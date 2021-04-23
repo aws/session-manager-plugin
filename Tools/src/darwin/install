@@ -1,0 +1,79 @@
+#!/usr/bin/env python
+import optparse
+import os
+import shutil
+import sys
+
+"""
+This script installs the session-manager-plugin for macOS.
+The executable is installed to /usr/local/sessionmanagerplugin (default) or to an install directory provided by the user.
+It also creates a symlink session-manager-plugin in the /usr/local/bin directory
+"""
+
+PLUGIN_FILE = "session-manager-plugin"
+VERSION_FILE = "VERSION"
+LICENSE_FILE = "LICENSE"
+SEELOG_FILE = "seelog.xml.template"
+
+INSTALL_DIR = "/usr/local/sessionmanagerplugin"
+SYMLINK_NAME = "/usr/local/bin/{}".format(PLUGIN_FILE)
+
+def create_symlink(real_location, symlink_name):
+    """
+    Removes a duplicate symlink if it exists and
+    creates symlink from real_location to symlink_name
+    """
+    if os.path.isfile(symlink_name):
+        print("Symlink already exists. Removing symlink from {}".format(symlink_name))
+        os.remove(symlink_name)
+
+    print("Creating Symlink from {} to {}".format(real_location, symlink_name))
+    os.symlink(real_location, symlink_name)
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option("-i", "--install-dir", help="The location to install the Session Manager Plugin."
+                    " The default value is {}".format(INSTALL_DIR), default=INSTALL_DIR)
+    parser.add_option("-b", "--bin-location", help="If this argument is "
+                      "provided, then a symlink will be created at this "
+                      "location that points to the session-manager-plugin executable. "
+                      "The default symlink location is {}\n"
+                      "Note: The session-manager-plugin executable must be in your $PATH "
+                      "to use Session Manager Plugin with AWS CLI.".format(SYMLINK_NAME), default=SYMLINK_NAME)
+    options = parser.parse_args()[0]
+
+    try:
+        current_working_directory = os.path.dirname(os.path.abspath(__file__))
+
+        current_bin_folder = os.path.join(current_working_directory, 'bin')
+        install_bin_folder = os.path.join(options.install_dir, 'bin')
+
+        if not os.path.isdir(install_bin_folder):
+             print("Creating install directories: {}".format(install_bin_folder))
+             os.makedirs(install_bin_folder)
+
+        # Copy executable. Overwrites file if it exists. The basename of the file is copied
+        current_bin_location = os.path.join(current_working_directory, 'bin', PLUGIN_FILE)
+        shutil.copy2(current_bin_location, install_bin_folder)
+        current_bin_folder = install_bin_folder
+
+        # Copy see_log file
+        seelog_location = os.path.join(current_working_directory, SEELOG_FILE)
+        shutil.copy2(seelog_location, options.install_dir)
+
+        # Copy Version File
+        version_file_location = os.path.join(current_working_directory, VERSION_FILE)
+        shutil.copy2(version_file_location, options.install_dir)
+
+        # Copy License File
+        license_file_location = os.path.join(current_working_directory, LICENSE_FILE)
+        shutil.copy2(license_file_location, options.install_dir)
+
+        install_bin_location = os.path.join(options.install_dir,'bin', PLUGIN_FILE)
+        create_symlink(install_bin_location, options.bin_location)
+        print("Installation successful!")
+    except:
+       print("Failed to create symlink.\nPlease add {} to your $PATH to use Session Manager Plugin.".format(current_bin_folder))
+
+if __name__ == '__main__':
+    main()

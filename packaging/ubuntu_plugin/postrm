@@ -1,0 +1,4 @@
+if [ -f /usr/local/bin/session-manager-plugin ]
+then
+    rm /usr/local/bin/session-manager-plugin
+fi

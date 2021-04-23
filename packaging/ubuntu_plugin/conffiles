@@ -1,0 +1,9 @@
+/etc/init/session-manager-plugin.conf
+/usr/local/sessionmanagerplugin/seelog.xml
+/lib/systemd/system/session-manager-plugin.service
+/usr/local/sessionmanagerplugin/LICENSE
+/usr/local/sessionmanagerplugin/NOTICE
+/usr/local/sessionmanagerplugin/README.md
+/usr/local/sessionmanagerplugin/RELEASENOTES.md
+/usr/local/sessionmanagerplugin/THIRD-PARTY
+/usr/local/sessionmanagerplugin/VERSION

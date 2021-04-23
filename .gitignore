@@ -1,0 +1,12 @@
+.DS_Store
+.idea/
+*.iml
+/Tools/bin/
+/Tools/pkg/
+/Tools/src/github.com/
+/Tools/src/golang.org/
+bin/
+build
+/vendor/bin/
+/vendor/pkg/
+.vscode/

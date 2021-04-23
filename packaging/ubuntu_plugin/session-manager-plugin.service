@@ -1,0 +1,14 @@
+[Unit]
+Description=session-manager-plugin
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/local/sessionmanagerplugin/bin/
+ExecStart=/usr/local/sessionmanagerplugin/bin/session-manager-plugin
+KillMode=process
+Restart=on-failure
+RestartSec=10min
+
+[Install]
+WantedBy=network-online.target

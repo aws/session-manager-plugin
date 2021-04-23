@@ -1,0 +1,10 @@
+echo "Stopping session-manager-plugin"
+if [ $(cat /proc/1/comm) = init ]
+then
+    stop session-manager-plugin || true
+elif [ $(cat /proc/1/comm) = systemd ]
+then
+    systemctl stop session-manager-plugin
+    systemctl disable session-manager-plugin
+    systemctl daemon-reload
+fi

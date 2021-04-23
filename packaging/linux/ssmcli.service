@@ -1,0 +1,14 @@
+[Unit]
+Description=ssmcli
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/bin/
+ExecStart=/usr/bin/ssmcli
+KillMode=process
+Restart=on-failure
+RestartSec=10min
+
+[Install]
+WantedBy=multi-user.target
