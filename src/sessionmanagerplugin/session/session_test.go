@@ -18,6 +18,7 @@ import (
 	"bytes"
 	"fmt"
 	"testing"
+	"time"
 
 	wsChannelMock "github.com/aws/SSMCLI/src/communicator/mocks"
 	dataChannelMock "github.com/aws/SSMCLI/src/datachannel/mocks"
@@ -78,6 +79,20 @@ func TestExecute(t *testing.T) {
 	err := sessionMock.Execute(logger)
 	assert.NotNil(t, err)
 	assert.Contains(t, err.Error(), "start session error for Standard_Stream")
+}
+
+func TestExecuteWhenNoResponseFromDataChannel(t *testing.T) {
+	sessionMock := &Session{}
+	sessionMock.DataChannel = mockDataChannel
+	sessionMock.Timeout = time.Duration(5 * time.Millisecond)
+	SetupMockActions()
+	mockDataChannel.On("Open", mock.Anything).Return(nil)
+	isSessionTypeSetMock := make(chan bool, 1)
+	mockDataChannel.On("IsSessionTypeSet").Return(isSessionTypeSetMock)
+
+	err := sessionMock.Execute(logger)
+	assert.NotNil(t, err)
+	assert.Contains(t, err.Error(), "client timeout")
 }
 
 func SetupMockActions() {

@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 
 	"github.com/aws/SSMCLI/src/datachannel"
 	"github.com/aws/SSMCLI/src/log"
@@ -34,9 +35,8 @@ import (
 
 const (
 	LegacyArgumentLength  = 4
-	ArgumentLength        = 7
 	StartSessionOperation = "StartSession"
-	VersionFile           = "VERSION"
+	ClientTimeoutSecond   = time.Duration(10 * time.Second)
 )
 
 var SessionRegistry = map[string]ISessionPlugin{}
@@ -81,6 +81,7 @@ type Session struct {
 	SessionType           string
 	SessionProperties     interface{}
 	DisplayMode           sessionutil.DisplayMode
+	Timeout               time.Duration
 }
 
 //startSession create the datachannel for session
@@ -175,6 +176,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 		session.ClientId = clientId
 		session.TargetId = target
 		session.DataChannel = &datachannel.DataChannel{}
+		session.Timeout = ClientTimeoutSecond
 
 	default:
 		fmt.Fprint(out, "Invalid Operation")
@@ -200,17 +202,24 @@ func (s *Session) Execute(log log.T) (err error) {
 		return
 	}
 
+	select {
 	// The session type is set either by handshake or the first packet received.
-	if !<-s.DataChannel.IsSessionTypeSet() {
-		log.Errorf("unable to  SessionType for session %s", s.SessionId)
-		return errors.New("unable to determine SessionType")
-	} else {
-		s.SessionType = s.DataChannel.GetSessionType()
-		s.SessionProperties = s.DataChannel.GetSessionProperties()
-		if err = setSessionHandlersWithSessionType(s, log); err != nil {
-			log.Errorf("Session ending with error: %v", err)
-			return
+	case isSessionTypeSet := <-s.DataChannel.IsSessionTypeSet():
+		if !isSessionTypeSet {
+			log.Errorf("unable to  SessionType for session %s", s.SessionId)
+			return errors.New("unable to determine SessionType")
+		} else {
+			s.SessionType = s.DataChannel.GetSessionType()
+			s.SessionProperties = s.DataChannel.GetSessionProperties()
+			if err = setSessionHandlersWithSessionType(s, log); err != nil {
+				log.Errorf("Session ending with error: %v", err)
+				return
+			}
 		}
+	case <-time.After(s.Timeout):
+		log.Errorf("client timeout: unable to receive message %s", s.SessionId)
+		s.TerminateSession(log)
+		return errors.New("client timeout: unable to receive message " + s.SessionId)
 	}
 	return
 }
