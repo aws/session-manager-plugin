@@ -1,5 +1,10 @@
 Latest
 ================
+- Introduce client timeout for session start request.
+- Add support for signed session-manager-plugin.pkg file for macOS.
+
+1.2.54.0
+================
 - Enhancement: Added support  for running session in NonInteractiveCommands execution mode.
 
 1.2.30.0
