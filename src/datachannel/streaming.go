@@ -303,7 +303,7 @@ func (dataChannel *DataChannel) SendInputDataMessage(
 		return
 	}
 
-	log.Debugf("Sending message with seq number: %d", dataChannel.StreamDataSequenceNumber)
+	log.Tracef("Sending message with seq number: %d", dataChannel.StreamDataSequenceNumber)
 	if err = SendMessageCall(log, dataChannel, msg, websocket.BinaryMessage); err != nil {
 		log.Errorf("Error sending stream data message %v", err)
 		return
@@ -399,7 +399,7 @@ func (dataChannel *DataChannel) OutputMessageHandler(log log.T, stopHandler Stop
 		return err
 	}
 
-	log.Debugf("Processing stream data message of type: %s", outputMessage.MessageType)
+	log.Tracef("Processing stream data message of type: %s", outputMessage.MessageType)
 	switch outputMessage.MessageType {
 	case message.OutputStreamMessage:
 		return dataChannel.HandleOutputMessage(log, *outputMessage, rawMessage)
@@ -639,7 +639,7 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 			}
 		default:
 
-			log.Debugf("Process new incoming stream data message. Sequence Number: %d", outputMessage.SequenceNumber)
+			log.Tracef("Process new incoming stream data message. Sequence Number: %d", outputMessage.SequenceNumber)
 
 			// Decrypt if encryption is enabled and payload type is output
 			if dataChannel.encryptionEnabled &&
