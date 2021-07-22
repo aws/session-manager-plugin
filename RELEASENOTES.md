@@ -1,5 +1,11 @@
 Latest
 ================
+- Change data streaming related logs from debug to trace level.
+- Fix typo for log config file.
+- Fix interactive command session abruptly terminated issue.
+
+1.2.205.0
+================
 - Introduce client timeout for session start request.
 - Add support for signed session-manager-plugin.pkg file for macOS.
 
