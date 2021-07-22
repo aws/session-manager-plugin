@@ -192,7 +192,6 @@ func (s *StartSessionCommand) Execute(parameters map[string][]string) (error, st
 		ClientId:    clientId,
 		TargetId:    instanceId,
 		DataChannel: &datachannel.DataChannel{},
-		Timeout:     session.ClientTimeoutSecond,
 	}
 
 	if err = executeSession(log, &session); err != nil {

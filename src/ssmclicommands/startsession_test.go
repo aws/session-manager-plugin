@@ -21,6 +21,7 @@ import (
 	"github.com/aws/SSMCLI/src/log"
 	"github.com/aws/SSMCLI/src/sessionmanagerplugin/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
+
 	"github.com/stretchr/testify/assert"
 )
 
