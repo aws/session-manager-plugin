@@ -1,23 +1,27 @@
 language: go
+sudo: required
+dist: bionic
 
-sudo: false
+branches:
+  only:
+    - main
+
+os:
+  - linux
+  - osx
+  # Travis doesn't work with windows and Go tip
+  #- windows
 
 go:
-  - 1.4
-  - 1.5
-  - 1.6
   - tip
-    
-# Use Go 1.5's vendoring experiment for 1.5 tests. 1.4 tests will use the tip of the dependencies repo.
-env:
-  - GO15VENDOREXPERIMENT=1
-
-install:
-  - make get-deps
-
-script:
-  - make unit-with-race-cover
 
 matrix:
   allow_failures:
     - go: tip
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then choco install make; fi
+  - (cd /tmp/; go get golang.org/x/lint/golint)
+
+script: make get-deps-verify ci-test
+

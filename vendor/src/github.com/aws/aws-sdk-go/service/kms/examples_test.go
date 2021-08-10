@@ -213,6 +213,7 @@ func ExampleKMS_Decrypt_shared00() {
 	svc := kms.New(session.New())
 	input := &kms.DecryptInput{
 		CiphertextBlob: []byte("<binary data>"),
+		KeyId:          aws.String("arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab"),
 	}
 
 	result, err := svc.Decrypt(input)
@@ -328,9 +329,9 @@ func ExampleKMS_DeleteImportedKeyMaterial_shared00() {
 	fmt.Println(result)
 }
 
-// To obtain information about a customer master key (CMK)
+// To get details about a customer master key (CMK)
 //
-// The following example returns information (metadata) about the specified CMK.
+// The following example gets metadata about a symmetric CMK.
 func ExampleKMS_DescribeKey_shared00() {
 	svc := kms.New(session.New())
 	input := &kms.DescribeKeyInput{
@@ -919,6 +920,8 @@ func ExampleKMS_ListGrants_shared00() {
 				fmt.Println(kms.ErrCodeDependencyTimeoutException, aerr.Error())
 			case kms.ErrCodeInvalidMarkerException:
 				fmt.Println(kms.ErrCodeInvalidMarkerException, aerr.Error())
+			case kms.ErrCodeInvalidGrantIdException:
+				fmt.Println(kms.ErrCodeInvalidGrantIdException, aerr.Error())
 			case kms.ErrCodeInvalidArnException:
 				fmt.Println(kms.ErrCodeInvalidArnException, aerr.Error())
 			case kms.ErrCodeInternalException:
@@ -1400,6 +1403,8 @@ func ExampleKMS_UpdateAlias_shared00() {
 				fmt.Println(kms.ErrCodeNotFoundException, aerr.Error())
 			case kms.ErrCodeInternalException:
 				fmt.Println(kms.ErrCodeInternalException, aerr.Error())
+			case kms.ErrCodeLimitExceededException:
+				fmt.Println(kms.ErrCodeLimitExceededException, aerr.Error())
 			case kms.ErrCodeInvalidStateException:
 				fmt.Println(kms.ErrCodeInvalidStateException, aerr.Error())
 			default:

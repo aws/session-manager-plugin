@@ -515,6 +515,10 @@
     }
   },
   "shapes" : {
+    "AuthenticationStrategy" : {
+      "type" : "string",
+      "enum" : [ "SIMPLE", "LDAP" ]
+    },
     "AvailabilityZone" : {
       "type" : "structure",
       "members" : {
@@ -569,7 +573,8 @@
           "shape" : "__string",
           "locationName" : "nextToken"
         }
-      }
+      },
+      "required" : [ "MaxResults" ]
     },
     "BrokerInstance" : {
       "type" : "structure",
@@ -632,7 +637,8 @@
           "shape" : "__string",
           "locationName" : "nextToken"
         }
-      }
+      },
+      "required" : [ "MaxResults" ]
     },
     "BrokerState" : {
       "type" : "string",
@@ -669,11 +675,16 @@
           "shape" : "DeploymentMode",
           "locationName" : "deploymentMode"
         },
+        "EngineType" : {
+          "shape" : "EngineType",
+          "locationName" : "engineType"
+        },
         "HostInstanceType" : {
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         }
-      }
+      },
+      "required" : [ "DeploymentMode", "EngineType" ]
     },
     "ChangeType" : {
       "type" : "string",
@@ -685,6 +696,10 @@
         "Arn" : {
           "shape" : "__string",
           "locationName" : "arn"
+        },
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
         },
         "Created" : {
           "shape" : "__timestampIso8601",
@@ -718,7 +733,8 @@
           "shape" : "__mapOf__string",
           "locationName" : "tags"
         }
-      }
+      },
+      "required" : [ "Description", "EngineVersion", "LatestRevision", "AuthenticationStrategy", "EngineType", "Id", "Arn", "Name", "Created" ]
     },
     "ConfigurationId" : {
       "type" : "structure",
@@ -731,7 +747,8 @@
           "shape" : "__integer",
           "locationName" : "revision"
         }
-      }
+      },
+      "required" : [ "Id" ]
     },
     "ConfigurationRevision" : {
       "type" : "structure",
@@ -748,7 +765,8 @@
           "shape" : "__integer",
           "locationName" : "revision"
         }
-      }
+      },
+      "required" : [ "Revision", "Created" ]
     },
     "Configurations" : {
       "type" : "structure",
@@ -787,6 +805,10 @@
     "CreateBrokerInput" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -824,6 +846,10 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataInput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
@@ -856,7 +882,8 @@
           "shape" : "__listOfUser",
           "locationName" : "users"
         }
-      }
+      },
+      "required" : [ "EngineVersion", "HostInstanceType", "AutoMinorVersionUpgrade", "Users", "BrokerName", "DeploymentMode", "EngineType", "PubliclyAccessible" ]
     },
     "CreateBrokerOutput" : {
       "type" : "structure",
@@ -874,6 +901,10 @@
     "CreateBrokerRequest" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -911,6 +942,10 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataInput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
@@ -943,7 +978,8 @@
           "shape" : "__listOfUser",
           "locationName" : "users"
         }
-      }
+      },
+      "required" : [ "EngineVersion", "HostInstanceType", "AutoMinorVersionUpgrade", "Users", "BrokerName", "DeploymentMode", "EngineType", "PubliclyAccessible" ]
     },
     "CreateBrokerResponse" : {
       "type" : "structure",
@@ -961,6 +997,10 @@
     "CreateConfigurationInput" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "EngineType" : {
           "shape" : "EngineType",
           "locationName" : "engineType"
@@ -977,7 +1017,8 @@
           "shape" : "__mapOf__string",
           "locationName" : "tags"
         }
-      }
+      },
+      "required" : [ "EngineVersion", "EngineType", "Name" ]
     },
     "CreateConfigurationOutput" : {
       "type" : "structure",
@@ -985,6 +1026,10 @@
         "Arn" : {
           "shape" : "__string",
           "locationName" : "arn"
+        },
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
         },
         "Created" : {
           "shape" : "__timestampIso8601",
@@ -1002,11 +1047,16 @@
           "shape" : "__string",
           "locationName" : "name"
         }
-      }
+      },
+      "required" : [ "AuthenticationStrategy", "Id", "Arn", "Name", "Created" ]
     },
     "CreateConfigurationRequest" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "EngineType" : {
           "shape" : "EngineType",
           "locationName" : "engineType"
@@ -1023,7 +1073,8 @@
           "shape" : "__mapOf__string",
           "locationName" : "tags"
         }
-      }
+      },
+      "required" : [ "EngineVersion", "EngineType", "Name" ]
     },
     "CreateConfigurationResponse" : {
       "type" : "structure",
@@ -1031,6 +1082,10 @@
         "Arn" : {
           "shape" : "__string",
           "locationName" : "arn"
+        },
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
         },
         "Created" : {
           "shape" : "__timestampIso8601",
@@ -1080,7 +1135,8 @@
           "shape" : "__string",
           "locationName" : "password"
         }
-      }
+      },
+      "required" : [ "Password" ]
     },
     "CreateUserRequest" : {
       "type" : "structure",
@@ -1108,7 +1164,7 @@
           "locationName" : "username"
         }
       },
-      "required" : [ "Username", "BrokerId" ]
+      "required" : [ "Username", "BrokerId", "Password" ]
     },
     "CreateUserResponse" : {
       "type" : "structure",
@@ -1185,7 +1241,7 @@
     },
     "DeploymentMode" : {
       "type" : "string",
-      "enum" : [ "SINGLE_INSTANCE", "ACTIVE_STANDBY_MULTI_AZ" ]
+      "enum" : [ "SINGLE_INSTANCE", "ACTIVE_STANDBY_MULTI_AZ", "CLUSTER_MULTI_AZ" ]
     },
     "DescribeBrokerEngineTypesRequest" : {
       "type" : "structure",
@@ -1274,6 +1330,10 @@
     "DescribeBrokerOutput" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -1326,6 +1386,10 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataOutput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "LogsSummary",
           "locationName" : "logs"
@@ -1334,6 +1398,10 @@
           "shape" : "WeeklyStartTime",
           "locationName" : "maintenanceWindowStartTime"
         },
+        "PendingAuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "pendingAuthenticationStrategy"
+        },
         "PendingEngineVersion" : {
           "shape" : "__string",
           "locationName" : "pendingEngineVersion"
@@ -1341,6 +1409,10 @@
         "PendingHostInstanceType" : {
           "shape" : "__string",
           "locationName" : "pendingHostInstanceType"
+        },
+        "PendingLdapServerMetadata" : {
+          "shape" : "LdapServerMetadataOutput",
+          "locationName" : "pendingLdapServerMetadata"
         },
         "PendingSecurityGroups" : {
           "shape" : "__listOf__string",
@@ -1370,7 +1442,8 @@
           "shape" : "__listOfUserSummary",
           "locationName" : "users"
         }
-      }
+      },
+      "required" : [ "DeploymentMode", "EngineType", "AutoMinorVersionUpgrade", "PubliclyAccessible" ]
     },
     "DescribeBrokerRequest" : {
       "type" : "structure",
@@ -1386,6 +1459,10 @@
     "DescribeBrokerResponse" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -1438,6 +1515,10 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataOutput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "LogsSummary",
           "locationName" : "logs"
@@ -1446,6 +1527,10 @@
           "shape" : "WeeklyStartTime",
           "locationName" : "maintenanceWindowStartTime"
         },
+        "PendingAuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "pendingAuthenticationStrategy"
+        },
         "PendingEngineVersion" : {
           "shape" : "__string",
           "locationName" : "pendingEngineVersion"
@@ -1453,6 +1538,10 @@
         "PendingHostInstanceType" : {
           "shape" : "__string",
           "locationName" : "pendingHostInstanceType"
+        },
+        "PendingLdapServerMetadata" : {
+          "shape" : "LdapServerMetadataOutput",
+          "locationName" : "pendingLdapServerMetadata"
         },
         "PendingSecurityGroups" : {
           "shape" : "__listOf__string",
@@ -1501,6 +1590,10 @@
         "Arn" : {
           "shape" : "__string",
           "locationName" : "arn"
+        },
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
         },
         "Created" : {
           "shape" : "__timestampIso8601",
@@ -1555,7 +1648,8 @@
           "shape" : "__string",
           "locationName" : "description"
         }
-      }
+      },
+      "required" : [ "Data", "ConfigurationId", "Created" ]
     },
     "DescribeConfigurationRevisionRequest" : {
       "type" : "structure",
@@ -1617,7 +1711,8 @@
           "shape" : "__string",
           "locationName" : "username"
         }
-      }
+      },
+      "required" : [ "Username", "BrokerId" ]
     },
     "DescribeUserRequest" : {
       "type" : "structure",
@@ -1676,7 +1771,7 @@
     },
     "EngineType" : {
       "type" : "string",
-      "enum" : [ "ACTIVEMQ" ]
+      "enum" : [ "ACTIVEMQ", "RABBITMQ" ]
     },
     "EngineVersion" : {
       "type" : "structure",
@@ -1733,6 +1828,102 @@
       "error" : {
         "httpStatusCode" : 500
       }
+    },
+    "LdapServerMetadataInput" : {
+      "type" : "structure",
+      "members" : {
+        "Hosts" : {
+          "shape" : "__listOf__string",
+          "locationName" : "hosts"
+        },
+        "RoleBase" : {
+          "shape" : "__string",
+          "locationName" : "roleBase"
+        },
+        "RoleName" : {
+          "shape" : "__string",
+          "locationName" : "roleName"
+        },
+        "RoleSearchMatching" : {
+          "shape" : "__string",
+          "locationName" : "roleSearchMatching"
+        },
+        "RoleSearchSubtree" : {
+          "shape" : "__boolean",
+          "locationName" : "roleSearchSubtree"
+        },
+        "ServiceAccountPassword" : {
+          "shape" : "__string",
+          "locationName" : "serviceAccountPassword"
+        },
+        "ServiceAccountUsername" : {
+          "shape" : "__string",
+          "locationName" : "serviceAccountUsername"
+        },
+        "UserBase" : {
+          "shape" : "__string",
+          "locationName" : "userBase"
+        },
+        "UserRoleName" : {
+          "shape" : "__string",
+          "locationName" : "userRoleName"
+        },
+        "UserSearchMatching" : {
+          "shape" : "__string",
+          "locationName" : "userSearchMatching"
+        },
+        "UserSearchSubtree" : {
+          "shape" : "__boolean",
+          "locationName" : "userSearchSubtree"
+        }
+      },
+      "required" : [ "Hosts", "UserSearchMatching", "UserBase", "RoleSearchMatching", "ServiceAccountUsername", "RoleBase", "ServiceAccountPassword" ]
+    },
+    "LdapServerMetadataOutput" : {
+      "type" : "structure",
+      "members" : {
+        "Hosts" : {
+          "shape" : "__listOf__string",
+          "locationName" : "hosts"
+        },
+        "RoleBase" : {
+          "shape" : "__string",
+          "locationName" : "roleBase"
+        },
+        "RoleName" : {
+          "shape" : "__string",
+          "locationName" : "roleName"
+        },
+        "RoleSearchMatching" : {
+          "shape" : "__string",
+          "locationName" : "roleSearchMatching"
+        },
+        "RoleSearchSubtree" : {
+          "shape" : "__boolean",
+          "locationName" : "roleSearchSubtree"
+        },
+        "ServiceAccountUsername" : {
+          "shape" : "__string",
+          "locationName" : "serviceAccountUsername"
+        },
+        "UserBase" : {
+          "shape" : "__string",
+          "locationName" : "userBase"
+        },
+        "UserRoleName" : {
+          "shape" : "__string",
+          "locationName" : "userRoleName"
+        },
+        "UserSearchMatching" : {
+          "shape" : "__string",
+          "locationName" : "userSearchMatching"
+        },
+        "UserSearchSubtree" : {
+          "shape" : "__boolean",
+          "locationName" : "userSearchSubtree"
+        }
+      },
+      "required" : [ "Hosts", "UserSearchMatching", "UserBase", "RoleSearchMatching", "ServiceAccountUsername", "RoleBase" ]
     },
     "ListBrokersOutput" : {
       "type" : "structure",
@@ -1926,7 +2117,8 @@
           "shape" : "__listOfUserSummary",
           "locationName" : "users"
         }
-      }
+      },
+      "required" : [ "BrokerId", "MaxResults", "Users" ]
     },
     "ListUsersRequest" : {
       "type" : "structure",
@@ -2006,7 +2198,8 @@
           "shape" : "PendingLogs",
           "locationName" : "pending"
         }
-      }
+      },
+      "required" : [ "GeneralLogGroup", "General" ]
     },
     "MaxResults" : {
       "type" : "integer",
@@ -2073,7 +2266,8 @@
           "shape" : "SanitizationWarningReason",
           "locationName" : "reason"
         }
-      }
+      },
+      "required" : [ "Reason" ]
     },
     "SanitizationWarningReason" : {
       "type" : "string",
@@ -2108,6 +2302,10 @@
     "UpdateBrokerInput" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2124,9 +2322,17 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataInput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
+        },
+        "MaintenanceWindowStartTime" : {
+          "shape" : "WeeklyStartTime",
+          "locationName" : "maintenanceWindowStartTime"
         },
         "SecurityGroups" : {
           "shape" : "__listOf__string",
@@ -2137,6 +2343,10 @@
     "UpdateBrokerOutput" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2157,19 +2367,32 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataOutput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
+        },
+        "MaintenanceWindowStartTime" : {
+          "shape" : "WeeklyStartTime",
+          "locationName" : "maintenanceWindowStartTime"
         },
         "SecurityGroups" : {
           "shape" : "__listOf__string",
           "locationName" : "securityGroups"
         }
-      }
+      },
+      "required" : [ "BrokerId" ]
     },
     "UpdateBrokerRequest" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2191,9 +2414,17 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataInput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
+        },
+        "MaintenanceWindowStartTime" : {
+          "shape" : "WeeklyStartTime",
+          "locationName" : "maintenanceWindowStartTime"
         },
         "SecurityGroups" : {
           "shape" : "__listOf__string",
@@ -2205,6 +2436,10 @@
     "UpdateBrokerResponse" : {
       "type" : "structure",
       "members" : {
+        "AuthenticationStrategy" : {
+          "shape" : "AuthenticationStrategy",
+          "locationName" : "authenticationStrategy"
+        },
         "AutoMinorVersionUpgrade" : {
           "shape" : "__boolean",
           "locationName" : "autoMinorVersionUpgrade"
@@ -2225,9 +2460,17 @@
           "shape" : "__string",
           "locationName" : "hostInstanceType"
         },
+        "LdapServerMetadata" : {
+          "shape" : "LdapServerMetadataOutput",
+          "locationName" : "ldapServerMetadata"
+        },
         "Logs" : {
           "shape" : "Logs",
           "locationName" : "logs"
+        },
+        "MaintenanceWindowStartTime" : {
+          "shape" : "WeeklyStartTime",
+          "locationName" : "maintenanceWindowStartTime"
         },
         "SecurityGroups" : {
           "shape" : "__listOf__string",
@@ -2246,7 +2489,8 @@
           "shape" : "__string",
           "locationName" : "description"
         }
-      }
+      },
+      "required" : [ "Data" ]
     },
     "UpdateConfigurationOutput" : {
       "type" : "structure",
@@ -2275,7 +2519,8 @@
           "shape" : "__listOfSanitizationWarning",
           "locationName" : "warnings"
         }
-      }
+      },
+      "required" : [ "Id", "Arn", "Name", "Created" ]
     },
     "UpdateConfigurationRequest" : {
       "type" : "structure",
@@ -2294,7 +2539,7 @@
           "locationName" : "description"
         }
       },
-      "required" : [ "ConfigurationId" ]
+      "required" : [ "ConfigurationId", "Data" ]
     },
     "UpdateConfigurationResponse" : {
       "type" : "structure",
@@ -2393,7 +2638,8 @@
           "shape" : "__string",
           "locationName" : "username"
         }
-      }
+      },
+      "required" : [ "Username", "Password" ]
     },
     "UserPendingChanges" : {
       "type" : "structure",
@@ -2410,7 +2656,8 @@
           "shape" : "ChangeType",
           "locationName" : "pendingChange"
         }
-      }
+      },
+      "required" : [ "PendingChange" ]
     },
     "UserSummary" : {
       "type" : "structure",
@@ -2423,7 +2670,8 @@
           "shape" : "__string",
           "locationName" : "username"
         }
-      }
+      },
+      "required" : [ "Username" ]
     },
     "WeeklyStartTime" : {
       "type" : "structure",
@@ -2440,7 +2688,8 @@
           "shape" : "__string",
           "locationName" : "timeZone"
         }
-      }
+      },
+      "required" : [ "TimeOfDay", "DayOfWeek" ]
     },
     "__boolean" : {
       "type" : "boolean"

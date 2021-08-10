@@ -22,6 +22,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/awstesting/unit"
+	"github.com/aws/aws-sdk-go/internal/sdktesting"
 )
 
 const instanceIdentityDocument = `{
@@ -67,6 +68,8 @@ const (
 	SecureTestType testType = iota
 	InsecureTestType
 	BadRequestTestType
+	NotFoundRequestTestType
+	InvalidTokenRequestTestType
 	ServerErrorForTokenTestType
 	pageNotFoundForTokenTestType
 	pageNotFoundWith401TestType
@@ -106,22 +109,28 @@ func newTestServer(t *testing.T, testType testType, testServer *testServer) *htt
 	switch testType {
 	case SecureTestType:
 		mux.HandleFunc("/latest/api/token", getTokenRequiredParams(t, testServer.secureGetTokenHandler))
-		mux.HandleFunc("/latest/", testServer.secureGetLatestHandler)
+		mux.HandleFunc("/", testServer.secureGetLatestHandler)
 	case InsecureTestType:
 		mux.HandleFunc("/latest/api/token", testServer.insecureGetTokenHandler)
-		mux.HandleFunc("/latest/", testServer.insecureGetLatestHandler)
+		mux.HandleFunc("/", testServer.insecureGetLatestHandler)
 	case BadRequestTestType:
 		mux.HandleFunc("/latest/api/token", getTokenRequiredParams(t, testServer.badRequestGetTokenHandler))
-		mux.HandleFunc("/latest/", testServer.badRequestGetLatestHandler)
+		mux.HandleFunc("/", testServer.badRequestGetLatestHandler)
+	case NotFoundRequestTestType:
+		mux.HandleFunc("/latest/api/token", getTokenRequiredParams(t, testServer.secureGetTokenHandler))
+		mux.HandleFunc("/", testServer.notFoundRequestGetLatestHandler)
+	case InvalidTokenRequestTestType:
+		mux.HandleFunc("/latest/api/token", getTokenRequiredParams(t, testServer.secureGetTokenHandler))
+		mux.HandleFunc("/", testServer.unauthorizedGetLatestHandler)
 	case ServerErrorForTokenTestType:
 		mux.HandleFunc("/latest/api/token", getTokenRequiredParams(t, testServer.serverErrorGetTokenHandler))
-		mux.HandleFunc("/latest/", testServer.insecureGetLatestHandler)
+		mux.HandleFunc("/", testServer.insecureGetLatestHandler)
 	case pageNotFoundForTokenTestType:
 		mux.HandleFunc("/latest/api/token", getTokenRequiredParams(t, testServer.pageNotFoundGetTokenHandler))
-		mux.HandleFunc("/latest/", testServer.insecureGetLatestHandler)
+		mux.HandleFunc("/", testServer.insecureGetLatestHandler)
 	case pageNotFoundWith401TestType:
 		mux.HandleFunc("/latest/api/token", getTokenRequiredParams(t, testServer.pageNotFoundGetTokenHandler))
-		mux.HandleFunc("/latest/", testServer.unauthorizedGetLatestHandler)
+		mux.HandleFunc("/", testServer.unauthorizedGetLatestHandler)
 
 	}
 
@@ -187,6 +196,10 @@ func (s *testServer) badRequestGetLatestHandler(w http.ResponseWriter, r *http.R
 	s.t.Errorf("Expected no call to this handler, incorrect behavior found")
 }
 
+func (s *testServer) notFoundRequestGetLatestHandler(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "not found error", 404)
+}
+
 func (s *testServer) serverErrorGetTokenHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "", 403)
 }
@@ -204,17 +217,17 @@ func (opListProvider *operationListProvider) addToOperationPerformedList(r *requ
 }
 
 func TestEndpoint(t *testing.T) {
+	restoreEnvFn := sdktesting.StashEnv()
+	defer restoreEnvFn()
+
 	c := ec2metadata.New(unit.Session)
 	op := &request.Operation{
 		Name:       "GetMetadata",
 		HTTPMethod: "GET",
-		HTTPPath:   path.Join("/", "meta-data", "testpath"),
+		HTTPPath:   path.Join("/latest", "meta-data", "testpath"),
 	}
 
 	req := c.NewRequest(op, nil, nil)
-	if e, a := "http://169.254.169.254/latest", req.ClientInfo.Endpoint; e != a {
-		t.Errorf("expect %v, got %v", e, a)
-	}
 	if e, a := "http://169.254.169.254/latest/meta-data/testpath", req.HTTPRequest.URL.String(); e != a {
 		t.Errorf("expect %v, got %v", e, a)
 	}
@@ -222,52 +235,84 @@ func TestEndpoint(t *testing.T) {
 
 func TestGetMetadata(t *testing.T) {
 	cases := map[string]struct {
-		NewServer                   func(t *testing.T) *httptest.Server
+		tokens                      []string
+		NewServer                   func(t *testing.T, tokens []string) *httptest.Server
 		expectedData                string
 		expectedError               string
-		expectedOperationsPerformed []string
+		expectedOperationsAttempted []string
 	}{
 		"Insecure server success case": {
-			NewServer: func(t *testing.T) *httptest.Server {
+			NewServer: func(t *testing.T, tokens []string) *httptest.Server {
 				testType := InsecureTestType
 				Ts := &testServer{
-					t:    t,
-					data: "IMDSProfileForGoSDK",
+					t:      t,
+					tokens: tokens,
+					data:   "IMDSProfileForGoSDK",
 				}
 				return newTestServer(t, testType, Ts)
 			},
 			expectedData:                "IMDSProfileForGoSDK",
-			expectedOperationsPerformed: []string{"GetToken", "GetMetadata", "GetMetadata"},
+			expectedOperationsAttempted: []string{"GetToken", "GetMetadata", "GetMetadata"},
 		},
 		"Secure server success case": {
-			NewServer: func(t *testing.T) *httptest.Server {
+			tokens: []string{"firstToken", "secondToken", "thirdToken"},
+			NewServer: func(t *testing.T, tokens []string) *httptest.Server {
 				testType := SecureTestType
 				Ts := &testServer{
 					t:      t,
-					tokens: []string{"firstToken", "secondToken", "thirdToken"},
+					tokens: tokens,
 					data:   "IMDSProfileForGoSDK",
 				}
 				return newTestServer(t, testType, Ts)
 			},
 			expectedData:                "IMDSProfileForGoSDK",
 			expectedError:               "",
-			expectedOperationsPerformed: []string{"GetToken", "GetMetadata", "GetMetadata"},
+			expectedOperationsAttempted: []string{"GetToken", "GetMetadata", "GetMetadata"},
 		},
-		"Bad request case": {
-			NewServer: func(t *testing.T) *httptest.Server {
+		"Bad token request case": {
+			tokens: []string{"firstToken", "secondToken", "thirdToken"},
+			NewServer: func(t *testing.T, tokens []string) *httptest.Server {
 				testType := BadRequestTestType
 				Ts := &testServer{
 					t:      t,
-					tokens: []string{"firstToken", "secondToken", "thirdToken"},
+					tokens: tokens,
 					data:   "IMDSProfileForGoSDK",
 				}
 				return newTestServer(t, testType, Ts)
 			},
 			expectedError:               "400",
-			expectedOperationsPerformed: []string{"GetToken", "GetMetadata", "GetToken", "GetMetadata"},
+			expectedOperationsAttempted: []string{"GetToken", "GetToken"},
+		},
+		"Not found no retry request case": {
+			tokens: []string{"firstToken", "secondToken", "thirdToken"},
+			NewServer: func(t *testing.T, tokens []string) *httptest.Server {
+				testType := NotFoundRequestTestType
+				Ts := &testServer{
+					t:      t,
+					tokens: tokens,
+					data:   "IMDSProfileForGoSDK",
+				}
+				return newTestServer(t, testType, Ts)
+			},
+			expectedError:               "404",
+			expectedOperationsAttempted: []string{"GetToken", "GetMetadata", "GetMetadata"},
+		},
+		"invalid token request case": {
+			tokens: []string{"firstToken", "secondToken", "thirdToken"},
+			NewServer: func(t *testing.T, tokens []string) *httptest.Server {
+				testType := InvalidTokenRequestTestType
+				Ts := &testServer{
+					t:      t,
+					tokens: tokens,
+					data:   "IMDSProfileForGoSDK",
+				}
+				return newTestServer(t, testType, Ts)
+			},
+			expectedError:               "401",
+			expectedOperationsAttempted: []string{"GetToken", "GetMetadata", "GetToken", "GetMetadata"},
 		},
 		"ServerErrorForTokenTestType": {
-			NewServer: func(t *testing.T) *httptest.Server {
+			NewServer: func(t *testing.T, tokens []string) *httptest.Server {
 				testType := ServerErrorForTokenTestType
 				Ts := &testServer{
 					t:      t,
@@ -277,20 +322,36 @@ func TestGetMetadata(t *testing.T) {
 				return newTestServer(t, testType, Ts)
 			},
 			expectedData:                "IMDSProfileForGoSDK",
-			expectedOperationsPerformed: []string{"GetToken", "GetMetadata", "GetMetadata"},
+			expectedOperationsAttempted: []string{"GetToken", "GetMetadata", "GetMetadata"},
 		},
 	}
 
 	for name, x := range cases {
 		t.Run(name, func(t *testing.T) {
 
-			server := x.NewServer(t)
+			server := x.NewServer(t, x.tokens)
 			defer server.Close()
 
 			op := &operationListProvider{}
 
-			c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
-			c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
+			c := ec2metadata.New(unit.Session, &aws.Config{
+				Endpoint: aws.String(server.URL),
+			})
+			c.Handlers.CompleteAttempt.PushBack(op.addToOperationPerformedList)
+
+			tokenCounter := -1
+			c.Handlers.Send.PushBack(func(r *request.Request) {
+				switch r.Operation.Name {
+				case "GetToken":
+					tokenCounter++
+
+				case "GetMetadata":
+					curToken := r.HTTPRequest.Header.Get("x-aws-ec2-metadata-token")
+					if len(curToken) != 0 && curToken != x.tokens[tokenCounter] {
+						t.Errorf("expect %v token, got %v", x.tokens[tokenCounter], curToken)
+					}
+				}
+			})
 
 			resp, err := c.GetMetadata("some/path")
 
@@ -312,7 +373,7 @@ func TestGetMetadata(t *testing.T) {
 				t.Fatalf("expect %v, got %v", e, a)
 			}
 
-			if e, a := x.expectedOperationsPerformed, op.operationsPerformed; !reflect.DeepEqual(e, a) {
+			if e, a := x.expectedOperationsAttempted, op.operationsPerformed; !reflect.DeepEqual(e, a) {
 				t.Errorf("expect %v operations, got %v", e, a)
 			}
 
@@ -340,7 +401,9 @@ func TestGetUserData_Error(t *testing.T) {
 	}))
 
 	defer server.Close()
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 
 	resp, err := c.GetUserData()
 	if err == nil {
@@ -425,7 +488,9 @@ func TestGetRegion(t *testing.T) {
 
 			op := &operationListProvider{}
 
-			c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+			c := ec2metadata.New(unit.Session, &aws.Config{
+				Endpoint: aws.String(server.URL),
+			})
 			c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
 
 			resp, err := c.Region()
@@ -494,7 +559,9 @@ func TestMetadataIAMInfo_success(t *testing.T) {
 
 			op := &operationListProvider{}
 
-			c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+			c := ec2metadata.New(unit.Session, &aws.Config{
+				Endpoint: aws.String(server.URL),
+			})
 			c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
 
 			iamInfo, err := c.IAMInfo()
@@ -570,7 +637,9 @@ func TestMetadataIAMInfo_failure(t *testing.T) {
 
 			op := &operationListProvider{}
 
-			c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+			c := ec2metadata.New(unit.Session, &aws.Config{
+				Endpoint: aws.String(server.URL),
+			})
 			c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
 
 			iamInfo, err := c.IAMInfo()
@@ -675,7 +744,9 @@ func TestEC2RoleProviderInstanceIdentity(t *testing.T) {
 
 			op := &operationListProvider{}
 
-			c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+			c := ec2metadata.New(unit.Session, &aws.Config{
+				Endpoint: aws.String(server.URL),
+			})
 			c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
 			doc, err := c.GetInstanceIdentityDocument()
 
@@ -719,7 +790,9 @@ func TestEC2MetadataRetryFailure(t *testing.T) {
 	server := httptest.NewServer(mux)
 	defer server.Close()
 
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 
 	c.Handlers.AfterRetry.PushBack(func(i *request.Request) {
 		t.Logf("%v received, retrying operation %v", i.HTTPResponse.StatusCode, i.Operation.Name)
@@ -774,7 +847,9 @@ func TestEC2MetadataRetryOnce(t *testing.T) {
 
 	server := httptest.NewServer(mux)
 	defer server.Close()
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 
 	// Handler on client that logs if retried
 	c.Handlers.AfterRetry.PushBack(func(i *request.Request) {
@@ -807,7 +882,9 @@ func TestEC2Metadata_Concurrency(t *testing.T) {
 	server := newTestServer(t, SecureTestType, ts)
 	defer server.Close()
 
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 
 	var wg sync.WaitGroup
 	wg.Add(10)
@@ -838,11 +915,13 @@ func TestRequestOnMetadata(t *testing.T) {
 	server := newTestServer(t, SecureTestType, ts)
 	defer server.Close()
 
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 	req := c.NewRequest(&request.Operation{
 		Name:            "Ec2Metadata request",
 		HTTPMethod:      "GET",
-		HTTPPath:        "/latest",
+		HTTPPath:        "/latest/foo",
 		Paginator:       nil,
 		BeforePresignFn: nil,
 	}, nil, nil)
@@ -878,7 +957,9 @@ func TestExhaustiveRetryToFetchToken(t *testing.T) {
 
 	op := &operationListProvider{}
 
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 	c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
 
 	resp, err := c.GetMetadata("/some/path")
@@ -930,7 +1011,9 @@ func TestExhaustiveRetryWith401(t *testing.T) {
 
 	op := &operationListProvider{}
 
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 	c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
 
 	resp, err := c.GetMetadata("/some/path")
@@ -991,7 +1074,9 @@ func TestRequestTimeOut(t *testing.T) {
 
 	op := &operationListProvider{}
 
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 	// for test, change the timeout to 100 ms
 	c.Config.HTTPClient.Timeout = 100 * time.Millisecond
 
@@ -1068,7 +1153,9 @@ func TestTokenExpiredBehavior(t *testing.T) {
 
 	op := &operationListProvider{}
 
-	c := ec2metadata.New(unit.Session, &aws.Config{Endpoint: aws.String(server.URL + "/latest")})
+	c := ec2metadata.New(unit.Session, &aws.Config{
+		Endpoint: aws.String(server.URL),
+	})
 	c.Handlers.Complete.PushBack(op.addToOperationPerformedList)
 
 	resp, err := c.GetMetadata("/some/path")

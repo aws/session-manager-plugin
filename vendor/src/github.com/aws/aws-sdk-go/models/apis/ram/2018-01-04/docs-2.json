@@ -13,12 +13,13 @@
     "GetPermission": "<p>Gets the contents of an AWS RAM permission in JSON format.</p>",
     "GetResourcePolicies": "<p>Gets the policies for the specified resources that you own and have shared.</p>",
     "GetResourceShareAssociations": "<p>Gets the resources or principals for the resource shares that you own.</p>",
-    "GetResourceShareInvitations": "<p>Gets the invitations for resource sharing that you've received.</p>",
+    "GetResourceShareInvitations": "<p>Gets the invitations that you have received for resource shares.</p>",
     "GetResourceShares": "<p>Gets the resource shares that you own or the resource shares that are shared with you.</p>",
     "ListPendingInvitationResources": "<p>Lists the resources in a resource share that is shared with you but that the invitation is still pending for.</p>",
     "ListPermissions": "<p>Lists the AWS RAM permissions.</p>",
     "ListPrincipals": "<p>Lists the principals that you have shared resources with or that have shared resources with you.</p>",
     "ListResourceSharePermissions": "<p>Lists the AWS RAM permissions that are associated with a resource share.</p>",
+    "ListResourceTypes": "<p>Lists the shareable resource types supported by AWS RAM.</p>",
     "ListResources": "<p>Lists the resources that you added to a resource shares or the resources that are shared with you.</p>",
     "PromoteResourceShareCreatedFromPolicy": "<p>Resource shares that were created by attaching a policy to a resource are visible only to the resource share owner, and the resource share cannot be modified in AWS RAM.</p> <p>Use this API action to promote the resource share. When you promote the resource share, it becomes:</p> <ul> <li> <p>Visible to all principals that it is shared with.</p> </li> <li> <p>Modifiable in AWS RAM.</p> </li> </ul>",
     "RejectResourceShareInvitation": "<p>Rejects an invitation to a resource share from another AWS account.</p>",
@@ -70,8 +71,10 @@
         "PromoteResourceShareCreatedFromPolicyResponse$returnValue": "<p>Indicates whether the request succeeded.</p>",
         "ResourceShare$allowExternalPrincipals": "<p>Indicates whether principals outside your AWS organization can be associated with a resource share.</p>",
         "ResourceShareAssociation$external": "<p>Indicates whether the principal belongs to the same AWS organization as the AWS account that owns the resource share.</p>",
-        "ResourceSharePermissionDetail$defaultVersion": "<p>The identifier for the version of the permission that is set as the default version.</p>",
-        "ResourceSharePermissionSummary$defaultVersion": "<p>The identifier for the version of the permission that is set as the default version.</p>",
+        "ResourceSharePermissionDetail$defaultVersion": "<p>Specifies whether the version of the permission is set to the default version for this permission.</p>",
+        "ResourceSharePermissionDetail$isResourceTypeDefault": "<p>Specifies whether the version of the permission is set to the default version for this resource type.</p>",
+        "ResourceSharePermissionSummary$defaultVersion": "<p>Specifies whether the version of the permission is set to the default version for this permission.</p>",
+        "ResourceSharePermissionSummary$isResourceTypeDefault": "<p>Specifies whether the version of the permission is set to the default version for this resource type.</p>",
         "UpdateResourceShareRequest$allowExternalPrincipals": "<p>Indicates whether principals outside your AWS organization can be associated with a resource share.</p>"
       }
     },
@@ -201,6 +204,7 @@
     "Integer": {
       "base": null,
       "refs": {
+        "AssociateResourceSharePermissionRequest$permissionVersion": "<p>The version of the AWS RAM permissions to associate with the resource share.</p>",
         "GetPermissionRequest$permissionVersion": "<p>The identifier for the version of the permission.</p>"
       }
     },
@@ -274,6 +278,16 @@
       "refs": {
       }
     },
+    "ListResourceTypesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListResourceTypesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListResourcesRequest": {
       "base": null,
       "refs": {
@@ -300,6 +314,7 @@
         "ListPermissionsRequest$maxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "ListPrincipalsRequest$maxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "ListResourceSharePermissionsRequest$maxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
+        "ListResourceTypesRequest$maxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>",
         "ListResourcesRequest$maxResults": "<p>The maximum number of results to return with a single call. To retrieve the remaining results, make another call with the returned <code>nextToken</code> value.</p>"
       }
     },
@@ -340,7 +355,7 @@
     "PrincipalArnOrIdList": {
       "base": null,
       "refs": {
-        "AssociateResourceShareRequest$principals": "<p>The principals.</p>",
+        "AssociateResourceShareRequest$principals": "<p>The principals to associate with the resource share. The possible values are IDs of AWS accounts, and the ARNs of organizational units (OU) or organizations from AWS Organizations.</p>",
         "CreateResourceShareRequest$principals": "<p>The principals to associate with the resource share. The possible values are IDs of AWS accounts, the ARN of an OU or organization from AWS Organizations.</p>",
         "DisassociateResourceShareRequest$principals": "<p>The principals.</p>",
         "ListPrincipalsRequest$principals": "<p>The principals.</p>"
@@ -421,7 +436,7 @@
       "refs": {
         "GetResourceShareAssociationsRequest$resourceShareArns": "<p>The Amazon Resource Names (ARN) of the resource shares.</p>",
         "GetResourceShareInvitationsRequest$resourceShareArns": "<p>The Amazon Resource Names (ARN) of the resource shares.</p>",
-        "GetResourceSharesRequest$resourceShareArns": "<p>The Amazon Resource Names (ARN) of the resource shares.</p>",
+        "GetResourceSharesRequest$resourceShareArns": "<p>The ARNs of the resource shares.</p>",
         "ListPrincipalsRequest$resourceShareArns": "<p>The Amazon Resource Names (ARN) of the resource shares.</p>",
         "ListResourcesRequest$resourceShareArns": "<p>The Amazon Resource Names (ARN) of the resource shares.</p>"
       }
@@ -555,6 +570,18 @@
       "refs": {
       }
     },
+    "ServiceNameAndResourceType": {
+      "base": "<p>Information about the shareable resource types and the AWS services to which they belong.</p>",
+      "refs": {
+        "ServiceNameAndResourceTypeList$member": null
+      }
+    },
+    "ServiceNameAndResourceTypeList": {
+      "base": null,
+      "refs": {
+        "ListResourceTypesResponse$resourceTypes": "<p>The shareable resource types supported by AWS RAM.</p>"
+      }
+    },
     "ServiceUnavailableException": {
       "base": "<p>The service is not available.</p>",
       "refs": {
@@ -567,7 +594,7 @@
         "AcceptResourceShareInvitationRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "AcceptResourceShareInvitationResponse$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "AssociateResourceSharePermissionRequest$resourceShareArn": "<p>The Amazon Resource Name (ARN) of the resource share.</p>",
-        "AssociateResourceSharePermissionRequest$permissionArn": "<p>The ARN of the AWS RAM permission to associate with the resource share.</p>",
+        "AssociateResourceSharePermissionRequest$permissionArn": "<p>The Amazon Resource Name (ARN) of the AWS RAM permissions to associate with the resource share.</p>",
         "AssociateResourceSharePermissionRequest$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "AssociateResourceSharePermissionResponse$clientToken": "<p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request.</p>",
         "AssociateResourceShareRequest$resourceShareArn": "<p>The Amazon Resource Name (ARN) of the resource share.</p>",
@@ -598,6 +625,7 @@
         "GetResourceShareInvitationsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "GetResourceSharesRequest$name": "<p>The name of the resource share.</p>",
         "GetResourceSharesRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "GetResourceSharesRequest$permissionArn": "<p>The Amazon Resource Name (ARN) of the AWS RAM permission that is associated with the resource share.</p>",
         "GetResourceSharesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "IdempotentParameterMismatchException$message": null,
         "InvalidClientTokenException$message": null,
@@ -613,14 +641,16 @@
         "ListPermissionsRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListPermissionsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListPrincipalsRequest$resourceArn": "<p>The Amazon Resource Name (ARN) of the resource.</p>",
-        "ListPrincipalsRequest$resourceType": "<p>The resource type.</p> <p>Valid values: <code>ec2:CapacityReservation</code> | <code>ec2:Subnet</code> | <code>ec2:TrafficMirrorTarget</code> | <code>ec2:TransitGateway</code> | <code>license-manager:LicenseConfiguration</code> | <code>rds:Cluster</code> | <code>route53resolver:ResolverRule</code> I <code>resource-groups:Group</code> </p>",
+        "ListPrincipalsRequest$resourceType": "<p>The resource type.</p> <p>Valid values: <code>acm-pca:CertificateAuthority</code> | <code>appmesh:Mesh</code> | <code>codebuild:Project</code> | <code>codebuild:ReportGroup</code> | <code>ec2:CapacityReservation</code> | <code>ec2:DedicatedHost</code> | <code>ec2:LocalGatewayRouteTable</code> | <code>ec2:PrefixList</code> | <code>ec2:Subnet</code> | <code>ec2:TrafficMirrorTarget</code> | <code>ec2:TransitGateway</code> | <code>imagebuilder:Component</code> | <code>imagebuilder:Image</code> | <code>imagebuilder:ImageRecipe</code> | <code>imagebuilder:ContainerRecipe</code> | <code>glue:Catalog</code> | <code>glue:Database</code> | <code>glue:Table</code> | <code>license-manager:LicenseConfiguration</code> I <code>network-firewall:FirewallPolicy</code> | <code>network-firewall:StatefulRuleGroup</code> | <code>network-firewall:StatelessRuleGroup</code> | <code>outposts:Outpost</code> | <code>resource-groups:Group</code> | <code>rds:Cluster</code> | <code>route53resolver:ResolverQueryLogConfig</code> | <code>route53resolver:ResolverRule</code> </p>",
         "ListPrincipalsRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListPrincipalsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListResourceSharePermissionsRequest$resourceShareArn": "<p>The Amazon Resource Name (ARN) of the resource share.</p>",
         "ListResourceSharePermissionsRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListResourceSharePermissionsResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
+        "ListResourceTypesRequest$nextToken": "<p>The token for the next page of results.</p>",
+        "ListResourceTypesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "ListResourcesRequest$principal": "<p>The principal.</p>",
-        "ListResourcesRequest$resourceType": "<p>The resource type.</p> <p>Valid values: <code>ec2:CapacityReservation</code> | <code>ec2:Subnet</code> | <code>ec2:TrafficMirrorTarget</code> | <code>ec2:TransitGateway</code> | <code>license-manager:LicenseConfiguration</code> | <code>rds:Cluster</code> | <code>route53resolver:ResolverRule</code> | <code>resource-groups:Group</code> </p>",
+        "ListResourcesRequest$resourceType": "<p>The resource type.</p> <p>Valid values: <code>acm-pca:CertificateAuthority</code> | <code>appmesh:Mesh</code> | <code>codebuild:Project</code> | <code>codebuild:ReportGroup</code> | <code>ec2:CapacityReservation</code> | <code>ec2:DedicatedHost</code> | <code>ec2:LocalGatewayRouteTable</code> | <code>ec2:PrefixList</code> | <code>ec2:Subnet</code> | <code>ec2:TrafficMirrorTarget</code> | <code>ec2:TransitGateway</code> | <code>imagebuilder:Component</code> | <code>imagebuilder:Image</code> | <code>imagebuilder:ImageRecipe</code> | <code>imagebuilder:ContainerRecipe</code> | <code>glue:Catalog</code> | <code>glue:Database</code> | <code>glue:Table</code> | <code>license-manager:LicenseConfiguration</code> I <code>network-firewall:FirewallPolicy</code> | <code>network-firewall:StatefulRuleGroup</code> | <code>network-firewall:StatelessRuleGroup</code> | <code>outposts:Outpost</code> | <code>resource-groups:Group</code> | <code>rds:Cluster</code> | <code>route53resolver:ResolverQueryLogConfig</code> | <code>route53resolver:ResolverRule</code> </p>",
         "ListResourcesRequest$nextToken": "<p>The token for the next page of results.</p>",
         "ListResourcesResponse$nextToken": "<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
         "MalformedArnException$message": null,
@@ -655,6 +685,7 @@
         "ResourceShareInvitation$resourceShareArn": "<p>The Amazon Resource Name (ARN) of the resource share.</p>",
         "ResourceShareInvitation$senderAccountId": "<p>The ID of the AWS account that sent the invitation.</p>",
         "ResourceShareInvitation$receiverAccountId": "<p>The ID of the AWS account that received the invitation.</p>",
+        "ResourceShareInvitation$receiverArn": "<p>The Amazon Resource Name (ARN) of the IAM user or IAM role that received the invitation.</p>",
         "ResourceShareInvitationAlreadyAcceptedException$message": null,
         "ResourceShareInvitationAlreadyRejectedException$message": null,
         "ResourceShareInvitationArnList$member": null,
@@ -672,6 +703,8 @@
         "ResourceSharePermissionSummary$resourceType": "<p>The type of resource to which the permission applies.</p>",
         "ResourceSharePermissionSummary$status": "<p>The current status of the permission.</p>",
         "ServerInternalException$message": null,
+        "ServiceNameAndResourceType$resourceType": "<p>The shareable resource types.</p>",
+        "ServiceNameAndResourceType$serviceName": "<p>The name of the AWS services to which the resources belong.</p>",
         "ServiceUnavailableException$message": null,
         "TagLimitExceededException$message": null,
         "TagPolicyViolationException$message": null,

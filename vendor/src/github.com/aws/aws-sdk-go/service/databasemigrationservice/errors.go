@@ -11,8 +11,7 @@ const (
 	// ErrCodeAccessDeniedFault for service response error code
 	// "AccessDeniedFault".
 	//
-	// AWS DMS was denied access to the endpoint. Check that the role is correctly
-	// configured.
+	// DMS was denied access to the endpoint. Check that the role is correctly configured.
 	ErrCodeAccessDeniedFault = "AccessDeniedFault"
 
 	// ErrCodeInsufficientResourceCapacityFault for service response error code
@@ -53,28 +52,34 @@ const (
 	// The specified master key (CMK) isn't enabled.
 	ErrCodeKMSDisabledFault = "KMSDisabledFault"
 
+	// ErrCodeKMSFault for service response error code
+	// "KMSFault".
+	//
+	// An Key Management Service (KMS) error is preventing access to KMS.
+	ErrCodeKMSFault = "KMSFault"
+
 	// ErrCodeKMSInvalidStateFault for service response error code
 	// "KMSInvalidStateFault".
 	//
-	// The state of the specified AWS KMS resource isn't valid for this request.
+	// The state of the specified KMS resource isn't valid for this request.
 	ErrCodeKMSInvalidStateFault = "KMSInvalidStateFault"
 
 	// ErrCodeKMSKeyNotAccessibleFault for service response error code
 	// "KMSKeyNotAccessibleFault".
 	//
-	// AWS DMS cannot access the AWS KMS key.
+	// DMS cannot access the KMS key.
 	ErrCodeKMSKeyNotAccessibleFault = "KMSKeyNotAccessibleFault"
 
 	// ErrCodeKMSNotFoundFault for service response error code
 	// "KMSNotFoundFault".
 	//
-	// The specified AWS KMS entity or resource can't be found.
+	// The specified KMS entity or resource can't be found.
 	ErrCodeKMSNotFoundFault = "KMSNotFoundFault"
 
 	// ErrCodeKMSThrottlingFault for service response error code
 	// "KMSThrottlingFault".
 	//
-	// This request triggered AWS KMS request throttling.
+	// This request triggered KMS request throttling.
 	ErrCodeKMSThrottlingFault = "KMSThrottlingFault"
 
 	// ErrCodeReplicationSubnetGroupDoesNotCoverEnoughAZs for service response error code
@@ -101,6 +106,18 @@ const (
 	//
 	// The quota for this resource quota has been exceeded.
 	ErrCodeResourceQuotaExceededFault = "ResourceQuotaExceededFault"
+
+	// ErrCodeS3AccessDeniedFault for service response error code
+	// "S3AccessDeniedFault".
+	//
+	// Insufficient privileges are preventing access to an Amazon S3 object.
+	ErrCodeS3AccessDeniedFault = "S3AccessDeniedFault"
+
+	// ErrCodeS3ResourceNotFoundFault for service response error code
+	// "S3ResourceNotFoundFault".
+	//
+	// A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+	ErrCodeS3ResourceNotFoundFault = "S3ResourceNotFoundFault"
 
 	// ErrCodeSNSInvalidTopicFault for service response error code
 	// "SNSInvalidTopicFault".
@@ -141,6 +158,7 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"InvalidSubnet":                               newErrorInvalidSubnet,
 	"KMSAccessDeniedFault":                        newErrorKMSAccessDeniedFault,
 	"KMSDisabledFault":                            newErrorKMSDisabledFault,
+	"KMSFault":                                    newErrorKMSFault,
 	"KMSInvalidStateFault":                        newErrorKMSInvalidStateFault,
 	"KMSKeyNotAccessibleFault":                    newErrorKMSKeyNotAccessibleFault,
 	"KMSNotFoundFault":                            newErrorKMSNotFoundFault,
@@ -149,6 +167,8 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"ResourceAlreadyExistsFault":                  newErrorResourceAlreadyExistsFault,
 	"ResourceNotFoundFault":                       newErrorResourceNotFoundFault,
 	"ResourceQuotaExceededFault":                  newErrorResourceQuotaExceededFault,
+	"S3AccessDeniedFault":                         newErrorS3AccessDeniedFault,
+	"S3ResourceNotFoundFault":                     newErrorS3ResourceNotFoundFault,
 	"SNSInvalidTopicFault":                        newErrorSNSInvalidTopicFault,
 	"SNSNoAuthorizationFault":                     newErrorSNSNoAuthorizationFault,
 	"StorageQuotaExceededFault":                   newErrorStorageQuotaExceededFault,

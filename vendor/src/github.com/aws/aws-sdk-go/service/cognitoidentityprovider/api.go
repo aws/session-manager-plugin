@@ -281,11 +281,11 @@ func (c *CognitoIdentityProvider) AdminConfirmSignUpRequest(input *AdminConfirmS
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
@@ -296,15 +296,15 @@ func (c *CognitoIdentityProvider) AdminConfirmSignUpRequest(input *AdminConfirmS
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * UserNotFoundException
 //   This exception is thrown when a user is not found.
@@ -383,9 +383,27 @@ func (c *CognitoIdentityProvider) AdminCreateUserRequest(input *AdminCreateUserI
 // If MessageAction is not set, the default is to send a welcome message via
 // email or phone (SMS).
 //
-// This message is based on a template that you configured in your call to or
-// . This template includes your custom sign-up instructions and placeholders
-// for user name and temporary password.
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
+// This message is based on a template that you configured in your call to create
+// or update a user pool. This template includes your custom sign-up instructions
+// and placeholders for user name and temporary password.
 //
 // Alternatively, you can call AdminCreateUser with “SUPPRESS” for the MessageAction
 // parameter, and Amazon Cognito will not send any email.
@@ -427,15 +445,15 @@ func (c *CognitoIdentityProvider) AdminCreateUserRequest(input *AdminCreateUserI
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * PreconditionNotMetException
 //   This exception is thrown when a precondition is not met.
@@ -737,7 +755,7 @@ func (c *CognitoIdentityProvider) AdminDisableProviderForUserRequest(input *Admi
 // sign-in. If the user to disable is a linked external IdP user, any link between
 // that user and an existing user is removed. The next time the external user
 // (no longer attached to the previously linked DestinationUser) signs in, they
-// must create a new user account. See .
+// must create a new user account. See AdminLinkProviderForUser (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminLinkProviderForUser.html).
 //
 // This action is enabled only for admin access and requires developer credentials.
 //
@@ -756,10 +774,11 @@ func (c *CognitoIdentityProvider) AdminDisableProviderForUserRequest(input *Admi
 // For de-linking a SAML identity, there are two scenarios. If the linked identity
 // has not yet been used to sign-in, the ProviderAttributeName and ProviderAttributeValue
 // must be the same values that were used for the SourceUser when the identities
-// were originally linked in the call. (If the linking was done with ProviderAttributeName
-// set to Cognito_Subject, the same applies here). However, if the user has
-// already signed in, the ProviderAttributeName must be Cognito_Subject and
-// ProviderAttributeValue must be the subject of the SAML assertion.
+// were originally linked using AdminLinkProviderForUser call. (If the linking
+// was done with ProviderAttributeName set to Cognito_Subject, the same applies
+// here). However, if the user has already signed in, the ProviderAttributeName
+// must be Cognito_Subject and ProviderAttributeValue must be the subject of
+// the SAML assertion.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1366,6 +1385,24 @@ func (c *CognitoIdentityProvider) AdminInitiateAuthRequest(input *AdminInitiateA
 //
 // Initiates the authentication flow, as an administrator.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Calling this action requires developer credentials.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -1396,18 +1433,18 @@ func (c *CognitoIdentityProvider) AdminInitiateAuthRequest(input *AdminInitiateA
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * InvalidUserPoolConfigurationException
 //   This exception is thrown when the user pool configuration is invalid.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * MFAMethodNotFoundException
 //   This exception is thrown when Amazon Cognito cannot find a multi-factor authentication
@@ -1510,12 +1547,12 @@ func (c *CognitoIdentityProvider) AdminLinkProviderForUserRequest(input *AdminLi
 // API links that user to a federated user identity, so that when the federated
 // user identity is used, the user signs in as the existing user account.
 //
+// The maximum number of federated identities linked to a user is 5.
+//
 // Because this API allows a user with an external federated identity to sign
 // in as an existing user in the user pool, it is critical that it only be used
 // with external identity providers and provider attributes that have been trusted
 // by the application owner.
-//
-// See also .
 //
 // This action is enabled only for admin access and requires developer credentials.
 //
@@ -1550,6 +1587,10 @@ func (c *CognitoIdentityProvider) AdminLinkProviderForUserRequest(input *AdminLi
 //   email or phone number that has already been supplied as an alias from a different
 //   account. This exception tells user that an account with this email or phone
 //   already exists.
+//
+//   * LimitExceededException
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InternalErrorException
 //   This exception is thrown when Amazon Cognito encounters an internal error.
@@ -2149,6 +2190,24 @@ func (c *CognitoIdentityProvider) AdminResetUserPasswordRequest(input *AdminRese
 // also result in sending a message to the end user with the code to change
 // their password.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Calling this action requires developer credentials.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -2169,26 +2228,26 @@ func (c *CognitoIdentityProvider) AdminResetUserPasswordRequest(input *AdminRese
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * UserNotFoundException
 //   This exception is thrown when a user is not found.
@@ -2278,6 +2337,24 @@ func (c *CognitoIdentityProvider) AdminRespondToAuthChallengeRequest(input *Admi
 //
 // Responds to an authentication challenge, as an administrator.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Calling this action requires developer credentials.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -2308,7 +2385,7 @@ func (c *CognitoIdentityProvider) AdminRespondToAuthChallengeRequest(input *Admi
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * InvalidPasswordException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
@@ -2316,11 +2393,11 @@ func (c *CognitoIdentityProvider) AdminRespondToAuthChallengeRequest(input *Admi
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
@@ -2652,7 +2729,8 @@ func (c *CognitoIdentityProvider) AdminSetUserSettingsRequest(input *AdminSetUse
 //
 // This action is no longer supported. You can use it to configure only SMS
 // MFA. You can't use it to configure TOTP software token MFA. To configure
-// either type of MFA, use the AdminSetUserMFAPreference action instead.
+// either type of MFA, use AdminSetUserMFAPreference (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminSetUserMFAPreference.html)
+// instead.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2961,6 +3039,24 @@ func (c *CognitoIdentityProvider) AdminUpdateUserAttributesRequest(input *AdminU
 // In addition to updating user attributes, this API can also be used to mark
 // phone and email as verified.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Calling this action requires developer credentials.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -2981,15 +3077,15 @@ func (c *CognitoIdentityProvider) AdminUpdateUserAttributesRequest(input *AdminU
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * AliasExistsException
 //   This exception is thrown when a user tries to confirm the account with an
@@ -3196,6 +3292,13 @@ func (c *CognitoIdentityProvider) AssociateSoftwareTokenRequest(input *Associate
 // Returns a unique generated shared secret key code for the user account. The
 // request takes an access token or a session string, but not both.
 //
+// Calling AssociateSoftwareToken immediately disassociates the existing software
+// token from the user account. If the user doesn't subsequently verify the
+// software token, their account is essentially set up to authenticate without
+// MFA. If MFA config is set to Optional at the user pool level, the user can
+// then login without MFA. However, if MFA is set to Required for the user pool,
+// the user will be asked to setup a new software token MFA during sign in.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -3204,6 +3307,9 @@ func (c *CognitoIdentityProvider) AssociateSoftwareTokenRequest(input *Associate
 // API operation AssociateSoftwareToken for usage and error information.
 //
 // Returned Error Types:
+//   * ConcurrentModificationException
+//   This exception is thrown if two or more modifications are happening concurrently.
+//
 //   * InvalidParameterException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
 //   parameter.
@@ -3320,8 +3426,8 @@ func (c *CognitoIdentityProvider) ChangePasswordRequest(input *ChangePasswordInp
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * PasswordResetRequiredException
 //   This exception is thrown when a password reset is required.
@@ -3429,7 +3535,7 @@ func (c *CognitoIdentityProvider) ConfirmDeviceRequest(input *ConfirmDeviceInput
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * UsernameExistsException
 //   This exception is thrown when Amazon Cognito encounters a user name that
@@ -3538,11 +3644,11 @@ func (c *CognitoIdentityProvider) ConfirmForgotPasswordRequest(input *ConfirmFor
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidParameterException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
@@ -3568,15 +3674,15 @@ func (c *CognitoIdentityProvider) ConfirmForgotPasswordRequest(input *ConfirmFor
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * UserNotFoundException
 //   This exception is thrown when a user is not found.
@@ -3676,11 +3782,11 @@ func (c *CognitoIdentityProvider) ConfirmSignUpRequest(input *ConfirmSignUpInput
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
@@ -3698,7 +3804,7 @@ func (c *CognitoIdentityProvider) ConfirmSignUpRequest(input *ConfirmSignUpInput
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * AliasExistsException
 //   This exception is thrown when a user tries to confirm the account with an
@@ -3711,8 +3817,8 @@ func (c *CognitoIdentityProvider) ConfirmSignUpRequest(input *ConfirmSignUpInput
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * UserNotFoundException
 //   This exception is thrown when a user is not found.
@@ -3815,8 +3921,8 @@ func (c *CognitoIdentityProvider) CreateGroupRequest(input *CreateGroupInput) (r
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
@@ -3920,8 +4026,8 @@ func (c *CognitoIdentityProvider) CreateIdentityProviderRequest(input *CreateIde
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InternalErrorException
 //   This exception is thrown when Amazon Cognito encounters an internal error.
@@ -4018,8 +4124,8 @@ func (c *CognitoIdentityProvider) CreateResourceServerRequest(input *CreateResou
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InternalErrorException
 //   This exception is thrown when Amazon Cognito encounters an internal error.
@@ -4119,8 +4225,8 @@ func (c *CognitoIdentityProvider) CreateUserImportJobRequest(input *CreateUserIm
 //   This exception is thrown when a user is not authorized.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InternalErrorException
 //   This exception is thrown when Amazon Cognito encounters an internal error.
@@ -4194,6 +4300,24 @@ func (c *CognitoIdentityProvider) CreateUserPoolRequest(input *CreateUserPoolInp
 // Creates a new Amazon Cognito user pool and sets the password policy for the
 // pool.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -4211,8 +4335,8 @@ func (c *CognitoIdentityProvider) CreateUserPoolRequest(input *CreateUserPoolInp
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InvalidSmsRoleAccessPolicyException
 //   This exception is returned when the role provided for SMS configuration does
@@ -4305,6 +4429,9 @@ func (c *CognitoIdentityProvider) CreateUserPoolClientRequest(input *CreateUserP
 //
 // Creates the user pool client.
 //
+// When you create a new user pool client, token revocation is automatically
+// enabled. For more information about revoking tokens, see RevokeToken (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html).
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -4326,8 +4453,8 @@ func (c *CognitoIdentityProvider) CreateUserPoolClientRequest(input *CreateUserP
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
@@ -4429,8 +4556,8 @@ func (c *CognitoIdentityProvider) CreateUserPoolDomainRequest(input *CreateUserP
 //   requested resource.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InternalErrorException
 //   This exception is thrown when Amazon Cognito encounters an internal error.
@@ -4502,7 +4629,7 @@ func (c *CognitoIdentityProvider) DeleteGroupRequest(input *DeleteGroupInput) (r
 
 // DeleteGroup API operation for Amazon Cognito Identity Provider.
 //
-// Deletes a group. Currently only groups with no members can be deleted.
+// Deletes a group.
 //
 // Calling this action requires developer credentials.
 //
@@ -6058,11 +6185,31 @@ func (c *CognitoIdentityProvider) ForgotPasswordRequest(input *ForgotPasswordInp
 //
 // Calling this API causes a message to be sent to the end user with a confirmation
 // code that is required to change the user's password. For the Username parameter,
-// you can use the username or user alias. If a verified phone number exists
-// for the user, the confirmation code is sent to the phone number. Otherwise,
-// if a verified email exists, the confirmation code is sent to the email. If
-// neither a verified phone number nor a verified email exists, InvalidParameterException
-// is thrown. To use the confirmation code for resetting the password, call .
+// you can use the username or user alias. The method used to send the confirmation
+// code is sent according to the specified AccountRecoverySetting. For more
+// information, see Recovering User Accounts (https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-recover-a-user-account.html)
+// in the Amazon Cognito Developer Guide. If neither a verified phone number
+// nor a verified email exists, an InvalidParameterException is thrown. To use
+// the confirmation code for resetting the password, call ConfirmForgotPassword
+// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_ConfirmForgotPassword.html).
+//
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6082,26 +6229,26 @@ func (c *CognitoIdentityProvider) ForgotPasswordRequest(input *ForgotPasswordInp
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InvalidSmsRoleAccessPolicyException
 //   This exception is returned when the role provided for SMS configuration does
@@ -6877,6 +7024,24 @@ func (c *CognitoIdentityProvider) GetUserAttributeVerificationCodeRequest(input 
 //
 // Gets the user attribute verification code for the specified attribute name.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -6902,15 +7067,15 @@ func (c *CognitoIdentityProvider) GetUserAttributeVerificationCodeRequest(input 
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * InvalidSmsRoleAccessPolicyException
 //   This exception is returned when the role provided for SMS configuration does
@@ -6930,8 +7095,8 @@ func (c *CognitoIdentityProvider) GetUserAttributeVerificationCodeRequest(input 
 //   This exception is thrown when a verification code fails to deliver successfully.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * PasswordResetRequiredException
 //   This exception is thrown when a password reset is required.
@@ -7203,12 +7368,31 @@ func (c *CognitoIdentityProvider) InitiateAuthRequest(input *InitiateAuthInput) 
 
 	output = &InitiateAuthOutput{}
 	req = c.newRequest(op, input, output)
+	req.Config.Credentials = credentials.AnonymousCredentials
 	return
 }
 
 // InitiateAuth API operation for Amazon Cognito Identity Provider.
 //
 // Initiates the authentication flow.
+//
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7235,18 +7419,18 @@ func (c *CognitoIdentityProvider) InitiateAuthRequest(input *InitiateAuthInput) 
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * InvalidUserPoolConfigurationException
 //   This exception is thrown when the user pool configuration is invalid.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * PasswordResetRequiredException
 //   This exception is thrown when a password reset is required.
@@ -8252,7 +8436,7 @@ func (c *CognitoIdentityProvider) ListUserPoolsRequest(input *ListUserPoolsInput
 
 // ListUserPools API operation for Amazon Cognito Identity Provider.
 //
-// Lists the user pools associated with an AWS account.
+// Lists the user pools associated with an account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8704,6 +8888,24 @@ func (c *CognitoIdentityProvider) ResendConfirmationCodeRequest(input *ResendCon
 // Resends the confirmation (for confirmation of registration) to a specific
 // user in the user pool.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -8722,26 +8924,26 @@ func (c *CognitoIdentityProvider) ResendConfirmationCodeRequest(input *ResendCon
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * InvalidSmsRoleAccessPolicyException
 //   This exception is returned when the role provided for SMS configuration does
@@ -8827,12 +9029,31 @@ func (c *CognitoIdentityProvider) RespondToAuthChallengeRequest(input *RespondTo
 
 	output = &RespondToAuthChallengeOutput{}
 	req = c.newRequest(op, input, output)
+	req.Config.Credentials = credentials.AnonymousCredentials
 	return
 }
 
 // RespondToAuthChallenge API operation for Amazon Cognito Identity Provider.
 //
 // Responds to the authentication challenge.
+//
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8862,11 +9083,11 @@ func (c *CognitoIdentityProvider) RespondToAuthChallengeRequest(input *RespondTo
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidPasswordException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
@@ -8874,7 +9095,7 @@ func (c *CognitoIdentityProvider) RespondToAuthChallengeRequest(input *RespondTo
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
@@ -8941,6 +9162,107 @@ func (c *CognitoIdentityProvider) RespondToAuthChallengeWithContext(ctx aws.Cont
 	return out, req.Send()
 }
 
+const opRevokeToken = "RevokeToken"
+
+// RevokeTokenRequest generates a "aws/request.Request" representing the
+// client's request for the RevokeToken operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See RevokeToken for more information on using the RevokeToken
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the RevokeTokenRequest method.
+//    req, resp := client.RevokeTokenRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/RevokeToken
+func (c *CognitoIdentityProvider) RevokeTokenRequest(input *RevokeTokenInput) (req *request.Request, output *RevokeTokenOutput) {
+	op := &request.Operation{
+		Name:       opRevokeToken,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &RevokeTokenInput{}
+	}
+
+	output = &RevokeTokenOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// RevokeToken API operation for Amazon Cognito Identity Provider.
+//
+// Revokes all of the access tokens generated by the specified refresh token.
+// After the token is revoked, you can not use the revoked token to access Cognito
+// authenticated APIs.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Cognito Identity Provider's
+// API operation RevokeToken for usage and error information.
+//
+// Returned Error Types:
+//   * TooManyRequestsException
+//   This exception is thrown when the user has made too many requests for a given
+//   operation.
+//
+//   * InternalErrorException
+//   This exception is thrown when Amazon Cognito encounters an internal error.
+//
+//   * UnauthorizedException
+//   This exception is thrown when the request is not authorized. This can happen
+//   due to an invalid access token in the request.
+//
+//   * InvalidParameterException
+//   This exception is thrown when the Amazon Cognito service encounters an invalid
+//   parameter.
+//
+//   * UnsupportedOperationException
+//   This exception is thrown when you attempt to perform an operation that is
+//   not enabled for the user pool client.
+//
+//   * UnsupportedTokenTypeException
+//   This exception is thrown when an unsupported token is passed to an operation.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cognito-idp-2016-04-18/RevokeToken
+func (c *CognitoIdentityProvider) RevokeToken(input *RevokeTokenInput) (*RevokeTokenOutput, error) {
+	req, out := c.RevokeTokenRequest(input)
+	return out, req.Send()
+}
+
+// RevokeTokenWithContext is the same as RevokeToken with the addition of
+// the ability to pass a context and additional request options.
+//
+// See RevokeToken for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CognitoIdentityProvider) RevokeTokenWithContext(ctx aws.Context, input *RevokeTokenInput, opts ...request.Option) (*RevokeTokenOutput, error) {
+	req, out := c.RevokeTokenRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opSetRiskConfiguration = "SetRiskConfiguration"
 
 // SetRiskConfigurationRequest generates a "aws/request.Request" representing the
@@ -8990,8 +9312,6 @@ func (c *CognitoIdentityProvider) SetRiskConfigurationRequest(input *SetRiskConf
 //
 // To enable Amazon Cognito advanced security features, update the user pool
 // to include the UserPoolAddOns keyAdvancedSecurityMode.
-//
-// See .
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9206,7 +9526,11 @@ func (c *CognitoIdentityProvider) SetUserMFAPreferenceRequest(input *SetUserMFAP
 // be set as preferred. The preferred MFA factor will be used to authenticate
 // a user if multiple factors are enabled. If multiple options are enabled and
 // no preference is set, a challenge to choose an MFA option will be returned
-// during sign in.
+// during sign in. If an MFA type is enabled for a user, the user will be prompted
+// for MFA during all sign in attempts, unless device tracking is turned on
+// and the device has been trusted. If you would like MFA to be applied selectively
+// based on the assessed risk level of sign in attempts, disable MFA for users
+// and turn on Adaptive Authentication for the user pool.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9306,6 +9630,24 @@ func (c *CognitoIdentityProvider) SetUserPoolMfaConfigRequest(input *SetUserPool
 // SetUserPoolMfaConfig API operation for Amazon Cognito Identity Provider.
 //
 // Set the user pool multi-factor authentication (MFA) configuration.
+//
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9413,7 +9755,8 @@ func (c *CognitoIdentityProvider) SetUserSettingsRequest(input *SetUserSettingsI
 //
 // This action is no longer supported. You can use it to configure only SMS
 // MFA. You can't use it to configure TOTP software token MFA. To configure
-// either type of MFA, use the SetUserMFAPreference action instead.
+// either type of MFA, use SetUserMFAPreference (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SetUserMFAPreference.html)
+// instead.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9516,6 +9859,24 @@ func (c *CognitoIdentityProvider) SignUpRequest(input *SignUpInput) (req *reques
 // Registers the user in the specified user pool and creates a user name, password,
 // and user attributes.
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -9534,11 +9895,11 @@ func (c *CognitoIdentityProvider) SignUpRequest(input *SignUpInput) (req *reques
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * NotAuthorizedException
 //   This exception is thrown when a user is not authorized.
@@ -9549,7 +9910,7 @@ func (c *CognitoIdentityProvider) SignUpRequest(input *SignUpInput) (req *reques
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * UsernameExistsException
 //   This exception is thrown when Amazon Cognito encounters a user name that
@@ -10261,9 +10622,6 @@ func (c *CognitoIdentityProvider) UpdateGroupRequest(input *UpdateGroupInput) (r
 //
 // Calling this action requires developer credentials.
 //
-// If you don't provide a value for an attribute, it will be set to the default
-// value.
-//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -10553,6 +10911,24 @@ func (c *CognitoIdentityProvider) UpdateUserAttributesRequest(input *UpdateUserA
 //
 // Allows a user to update a specific attribute (one at a time).
 //
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -10581,15 +10957,15 @@ func (c *CognitoIdentityProvider) UpdateUserAttributesRequest(input *UpdateUserA
 //
 //   * UnexpectedLambdaException
 //   This exception is thrown when the Amazon Cognito service encounters an unexpected
-//   exception with the AWS Lambda service.
+//   exception with the Lambda service.
 //
 //   * UserLambdaValidationException
 //   This exception is thrown when the Amazon Cognito service encounters a user
-//   validation exception with the AWS Lambda service.
+//   validation exception with the Lambda service.
 //
 //   * InvalidLambdaResponseException
 //   This exception is thrown when the Amazon Cognito service encounters an invalid
-//   AWS Lambda response.
+//   Lambda response.
 //
 //   * TooManyRequestsException
 //   This exception is thrown when the user has made too many requests for a given
@@ -10698,10 +11074,27 @@ func (c *CognitoIdentityProvider) UpdateUserPoolRequest(input *UpdateUserPoolInp
 // UpdateUserPool API operation for Amazon Cognito Identity Provider.
 //
 // Updates the specified user pool with the specified attributes. You can get
-// a list of the current user pool settings with .
-//
+// a list of the current user pool settings using DescribeUserPool (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_DescribeUserPool.html).
 // If you don't provide a value for an attribute, it will be set to the default
 // value.
+//
+// This action might generate an SMS text message. Starting June 1, 2021, U.S.
+// telecom carriers require that you register an origination phone number before
+// you can send SMS messages to U.S. phone numbers. If you use SMS text messages
+// in Amazon Cognito, you must register a phone number with Amazon Pinpoint
+// (https://console.aws.amazon.com/pinpoint/home/). Cognito will use the the
+// registered number automatically. Otherwise, Cognito users that must receive
+// SMS messages might be unable to sign up, activate their accounts, or sign
+// in.
+//
+// If you have never used SMS text messages with Amazon Cognito or any other
+// Amazon Web Service, Amazon SNS might place your account in SMS sandbox. In
+// sandbox mode (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox.html)
+// , you’ll have limitations, such as sending messages to only verified phone
+// numbers. After testing in the sandbox environment, you can move out of the
+// SMS sandbox and into production. For more information, see SMS message settings
+// for Cognito User Pools (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-sms-userpool-settings.html)
+// in the Amazon Cognito Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -10820,10 +11213,14 @@ func (c *CognitoIdentityProvider) UpdateUserPoolClientRequest(input *UpdateUserP
 // UpdateUserPoolClient API operation for Amazon Cognito Identity Provider.
 //
 // Updates the specified user pool app client with the specified attributes.
-// You can get a list of the current user pool app client settings with .
+// You can get a list of the current user pool app client settings using DescribeUserPoolClient
+// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_DescribeUserPoolClient.html).
 //
 // If you don't provide a value for an attribute, it will be set to the default
 // value.
+//
+// You can also use this operation to enable token revocation for user pool
+// clients. For more information about revoking tokens, see RevokeToken (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -10935,7 +11332,7 @@ func (c *CognitoIdentityProvider) UpdateUserPoolDomainRequest(input *UpdateUserP
 //
 // A custom domain is used to host the Amazon Cognito hosted UI, which provides
 // sign-up and sign-in pages for your application. When you set up a custom
-// domain, you provide a certificate that you manage with AWS Certificate Manager
+// domain, you provide a certificate that you manage with Certificate Manager
 // (ACM). When necessary, you can use this operation to change the certificate
 // that you applied to your custom domain.
 //
@@ -10948,7 +11345,7 @@ func (c *CognitoIdentityProvider) UpdateUserPoolDomainRequest(input *UpdateUserP
 // domain, you must provide this ARN to Amazon Cognito.
 //
 // When you add your new certificate in ACM, you must choose US East (N. Virginia)
-// as the AWS Region.
+// as the Region.
 //
 // After you submit your request, Amazon Cognito requires up to 1 hour to distribute
 // your new certificate to your custom domain.
@@ -11206,8 +11603,8 @@ func (c *CognitoIdentityProvider) VerifyUserAttributeRequest(input *VerifyUserAt
 //   operation.
 //
 //   * LimitExceededException
-//   This exception is thrown when a user exceeds the limit for a requested AWS
-//   resource.
+//   This exception is thrown when a user exceeds the limit for a requested Amazon
+//   Web Services resource.
 //
 //   * PasswordResetRequiredException
 //   This exception is thrown when a password reset is required.
@@ -11660,13 +12057,13 @@ type AdminConfirmSignUpInput struct {
 	// workflows that this action triggers.
 	//
 	// If your user pool configuration includes triggers, the AdminConfirmSignUp
-	// API action invokes the AWS Lambda function that is specified for the post
-	// confirmation trigger. When Amazon Cognito invokes this function, it passes
-	// a JSON payload, which the function receives as input. In this payload, the
-	// clientMetadata attribute provides the data that you assigned to the ClientMetadata
-	// parameter in your AdminConfirmSignUp request. In your function code in AWS
-	// Lambda, you can process the ClientMetadata value to enhance your workflow
-	// for your specific needs.
+	// API action invokes the Lambda function that is specified for the post confirmation
+	// trigger. When Amazon Cognito invokes this function, it passes a JSON payload,
+	// which the function receives as input. In this payload, the clientMetadata
+	// attribute provides the data that you assigned to the ClientMetadata parameter
+	// in your AdminConfirmSignUp request. In your function code in Lambda, you
+	// can process the ClientMetadata value to enhance your workflow for your specific
+	// needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -11676,9 +12073,9 @@ type AdminConfirmSignUpInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -11836,13 +12233,13 @@ type AdminCreateUserInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the AdminCreateUser API action, Amazon Cognito invokes
-	// the function that is assigned to the pre sign-up trigger. When Amazon Cognito
-	// invokes this function, it passes a JSON payload, which the function receives
-	// as input. This payload contains a clientMetadata attribute, which provides
-	// the data that you assigned to the ClientMetadata parameter in your AdminCreateUser
-	// request. In your function code in AWS Lambda, you can process the clientMetadata
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the AdminCreateUser API action, Amazon Cognito invokes the function
+	// that is assigned to the pre sign-up trigger. When Amazon Cognito invokes
+	// this function, it passes a JSON payload, which the function receives as input.
+	// This payload contains a clientMetadata attribute, which provides the data
+	// that you assigned to the ClientMetadata parameter in your AdminCreateUser
+	// request. In your function code in Lambda, you can process the clientMetadata
 	// value to enhance your workflow for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
@@ -11853,9 +12250,9 @@ type AdminCreateUserInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -11905,9 +12302,9 @@ type AdminCreateUserInput struct {
 	// An array of name-value pairs that contain user attributes and attribute values
 	// to be set for the user to be created. You can create a user without specifying
 	// any attributes other than Username. However, any attributes that you specify
-	// as required (in or in the Attributes tab of the console) must be supplied
-	// either by you (in your call to AdminCreateUser) or by the user (when he or
-	// she signs up in response to your welcome message).
+	// as required (when creating a user pool or in the Attributes tab of the console)
+	// must be supplied either by you (in your call to AdminCreateUser) or by the
+	// user (when he or she signs up in response to your welcome message).
 	//
 	// For custom attributes, you must prepend the custom: prefix to the attribute
 	// name.
@@ -11919,7 +12316,7 @@ type AdminCreateUserInput struct {
 	//
 	// In your call to AdminCreateUser, you can set the email_verified attribute
 	// to True, and you can set the phone_number_verified attribute to True. (You
-	// can also do this by calling .)
+	// can also do this by calling AdminUpdateUserAttributes (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminUpdateUserAttributes.html).)
 	//
 	//    * email: The email address of the user to whom the message that contains
 	//    the code and username will be sent. Required if the email_verified attribute
@@ -12328,7 +12725,7 @@ func (s AdminDisableProviderForUserOutput) GoString() string {
 	return s.String()
 }
 
-// Represents the request to disable any user as an administrator.
+// Represents the request to disable the user as an administrator.
 type AdminDisableUserInput struct {
 	_ struct{} `type:"structure"`
 
@@ -12741,7 +13138,7 @@ type AdminGetUserOutput struct {
 	// This response parameter is no longer supported. It provides information only
 	// about SMS MFA configurations. It doesn't provide information about TOTP software
 	// token MFA configurations. To look up information about either type of MFA
-	// configuration, use the AdminGetUserResponse$UserMFASettingList response instead.
+	// configuration, use UserMFASettingList instead.
 	MFAOptions []*MFAOptionType `type:"list"`
 
 	// The user's preferred MFA setting.
@@ -12901,17 +13298,19 @@ type AdminInitiateAuthInput struct {
 	// that you are invoking. The required values depend on the value of AuthFlow:
 	//
 	//    * For USER_SRP_AUTH: USERNAME (required), SRP_A (required), SECRET_HASH
-	//    (required if the app client is configured with a client secret), DEVICE_KEY
+	//    (required if the app client is configured with a client secret), DEVICE_KEY.
 	//
 	//    * For REFRESH_TOKEN_AUTH/REFRESH_TOKEN: REFRESH_TOKEN (required), SECRET_HASH
-	//    (required if the app client is configured with a client secret), DEVICE_KEY
+	//    (required if the app client is configured with a client secret), DEVICE_KEY.
 	//
 	//    * For ADMIN_NO_SRP_AUTH: USERNAME (required), SECRET_HASH (if app client
-	//    is configured with client secret), PASSWORD (required), DEVICE_KEY
+	//    is configured with client secret), PASSWORD (required), DEVICE_KEY.
 	//
 	//    * For CUSTOM_AUTH: USERNAME (required), SECRET_HASH (if app client is
-	//    configured with client secret), DEVICE_KEY
-	AuthParameters map[string]*string `type:"map"`
+	//    configured with client secret), DEVICE_KEY. To start the authentication
+	//    flow with password verification, include ChallengeName: SRP_A and SRP_A:
+	//    (The SRP_A Value).
+	AuthParameters map[string]*string `type:"map" sensitive:"true"`
 
 	// The app client ID.
 	//
@@ -12921,9 +13320,9 @@ type AdminInitiateAuthInput struct {
 	// A map of custom key-value pairs that you can provide as input for certain
 	// custom workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the AdminInitiateAuth API action, Amazon Cognito invokes
-	// the AWS Lambda functions that are specified for various triggers. The ClientMetadata
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the AdminInitiateAuth API action, Amazon Cognito invokes the
+	// Lambda functions that are specified for various triggers. The ClientMetadata
 	// value is passed as input to the functions for only the following triggers:
 	//
 	//    * Pre signup
@@ -12936,7 +13335,7 @@ type AdminInitiateAuthInput struct {
 	// JSON payload, which the function receives as input. This payload contains
 	// a validationData attribute, which provides the data that you assigned to
 	// the ClientMetadata parameter in your AdminInitiateAuth request. In your function
-	// code in AWS Lambda, you can process the validationData value to enhance your
+	// code in Lambda, you can process the validationData value to enhance your
 	// workflow for your specific needs.
 	//
 	// When you use the AdminInitiateAuth API action, Amazon Cognito also invokes
@@ -12963,9 +13362,9 @@ type AdminInitiateAuthInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -13108,9 +13507,18 @@ type AdminInitiateAuthOutput struct {
 	//    USERNAME and PASSWORD directly. An app client must be enabled to use this
 	//    flow.
 	//
-	//    * NEW_PASSWORD_REQUIRED: For users which are required to change their
-	//    passwords after successful first login. This challenge should be passed
-	//    with NEW_PASSWORD and any other required attributes.
+	//    * NEW_PASSWORD_REQUIRED: For users who are required to change their passwords
+	//    after successful first login. This challenge should be passed with NEW_PASSWORD
+	//    and any other required attributes.
+	//
+	//    * MFA_SETUP: For users who are required to setup an MFA factor before
+	//    they can sign-in. The MFA types enabled for the user pool will be listed
+	//    in the challenge parameters MFA_CAN_SETUP value. To setup software token
+	//    MFA, use the session returned here from InitiateAuth as an input to AssociateSoftwareToken,
+	//    and use the session returned by VerifySoftwareToken as an input to RespondToAuthChallenge
+	//    with challenge name MFA_SETUP to complete sign-in. To setup SMS MFA, users
+	//    will need help from an administrator to add a phone number to their account
+	//    and then call InitiateAuth again to restart sign-in.
 	ChallengeName *string `type:"string" enum:"ChallengeNameType"`
 
 	// The challenge parameters. These are returned to you in the AdminInitiateAuth
@@ -13721,15 +14129,15 @@ type AdminResetUserPasswordInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the AdminResetUserPassword API action, Amazon Cognito
-	// invokes the function that is assigned to the custom message trigger. When
-	// Amazon Cognito invokes this function, it passes a JSON payload, which the
-	// function receives as input. This payload contains a clientMetadata attribute,
-	// which provides the data that you assigned to the ClientMetadata parameter
-	// in your AdminResetUserPassword request. In your function code in AWS Lambda,
-	// you can process the clientMetadata value to enhance your workflow for your
-	// specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the AdminResetUserPassword API action, Amazon Cognito invokes
+	// the function that is assigned to the custom message trigger. When Amazon
+	// Cognito invokes this function, it passes a JSON payload, which the function
+	// receives as input. This payload contains a clientMetadata attribute, which
+	// provides the data that you assigned to the ClientMetadata parameter in your
+	// AdminResetUserPassword request. In your function code in Lambda, you can
+	// process the clientMetadata value to enhance your workflow for your specific
+	// needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -13739,9 +14147,9 @@ type AdminResetUserPasswordInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -13833,7 +14241,7 @@ type AdminRespondToAuthChallengeInput struct {
 	// calls.
 	AnalyticsMetadata *AnalyticsMetadataType `type:"structure"`
 
-	// The challenge name. For more information, see .
+	// The challenge name. For more information, see AdminInitiateAuth (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html).
 	//
 	// ChallengeName is a required field
 	ChallengeName *string `type:"string" required:"true" enum:"ChallengeNameType"`
@@ -13854,6 +14262,9 @@ type AdminRespondToAuthChallengeInput struct {
 	//    * NEW_PASSWORD_REQUIRED: NEW_PASSWORD, any other required attributes,
 	//    USERNAME, SECRET_HASH (if app client is configured with client secret).
 	//
+	//    * MFA_SETUP requires USERNAME, plus you need to use the session value
+	//    returned by VerifySoftwareToken in the Session parameter.
+	//
 	// The value of the USERNAME attribute must be the user's actual username, not
 	// an alias (such as email address or phone number). To make this easier, the
 	// AdminInitiateAuth response includes the actual username value in the USERNAMEUSER_ID_FOR_SRP
@@ -13868,17 +14279,17 @@ type AdminRespondToAuthChallengeInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the AdminRespondToAuthChallenge API action, Amazon
-	// Cognito invokes any functions that are assigned to the following triggers:
-	// pre sign-up, custom message, post authentication, user migration, pre token
-	// generation, define auth challenge, create auth challenge, and verify auth
-	// challenge response. When Amazon Cognito invokes any of these functions, it
-	// passes a JSON payload, which the function receives as input. This payload
-	// contains a clientMetadata attribute, which provides the data that you assigned
-	// to the ClientMetadata parameter in your AdminRespondToAuthChallenge request.
-	// In your function code in AWS Lambda, you can process the clientMetadata value
-	// to enhance your workflow for your specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the AdminRespondToAuthChallenge API action, Amazon Cognito invokes
+	// any functions that are assigned to the following triggers: pre sign-up, custom
+	// message, post authentication, user migration, pre token generation, define
+	// auth challenge, create auth challenge, and verify auth challenge response.
+	// When Amazon Cognito invokes any of these functions, it passes a JSON payload,
+	// which the function receives as input. This payload contains a clientMetadata
+	// attribute, which provides the data that you assigned to the ClientMetadata
+	// parameter in your AdminRespondToAuthChallenge request. In your function code
+	// in Lambda, you can process the clientMetadata value to enhance your workflow
+	// for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -13888,9 +14299,9 @@ type AdminRespondToAuthChallengeInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -14014,17 +14425,16 @@ type AdminRespondToAuthChallengeOutput struct {
 	// The result returned by the server in response to the authentication request.
 	AuthenticationResult *AuthenticationResultType `type:"structure"`
 
-	// The name of the challenge. For more information, see .
+	// The name of the challenge. For more information, see AdminInitiateAuth (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html).
 	ChallengeName *string `type:"string" enum:"ChallengeNameType"`
 
-	// The challenge parameters. For more information, see .
+	// The challenge parameters. For more information, see AdminInitiateAuth (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminInitiateAuth.html).
 	ChallengeParameters map[string]*string `type:"map"`
 
 	// The session which should be passed both ways in challenge-response calls
-	// to the service. If the or API call determines that the caller needs to go
-	// through another challenge, they return a session with other challenge parameters.
-	// This session should be passed as it is to the next RespondToAuthChallenge
-	// API call.
+	// to the service. If the caller needs to go through another challenge, they
+	// return a session with other challenge parameters. This session should be
+	// passed as it is to the next RespondToAuthChallenge API call.
 	Session *string `min:"20" type:"string"`
 }
 
@@ -14561,15 +14971,15 @@ type AdminUpdateUserAttributesInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the AdminUpdateUserAttributes API action, Amazon Cognito
-	// invokes the function that is assigned to the custom message trigger. When
-	// Amazon Cognito invokes this function, it passes a JSON payload, which the
-	// function receives as input. This payload contains a clientMetadata attribute,
-	// which provides the data that you assigned to the ClientMetadata parameter
-	// in your AdminUpdateUserAttributes request. In your function code in AWS Lambda,
-	// you can process the clientMetadata value to enhance your workflow for your
-	// specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the AdminUpdateUserAttributes API action, Amazon Cognito invokes
+	// the function that is assigned to the custom message trigger. When Amazon
+	// Cognito invokes this function, it passes a JSON payload, which the function
+	// receives as input. This payload contains a clientMetadata attribute, which
+	// provides the data that you assigned to the ClientMetadata parameter in your
+	// AdminUpdateUserAttributes request. In your function code in Lambda, you can
+	// process the clientMetadata value to enhance your workflow for your specific
+	// needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -14579,9 +14989,9 @@ type AdminUpdateUserAttributesInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -14772,8 +15182,8 @@ func (s AdminUserGlobalSignOutOutput) GoString() string {
 // account. This exception tells user that an account with this email or phone
 // already exists.
 type AliasExistsException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message sent to the user when an alias exists.
 	Message_ *string `locationName:"message" type:"string"`
@@ -14791,17 +15201,17 @@ func (s AliasExistsException) GoString() string {
 
 func newErrorAliasExistsException(v protocol.ResponseMetadata) error {
 	return &AliasExistsException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s AliasExistsException) Code() string {
+func (s *AliasExistsException) Code() string {
 	return "AliasExistsException"
 }
 
 // Message returns the exception's message.
-func (s AliasExistsException) Message() string {
+func (s *AliasExistsException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -14809,44 +15219,49 @@ func (s AliasExistsException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s AliasExistsException) OrigErr() error {
+func (s *AliasExistsException) OrigErr() error {
 	return nil
 }
 
-func (s AliasExistsException) Error() string {
+func (s *AliasExistsException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s AliasExistsException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *AliasExistsException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s AliasExistsException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *AliasExistsException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The Amazon Pinpoint analytics configuration for collecting metrics for a
 // user pool.
+//
+// In regions where Pinpoint is not available, Cognito User Pools only supports
+// sending events to Amazon Pinpoint projects in us-east-1. In regions where
+// Pinpoint is available, Cognito User Pools will support sending events to
+// Amazon Pinpoint projects within that same region.
 type AnalyticsConfigurationType struct {
 	_ struct{} `type:"structure"`
 
+	// The Amazon Resource Name (ARN) of an Amazon Pinpoint project. You can use
+	// the Amazon Pinpoint project for Pinpoint integration with the chosen User
+	// Pool Client. Amazon Cognito publishes events to the pinpoint project declared
+	// by the app ARN.
+	ApplicationArn *string `min:"20" type:"string"`
+
 	// The application ID for an Amazon Pinpoint application.
-	//
-	// ApplicationId is a required field
-	ApplicationId *string `type:"string" required:"true"`
+	ApplicationId *string `type:"string"`
 
 	// The external ID.
-	//
-	// ExternalId is a required field
-	ExternalId *string `type:"string" required:"true"`
+	ExternalId *string `type:"string"`
 
 	// The ARN of an IAM role that authorizes Amazon Cognito to publish events to
 	// Amazon Pinpoint analytics.
-	//
-	// RoleArn is a required field
-	RoleArn *string `min:"20" type:"string" required:"true"`
+	RoleArn *string `min:"20" type:"string"`
 
 	// If UserDataShared is true, Amazon Cognito will include user data in the events
 	// it publishes to Amazon Pinpoint analytics.
@@ -14866,14 +15281,8 @@ func (s AnalyticsConfigurationType) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AnalyticsConfigurationType) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AnalyticsConfigurationType"}
-	if s.ApplicationId == nil {
-		invalidParams.Add(request.NewErrParamRequired("ApplicationId"))
-	}
-	if s.ExternalId == nil {
-		invalidParams.Add(request.NewErrParamRequired("ExternalId"))
-	}
-	if s.RoleArn == nil {
-		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
+	if s.ApplicationArn != nil && len(*s.ApplicationArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("ApplicationArn", 20))
 	}
 	if s.RoleArn != nil && len(*s.RoleArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("RoleArn", 20))
@@ -14883,6 +15292,12 @@ func (s *AnalyticsConfigurationType) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetApplicationArn sets the ApplicationArn field's value.
+func (s *AnalyticsConfigurationType) SetApplicationArn(v string) *AnalyticsConfigurationType {
+	s.ApplicationArn = &v
+	return s
 }
 
 // SetApplicationId sets the ApplicationId field's value.
@@ -14913,6 +15328,10 @@ func (s *AnalyticsConfigurationType) SetUserDataShared(v bool) *AnalyticsConfigu
 //
 // An endpoint uniquely identifies a mobile device, email address, or phone
 // number that can receive messages from Amazon Pinpoint analytics.
+//
+// Cognito User Pools only supports sending events to Amazon Pinpoint projects
+// in the US East (N. Virginia) us-east-1 Region, regardless of the region in
+// which the user pool resides.
 type AnalyticsMetadataType struct {
 	_ struct{} `type:"structure"`
 
@@ -15392,8 +15811,8 @@ func (s *CodeDeliveryDetailsType) SetDestination(v string) *CodeDeliveryDetailsT
 
 // This exception is thrown when a verification code fails to deliver successfully.
 type CodeDeliveryFailureException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message sent when a verification code fails to deliver successfully.
 	Message_ *string `locationName:"message" type:"string"`
@@ -15411,17 +15830,17 @@ func (s CodeDeliveryFailureException) GoString() string {
 
 func newErrorCodeDeliveryFailureException(v protocol.ResponseMetadata) error {
 	return &CodeDeliveryFailureException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s CodeDeliveryFailureException) Code() string {
+func (s *CodeDeliveryFailureException) Code() string {
 	return "CodeDeliveryFailureException"
 }
 
 // Message returns the exception's message.
-func (s CodeDeliveryFailureException) Message() string {
+func (s *CodeDeliveryFailureException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -15429,29 +15848,29 @@ func (s CodeDeliveryFailureException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s CodeDeliveryFailureException) OrigErr() error {
+func (s *CodeDeliveryFailureException) OrigErr() error {
 	return nil
 }
 
-func (s CodeDeliveryFailureException) Error() string {
+func (s *CodeDeliveryFailureException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s CodeDeliveryFailureException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *CodeDeliveryFailureException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s CodeDeliveryFailureException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *CodeDeliveryFailureException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown if the provided code does not match what the server
 // was expecting.
 type CodeMismatchException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message provided when the code mismatch exception is thrown.
 	Message_ *string `locationName:"message" type:"string"`
@@ -15469,17 +15888,17 @@ func (s CodeMismatchException) GoString() string {
 
 func newErrorCodeMismatchException(v protocol.ResponseMetadata) error {
 	return &CodeMismatchException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s CodeMismatchException) Code() string {
+func (s *CodeMismatchException) Code() string {
 	return "CodeMismatchException"
 }
 
 // Message returns the exception's message.
-func (s CodeMismatchException) Message() string {
+func (s *CodeMismatchException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -15487,22 +15906,22 @@ func (s CodeMismatchException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s CodeMismatchException) OrigErr() error {
+func (s *CodeMismatchException) OrigErr() error {
 	return nil
 }
 
-func (s CodeMismatchException) Error() string {
+func (s *CodeMismatchException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s CodeMismatchException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *CodeMismatchException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s CodeMismatchException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *CodeMismatchException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The compromised credentials actions type
@@ -15600,8 +16019,8 @@ func (s *CompromisedCredentialsRiskConfigurationType) SetEventFilter(v []*string
 
 // This exception is thrown if two or more modifications are happening concurrently.
 type ConcurrentModificationException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message provided when the concurrent exception is thrown.
 	Message_ *string `locationName:"message" type:"string"`
@@ -15619,17 +16038,17 @@ func (s ConcurrentModificationException) GoString() string {
 
 func newErrorConcurrentModificationException(v protocol.ResponseMetadata) error {
 	return &ConcurrentModificationException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ConcurrentModificationException) Code() string {
+func (s *ConcurrentModificationException) Code() string {
 	return "ConcurrentModificationException"
 }
 
 // Message returns the exception's message.
-func (s ConcurrentModificationException) Message() string {
+func (s *ConcurrentModificationException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -15637,22 +16056,22 @@ func (s ConcurrentModificationException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ConcurrentModificationException) OrigErr() error {
+func (s *ConcurrentModificationException) OrigErr() error {
 	return nil
 }
 
-func (s ConcurrentModificationException) Error() string {
+func (s *ConcurrentModificationException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ConcurrentModificationException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ConcurrentModificationException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ConcurrentModificationException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ConcurrentModificationException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Confirms the device request.
@@ -15773,15 +16192,14 @@ type ConfirmForgotPasswordInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the ConfirmForgotPassword API action, Amazon Cognito
-	// invokes the function that is assigned to the post confirmation trigger. When
-	// Amazon Cognito invokes this function, it passes a JSON payload, which the
-	// function receives as input. This payload contains a clientMetadata attribute,
-	// which provides the data that you assigned to the ClientMetadata parameter
-	// in your ConfirmForgotPassword request. In your function code in AWS Lambda,
-	// you can process the clientMetadata value to enhance your workflow for your
-	// specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the ConfirmForgotPassword API action, Amazon Cognito invokes
+	// the function that is assigned to the post confirmation trigger. When Amazon
+	// Cognito invokes this function, it passes a JSON payload, which the function
+	// receives as input. This payload contains a clientMetadata attribute, which
+	// provides the data that you assigned to the ClientMetadata parameter in your
+	// ConfirmForgotPassword request. In your function code in Lambda, you can process
+	// the clientMetadata value to enhance your workflow for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -15791,9 +16209,9 @@ type ConfirmForgotPasswordInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -15802,7 +16220,7 @@ type ConfirmForgotPasswordInput struct {
 	ClientMetadata map[string]*string `type:"map"`
 
 	// The confirmation code sent by a user's request to retrieve a forgotten password.
-	// For more information, see
+	// For more information, see ForgotPassword (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_ForgotPassword.html).
 	//
 	// ConfirmationCode is a required field
 	ConfirmationCode *string `min:"1" type:"string" required:"true"`
@@ -15955,14 +16373,14 @@ type ConfirmSignUpInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the ConfirmSignUp API action, Amazon Cognito invokes
-	// the function that is assigned to the post confirmation trigger. When Amazon
-	// Cognito invokes this function, it passes a JSON payload, which the function
-	// receives as input. This payload contains a clientMetadata attribute, which
-	// provides the data that you assigned to the ClientMetadata parameter in your
-	// ConfirmSignUp request. In your function code in AWS Lambda, you can process
-	// the clientMetadata value to enhance your workflow for your specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the ConfirmSignUp API action, Amazon Cognito invokes the function
+	// that is assigned to the post confirmation trigger. When Amazon Cognito invokes
+	// this function, it passes a JSON payload, which the function receives as input.
+	// This payload contains a clientMetadata attribute, which provides the data
+	// that you assigned to the ClientMetadata parameter in your ConfirmSignUp request.
+	// In your function code in Lambda, you can process the clientMetadata value
+	// to enhance your workflow for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -15972,9 +16390,9 @@ type ConfirmSignUpInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -16344,8 +16762,9 @@ type CreateIdentityProviderInput struct {
 	// The identity provider details. The following list describes the provider
 	// detail keys for each identity provider type.
 	//
-	//    * For Google, Facebook and Login with Amazon: client_id client_secret
-	//    authorize_scopes
+	//    * For Google and Login with Amazon: client_id client_secret authorize_scopes
+	//
+	//    * For Facebook: client_id client_secret authorize_scopes api_version
 	//
 	//    * For Sign in with Apple: client_id team_id key_id private_key authorize_scopes
 	//
@@ -16354,9 +16773,9 @@ type CreateIdentityProviderInput struct {
 	//    URL specified by oidc_issuer key token_url if not available from discovery
 	//    URL specified by oidc_issuer key attributes_url if not available from
 	//    discovery URL specified by oidc_issuer key jwks_uri if not available from
-	//    discovery URL specified by oidc_issuer key authorize_scopes
+	//    discovery URL specified by oidc_issuer key
 	//
-	//    * For SAML providers: MetadataFile OR MetadataURL IDPSignOut optional
+	//    * For SAML providers: MetadataFile OR MetadataURL IDPSignout optional
 	//
 	// ProviderDetails is a required field
 	ProviderDetails map[string]*string `type:"map" required:"true"`
@@ -16701,6 +17120,11 @@ func (s *CreateUserImportJobOutput) SetUserImportJob(v *UserImportJobType) *Crea
 type CreateUserPoolClientInput struct {
 	_ struct{} `type:"structure"`
 
+	// The time limit, between 5 minutes and 1 day, after which the access token
+	// is no longer valid and cannot be used. This value will be overridden if you
+	// have entered a value in TokenValidityUnits.
+	AccessTokenValidity *int64 `min:"1" type:"integer"`
+
 	// The allowed OAuth flows.
 	//
 	// Set to code to initiate a code grant flow, which provides an authorization
@@ -16720,12 +17144,18 @@ type CreateUserPoolClientInput struct {
 	AllowedOAuthFlowsUserPoolClient *bool `type:"boolean"`
 
 	// The allowed OAuth scopes. Possible values provided by OAuth are: phone, email,
-	// openid, and profile. Possible values provided by AWS are: aws.cognito.signin.user.admin.
-	// Custom scopes created in Resource Servers are also supported.
+	// openid, and profile. Possible values provided by Amazon Web Services are:
+	// aws.cognito.signin.user.admin. Custom scopes created in Resource Servers
+	// are also supported.
 	AllowedOAuthScopes []*string `type:"list"`
 
 	// The Amazon Pinpoint analytics configuration for collecting metrics for this
 	// user pool.
+	//
+	// In regions where Pinpoint is not available, Cognito User Pools only supports
+	// sending events to Amazon Pinpoint projects in us-east-1. In regions where
+	// Pinpoint is available, Cognito User Pools will support sending events to
+	// Amazon Pinpoint projects within that same region.
 	AnalyticsConfiguration *AnalyticsConfigurationType `type:"structure"`
 
 	// A list of allowed redirect (callback) URLs for the identity providers.
@@ -16769,6 +17199,13 @@ type CreateUserPoolClientInput struct {
 	// App callback URLs such as myapp://example are also supported.
 	DefaultRedirectURI *string `min:"1" type:"string"`
 
+	// Enables or disables token revocation. For more information about revoking
+	// tokens, see RevokeToken (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html).
+	//
+	// If you don't include this parameter, token revocation is automatically enabled
+	// for the new user pool client.
+	EnableTokenRevocation *bool `type:"boolean"`
+
 	// The authentication flows that are supported by the user pool clients. Flow
 	// names without the ALLOW_ prefix are deprecated in favor of new names with
 	// the ALLOW_ prefix. Note that values with ALLOW_ prefix cannot be used along
@@ -16797,6 +17234,11 @@ type CreateUserPoolClientInput struct {
 	// client being created.
 	GenerateSecret *bool `type:"boolean"`
 
+	// The time limit, between 5 minutes and 1 day, after which the ID token is
+	// no longer valid and cannot be used. This value will be overridden if you
+	// have entered a value in TokenValidityUnits.
+	IdTokenValidity *int64 `min:"1" type:"integer"`
+
 	// A list of allowed logout URLs for the identity providers.
 	LogoutURLs []*string `type:"list"`
 
@@ -16816,24 +17258,6 @@ type CreateUserPoolClientInput struct {
 	//    * LEGACY - This represents the old behavior of Cognito where user existence
 	//    related errors are not prevented.
 	//
-	// This setting affects the behavior of following APIs:
-	//
-	//    * AdminInitiateAuth
-	//
-	//    * AdminRespondToAuthChallenge
-	//
-	//    * InitiateAuth
-	//
-	//    * RespondToAuthChallenge
-	//
-	//    * ForgotPassword
-	//
-	//    * ConfirmForgotPassword
-	//
-	//    * ConfirmSignUp
-	//
-	//    * ResendConfirmationCode
-	//
 	// After February 15th 2020, the value of PreventUserExistenceErrors will default
 	// to ENABLED for newly created user pool clients if no value is provided.
 	PreventUserExistenceErrors *string `type:"string" enum:"PreventUserExistenceErrorTypes"`
@@ -16848,6 +17272,10 @@ type CreateUserPoolClientInput struct {
 	// A list of provider names for the identity providers that are supported on
 	// this client. The following are supported: COGNITO, Facebook, Google and LoginWithAmazon.
 	SupportedIdentityProviders []*string `type:"list"`
+
+	// The units in which the validity times are represented in. Default for RefreshToken
+	// is days, and default for ID and access tokens are hours.
+	TokenValidityUnits *TokenValidityUnitsType `type:"structure"`
 
 	// The user pool ID for the user pool where you want to create a user pool client.
 	//
@@ -16879,6 +17307,9 @@ func (s CreateUserPoolClientInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateUserPoolClientInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateUserPoolClientInput"}
+	if s.AccessTokenValidity != nil && *s.AccessTokenValidity < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("AccessTokenValidity", 1))
+	}
 	if s.ClientName == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClientName"))
 	}
@@ -16887,6 +17318,9 @@ func (s *CreateUserPoolClientInput) Validate() error {
 	}
 	if s.DefaultRedirectURI != nil && len(*s.DefaultRedirectURI) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DefaultRedirectURI", 1))
+	}
+	if s.IdTokenValidity != nil && *s.IdTokenValidity < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("IdTokenValidity", 1))
 	}
 	if s.UserPoolId == nil {
 		invalidParams.Add(request.NewErrParamRequired("UserPoolId"))
@@ -16904,6 +17338,12 @@ func (s *CreateUserPoolClientInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAccessTokenValidity sets the AccessTokenValidity field's value.
+func (s *CreateUserPoolClientInput) SetAccessTokenValidity(v int64) *CreateUserPoolClientInput {
+	s.AccessTokenValidity = &v
+	return s
 }
 
 // SetAllowedOAuthFlows sets the AllowedOAuthFlows field's value.
@@ -16948,6 +17388,12 @@ func (s *CreateUserPoolClientInput) SetDefaultRedirectURI(v string) *CreateUserP
 	return s
 }
 
+// SetEnableTokenRevocation sets the EnableTokenRevocation field's value.
+func (s *CreateUserPoolClientInput) SetEnableTokenRevocation(v bool) *CreateUserPoolClientInput {
+	s.EnableTokenRevocation = &v
+	return s
+}
+
 // SetExplicitAuthFlows sets the ExplicitAuthFlows field's value.
 func (s *CreateUserPoolClientInput) SetExplicitAuthFlows(v []*string) *CreateUserPoolClientInput {
 	s.ExplicitAuthFlows = v
@@ -16957,6 +17403,12 @@ func (s *CreateUserPoolClientInput) SetExplicitAuthFlows(v []*string) *CreateUse
 // SetGenerateSecret sets the GenerateSecret field's value.
 func (s *CreateUserPoolClientInput) SetGenerateSecret(v bool) *CreateUserPoolClientInput {
 	s.GenerateSecret = &v
+	return s
+}
+
+// SetIdTokenValidity sets the IdTokenValidity field's value.
+func (s *CreateUserPoolClientInput) SetIdTokenValidity(v int64) *CreateUserPoolClientInput {
+	s.IdTokenValidity = &v
 	return s
 }
 
@@ -16987,6 +17439,12 @@ func (s *CreateUserPoolClientInput) SetRefreshTokenValidity(v int64) *CreateUser
 // SetSupportedIdentityProviders sets the SupportedIdentityProviders field's value.
 func (s *CreateUserPoolClientInput) SetSupportedIdentityProviders(v []*string) *CreateUserPoolClientInput {
 	s.SupportedIdentityProviders = v
+	return s
+}
+
+// SetTokenValidityUnits sets the TokenValidityUnits field's value.
+func (s *CreateUserPoolClientInput) SetTokenValidityUnits(v *TokenValidityUnitsType) *CreateUserPoolClientInput {
+	s.TokenValidityUnits = v
 	return s
 }
 
@@ -17141,10 +17599,6 @@ type CreateUserPoolInput struct {
 	// if the user also has SMS MFA enabled. In the absence of this setting, Cognito
 	// uses the legacy behavior to determine the recovery method where SMS is preferred
 	// over email.
-	//
-	// Starting February 1, 2020, the value of AccountRecoverySetting will default
-	// to verified_email first and verified_phone_number as the second option for
-	// newly created user pools if no value is provided.
 	AccountRecoverySetting *AccountRecoverySettingType `type:"structure"`
 
 	// The configuration for AdminCreateUser requests.
@@ -17163,10 +17617,14 @@ type CreateUserPoolInput struct {
 	// The email configuration.
 	EmailConfiguration *EmailConfigurationType `type:"structure"`
 
-	// A string representing the email verification message.
+	// A string representing the email verification message. EmailVerificationMessage
+	// is allowed only if EmailSendingAccount (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailVerificationMessage *string `min:"6" type:"string"`
 
-	// A string representing the email verification subject.
+	// A string representing the email verification subject. EmailVerificationSubject
+	// is allowed only if EmailSendingAccount (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailVerificationSubject *string `min:"1" type:"string"`
 
 	// The Lambda trigger configuration information for the new user pool.
@@ -17178,7 +17636,7 @@ type CreateUserPoolInput struct {
 	// For more information on using the Lambda API to add permission, see AddPermission
 	// (https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html).
 	//
-	// For adding permission using the AWS CLI, see add-permission (https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html).
+	// For adding permission using the CLI, see add-permission (https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html).
 	LambdaConfig *LambdaConfigType `type:"structure"`
 
 	// Specifies MFA configuration details.
@@ -17221,7 +17679,8 @@ type CreateUserPoolInput struct {
 	// You can choose to set case sensitivity on the username input for the selected
 	// sign-in option. For example, when this is set to False, users will be able
 	// to sign in using either "username" or "Username". This configuration is immutable
-	// once it has been set. For more information, see .
+	// once it has been set. For more information, see UsernameConfigurationType
+	// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UsernameConfigurationType.html).
 	UsernameConfiguration *UsernameConfigurationType `type:"structure"`
 
 	// The template for the verification message that the user sees when the app
@@ -17481,7 +17940,7 @@ func (s *CreateUserPoolOutput) SetUserPool(v *UserPoolType) *CreateUserPoolOutpu
 type CustomDomainConfigType struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of an AWS Certificate Manager SSL certificate.
+	// The Amazon Resource Name (ARN) of an Certificate Manager SSL certificate.
 	// You use this certificate for the subdomain of your custom domain.
 	//
 	// CertificateArn is a required field
@@ -17517,6 +17976,124 @@ func (s *CustomDomainConfigType) Validate() error {
 // SetCertificateArn sets the CertificateArn field's value.
 func (s *CustomDomainConfigType) SetCertificateArn(v string) *CustomDomainConfigType {
 	s.CertificateArn = &v
+	return s
+}
+
+// A custom email sender Lambda configuration type.
+type CustomEmailLambdaVersionConfigType struct {
+	_ struct{} `type:"structure"`
+
+	// The Lambda Amazon Resource Name of the Lambda function that Amazon Cognito
+	// triggers to send email notifications to users.
+	//
+	// LambdaArn is a required field
+	LambdaArn *string `min:"20" type:"string" required:"true"`
+
+	// The Lambda version represents the signature of the "request" attribute in
+	// the "event" information Amazon Cognito passes to your custom email Lambda
+	// function. The only supported value is V1_0.
+	//
+	// LambdaVersion is a required field
+	LambdaVersion *string `type:"string" required:"true" enum:"CustomEmailSenderLambdaVersionType"`
+}
+
+// String returns the string representation
+func (s CustomEmailLambdaVersionConfigType) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s CustomEmailLambdaVersionConfigType) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CustomEmailLambdaVersionConfigType) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CustomEmailLambdaVersionConfigType"}
+	if s.LambdaArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("LambdaArn"))
+	}
+	if s.LambdaArn != nil && len(*s.LambdaArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("LambdaArn", 20))
+	}
+	if s.LambdaVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("LambdaVersion"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLambdaArn sets the LambdaArn field's value.
+func (s *CustomEmailLambdaVersionConfigType) SetLambdaArn(v string) *CustomEmailLambdaVersionConfigType {
+	s.LambdaArn = &v
+	return s
+}
+
+// SetLambdaVersion sets the LambdaVersion field's value.
+func (s *CustomEmailLambdaVersionConfigType) SetLambdaVersion(v string) *CustomEmailLambdaVersionConfigType {
+	s.LambdaVersion = &v
+	return s
+}
+
+// A custom SMS sender Lambda configuration type.
+type CustomSMSLambdaVersionConfigType struct {
+	_ struct{} `type:"structure"`
+
+	// The Lambda Amazon Resource Name of the Lambda function that Amazon Cognito
+	// triggers to send SMS notifications to users.
+	//
+	// LambdaArn is a required field
+	LambdaArn *string `min:"20" type:"string" required:"true"`
+
+	// The Lambda version represents the signature of the "request" attribute in
+	// the "event" information Amazon Cognito passes to your custom SMS Lambda function.
+	// The only supported value is V1_0.
+	//
+	// LambdaVersion is a required field
+	LambdaVersion *string `type:"string" required:"true" enum:"CustomSMSSenderLambdaVersionType"`
+}
+
+// String returns the string representation
+func (s CustomSMSLambdaVersionConfigType) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s CustomSMSLambdaVersionConfigType) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CustomSMSLambdaVersionConfigType) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CustomSMSLambdaVersionConfigType"}
+	if s.LambdaArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("LambdaArn"))
+	}
+	if s.LambdaArn != nil && len(*s.LambdaArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("LambdaArn", 20))
+	}
+	if s.LambdaVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("LambdaVersion"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLambdaArn sets the LambdaArn field's value.
+func (s *CustomSMSLambdaVersionConfigType) SetLambdaArn(v string) *CustomSMSLambdaVersionConfigType {
+	s.LambdaArn = &v
+	return s
+}
+
+// SetLambdaVersion sets the LambdaVersion field's value.
+func (s *CustomSMSLambdaVersionConfigType) SetLambdaVersion(v string) *CustomSMSLambdaVersionConfigType {
+	s.LambdaVersion = &v
 	return s
 }
 
@@ -18734,7 +19311,7 @@ func (s *DeviceType) SetDeviceLastModifiedDate(v time.Time) *DeviceType {
 type DomainDescriptionType struct {
 	_ struct{} `type:"structure"`
 
-	// The AWS account ID for the user pool owner.
+	// The account ID for the user pool owner.
 	AWSAccountId *string `type:"string"`
 
 	// The ARN of the CloudFront distribution.
@@ -18821,8 +19398,8 @@ func (s *DomainDescriptionType) SetVersion(v string) *DomainDescriptionType {
 // This exception is thrown when the provider is already supported by the user
 // pool.
 type DuplicateProviderException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -18839,17 +19416,17 @@ func (s DuplicateProviderException) GoString() string {
 
 func newErrorDuplicateProviderException(v protocol.ResponseMetadata) error {
 	return &DuplicateProviderException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s DuplicateProviderException) Code() string {
+func (s *DuplicateProviderException) Code() string {
 	return "DuplicateProviderException"
 }
 
 // Message returns the exception's message.
-func (s DuplicateProviderException) Message() string {
+func (s *DuplicateProviderException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -18857,25 +19434,29 @@ func (s DuplicateProviderException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s DuplicateProviderException) OrigErr() error {
+func (s *DuplicateProviderException) OrigErr() error {
 	return nil
 }
 
-func (s DuplicateProviderException) Error() string {
+func (s *DuplicateProviderException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s DuplicateProviderException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *DuplicateProviderException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s DuplicateProviderException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *DuplicateProviderException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The email configuration type.
+//
+// Amazon Cognito has specific regions for use with Amazon SES. For more information
+// on the supported regions, see Email Settings for Amazon Cognito User Pools
+// (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-email.html).
 type EmailConfigurationType struct {
 	_ struct{} `type:"structure"`
 
@@ -18887,8 +19468,8 @@ type EmailConfigurationType struct {
 	//
 	//    * Event publishing – Amazon SES can track the number of send, delivery,
 	//    open, click, bounce, and complaint events for each email sent. Use event
-	//    publishing to send information about these events to other AWS services
-	//    such as SNS and CloudWatch.
+	//    publishing to send information about these events to other Amazon Web
+	//    Services services such as SNS and CloudWatch.
 	//
 	//    * IP pool management – When leasing dedicated IP addresses with Amazon
 	//    SES, you can create groups of IP addresses, called dedicated IP pools.
@@ -18916,13 +19497,34 @@ type EmailConfigurationType struct {
 	// the FROM address, provide the ARN of an Amazon SES verified email address
 	// for the SourceArn parameter.
 	//
+	// If EmailSendingAccount is COGNITO_DEFAULT, the following parameters aren't
+	// allowed:
+	//
+	//    * EmailVerificationMessage
+	//
+	//    * EmailVerificationSubject
+	//
+	//    * InviteMessageTemplate.EmailMessage
+	//
+	//    * InviteMessageTemplate.EmailSubject
+	//
+	//    * VerificationMessageTemplate.EmailMessage
+	//
+	//    * VerificationMessageTemplate.EmailMessageByLink
+	//
+	//    * VerificationMessageTemplate.EmailSubject,
+	//
+	//    * VerificationMessageTemplate.EmailSubjectByLink
+	//
+	// DEVELOPER EmailSendingAccount is required.
+	//
 	// DEVELOPER
 	//
 	// When Amazon Cognito emails your users, it uses your Amazon SES configuration.
 	// Amazon Cognito calls Amazon SES on your behalf to send email from your verified
 	// email address. When you use this option, the email delivery limits are the
 	// same limits that apply to your Amazon SES verified email address in your
-	// AWS account.
+	// account.
 	//
 	// If you use this option, you must provide the ARN of an Amazon SES verified
 	// email address for the SourceArn parameter.
@@ -18930,7 +19532,7 @@ type EmailConfigurationType struct {
 	// Before Amazon Cognito can email your users, it requires additional permissions
 	// to call Amazon SES on your behalf. When you update your user pool with this
 	// option, Amazon Cognito creates a service-linked role, which is a type of
-	// IAM role, in your AWS account. This role contains the permissions that allow
+	// IAM role, in your account. This role contains the permissions that allow
 	// Amazon Cognito to access Amazon SES and send email messages with your address.
 	// For more information about the service-linked role that Amazon Cognito creates,
 	// see Using Service-Linked Roles for Amazon Cognito (https://docs.aws.amazon.com/cognito/latest/developerguide/using-service-linked-roles.html)
@@ -19017,8 +19619,8 @@ func (s *EmailConfigurationType) SetSourceArn(v string) *EmailConfigurationType 
 // This exception is thrown when there is a code mismatch and the service fails
 // to configure the software token TOTP multi-factor authentication (MFA).
 type EnableSoftwareTokenMFAException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -19035,17 +19637,17 @@ func (s EnableSoftwareTokenMFAException) GoString() string {
 
 func newErrorEnableSoftwareTokenMFAException(v protocol.ResponseMetadata) error {
 	return &EnableSoftwareTokenMFAException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s EnableSoftwareTokenMFAException) Code() string {
+func (s *EnableSoftwareTokenMFAException) Code() string {
 	return "EnableSoftwareTokenMFAException"
 }
 
 // Message returns the exception's message.
-func (s EnableSoftwareTokenMFAException) Message() string {
+func (s *EnableSoftwareTokenMFAException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -19053,22 +19655,22 @@ func (s EnableSoftwareTokenMFAException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s EnableSoftwareTokenMFAException) OrigErr() error {
+func (s *EnableSoftwareTokenMFAException) OrigErr() error {
 	return nil
 }
 
-func (s EnableSoftwareTokenMFAException) Error() string {
+func (s *EnableSoftwareTokenMFAException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s EnableSoftwareTokenMFAException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *EnableSoftwareTokenMFAException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s EnableSoftwareTokenMFAException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *EnableSoftwareTokenMFAException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Specifies the user context data captured at the time of an event request.
@@ -19181,6 +19783,10 @@ func (s *EventFeedbackType) SetProvider(v string) *EventFeedbackType {
 type EventRiskType struct {
 	_ struct{} `type:"structure"`
 
+	// Indicates whether compromised credentials were detected during an authentication
+	// event.
+	CompromisedCredentialsDetected *bool `type:"boolean"`
+
 	// The risk decision.
 	RiskDecision *string `type:"string" enum:"RiskDecisionType"`
 
@@ -19198,6 +19804,12 @@ func (s EventRiskType) GoString() string {
 	return s.String()
 }
 
+// SetCompromisedCredentialsDetected sets the CompromisedCredentialsDetected field's value.
+func (s *EventRiskType) SetCompromisedCredentialsDetected(v bool) *EventRiskType {
+	s.CompromisedCredentialsDetected = &v
+	return s
+}
+
 // SetRiskDecision sets the RiskDecision field's value.
 func (s *EventRiskType) SetRiskDecision(v string) *EventRiskType {
 	s.RiskDecision = &v
@@ -19212,8 +19824,8 @@ func (s *EventRiskType) SetRiskLevel(v string) *EventRiskType {
 
 // This exception is thrown if a code has expired.
 type ExpiredCodeException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the expired code exception is thrown.
 	Message_ *string `locationName:"message" type:"string"`
@@ -19231,17 +19843,17 @@ func (s ExpiredCodeException) GoString() string {
 
 func newErrorExpiredCodeException(v protocol.ResponseMetadata) error {
 	return &ExpiredCodeException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ExpiredCodeException) Code() string {
+func (s *ExpiredCodeException) Code() string {
 	return "ExpiredCodeException"
 }
 
 // Message returns the exception's message.
-func (s ExpiredCodeException) Message() string {
+func (s *ExpiredCodeException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -19249,22 +19861,22 @@ func (s ExpiredCodeException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ExpiredCodeException) OrigErr() error {
+func (s *ExpiredCodeException) OrigErr() error {
 	return nil
 }
 
-func (s ExpiredCodeException) Error() string {
+func (s *ExpiredCodeException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ExpiredCodeException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ExpiredCodeException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ExpiredCodeException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ExpiredCodeException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Represents the request to forget the device.
@@ -19348,14 +19960,14 @@ type ForgotPasswordInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the ForgotPassword API action, Amazon Cognito invokes
-	// any functions that are assigned to the following triggers: pre sign-up, custom
-	// message, and user migration. When Amazon Cognito invokes any of these functions,
-	// it passes a JSON payload, which the function receives as input. This payload
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the ForgotPassword API action, Amazon Cognito invokes any functions
+	// that are assigned to the following triggers: pre sign-up, custom message,
+	// and user migration. When Amazon Cognito invokes any of these functions, it
+	// passes a JSON payload, which the function receives as input. This payload
 	// contains a clientMetadata attribute, which provides the data that you assigned
 	// to the ClientMetadata parameter in your ForgotPassword request. In your function
-	// code in AWS Lambda, you can process the clientMetadata value to enhance your
+	// code in Lambda, you can process the clientMetadata value to enhance your
 	// workflow for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
@@ -19366,9 +19978,9 @@ type ForgotPasswordInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -19970,14 +20582,14 @@ type GetUserAttributeVerificationCodeInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the GetUserAttributeVerificationCode API action, Amazon
-	// Cognito invokes the function that is assigned to the custom message trigger.
-	// When Amazon Cognito invokes this function, it passes a JSON payload, which
-	// the function receives as input. This payload contains a clientMetadata attribute,
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the GetUserAttributeVerificationCode API action, Amazon Cognito
+	// invokes the function that is assigned to the custom message trigger. When
+	// Amazon Cognito invokes this function, it passes a JSON payload, which the
+	// function receives as input. This payload contains a clientMetadata attribute,
 	// which provides the data that you assigned to the ClientMetadata parameter
 	// in your GetUserAttributeVerificationCode request. In your function code in
-	// AWS Lambda, you can process the clientMetadata value to enhance your workflow
+	// Lambda, you can process the clientMetadata value to enhance your workflow
 	// for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
@@ -19988,9 +20600,9 @@ type GetUserAttributeVerificationCodeInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -20120,8 +20732,7 @@ type GetUserOutput struct {
 	// This response parameter is no longer supported. It provides information only
 	// about SMS MFA configurations. It doesn't provide information about TOTP software
 	// token MFA configurations. To look up information about either type of MFA
-	// configuration, use the use the GetUserResponse$UserMFASettingList response
-	// instead.
+	// configuration, use UserMFASettingList instead.
 	MFAOptions []*MFAOptionType `type:"list"`
 
 	// The user's preferred MFA setting.
@@ -20331,8 +20942,8 @@ func (s GlobalSignOutOutput) GoString() string {
 // This exception is thrown when Amazon Cognito encounters a group that already
 // exists in the user pool.
 type GroupExistsException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -20349,17 +20960,17 @@ func (s GroupExistsException) GoString() string {
 
 func newErrorGroupExistsException(v protocol.ResponseMetadata) error {
 	return &GroupExistsException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s GroupExistsException) Code() string {
+func (s *GroupExistsException) Code() string {
 	return "GroupExistsException"
 }
 
 // Message returns the exception's message.
-func (s GroupExistsException) Message() string {
+func (s *GroupExistsException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -20367,22 +20978,22 @@ func (s GroupExistsException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s GroupExistsException) OrigErr() error {
+func (s *GroupExistsException) OrigErr() error {
 	return nil
 }
 
-func (s GroupExistsException) Error() string {
+func (s *GroupExistsException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s GroupExistsException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *GroupExistsException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s GroupExistsException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *GroupExistsException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The group type.
@@ -20529,8 +21140,9 @@ type IdentityProviderType struct {
 	// The identity provider details. The following list describes the provider
 	// detail keys for each identity provider type.
 	//
-	//    * For Google, Facebook and Login with Amazon: client_id client_secret
-	//    authorize_scopes
+	//    * For Google and Login with Amazon: client_id client_secret authorize_scopes
+	//
+	//    * For Facebook: client_id client_secret authorize_scopes api_version
 	//
 	//    * For Sign in with Apple: client_id team_id key_id private_key authorize_scopes
 	//
@@ -20539,7 +21151,7 @@ type IdentityProviderType struct {
 	//    URL specified by oidc_issuer key token_url if not available from discovery
 	//    URL specified by oidc_issuer key attributes_url if not available from
 	//    discovery URL specified by oidc_issuer key jwks_uri if not available from
-	//    discovery URL specified by oidc_issuer key authorize_scopes
+	//    discovery URL specified by oidc_issuer key
 	//
 	//    * For SAML providers: MetadataFile OR MetadataURL IDPSignOut optional
 	ProviderDetails map[string]*string `type:"map"`
@@ -20661,14 +21273,16 @@ type InitiateAuthInput struct {
 	// that you are invoking. The required values depend on the value of AuthFlow:
 	//
 	//    * For USER_SRP_AUTH: USERNAME (required), SRP_A (required), SECRET_HASH
-	//    (required if the app client is configured with a client secret), DEVICE_KEY
+	//    (required if the app client is configured with a client secret), DEVICE_KEY.
 	//
 	//    * For REFRESH_TOKEN_AUTH/REFRESH_TOKEN: REFRESH_TOKEN (required), SECRET_HASH
-	//    (required if the app client is configured with a client secret), DEVICE_KEY
+	//    (required if the app client is configured with a client secret), DEVICE_KEY.
 	//
 	//    * For CUSTOM_AUTH: USERNAME (required), SECRET_HASH (if app client is
-	//    configured with client secret), DEVICE_KEY
-	AuthParameters map[string]*string `type:"map"`
+	//    configured with client secret), DEVICE_KEY. To start the authentication
+	//    flow with password verification, include ChallengeName: SRP_A and SRP_A:
+	//    (The SRP_A Value).
+	AuthParameters map[string]*string `type:"map" sensitive:"true"`
 
 	// The app client ID.
 	//
@@ -20678,10 +21292,10 @@ type InitiateAuthInput struct {
 	// A map of custom key-value pairs that you can provide as input for certain
 	// custom workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the InitiateAuth API action, Amazon Cognito invokes
-	// the AWS Lambda functions that are specified for various triggers. The ClientMetadata
-	// value is passed as input to the functions for only the following triggers:
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the InitiateAuth API action, Amazon Cognito invokes the Lambda
+	// functions that are specified for various triggers. The ClientMetadata value
+	// is passed as input to the functions for only the following triggers:
 	//
 	//    * Pre signup
 	//
@@ -20693,7 +21307,7 @@ type InitiateAuthInput struct {
 	// JSON payload, which the function receives as input. This payload contains
 	// a validationData attribute, which provides the data that you assigned to
 	// the ClientMetadata parameter in your InitiateAuth request. In your function
-	// code in AWS Lambda, you can process the validationData value to enhance your
+	// code in Lambda, you can process the validationData value to enhance your
 	// workflow for your specific needs.
 	//
 	// When you use the InitiateAuth API action, Amazon Cognito also invokes the
@@ -20720,9 +21334,9 @@ type InitiateAuthInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -20835,9 +21449,18 @@ type InitiateAuthOutput struct {
 	//    * DEVICE_PASSWORD_VERIFIER: Similar to PASSWORD_VERIFIER, but for devices
 	//    only.
 	//
-	//    * NEW_PASSWORD_REQUIRED: For users which are required to change their
-	//    passwords after successful first login. This challenge should be passed
-	//    with NEW_PASSWORD and any other required attributes.
+	//    * NEW_PASSWORD_REQUIRED: For users who are required to change their passwords
+	//    after successful first login. This challenge should be passed with NEW_PASSWORD
+	//    and any other required attributes.
+	//
+	//    * MFA_SETUP: For users who are required to setup an MFA factor before
+	//    they can sign-in. The MFA types enabled for the user pool will be listed
+	//    in the challenge parameters MFA_CAN_SETUP value. To setup software token
+	//    MFA, use the session returned here from InitiateAuth as an input to AssociateSoftwareToken,
+	//    and use the session returned by VerifySoftwareToken as an input to RespondToAuthChallenge
+	//    with challenge name MFA_SETUP to complete sign-in. To setup SMS MFA, users
+	//    will need help from an administrator to add a phone number to their account
+	//    and then call InitiateAuth again to restart sign-in.
 	ChallengeName *string `type:"string" enum:"ChallengeNameType"`
 
 	// The challenge parameters. These are returned to you in the InitiateAuth response
@@ -20848,10 +21471,9 @@ type InitiateAuthOutput struct {
 	ChallengeParameters map[string]*string `type:"map"`
 
 	// The session which should be passed both ways in challenge-response calls
-	// to the service. If the or API call determines that the caller needs to go
-	// through another challenge, they return a session with other challenge parameters.
-	// This session should be passed as it is to the next RespondToAuthChallenge
-	// API call.
+	// to the service. If the caller needs to go through another challenge, they
+	// return a session with other challenge parameters. This session should be
+	// passed as it is to the next RespondToAuthChallenge API call.
 	Session *string `min:"20" type:"string"`
 }
 
@@ -20891,8 +21513,8 @@ func (s *InitiateAuthOutput) SetSession(v string) *InitiateAuthOutput {
 
 // This exception is thrown when Amazon Cognito encounters an internal error.
 type InternalErrorException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when Amazon Cognito throws an internal error exception.
 	Message_ *string `locationName:"message" type:"string"`
@@ -20910,17 +21532,17 @@ func (s InternalErrorException) GoString() string {
 
 func newErrorInternalErrorException(v protocol.ResponseMetadata) error {
 	return &InternalErrorException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InternalErrorException) Code() string {
+func (s *InternalErrorException) Code() string {
 	return "InternalErrorException"
 }
 
 // Message returns the exception's message.
-func (s InternalErrorException) Message() string {
+func (s *InternalErrorException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -20928,29 +21550,29 @@ func (s InternalErrorException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InternalErrorException) OrigErr() error {
+func (s *InternalErrorException) OrigErr() error {
 	return nil
 }
 
-func (s InternalErrorException) Error() string {
+func (s *InternalErrorException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InternalErrorException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InternalErrorException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InternalErrorException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InternalErrorException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when Amazon Cognito is not allowed to use your email
 // identity. HTTP status code: 400.
 type InvalidEmailRoleAccessPolicyException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when you have an unverified email address or the identity
 	// policy is not set on an email address that Amazon Cognito can access.
@@ -20969,17 +21591,17 @@ func (s InvalidEmailRoleAccessPolicyException) GoString() string {
 
 func newErrorInvalidEmailRoleAccessPolicyException(v protocol.ResponseMetadata) error {
 	return &InvalidEmailRoleAccessPolicyException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidEmailRoleAccessPolicyException) Code() string {
+func (s *InvalidEmailRoleAccessPolicyException) Code() string {
 	return "InvalidEmailRoleAccessPolicyException"
 }
 
 // Message returns the exception's message.
-func (s InvalidEmailRoleAccessPolicyException) Message() string {
+func (s *InvalidEmailRoleAccessPolicyException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -20987,32 +21609,32 @@ func (s InvalidEmailRoleAccessPolicyException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidEmailRoleAccessPolicyException) OrigErr() error {
+func (s *InvalidEmailRoleAccessPolicyException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidEmailRoleAccessPolicyException) Error() string {
+func (s *InvalidEmailRoleAccessPolicyException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidEmailRoleAccessPolicyException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidEmailRoleAccessPolicyException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidEmailRoleAccessPolicyException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidEmailRoleAccessPolicyException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the Amazon Cognito service encounters an invalid
-// AWS Lambda response.
+// Lambda response.
 type InvalidLambdaResponseException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// The message returned when the Amazon Cognito service throws an invalid AWS
-	// Lambda response exception.
+	// The message returned when the Amazon Cognito service throws an invalid Lambda
+	// response exception.
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -21028,17 +21650,17 @@ func (s InvalidLambdaResponseException) GoString() string {
 
 func newErrorInvalidLambdaResponseException(v protocol.ResponseMetadata) error {
 	return &InvalidLambdaResponseException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidLambdaResponseException) Code() string {
+func (s *InvalidLambdaResponseException) Code() string {
 	return "InvalidLambdaResponseException"
 }
 
 // Message returns the exception's message.
-func (s InvalidLambdaResponseException) Message() string {
+func (s *InvalidLambdaResponseException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21046,28 +21668,28 @@ func (s InvalidLambdaResponseException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidLambdaResponseException) OrigErr() error {
+func (s *InvalidLambdaResponseException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidLambdaResponseException) Error() string {
+func (s *InvalidLambdaResponseException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidLambdaResponseException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidLambdaResponseException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidLambdaResponseException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidLambdaResponseException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the specified OAuth flow is invalid.
 type InvalidOAuthFlowException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -21084,17 +21706,17 @@ func (s InvalidOAuthFlowException) GoString() string {
 
 func newErrorInvalidOAuthFlowException(v protocol.ResponseMetadata) error {
 	return &InvalidOAuthFlowException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidOAuthFlowException) Code() string {
+func (s *InvalidOAuthFlowException) Code() string {
 	return "InvalidOAuthFlowException"
 }
 
 // Message returns the exception's message.
-func (s InvalidOAuthFlowException) Message() string {
+func (s *InvalidOAuthFlowException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21102,29 +21724,29 @@ func (s InvalidOAuthFlowException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidOAuthFlowException) OrigErr() error {
+func (s *InvalidOAuthFlowException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidOAuthFlowException) Error() string {
+func (s *InvalidOAuthFlowException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidOAuthFlowException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidOAuthFlowException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidOAuthFlowException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidOAuthFlowException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the Amazon Cognito service encounters an invalid
 // parameter.
 type InvalidParameterException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service throws an invalid parameter
 	// exception.
@@ -21143,17 +21765,17 @@ func (s InvalidParameterException) GoString() string {
 
 func newErrorInvalidParameterException(v protocol.ResponseMetadata) error {
 	return &InvalidParameterException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidParameterException) Code() string {
+func (s *InvalidParameterException) Code() string {
 	return "InvalidParameterException"
 }
 
 // Message returns the exception's message.
-func (s InvalidParameterException) Message() string {
+func (s *InvalidParameterException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21161,29 +21783,29 @@ func (s InvalidParameterException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidParameterException) OrigErr() error {
+func (s *InvalidParameterException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidParameterException) Error() string {
+func (s *InvalidParameterException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidParameterException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidParameterException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidParameterException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidParameterException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the Amazon Cognito service encounters an invalid
 // password.
 type InvalidPasswordException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service throws an invalid user
 	// password exception.
@@ -21202,17 +21824,17 @@ func (s InvalidPasswordException) GoString() string {
 
 func newErrorInvalidPasswordException(v protocol.ResponseMetadata) error {
 	return &InvalidPasswordException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidPasswordException) Code() string {
+func (s *InvalidPasswordException) Code() string {
 	return "InvalidPasswordException"
 }
 
 // Message returns the exception's message.
-func (s InvalidPasswordException) Message() string {
+func (s *InvalidPasswordException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21220,29 +21842,29 @@ func (s InvalidPasswordException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidPasswordException) OrigErr() error {
+func (s *InvalidPasswordException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidPasswordException) Error() string {
+func (s *InvalidPasswordException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidPasswordException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidPasswordException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidPasswordException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidPasswordException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is returned when the role provided for SMS configuration does
 // not have permission to publish using Amazon SNS.
 type InvalidSmsRoleAccessPolicyException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message retuned when the invalid SMS role access policy exception is
 	// thrown.
@@ -21261,17 +21883,17 @@ func (s InvalidSmsRoleAccessPolicyException) GoString() string {
 
 func newErrorInvalidSmsRoleAccessPolicyException(v protocol.ResponseMetadata) error {
 	return &InvalidSmsRoleAccessPolicyException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidSmsRoleAccessPolicyException) Code() string {
+func (s *InvalidSmsRoleAccessPolicyException) Code() string {
 	return "InvalidSmsRoleAccessPolicyException"
 }
 
 // Message returns the exception's message.
-func (s InvalidSmsRoleAccessPolicyException) Message() string {
+func (s *InvalidSmsRoleAccessPolicyException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21279,22 +21901,22 @@ func (s InvalidSmsRoleAccessPolicyException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidSmsRoleAccessPolicyException) OrigErr() error {
+func (s *InvalidSmsRoleAccessPolicyException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidSmsRoleAccessPolicyException) Error() string {
+func (s *InvalidSmsRoleAccessPolicyException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidSmsRoleAccessPolicyException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidSmsRoleAccessPolicyException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidSmsRoleAccessPolicyException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidSmsRoleAccessPolicyException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the trust relationship is invalid for the role
@@ -21302,8 +21924,8 @@ func (s InvalidSmsRoleAccessPolicyException) RequestID() string {
 // or the external ID provided in the role does not match what is provided in
 // the SMS configuration for the user pool.
 type InvalidSmsRoleTrustRelationshipException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the role trust relationship for the SMS message
 	// is invalid.
@@ -21322,17 +21944,17 @@ func (s InvalidSmsRoleTrustRelationshipException) GoString() string {
 
 func newErrorInvalidSmsRoleTrustRelationshipException(v protocol.ResponseMetadata) error {
 	return &InvalidSmsRoleTrustRelationshipException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidSmsRoleTrustRelationshipException) Code() string {
+func (s *InvalidSmsRoleTrustRelationshipException) Code() string {
 	return "InvalidSmsRoleTrustRelationshipException"
 }
 
 // Message returns the exception's message.
-func (s InvalidSmsRoleTrustRelationshipException) Message() string {
+func (s *InvalidSmsRoleTrustRelationshipException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21340,28 +21962,28 @@ func (s InvalidSmsRoleTrustRelationshipException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidSmsRoleTrustRelationshipException) OrigErr() error {
+func (s *InvalidSmsRoleTrustRelationshipException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidSmsRoleTrustRelationshipException) Error() string {
+func (s *InvalidSmsRoleTrustRelationshipException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidSmsRoleTrustRelationshipException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidSmsRoleTrustRelationshipException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidSmsRoleTrustRelationshipException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidSmsRoleTrustRelationshipException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the user pool configuration is invalid.
 type InvalidUserPoolConfigurationException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the user pool configuration is invalid.
 	Message_ *string `locationName:"message" type:"string"`
@@ -21379,17 +22001,17 @@ func (s InvalidUserPoolConfigurationException) GoString() string {
 
 func newErrorInvalidUserPoolConfigurationException(v protocol.ResponseMetadata) error {
 	return &InvalidUserPoolConfigurationException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InvalidUserPoolConfigurationException) Code() string {
+func (s *InvalidUserPoolConfigurationException) Code() string {
 	return "InvalidUserPoolConfigurationException"
 }
 
 // Message returns the exception's message.
-func (s InvalidUserPoolConfigurationException) Message() string {
+func (s *InvalidUserPoolConfigurationException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21397,47 +22019,58 @@ func (s InvalidUserPoolConfigurationException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InvalidUserPoolConfigurationException) OrigErr() error {
+func (s *InvalidUserPoolConfigurationException) OrigErr() error {
 	return nil
 }
 
-func (s InvalidUserPoolConfigurationException) Error() string {
+func (s *InvalidUserPoolConfigurationException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InvalidUserPoolConfigurationException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InvalidUserPoolConfigurationException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InvalidUserPoolConfigurationException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InvalidUserPoolConfigurationException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
-// Specifies the configuration for AWS Lambda triggers.
+// Specifies the configuration for Lambda triggers.
 type LambdaConfigType struct {
 	_ struct{} `type:"structure"`
 
 	// Creates an authentication challenge.
 	CreateAuthChallenge *string `min:"20" type:"string"`
 
-	// A custom Message AWS Lambda trigger.
+	// A custom email sender Lambda trigger.
+	CustomEmailSender *CustomEmailLambdaVersionConfigType `type:"structure"`
+
+	// A custom Message Lambda trigger.
 	CustomMessage *string `min:"20" type:"string"`
+
+	// A custom SMS sender Lambda trigger.
+	CustomSMSSender *CustomSMSLambdaVersionConfigType `type:"structure"`
 
 	// Defines the authentication challenge.
 	DefineAuthChallenge *string `min:"20" type:"string"`
 
-	// A post-authentication AWS Lambda trigger.
+	// The Amazon Resource Name of Key Management Service Customer master keys (/kms/latest/developerguide/concepts.html#master_keys)
+	// . Amazon Cognito uses the key to encrypt codes and temporary passwords sent
+	// to CustomEmailSender and CustomSMSSender.
+	KMSKeyID *string `min:"20" type:"string"`
+
+	// A post-authentication Lambda trigger.
 	PostAuthentication *string `min:"20" type:"string"`
 
-	// A post-confirmation AWS Lambda trigger.
+	// A post-confirmation Lambda trigger.
 	PostConfirmation *string `min:"20" type:"string"`
 
-	// A pre-authentication AWS Lambda trigger.
+	// A pre-authentication Lambda trigger.
 	PreAuthentication *string `min:"20" type:"string"`
 
-	// A pre-registration AWS Lambda trigger.
+	// A pre-registration Lambda trigger.
 	PreSignUp *string `min:"20" type:"string"`
 
 	// A Lambda trigger that is invoked before token generation.
@@ -21472,6 +22105,9 @@ func (s *LambdaConfigType) Validate() error {
 	if s.DefineAuthChallenge != nil && len(*s.DefineAuthChallenge) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("DefineAuthChallenge", 20))
 	}
+	if s.KMSKeyID != nil && len(*s.KMSKeyID) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("KMSKeyID", 20))
+	}
 	if s.PostAuthentication != nil && len(*s.PostAuthentication) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("PostAuthentication", 20))
 	}
@@ -21493,6 +22129,16 @@ func (s *LambdaConfigType) Validate() error {
 	if s.VerifyAuthChallengeResponse != nil && len(*s.VerifyAuthChallengeResponse) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("VerifyAuthChallengeResponse", 20))
 	}
+	if s.CustomEmailSender != nil {
+		if err := s.CustomEmailSender.Validate(); err != nil {
+			invalidParams.AddNested("CustomEmailSender", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.CustomSMSSender != nil {
+		if err := s.CustomSMSSender.Validate(); err != nil {
+			invalidParams.AddNested("CustomSMSSender", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -21506,15 +22152,33 @@ func (s *LambdaConfigType) SetCreateAuthChallenge(v string) *LambdaConfigType {
 	return s
 }
 
+// SetCustomEmailSender sets the CustomEmailSender field's value.
+func (s *LambdaConfigType) SetCustomEmailSender(v *CustomEmailLambdaVersionConfigType) *LambdaConfigType {
+	s.CustomEmailSender = v
+	return s
+}
+
 // SetCustomMessage sets the CustomMessage field's value.
 func (s *LambdaConfigType) SetCustomMessage(v string) *LambdaConfigType {
 	s.CustomMessage = &v
 	return s
 }
 
+// SetCustomSMSSender sets the CustomSMSSender field's value.
+func (s *LambdaConfigType) SetCustomSMSSender(v *CustomSMSLambdaVersionConfigType) *LambdaConfigType {
+	s.CustomSMSSender = v
+	return s
+}
+
 // SetDefineAuthChallenge sets the DefineAuthChallenge field's value.
 func (s *LambdaConfigType) SetDefineAuthChallenge(v string) *LambdaConfigType {
 	s.DefineAuthChallenge = &v
+	return s
+}
+
+// SetKMSKeyID sets the KMSKeyID field's value.
+func (s *LambdaConfigType) SetKMSKeyID(v string) *LambdaConfigType {
+	s.KMSKeyID = &v
 	return s
 }
 
@@ -21560,11 +22224,11 @@ func (s *LambdaConfigType) SetVerifyAuthChallengeResponse(v string) *LambdaConfi
 	return s
 }
 
-// This exception is thrown when a user exceeds the limit for a requested AWS
-// resource.
+// This exception is thrown when a user exceeds the limit for a requested Amazon
+// Web Services resource.
 type LimitExceededException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when Amazon Cognito throws a limit exceeded exception.
 	Message_ *string `locationName:"message" type:"string"`
@@ -21582,17 +22246,17 @@ func (s LimitExceededException) GoString() string {
 
 func newErrorLimitExceededException(v protocol.ResponseMetadata) error {
 	return &LimitExceededException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s LimitExceededException) Code() string {
+func (s *LimitExceededException) Code() string {
 	return "LimitExceededException"
 }
 
 // Message returns the exception's message.
-func (s LimitExceededException) Message() string {
+func (s *LimitExceededException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -21600,22 +22264,22 @@ func (s LimitExceededException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s LimitExceededException) OrigErr() error {
+func (s *LimitExceededException) OrigErr() error {
 	return nil
 }
 
-func (s LimitExceededException) Error() string {
+func (s *LimitExceededException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s LimitExceededException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *LimitExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s LimitExceededException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *LimitExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Represents the request to list the devices.
@@ -22641,8 +23305,8 @@ func (s *ListUsersOutput) SetUsers(v []*UserType) *ListUsersOutput {
 // This exception is thrown when Amazon Cognito cannot find a multi-factor authentication
 // (MFA) method.
 type MFAMethodNotFoundException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when Amazon Cognito throws an MFA method not found exception.
 	Message_ *string `locationName:"message" type:"string"`
@@ -22660,17 +23324,17 @@ func (s MFAMethodNotFoundException) GoString() string {
 
 func newErrorMFAMethodNotFoundException(v protocol.ResponseMetadata) error {
 	return &MFAMethodNotFoundException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s MFAMethodNotFoundException) Code() string {
+func (s *MFAMethodNotFoundException) Code() string {
 	return "MFAMethodNotFoundException"
 }
 
 // Message returns the exception's message.
-func (s MFAMethodNotFoundException) Message() string {
+func (s *MFAMethodNotFoundException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -22678,32 +23342,26 @@ func (s MFAMethodNotFoundException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s MFAMethodNotFoundException) OrigErr() error {
+func (s *MFAMethodNotFoundException) OrigErr() error {
 	return nil
 }
 
-func (s MFAMethodNotFoundException) Error() string {
+func (s *MFAMethodNotFoundException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s MFAMethodNotFoundException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *MFAMethodNotFoundException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s MFAMethodNotFoundException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *MFAMethodNotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This data type is no longer supported. You can use it only for SMS MFA configurations.
 // You can't use it for TOTP software token MFA configurations.
-//
-// To set either type of MFA configuration, use the AdminSetUserMFAPreference
-// or SetUserMFAPreference actions.
-//
-// To look up information about either type of MFA configuration, use the AdminGetUserResponse$UserMFASettingList
-// or GetUserResponse$UserMFASettingList responses.
 type MFAOptionType struct {
 	_ struct{} `type:"structure"`
 
@@ -22754,10 +23412,14 @@ func (s *MFAOptionType) SetDeliveryMedium(v string) *MFAOptionType {
 type MessageTemplateType struct {
 	_ struct{} `type:"structure"`
 
-	// The message template for email messages.
+	// The message template for email messages. EmailMessage is allowed only if
+	// EmailSendingAccount (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailMessage *string `min:"6" type:"string"`
 
-	// The subject line for email messages.
+	// The subject line for email messages. EmailSubject is allowed only if EmailSendingAccount
+	// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailSubject *string `min:"1" type:"string"`
 
 	// The message template for SMS messages.
@@ -22846,8 +23508,8 @@ func (s *NewDeviceMetadataType) SetDeviceKey(v string) *NewDeviceMetadataType {
 
 // This exception is thrown when a user is not authorized.
 type NotAuthorizedException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service returns a not authorized
 	// exception.
@@ -22866,17 +23528,17 @@ func (s NotAuthorizedException) GoString() string {
 
 func newErrorNotAuthorizedException(v protocol.ResponseMetadata) error {
 	return &NotAuthorizedException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s NotAuthorizedException) Code() string {
+func (s *NotAuthorizedException) Code() string {
 	return "NotAuthorizedException"
 }
 
 // Message returns the exception's message.
-func (s NotAuthorizedException) Message() string {
+func (s *NotAuthorizedException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -22884,22 +23546,22 @@ func (s NotAuthorizedException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s NotAuthorizedException) OrigErr() error {
+func (s *NotAuthorizedException) OrigErr() error {
 	return nil
 }
 
-func (s NotAuthorizedException) Error() string {
+func (s *NotAuthorizedException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s NotAuthorizedException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *NotAuthorizedException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s NotAuthorizedException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *NotAuthorizedException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The notify configuration type.
@@ -23204,8 +23866,8 @@ func (s *PasswordPolicyType) SetTemporaryPasswordValidityDays(v int64) *Password
 
 // This exception is thrown when a password reset is required.
 type PasswordResetRequiredException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when a password reset is required.
 	Message_ *string `locationName:"message" type:"string"`
@@ -23223,17 +23885,17 @@ func (s PasswordResetRequiredException) GoString() string {
 
 func newErrorPasswordResetRequiredException(v protocol.ResponseMetadata) error {
 	return &PasswordResetRequiredException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s PasswordResetRequiredException) Code() string {
+func (s *PasswordResetRequiredException) Code() string {
 	return "PasswordResetRequiredException"
 }
 
 // Message returns the exception's message.
-func (s PasswordResetRequiredException) Message() string {
+func (s *PasswordResetRequiredException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -23241,28 +23903,28 @@ func (s PasswordResetRequiredException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s PasswordResetRequiredException) OrigErr() error {
+func (s *PasswordResetRequiredException) OrigErr() error {
 	return nil
 }
 
-func (s PasswordResetRequiredException) Error() string {
+func (s *PasswordResetRequiredException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s PasswordResetRequiredException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *PasswordResetRequiredException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s PasswordResetRequiredException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *PasswordResetRequiredException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when a precondition is not met.
 type PreconditionNotMetException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when a precondition is not met.
 	Message_ *string `locationName:"message" type:"string"`
@@ -23280,17 +23942,17 @@ func (s PreconditionNotMetException) GoString() string {
 
 func newErrorPreconditionNotMetException(v protocol.ResponseMetadata) error {
 	return &PreconditionNotMetException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s PreconditionNotMetException) Code() string {
+func (s *PreconditionNotMetException) Code() string {
 	return "PreconditionNotMetException"
 }
 
 // Message returns the exception's message.
-func (s PreconditionNotMetException) Message() string {
+func (s *PreconditionNotMetException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -23298,22 +23960,22 @@ func (s PreconditionNotMetException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s PreconditionNotMetException) OrigErr() error {
+func (s *PreconditionNotMetException) OrigErr() error {
 	return nil
 }
 
-func (s PreconditionNotMetException) Error() string {
+func (s *PreconditionNotMetException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s PreconditionNotMetException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *PreconditionNotMetException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s PreconditionNotMetException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *PreconditionNotMetException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // A container for identity provider details.
@@ -23495,15 +24157,15 @@ type ResendConfirmationCodeInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the ResendConfirmationCode API action, Amazon Cognito
-	// invokes the function that is assigned to the custom message trigger. When
-	// Amazon Cognito invokes this function, it passes a JSON payload, which the
-	// function receives as input. This payload contains a clientMetadata attribute,
-	// which provides the data that you assigned to the ClientMetadata parameter
-	// in your ResendConfirmationCode request. In your function code in AWS Lambda,
-	// you can process the clientMetadata value to enhance your workflow for your
-	// specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the ResendConfirmationCode API action, Amazon Cognito invokes
+	// the function that is assigned to the custom message trigger. When Amazon
+	// Cognito invokes this function, it passes a JSON payload, which the function
+	// receives as input. This payload contains a clientMetadata attribute, which
+	// provides the data that you assigned to the ClientMetadata parameter in your
+	// ResendConfirmationCode request. In your function code in Lambda, you can
+	// process the clientMetadata value to enhance your workflow for your specific
+	// needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -23513,9 +24175,9 @@ type ResendConfirmationCodeInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -23638,8 +24300,8 @@ func (s *ResendConfirmationCodeOutput) SetCodeDeliveryDetails(v *CodeDeliveryDet
 // This exception is thrown when the Amazon Cognito service cannot find the
 // requested resource.
 type ResourceNotFoundException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service returns a resource not
 	// found exception.
@@ -23658,17 +24320,17 @@ func (s ResourceNotFoundException) GoString() string {
 
 func newErrorResourceNotFoundException(v protocol.ResponseMetadata) error {
 	return &ResourceNotFoundException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ResourceNotFoundException) Code() string {
+func (s *ResourceNotFoundException) Code() string {
 	return "ResourceNotFoundException"
 }
 
 // Message returns the exception's message.
-func (s ResourceNotFoundException) Message() string {
+func (s *ResourceNotFoundException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -23676,22 +24338,22 @@ func (s ResourceNotFoundException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ResourceNotFoundException) OrigErr() error {
+func (s *ResourceNotFoundException) OrigErr() error {
 	return nil
 }
 
-func (s ResourceNotFoundException) Error() string {
+func (s *ResourceNotFoundException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ResourceNotFoundException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ResourceNotFoundException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ResourceNotFoundException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ResourceNotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // A resource server scope.
@@ -23812,7 +24474,7 @@ type RespondToAuthChallengeInput struct {
 	// calls.
 	AnalyticsMetadata *AnalyticsMetadataType `type:"structure"`
 
-	// The challenge name. For more information, see .
+	// The challenge name. For more information, see InitiateAuth (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html).
 	//
 	// ADMIN_NO_SRP_AUTH is not a valid value.
 	//
@@ -23840,6 +24502,9 @@ type RespondToAuthChallengeInput struct {
 	//
 	//    * DEVICE_PASSWORD_VERIFIER requires everything that PASSWORD_VERIFIER
 	//    requires plus DEVICE_KEY.
+	//
+	//    * MFA_SETUP requires USERNAME, plus you need to use the session value
+	//    returned by VerifySoftwareToken in the Session parameter.
 	ChallengeResponses map[string]*string `type:"map"`
 
 	// The app client ID.
@@ -23850,16 +24515,16 @@ type RespondToAuthChallengeInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the RespondToAuthChallenge API action, Amazon Cognito
-	// invokes any functions that are assigned to the following triggers: post authentication,
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the RespondToAuthChallenge API action, Amazon Cognito invokes
+	// any functions that are assigned to the following triggers: post authentication,
 	// pre token generation, define auth challenge, create auth challenge, and verify
 	// auth challenge. When Amazon Cognito invokes any of these functions, it passes
 	// a JSON payload, which the function receives as input. This payload contains
 	// a clientMetadata attribute, which provides the data that you assigned to
 	// the ClientMetadata parameter in your RespondToAuthChallenge request. In your
-	// function code in AWS Lambda, you can process the clientMetadata value to
-	// enhance your workflow for your specific needs.
+	// function code in Lambda, you can process the clientMetadata value to enhance
+	// your workflow for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -23869,9 +24534,9 @@ type RespondToAuthChallengeInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -23974,17 +24639,16 @@ type RespondToAuthChallengeOutput struct {
 	// the authentication challenge.
 	AuthenticationResult *AuthenticationResultType `type:"structure"`
 
-	// The challenge name. For more information, see .
+	// The challenge name. For more information, see InitiateAuth (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html).
 	ChallengeName *string `type:"string" enum:"ChallengeNameType"`
 
-	// The challenge parameters. For more information, see .
+	// The challenge parameters. For more information, see InitiateAuth (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_InitiateAuth.html).
 	ChallengeParameters map[string]*string `type:"map"`
 
 	// The session which should be passed both ways in challenge-response calls
-	// to the service. If the or API call determines that the caller needs to go
-	// through another challenge, they return a session with other challenge parameters.
-	// This session should be passed as it is to the next RespondToAuthChallenge
-	// API call.
+	// to the service. If the caller needs to go through another challenge, they
+	// return a session with other challenge parameters. This session should be
+	// passed as it is to the next RespondToAuthChallenge API call.
 	Session *string `min:"20" type:"string"`
 }
 
@@ -24020,6 +24684,88 @@ func (s *RespondToAuthChallengeOutput) SetChallengeParameters(v map[string]*stri
 func (s *RespondToAuthChallengeOutput) SetSession(v string) *RespondToAuthChallengeOutput {
 	s.Session = &v
 	return s
+}
+
+type RevokeTokenInput struct {
+	_ struct{} `type:"structure"`
+
+	// The client ID for the token that you want to revoke.
+	//
+	// ClientId is a required field
+	ClientId *string `min:"1" type:"string" required:"true" sensitive:"true"`
+
+	// The secret for the client ID. This is required only if the client ID has
+	// a secret.
+	ClientSecret *string `min:"1" type:"string" sensitive:"true"`
+
+	// The token that you want to revoke.
+	//
+	// Token is a required field
+	Token *string `type:"string" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation
+func (s RevokeTokenInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s RevokeTokenInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RevokeTokenInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RevokeTokenInput"}
+	if s.ClientId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ClientId"))
+	}
+	if s.ClientId != nil && len(*s.ClientId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientId", 1))
+	}
+	if s.ClientSecret != nil && len(*s.ClientSecret) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientSecret", 1))
+	}
+	if s.Token == nil {
+		invalidParams.Add(request.NewErrParamRequired("Token"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientId sets the ClientId field's value.
+func (s *RevokeTokenInput) SetClientId(v string) *RevokeTokenInput {
+	s.ClientId = &v
+	return s
+}
+
+// SetClientSecret sets the ClientSecret field's value.
+func (s *RevokeTokenInput) SetClientSecret(v string) *RevokeTokenInput {
+	s.ClientSecret = &v
+	return s
+}
+
+// SetToken sets the Token field's value.
+func (s *RevokeTokenInput) SetToken(v string) *RevokeTokenInput {
+	s.Token = &v
+	return s
+}
+
+type RevokeTokenOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation
+func (s RevokeTokenOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s RevokeTokenOutput) GoString() string {
+	return s.String()
 }
 
 // The risk configuration type.
@@ -24129,11 +24875,19 @@ func (s *RiskExceptionConfigurationType) SetSkippedIPRangeList(v []*string) *Ris
 	return s
 }
 
-// The type used for enabling SMS MFA at the user level.
+// The type used for enabling SMS MFA at the user level. Phone numbers don't
+// need to be verified to be used for SMS MFA. If an MFA type is enabled for
+// a user, the user will be prompted for MFA during all sign in attempts, unless
+// device tracking is turned on and the device has been trusted. If you would
+// like MFA to be applied selectively based on the assessed risk level of sign
+// in attempts, disable MFA for users and turn on Adaptive Authentication for
+// the user pool.
 type SMSMfaSettingsType struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies whether SMS text message MFA is enabled.
+	// Specifies whether SMS text message MFA is enabled. If an MFA type is enabled
+	// for a user, the user will be prompted for MFA during all sign in attempts,
+	// unless device tracking is turned on and the device has been trusted.
 	Enabled *bool `type:"boolean"`
 
 	// Specifies whether SMS is the preferred MFA method.
@@ -24177,7 +24931,7 @@ type SchemaAttributeType struct {
 	// Specifies whether the attribute type is developer only. This attribute can
 	// only be modified by an administrator. Users will not be able to modify this
 	// attribute using their access token. For example, DeveloperOnlyAttribute can
-	// be modified using the API but cannot be updated using the API.
+	// be modified using AdminUpdateUserAttributes but cannot be updated using UpdateUserAttributes.
 	DeveloperOnlyAttribute *bool `type:"boolean"`
 
 	// Specifies whether the value of the attribute can be changed.
@@ -24272,8 +25026,8 @@ func (s *SchemaAttributeType) SetStringAttributeConstraints(v *StringAttributeCo
 
 // This exception is thrown when the specified scope does not exist.
 type ScopeDoesNotExistException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -24290,17 +25044,17 @@ func (s ScopeDoesNotExistException) GoString() string {
 
 func newErrorScopeDoesNotExistException(v protocol.ResponseMetadata) error {
 	return &ScopeDoesNotExistException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ScopeDoesNotExistException) Code() string {
+func (s *ScopeDoesNotExistException) Code() string {
 	return "ScopeDoesNotExistException"
 }
 
 // Message returns the exception's message.
-func (s ScopeDoesNotExistException) Message() string {
+func (s *ScopeDoesNotExistException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -24308,22 +25062,22 @@ func (s ScopeDoesNotExistException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ScopeDoesNotExistException) OrigErr() error {
+func (s *ScopeDoesNotExistException) OrigErr() error {
 	return nil
 }
 
-func (s ScopeDoesNotExistException) Error() string {
+func (s *ScopeDoesNotExistException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ScopeDoesNotExistException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ScopeDoesNotExistException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ScopeDoesNotExistException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ScopeDoesNotExistException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 type SetRiskConfigurationInput struct {
@@ -24618,7 +25372,10 @@ func (s SetUserMFAPreferenceOutput) GoString() string {
 type SetUserPoolMfaConfigInput struct {
 	_ struct{} `type:"structure"`
 
-	// The MFA configuration. Valid values include:
+	// The MFA configuration. Users who don't have an MFA factor set up won't be
+	// able to sign-in if you set the MfaConfiguration value to ‘ON’. See Adding
+	// Multi-Factor Authentication (MFA) to a User Pool (cognito/latest/developerguide/user-pool-settings-mfa.html)
+	// to learn more. Valid values include:
 	//
 	//    * OFF MFA will not be used for any users.
 	//
@@ -24838,15 +25595,15 @@ type SignUpInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the SignUp API action, Amazon Cognito invokes any
-	// functions that are assigned to the following triggers: pre sign-up, custom
-	// message, and post confirmation. When Amazon Cognito invokes any of these
-	// functions, it passes a JSON payload, which the function receives as input.
-	// This payload contains a clientMetadata attribute, which provides the data
-	// that you assigned to the ClientMetadata parameter in your SignUp request.
-	// In your function code in AWS Lambda, you can process the clientMetadata value
-	// to enhance your workflow for your specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the SignUp API action, Amazon Cognito invokes any functions
+	// that are assigned to the following triggers: pre sign-up, custom message,
+	// and post confirmation. When Amazon Cognito invokes any of these functions,
+	// it passes a JSON payload, which the function receives as input. This payload
+	// contains a clientMetadata attribute, which provides the data that you assigned
+	// to the ClientMetadata parameter in your SignUp request. In your function
+	// code in Lambda, you can process the clientMetadata value to enhance your
+	// workflow for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -24856,9 +25613,9 @@ type SignUpInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -25059,8 +25816,8 @@ func (s *SignUpOutput) SetUserSub(v string) *SignUpOutput {
 
 // The SMS configuration type that includes the settings the Cognito User Pool
 // needs to call for the Amazon SNS service to send an SMS message from your
-// AWS account. The Cognito User Pool makes the request to the Amazon SNS Service
-// by using an AWS IAM role that you provide for your AWS account.
+// account. The Cognito User Pool makes the request to the Amazon SNS Service
+// by using an IAM role that you provide for your account.
 type SmsConfigurationType struct {
 	_ struct{} `type:"structure"`
 
@@ -25071,11 +25828,16 @@ type SmsConfigurationType struct {
 	// policy to require the ExternalID. If you use the Cognito Management Console
 	// to create a role for SMS MFA, Cognito will create a role with the required
 	// permissions and a trust policy that demonstrates use of the ExternalId.
+	//
+	// For more information about the ExternalId of a role, see How to use an external
+	// ID when granting access to your Amazon Web Services resources to a third
+	// party (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)
 	ExternalId *string `type:"string"`
 
 	// The Amazon Resource Name (ARN) of the Amazon Simple Notification Service
-	// (SNS) caller. This is the ARN of the IAM role in your AWS account which Cognito
-	// will use to send SMS messages.
+	// (SNS) caller. This is the ARN of the IAM role in your account which Cognito
+	// will use to send SMS messages. SMS messages are subject to a spending limit
+	// (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-email-phone-verification.html).
 	//
 	// SnsCallerArn is a required field
 	SnsCallerArn *string `min:"20" type:"string" required:"true"`
@@ -25176,8 +25938,8 @@ func (s *SmsMfaConfigType) SetSmsConfiguration(v *SmsConfigurationType) *SmsMfaC
 // This exception is thrown when the software token TOTP multi-factor authentication
 // (MFA) is not enabled for the user pool.
 type SoftwareTokenMFANotFoundException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -25194,17 +25956,17 @@ func (s SoftwareTokenMFANotFoundException) GoString() string {
 
 func newErrorSoftwareTokenMFANotFoundException(v protocol.ResponseMetadata) error {
 	return &SoftwareTokenMFANotFoundException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s SoftwareTokenMFANotFoundException) Code() string {
+func (s *SoftwareTokenMFANotFoundException) Code() string {
 	return "SoftwareTokenMFANotFoundException"
 }
 
 // Message returns the exception's message.
-func (s SoftwareTokenMFANotFoundException) Message() string {
+func (s *SoftwareTokenMFANotFoundException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -25212,22 +25974,22 @@ func (s SoftwareTokenMFANotFoundException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s SoftwareTokenMFANotFoundException) OrigErr() error {
+func (s *SoftwareTokenMFANotFoundException) OrigErr() error {
 	return nil
 }
 
-func (s SoftwareTokenMFANotFoundException) Error() string {
+func (s *SoftwareTokenMFANotFoundException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s SoftwareTokenMFANotFoundException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *SoftwareTokenMFANotFoundException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s SoftwareTokenMFANotFoundException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *SoftwareTokenMFANotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The type used for enabling software token MFA at the user pool level.
@@ -25254,11 +26016,18 @@ func (s *SoftwareTokenMfaConfigType) SetEnabled(v bool) *SoftwareTokenMfaConfigT
 	return s
 }
 
-// The type used for enabling software token MFA at the user level.
+// The type used for enabling software token MFA at the user level. If an MFA
+// type is enabled for a user, the user will be prompted for MFA during all
+// sign in attempts, unless device tracking is turned on and the device has
+// been trusted. If you would like MFA to be applied selectively based on the
+// assessed risk level of sign in attempts, disable MFA for users and turn on
+// Adaptive Authentication for the user pool.
 type SoftwareTokenMfaSettingsType struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies whether software token MFA is enabled.
+	// Specifies whether software token MFA is enabled. If an MFA type is enabled
+	// for a user, the user will be prompted for MFA during all sign in attempts,
+	// unless device tracking is turned on and the device has been trusted.
 	Enabled *bool `type:"boolean"`
 
 	// Specifies whether software token MFA is the preferred MFA method.
@@ -25557,11 +26326,57 @@ func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
 
+// The data type for TokenValidityUnits that specifics the time measurements
+// for token validity.
+type TokenValidityUnitsType struct {
+	_ struct{} `type:"structure"`
+
+	// A time unit in “seconds”, “minutes”, “hours” or “days” for
+	// the value in AccessTokenValidity, defaults to hours.
+	AccessToken *string `type:"string" enum:"TimeUnitsType"`
+
+	// A time unit in “seconds”, “minutes”, “hours” or “days” for
+	// the value in IdTokenValidity, defaults to hours.
+	IdToken *string `type:"string" enum:"TimeUnitsType"`
+
+	// A time unit in “seconds”, “minutes”, “hours” or “days” for
+	// the value in RefreshTokenValidity, defaults to days.
+	RefreshToken *string `type:"string" enum:"TimeUnitsType"`
+}
+
+// String returns the string representation
+func (s TokenValidityUnitsType) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s TokenValidityUnitsType) GoString() string {
+	return s.String()
+}
+
+// SetAccessToken sets the AccessToken field's value.
+func (s *TokenValidityUnitsType) SetAccessToken(v string) *TokenValidityUnitsType {
+	s.AccessToken = &v
+	return s
+}
+
+// SetIdToken sets the IdToken field's value.
+func (s *TokenValidityUnitsType) SetIdToken(v string) *TokenValidityUnitsType {
+	s.IdToken = &v
+	return s
+}
+
+// SetRefreshToken sets the RefreshToken field's value.
+func (s *TokenValidityUnitsType) SetRefreshToken(v string) *TokenValidityUnitsType {
+	s.RefreshToken = &v
+	return s
+}
+
 // This exception is thrown when the user has made too many failed attempts
 // for a given action (e.g., sign in).
 type TooManyFailedAttemptsException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service returns a too many failed
 	// attempts exception.
@@ -25580,17 +26395,17 @@ func (s TooManyFailedAttemptsException) GoString() string {
 
 func newErrorTooManyFailedAttemptsException(v protocol.ResponseMetadata) error {
 	return &TooManyFailedAttemptsException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s TooManyFailedAttemptsException) Code() string {
+func (s *TooManyFailedAttemptsException) Code() string {
 	return "TooManyFailedAttemptsException"
 }
 
 // Message returns the exception's message.
-func (s TooManyFailedAttemptsException) Message() string {
+func (s *TooManyFailedAttemptsException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -25598,29 +26413,29 @@ func (s TooManyFailedAttemptsException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s TooManyFailedAttemptsException) OrigErr() error {
+func (s *TooManyFailedAttemptsException) OrigErr() error {
 	return nil
 }
 
-func (s TooManyFailedAttemptsException) Error() string {
+func (s *TooManyFailedAttemptsException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s TooManyFailedAttemptsException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *TooManyFailedAttemptsException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s TooManyFailedAttemptsException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *TooManyFailedAttemptsException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the user has made too many requests for a given
 // operation.
 type TooManyRequestsException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service returns a too many requests
 	// exception.
@@ -25639,17 +26454,17 @@ func (s TooManyRequestsException) GoString() string {
 
 func newErrorTooManyRequestsException(v protocol.ResponseMetadata) error {
 	return &TooManyRequestsException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s TooManyRequestsException) Code() string {
+func (s *TooManyRequestsException) Code() string {
 	return "TooManyRequestsException"
 }
 
 // Message returns the exception's message.
-func (s TooManyRequestsException) Message() string {
+func (s *TooManyRequestsException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -25657,22 +26472,22 @@ func (s TooManyRequestsException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s TooManyRequestsException) OrigErr() error {
+func (s *TooManyRequestsException) OrigErr() error {
 	return nil
 }
 
-func (s TooManyRequestsException) Error() string {
+func (s *TooManyRequestsException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s TooManyRequestsException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *TooManyRequestsException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s TooManyRequestsException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *TooManyRequestsException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // A container for the UI customization information for a user pool's built-in
@@ -25754,14 +26569,71 @@ func (s *UICustomizationType) SetUserPoolId(v string) *UICustomizationType {
 	return s
 }
 
+// This exception is thrown when the request is not authorized. This can happen
+// due to an invalid access token in the request.
+type UnauthorizedException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation
+func (s UnauthorizedException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s UnauthorizedException) GoString() string {
+	return s.String()
+}
+
+func newErrorUnauthorizedException(v protocol.ResponseMetadata) error {
+	return &UnauthorizedException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *UnauthorizedException) Code() string {
+	return "UnauthorizedException"
+}
+
+// Message returns the exception's message.
+func (s *UnauthorizedException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *UnauthorizedException) OrigErr() error {
+	return nil
+}
+
+func (s *UnauthorizedException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *UnauthorizedException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *UnauthorizedException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // This exception is thrown when the Amazon Cognito service encounters an unexpected
-// exception with the AWS Lambda service.
+// exception with the Lambda service.
 type UnexpectedLambdaException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service returns an unexpected
-	// AWS Lambda exception.
+	// Lambda exception.
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -25777,17 +26649,17 @@ func (s UnexpectedLambdaException) GoString() string {
 
 func newErrorUnexpectedLambdaException(v protocol.ResponseMetadata) error {
 	return &UnexpectedLambdaException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UnexpectedLambdaException) Code() string {
+func (s *UnexpectedLambdaException) Code() string {
 	return "UnexpectedLambdaException"
 }
 
 // Message returns the exception's message.
-func (s UnexpectedLambdaException) Message() string {
+func (s *UnexpectedLambdaException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -25795,28 +26667,28 @@ func (s UnexpectedLambdaException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UnexpectedLambdaException) OrigErr() error {
+func (s *UnexpectedLambdaException) OrigErr() error {
 	return nil
 }
 
-func (s UnexpectedLambdaException) Error() string {
+func (s *UnexpectedLambdaException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UnexpectedLambdaException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UnexpectedLambdaException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UnexpectedLambdaException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UnexpectedLambdaException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when the specified identifier is not supported.
 type UnsupportedIdentityProviderException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -25833,17 +26705,17 @@ func (s UnsupportedIdentityProviderException) GoString() string {
 
 func newErrorUnsupportedIdentityProviderException(v protocol.ResponseMetadata) error {
 	return &UnsupportedIdentityProviderException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UnsupportedIdentityProviderException) Code() string {
+func (s *UnsupportedIdentityProviderException) Code() string {
 	return "UnsupportedIdentityProviderException"
 }
 
 // Message returns the exception's message.
-func (s UnsupportedIdentityProviderException) Message() string {
+func (s *UnsupportedIdentityProviderException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -25851,28 +26723,141 @@ func (s UnsupportedIdentityProviderException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UnsupportedIdentityProviderException) OrigErr() error {
+func (s *UnsupportedIdentityProviderException) OrigErr() error {
 	return nil
 }
 
-func (s UnsupportedIdentityProviderException) Error() string {
+func (s *UnsupportedIdentityProviderException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UnsupportedIdentityProviderException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UnsupportedIdentityProviderException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UnsupportedIdentityProviderException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UnsupportedIdentityProviderException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// This exception is thrown when you attempt to perform an operation that is
+// not enabled for the user pool client.
+type UnsupportedOperationException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation
+func (s UnsupportedOperationException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s UnsupportedOperationException) GoString() string {
+	return s.String()
+}
+
+func newErrorUnsupportedOperationException(v protocol.ResponseMetadata) error {
+	return &UnsupportedOperationException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *UnsupportedOperationException) Code() string {
+	return "UnsupportedOperationException"
+}
+
+// Message returns the exception's message.
+func (s *UnsupportedOperationException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *UnsupportedOperationException) OrigErr() error {
+	return nil
+}
+
+func (s *UnsupportedOperationException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *UnsupportedOperationException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *UnsupportedOperationException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// This exception is thrown when an unsupported token is passed to an operation.
+type UnsupportedTokenTypeException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation
+func (s UnsupportedTokenTypeException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s UnsupportedTokenTypeException) GoString() string {
+	return s.String()
+}
+
+func newErrorUnsupportedTokenTypeException(v protocol.ResponseMetadata) error {
+	return &UnsupportedTokenTypeException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *UnsupportedTokenTypeException) Code() string {
+	return "UnsupportedTokenTypeException"
+}
+
+// Message returns the exception's message.
+func (s *UnsupportedTokenTypeException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *UnsupportedTokenTypeException) OrigErr() error {
+	return nil
+}
+
+func (s *UnsupportedTokenTypeException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *UnsupportedTokenTypeException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *UnsupportedTokenTypeException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The request failed because the user is in an unsupported state.
 type UnsupportedUserStateException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the user is in an unsupported state.
 	Message_ *string `locationName:"message" type:"string"`
@@ -25890,17 +26875,17 @@ func (s UnsupportedUserStateException) GoString() string {
 
 func newErrorUnsupportedUserStateException(v protocol.ResponseMetadata) error {
 	return &UnsupportedUserStateException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UnsupportedUserStateException) Code() string {
+func (s *UnsupportedUserStateException) Code() string {
 	return "UnsupportedUserStateException"
 }
 
 // Message returns the exception's message.
-func (s UnsupportedUserStateException) Message() string {
+func (s *UnsupportedUserStateException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -25908,22 +26893,22 @@ func (s UnsupportedUserStateException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UnsupportedUserStateException) OrigErr() error {
+func (s *UnsupportedUserStateException) OrigErr() error {
 	return nil
 }
 
-func (s UnsupportedUserStateException) Error() string {
+func (s *UnsupportedUserStateException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UnsupportedUserStateException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UnsupportedUserStateException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UnsupportedUserStateException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UnsupportedUserStateException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 type UntagResourceInput struct {
@@ -26205,7 +27190,7 @@ type UpdateGroupInput struct {
 	GroupName *string `min:"1" type:"string" required:"true"`
 
 	// The new precedence value for the group. For more information about this parameter,
-	// see .
+	// see CreateGroup (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_CreateGroup.html).
 	Precedence *int64 `type:"integer"`
 
 	// The new role ARN for the group. This is used for setting the cognito:roles
@@ -26547,15 +27532,14 @@ type UpdateUserAttributesInput struct {
 	// A map of custom key-value pairs that you can provide as input for any custom
 	// workflows that this action triggers.
 	//
-	// You create custom workflows by assigning AWS Lambda functions to user pool
-	// triggers. When you use the UpdateUserAttributes API action, Amazon Cognito
-	// invokes the function that is assigned to the custom message trigger. When
-	// Amazon Cognito invokes this function, it passes a JSON payload, which the
-	// function receives as input. This payload contains a clientMetadata attribute,
-	// which provides the data that you assigned to the ClientMetadata parameter
-	// in your UpdateUserAttributes request. In your function code in AWS Lambda,
-	// you can process the clientMetadata value to enhance your workflow for your
-	// specific needs.
+	// You create custom workflows by assigning Lambda functions to user pool triggers.
+	// When you use the UpdateUserAttributes API action, Amazon Cognito invokes
+	// the function that is assigned to the custom message trigger. When Amazon
+	// Cognito invokes this function, it passes a JSON payload, which the function
+	// receives as input. This payload contains a clientMetadata attribute, which
+	// provides the data that you assigned to the ClientMetadata parameter in your
+	// UpdateUserAttributes request. In your function code in Lambda, you can process
+	// the clientMetadata value to enhance your workflow for your specific needs.
 	//
 	// For more information, see Customizing User Pool Workflows with Lambda Triggers
 	// (https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html)
@@ -26565,9 +27549,9 @@ type UpdateUserAttributesInput struct {
 	// parameter:
 	//
 	//    * Amazon Cognito does not store the ClientMetadata value. This data is
-	//    available only to AWS Lambda triggers that are assigned to a user pool
-	//    to support custom workflows. If your user pool configuration does not
-	//    include triggers, the ClientMetadata parameter serves no purpose.
+	//    available only to Lambda triggers that are assigned to a user pool to
+	//    support custom workflows. If your user pool configuration does not include
+	//    triggers, the ClientMetadata parameter serves no purpose.
 	//
 	//    * Amazon Cognito does not validate the ClientMetadata value.
 	//
@@ -26667,6 +27651,10 @@ func (s *UpdateUserAttributesOutput) SetCodeDeliveryDetailsList(v []*CodeDeliver
 type UpdateUserPoolClientInput struct {
 	_ struct{} `type:"structure"`
 
+	// The time limit, after which the access token is no longer valid and cannot
+	// be used.
+	AccessTokenValidity *int64 `min:"1" type:"integer"`
+
 	// The allowed OAuth flows.
 	//
 	// Set to code to initiate a code grant flow, which provides an authorization
@@ -26686,12 +27674,18 @@ type UpdateUserPoolClientInput struct {
 	AllowedOAuthFlowsUserPoolClient *bool `type:"boolean"`
 
 	// The allowed OAuth scopes. Possible values provided by OAuth are: phone, email,
-	// openid, and profile. Possible values provided by AWS are: aws.cognito.signin.user.admin.
-	// Custom scopes created in Resource Servers are also supported.
+	// openid, and profile. Possible values provided by Amazon Web Services are:
+	// aws.cognito.signin.user.admin. Custom scopes created in Resource Servers
+	// are also supported.
 	AllowedOAuthScopes []*string `type:"list"`
 
 	// The Amazon Pinpoint analytics configuration for collecting metrics for this
 	// user pool.
+	//
+	// In regions where Pinpoint is not available, Cognito User Pools only supports
+	// sending events to Amazon Pinpoint projects in us-east-1. In regions where
+	// Pinpoint is available, Cognito User Pools will support sending events to
+	// Amazon Pinpoint projects within that same region.
 	AnalyticsConfiguration *AnalyticsConfigurationType `type:"structure"`
 
 	// A list of allowed redirect (callback) URLs for the identity providers.
@@ -26738,6 +27732,10 @@ type UpdateUserPoolClientInput struct {
 	// App callback URLs such as myapp://example are also supported.
 	DefaultRedirectURI *string `min:"1" type:"string"`
 
+	// Enables or disables token revocation. For more information about revoking
+	// tokens, see RevokeToken (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html).
+	EnableTokenRevocation *bool `type:"boolean"`
+
 	// The authentication flows that are supported by the user pool clients. Flow
 	// names without the ALLOW_ prefix are deprecated in favor of new names with
 	// the ALLOW_ prefix. Note that values with ALLOW_ prefix cannot be used along
@@ -26762,6 +27760,10 @@ type UpdateUserPoolClientInput struct {
 	//    * ALLOW_REFRESH_TOKEN_AUTH: Enable authflow to refresh tokens.
 	ExplicitAuthFlows []*string `type:"list"`
 
+	// The time limit, after which the ID token is no longer valid and cannot be
+	// used.
+	IdTokenValidity *int64 `min:"1" type:"integer"`
+
 	// A list of allowed logout URLs for the identity providers.
 	LogoutURLs []*string `type:"list"`
 
@@ -26781,24 +27783,6 @@ type UpdateUserPoolClientInput struct {
 	//    * LEGACY - This represents the old behavior of Cognito where user existence
 	//    related errors are not prevented.
 	//
-	// This setting affects the behavior of following APIs:
-	//
-	//    * AdminInitiateAuth
-	//
-	//    * AdminRespondToAuthChallenge
-	//
-	//    * InitiateAuth
-	//
-	//    * RespondToAuthChallenge
-	//
-	//    * ForgotPassword
-	//
-	//    * ConfirmForgotPassword
-	//
-	//    * ConfirmSignUp
-	//
-	//    * ResendConfirmationCode
-	//
 	// After February 15th 2020, the value of PreventUserExistenceErrors will default
 	// to ENABLED for newly created user pool clients if no value is provided.
 	PreventUserExistenceErrors *string `type:"string" enum:"PreventUserExistenceErrorTypes"`
@@ -26813,6 +27797,10 @@ type UpdateUserPoolClientInput struct {
 	// A list of provider names for the identity providers that are supported on
 	// this client.
 	SupportedIdentityProviders []*string `type:"list"`
+
+	// The units in which the validity times are represented in. Default for RefreshToken
+	// is days, and default for ID and access tokens are hours.
+	TokenValidityUnits *TokenValidityUnitsType `type:"structure"`
 
 	// The user pool ID for the user pool where you want to update the user pool
 	// client.
@@ -26837,6 +27825,9 @@ func (s UpdateUserPoolClientInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *UpdateUserPoolClientInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UpdateUserPoolClientInput"}
+	if s.AccessTokenValidity != nil && *s.AccessTokenValidity < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("AccessTokenValidity", 1))
+	}
 	if s.ClientId == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClientId"))
 	}
@@ -26848,6 +27839,9 @@ func (s *UpdateUserPoolClientInput) Validate() error {
 	}
 	if s.DefaultRedirectURI != nil && len(*s.DefaultRedirectURI) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DefaultRedirectURI", 1))
+	}
+	if s.IdTokenValidity != nil && *s.IdTokenValidity < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("IdTokenValidity", 1))
 	}
 	if s.UserPoolId == nil {
 		invalidParams.Add(request.NewErrParamRequired("UserPoolId"))
@@ -26865,6 +27859,12 @@ func (s *UpdateUserPoolClientInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAccessTokenValidity sets the AccessTokenValidity field's value.
+func (s *UpdateUserPoolClientInput) SetAccessTokenValidity(v int64) *UpdateUserPoolClientInput {
+	s.AccessTokenValidity = &v
+	return s
 }
 
 // SetAllowedOAuthFlows sets the AllowedOAuthFlows field's value.
@@ -26915,9 +27915,21 @@ func (s *UpdateUserPoolClientInput) SetDefaultRedirectURI(v string) *UpdateUserP
 	return s
 }
 
+// SetEnableTokenRevocation sets the EnableTokenRevocation field's value.
+func (s *UpdateUserPoolClientInput) SetEnableTokenRevocation(v bool) *UpdateUserPoolClientInput {
+	s.EnableTokenRevocation = &v
+	return s
+}
+
 // SetExplicitAuthFlows sets the ExplicitAuthFlows field's value.
 func (s *UpdateUserPoolClientInput) SetExplicitAuthFlows(v []*string) *UpdateUserPoolClientInput {
 	s.ExplicitAuthFlows = v
+	return s
+}
+
+// SetIdTokenValidity sets the IdTokenValidity field's value.
+func (s *UpdateUserPoolClientInput) SetIdTokenValidity(v int64) *UpdateUserPoolClientInput {
+	s.IdTokenValidity = &v
 	return s
 }
 
@@ -26948,6 +27960,12 @@ func (s *UpdateUserPoolClientInput) SetRefreshTokenValidity(v int64) *UpdateUser
 // SetSupportedIdentityProviders sets the SupportedIdentityProviders field's value.
 func (s *UpdateUserPoolClientInput) SetSupportedIdentityProviders(v []*string) *UpdateUserPoolClientInput {
 	s.SupportedIdentityProviders = v
+	return s
+}
+
+// SetTokenValidityUnits sets the TokenValidityUnits field's value.
+func (s *UpdateUserPoolClientInput) SetTokenValidityUnits(v *TokenValidityUnitsType) *UpdateUserPoolClientInput {
+	s.TokenValidityUnits = v
 	return s
 }
 
@@ -27132,7 +28150,7 @@ type UpdateUserPoolInput struct {
 	// The subject of the email verification message.
 	EmailVerificationSubject *string `min:"1" type:"string"`
 
-	// The AWS Lambda configuration information from the request to update the user
+	// The Lambda configuration information from the request to update the user
 	// pool.
 	LambdaConfig *LambdaConfigType `type:"structure"`
 
@@ -27142,7 +28160,9 @@ type UpdateUserPoolInput struct {
 	//    registration.
 	//
 	//    * ON - MFA tokens are required for all user registrations. You can only
-	//    specify required when you are initially creating a user pool.
+	//    specify ON when you are initially creating a user pool. You can use the
+	//    SetUserPoolMfaConfig (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SetUserPoolMfaConfig.html)
+	//    API operation to turn MFA "ON" for existing user pools.
 	//
 	//    * OPTIONAL - Users have the option when registering to create an MFA token.
 	MfaConfiguration *string `type:"string" enum:"UserPoolMfaType"`
@@ -27404,8 +28424,8 @@ func (s *UserContextDataType) SetEncodedData(v string) *UserContextDataType {
 // This exception is thrown when you are trying to modify a user pool while
 // a user import job is in progress for that pool.
 type UserImportInProgressException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the user pool has an import job running.
 	Message_ *string `locationName:"message" type:"string"`
@@ -27423,17 +28443,17 @@ func (s UserImportInProgressException) GoString() string {
 
 func newErrorUserImportInProgressException(v protocol.ResponseMetadata) error {
 	return &UserImportInProgressException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UserImportInProgressException) Code() string {
+func (s *UserImportInProgressException) Code() string {
 	return "UserImportInProgressException"
 }
 
 // Message returns the exception's message.
-func (s UserImportInProgressException) Message() string {
+func (s *UserImportInProgressException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -27441,22 +28461,22 @@ func (s UserImportInProgressException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UserImportInProgressException) OrigErr() error {
+func (s *UserImportInProgressException) OrigErr() error {
 	return nil
 }
 
-func (s UserImportInProgressException) Error() string {
+func (s *UserImportInProgressException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UserImportInProgressException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UserImportInProgressException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UserImportInProgressException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UserImportInProgressException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The user import job type.
@@ -27615,13 +28635,13 @@ func (s *UserImportJobType) SetUserPoolId(v string) *UserImportJobType {
 }
 
 // This exception is thrown when the Amazon Cognito service encounters a user
-// validation exception with the AWS Lambda service.
+// validation exception with the Lambda service.
 type UserLambdaValidationException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when the Amazon Cognito service returns a user validation
-	// exception with the AWS Lambda service.
+	// exception with the Lambda service.
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -27637,17 +28657,17 @@ func (s UserLambdaValidationException) GoString() string {
 
 func newErrorUserLambdaValidationException(v protocol.ResponseMetadata) error {
 	return &UserLambdaValidationException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UserLambdaValidationException) Code() string {
+func (s *UserLambdaValidationException) Code() string {
 	return "UserLambdaValidationException"
 }
 
 // Message returns the exception's message.
-func (s UserLambdaValidationException) Message() string {
+func (s *UserLambdaValidationException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -27655,28 +28675,28 @@ func (s UserLambdaValidationException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UserLambdaValidationException) OrigErr() error {
+func (s *UserLambdaValidationException) OrigErr() error {
 	return nil
 }
 
-func (s UserLambdaValidationException) Error() string {
+func (s *UserLambdaValidationException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UserLambdaValidationException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UserLambdaValidationException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UserLambdaValidationException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UserLambdaValidationException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when a user is not confirmed successfully.
 type UserNotConfirmedException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when a user is not confirmed successfully.
 	Message_ *string `locationName:"message" type:"string"`
@@ -27694,17 +28714,17 @@ func (s UserNotConfirmedException) GoString() string {
 
 func newErrorUserNotConfirmedException(v protocol.ResponseMetadata) error {
 	return &UserNotConfirmedException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UserNotConfirmedException) Code() string {
+func (s *UserNotConfirmedException) Code() string {
 	return "UserNotConfirmedException"
 }
 
 // Message returns the exception's message.
-func (s UserNotConfirmedException) Message() string {
+func (s *UserNotConfirmedException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -27712,28 +28732,28 @@ func (s UserNotConfirmedException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UserNotConfirmedException) OrigErr() error {
+func (s *UserNotConfirmedException) OrigErr() error {
 	return nil
 }
 
-func (s UserNotConfirmedException) Error() string {
+func (s *UserNotConfirmedException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UserNotConfirmedException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UserNotConfirmedException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UserNotConfirmedException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UserNotConfirmedException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when a user is not found.
 type UserNotFoundException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when a user is not found.
 	Message_ *string `locationName:"message" type:"string"`
@@ -27751,17 +28771,17 @@ func (s UserNotFoundException) GoString() string {
 
 func newErrorUserNotFoundException(v protocol.ResponseMetadata) error {
 	return &UserNotFoundException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UserNotFoundException) Code() string {
+func (s *UserNotFoundException) Code() string {
 	return "UserNotFoundException"
 }
 
 // Message returns the exception's message.
-func (s UserNotFoundException) Message() string {
+func (s *UserNotFoundException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -27769,28 +28789,28 @@ func (s UserNotFoundException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UserNotFoundException) OrigErr() error {
+func (s *UserNotFoundException) OrigErr() error {
 	return nil
 }
 
-func (s UserNotFoundException) Error() string {
+func (s *UserNotFoundException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UserNotFoundException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UserNotFoundException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UserNotFoundException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UserNotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // This exception is thrown when user pool add-ons are not enabled.
 type UserPoolAddOnNotEnabledException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -27807,17 +28827,17 @@ func (s UserPoolAddOnNotEnabledException) GoString() string {
 
 func newErrorUserPoolAddOnNotEnabledException(v protocol.ResponseMetadata) error {
 	return &UserPoolAddOnNotEnabledException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UserPoolAddOnNotEnabledException) Code() string {
+func (s *UserPoolAddOnNotEnabledException) Code() string {
 	return "UserPoolAddOnNotEnabledException"
 }
 
 // Message returns the exception's message.
-func (s UserPoolAddOnNotEnabledException) Message() string {
+func (s *UserPoolAddOnNotEnabledException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -27825,22 +28845,22 @@ func (s UserPoolAddOnNotEnabledException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UserPoolAddOnNotEnabledException) OrigErr() error {
+func (s *UserPoolAddOnNotEnabledException) OrigErr() error {
 	return nil
 }
 
-func (s UserPoolAddOnNotEnabledException) Error() string {
+func (s *UserPoolAddOnNotEnabledException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UserPoolAddOnNotEnabledException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UserPoolAddOnNotEnabledException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UserPoolAddOnNotEnabledException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UserPoolAddOnNotEnabledException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The user pool add-ons type.
@@ -27929,6 +28949,10 @@ func (s *UserPoolClientDescription) SetUserPoolId(v string) *UserPoolClientDescr
 type UserPoolClientType struct {
 	_ struct{} `type:"structure"`
 
+	// The time limit, specified by tokenValidityUnits, defaulting to hours, after
+	// which the access token is no longer valid and cannot be used.
+	AccessTokenValidity *int64 `min:"1" type:"integer"`
+
 	// The allowed OAuth flows.
 	//
 	// Set to code to initiate a code grant flow, which provides an authorization
@@ -27948,11 +28972,16 @@ type UserPoolClientType struct {
 	AllowedOAuthFlowsUserPoolClient *bool `type:"boolean"`
 
 	// The allowed OAuth scopes. Possible values provided by OAuth are: phone, email,
-	// openid, and profile. Possible values provided by AWS are: aws.cognito.signin.user.admin.
-	// Custom scopes created in Resource Servers are also supported.
+	// openid, and profile. Possible values provided by Amazon Web Services are:
+	// aws.cognito.signin.user.admin. Custom scopes created in Resource Servers
+	// are also supported.
 	AllowedOAuthScopes []*string `type:"list"`
 
 	// The Amazon Pinpoint analytics configuration for the user pool client.
+	//
+	// Cognito User Pools only supports sending events to Amazon Pinpoint projects
+	// in the US East (N. Virginia) us-east-1 Region, regardless of the region in
+	// which the user pool resides.
 	AnalyticsConfiguration *AnalyticsConfigurationType `type:"structure"`
 
 	// A list of allowed redirect (callback) URLs for the identity providers.
@@ -28003,6 +29032,11 @@ type UserPoolClientType struct {
 	// App callback URLs such as myapp://example are also supported.
 	DefaultRedirectURI *string `min:"1" type:"string"`
 
+	// Indicates whether token revocation is enabled for the user pool client. When
+	// you create a new user pool client, token revocation is enabled by default.
+	// For more information about revoking tokens, see RevokeToken (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_RevokeToken.html).
+	EnableTokenRevocation *bool `type:"boolean"`
+
 	// The authentication flows that are supported by the user pool clients. Flow
 	// names without the ALLOW_ prefix are deprecated in favor of new names with
 	// the ALLOW_ prefix. Note that values with ALLOW_ prefix cannot be used along
@@ -28027,6 +29061,10 @@ type UserPoolClientType struct {
 	//    * ALLOW_REFRESH_TOKEN_AUTH: Enable authflow to refresh tokens.
 	ExplicitAuthFlows []*string `type:"list"`
 
+	// The time limit, specified by tokenValidityUnits, defaulting to hours, after
+	// which the refresh token is no longer valid and cannot be used.
+	IdTokenValidity *int64 `min:"1" type:"integer"`
+
 	// The date the user pool client was last modified.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
@@ -28049,24 +29087,6 @@ type UserPoolClientType struct {
 	//    * LEGACY - This represents the old behavior of Cognito where user existence
 	//    related errors are not prevented.
 	//
-	// This setting affects the behavior of following APIs:
-	//
-	//    * AdminInitiateAuth
-	//
-	//    * AdminRespondToAuthChallenge
-	//
-	//    * InitiateAuth
-	//
-	//    * RespondToAuthChallenge
-	//
-	//    * ForgotPassword
-	//
-	//    * ConfirmForgotPassword
-	//
-	//    * ConfirmSignUp
-	//
-	//    * ResendConfirmationCode
-	//
 	// After February 15th 2020, the value of PreventUserExistenceErrors will default
 	// to ENABLED for newly created user pool clients if no value is provided.
 	PreventUserExistenceErrors *string `type:"string" enum:"PreventUserExistenceErrorTypes"`
@@ -28081,6 +29101,10 @@ type UserPoolClientType struct {
 	// A list of provider names for the identity providers that are supported on
 	// this client.
 	SupportedIdentityProviders []*string `type:"list"`
+
+	// The time units used to specify the token validity times of their respective
+	// token.
+	TokenValidityUnits *TokenValidityUnitsType `type:"structure"`
 
 	// The user pool ID for the user pool client.
 	UserPoolId *string `min:"1" type:"string"`
@@ -28097,6 +29121,12 @@ func (s UserPoolClientType) String() string {
 // GoString returns the string representation
 func (s UserPoolClientType) GoString() string {
 	return s.String()
+}
+
+// SetAccessTokenValidity sets the AccessTokenValidity field's value.
+func (s *UserPoolClientType) SetAccessTokenValidity(v int64) *UserPoolClientType {
+	s.AccessTokenValidity = &v
+	return s
 }
 
 // SetAllowedOAuthFlows sets the AllowedOAuthFlows field's value.
@@ -28159,9 +29189,21 @@ func (s *UserPoolClientType) SetDefaultRedirectURI(v string) *UserPoolClientType
 	return s
 }
 
+// SetEnableTokenRevocation sets the EnableTokenRevocation field's value.
+func (s *UserPoolClientType) SetEnableTokenRevocation(v bool) *UserPoolClientType {
+	s.EnableTokenRevocation = &v
+	return s
+}
+
 // SetExplicitAuthFlows sets the ExplicitAuthFlows field's value.
 func (s *UserPoolClientType) SetExplicitAuthFlows(v []*string) *UserPoolClientType {
 	s.ExplicitAuthFlows = v
+	return s
+}
+
+// SetIdTokenValidity sets the IdTokenValidity field's value.
+func (s *UserPoolClientType) SetIdTokenValidity(v int64) *UserPoolClientType {
+	s.IdTokenValidity = &v
 	return s
 }
 
@@ -28201,6 +29243,12 @@ func (s *UserPoolClientType) SetSupportedIdentityProviders(v []*string) *UserPoo
 	return s
 }
 
+// SetTokenValidityUnits sets the TokenValidityUnits field's value.
+func (s *UserPoolClientType) SetTokenValidityUnits(v *TokenValidityUnitsType) *UserPoolClientType {
+	s.TokenValidityUnits = v
+	return s
+}
+
 // SetUserPoolId sets the UserPoolId field's value.
 func (s *UserPoolClientType) SetUserPoolId(v string) *UserPoolClientType {
 	s.UserPoolId = &v
@@ -28223,7 +29271,7 @@ type UserPoolDescriptionType struct {
 	// The ID in a user pool description.
 	Id *string `min:"1" type:"string"`
 
-	// The AWS Lambda configuration information in a user pool description.
+	// The Lambda configuration information in a user pool description.
 	LambdaConfig *LambdaConfigType `type:"structure"`
 
 	// The date the user pool description was last modified.
@@ -28323,8 +29371,8 @@ func (s *UserPoolPolicyType) SetPasswordPolicy(v *PasswordPolicyType) *UserPoolP
 
 // This exception is thrown when a user pool tag cannot be set or updated.
 type UserPoolTaggingException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -28341,17 +29389,17 @@ func (s UserPoolTaggingException) GoString() string {
 
 func newErrorUserPoolTaggingException(v protocol.ResponseMetadata) error {
 	return &UserPoolTaggingException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UserPoolTaggingException) Code() string {
+func (s *UserPoolTaggingException) Code() string {
 	return "UserPoolTaggingException"
 }
 
 // Message returns the exception's message.
-func (s UserPoolTaggingException) Message() string {
+func (s *UserPoolTaggingException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -28359,22 +29407,22 @@ func (s UserPoolTaggingException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UserPoolTaggingException) OrigErr() error {
+func (s *UserPoolTaggingException) OrigErr() error {
 	return nil
 }
 
-func (s UserPoolTaggingException) Error() string {
+func (s *UserPoolTaggingException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UserPoolTaggingException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UserPoolTaggingException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UserPoolTaggingException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UserPoolTaggingException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // A container for information about the user pool.
@@ -28437,7 +29485,7 @@ type UserPoolType struct {
 	// The ID of the user pool.
 	Id *string `min:"1" type:"string"`
 
-	// The AWS Lambda triggers associated with the user pool.
+	// The Lambda triggers associated with the user pool.
 	LambdaConfig *LambdaConfigType `type:"structure"`
 
 	// The date the user pool was last modified.
@@ -28470,6 +29518,19 @@ type UserPoolType struct {
 	SmsConfiguration *SmsConfigurationType `type:"structure"`
 
 	// The reason why the SMS configuration cannot send the messages to your users.
+	//
+	// This message might include comma-separated values to describe why your SMS
+	// configuration can't send messages to user pool end users.
+	//
+	//    * InvalidSmsRoleAccessPolicyException - The IAM role which Cognito uses
+	//    to send SMS messages is not properly configured. For more information,
+	//    see SmsConfigurationType (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SmsConfigurationType.html).
+	//
+	//    * SNSSandbox - The account is in SNS Sandbox and messages won’t reach
+	//    unverified end users. This parameter won’t get populated with SNSSandbox
+	//    if the IAM user creating the user pool doesn’t have SNS permissions.
+	//    To learn how to move your account out of the sandbox, see Moving out of
+	//    the SMS sandbox (https://docs.aws.amazon.com/sns/latest/dg/sns-sms-sandbox-moving-to-production.html).
 	SmsConfigurationFailure *string `type:"string"`
 
 	// The contents of the SMS verification message.
@@ -28493,7 +29554,8 @@ type UserPoolType struct {
 	// You can choose to enable case sensitivity on the username input for the selected
 	// sign-in option. For example, when this is set to False, users will be able
 	// to sign in using either "username" or "Username". This configuration is immutable
-	// once it has been set. For more information, see .
+	// once it has been set. For more information, see UsernameConfigurationType
+	// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UsernameConfigurationType.html).
 	UsernameConfiguration *UsernameConfigurationType `type:"structure"`
 
 	// The template for verification messages.
@@ -28845,8 +29907,8 @@ func (s *UsernameConfigurationType) SetCaseSensitive(v bool) *UsernameConfigurat
 // This exception is thrown when Amazon Cognito encounters a user name that
 // already exists in the user pool.
 type UsernameExistsException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	// The message returned when Amazon Cognito throws a user name exists exception.
 	Message_ *string `locationName:"message" type:"string"`
@@ -28864,17 +29926,17 @@ func (s UsernameExistsException) GoString() string {
 
 func newErrorUsernameExistsException(v protocol.ResponseMetadata) error {
 	return &UsernameExistsException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UsernameExistsException) Code() string {
+func (s *UsernameExistsException) Code() string {
 	return "UsernameExistsException"
 }
 
 // Message returns the exception's message.
-func (s UsernameExistsException) Message() string {
+func (s *UsernameExistsException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -28882,22 +29944,22 @@ func (s UsernameExistsException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UsernameExistsException) OrigErr() error {
+func (s *UsernameExistsException) OrigErr() error {
 	return nil
 }
 
-func (s UsernameExistsException) Error() string {
+func (s *UsernameExistsException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UsernameExistsException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UsernameExistsException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UsernameExistsException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UsernameExistsException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The template for verification messages.
@@ -28907,17 +29969,25 @@ type VerificationMessageTemplateType struct {
 	// The default email option.
 	DefaultEmailOption *string `type:"string" enum:"DefaultEmailOptionType"`
 
-	// The email message template.
+	// The email message template. EmailMessage is allowed only if EmailSendingAccount
+	// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailMessage *string `min:"6" type:"string"`
 
-	// The email message template for sending a confirmation link to the user.
+	// The email message template for sending a confirmation link to the user. EmailMessageByLink
+	// is allowed only if EmailSendingAccount (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailMessageByLink *string `min:"6" type:"string"`
 
-	// The subject line for the email message template.
+	// The subject line for the email message template. EmailSubject is allowed
+	// only if EmailSendingAccount (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailSubject *string `min:"1" type:"string"`
 
 	// The subject line for the email message template for sending a confirmation
-	// link to the user.
+	// link to the user. EmailSubjectByLink is allowed only EmailSendingAccount
+	// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_EmailConfigurationType.html#CognitoUserPools-Type-EmailConfigurationType-EmailSendingAccount)
+	// is DEVELOPER.
 	EmailSubjectByLink *string `min:"1" type:"string"`
 
 	// The SMS message template.
@@ -29008,7 +30078,8 @@ type VerifySoftwareTokenInput struct {
 	// to the service.
 	Session *string `min:"20" type:"string"`
 
-	// The one time password computed using the secret code returned by
+	// The one time password computed using the secret code returned by AssociateSoftwareToken"
+	// (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AssociateSoftwareToken.html).
 	//
 	// UserCode is a required field
 	UserCode *string `min:"6" type:"string" required:"true"`
@@ -29203,6 +30274,16 @@ const (
 	AccountTakeoverEventActionTypeNoAction = "NO_ACTION"
 )
 
+// AccountTakeoverEventActionType_Values returns all elements of the AccountTakeoverEventActionType enum
+func AccountTakeoverEventActionType_Values() []string {
+	return []string{
+		AccountTakeoverEventActionTypeBlock,
+		AccountTakeoverEventActionTypeMfaIfConfigured,
+		AccountTakeoverEventActionTypeMfaRequired,
+		AccountTakeoverEventActionTypeNoAction,
+	}
+}
+
 const (
 	// AdvancedSecurityModeTypeOff is a AdvancedSecurityModeType enum value
 	AdvancedSecurityModeTypeOff = "OFF"
@@ -29214,6 +30295,15 @@ const (
 	AdvancedSecurityModeTypeEnforced = "ENFORCED"
 )
 
+// AdvancedSecurityModeType_Values returns all elements of the AdvancedSecurityModeType enum
+func AdvancedSecurityModeType_Values() []string {
+	return []string{
+		AdvancedSecurityModeTypeOff,
+		AdvancedSecurityModeTypeAudit,
+		AdvancedSecurityModeTypeEnforced,
+	}
+}
+
 const (
 	// AliasAttributeTypePhoneNumber is a AliasAttributeType enum value
 	AliasAttributeTypePhoneNumber = "phone_number"
@@ -29224,6 +30314,15 @@ const (
 	// AliasAttributeTypePreferredUsername is a AliasAttributeType enum value
 	AliasAttributeTypePreferredUsername = "preferred_username"
 )
+
+// AliasAttributeType_Values returns all elements of the AliasAttributeType enum
+func AliasAttributeType_Values() []string {
+	return []string{
+		AliasAttributeTypePhoneNumber,
+		AliasAttributeTypeEmail,
+		AliasAttributeTypePreferredUsername,
+	}
+}
 
 const (
 	// AttributeDataTypeString is a AttributeDataType enum value
@@ -29238,6 +30337,16 @@ const (
 	// AttributeDataTypeBoolean is a AttributeDataType enum value
 	AttributeDataTypeBoolean = "Boolean"
 )
+
+// AttributeDataType_Values returns all elements of the AttributeDataType enum
+func AttributeDataType_Values() []string {
+	return []string{
+		AttributeDataTypeString,
+		AttributeDataTypeNumber,
+		AttributeDataTypeDateTime,
+		AttributeDataTypeBoolean,
+	}
+}
 
 const (
 	// AuthFlowTypeUserSrpAuth is a AuthFlowType enum value
@@ -29262,6 +30371,19 @@ const (
 	AuthFlowTypeAdminUserPasswordAuth = "ADMIN_USER_PASSWORD_AUTH"
 )
 
+// AuthFlowType_Values returns all elements of the AuthFlowType enum
+func AuthFlowType_Values() []string {
+	return []string{
+		AuthFlowTypeUserSrpAuth,
+		AuthFlowTypeRefreshTokenAuth,
+		AuthFlowTypeRefreshToken,
+		AuthFlowTypeCustomAuth,
+		AuthFlowTypeAdminNoSrpAuth,
+		AuthFlowTypeUserPasswordAuth,
+		AuthFlowTypeAdminUserPasswordAuth,
+	}
+}
+
 const (
 	// ChallengeNamePassword is a ChallengeName enum value
 	ChallengeNamePassword = "Password"
@@ -29269,6 +30391,14 @@ const (
 	// ChallengeNameMfa is a ChallengeName enum value
 	ChallengeNameMfa = "Mfa"
 )
+
+// ChallengeName_Values returns all elements of the ChallengeName enum
+func ChallengeName_Values() []string {
+	return []string{
+		ChallengeNamePassword,
+		ChallengeNameMfa,
+	}
+}
 
 const (
 	// ChallengeNameTypeSmsMfa is a ChallengeNameType enum value
@@ -29302,6 +30432,22 @@ const (
 	ChallengeNameTypeNewPasswordRequired = "NEW_PASSWORD_REQUIRED"
 )
 
+// ChallengeNameType_Values returns all elements of the ChallengeNameType enum
+func ChallengeNameType_Values() []string {
+	return []string{
+		ChallengeNameTypeSmsMfa,
+		ChallengeNameTypeSoftwareTokenMfa,
+		ChallengeNameTypeSelectMfaType,
+		ChallengeNameTypeMfaSetup,
+		ChallengeNameTypePasswordVerifier,
+		ChallengeNameTypeCustomChallenge,
+		ChallengeNameTypeDeviceSrpAuth,
+		ChallengeNameTypeDevicePasswordVerifier,
+		ChallengeNameTypeAdminNoSrpAuth,
+		ChallengeNameTypeNewPasswordRequired,
+	}
+}
+
 const (
 	// ChallengeResponseSuccess is a ChallengeResponse enum value
 	ChallengeResponseSuccess = "Success"
@@ -29309,6 +30455,14 @@ const (
 	// ChallengeResponseFailure is a ChallengeResponse enum value
 	ChallengeResponseFailure = "Failure"
 )
+
+// ChallengeResponse_Values returns all elements of the ChallengeResponse enum
+func ChallengeResponse_Values() []string {
+	return []string{
+		ChallengeResponseSuccess,
+		ChallengeResponseFailure,
+	}
+}
 
 const (
 	// CompromisedCredentialsEventActionTypeBlock is a CompromisedCredentialsEventActionType enum value
@@ -29318,6 +30472,38 @@ const (
 	CompromisedCredentialsEventActionTypeNoAction = "NO_ACTION"
 )
 
+// CompromisedCredentialsEventActionType_Values returns all elements of the CompromisedCredentialsEventActionType enum
+func CompromisedCredentialsEventActionType_Values() []string {
+	return []string{
+		CompromisedCredentialsEventActionTypeBlock,
+		CompromisedCredentialsEventActionTypeNoAction,
+	}
+}
+
+const (
+	// CustomEmailSenderLambdaVersionTypeV10 is a CustomEmailSenderLambdaVersionType enum value
+	CustomEmailSenderLambdaVersionTypeV10 = "V1_0"
+)
+
+// CustomEmailSenderLambdaVersionType_Values returns all elements of the CustomEmailSenderLambdaVersionType enum
+func CustomEmailSenderLambdaVersionType_Values() []string {
+	return []string{
+		CustomEmailSenderLambdaVersionTypeV10,
+	}
+}
+
+const (
+	// CustomSMSSenderLambdaVersionTypeV10 is a CustomSMSSenderLambdaVersionType enum value
+	CustomSMSSenderLambdaVersionTypeV10 = "V1_0"
+)
+
+// CustomSMSSenderLambdaVersionType_Values returns all elements of the CustomSMSSenderLambdaVersionType enum
+func CustomSMSSenderLambdaVersionType_Values() []string {
+	return []string{
+		CustomSMSSenderLambdaVersionTypeV10,
+	}
+}
+
 const (
 	// DefaultEmailOptionTypeConfirmWithLink is a DefaultEmailOptionType enum value
 	DefaultEmailOptionTypeConfirmWithLink = "CONFIRM_WITH_LINK"
@@ -29325,6 +30511,14 @@ const (
 	// DefaultEmailOptionTypeConfirmWithCode is a DefaultEmailOptionType enum value
 	DefaultEmailOptionTypeConfirmWithCode = "CONFIRM_WITH_CODE"
 )
+
+// DefaultEmailOptionType_Values returns all elements of the DefaultEmailOptionType enum
+func DefaultEmailOptionType_Values() []string {
+	return []string{
+		DefaultEmailOptionTypeConfirmWithLink,
+		DefaultEmailOptionTypeConfirmWithCode,
+	}
+}
 
 const (
 	// DeliveryMediumTypeSms is a DeliveryMediumType enum value
@@ -29334,6 +30528,14 @@ const (
 	DeliveryMediumTypeEmail = "EMAIL"
 )
 
+// DeliveryMediumType_Values returns all elements of the DeliveryMediumType enum
+func DeliveryMediumType_Values() []string {
+	return []string{
+		DeliveryMediumTypeSms,
+		DeliveryMediumTypeEmail,
+	}
+}
+
 const (
 	// DeviceRememberedStatusTypeRemembered is a DeviceRememberedStatusType enum value
 	DeviceRememberedStatusTypeRemembered = "remembered"
@@ -29341,6 +30543,14 @@ const (
 	// DeviceRememberedStatusTypeNotRemembered is a DeviceRememberedStatusType enum value
 	DeviceRememberedStatusTypeNotRemembered = "not_remembered"
 )
+
+// DeviceRememberedStatusType_Values returns all elements of the DeviceRememberedStatusType enum
+func DeviceRememberedStatusType_Values() []string {
+	return []string{
+		DeviceRememberedStatusTypeRemembered,
+		DeviceRememberedStatusTypeNotRemembered,
+	}
+}
 
 const (
 	// DomainStatusTypeCreating is a DomainStatusType enum value
@@ -29359,6 +30569,17 @@ const (
 	DomainStatusTypeFailed = "FAILED"
 )
 
+// DomainStatusType_Values returns all elements of the DomainStatusType enum
+func DomainStatusType_Values() []string {
+	return []string{
+		DomainStatusTypeCreating,
+		DomainStatusTypeDeleting,
+		DomainStatusTypeUpdating,
+		DomainStatusTypeActive,
+		DomainStatusTypeFailed,
+	}
+}
+
 const (
 	// EmailSendingAccountTypeCognitoDefault is a EmailSendingAccountType enum value
 	EmailSendingAccountTypeCognitoDefault = "COGNITO_DEFAULT"
@@ -29366,6 +30587,14 @@ const (
 	// EmailSendingAccountTypeDeveloper is a EmailSendingAccountType enum value
 	EmailSendingAccountTypeDeveloper = "DEVELOPER"
 )
+
+// EmailSendingAccountType_Values returns all elements of the EmailSendingAccountType enum
+func EmailSendingAccountType_Values() []string {
+	return []string{
+		EmailSendingAccountTypeCognitoDefault,
+		EmailSendingAccountTypeDeveloper,
+	}
+}
 
 const (
 	// EventFilterTypeSignIn is a EventFilterType enum value
@@ -29378,6 +30607,15 @@ const (
 	EventFilterTypeSignUp = "SIGN_UP"
 )
 
+// EventFilterType_Values returns all elements of the EventFilterType enum
+func EventFilterType_Values() []string {
+	return []string{
+		EventFilterTypeSignIn,
+		EventFilterTypePasswordChange,
+		EventFilterTypeSignUp,
+	}
+}
+
 const (
 	// EventResponseTypeSuccess is a EventResponseType enum value
 	EventResponseTypeSuccess = "Success"
@@ -29385,6 +30623,14 @@ const (
 	// EventResponseTypeFailure is a EventResponseType enum value
 	EventResponseTypeFailure = "Failure"
 )
+
+// EventResponseType_Values returns all elements of the EventResponseType enum
+func EventResponseType_Values() []string {
+	return []string{
+		EventResponseTypeSuccess,
+		EventResponseTypeFailure,
+	}
+}
 
 const (
 	// EventTypeSignIn is a EventType enum value
@@ -29396,6 +30642,15 @@ const (
 	// EventTypeForgotPassword is a EventType enum value
 	EventTypeForgotPassword = "ForgotPassword"
 )
+
+// EventType_Values returns all elements of the EventType enum
+func EventType_Values() []string {
+	return []string{
+		EventTypeSignIn,
+		EventTypeSignUp,
+		EventTypeForgotPassword,
+	}
+}
 
 const (
 	// ExplicitAuthFlowsTypeAdminNoSrpAuth is a ExplicitAuthFlowsType enum value
@@ -29423,6 +30678,20 @@ const (
 	ExplicitAuthFlowsTypeAllowRefreshTokenAuth = "ALLOW_REFRESH_TOKEN_AUTH"
 )
 
+// ExplicitAuthFlowsType_Values returns all elements of the ExplicitAuthFlowsType enum
+func ExplicitAuthFlowsType_Values() []string {
+	return []string{
+		ExplicitAuthFlowsTypeAdminNoSrpAuth,
+		ExplicitAuthFlowsTypeCustomAuthFlowOnly,
+		ExplicitAuthFlowsTypeUserPasswordAuth,
+		ExplicitAuthFlowsTypeAllowAdminUserPasswordAuth,
+		ExplicitAuthFlowsTypeAllowCustomAuth,
+		ExplicitAuthFlowsTypeAllowUserPasswordAuth,
+		ExplicitAuthFlowsTypeAllowUserSrpAuth,
+		ExplicitAuthFlowsTypeAllowRefreshTokenAuth,
+	}
+}
+
 const (
 	// FeedbackValueTypeValid is a FeedbackValueType enum value
 	FeedbackValueTypeValid = "Valid"
@@ -29430,6 +30699,14 @@ const (
 	// FeedbackValueTypeInvalid is a FeedbackValueType enum value
 	FeedbackValueTypeInvalid = "Invalid"
 )
+
+// FeedbackValueType_Values returns all elements of the FeedbackValueType enum
+func FeedbackValueType_Values() []string {
+	return []string{
+		FeedbackValueTypeValid,
+		FeedbackValueTypeInvalid,
+	}
+}
 
 const (
 	// IdentityProviderTypeTypeSaml is a IdentityProviderTypeType enum value
@@ -29451,6 +30728,18 @@ const (
 	IdentityProviderTypeTypeOidc = "OIDC"
 )
 
+// IdentityProviderTypeType_Values returns all elements of the IdentityProviderTypeType enum
+func IdentityProviderTypeType_Values() []string {
+	return []string{
+		IdentityProviderTypeTypeSaml,
+		IdentityProviderTypeTypeFacebook,
+		IdentityProviderTypeTypeGoogle,
+		IdentityProviderTypeTypeLoginWithAmazon,
+		IdentityProviderTypeTypeSignInWithApple,
+		IdentityProviderTypeTypeOidc,
+	}
+}
+
 const (
 	// MessageActionTypeResend is a MessageActionType enum value
 	MessageActionTypeResend = "RESEND"
@@ -29458,6 +30747,14 @@ const (
 	// MessageActionTypeSuppress is a MessageActionType enum value
 	MessageActionTypeSuppress = "SUPPRESS"
 )
+
+// MessageActionType_Values returns all elements of the MessageActionType enum
+func MessageActionType_Values() []string {
+	return []string{
+		MessageActionTypeResend,
+		MessageActionTypeSuppress,
+	}
+}
 
 const (
 	// OAuthFlowTypeCode is a OAuthFlowType enum value
@@ -29470,6 +30767,15 @@ const (
 	OAuthFlowTypeClientCredentials = "client_credentials"
 )
 
+// OAuthFlowType_Values returns all elements of the OAuthFlowType enum
+func OAuthFlowType_Values() []string {
+	return []string{
+		OAuthFlowTypeCode,
+		OAuthFlowTypeImplicit,
+		OAuthFlowTypeClientCredentials,
+	}
+}
+
 const (
 	// PreventUserExistenceErrorTypesLegacy is a PreventUserExistenceErrorTypes enum value
 	PreventUserExistenceErrorTypesLegacy = "LEGACY"
@@ -29477,6 +30783,14 @@ const (
 	// PreventUserExistenceErrorTypesEnabled is a PreventUserExistenceErrorTypes enum value
 	PreventUserExistenceErrorTypesEnabled = "ENABLED"
 )
+
+// PreventUserExistenceErrorTypes_Values returns all elements of the PreventUserExistenceErrorTypes enum
+func PreventUserExistenceErrorTypes_Values() []string {
+	return []string{
+		PreventUserExistenceErrorTypesLegacy,
+		PreventUserExistenceErrorTypesEnabled,
+	}
+}
 
 const (
 	// RecoveryOptionNameTypeVerifiedEmail is a RecoveryOptionNameType enum value
@@ -29489,6 +30803,15 @@ const (
 	RecoveryOptionNameTypeAdminOnly = "admin_only"
 )
 
+// RecoveryOptionNameType_Values returns all elements of the RecoveryOptionNameType enum
+func RecoveryOptionNameType_Values() []string {
+	return []string{
+		RecoveryOptionNameTypeVerifiedEmail,
+		RecoveryOptionNameTypeVerifiedPhoneNumber,
+		RecoveryOptionNameTypeAdminOnly,
+	}
+}
+
 const (
 	// RiskDecisionTypeNoRisk is a RiskDecisionType enum value
 	RiskDecisionTypeNoRisk = "NoRisk"
@@ -29499,6 +30822,15 @@ const (
 	// RiskDecisionTypeBlock is a RiskDecisionType enum value
 	RiskDecisionTypeBlock = "Block"
 )
+
+// RiskDecisionType_Values returns all elements of the RiskDecisionType enum
+func RiskDecisionType_Values() []string {
+	return []string{
+		RiskDecisionTypeNoRisk,
+		RiskDecisionTypeAccountTakeover,
+		RiskDecisionTypeBlock,
+	}
+}
 
 const (
 	// RiskLevelTypeLow is a RiskLevelType enum value
@@ -29511,6 +30843,15 @@ const (
 	RiskLevelTypeHigh = "High"
 )
 
+// RiskLevelType_Values returns all elements of the RiskLevelType enum
+func RiskLevelType_Values() []string {
+	return []string{
+		RiskLevelTypeLow,
+		RiskLevelTypeMedium,
+		RiskLevelTypeHigh,
+	}
+}
+
 const (
 	// StatusTypeEnabled is a StatusType enum value
 	StatusTypeEnabled = "Enabled"
@@ -29518,6 +30859,38 @@ const (
 	// StatusTypeDisabled is a StatusType enum value
 	StatusTypeDisabled = "Disabled"
 )
+
+// StatusType_Values returns all elements of the StatusType enum
+func StatusType_Values() []string {
+	return []string{
+		StatusTypeEnabled,
+		StatusTypeDisabled,
+	}
+}
+
+const (
+	// TimeUnitsTypeSeconds is a TimeUnitsType enum value
+	TimeUnitsTypeSeconds = "seconds"
+
+	// TimeUnitsTypeMinutes is a TimeUnitsType enum value
+	TimeUnitsTypeMinutes = "minutes"
+
+	// TimeUnitsTypeHours is a TimeUnitsType enum value
+	TimeUnitsTypeHours = "hours"
+
+	// TimeUnitsTypeDays is a TimeUnitsType enum value
+	TimeUnitsTypeDays = "days"
+)
+
+// TimeUnitsType_Values returns all elements of the TimeUnitsType enum
+func TimeUnitsType_Values() []string {
+	return []string{
+		TimeUnitsTypeSeconds,
+		TimeUnitsTypeMinutes,
+		TimeUnitsTypeHours,
+		TimeUnitsTypeDays,
+	}
+}
 
 const (
 	// UserImportJobStatusTypeCreated is a UserImportJobStatusType enum value
@@ -29545,6 +30918,20 @@ const (
 	UserImportJobStatusTypeSucceeded = "Succeeded"
 )
 
+// UserImportJobStatusType_Values returns all elements of the UserImportJobStatusType enum
+func UserImportJobStatusType_Values() []string {
+	return []string{
+		UserImportJobStatusTypeCreated,
+		UserImportJobStatusTypePending,
+		UserImportJobStatusTypeInProgress,
+		UserImportJobStatusTypeStopping,
+		UserImportJobStatusTypeExpired,
+		UserImportJobStatusTypeStopped,
+		UserImportJobStatusTypeFailed,
+		UserImportJobStatusTypeSucceeded,
+	}
+}
+
 const (
 	// UserPoolMfaTypeOff is a UserPoolMfaType enum value
 	UserPoolMfaTypeOff = "OFF"
@@ -29555,6 +30942,15 @@ const (
 	// UserPoolMfaTypeOptional is a UserPoolMfaType enum value
 	UserPoolMfaTypeOptional = "OPTIONAL"
 )
+
+// UserPoolMfaType_Values returns all elements of the UserPoolMfaType enum
+func UserPoolMfaType_Values() []string {
+	return []string{
+		UserPoolMfaTypeOff,
+		UserPoolMfaTypeOn,
+		UserPoolMfaTypeOptional,
+	}
+}
 
 const (
 	// UserStatusTypeUnconfirmed is a UserStatusType enum value
@@ -29579,6 +30975,19 @@ const (
 	UserStatusTypeForceChangePassword = "FORCE_CHANGE_PASSWORD"
 )
 
+// UserStatusType_Values returns all elements of the UserStatusType enum
+func UserStatusType_Values() []string {
+	return []string{
+		UserStatusTypeUnconfirmed,
+		UserStatusTypeConfirmed,
+		UserStatusTypeArchived,
+		UserStatusTypeCompromised,
+		UserStatusTypeUnknown,
+		UserStatusTypeResetRequired,
+		UserStatusTypeForceChangePassword,
+	}
+}
+
 const (
 	// UsernameAttributeTypePhoneNumber is a UsernameAttributeType enum value
 	UsernameAttributeTypePhoneNumber = "phone_number"
@@ -29586,6 +30995,14 @@ const (
 	// UsernameAttributeTypeEmail is a UsernameAttributeType enum value
 	UsernameAttributeTypeEmail = "email"
 )
+
+// UsernameAttributeType_Values returns all elements of the UsernameAttributeType enum
+func UsernameAttributeType_Values() []string {
+	return []string{
+		UsernameAttributeTypePhoneNumber,
+		UsernameAttributeTypeEmail,
+	}
+}
 
 const (
 	// VerifiedAttributeTypePhoneNumber is a VerifiedAttributeType enum value
@@ -29595,6 +31012,14 @@ const (
 	VerifiedAttributeTypeEmail = "email"
 )
 
+// VerifiedAttributeType_Values returns all elements of the VerifiedAttributeType enum
+func VerifiedAttributeType_Values() []string {
+	return []string{
+		VerifiedAttributeTypePhoneNumber,
+		VerifiedAttributeTypeEmail,
+	}
+}
+
 const (
 	// VerifySoftwareTokenResponseTypeSuccess is a VerifySoftwareTokenResponseType enum value
 	VerifySoftwareTokenResponseTypeSuccess = "SUCCESS"
@@ -29602,3 +31027,11 @@ const (
 	// VerifySoftwareTokenResponseTypeError is a VerifySoftwareTokenResponseType enum value
 	VerifySoftwareTokenResponseTypeError = "ERROR"
 )
+
+// VerifySoftwareTokenResponseType_Values returns all elements of the VerifySoftwareTokenResponseType enum
+func VerifySoftwareTokenResponseType_Values() []string {
+	return []string{
+		VerifySoftwareTokenResponseTypeSuccess,
+		VerifySoftwareTokenResponseTypeError,
+	}
+}

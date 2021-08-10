@@ -57,9 +57,8 @@ func (c *Cloud9) CreateEnvironmentEC2Request(input *CreateEnvironmentEC2Input) (
 
 // CreateEnvironmentEC2 API operation for AWS Cloud9.
 //
-// Creates an AWS Cloud9 development environment, launches an Amazon Elastic
-// Compute Cloud (Amazon EC2) instance, and then connects from the instance
-// to the environment.
+// Creates an Cloud9 development environment, launches an Amazon Elastic Compute
+// Cloud (Amazon EC2) instance, and then connects from the instance to the environment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -156,7 +155,7 @@ func (c *Cloud9) CreateEnvironmentMembershipRequest(input *CreateEnvironmentMemb
 
 // CreateEnvironmentMembership API operation for AWS Cloud9.
 //
-// Adds an environment member to an AWS Cloud9 development environment.
+// Adds an environment member to an Cloud9 development environment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -254,8 +253,8 @@ func (c *Cloud9) DeleteEnvironmentRequest(input *DeleteEnvironmentInput) (req *r
 
 // DeleteEnvironment API operation for AWS Cloud9.
 //
-// Deletes an AWS Cloud9 development environment. If an Amazon EC2 instance
-// is connected to the environment, also terminates the instance.
+// Deletes an Cloud9 development environment. If an Amazon EC2 instance is connected
+// to the environment, also terminates the instance.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -353,7 +352,7 @@ func (c *Cloud9) DeleteEnvironmentMembershipRequest(input *DeleteEnvironmentMemb
 
 // DeleteEnvironmentMembership API operation for AWS Cloud9.
 //
-// Deletes an environment member from an AWS Cloud9 development environment.
+// Deletes an environment member from an Cloud9 development environment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -456,8 +455,7 @@ func (c *Cloud9) DescribeEnvironmentMembershipsRequest(input *DescribeEnvironmen
 
 // DescribeEnvironmentMemberships API operation for AWS Cloud9.
 //
-// Gets information about environment members for an AWS Cloud9 development
-// environment.
+// Gets information about environment members for an Cloud9 development environment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -606,7 +604,7 @@ func (c *Cloud9) DescribeEnvironmentStatusRequest(input *DescribeEnvironmentStat
 
 // DescribeEnvironmentStatus API operation for AWS Cloud9.
 //
-// Gets status information for an AWS Cloud9 development environment.
+// Gets status information for an Cloud9 development environment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -703,7 +701,7 @@ func (c *Cloud9) DescribeEnvironmentsRequest(input *DescribeEnvironmentsInput) (
 
 // DescribeEnvironments API operation for AWS Cloud9.
 //
-// Gets information about AWS Cloud9 development environments.
+// Gets information about Cloud9 development environments.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -806,7 +804,7 @@ func (c *Cloud9) ListEnvironmentsRequest(input *ListEnvironmentsInput) (req *req
 
 // ListEnvironments API operation for AWS Cloud9.
 //
-// Gets a list of AWS Cloud9 development environment identifiers.
+// Gets a list of Cloud9 development environment identifiers.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -911,6 +909,272 @@ func (c *Cloud9) ListEnvironmentsPagesWithContext(ctx aws.Context, input *ListEn
 	return p.Err()
 }
 
+const opListTagsForResource = "ListTagsForResource"
+
+// ListTagsForResourceRequest generates a "aws/request.Request" representing the
+// client's request for the ListTagsForResource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListTagsForResource for more information on using the ListTagsForResource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the ListTagsForResourceRequest method.
+//    req, resp := client.ListTagsForResourceRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cloud9-2017-09-23/ListTagsForResource
+func (c *Cloud9) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *request.Request, output *ListTagsForResourceOutput) {
+	op := &request.Operation{
+		Name:       opListTagsForResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ListTagsForResourceInput{}
+	}
+
+	output = &ListTagsForResourceOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListTagsForResource API operation for AWS Cloud9.
+//
+// Gets a list of the tags associated with an Cloud9 development environment.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Cloud9's
+// API operation ListTagsForResource for usage and error information.
+//
+// Returned Error Types:
+//   * NotFoundException
+//   The target resource cannot be found.
+//
+//   * InternalServerErrorException
+//   An internal server error occurred.
+//
+//   * BadRequestException
+//   The target request is invalid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cloud9-2017-09-23/ListTagsForResource
+func (c *Cloud9) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
+	req, out := c.ListTagsForResourceRequest(input)
+	return out, req.Send()
+}
+
+// ListTagsForResourceWithContext is the same as ListTagsForResource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListTagsForResource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Cloud9) ListTagsForResourceWithContext(ctx aws.Context, input *ListTagsForResourceInput, opts ...request.Option) (*ListTagsForResourceOutput, error) {
+	req, out := c.ListTagsForResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opTagResource = "TagResource"
+
+// TagResourceRequest generates a "aws/request.Request" representing the
+// client's request for the TagResource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See TagResource for more information on using the TagResource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the TagResourceRequest method.
+//    req, resp := client.TagResourceRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cloud9-2017-09-23/TagResource
+func (c *Cloud9) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
+	op := &request.Operation{
+		Name:       opTagResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &TagResourceInput{}
+	}
+
+	output = &TagResourceOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// TagResource API operation for AWS Cloud9.
+//
+// Adds tags to an Cloud9 development environment.
+//
+// Tags that you add to an Cloud9 environment by using this method will NOT
+// be automatically propagated to underlying resources.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Cloud9's
+// API operation TagResource for usage and error information.
+//
+// Returned Error Types:
+//   * NotFoundException
+//   The target resource cannot be found.
+//
+//   * InternalServerErrorException
+//   An internal server error occurred.
+//
+//   * BadRequestException
+//   The target request is invalid.
+//
+//   * ConcurrentAccessException
+//   A concurrent access issue occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cloud9-2017-09-23/TagResource
+func (c *Cloud9) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
+	req, out := c.TagResourceRequest(input)
+	return out, req.Send()
+}
+
+// TagResourceWithContext is the same as TagResource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See TagResource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Cloud9) TagResourceWithContext(ctx aws.Context, input *TagResourceInput, opts ...request.Option) (*TagResourceOutput, error) {
+	req, out := c.TagResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUntagResource = "UntagResource"
+
+// UntagResourceRequest generates a "aws/request.Request" representing the
+// client's request for the UntagResource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UntagResource for more information on using the UntagResource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//
+//    // Example sending a request using the UntagResourceRequest method.
+//    req, resp := client.UntagResourceRequest(params)
+//
+//    err := req.Send()
+//    if err == nil { // resp is now filled
+//        fmt.Println(resp)
+//    }
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cloud9-2017-09-23/UntagResource
+func (c *Cloud9) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
+	op := &request.Operation{
+		Name:       opUntagResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &UntagResourceInput{}
+	}
+
+	output = &UntagResourceOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// UntagResource API operation for AWS Cloud9.
+//
+// Removes tags from an Cloud9 development environment.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Cloud9's
+// API operation UntagResource for usage and error information.
+//
+// Returned Error Types:
+//   * NotFoundException
+//   The target resource cannot be found.
+//
+//   * InternalServerErrorException
+//   An internal server error occurred.
+//
+//   * BadRequestException
+//   The target request is invalid.
+//
+//   * ConcurrentAccessException
+//   A concurrent access issue occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cloud9-2017-09-23/UntagResource
+func (c *Cloud9) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
+	req, out := c.UntagResourceRequest(input)
+	return out, req.Send()
+}
+
+// UntagResourceWithContext is the same as UntagResource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UntagResource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Cloud9) UntagResourceWithContext(ctx aws.Context, input *UntagResourceInput, opts ...request.Option) (*UntagResourceOutput, error) {
+	req, out := c.UntagResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateEnvironment = "UpdateEnvironment"
 
 // UpdateEnvironmentRequest generates a "aws/request.Request" representing the
@@ -956,7 +1220,7 @@ func (c *Cloud9) UpdateEnvironmentRequest(input *UpdateEnvironmentInput) (req *r
 
 // UpdateEnvironment API operation for AWS Cloud9.
 //
-// Changes the settings of an existing AWS Cloud9 development environment.
+// Changes the settings of an existing Cloud9 development environment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1053,8 +1317,8 @@ func (c *Cloud9) UpdateEnvironmentMembershipRequest(input *UpdateEnvironmentMemb
 
 // UpdateEnvironmentMembership API operation for AWS Cloud9.
 //
-// Changes the settings of an existing environment member for an AWS Cloud9
-// development environment.
+// Changes the settings of an existing environment member for an Cloud9 development
+// environment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1109,8 +1373,8 @@ func (c *Cloud9) UpdateEnvironmentMembershipWithContext(ctx aws.Context, input *
 
 // The target request is invalid.
 type BadRequestException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -1127,17 +1391,17 @@ func (s BadRequestException) GoString() string {
 
 func newErrorBadRequestException(v protocol.ResponseMetadata) error {
 	return &BadRequestException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s BadRequestException) Code() string {
+func (s *BadRequestException) Code() string {
 	return "BadRequestException"
 }
 
 // Message returns the exception's message.
-func (s BadRequestException) Message() string {
+func (s *BadRequestException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -1145,28 +1409,84 @@ func (s BadRequestException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s BadRequestException) OrigErr() error {
+func (s *BadRequestException) OrigErr() error {
 	return nil
 }
 
-func (s BadRequestException) Error() string {
+func (s *BadRequestException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s BadRequestException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *BadRequestException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s BadRequestException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *BadRequestException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// A concurrent access issue occurred.
+type ConcurrentAccessException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation
+func (s ConcurrentAccessException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s ConcurrentAccessException) GoString() string {
+	return s.String()
+}
+
+func newErrorConcurrentAccessException(v protocol.ResponseMetadata) error {
+	return &ConcurrentAccessException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ConcurrentAccessException) Code() string {
+	return "ConcurrentAccessException"
+}
+
+// Message returns the exception's message.
+func (s *ConcurrentAccessException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ConcurrentAccessException) OrigErr() error {
+	return nil
+}
+
+func (s *ConcurrentAccessException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ConcurrentAccessException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ConcurrentAccessException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // A conflict occurred.
 type ConflictException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -1183,17 +1503,17 @@ func (s ConflictException) GoString() string {
 
 func newErrorConflictException(v protocol.ResponseMetadata) error {
 	return &ConflictException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ConflictException) Code() string {
+func (s *ConflictException) Code() string {
 	return "ConflictException"
 }
 
 // Message returns the exception's message.
-func (s ConflictException) Message() string {
+func (s *ConflictException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -1201,22 +1521,22 @@ func (s ConflictException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ConflictException) OrigErr() error {
+func (s *ConflictException) OrigErr() error {
 	return nil
 }
 
-func (s ConflictException) Error() string {
+func (s *ConflictException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ConflictException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ConflictException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ConflictException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ConflictException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 type CreateEnvironmentEC2Input struct {
@@ -1226,15 +1546,50 @@ type CreateEnvironmentEC2Input struct {
 	// has last been used.
 	AutomaticStopTimeMinutes *int64 `locationName:"automaticStopTimeMinutes" type:"integer"`
 
-	// A unique, case-sensitive string that helps AWS Cloud9 to ensure this operation
+	// A unique, case-sensitive string that helps Cloud9 to ensure this operation
 	// completes no more than one time.
 	//
-	// For more information, see Client Tokens (http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html)
+	// For more information, see Client Tokens (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html)
 	// in the Amazon EC2 API Reference.
 	ClientRequestToken *string `locationName:"clientRequestToken" type:"string"`
 
+	// The connection type used for connecting to an Amazon EC2 environment. Valid
+	// values are CONNECT_SSH (default) and CONNECT_SSM (connected through Amazon
+	// EC2 Systems Manager).
+	//
+	// For more information, see Accessing no-ingress EC2 instances with Amazon
+	// EC2 Systems Manager (https://docs.aws.amazon.com/cloud9/latest/user-guide/ec2-ssm.html)
+	// in the Cloud9 User Guide.
+	ConnectionType *string `locationName:"connectionType" type:"string" enum:"ConnectionType"`
+
 	// The description of the environment to create.
 	Description *string `locationName:"description" type:"string" sensitive:"true"`
+
+	// The identifier for the Amazon Machine Image (AMI) that's used to create the
+	// EC2 instance. To choose an AMI for the instance, you must specify a valid
+	// AMI alias or a valid Amazon EC2 Systems Manager (SSM) path.
+	//
+	// The default AMI is used if the parameter isn't explicitly assigned a value
+	// in the request. Because Amazon Linux AMI has ended standard support as of
+	// December 31, 2020, we recommend you choose Amazon Linux 2, which includes
+	// long term support through 2023.
+	//
+	// AMI aliases
+	//
+	//    * Amazon Linux (default): amazonlinux-1-x86_64
+	//
+	//    * Amazon Linux 2: amazonlinux-2-x86_64
+	//
+	//    * Ubuntu 18.04: ubuntu-18.04-x86_64
+	//
+	// SSM paths
+	//
+	//    * Amazon Linux (default): resolve:ssm:/aws/service/cloud9/amis/amazonlinux-1-x86_64
+	//
+	//    * Amazon Linux 2: resolve:ssm:/aws/service/cloud9/amis/amazonlinux-2-x86_64
+	//
+	//    * Ubuntu 18.04: resolve:ssm:/aws/service/cloud9/amis/ubuntu-18.04-x86_64
+	ImageId *string `locationName:"imageId" type:"string"`
 
 	// The type of instance to connect to the environment (for example, t2.micro).
 	//
@@ -1243,19 +1598,23 @@ type CreateEnvironmentEC2Input struct {
 
 	// The name of the environment to create.
 	//
-	// This name is visible to other AWS IAM users in the same AWS account.
+	// This name is visible to other IAM users in the same Amazon Web Services account.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
 	// The Amazon Resource Name (ARN) of the environment owner. This ARN can be
-	// the ARN of any AWS IAM principal. If this value is not specified, the ARN
-	// defaults to this environment's creator.
+	// the ARN of any IAM principal. If this value is not specified, the ARN defaults
+	// to this environment's creator.
 	OwnerArn *string `locationName:"ownerArn" type:"string"`
 
-	// The ID of the subnet in Amazon VPC that AWS Cloud9 will use to communicate
-	// with the Amazon EC2 instance.
-	SubnetId *string `locationName:"subnetId" min:"5" type:"string"`
+	// The ID of the subnet in Amazon VPC that Cloud9 will use to communicate with
+	// the Amazon EC2 instance.
+	SubnetId *string `locationName:"subnetId" min:"15" type:"string"`
+
+	// An array of key-value pairs that will be associated with the new Cloud9 development
+	// environment.
+	Tags []*Tag `locationName:"tags" type:"list" sensitive:"true"`
 }
 
 // String returns the string representation
@@ -1283,8 +1642,18 @@ func (s *CreateEnvironmentEC2Input) Validate() error {
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
 	}
-	if s.SubnetId != nil && len(*s.SubnetId) < 5 {
-		invalidParams.Add(request.NewErrParamMinLen("SubnetId", 5))
+	if s.SubnetId != nil && len(*s.SubnetId) < 15 {
+		invalidParams.Add(request.NewErrParamMinLen("SubnetId", 15))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
 	}
 
 	if invalidParams.Len() > 0 {
@@ -1305,9 +1674,21 @@ func (s *CreateEnvironmentEC2Input) SetClientRequestToken(v string) *CreateEnvir
 	return s
 }
 
+// SetConnectionType sets the ConnectionType field's value.
+func (s *CreateEnvironmentEC2Input) SetConnectionType(v string) *CreateEnvironmentEC2Input {
+	s.ConnectionType = &v
+	return s
+}
+
 // SetDescription sets the Description field's value.
 func (s *CreateEnvironmentEC2Input) SetDescription(v string) *CreateEnvironmentEC2Input {
 	s.Description = &v
+	return s
+}
+
+// SetImageId sets the ImageId field's value.
+func (s *CreateEnvironmentEC2Input) SetImageId(v string) *CreateEnvironmentEC2Input {
+	s.ImageId = &v
 	return s
 }
 
@@ -1332,6 +1713,12 @@ func (s *CreateEnvironmentEC2Input) SetOwnerArn(v string) *CreateEnvironmentEC2I
 // SetSubnetId sets the SubnetId field's value.
 func (s *CreateEnvironmentEC2Input) SetSubnetId(v string) *CreateEnvironmentEC2Input {
 	s.SubnetId = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateEnvironmentEC2Input) SetTags(v []*Tag) *CreateEnvironmentEC2Input {
+	s.Tags = v
 	return s
 }
 
@@ -1434,7 +1821,9 @@ type CreateEnvironmentMembershipOutput struct {
 	_ struct{} `type:"structure"`
 
 	// Information about the environment member that was added.
-	Membership *EnvironmentMember `locationName:"membership" type:"structure"`
+	//
+	// Membership is a required field
+	Membership *EnvironmentMember `locationName:"membership" type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -1724,7 +2113,9 @@ type DescribeEnvironmentStatusOutput struct {
 	_ struct{} `type:"structure"`
 
 	// Any informational message about the status of the environment.
-	Message *string `locationName:"message" type:"string"`
+	//
+	// Message is a required field
+	Message *string `locationName:"message" type:"string" required:"true"`
 
 	// The status of the environment. Available values include:
 	//
@@ -1741,7 +2132,9 @@ type DescribeEnvironmentStatusOutput struct {
 	//    * stopped: The environment is stopped.
 	//
 	//    * stopping: The environment is stopping.
-	Status *string `locationName:"status" type:"string" enum:"EnvironmentStatus"`
+	//
+	// Status is a required field
+	Status *string `locationName:"status" type:"string" required:"true" enum:"EnvironmentStatus"`
 }
 
 // String returns the string representation
@@ -1830,12 +2223,18 @@ func (s *DescribeEnvironmentsOutput) SetEnvironments(v []*Environment) *Describe
 	return s
 }
 
-// Information about an AWS Cloud9 development environment.
+// Information about an Cloud9 development environment.
 type Environment struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the environment.
-	Arn *string `locationName:"arn" type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" type:"string" required:"true"`
+
+	// The connection type used for connecting to an Amazon EC2 environment. CONNECT_SSH
+	// is selected by default.
+	ConnectionType *string `locationName:"connectionType" type:"string" enum:"ConnectionType"`
 
 	// The description for the environment.
 	Description *string `locationName:"description" type:"string" sensitive:"true"`
@@ -1846,11 +2245,37 @@ type Environment struct {
 	// The state of the environment in its creation or deletion lifecycle.
 	Lifecycle *EnvironmentLifecycle `locationName:"lifecycle" type:"structure"`
 
+	// Describes the status of Amazon Web Services managed temporary credentials
+	// for the Cloud9 environment. Available values are:
+	//
+	//    * ENABLED_ON_CREATE
+	//
+	//    * ENABLED_BY_OWNER
+	//
+	//    * DISABLED_BY_DEFAULT
+	//
+	//    * DISABLED_BY_OWNER
+	//
+	//    * DISABLED_BY_COLLABORATOR
+	//
+	//    * PENDING_REMOVAL_BY_COLLABORATOR
+	//
+	//    * PENDING_REMOVAL_BY_OWNER
+	//
+	//    * FAILED_REMOVAL_BY_COLLABORATOR
+	//
+	//    * ENABLED_BY_OWNER
+	//
+	//    * DISABLED_BY_DEFAULT
+	ManagedCredentialsStatus *string `locationName:"managedCredentialsStatus" type:"string" enum:"ManagedCredentialsStatus"`
+
 	// The name of the environment.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the environment owner.
-	OwnerArn *string `locationName:"ownerArn" type:"string"`
+	//
+	// OwnerArn is a required field
+	OwnerArn *string `locationName:"ownerArn" type:"string" required:"true"`
 
 	// The type of environment. Valid values include the following:
 	//
@@ -1858,7 +2283,9 @@ type Environment struct {
 	//    to the environment.
 	//
 	//    * ssh: Your own server connects to the environment.
-	Type *string `locationName:"type" type:"string" enum:"EnvironmentType"`
+	//
+	// Type is a required field
+	Type *string `locationName:"type" type:"string" required:"true" enum:"EnvironmentType"`
 }
 
 // String returns the string representation
@@ -1877,6 +2304,12 @@ func (s *Environment) SetArn(v string) *Environment {
 	return s
 }
 
+// SetConnectionType sets the ConnectionType field's value.
+func (s *Environment) SetConnectionType(v string) *Environment {
+	s.ConnectionType = &v
+	return s
+}
+
 // SetDescription sets the Description field's value.
 func (s *Environment) SetDescription(v string) *Environment {
 	s.Description = &v
@@ -1892,6 +2325,12 @@ func (s *Environment) SetId(v string) *Environment {
 // SetLifecycle sets the Lifecycle field's value.
 func (s *Environment) SetLifecycle(v *EnvironmentLifecycle) *Environment {
 	s.Lifecycle = v
+	return s
+}
+
+// SetManagedCredentialsStatus sets the ManagedCredentialsStatus field's value.
+func (s *Environment) SetManagedCredentialsStatus(v string) *Environment {
+	s.ManagedCredentialsStatus = &v
 	return s
 }
 
@@ -1914,12 +2353,12 @@ func (s *Environment) SetType(v string) *Environment {
 }
 
 // Information about the current creation or deletion lifecycle state of an
-// AWS Cloud9 development environment.
+// Cloud9 development environment.
 type EnvironmentLifecycle struct {
 	_ struct{} `type:"structure"`
 
 	// If the environment failed to delete, the Amazon Resource Name (ARN) of the
-	// related AWS resource.
+	// related Amazon Web Services resource.
 	FailureResource *string `locationName:"failureResource" type:"string"`
 
 	// Any informational message about the lifecycle state of the environment.
@@ -1967,12 +2406,14 @@ func (s *EnvironmentLifecycle) SetStatus(v string) *EnvironmentLifecycle {
 	return s
 }
 
-// Information about an environment member for an AWS Cloud9 development environment.
+// Information about an environment member for an Cloud9 development environment.
 type EnvironmentMember struct {
 	_ struct{} `type:"structure"`
 
 	// The ID of the environment for the environment member.
-	EnvironmentId *string `locationName:"environmentId" type:"string"`
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `locationName:"environmentId" type:"string" required:"true"`
 
 	// The time, expressed in epoch time format, when the environment member last
 	// opened the environment.
@@ -1986,14 +2427,19 @@ type EnvironmentMember struct {
 	//    * read-only: Has read-only access to the environment.
 	//
 	//    * read-write: Has read-write access to the environment.
-	Permissions *string `locationName:"permissions" type:"string" enum:"Permissions"`
+	//
+	// Permissions is a required field
+	Permissions *string `locationName:"permissions" type:"string" required:"true" enum:"Permissions"`
 
 	// The Amazon Resource Name (ARN) of the environment member.
-	UserArn *string `locationName:"userArn" type:"string"`
+	//
+	// UserArn is a required field
+	UserArn *string `locationName:"userArn" type:"string" required:"true"`
 
-	// The user ID in AWS Identity and Access Management (AWS IAM) of the environment
-	// member.
-	UserId *string `locationName:"userId" type:"string"`
+	// The user ID in Identity and Access Management (IAM) of the environment member.
+	//
+	// UserId is a required field
+	UserId *string `locationName:"userId" type:"string" required:"true"`
 }
 
 // String returns the string representation
@@ -2038,8 +2484,8 @@ func (s *EnvironmentMember) SetUserId(v string) *EnvironmentMember {
 
 // An access permissions issue occurred.
 type ForbiddenException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -2056,17 +2502,17 @@ func (s ForbiddenException) GoString() string {
 
 func newErrorForbiddenException(v protocol.ResponseMetadata) error {
 	return &ForbiddenException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ForbiddenException) Code() string {
+func (s *ForbiddenException) Code() string {
 	return "ForbiddenException"
 }
 
 // Message returns the exception's message.
-func (s ForbiddenException) Message() string {
+func (s *ForbiddenException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -2074,28 +2520,28 @@ func (s ForbiddenException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ForbiddenException) OrigErr() error {
+func (s *ForbiddenException) OrigErr() error {
 	return nil
 }
 
-func (s ForbiddenException) Error() string {
+func (s *ForbiddenException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ForbiddenException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ForbiddenException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ForbiddenException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ForbiddenException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // An internal server error occurred.
 type InternalServerErrorException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -2112,17 +2558,17 @@ func (s InternalServerErrorException) GoString() string {
 
 func newErrorInternalServerErrorException(v protocol.ResponseMetadata) error {
 	return &InternalServerErrorException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InternalServerErrorException) Code() string {
+func (s *InternalServerErrorException) Code() string {
 	return "InternalServerErrorException"
 }
 
 // Message returns the exception's message.
-func (s InternalServerErrorException) Message() string {
+func (s *InternalServerErrorException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -2130,28 +2576,28 @@ func (s InternalServerErrorException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InternalServerErrorException) OrigErr() error {
+func (s *InternalServerErrorException) OrigErr() error {
 	return nil
 }
 
-func (s InternalServerErrorException) Error() string {
+func (s *InternalServerErrorException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InternalServerErrorException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InternalServerErrorException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InternalServerErrorException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InternalServerErrorException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // A service limit was exceeded.
 type LimitExceededException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -2168,17 +2614,17 @@ func (s LimitExceededException) GoString() string {
 
 func newErrorLimitExceededException(v protocol.ResponseMetadata) error {
 	return &LimitExceededException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s LimitExceededException) Code() string {
+func (s *LimitExceededException) Code() string {
 	return "LimitExceededException"
 }
 
 // Message returns the exception's message.
-func (s LimitExceededException) Message() string {
+func (s *LimitExceededException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -2186,22 +2632,22 @@ func (s LimitExceededException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s LimitExceededException) OrigErr() error {
+func (s *LimitExceededException) OrigErr() error {
 	return nil
 }
 
-func (s LimitExceededException) Error() string {
+func (s *LimitExceededException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s LimitExceededException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *LimitExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s LimitExceededException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *LimitExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 type ListEnvironmentsInput struct {
@@ -2276,10 +2722,72 @@ func (s *ListEnvironmentsOutput) SetNextToken(v string) *ListEnvironmentsOutput 
 	return s
 }
 
+type ListTagsForResourceInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the Cloud9 development environment to get
+	// the tags for.
+	//
+	// ResourceARN is a required field
+	ResourceARN *string `type:"string" required:"true"`
+}
+
+// String returns the string representation
+func (s ListTagsForResourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForResourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListTagsForResourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListTagsForResourceInput"}
+	if s.ResourceARN == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceARN"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceARN sets the ResourceARN field's value.
+func (s *ListTagsForResourceInput) SetResourceARN(v string) *ListTagsForResourceInput {
+	s.ResourceARN = &v
+	return s
+}
+
+type ListTagsForResourceOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of tags associated with the Cloud9 development environment.
+	Tags []*Tag `type:"list" sensitive:"true"`
+}
+
+// String returns the string representation
+func (s ListTagsForResourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForResourceOutput) GoString() string {
+	return s.String()
+}
+
+// SetTags sets the Tags field's value.
+func (s *ListTagsForResourceOutput) SetTags(v []*Tag) *ListTagsForResourceOutput {
+	s.Tags = v
+	return s
+}
+
 // The target resource cannot be found.
 type NotFoundException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -2296,17 +2804,17 @@ func (s NotFoundException) GoString() string {
 
 func newErrorNotFoundException(v protocol.ResponseMetadata) error {
 	return &NotFoundException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s NotFoundException) Code() string {
+func (s *NotFoundException) Code() string {
 	return "NotFoundException"
 }
 
 // Message returns the exception's message.
-func (s NotFoundException) Message() string {
+func (s *NotFoundException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -2314,28 +2822,166 @@ func (s NotFoundException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s NotFoundException) OrigErr() error {
+func (s *NotFoundException) OrigErr() error {
 	return nil
 }
 
-func (s NotFoundException) Error() string {
+func (s *NotFoundException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s NotFoundException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *NotFoundException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s NotFoundException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *NotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// Metadata that is associated with Amazon Web Services resources. In particular,
+// a name-value pair that can be associated with an Cloud9 development environment.
+// There are two types of tags: user tags and system tags. A user tag is created
+// by the user. A system tag is automatically created by Amazon Web Services
+// services. A system tag is prefixed with "aws:" and cannot be modified by
+// the user.
+type Tag struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The name part of a tag.
+	//
+	// Key is a required field
+	Key *string `min:"1" type:"string" required:"true" sensitive:"true"`
+
+	// The value part of a tag.
+	//
+	// Value is a required field
+	Value *string `type:"string" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *Tag) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "Tag"}
+	if s.Key == nil {
+		invalidParams.Add(request.NewErrParamRequired("Key"))
+	}
+	if s.Key != nil && len(*s.Key) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Key", 1))
+	}
+	if s.Value == nil {
+		invalidParams.Add(request.NewErrParamRequired("Value"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetKey sets the Key field's value.
+func (s *Tag) SetKey(v string) *Tag {
+	s.Key = &v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *Tag) SetValue(v string) *Tag {
+	s.Value = &v
+	return s
+}
+
+type TagResourceInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the Cloud9 development environment to add
+	// tags to.
+	//
+	// ResourceARN is a required field
+	ResourceARN *string `type:"string" required:"true"`
+
+	// The list of tags to add to the given Cloud9 development environment.
+	//
+	// Tags is a required field
+	Tags []*Tag `type:"list" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation
+func (s TagResourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s TagResourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TagResourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TagResourceInput"}
+	if s.ResourceARN == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceARN"))
+	}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceARN sets the ResourceARN field's value.
+func (s *TagResourceInput) SetResourceARN(v string) *TagResourceInput {
+	s.ResourceARN = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *TagResourceInput) SetTags(v []*Tag) *TagResourceInput {
+	s.Tags = v
+	return s
+}
+
+type TagResourceOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation
+func (s TagResourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s TagResourceOutput) GoString() string {
+	return s.String()
 }
 
 // Too many service requests were made over the given time period.
 type TooManyRequestsException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -2352,17 +2998,17 @@ func (s TooManyRequestsException) GoString() string {
 
 func newErrorTooManyRequestsException(v protocol.ResponseMetadata) error {
 	return &TooManyRequestsException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s TooManyRequestsException) Code() string {
+func (s *TooManyRequestsException) Code() string {
 	return "TooManyRequestsException"
 }
 
 // Message returns the exception's message.
-func (s TooManyRequestsException) Message() string {
+func (s *TooManyRequestsException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -2370,22 +3016,89 @@ func (s TooManyRequestsException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s TooManyRequestsException) OrigErr() error {
+func (s *TooManyRequestsException) OrigErr() error {
 	return nil
 }
 
-func (s TooManyRequestsException) Error() string {
+func (s *TooManyRequestsException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s TooManyRequestsException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *TooManyRequestsException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s TooManyRequestsException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *TooManyRequestsException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+type UntagResourceInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the Cloud9 development environment to remove
+	// tags from.
+	//
+	// ResourceARN is a required field
+	ResourceARN *string `type:"string" required:"true"`
+
+	// The tag names of the tags to remove from the given Cloud9 development environment.
+	//
+	// TagKeys is a required field
+	TagKeys []*string `type:"list" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation
+func (s UntagResourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s UntagResourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UntagResourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UntagResourceInput"}
+	if s.ResourceARN == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceARN"))
+	}
+	if s.TagKeys == nil {
+		invalidParams.Add(request.NewErrParamRequired("TagKeys"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceARN sets the ResourceARN field's value.
+func (s *UntagResourceInput) SetResourceARN(v string) *UntagResourceInput {
+	s.ResourceARN = &v
+	return s
+}
+
+// SetTagKeys sets the TagKeys field's value.
+func (s *UntagResourceInput) SetTagKeys(v []*string) *UntagResourceInput {
+	s.TagKeys = v
+	return s
+}
+
+type UntagResourceOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation
+func (s UntagResourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s UntagResourceOutput) GoString() string {
+	return s.String()
 }
 
 type UpdateEnvironmentInput struct {
@@ -2558,6 +3271,22 @@ func (s UpdateEnvironmentOutput) GoString() string {
 }
 
 const (
+	// ConnectionTypeConnectSsh is a ConnectionType enum value
+	ConnectionTypeConnectSsh = "CONNECT_SSH"
+
+	// ConnectionTypeConnectSsm is a ConnectionType enum value
+	ConnectionTypeConnectSsm = "CONNECT_SSM"
+)
+
+// ConnectionType_Values returns all elements of the ConnectionType enum
+func ConnectionType_Values() []string {
+	return []string{
+		ConnectionTypeConnectSsh,
+		ConnectionTypeConnectSsm,
+	}
+}
+
+const (
 	// EnvironmentLifecycleStatusCreating is a EnvironmentLifecycleStatus enum value
 	EnvironmentLifecycleStatusCreating = "CREATING"
 
@@ -2573,6 +3302,17 @@ const (
 	// EnvironmentLifecycleStatusDeleteFailed is a EnvironmentLifecycleStatus enum value
 	EnvironmentLifecycleStatusDeleteFailed = "DELETE_FAILED"
 )
+
+// EnvironmentLifecycleStatus_Values returns all elements of the EnvironmentLifecycleStatus enum
+func EnvironmentLifecycleStatus_Values() []string {
+	return []string{
+		EnvironmentLifecycleStatusCreating,
+		EnvironmentLifecycleStatusCreated,
+		EnvironmentLifecycleStatusCreateFailed,
+		EnvironmentLifecycleStatusDeleting,
+		EnvironmentLifecycleStatusDeleteFailed,
+	}
+}
 
 const (
 	// EnvironmentStatusError is a EnvironmentStatus enum value
@@ -2597,6 +3337,19 @@ const (
 	EnvironmentStatusDeleting = "deleting"
 )
 
+// EnvironmentStatus_Values returns all elements of the EnvironmentStatus enum
+func EnvironmentStatus_Values() []string {
+	return []string{
+		EnvironmentStatusError,
+		EnvironmentStatusCreating,
+		EnvironmentStatusConnecting,
+		EnvironmentStatusReady,
+		EnvironmentStatusStopping,
+		EnvironmentStatusStopped,
+		EnvironmentStatusDeleting,
+	}
+}
+
 const (
 	// EnvironmentTypeSsh is a EnvironmentType enum value
 	EnvironmentTypeSsh = "ssh"
@@ -2605,6 +3358,66 @@ const (
 	EnvironmentTypeEc2 = "ec2"
 )
 
+// EnvironmentType_Values returns all elements of the EnvironmentType enum
+func EnvironmentType_Values() []string {
+	return []string{
+		EnvironmentTypeSsh,
+		EnvironmentTypeEc2,
+	}
+}
+
+const (
+	// ManagedCredentialsStatusEnabledOnCreate is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusEnabledOnCreate = "ENABLED_ON_CREATE"
+
+	// ManagedCredentialsStatusEnabledByOwner is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusEnabledByOwner = "ENABLED_BY_OWNER"
+
+	// ManagedCredentialsStatusDisabledByDefault is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusDisabledByDefault = "DISABLED_BY_DEFAULT"
+
+	// ManagedCredentialsStatusDisabledByOwner is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusDisabledByOwner = "DISABLED_BY_OWNER"
+
+	// ManagedCredentialsStatusDisabledByCollaborator is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusDisabledByCollaborator = "DISABLED_BY_COLLABORATOR"
+
+	// ManagedCredentialsStatusPendingRemovalByCollaborator is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusPendingRemovalByCollaborator = "PENDING_REMOVAL_BY_COLLABORATOR"
+
+	// ManagedCredentialsStatusPendingStartRemovalByCollaborator is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusPendingStartRemovalByCollaborator = "PENDING_START_REMOVAL_BY_COLLABORATOR"
+
+	// ManagedCredentialsStatusPendingRemovalByOwner is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusPendingRemovalByOwner = "PENDING_REMOVAL_BY_OWNER"
+
+	// ManagedCredentialsStatusPendingStartRemovalByOwner is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusPendingStartRemovalByOwner = "PENDING_START_REMOVAL_BY_OWNER"
+
+	// ManagedCredentialsStatusFailedRemovalByCollaborator is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusFailedRemovalByCollaborator = "FAILED_REMOVAL_BY_COLLABORATOR"
+
+	// ManagedCredentialsStatusFailedRemovalByOwner is a ManagedCredentialsStatus enum value
+	ManagedCredentialsStatusFailedRemovalByOwner = "FAILED_REMOVAL_BY_OWNER"
+)
+
+// ManagedCredentialsStatus_Values returns all elements of the ManagedCredentialsStatus enum
+func ManagedCredentialsStatus_Values() []string {
+	return []string{
+		ManagedCredentialsStatusEnabledOnCreate,
+		ManagedCredentialsStatusEnabledByOwner,
+		ManagedCredentialsStatusDisabledByDefault,
+		ManagedCredentialsStatusDisabledByOwner,
+		ManagedCredentialsStatusDisabledByCollaborator,
+		ManagedCredentialsStatusPendingRemovalByCollaborator,
+		ManagedCredentialsStatusPendingStartRemovalByCollaborator,
+		ManagedCredentialsStatusPendingRemovalByOwner,
+		ManagedCredentialsStatusPendingStartRemovalByOwner,
+		ManagedCredentialsStatusFailedRemovalByCollaborator,
+		ManagedCredentialsStatusFailedRemovalByOwner,
+	}
+}
+
 const (
 	// MemberPermissionsReadWrite is a MemberPermissions enum value
 	MemberPermissionsReadWrite = "read-write"
@@ -2612,6 +3425,14 @@ const (
 	// MemberPermissionsReadOnly is a MemberPermissions enum value
 	MemberPermissionsReadOnly = "read-only"
 )
+
+// MemberPermissions_Values returns all elements of the MemberPermissions enum
+func MemberPermissions_Values() []string {
+	return []string{
+		MemberPermissionsReadWrite,
+		MemberPermissionsReadOnly,
+	}
+}
 
 const (
 	// PermissionsOwner is a Permissions enum value
@@ -2623,3 +3444,12 @@ const (
 	// PermissionsReadOnly is a Permissions enum value
 	PermissionsReadOnly = "read-only"
 )
+
+// Permissions_Values returns all elements of the Permissions enum
+func Permissions_Values() []string {
+	return []string{
+		PermissionsOwner,
+		PermissionsReadWrite,
+		PermissionsReadOnly,
+	}
+}

@@ -82,7 +82,7 @@ func (c *AppSync) CreateApiCacheRequest(input *CreateApiCacheInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateApiCache
 func (c *AppSync) CreateApiCache(input *CreateApiCacheInput) (*CreateApiCacheOutput, error) {
@@ -179,7 +179,7 @@ func (c *AppSync) CreateApiKeyRequest(input *CreateApiKeyInput) (req *request.Re
 //   The request exceeded a limit. Try your request again.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * ApiKeyLimitExceededException
 //   The API key exceeded a limit. Try your request again.
@@ -280,7 +280,7 @@ func (c *AppSync) CreateDataSourceRequest(input *CreateDataSourceInput) (req *re
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateDataSource
 func (c *AppSync) CreateDataSource(input *CreateDataSourceInput) (*CreateDataSourceOutput, error) {
@@ -373,7 +373,7 @@ func (c *AppSync) CreateFunctionRequest(input *CreateFunctionInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateFunction
 func (c *AppSync) CreateFunction(input *CreateFunctionInput) (*CreateFunctionOutput, error) {
@@ -466,7 +466,7 @@ func (c *AppSync) CreateGraphqlApiRequest(input *CreateGraphqlApiInput) (req *re
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * ApiLimitExceededException
 //   The GraphQL API exceeded a limit. Try your request again.
@@ -562,7 +562,7 @@ func (c *AppSync) CreateResolverRequest(input *CreateResolverInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateResolver
 func (c *AppSync) CreateResolver(input *CreateResolverInput) (*CreateResolverOutput, error) {
@@ -656,7 +656,7 @@ func (c *AppSync) CreateTypeRequest(input *CreateTypeInput) (req *request.Reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateType
 func (c *AppSync) CreateType(input *CreateTypeInput) (*CreateTypeOutput, error) {
@@ -751,7 +751,7 @@ func (c *AppSync) DeleteApiCacheRequest(input *DeleteApiCacheInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteApiCache
 func (c *AppSync) DeleteApiCache(input *DeleteApiCacheInput) (*DeleteApiCacheOutput, error) {
@@ -842,7 +842,7 @@ func (c *AppSync) DeleteApiKeyRequest(input *DeleteApiKeyInput) (req *request.Re
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteApiKey
 func (c *AppSync) DeleteApiKey(input *DeleteApiKeyInput) (*DeleteApiKeyOutput, error) {
@@ -937,7 +937,7 @@ func (c *AppSync) DeleteDataSourceRequest(input *DeleteDataSourceInput) (req *re
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteDataSource
 func (c *AppSync) DeleteDataSource(input *DeleteDataSourceInput) (*DeleteDataSourceOutput, error) {
@@ -1028,7 +1028,7 @@ func (c *AppSync) DeleteFunctionRequest(input *DeleteFunctionInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteFunction
 func (c *AppSync) DeleteFunction(input *DeleteFunctionInput) (*DeleteFunctionOutput, error) {
@@ -1123,7 +1123,7 @@ func (c *AppSync) DeleteGraphqlApiRequest(input *DeleteGraphqlApiInput) (req *re
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * AccessDeniedException
 //   You do not have access to perform this operation on this resource.
@@ -1217,7 +1217,7 @@ func (c *AppSync) DeleteResolverRequest(input *DeleteResolverInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteResolver
 func (c *AppSync) DeleteResolver(input *DeleteResolverInput) (*DeleteResolverOutput, error) {
@@ -1312,7 +1312,7 @@ func (c *AppSync) DeleteTypeRequest(input *DeleteTypeInput) (req *request.Reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteType
 func (c *AppSync) DeleteType(input *DeleteTypeInput) (*DeleteTypeOutput, error) {
@@ -1407,7 +1407,7 @@ func (c *AppSync) FlushApiCacheRequest(input *FlushApiCacheInput) (req *request.
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/FlushApiCache
 func (c *AppSync) FlushApiCache(input *FlushApiCacheInput) (*FlushApiCacheOutput, error) {
@@ -1501,7 +1501,7 @@ func (c *AppSync) GetApiCacheRequest(input *GetApiCacheInput) (req *request.Requ
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetApiCache
 func (c *AppSync) GetApiCache(input *GetApiCacheInput) (*GetApiCacheOutput, error) {
@@ -1595,7 +1595,7 @@ func (c *AppSync) GetDataSourceRequest(input *GetDataSourceInput) (req *request.
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetDataSource
 func (c *AppSync) GetDataSource(input *GetDataSourceInput) (*GetDataSourceOutput, error) {
@@ -1772,7 +1772,7 @@ func (c *AppSync) GetGraphqlApiRequest(input *GetGraphqlApiInput) (req *request.
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * AccessDeniedException
 //   You do not have access to perform this operation on this resource.
@@ -1864,7 +1864,7 @@ func (c *AppSync) GetIntrospectionSchemaRequest(input *GetIntrospectionSchemaInp
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetIntrospectionSchema
 func (c *AppSync) GetIntrospectionSchema(input *GetIntrospectionSchemaInput) (*GetIntrospectionSchemaOutput, error) {
@@ -2041,7 +2041,7 @@ func (c *AppSync) GetSchemaCreationStatusRequest(input *GetSchemaCreationStatusI
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetSchemaCreationStatus
 func (c *AppSync) GetSchemaCreationStatus(input *GetSchemaCreationStatusInput) (*GetSchemaCreationStatusOutput, error) {
@@ -2135,7 +2135,7 @@ func (c *AppSync) GetTypeRequest(input *GetTypeInput) (req *request.Request, out
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetType
 func (c *AppSync) GetType(input *GetTypeInput) (*GetTypeOutput, error) {
@@ -2205,7 +2205,7 @@ func (c *AppSync) ListApiKeysRequest(input *ListApiKeysInput) (req *request.Requ
 //
 // Lists the API keys for a given API.
 //
-// API keys are deleted automatically sometime after they expire. However, they
+// API keys are deleted automatically 60 days after they expire. However, they
 // may still be included in the response until they have actually been deleted.
 // You can safely call DeleteApiKey to manually delete a key before it's automatically
 // deleted.
@@ -2230,7 +2230,7 @@ func (c *AppSync) ListApiKeysRequest(input *ListApiKeysInput) (req *request.Requ
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListApiKeys
 func (c *AppSync) ListApiKeys(input *ListApiKeysInput) (*ListApiKeysOutput, error) {
@@ -2320,7 +2320,7 @@ func (c *AppSync) ListDataSourcesRequest(input *ListDataSourcesInput) (req *requ
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListDataSources
 func (c *AppSync) ListDataSources(input *ListDataSourcesInput) (*ListDataSourcesOutput, error) {
@@ -2410,7 +2410,7 @@ func (c *AppSync) ListFunctionsRequest(input *ListFunctionsInput) (req *request.
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListFunctions
 func (c *AppSync) ListFunctions(input *ListFunctionsInput) (*ListFunctionsOutput, error) {
@@ -2496,7 +2496,7 @@ func (c *AppSync) ListGraphqlApisRequest(input *ListGraphqlApisInput) (req *requ
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListGraphqlApis
 func (c *AppSync) ListGraphqlApis(input *ListGraphqlApisInput) (*ListGraphqlApisOutput, error) {
@@ -2586,7 +2586,7 @@ func (c *AppSync) ListResolversRequest(input *ListResolversInput) (req *request.
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListResolvers
 func (c *AppSync) ListResolvers(input *ListResolversInput) (*ListResolversOutput, error) {
@@ -2676,7 +2676,7 @@ func (c *AppSync) ListResolversByFunctionRequest(input *ListResolversByFunctionI
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListResolversByFunction
 func (c *AppSync) ListResolversByFunction(input *ListResolversByFunctionInput) (*ListResolversByFunctionOutput, error) {
@@ -2769,7 +2769,7 @@ func (c *AppSync) ListTagsForResourceRequest(input *ListTagsForResourceInput) (r
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * AccessDeniedException
 //   You do not have access to perform this operation on this resource.
@@ -2866,7 +2866,7 @@ func (c *AppSync) ListTypesRequest(input *ListTypesInput) (req *request.Request,
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListTypes
 func (c *AppSync) ListTypes(input *ListTypesInput) (*ListTypesOutput, error) {
@@ -2962,7 +2962,7 @@ func (c *AppSync) StartSchemaCreationRequest(input *StartSchemaCreationInput) (r
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/StartSchemaCreation
 func (c *AppSync) StartSchemaCreation(input *StartSchemaCreationInput) (*StartSchemaCreationOutput, error) {
@@ -3056,7 +3056,7 @@ func (c *AppSync) TagResourceRequest(input *TagResourceInput) (req *request.Requ
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * AccessDeniedException
 //   You do not have access to perform this operation on this resource.
@@ -3153,7 +3153,7 @@ func (c *AppSync) UntagResourceRequest(input *UntagResourceInput) (req *request.
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * AccessDeniedException
 //   You do not have access to perform this operation on this resource.
@@ -3250,7 +3250,7 @@ func (c *AppSync) UpdateApiCacheRequest(input *UpdateApiCacheInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateApiCache
 func (c *AppSync) UpdateApiCache(input *UpdateApiCacheInput) (*UpdateApiCacheOutput, error) {
@@ -3318,7 +3318,7 @@ func (c *AppSync) UpdateApiKeyRequest(input *UpdateApiKeyInput) (req *request.Re
 
 // UpdateApiKey API operation for AWS AppSync.
 //
-// Updates an API key.
+// Updates an API key. The key can be updated while it is not deleted.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3343,7 +3343,7 @@ func (c *AppSync) UpdateApiKeyRequest(input *UpdateApiKeyInput) (req *request.Re
 //   The request exceeded a limit. Try your request again.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * ApiKeyValidityOutOfBoundsException
 //   The API key expiration must be set to a value between 1 and 365 days from
@@ -3441,7 +3441,7 @@ func (c *AppSync) UpdateDataSourceRequest(input *UpdateDataSourceInput) (req *re
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateDataSource
 func (c *AppSync) UpdateDataSource(input *UpdateDataSourceInput) (*UpdateDataSourceOutput, error) {
@@ -3531,7 +3531,7 @@ func (c *AppSync) UpdateFunctionRequest(input *UpdateFunctionInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateFunction
 func (c *AppSync) UpdateFunction(input *UpdateFunctionInput) (*UpdateFunctionOutput, error) {
@@ -3625,7 +3625,7 @@ func (c *AppSync) UpdateGraphqlApiRequest(input *UpdateGraphqlApiInput) (req *re
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 //   * AccessDeniedException
 //   You do not have access to perform this operation on this resource.
@@ -3718,7 +3718,7 @@ func (c *AppSync) UpdateResolverRequest(input *UpdateResolverInput) (req *reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateResolver
 func (c *AppSync) UpdateResolver(input *UpdateResolverInput) (*UpdateResolverOutput, error) {
@@ -3812,7 +3812,7 @@ func (c *AppSync) UpdateTypeRequest(input *UpdateTypeInput) (req *request.Reques
 //   You are not authorized to perform this operation.
 //
 //   * InternalFailureException
-//   An internal AWS AppSync error occurred. Try your request again.
+//   An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateType
 func (c *AppSync) UpdateType(input *UpdateTypeInput) (*UpdateTypeOutput, error) {
@@ -3838,8 +3838,8 @@ func (c *AppSync) UpdateTypeWithContext(ctx aws.Context, input *UpdateTypeInput,
 
 // You do not have access to perform this operation on this resource.
 type AccessDeniedException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -3856,17 +3856,17 @@ func (s AccessDeniedException) GoString() string {
 
 func newErrorAccessDeniedException(v protocol.ResponseMetadata) error {
 	return &AccessDeniedException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s AccessDeniedException) Code() string {
+func (s *AccessDeniedException) Code() string {
 	return "AccessDeniedException"
 }
 
 // Message returns the exception's message.
-func (s AccessDeniedException) Message() string {
+func (s *AccessDeniedException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -3874,30 +3874,34 @@ func (s AccessDeniedException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s AccessDeniedException) OrigErr() error {
+func (s *AccessDeniedException) OrigErr() error {
 	return nil
 }
 
-func (s AccessDeniedException) Error() string {
+func (s *AccessDeniedException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s AccessDeniedException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *AccessDeniedException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s AccessDeniedException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *AccessDeniedException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Describes an additional authentication provider.
 type AdditionalAuthenticationProvider struct {
 	_ struct{} `type:"structure"`
 
-	// The authentication type: API key, AWS IAM, OIDC, or Amazon Cognito user pools.
+	// The authentication type: API key, Identity and Access Management, OIDC, or
+	// Amazon Cognito user pools.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
+
+	// Configuration for AWS Lambda function authorization.
+	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
 
 	// The OpenID Connect configuration.
 	OpenIDConnectConfig *OpenIDConnectConfig `locationName:"openIDConnectConfig" type:"structure"`
@@ -3919,6 +3923,11 @@ func (s AdditionalAuthenticationProvider) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AdditionalAuthenticationProvider) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AdditionalAuthenticationProvider"}
+	if s.LambdaAuthorizerConfig != nil {
+		if err := s.LambdaAuthorizerConfig.Validate(); err != nil {
+			invalidParams.AddNested("LambdaAuthorizerConfig", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.OpenIDConnectConfig != nil {
 		if err := s.OpenIDConnectConfig.Validate(); err != nil {
 			invalidParams.AddNested("OpenIDConnectConfig", err.(request.ErrInvalidParams))
@@ -3942,6 +3951,12 @@ func (s *AdditionalAuthenticationProvider) SetAuthenticationType(v string) *Addi
 	return s
 }
 
+// SetLambdaAuthorizerConfig sets the LambdaAuthorizerConfig field's value.
+func (s *AdditionalAuthenticationProvider) SetLambdaAuthorizerConfig(v *LambdaAuthorizerConfig) *AdditionalAuthenticationProvider {
+	s.LambdaAuthorizerConfig = v
+	return s
+}
+
 // SetOpenIDConnectConfig sets the OpenIDConnectConfig field's value.
 func (s *AdditionalAuthenticationProvider) SetOpenIDConnectConfig(v *OpenIDConnectConfig) *AdditionalAuthenticationProvider {
 	s.OpenIDConnectConfig = v
@@ -3962,7 +3977,7 @@ type ApiCache struct {
 	//
 	//    * FULL_REQUEST_CACHING: All requests are fully cached.
 	//
-	//    * PER_RESOLVER_CACHING: Individual resovlers that you specify are cached.
+	//    * PER_RESOLVER_CACHING: Individual resolvers that you specify are cached.
 	ApiCachingBehavior *string `locationName:"apiCachingBehavior" type:"string" enum:"ApiCachingBehavior"`
 
 	// At rest encryption flag for cache. This setting cannot be updated after creation.
@@ -3990,7 +4005,29 @@ type ApiCache struct {
 	// Valid values are between 1 and 3600 seconds.
 	Ttl *int64 `locationName:"ttl" type:"long"`
 
-	// The cache instance type.
+	// The cache instance type. Valid values are
+	//
+	//    * SMALL
+	//
+	//    * MEDIUM
+	//
+	//    * LARGE
+	//
+	//    * XLARGE
+	//
+	//    * LARGE_2X
+	//
+	//    * LARGE_4X
+	//
+	//    * LARGE_8X (not available in all regions)
+	//
+	//    * LARGE_12X
+	//
+	// Historically, instance types were identified by an EC2-style value. As of
+	// July 2020, this is deprecated, and the generic identifiers above should be
+	// used.
+	//
+	// The following legacy instance types are available, but their use is discouraged:
 	//
 	//    * T2_SMALL: A t2.small instance type.
 	//
@@ -4056,7 +4093,7 @@ func (s *ApiCache) SetType(v string) *ApiCache {
 
 // Describes an API key.
 //
-// Customers invoke AWS AppSync GraphQL API operations with API keys as an identity
+// Customers invoke AppSync GraphQL API operations with API keys as an identity
 // mechanism. There are two key versions:
 //
 // da1: This version was introduced at launch in November 2017. These keys always
@@ -4080,20 +4117,30 @@ func (s *ApiCache) SetType(v string) *ApiCache {
 // da2: This version was introduced in February 2018 when AppSync added support
 // to extend key expiration.
 //
-//    * ListApiKeys returns the expiration time in seconds.
+//    * ListApiKeys returns the expiration time and deletion time in seconds.
 //
-//    * CreateApiKey returns the expiration time in seconds and accepts a user-provided
-//    expiration time in seconds.
+//    * CreateApiKey returns the expiration time and deletion time in seconds
+//    and accepts a user-provided expiration time in seconds.
 //
-//    * UpdateApiKey returns the expiration time in seconds and accepts a user-provided
-//    expiration time in seconds. Key expiration can only be updated while the
-//    key has not expired.
+//    * UpdateApiKey returns the expiration time and and deletion time in seconds
+//    and accepts a user-provided expiration time in seconds. Expired API keys
+//    are kept for 60 days after the expiration time. Key expiration time can
+//    be updated while the key is not deleted.
 //
 //    * DeleteApiKey deletes the item from the table.
 //
-//    * Expiration is stored in Amazon DynamoDB as seconds.
+//    * Expiration is stored in Amazon DynamoDB as seconds. After the expiration
+//    time, using the key to authenticate will fail. But the key can be reinstated
+//    before deletion.
+//
+//    * Deletion is stored in Amazon DynamoDB as seconds. The key will be deleted
+//    after deletion time.
 type ApiKey struct {
 	_ struct{} `type:"structure"`
+
+	// The time after which the API key is deleted. The date is represented as seconds
+	// since the epoch, rounded down to the nearest hour.
+	Deletes *int64 `locationName:"deletes" type:"long"`
 
 	// A description of the purpose of the API key.
 	Description *string `locationName:"description" type:"string"`
@@ -4116,6 +4163,12 @@ func (s ApiKey) GoString() string {
 	return s.String()
 }
 
+// SetDeletes sets the Deletes field's value.
+func (s *ApiKey) SetDeletes(v int64) *ApiKey {
+	s.Deletes = &v
+	return s
+}
+
 // SetDescription sets the Description field's value.
 func (s *ApiKey) SetDescription(v string) *ApiKey {
 	s.Description = &v
@@ -4136,8 +4189,8 @@ func (s *ApiKey) SetId(v string) *ApiKey {
 
 // The API key exceeded a limit. Try your request again.
 type ApiKeyLimitExceededException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -4154,17 +4207,17 @@ func (s ApiKeyLimitExceededException) GoString() string {
 
 func newErrorApiKeyLimitExceededException(v protocol.ResponseMetadata) error {
 	return &ApiKeyLimitExceededException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ApiKeyLimitExceededException) Code() string {
+func (s *ApiKeyLimitExceededException) Code() string {
 	return "ApiKeyLimitExceededException"
 }
 
 // Message returns the exception's message.
-func (s ApiKeyLimitExceededException) Message() string {
+func (s *ApiKeyLimitExceededException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -4172,29 +4225,29 @@ func (s ApiKeyLimitExceededException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ApiKeyLimitExceededException) OrigErr() error {
+func (s *ApiKeyLimitExceededException) OrigErr() error {
 	return nil
 }
 
-func (s ApiKeyLimitExceededException) Error() string {
+func (s *ApiKeyLimitExceededException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ApiKeyLimitExceededException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ApiKeyLimitExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ApiKeyLimitExceededException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ApiKeyLimitExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The API key expiration must be set to a value between 1 and 365 days from
 // creation (for CreateApiKey) or from update (for UpdateApiKey).
 type ApiKeyValidityOutOfBoundsException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -4211,17 +4264,17 @@ func (s ApiKeyValidityOutOfBoundsException) GoString() string {
 
 func newErrorApiKeyValidityOutOfBoundsException(v protocol.ResponseMetadata) error {
 	return &ApiKeyValidityOutOfBoundsException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ApiKeyValidityOutOfBoundsException) Code() string {
+func (s *ApiKeyValidityOutOfBoundsException) Code() string {
 	return "ApiKeyValidityOutOfBoundsException"
 }
 
 // Message returns the exception's message.
-func (s ApiKeyValidityOutOfBoundsException) Message() string {
+func (s *ApiKeyValidityOutOfBoundsException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -4229,28 +4282,28 @@ func (s ApiKeyValidityOutOfBoundsException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ApiKeyValidityOutOfBoundsException) OrigErr() error {
+func (s *ApiKeyValidityOutOfBoundsException) OrigErr() error {
 	return nil
 }
 
-func (s ApiKeyValidityOutOfBoundsException) Error() string {
+func (s *ApiKeyValidityOutOfBoundsException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ApiKeyValidityOutOfBoundsException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ApiKeyValidityOutOfBoundsException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ApiKeyValidityOutOfBoundsException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ApiKeyValidityOutOfBoundsException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The GraphQL API exceeded a limit. Try your request again.
 type ApiLimitExceededException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -4267,17 +4320,17 @@ func (s ApiLimitExceededException) GoString() string {
 
 func newErrorApiLimitExceededException(v protocol.ResponseMetadata) error {
 	return &ApiLimitExceededException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ApiLimitExceededException) Code() string {
+func (s *ApiLimitExceededException) Code() string {
 	return "ApiLimitExceededException"
 }
 
 // Message returns the exception's message.
-func (s ApiLimitExceededException) Message() string {
+func (s *ApiLimitExceededException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -4285,22 +4338,22 @@ func (s ApiLimitExceededException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ApiLimitExceededException) OrigErr() error {
+func (s *ApiLimitExceededException) OrigErr() error {
 	return nil
 }
 
-func (s ApiLimitExceededException) Error() string {
+func (s *ApiLimitExceededException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ApiLimitExceededException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ApiLimitExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ApiLimitExceededException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ApiLimitExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The authorization config in case the HTTP endpoint requires authorization.
@@ -4314,7 +4367,7 @@ type AuthorizationConfig struct {
 	// AuthorizationType is a required field
 	AuthorizationType *string `locationName:"authorizationType" type:"string" required:"true" enum:"AuthorizationType"`
 
-	// The AWS IAM settings.
+	// The Identity and Access Management settings.
 	AwsIamConfig *AwsIamConfig `locationName:"awsIamConfig" type:"structure"`
 }
 
@@ -4353,14 +4406,14 @@ func (s *AuthorizationConfig) SetAwsIamConfig(v *AwsIamConfig) *AuthorizationCon
 	return s
 }
 
-// The AWS IAM configuration.
+// The Identity and Access Management configuration.
 type AwsIamConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The signing region for AWS IAM authorization.
+	// The signing region for Identity and Access Management authorization.
 	SigningRegion *string `locationName:"signingRegion" type:"string"`
 
-	// The signing service name for AWS IAM authorization.
+	// The signing service name for Identity and Access Management authorization.
 	SigningServiceName *string `locationName:"signingServiceName" type:"string"`
 }
 
@@ -4389,8 +4442,8 @@ func (s *AwsIamConfig) SetSigningServiceName(v string) *AwsIamConfig {
 // The request is not well formed. For example, a value is invalid or a required
 // field is missing. Check the field values, and then try again.
 type BadRequestException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -4407,17 +4460,17 @@ func (s BadRequestException) GoString() string {
 
 func newErrorBadRequestException(v protocol.ResponseMetadata) error {
 	return &BadRequestException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s BadRequestException) Code() string {
+func (s *BadRequestException) Code() string {
 	return "BadRequestException"
 }
 
 // Message returns the exception's message.
-func (s BadRequestException) Message() string {
+func (s *BadRequestException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -4425,22 +4478,22 @@ func (s BadRequestException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s BadRequestException) OrigErr() error {
+func (s *BadRequestException) OrigErr() error {
 	return nil
 }
 
-func (s BadRequestException) Error() string {
+func (s *BadRequestException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s BadRequestException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *BadRequestException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s BadRequestException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *BadRequestException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // The caching configuration for a resolver that has caching enabled.
@@ -4449,8 +4502,8 @@ type CachingConfig struct {
 
 	// The caching keys for a resolver that has caching enabled.
 	//
-	// Valid values are entries from the $context.identity and $context.arguments
-	// maps.
+	// Valid values are entries from the $context.arguments, $context.source, and
+	// $context.identity maps.
 	CachingKeys []*string `locationName:"cachingKeys" type:"list"`
 
 	// The TTL in seconds for a resolver that has caching enabled.
@@ -4489,7 +4542,7 @@ type CognitoUserPoolConfig struct {
 	// app client ID.
 	AppIdClientRegex *string `locationName:"appIdClientRegex" type:"string"`
 
-	// The AWS Region in which the user pool was created.
+	// The Amazon Web Services Region in which the user pool was created.
 	//
 	// AwsRegion is a required field
 	AwsRegion *string `locationName:"awsRegion" type:"string" required:"true"`
@@ -4547,8 +4600,8 @@ func (s *CognitoUserPoolConfig) SetUserPoolId(v string) *CognitoUserPoolConfig {
 // Another modification is in progress at this time and it must complete before
 // you can make your change.
 type ConcurrentModificationException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -4565,17 +4618,17 @@ func (s ConcurrentModificationException) GoString() string {
 
 func newErrorConcurrentModificationException(v protocol.ResponseMetadata) error {
 	return &ConcurrentModificationException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s ConcurrentModificationException) Code() string {
+func (s *ConcurrentModificationException) Code() string {
 	return "ConcurrentModificationException"
 }
 
 // Message returns the exception's message.
-func (s ConcurrentModificationException) Message() string {
+func (s *ConcurrentModificationException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -4583,22 +4636,22 @@ func (s ConcurrentModificationException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s ConcurrentModificationException) OrigErr() error {
+func (s *ConcurrentModificationException) OrigErr() error {
 	return nil
 }
 
-func (s ConcurrentModificationException) Error() string {
+func (s *ConcurrentModificationException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s ConcurrentModificationException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *ConcurrentModificationException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s ConcurrentModificationException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *ConcurrentModificationException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Represents the input of a CreateApiCache operation.
@@ -4609,7 +4662,7 @@ type CreateApiCacheInput struct {
 	//
 	//    * FULL_REQUEST_CACHING: All requests are fully cached.
 	//
-	//    * PER_RESOLVER_CACHING: Individual resovlers that you specify are cached.
+	//    * PER_RESOLVER_CACHING: Individual resolvers that you specify are cached.
 	//
 	// ApiCachingBehavior is a required field
 	ApiCachingBehavior *string `locationName:"apiCachingBehavior" type:"string" required:"true" enum:"ApiCachingBehavior"`
@@ -4633,7 +4686,29 @@ type CreateApiCacheInput struct {
 	// Ttl is a required field
 	Ttl *int64 `locationName:"ttl" type:"long" required:"true"`
 
-	// The cache instance type.
+	// The cache instance type. Valid values are
+	//
+	//    * SMALL
+	//
+	//    * MEDIUM
+	//
+	//    * LARGE
+	//
+	//    * XLARGE
+	//
+	//    * LARGE_2X
+	//
+	//    * LARGE_4X
+	//
+	//    * LARGE_8X (not available in all regions)
+	//
+	//    * LARGE_12X
+	//
+	// Historically, instance types were identified by an EC2-style value. As of
+	// July 2020, this is deprecated, and the generic identifiers above should be
+	// used.
+	//
+	// The following legacy instance types are available, but their use is discouraged:
 	//
 	//    * T2_SMALL: A t2.small instance type.
 	//
@@ -4853,7 +4928,7 @@ type CreateDataSourceInput struct {
 	// HTTP endpoint settings.
 	HttpConfig *HttpDataSourceConfig `locationName:"httpConfig" type:"structure"`
 
-	// AWS Lambda settings.
+	// Amazon Web Services Lambda settings.
 	LambdaConfig *LambdaDataSourceConfig `locationName:"lambdaConfig" type:"structure"`
 
 	// A user-supplied name for the DataSource.
@@ -4864,8 +4939,8 @@ type CreateDataSourceInput struct {
 	// Relational database settings.
 	RelationalDatabaseConfig *RelationalDatabaseDataSourceConfig `locationName:"relationalDatabaseConfig" type:"structure"`
 
-	// The AWS IAM service role ARN for the data source. The system assumes this
-	// role when accessing the data source.
+	// The Identity and Access Management service role ARN for the data source.
+	// The system assumes this role when accessing the data source.
 	ServiceRoleArn *string `locationName:"serviceRoleArn" type:"string"`
 
 	// The type of the DataSource.
@@ -5041,12 +5116,16 @@ type CreateFunctionInput struct {
 
 	// The Function request mapping template. Functions support only the 2018-05-29
 	// version of the request mapping template.
-	//
-	// RequestMappingTemplate is a required field
-	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string" required:"true"`
+	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string"`
 
 	// The Function response mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
+
+	// Describes a Sync configuration for a resolver.
+	//
+	// Contains information on which Conflict Detection as well as Resolution strategy
+	// should be performed when the resolver is invoked.
+	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 }
 
 // String returns the string representation
@@ -5082,9 +5161,6 @@ func (s *CreateFunctionInput) Validate() error {
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
-	if s.RequestMappingTemplate == nil {
-		invalidParams.Add(request.NewErrParamRequired("RequestMappingTemplate"))
 	}
 	if s.RequestMappingTemplate != nil && len(*s.RequestMappingTemplate) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("RequestMappingTemplate", 1))
@@ -5141,6 +5217,12 @@ func (s *CreateFunctionInput) SetResponseMappingTemplate(v string) *CreateFuncti
 	return s
 }
 
+// SetSyncConfig sets the SyncConfig field's value.
+func (s *CreateFunctionInput) SetSyncConfig(v *SyncConfig) *CreateFunctionInput {
+	s.SyncConfig = v
+	return s
+}
+
 type CreateFunctionOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -5170,10 +5252,14 @@ type CreateGraphqlApiInput struct {
 	// A list of additional authentication providers for the GraphqlApi API.
 	AdditionalAuthenticationProviders []*AdditionalAuthenticationProvider `locationName:"additionalAuthenticationProviders" type:"list"`
 
-	// The authentication type: API key, AWS IAM, OIDC, or Amazon Cognito user pools.
+	// The authentication type: API key, Identity and Access Management, OIDC, or
+	// Amazon Cognito user pools.
 	//
 	// AuthenticationType is a required field
 	AuthenticationType *string `locationName:"authenticationType" type:"string" required:"true" enum:"AuthenticationType"`
+
+	// Configuration for AWS Lambda function authorization.
+	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
 
 	// The Amazon CloudWatch Logs configuration.
 	LogConfig *LogConfig `locationName:"logConfig" type:"structure"`
@@ -5228,6 +5314,11 @@ func (s *CreateGraphqlApiInput) Validate() error {
 			}
 		}
 	}
+	if s.LambdaAuthorizerConfig != nil {
+		if err := s.LambdaAuthorizerConfig.Validate(); err != nil {
+			invalidParams.AddNested("LambdaAuthorizerConfig", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.LogConfig != nil {
 		if err := s.LogConfig.Validate(); err != nil {
 			invalidParams.AddNested("LogConfig", err.(request.ErrInvalidParams))
@@ -5259,6 +5350,12 @@ func (s *CreateGraphqlApiInput) SetAdditionalAuthenticationProviders(v []*Additi
 // SetAuthenticationType sets the AuthenticationType field's value.
 func (s *CreateGraphqlApiInput) SetAuthenticationType(v string) *CreateGraphqlApiInput {
 	s.AuthenticationType = &v
+	return s
+}
+
+// SetLambdaAuthorizerConfig sets the LambdaAuthorizerConfig field's value.
+func (s *CreateGraphqlApiInput) SetLambdaAuthorizerConfig(v *LambdaAuthorizerConfig) *CreateGraphqlApiInput {
+	s.LambdaAuthorizerConfig = v
 	return s
 }
 
@@ -5360,8 +5457,10 @@ type CreateResolverInput struct {
 	// into a format that a data source can understand. Mapping templates are written
 	// in Apache Velocity Template Language (VTL).
 	//
-	// RequestMappingTemplate is a required field
-	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string" required:"true"`
+	// VTL request mapping templates are optional when using a Lambda data source.
+	// For all other data sources, VTL request and response mapping templates are
+	// required.
+	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string"`
 
 	// The mapping template to be used for responses from the data source.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
@@ -5402,9 +5501,6 @@ func (s *CreateResolverInput) Validate() error {
 	}
 	if s.FieldName != nil && len(*s.FieldName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FieldName", 1))
-	}
-	if s.RequestMappingTemplate == nil {
-		invalidParams.Add(request.NewErrParamRequired("RequestMappingTemplate"))
 	}
 	if s.RequestMappingTemplate != nil && len(*s.RequestMappingTemplate) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("RequestMappingTemplate", 1))
@@ -5621,7 +5717,7 @@ type DataSource struct {
 	// HTTP endpoint settings.
 	HttpConfig *HttpDataSourceConfig `locationName:"httpConfig" type:"structure"`
 
-	// AWS Lambda settings.
+	// Amazon Web Services Lambda settings.
 	LambdaConfig *LambdaDataSourceConfig `locationName:"lambdaConfig" type:"structure"`
 
 	// The name of the data source.
@@ -5630,8 +5726,8 @@ type DataSource struct {
 	// Relational database settings.
 	RelationalDatabaseConfig *RelationalDatabaseDataSourceConfig `locationName:"relationalDatabaseConfig" type:"structure"`
 
-	// The AWS IAM service role ARN for the data source. The system assumes this
-	// role when accessing the data source.
+	// The Identity and Access Management service role ARN for the data source.
+	// The system assumes this role when accessing the data source.
 	ServiceRoleArn *string `locationName:"serviceRoleArn" type:"string"`
 
 	// The type of the data source.
@@ -5641,7 +5737,7 @@ type DataSource struct {
 	//    * AMAZON_ELASTICSEARCH: The data source is an Amazon Elasticsearch Service
 	//    domain.
 	//
-	//    * AWS_LAMBDA: The data source is an AWS Lambda function.
+	//    * AWS_LAMBDA: The data source is an Amazon Web Services Lambda function.
 	//
 	//    * NONE: There is no data source. This type is used when you wish to invoke
 	//    a GraphQL operation without connecting to a data source, such as performing
@@ -6260,7 +6356,7 @@ func (s *DeltaSyncConfig) SetDeltaSyncTableTTL(v int64) *DeltaSyncConfig {
 type DynamodbDataSourceConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The AWS Region.
+	// The Amazon Web Services Region.
 	//
 	// AwsRegion is a required field
 	AwsRegion *string `locationName:"awsRegion" type:"string" required:"true"`
@@ -6340,7 +6436,7 @@ func (s *DynamodbDataSourceConfig) SetVersioned(v bool) *DynamodbDataSourceConfi
 type ElasticsearchDataSourceConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The AWS Region.
+	// The Amazon Web Services Region.
 	//
 	// AwsRegion is a required field
 	AwsRegion *string `locationName:"awsRegion" type:"string" required:"true"`
@@ -6476,6 +6572,12 @@ type FunctionConfiguration struct {
 
 	// The Function response mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
+
+	// Describes a Sync configuration for a resolver.
+	//
+	// Contains information on which Conflict Detection as well as Resolution strategy
+	// should be performed when the resolver is invoked.
+	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 }
 
 // String returns the string representation
@@ -6533,6 +6635,12 @@ func (s *FunctionConfiguration) SetRequestMappingTemplate(v string) *FunctionCon
 // SetResponseMappingTemplate sets the ResponseMappingTemplate field's value.
 func (s *FunctionConfiguration) SetResponseMappingTemplate(v string) *FunctionConfiguration {
 	s.ResponseMappingTemplate = &v
+	return s
+}
+
+// SetSyncConfig sets the SyncConfig field's value.
+func (s *FunctionConfiguration) SetSyncConfig(v *SyncConfig) *FunctionConfiguration {
+	s.SyncConfig = v
 	return s
 }
 
@@ -7186,8 +7294,8 @@ func (s *GetTypeOutput) SetType(v *Type) *GetTypeOutput {
 
 // The GraphQL schema is not valid.
 type GraphQLSchemaException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -7204,17 +7312,17 @@ func (s GraphQLSchemaException) GoString() string {
 
 func newErrorGraphQLSchemaException(v protocol.ResponseMetadata) error {
 	return &GraphQLSchemaException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s GraphQLSchemaException) Code() string {
+func (s *GraphQLSchemaException) Code() string {
 	return "GraphQLSchemaException"
 }
 
 // Message returns the exception's message.
-func (s GraphQLSchemaException) Message() string {
+func (s *GraphQLSchemaException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -7222,22 +7330,22 @@ func (s GraphQLSchemaException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s GraphQLSchemaException) OrigErr() error {
+func (s *GraphQLSchemaException) OrigErr() error {
 	return nil
 }
 
-func (s GraphQLSchemaException) Error() string {
+func (s *GraphQLSchemaException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s GraphQLSchemaException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *GraphQLSchemaException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s GraphQLSchemaException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *GraphQLSchemaException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Describes a GraphQL API.
@@ -7256,6 +7364,9 @@ type GraphqlApi struct {
 	// The authentication type.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
 
+	// Configuration for AWS Lambda function authorization.
+	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
+
 	// The Amazon CloudWatch Logs configuration.
 	LogConfig *LogConfig `locationName:"logConfig" type:"structure"`
 
@@ -7273,6 +7384,9 @@ type GraphqlApi struct {
 
 	// The Amazon Cognito user pool configuration.
 	UserPoolConfig *UserPoolConfig `locationName:"userPoolConfig" type:"structure"`
+
+	// The ARN of the WAF ACL associated with this GraphqlApi, if one exists.
+	WafWebAclArn *string `locationName:"wafWebAclArn" type:"string"`
 
 	// A flag representing whether X-Ray tracing is enabled for this GraphqlApi.
 	XrayEnabled *bool `locationName:"xrayEnabled" type:"boolean"`
@@ -7312,6 +7426,12 @@ func (s *GraphqlApi) SetAuthenticationType(v string) *GraphqlApi {
 	return s
 }
 
+// SetLambdaAuthorizerConfig sets the LambdaAuthorizerConfig field's value.
+func (s *GraphqlApi) SetLambdaAuthorizerConfig(v *LambdaAuthorizerConfig) *GraphqlApi {
+	s.LambdaAuthorizerConfig = v
+	return s
+}
+
 // SetLogConfig sets the LogConfig field's value.
 func (s *GraphqlApi) SetLogConfig(v *LogConfig) *GraphqlApi {
 	s.LogConfig = v
@@ -7348,6 +7468,12 @@ func (s *GraphqlApi) SetUserPoolConfig(v *UserPoolConfig) *GraphqlApi {
 	return s
 }
 
+// SetWafWebAclArn sets the WafWebAclArn field's value.
+func (s *GraphqlApi) SetWafWebAclArn(v string) *GraphqlApi {
+	s.WafWebAclArn = &v
+	return s
+}
+
 // SetXrayEnabled sets the XrayEnabled field's value.
 func (s *GraphqlApi) SetXrayEnabled(v bool) *GraphqlApi {
 	s.XrayEnabled = &v
@@ -7363,8 +7489,8 @@ type HttpDataSourceConfig struct {
 
 	// The HTTP URL endpoint. You can either specify the domain name or IP, and
 	// port combination, and the URL scheme must be HTTP or HTTPS. If the port is
-	// not specified, AWS AppSync uses the default port 80 for the HTTP endpoint
-	// and port 443 for HTTPS endpoints.
+	// not specified, AppSync uses the default port 80 for the HTTP endpoint and
+	// port 443 for HTTPS endpoints.
 	Endpoint *string `locationName:"endpoint" type:"string"`
 }
 
@@ -7405,10 +7531,10 @@ func (s *HttpDataSourceConfig) SetEndpoint(v string) *HttpDataSourceConfig {
 	return s
 }
 
-// An internal AWS AppSync error occurred. Try your request again.
+// An internal AppSync error occurred. Try your request again.
 type InternalFailureException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -7425,17 +7551,17 @@ func (s InternalFailureException) GoString() string {
 
 func newErrorInternalFailureException(v protocol.ResponseMetadata) error {
 	return &InternalFailureException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s InternalFailureException) Code() string {
+func (s *InternalFailureException) Code() string {
 	return "InternalFailureException"
 }
 
 // Message returns the exception's message.
-func (s InternalFailureException) Message() string {
+func (s *InternalFailureException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -7443,22 +7569,92 @@ func (s InternalFailureException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s InternalFailureException) OrigErr() error {
+func (s *InternalFailureException) OrigErr() error {
 	return nil
 }
 
-func (s InternalFailureException) Error() string {
+func (s *InternalFailureException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s InternalFailureException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *InternalFailureException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s InternalFailureException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *InternalFailureException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// A LambdaAuthorizerConfig holds configuration on how to authorize AppSync
+// API access when using the AWS_LAMBDA authorizer mode. Be aware that an AppSync
+// API may have only one Lambda authorizer configured at a time.
+type LambdaAuthorizerConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The number of seconds a response should be cached for. The default is 5 minutes
+	// (300 seconds). The Lambda function can override this by returning a ttlOverride
+	// key in its response. A value of 0 disables caching of responses.
+	AuthorizerResultTtlInSeconds *int64 `locationName:"authorizerResultTtlInSeconds" type:"integer"`
+
+	// The ARN of the lambda function to be called for authorization. This may be
+	// a standard Lambda ARN, a version ARN (.../v3) or alias ARN.
+	//
+	// Note: This Lambda function must have the following resource-based policy
+	// assigned to it. When configuring Lambda authorizers in the Console, this
+	// is done for you. To do so with the AWS CLI, run the following:
+	//
+	// aws lambda add-permission --function-name "arn:aws:lambda:us-east-2:111122223333:function:my-function"
+	// --statement-id "appsync" --principal appsync.amazonaws.com --action lambda:InvokeFunction
+	//
+	// AuthorizerUri is a required field
+	AuthorizerUri *string `locationName:"authorizerUri" type:"string" required:"true"`
+
+	// A regular expression for validation of tokens before the Lambda Function
+	// is called.
+	IdentityValidationExpression *string `locationName:"identityValidationExpression" type:"string"`
+}
+
+// String returns the string representation
+func (s LambdaAuthorizerConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation
+func (s LambdaAuthorizerConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LambdaAuthorizerConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LambdaAuthorizerConfig"}
+	if s.AuthorizerUri == nil {
+		invalidParams.Add(request.NewErrParamRequired("AuthorizerUri"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthorizerResultTtlInSeconds sets the AuthorizerResultTtlInSeconds field's value.
+func (s *LambdaAuthorizerConfig) SetAuthorizerResultTtlInSeconds(v int64) *LambdaAuthorizerConfig {
+	s.AuthorizerResultTtlInSeconds = &v
+	return s
+}
+
+// SetAuthorizerUri sets the AuthorizerUri field's value.
+func (s *LambdaAuthorizerConfig) SetAuthorizerUri(v string) *LambdaAuthorizerConfig {
+	s.AuthorizerUri = &v
+	return s
+}
+
+// SetIdentityValidationExpression sets the IdentityValidationExpression field's value.
+func (s *LambdaAuthorizerConfig) SetIdentityValidationExpression(v string) *LambdaAuthorizerConfig {
+	s.IdentityValidationExpression = &v
+	return s
 }
 
 // The LambdaConflictHandlerConfig object when configuring LAMBDA as the Conflict
@@ -7486,7 +7682,7 @@ func (s *LambdaConflictHandlerConfig) SetLambdaConflictHandlerArn(v string) *Lam
 	return s
 }
 
-// Describes an AWS Lambda data source configuration.
+// Describes an Amazon Web Services Lambda data source configuration.
 type LambdaDataSourceConfig struct {
 	_ struct{} `type:"structure"`
 
@@ -7527,8 +7723,8 @@ func (s *LambdaDataSourceConfig) SetLambdaFunctionArn(v string) *LambdaDataSourc
 
 // The request exceeded a limit. Try your request again.
 type LimitExceededException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -7545,17 +7741,17 @@ func (s LimitExceededException) GoString() string {
 
 func newErrorLimitExceededException(v protocol.ResponseMetadata) error {
 	return &LimitExceededException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s LimitExceededException) Code() string {
+func (s *LimitExceededException) Code() string {
 	return "LimitExceededException"
 }
 
 // Message returns the exception's message.
-func (s LimitExceededException) Message() string {
+func (s *LimitExceededException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -7563,22 +7759,22 @@ func (s LimitExceededException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s LimitExceededException) OrigErr() error {
+func (s *LimitExceededException) OrigErr() error {
 	return nil
 }
 
-func (s LimitExceededException) Error() string {
+func (s *LimitExceededException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s LimitExceededException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *LimitExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s LimitExceededException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *LimitExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 type ListApiKeysInput struct {
@@ -8351,7 +8547,7 @@ func (s *ListTypesOutput) SetTypes(v []*Type) *ListTypesOutput {
 type LogConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The service role that AWS AppSync will assume to publish to Amazon CloudWatch
+	// The service role that AppSync will assume to publish to Amazon CloudWatch
 	// logs in your account.
 	//
 	// CloudWatchLogsRoleArn is a required field
@@ -8424,8 +8620,8 @@ func (s *LogConfig) SetFieldLogLevel(v string) *LogConfig {
 // The resource specified in the request was not found. Check the resource,
 // and then try again.
 type NotFoundException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -8442,17 +8638,17 @@ func (s NotFoundException) GoString() string {
 
 func newErrorNotFoundException(v protocol.ResponseMetadata) error {
 	return &NotFoundException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s NotFoundException) Code() string {
+func (s *NotFoundException) Code() string {
 	return "NotFoundException"
 }
 
 // Message returns the exception's message.
-func (s NotFoundException) Message() string {
+func (s *NotFoundException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -8460,22 +8656,22 @@ func (s NotFoundException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s NotFoundException) OrigErr() error {
+func (s *NotFoundException) OrigErr() error {
 	return nil
 }
 
-func (s NotFoundException) Error() string {
+func (s *NotFoundException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s NotFoundException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *NotFoundException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s NotFoundException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *NotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Describes an OpenID Connect configuration.
@@ -8488,7 +8684,7 @@ type OpenIDConnectConfig struct {
 	// The client identifier of the Relying party at the OpenID identity provider.
 	// This identifier is typically obtained when the Relying party is registered
 	// with the OpenID identity provider. You can specify a regular expression so
-	// the AWS AppSync can validate against multiple client identifiers at a time.
+	// the AppSync can validate against multiple client identifiers at a time.
 	ClientId *string `locationName:"clientId" type:"string"`
 
 	// The number of milliseconds a token is valid after being issued to a user.
@@ -8576,16 +8772,16 @@ func (s *PipelineConfig) SetFunctions(v []*string) *PipelineConfig {
 type RdsHttpEndpointConfig struct {
 	_ struct{} `type:"structure"`
 
-	// AWS Region for RDS HTTP endpoint.
+	// Amazon Web Services Region for RDS HTTP endpoint.
 	AwsRegion *string `locationName:"awsRegion" type:"string"`
 
-	// AWS secret store ARN for database credentials.
+	// Amazon Web Services secret store ARN for database credentials.
 	AwsSecretStoreArn *string `locationName:"awsSecretStoreArn" type:"string"`
 
 	// Logical database name.
 	DatabaseName *string `locationName:"databaseName" type:"string"`
 
-	// Amazon RDS cluster identifier.
+	// Amazon RDS cluster ARN.
 	DbClusterIdentifier *string `locationName:"dbClusterIdentifier" type:"string"`
 
 	// Logical schema name.
@@ -9053,8 +9249,8 @@ func (s *Type) SetName(v string) *Type {
 
 // You are not authorized to perform this operation.
 type UnauthorizedException struct {
-	_            struct{} `type:"structure"`
-	respMetadata protocol.ResponseMetadata
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 }
@@ -9071,17 +9267,17 @@ func (s UnauthorizedException) GoString() string {
 
 func newErrorUnauthorizedException(v protocol.ResponseMetadata) error {
 	return &UnauthorizedException{
-		respMetadata: v,
+		RespMetadata: v,
 	}
 }
 
 // Code returns the exception type name.
-func (s UnauthorizedException) Code() string {
+func (s *UnauthorizedException) Code() string {
 	return "UnauthorizedException"
 }
 
 // Message returns the exception's message.
-func (s UnauthorizedException) Message() string {
+func (s *UnauthorizedException) Message() string {
 	if s.Message_ != nil {
 		return *s.Message_
 	}
@@ -9089,22 +9285,22 @@ func (s UnauthorizedException) Message() string {
 }
 
 // OrigErr always returns nil, satisfies awserr.Error interface.
-func (s UnauthorizedException) OrigErr() error {
+func (s *UnauthorizedException) OrigErr() error {
 	return nil
 }
 
-func (s UnauthorizedException) Error() string {
+func (s *UnauthorizedException) Error() string {
 	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
 }
 
 // Status code returns the HTTP status code for the request's response error.
-func (s UnauthorizedException) StatusCode() int {
-	return s.respMetadata.StatusCode
+func (s *UnauthorizedException) StatusCode() int {
+	return s.RespMetadata.StatusCode
 }
 
 // RequestID returns the service's response RequestID for request.
-func (s UnauthorizedException) RequestID() string {
-	return s.respMetadata.RequestID
+func (s *UnauthorizedException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 type UntagResourceInput struct {
@@ -9187,7 +9383,7 @@ type UpdateApiCacheInput struct {
 	//
 	//    * FULL_REQUEST_CACHING: All requests are fully cached.
 	//
-	//    * PER_RESOLVER_CACHING: Individual resovlers that you specify are cached.
+	//    * PER_RESOLVER_CACHING: Individual resolvers that you specify are cached.
 	//
 	// ApiCachingBehavior is a required field
 	ApiCachingBehavior *string `locationName:"apiCachingBehavior" type:"string" required:"true" enum:"ApiCachingBehavior"`
@@ -9204,7 +9400,29 @@ type UpdateApiCacheInput struct {
 	// Ttl is a required field
 	Ttl *int64 `locationName:"ttl" type:"long" required:"true"`
 
-	// The cache instance type.
+	// The cache instance type. Valid values are
+	//
+	//    * SMALL
+	//
+	//    * MEDIUM
+	//
+	//    * LARGE
+	//
+	//    * XLARGE
+	//
+	//    * LARGE_2X
+	//
+	//    * LARGE_4X
+	//
+	//    * LARGE_8X (not available in all regions)
+	//
+	//    * LARGE_12X
+	//
+	// Historically, instance types were identified by an EC2-style value. As of
+	// July 2020, this is deprecated, and the generic identifiers above should be
+	// used.
+	//
+	// The following legacy instance types are available, but their use is discouraged:
 	//
 	//    * T2_SMALL: A t2.small instance type.
 	//
@@ -9427,7 +9645,7 @@ type UpdateDataSourceInput struct {
 	// The new HTTP endpoint configuration.
 	HttpConfig *HttpDataSourceConfig `locationName:"httpConfig" type:"structure"`
 
-	// The new AWS Lambda configuration.
+	// The new Amazon Web Services Lambda configuration.
 	LambdaConfig *LambdaDataSourceConfig `locationName:"lambdaConfig" type:"structure"`
 
 	// The new name for the data source.
@@ -9619,12 +9837,16 @@ type UpdateFunctionInput struct {
 
 	// The Function request mapping template. Functions support only the 2018-05-29
 	// version of the request mapping template.
-	//
-	// RequestMappingTemplate is a required field
-	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string" required:"true"`
+	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string"`
 
 	// The Function request mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
+
+	// Describes a Sync configuration for a resolver.
+	//
+	// Contains information on which Conflict Detection as well as Resolution strategy
+	// should be performed when the resolver is invoked.
+	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 }
 
 // String returns the string representation
@@ -9666,9 +9888,6 @@ func (s *UpdateFunctionInput) Validate() error {
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
-	if s.RequestMappingTemplate == nil {
-		invalidParams.Add(request.NewErrParamRequired("RequestMappingTemplate"))
 	}
 	if s.RequestMappingTemplate != nil && len(*s.RequestMappingTemplate) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("RequestMappingTemplate", 1))
@@ -9731,6 +9950,12 @@ func (s *UpdateFunctionInput) SetResponseMappingTemplate(v string) *UpdateFuncti
 	return s
 }
 
+// SetSyncConfig sets the SyncConfig field's value.
+func (s *UpdateFunctionInput) SetSyncConfig(v *SyncConfig) *UpdateFunctionInput {
+	s.SyncConfig = v
+	return s
+}
+
 type UpdateFunctionOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -9767,6 +9992,9 @@ type UpdateGraphqlApiInput struct {
 
 	// The new authentication type for the GraphqlApi object.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
+
+	// Configuration for AWS Lambda function authorization.
+	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
 
 	// The Amazon CloudWatch Logs configuration for the GraphqlApi object.
 	LogConfig *LogConfig `locationName:"logConfig" type:"structure"`
@@ -9818,6 +10046,11 @@ func (s *UpdateGraphqlApiInput) Validate() error {
 			}
 		}
 	}
+	if s.LambdaAuthorizerConfig != nil {
+		if err := s.LambdaAuthorizerConfig.Validate(); err != nil {
+			invalidParams.AddNested("LambdaAuthorizerConfig", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.LogConfig != nil {
 		if err := s.LogConfig.Validate(); err != nil {
 			invalidParams.AddNested("LogConfig", err.(request.ErrInvalidParams))
@@ -9855,6 +10088,12 @@ func (s *UpdateGraphqlApiInput) SetApiId(v string) *UpdateGraphqlApiInput {
 // SetAuthenticationType sets the AuthenticationType field's value.
 func (s *UpdateGraphqlApiInput) SetAuthenticationType(v string) *UpdateGraphqlApiInput {
 	s.AuthenticationType = &v
+	return s
+}
+
+// SetLambdaAuthorizerConfig sets the LambdaAuthorizerConfig field's value.
+func (s *UpdateGraphqlApiInput) SetLambdaAuthorizerConfig(v *LambdaAuthorizerConfig) *UpdateGraphqlApiInput {
+	s.LambdaAuthorizerConfig = v
 	return s
 }
 
@@ -9946,8 +10185,14 @@ type UpdateResolverInput struct {
 
 	// The new request mapping template.
 	//
-	// RequestMappingTemplate is a required field
-	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string" required:"true"`
+	// A resolver uses a request mapping template to convert a GraphQL expression
+	// into a format that a data source can understand. Mapping templates are written
+	// in Apache Velocity Template Language (VTL).
+	//
+	// VTL request mapping templates are optional when using a Lambda data source.
+	// For all other data sources, VTL request and response mapping templates are
+	// required.
+	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string"`
 
 	// The new response mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
@@ -9988,9 +10233,6 @@ func (s *UpdateResolverInput) Validate() error {
 	}
 	if s.FieldName != nil && len(*s.FieldName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FieldName", 1))
-	}
-	if s.RequestMappingTemplate == nil {
-		invalidParams.Add(request.NewErrParamRequired("RequestMappingTemplate"))
 	}
 	if s.RequestMappingTemplate != nil && len(*s.RequestMappingTemplate) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("RequestMappingTemplate", 1))
@@ -10206,7 +10448,7 @@ type UserPoolConfig struct {
 	// app client ID.
 	AppIdClientRegex *string `locationName:"appIdClientRegex" type:"string"`
 
-	// The AWS Region in which the user pool was created.
+	// The Amazon Web Services Region in which the user pool was created.
 	//
 	// AwsRegion is a required field
 	AwsRegion *string `locationName:"awsRegion" type:"string" required:"true"`
@@ -10294,6 +10536,17 @@ const (
 	ApiCacheStatusFailed = "FAILED"
 )
 
+// ApiCacheStatus_Values returns all elements of the ApiCacheStatus enum
+func ApiCacheStatus_Values() []string {
+	return []string{
+		ApiCacheStatusAvailable,
+		ApiCacheStatusCreating,
+		ApiCacheStatusDeleting,
+		ApiCacheStatusModifying,
+		ApiCacheStatusFailed,
+	}
+}
+
 const (
 	// ApiCacheTypeT2Small is a ApiCacheType enum value
 	ApiCacheTypeT2Small = "T2_SMALL"
@@ -10315,7 +10568,52 @@ const (
 
 	// ApiCacheTypeR48xlarge is a ApiCacheType enum value
 	ApiCacheTypeR48xlarge = "R4_8XLARGE"
+
+	// ApiCacheTypeSmall is a ApiCacheType enum value
+	ApiCacheTypeSmall = "SMALL"
+
+	// ApiCacheTypeMedium is a ApiCacheType enum value
+	ApiCacheTypeMedium = "MEDIUM"
+
+	// ApiCacheTypeLarge is a ApiCacheType enum value
+	ApiCacheTypeLarge = "LARGE"
+
+	// ApiCacheTypeXlarge is a ApiCacheType enum value
+	ApiCacheTypeXlarge = "XLARGE"
+
+	// ApiCacheTypeLarge2x is a ApiCacheType enum value
+	ApiCacheTypeLarge2x = "LARGE_2X"
+
+	// ApiCacheTypeLarge4x is a ApiCacheType enum value
+	ApiCacheTypeLarge4x = "LARGE_4X"
+
+	// ApiCacheTypeLarge8x is a ApiCacheType enum value
+	ApiCacheTypeLarge8x = "LARGE_8X"
+
+	// ApiCacheTypeLarge12x is a ApiCacheType enum value
+	ApiCacheTypeLarge12x = "LARGE_12X"
 )
+
+// ApiCacheType_Values returns all elements of the ApiCacheType enum
+func ApiCacheType_Values() []string {
+	return []string{
+		ApiCacheTypeT2Small,
+		ApiCacheTypeT2Medium,
+		ApiCacheTypeR4Large,
+		ApiCacheTypeR4Xlarge,
+		ApiCacheTypeR42xlarge,
+		ApiCacheTypeR44xlarge,
+		ApiCacheTypeR48xlarge,
+		ApiCacheTypeSmall,
+		ApiCacheTypeMedium,
+		ApiCacheTypeLarge,
+		ApiCacheTypeXlarge,
+		ApiCacheTypeLarge2x,
+		ApiCacheTypeLarge4x,
+		ApiCacheTypeLarge8x,
+		ApiCacheTypeLarge12x,
+	}
+}
 
 const (
 	// ApiCachingBehaviorFullRequestCaching is a ApiCachingBehavior enum value
@@ -10324,6 +10622,14 @@ const (
 	// ApiCachingBehaviorPerResolverCaching is a ApiCachingBehavior enum value
 	ApiCachingBehaviorPerResolverCaching = "PER_RESOLVER_CACHING"
 )
+
+// ApiCachingBehavior_Values returns all elements of the ApiCachingBehavior enum
+func ApiCachingBehavior_Values() []string {
+	return []string{
+		ApiCachingBehaviorFullRequestCaching,
+		ApiCachingBehaviorPerResolverCaching,
+	}
+}
 
 const (
 	// AuthenticationTypeApiKey is a AuthenticationType enum value
@@ -10337,12 +10643,33 @@ const (
 
 	// AuthenticationTypeOpenidConnect is a AuthenticationType enum value
 	AuthenticationTypeOpenidConnect = "OPENID_CONNECT"
+
+	// AuthenticationTypeAwsLambda is a AuthenticationType enum value
+	AuthenticationTypeAwsLambda = "AWS_LAMBDA"
 )
+
+// AuthenticationType_Values returns all elements of the AuthenticationType enum
+func AuthenticationType_Values() []string {
+	return []string{
+		AuthenticationTypeApiKey,
+		AuthenticationTypeAwsIam,
+		AuthenticationTypeAmazonCognitoUserPools,
+		AuthenticationTypeOpenidConnect,
+		AuthenticationTypeAwsLambda,
+	}
+}
 
 const (
 	// AuthorizationTypeAwsIam is a AuthorizationType enum value
 	AuthorizationTypeAwsIam = "AWS_IAM"
 )
+
+// AuthorizationType_Values returns all elements of the AuthorizationType enum
+func AuthorizationType_Values() []string {
+	return []string{
+		AuthorizationTypeAwsIam,
+	}
+}
 
 const (
 	// ConflictDetectionTypeVersion is a ConflictDetectionType enum value
@@ -10351,6 +10678,14 @@ const (
 	// ConflictDetectionTypeNone is a ConflictDetectionType enum value
 	ConflictDetectionTypeNone = "NONE"
 )
+
+// ConflictDetectionType_Values returns all elements of the ConflictDetectionType enum
+func ConflictDetectionType_Values() []string {
+	return []string{
+		ConflictDetectionTypeVersion,
+		ConflictDetectionTypeNone,
+	}
+}
 
 const (
 	// ConflictHandlerTypeOptimisticConcurrency is a ConflictHandlerType enum value
@@ -10365,6 +10700,16 @@ const (
 	// ConflictHandlerTypeNone is a ConflictHandlerType enum value
 	ConflictHandlerTypeNone = "NONE"
 )
+
+// ConflictHandlerType_Values returns all elements of the ConflictHandlerType enum
+func ConflictHandlerType_Values() []string {
+	return []string{
+		ConflictHandlerTypeOptimisticConcurrency,
+		ConflictHandlerTypeLambda,
+		ConflictHandlerTypeAutomerge,
+		ConflictHandlerTypeNone,
+	}
+}
 
 const (
 	// DataSourceTypeAwsLambda is a DataSourceType enum value
@@ -10386,6 +10731,18 @@ const (
 	DataSourceTypeRelationalDatabase = "RELATIONAL_DATABASE"
 )
 
+// DataSourceType_Values returns all elements of the DataSourceType enum
+func DataSourceType_Values() []string {
+	return []string{
+		DataSourceTypeAwsLambda,
+		DataSourceTypeAmazonDynamodb,
+		DataSourceTypeAmazonElasticsearch,
+		DataSourceTypeNone,
+		DataSourceTypeHttp,
+		DataSourceTypeRelationalDatabase,
+	}
+}
+
 const (
 	// DefaultActionAllow is a DefaultAction enum value
 	DefaultActionAllow = "ALLOW"
@@ -10393,6 +10750,14 @@ const (
 	// DefaultActionDeny is a DefaultAction enum value
 	DefaultActionDeny = "DENY"
 )
+
+// DefaultAction_Values returns all elements of the DefaultAction enum
+func DefaultAction_Values() []string {
+	return []string{
+		DefaultActionAllow,
+		DefaultActionDeny,
+	}
+}
 
 const (
 	// FieldLogLevelNone is a FieldLogLevel enum value
@@ -10405,6 +10770,15 @@ const (
 	FieldLogLevelAll = "ALL"
 )
 
+// FieldLogLevel_Values returns all elements of the FieldLogLevel enum
+func FieldLogLevel_Values() []string {
+	return []string{
+		FieldLogLevelNone,
+		FieldLogLevelError,
+		FieldLogLevelAll,
+	}
+}
+
 const (
 	// OutputTypeSdl is a OutputType enum value
 	OutputTypeSdl = "SDL"
@@ -10413,10 +10787,25 @@ const (
 	OutputTypeJson = "JSON"
 )
 
+// OutputType_Values returns all elements of the OutputType enum
+func OutputType_Values() []string {
+	return []string{
+		OutputTypeSdl,
+		OutputTypeJson,
+	}
+}
+
 const (
 	// RelationalDatabaseSourceTypeRdsHttpEndpoint is a RelationalDatabaseSourceType enum value
 	RelationalDatabaseSourceTypeRdsHttpEndpoint = "RDS_HTTP_ENDPOINT"
 )
+
+// RelationalDatabaseSourceType_Values returns all elements of the RelationalDatabaseSourceType enum
+func RelationalDatabaseSourceType_Values() []string {
+	return []string{
+		RelationalDatabaseSourceTypeRdsHttpEndpoint,
+	}
+}
 
 const (
 	// ResolverKindUnit is a ResolverKind enum value
@@ -10425,6 +10814,14 @@ const (
 	// ResolverKindPipeline is a ResolverKind enum value
 	ResolverKindPipeline = "PIPELINE"
 )
+
+// ResolverKind_Values returns all elements of the ResolverKind enum
+func ResolverKind_Values() []string {
+	return []string{
+		ResolverKindUnit,
+		ResolverKindPipeline,
+	}
+}
 
 const (
 	// SchemaStatusProcessing is a SchemaStatus enum value
@@ -10446,6 +10843,18 @@ const (
 	SchemaStatusNotApplicable = "NOT_APPLICABLE"
 )
 
+// SchemaStatus_Values returns all elements of the SchemaStatus enum
+func SchemaStatus_Values() []string {
+	return []string{
+		SchemaStatusProcessing,
+		SchemaStatusActive,
+		SchemaStatusDeleting,
+		SchemaStatusFailed,
+		SchemaStatusSuccess,
+		SchemaStatusNotApplicable,
+	}
+}
+
 const (
 	// TypeDefinitionFormatSdl is a TypeDefinitionFormat enum value
 	TypeDefinitionFormatSdl = "SDL"
@@ -10453,3 +10862,11 @@ const (
 	// TypeDefinitionFormatJson is a TypeDefinitionFormat enum value
 	TypeDefinitionFormatJson = "JSON"
 )
+
+// TypeDefinitionFormat_Values returns all elements of the TypeDefinitionFormat enum
+func TypeDefinitionFormat_Values() []string {
+	return []string{
+		TypeDefinitionFormatSdl,
+		TypeDefinitionFormatJson,
+	}
+}
