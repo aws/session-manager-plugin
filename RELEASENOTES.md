@@ -1,5 +1,10 @@
 Latest
 ================
+- Enhancement: Upgrade aws-sdk-go to latest version (v1.40.17) to support SSO
+- Enhancement: Improve error message for legacy CLI version 
+
+1.2.234.0
+================
 - Change data streaming related logs from debug to trace level.
 - Fix typo for log config file.
 - Fix interactive command session abruptly terminated issue.
