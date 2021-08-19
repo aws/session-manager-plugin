@@ -261,7 +261,8 @@ func (s *StartSessionCommand) getStartSessionParams(log log.T, parameters map[st
 		for k, v := range params {
 			values := make([]*string, len(v))
 			for index, element := range v {
-				values[index] = &element
+				value := element
+				values[index] = &value
 			}
 			userParameters[k] = values
 		}
