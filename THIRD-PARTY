@@ -10,6 +10,8 @@ Copyright (c) 2013 The Gorilla WebSocket Authors. All rights reserved.
 ** fsnotigy/fsnotify - https://github.com/fsnotify/fsnotify
 Copyright (c) 2012 The Go Authors. All rights reserved.
 Copyright (c) 2012 fsnotify Authors. All rights reserved.
+** google/uuid - https://github.com/google/uuid
+Copyright (c) 2009,2014 Google Inc. All rights reserved.
 
 BSD License
 
@@ -37,9 +39,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 ----------------
 
-** twinj/uuid - https://github.com/twinj/uuid
-Copyright (C) 2011 by Krzysztof Kowalik <chris@nu7hat.ch>
-Copyright (C) 2016 by Daniel Kemp <twinj@github.com> Derivative work
 ** stretchr/testify - https://github.com/stretchr/testify
 Copyright (c) 2012 - 2013 Mat Ryer and Tyler Bunnell
 ** stretchr/objx - https://github.com/stretchr/objx

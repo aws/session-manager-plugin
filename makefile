@@ -7,7 +7,7 @@ GOOS?=$(shell go env GOOS)
 
 GO_SPACE?=$(CURDIR)
 GOTEMPPATH?=$(GO_SPACE)/build/private
-GOTEMPCOPYPATH?=$(GOTEMPPATH)/src/github.com/aws/SSMCLI
+GOTEMPCOPYPATH?=$(GOTEMPPATH)/pkg/github.com/aws/session-manager-plugin
 GOPATH:=$(GOTEMPPATH):$(GO_SPACE)/vendor:$(GOPATH)
 
 export GOPATH
@@ -41,7 +41,7 @@ copy-src:
 	rm -rf $(GOTEMPCOPYPATH)
 	mkdir -p $(GOTEMPCOPYPATH)
 	@echo "copying files to $(GOTEMPCOPYPATH)"
-	$(COPY) -r $(GO_SPACE)/src $(GOTEMPCOPYPATH)
+	$(COPY) -r $(GO_SPACE)/pkg $(GOTEMPCOPYPATH)
 
 .PHONY: pre-build
 pre-build:
@@ -59,21 +59,20 @@ pre-build:
 	$(COPY) $(GO_SPACE)/seelog_windows.xml.template $(GO_SPACE)/bin/
 
 	@echo "Regenerate version file during pre-release"
-	go run $(GO_SPACE)/src/version/versiongenerator/version-gen.go
+	go run $(GO_SPACE)/cmd/versiongenerator/main.go
 	$(COPY) $(GO_SPACE)/VERSION $(GO_SPACE)/bin/
 
 .PHONY: pre-release
 pre-release:
 	@echo "session-manager-plugin release build"
 	$(eval GO_BUILD := go build)
-	rm -rf $(GO_SPACE)/vendor/pkg
 
 .PHONY: quick-test
 quick-test:
 	# if you want to test a specific package, you can add the package name instead of the dots. Sample below
-	# go test -gcflags "-N -l" github.com/aws/SSMCLI/src/datachannel
+	# go test -gcflags "-N -l" github.com/aws/session-manager-plugin/pkg/datachannel
 	go clean -testcache
-	go test -cover -gcflags "-N -l" github.com/aws/SSMCLI/src/...
+	go test -cover -gcflags "-N -l" github.com/aws/session-manager-plugin/pkg/...
 
 .PHONY: create-package-folder
 create-package-folder:
@@ -84,54 +83,54 @@ create-package-folder:
 build-linux-amd64: checkstyle copy-src pre-build
 	@echo "Build for linux platform"
 	GOOS=linux GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/linux_amd64_plugin/session-manager-plugin -v \
-		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 	GOOS=linux GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/linux_amd64/ssmcli -v \
-    		$(GO_SPACE)/src/ssmcli-main/main.go
+    		$(GO_SPACE)/cmd/ssmcli/main.go
 
 .PHONY: build-linux-386
 build-linux-386: checkstyle copy-src pre-build
 	@echo "Build for linux platform"
 	GOOS=linux GOARCH=386 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/linux_386_plugin/session-manager-plugin -v \
-		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 	GOOS=linux GOARCH=386 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/linux_386/ssmcli -v \
-    		$(GO_SPACE)/src/ssmcli-main/main.go
+    		$(GO_SPACE)/cmd/ssmcli/main.go
 
 .PHONY: build-arm
 build-arm: checkstyle copy-src pre-build
 	@echo "Build for ARM platform"
 	GOOS=linux GOARCH=arm GOARM=6 $(GO_BUILD) -ldflags "-s -w -extldflags=-Wl,-z,now,-z,relro,-z,defs" -o $(GO_SPACE)/bin/linux_arm_plugin/session-manager-plugin -v \
-		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 
 .PHONY: build-arm64
 build-arm64: checkstyle copy-src pre-build
 	@echo "Build for ARM64 platform"
 	GOOS=linux GOARCH=arm64 $(GO_BUILD) -ldflags "-s -w -extldflags=-Wl,-z,now,-z,relro,-z,defs" -o $(GO_SPACE)/bin/linux_arm64_plugin/session-manager-plugin -v \
-		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 
 
 .PHONY: build-darwin-amd64
 build-darwin-amd64: checkstyle copy-src pre-build
 	@echo "Build for darwin platform"
 	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_amd64_plugin/session-manager-plugin -v \
-		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_amd64/ssmcli -v \
-    		$(GO_SPACE)/src/ssmcli-main/main.go
+    		$(GO_SPACE)/cmd/ssmcli/main.go
 
 .PHONY: build-windows-amd64
 build-windows-amd64: checkstyle copy-src pre-build
 	@echo "Build for windows platform"
 	GOOS=windows GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/windows_amd64_plugin/session-manager-plugin.exe -v \
-		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 	GOOS=windows GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/windows_amd64/ssmcli.exe -v \
-    		$(GO_SPACE)/src/ssmcli-main/main.go
+    		$(GO_SPACE)/cmd/ssmcli/main.go
 
 .PHONY: build-windows-386
 build-windows-386: checkstyle copy-src pre-build
 	@echo "Build for windows platform"
 	GOOS=windows GOARCH=386 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/windows_386_plugin/session-manager-plugin.exe -v \
-		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 	GOOS=windows GOARCH=386 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/windows_386/ssmcli.exe -v \
-    		$(GO_SPACE)/src/ssmcli-main/main.go
+    		$(GO_SPACE)/cmd/ssmcli/main.go
 
 
 .PHONY: prepack-linux-amd64
