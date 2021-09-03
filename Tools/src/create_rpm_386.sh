@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "***********************************************"
 echo "Creating rpm file for Amazon Linux and RHEL 386"
 echo "***********************************************"

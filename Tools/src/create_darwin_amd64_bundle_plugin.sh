@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "**********************************************"
 echo "Creating bundle zip file Mac OS X amd64 Plugin"
 echo "**********************************************"

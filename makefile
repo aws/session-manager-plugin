@@ -1,5 +1,5 @@
 COPY := cp -p
-GO_BUILD := go build -i
+GO_BUILD := go build
 
 # Default build configuration, can be overridden at build time.
 GOARCH?=$(shell go env GOARCH)
@@ -17,11 +17,11 @@ checkstyle::
 #   Run checkstyle script
 	$(GO_SPACE)/Tools/src/checkstyle.sh
 
-build:: build-linux-amd64 build-linux-386 build-arm build-arm64 build-darwin-amd64 build-windows-amd64 build-windows-386
+build:: build-linux-amd64 build-linux-386 build-arm build-arm64 build-darwin-amd64 build-darwin-arm64 build-windows-amd64 build-windows-386
 
 prepack:: prepack-linux-amd64 prepack-linux-386 prepack-linux-arm64 prepack-windows-386 prepack-windows-amd64
 
-package:: create-package-folder package-rpm-amd64 package-rpm-386 package-rpm-arm64 package-deb-amd64 package-deb-386 package-deb-arm package-deb-arm64 package-darwin-amd64 package-win-386 package-win-amd64
+package:: create-package-folder package-rpm-amd64 package-rpm-386 package-rpm-arm64 package-deb-amd64 package-deb-386 package-deb-arm package-deb-arm64 package-darwin-amd64 package-darwin-arm64 package-win-386 package-win-amd64
 
 release:: clean checkstyle release-test pre-release build prepack package copy-package-dependencies
 
@@ -110,10 +110,18 @@ build-arm64: checkstyle copy-src pre-build
 
 .PHONY: build-darwin-amd64
 build-darwin-amd64: checkstyle copy-src pre-build
-	@echo "Build for darwin platform"
+	@echo "Build for darwin amd64 platform"
 	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_amd64_plugin/session-manager-plugin -v \
 		$(GO_SPACE)/cmd/session-manager-plugin/main.go
 	GOOS=darwin GOARCH=amd64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_amd64/ssmcli -v \
+    		$(GO_SPACE)/cmd/ssmcli/main.go
+
+.PHONY: build-darwin-arm64
+build-darwin-arm64: checkstyle copy-src pre-build
+	@echo "Build for darwin arm64 platform"
+	GOOS=darwin GOARCH=arm64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_arm64_plugin/session-manager-plugin -v \
+		$(GO_SPACE)/cmd/session-manager-plugin/main.go
+	GOOS=darwin GOARCH=arm64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_arm64/ssmcli -v \
     		$(GO_SPACE)/cmd/ssmcli/main.go
 
 .PHONY: build-windows-amd64
@@ -232,7 +240,11 @@ package-deb-arm64: create-package-folder
 
 .PHONY: package-darwin-amd64
 package-darwin-amd64:
-	$(GO_SPACE)/Tools/src/create_darwin_bundle_plugin.sh
+	$(GO_SPACE)/Tools/src/create_darwin_amd64_bundle_plugin.sh
+
+.PHONY: package-darwin-arm64
+package-darwin-arm64:
+	$(GO_SPACE)/Tools/src/create_darwin_arm64_bundle_plugin.sh
 
 .PHONY: package-win-386
 package-win-386: create-package-folder

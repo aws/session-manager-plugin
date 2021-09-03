@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "*********************************************"
 echo "Creating deb file for Ubuntu Linux 386 Plugin"
 echo "*********************************************"

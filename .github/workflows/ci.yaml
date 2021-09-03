@@ -1,0 +1,24 @@
+name: Session Manager Plugin CI
+
+on: [push, pull_request, workflow_dispatch]
+
+env:
+  DEFAULT_GO_VERSION: ^1.16
+
+jobs:
+
+  buildAndTest:
+    name: Build and Test
+    runs-on: ubuntu-20.04
+    steps:
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ env.DEFAULT_GO_VERSION }}
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Unit Tests
+      run: make quick-test checkstyle
+    

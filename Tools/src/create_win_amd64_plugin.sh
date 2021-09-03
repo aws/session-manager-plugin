@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "****************************************"
 echo "Creating zip file for Windows amd64 plugin"
 echo "****************************************"

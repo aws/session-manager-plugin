@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euo pipefail
 echo "Run checkstyle script"
 
 # run gofmt
@@ -18,7 +19,7 @@ echo "Try update 'goimports'"
 GOPATH=`pwd`/Tools go get golang.org/x/tools/cmd/goimports
 
 echo "Run 'goimports'"
-unformatted=$(Tools/bin/goimports -l `pwd`/src/)
+unformatted=$(Tools/bin/goimports -l `pwd`/pkg/)
 if [[ -n $unformatted ]]; then
 	echo >&2 "Error: Found files not formatted by goimports"
 	for f in $unformatted; do
