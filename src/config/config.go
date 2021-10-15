@@ -35,7 +35,7 @@ const (
 	DataChannelRetryInitialDelayMillis = 100
 	DataChannelRetryMaxIntervalMillis  = 5000
 	RetryAttempt                       = 5
-	PingTimeInterval                   = 5 * time.Minute
+	PingTimeInterval                   = 15 * time.Second
 
 	// Plugin names
 	ShellPluginName                  = "Standard_Stream"
