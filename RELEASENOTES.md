@@ -1,5 +1,10 @@
 Latest
 ================
+- Fix single memory reference access for parameters
+- Upgrade gorilla package to 1.4.2 
+
+1.2.245.0
+================
 - Enhancement: Upgrade aws-sdk-go to latest version (v1.40.17) to support SSO
 - Enhancement: Improve error message for legacy CLI version 
 
