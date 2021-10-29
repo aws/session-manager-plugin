@@ -70,7 +70,7 @@ func (d *DisplayMode) DisplayMessage(log log.T, message message.ClientMessage) {
 	// refer - https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-writefile
 	if err = windows.WriteFile(d.handle, message.Payload, done, nil); err != nil {
 		log.Errorf("error occurred while writing to file: %v", err)
-		fmt.Fprintf(os.Stdout, "\nError getting the output. %s\n", err.Error())
+		fmt.Fprintf(os.Stderr, "\nError getting the output. %s\n", err.Error())
 		os.Exit(0)
 	}
 }

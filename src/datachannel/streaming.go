@@ -495,7 +495,7 @@ func (dataChannel *DataChannel) handleHandshakeComplete(log log.T, clientMessage
 		handshakeComplete.HandshakeTimeToComplete.Seconds())
 
 	if handshakeComplete.CustomerMessage != "" {
-		fmt.Fprintln(os.Stdout, handshakeComplete.CustomerMessage)
+		fmt.Fprintln(os.Stderr, handshakeComplete.CustomerMessage)
 	}
 
 	return err
@@ -763,9 +763,9 @@ func (dataChannel DataChannel) HandleChannelClosedMessage(log log.T, stopHandler
 
 	log.Infof("Exiting session with sessionId: %s with output: %s", sessionId, channelClosedMessage.Output)
 	if channelClosedMessage.Output == "" {
-		fmt.Fprintf(os.Stdout, "\n\nExiting session with sessionId: %s.\n\n", sessionId)
+		fmt.Fprintf(os.Stderr, "\n\nExiting session with sessionId: %s.\n\n", sessionId)
 	} else {
-		fmt.Fprintf(os.Stdout, "\n\nSessionId: %s : %s\n\n", sessionId, channelClosedMessage.Output)
+		fmt.Fprintf(os.Stderr, "\n\nSessionId: %s : %s\n\n", sessionId, channelClosedMessage.Output)
 	}
 
 	stopHandler()
