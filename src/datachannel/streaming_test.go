@@ -570,6 +570,7 @@ func getClientAndStreamingMessageList(size int) (serializedClientMessage [][]byt
 			serializedClientMessage[i],
 			int64(i),
 			time.Now(),
+			new(int),
 		}
 	}
 	return

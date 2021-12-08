@@ -23,6 +23,7 @@ const (
 	DefaultRoundTripTime               = 100 * time.Millisecond
 	DefaultRoundTripTimeVariation      = 0
 	ResendSleepInterval                = 100 * time.Millisecond
+	ResendMaxAttempt                   = 3000 // 5 minutes / ResendSleepInterval
 	StreamDataPayloadSize              = 1024
 	OutgoingMessageBufferCapacity      = 10000
 	IncomingMessageBufferCapacity      = 10000

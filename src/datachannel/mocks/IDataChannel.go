@@ -161,6 +161,22 @@ func (_m *IDataChannel) IsSessionTypeSet() chan bool {
 	return r0
 }
 
+// IsStreamMessageResendTimeout checks if resending a streaming message reaches timeout
+func (_m *IDataChannel) IsStreamMessageResendTimeout() chan bool {
+	ret := _m.Called()
+
+	var r0 chan bool
+	if rf, ok := ret.Get(0).(func() chan bool); ok {
+		r0 = rf()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(chan bool)
+		}
+	}
+
+	return r0
+}
+
 // Open provides a mock function with given fields: _a0
 func (_m *IDataChannel) Open(_a0 log.T) error {
 	ret := _m.Called(_a0)

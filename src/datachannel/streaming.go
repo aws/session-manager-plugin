@@ -62,6 +62,7 @@ type IDataChannel interface {
 	RegisterOutputStreamHandler(handler OutputStreamDataMessageHandler, isSessionSpecificHandler bool)
 	DeregisterOutputStreamHandler(handler OutputStreamDataMessageHandler)
 	IsSessionTypeSet() chan bool
+	IsStreamMessageResendTimeout() chan bool
 	GetSessionType() string
 	SetSessionType(sessionType string)
 	GetSessionProperties() interface{}
@@ -105,6 +106,9 @@ type DataChannel struct {
 	isSessionTypeSet  chan bool
 	sessionProperties interface{}
 
+	// Used to detect if resending a streaming message reaches timeout
+	isStreamMessageResendTimeout chan bool
+
 	// Handles data on output stream. Output stream is data outputted by the SSM agent and received here.
 	outputStreamHandlers        []OutputStreamDataMessageHandler
 	isSessionSpecificHandlerSet bool
@@ -129,6 +133,7 @@ type StreamingMessage struct {
 	Content        []byte
 	SequenceNumber int64
 	LastSentTime   time.Time
+	ResendAttempt  *int
 }
 
 type OutputStreamDataMessageHandler func(log log.T, streamDataMessage message.ClientMessage) (bool, error)
@@ -182,6 +187,7 @@ func (dataChannel *DataChannel) Initialize(log log.T, clientId string, sessionId
 	dataChannel.wsChannel = &communicator.WebSocketChannel{}
 	dataChannel.encryptionEnabled = false
 	dataChannel.isSessionTypeSet = make(chan bool, 1)
+	dataChannel.isStreamMessageResendTimeout = make(chan bool, 1)
 	dataChannel.sessionType = ""
 	dataChannel.IsAwsCliUpgradeNeeded = isAwsCliUpgradeNeeded
 }
@@ -313,6 +319,7 @@ func (dataChannel *DataChannel) SendInputDataMessage(
 		msg,
 		dataChannel.StreamDataSequenceNumber,
 		time.Now(),
+		new(int),
 	}
 	dataChannel.AddDataToOutgoingMessageBuffer(streamingMessage)
 	dataChannel.StreamDataSequenceNumber = dataChannel.StreamDataSequenceNumber + 1
@@ -336,7 +343,12 @@ func (dataChannel *DataChannel) ResendStreamDataMessageScheduler(log log.T) (err
 
 			streamMessage := streamMessageElement.Value.(StreamingMessage)
 			if time.Since(streamMessage.LastSentTime) > dataChannel.RetransmissionTimeout {
-				log.Debugf("Resend stream data message: %d", streamMessage.SequenceNumber)
+				log.Debugf("Resend stream data message %d for the %d attempt.", streamMessage.SequenceNumber, *streamMessage.ResendAttempt)
+				if *streamMessage.ResendAttempt >= config.ResendMaxAttempt {
+					log.Warnf("Message %d was resent over %d times.", streamMessage.SequenceNumber, config.ResendMaxAttempt)
+					dataChannel.isStreamMessageResendTimeout <- true
+				}
+				*streamMessage.ResendAttempt++
 				if err = SendMessageCall(log, dataChannel, streamMessage.Content, websocket.BinaryMessage); err != nil {
 					log.Errorf("Unable to send stream data message: %s", err)
 				}
@@ -344,6 +356,7 @@ func (dataChannel *DataChannel) ResendStreamDataMessageScheduler(log log.T) (err
 			}
 		}
 	}()
+
 	return
 }
 
@@ -687,6 +700,7 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 					rawMessage,
 					outputMessage.SequenceNumber,
 					time.Now(),
+					new(int),
 				}
 
 				//Add message to buffer for future processing
@@ -868,6 +882,11 @@ func (dataChannel *DataChannel) ProcessSessionTypeHandshakeAction(actionParams j
 // IsSessionTypeSet check has data channel sessionType been set
 func (dataChannel *DataChannel) IsSessionTypeSet() chan bool {
 	return dataChannel.isSessionTypeSet
+}
+
+// IsStreamMessageResendTimeout checks if resending a streaming message reaches timeout
+func (dataChannel *DataChannel) IsStreamMessageResendTimeout() chan bool {
+	return dataChannel.isStreamMessageResendTimeout
 }
 
 // SetSessionType set session type

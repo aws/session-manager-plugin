@@ -20,6 +20,9 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
+
+	"github.com/aws/SSMCLI/src/config"
 
 	"github.com/aws/SSMCLI/src/datachannel"
 	"github.com/aws/SSMCLI/src/log"
@@ -94,6 +97,24 @@ var setSessionHandlersWithSessionType = func(session *Session, log log.T) error 
 	sessionSubType := SessionRegistry[session.SessionType]
 	sessionSubType.Initialize(log, session)
 	return sessionSubType.SetSessionHandlers(log)
+}
+
+// Set up a scheduler to listen on stream data resend timeout event
+var handleStreamMessageResendTimeout = func(session *Session, log log.T) {
+	log.Tracef("Setting up scheduler to listen on IsStreamMessageResendTimeout event.")
+	go func() {
+		for {
+			// Repeat this loop for every 200ms
+			time.Sleep(config.ResendSleepInterval)
+			if <-session.DataChannel.IsStreamMessageResendTimeout() {
+				log.Errorf("Terminating session %s as the stream data was not processed before timeout.", session.SessionId)
+				if err := session.TerminateSession(log); err != nil {
+					log.Errorf("Unable to terminate session upon stream data timeout. %v", err)
+				}
+				return
+			}
+		}
+	}()
 }
 
 // ValidateInputAndStartSession validates input sent from AWS CLI and starts a session if validation is successful.
@@ -200,9 +221,11 @@ func (s *Session) Execute(log log.T) (err error) {
 		return
 	}
 
+	handleStreamMessageResendTimeout(s, log)
+
 	// The session type is set either by handshake or the first packet received.
 	if !<-s.DataChannel.IsSessionTypeSet() {
-		log.Errorf("unable to  SessionType for session %s", s.SessionId)
+		log.Errorf("unable to set SessionType for session %s", s.SessionId)
 		return errors.New("unable to determine SessionType")
 	} else {
 		s.SessionType = s.DataChannel.GetSessionType()
@@ -212,5 +235,6 @@ func (s *Session) Execute(log log.T) (err error) {
 			return
 		}
 	}
+
 	return
 }
