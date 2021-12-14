@@ -394,6 +394,36 @@ func TestDataChannelIncomingMessageHandlerForAcknowledgeMessage(t *testing.T) {
 	assert.Equal(t, 3, dataChannel.OutgoingMessageBuffer.Messages.Len())
 }
 
+func TestDataChannelIncomingMessageHandlerForPausePublicationessage(t *testing.T) {
+	dataChannel := getDataChannel()
+	mockChannel := &communicatorMocks.IWebSocketChannel{}
+	dataChannel.wsChannel = mockChannel
+
+	size := 5
+	streamingMessages = make([]StreamingMessage, size)
+	serializedClientMessage := make([][]byte, size)
+	for i := 0; i < size; i++ {
+		clientMessage := getClientMessage(int64(i), message.PausePublicationMessage, uint32(message.Output), []byte(""))
+		serializedClientMessage[i], _ = clientMessage.SerializeClientMessage(mockLogger)
+		streamingMessages[i] = StreamingMessage{
+			serializedClientMessage[i],
+			int64(i),
+			time.Now(),
+			new(int),
+		}
+	}
+
+	var handler OutputStreamDataMessageHandler = func(log log.T, outputMessage message.ClientMessage) (bool, error) {
+		return true, nil
+	}
+
+	var stopHandler Stop
+
+	dataChannel.RegisterOutputStreamHandler(handler, true)
+	err := dataChannel.OutputMessageHandler(logger, stopHandler, sessionId, serializedClientMessages[0])
+	assert.Nil(t, err)
+}
+
 func TestHandshakeRequestHandler(t *testing.T) {
 	dataChannel := getDataChannel()
 	mockChannel := &communicatorMocks.IWebSocketChannel{}

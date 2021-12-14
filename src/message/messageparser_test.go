@@ -705,6 +705,23 @@ func TestClientMessage_Validate(t *testing.T) {
 	assert.NoError(t, err, "An error was thrown when none was expected.")
 }
 
+func TestClientMessage_ValidateStartPublicationMessage(t *testing.T) {
+	u, _ := uuid.Parse(messageId)
+
+	clientMessage := ClientMessage{
+		SchemaVersion:  schemaVersion,
+		SequenceNumber: 1,
+		Flags:          2,
+		MessageId:      u,
+		Payload:        payload,
+		PayloadLength:  3,
+		MessageType:    StartPublicationMessage,
+	}
+
+	err := clientMessage.Validate()
+	assert.NoError(t, err, "Validating StartPublicationMessage should not throw an error")
+}
+
 func TestClientMessage_DeserializeDataStreamAcknowledgeContent(t *testing.T) {
 	t.Logf("Starting test: %s", t.Name())
 	// ClientMessage is initialized with improperly formatted json data

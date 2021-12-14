@@ -223,6 +223,10 @@ func getBytes(log log.T, byteArray []byte, offset int, byteLength int) (result [
 
 // Validate returns error if the message is invalid
 func (clientMessage *ClientMessage) Validate() error {
+	if StartPublicationMessage == clientMessage.MessageType ||
+		PausePublicationMessage == clientMessage.MessageType {
+		return nil
+	}
 	if clientMessage.HeaderLength == 0 {
 		return errors.New("HeaderLength cannot be zero")
 	}

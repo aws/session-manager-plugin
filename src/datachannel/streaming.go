@@ -420,6 +420,8 @@ func (dataChannel *DataChannel) OutputMessageHandler(log log.T, stopHandler Stop
 		return dataChannel.HandleAcknowledgeMessage(log, *outputMessage)
 	case message.ChannelClosedMessage:
 		dataChannel.HandleChannelClosedMessage(log, stopHandler, sessionID, *outputMessage)
+	case message.StartPublicationMessage, message.PausePublicationMessage:
+		return nil
 	default:
 		log.Warn("Invalid message type received: %s", outputMessage.MessageType)
 	}

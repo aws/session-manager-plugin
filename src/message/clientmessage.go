@@ -31,6 +31,13 @@ const (
 
 	// ChannelClosedMessage represents message type for ChannelClosed
 	ChannelClosedMessage = "channel_closed"
+
+	// StartPublicationMessage represents the message type that notifies the CLI to start sending stream messages
+	StartPublicationMessage = "start_publication"
+
+	// PausePublicationMessage represents the message type that notifies the CLI to pause sending stream messages
+	// as the remote data channel is inactive
+	PausePublicationMessage = "pause_publication"
 )
 
 // AcknowledgeContent is used to inform the sender of an acknowledge message that the message has been received.
