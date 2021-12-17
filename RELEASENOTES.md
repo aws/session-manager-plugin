@@ -1,5 +1,10 @@
 Latest
 ================
+- Fix hung sessions caused by client resending stream data when agent becomes inactive.
+- Fix incorrect logs for start_publication and pause_publication messages.
+
+1.2.279.0
+================
 - Fix single memory reference access for parameters
 - Upgrade gorilla package to 1.4.2 
 
