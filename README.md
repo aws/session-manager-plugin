@@ -67,10 +67,9 @@ The `ssmcli` binary is available for some operating systems for testing purposes
 
 Source code
 
-* `sessionmanagerplugin/session` contains the source code for core functionalities
-* `communicator/` contains the source code for websocket related operations
-* `vendor/src` contains the vendor package source code
 * `packaging/` contains rpm and dpkg artifacts
+* `pkg/communicator/` contains the source code for websocket related operations
+* `pkg/sessionmanagerplugin/session/` contains the source code for core functionalities
 * `Tools/src` contains build scripts
 
 ## Feedback

@@ -3,7 +3,7 @@ echo "Run checkstyle script"
 
 # run gofmt
 echo "Run 'gofmt'"
-unformatted=$(gofmt -l `pwd`/src/)
+unformatted=$(gofmt -l cmd pkg)
 if [[ -n $unformatted ]]; then
 	echo >&2 "Error: Found files not formatted by gofmt"
 	for fi in $unformatted; do
@@ -18,7 +18,7 @@ echo "Try update 'goimports'"
 GOPATH=`pwd`/Tools go get golang.org/x/tools/cmd/goimports
 
 echo "Run 'goimports'"
-unformatted=$(Tools/bin/goimports -l `pwd`/src/)
+unformatted=$(Tools/bin/goimports -l cmd pkg)
 if [[ -n $unformatted ]]; then
 	echo >&2 "Error: Found files not formatted by goimports"
 	for f in $unformatted; do
@@ -29,5 +29,4 @@ if [[ -n $unformatted ]]; then
 fi
 
 echo "Run 'go vet'"
-ln -s `pwd` `pwd`/vendor/src/github.com/aws/SSMCLI
-go vet ./src/...
+go vet ./cmd/... ./pkg/...
