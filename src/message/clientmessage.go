@@ -83,6 +83,8 @@ const (
 	EncChallengeRequest          PayloadType = 8
 	EncChallengeResponse         PayloadType = 9
 	Flag                         PayloadType = 10
+	StdErr                       PayloadType = 11
+	ExitCode                     PayloadType = 12
 )
 
 type PayloadTypeFlag uint32

@@ -16,6 +16,7 @@ package datachannel
 
 import (
 	"encoding/json"
+	"fmt"
 	"reflect"
 	"strconv"
 	"strings"
@@ -489,6 +490,23 @@ func TestHandleOutputMessageForDefaultTypeWithError(t *testing.T) {
 
 	err := dataChannel.HandleOutputMessage(mockLogger, clientMessage, rawMessage)
 	assert.NotNil(t, err)
+}
+
+func TestHandleOutputMessageForExitCodePayloadTypeWithError(t *testing.T) {
+	dataChannel := getDataChannel()
+	mockChannel := &communicatorMocks.IWebSocketChannel{}
+	dataChannel.wsChannel = mockChannel
+	clientMessage := getClientMessage(0, message.OutputStreamMessage,
+		uint32(message.ExitCode), payload)
+	dataChannel.encryptionEnabled = true
+	mockEncrypter := &mocks.IEncrypter{}
+	dataChannel.encryption = mockEncrypter
+	mockErr := fmt.Errorf("Decrypt Error")
+	mockEncrypter.On("Decrypt", mock.Anything, mock.Anything).Return([]byte{10, 11, 12}, mockErr)
+	rawMessage := []byte("rawMessage")
+
+	err := dataChannel.HandleOutputMessage(mockLogger, clientMessage, rawMessage)
+	assert.Equal(t, mockErr, err)
 }
 
 func TestHandleHandshakeRequestWithMessageDeserializeError(t *testing.T) {

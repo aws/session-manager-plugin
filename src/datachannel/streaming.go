@@ -658,11 +658,13 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 
 			// Decrypt if encryption is enabled and payload type is output
 			if dataChannel.encryptionEnabled &&
-				outputMessage.PayloadType == uint32(message.Output) {
+				(outputMessage.PayloadType == uint32(message.Output) ||
+					outputMessage.PayloadType == uint32(message.StdErr) ||
+					outputMessage.PayloadType == uint32(message.ExitCode)) {
 				outputMessage.Payload, err = dataChannel.encryption.Decrypt(log, outputMessage.Payload)
 				if err != nil {
 					log.Errorf("Unable to decrypt incoming data payload, MessageType %s, "+
-						"PayloadType Output, err: %s.", outputMessage.MessageType, err)
+						"PayloadType %d, err: %s.", outputMessage.MessageType, outputMessage.PayloadType, err)
 					return err
 				}
 			}
@@ -732,11 +734,13 @@ func (dataChannel *DataChannel) ProcessIncomingMessageBufferItems(log log.T,
 
 			// Decrypt if encryption is enabled and payload type is output
 			if dataChannel.encryptionEnabled &&
-				outputMessage.PayloadType == uint32(message.Output) {
+				(outputMessage.PayloadType == uint32(message.Output) ||
+					outputMessage.PayloadType == uint32(message.StdErr) ||
+					outputMessage.PayloadType == uint32(message.ExitCode)) {
 				outputMessage.Payload, err = dataChannel.encryption.Decrypt(log, outputMessage.Payload)
 				if err != nil {
-					log.Errorf("Unable to decrypt incoming data payload, MessageType %s, "+
-						"PayloadType Output, err: %s.", outputMessage.MessageType, err)
+					log.Errorf("Unable to decrypt buffered message data payload, MessageType %s, "+
+						"PayloadType %d, err: %s.", outputMessage.MessageType, outputMessage.PayloadType, err)
 					return err
 				}
 			}
