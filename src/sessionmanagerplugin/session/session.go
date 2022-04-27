@@ -20,6 +20,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
+	"strings"
 	"time"
 
 	"github.com/aws/SSMCLI/src/config"
@@ -191,6 +193,22 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 
 		session.SessionId = *startSessionOutput.SessionId
 		session.StreamUrl = *startSessionOutput.StreamUrl
+
+		if len(profile) > 0 {
+			// Lookup for a custom endpoint inside the profile
+			ssmmsgEndpointRes, err := exec.Command("aws", "configure", "get", "aws_ssmmessages_endpoint", "--profile", profile).Output()
+			if err == nil && ssmmsgEndpointRes != nil {
+				ssmmsgEndpoint := string(ssmmsgEndpointRes)
+				streamUrl := string(*startSessionOutput.StreamUrl)
+				// Cleanup Windows/Linux line feeds
+				ssmmsgEndpoint = strings.TrimSuffix(strings.TrimSuffix(strings.TrimSuffix(ssmmsgEndpoint, "\n"), "\r"), "\n")
+				if strings.HasSuffix(ssmmsgEndpoint, ".vpce.amazonaws.com") {
+					// Looks like a legit endpoint, patch the WSS url
+					fmt.Printf("Custom endpoint detected %s\n", ssmmsgEndpoint)
+					session.StreamUrl = strings.Replace(streamUrl, "ssmmessages.eu-west-1.amazonaws.com", ssmmsgEndpoint, -1)
+				}
+			}
+		}
 		session.TokenValue = *startSessionOutput.TokenValue
 		session.Endpoint = ssmEndpoint
 		session.ClientId = clientId
