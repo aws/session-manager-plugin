@@ -1,5 +1,9 @@
 Latest
 ================
+- Support more output message payload type.
+
+1.2.295.0
+================
 - Fix hung sessions caused by client resending stream data when agent becomes inactive.
 - Fix incorrect logs for start_publication and pause_publication messages.
 
