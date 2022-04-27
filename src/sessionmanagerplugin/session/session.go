@@ -21,6 +21,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"regexp"
 	"strings"
 	"time"
 
@@ -205,7 +206,8 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 				if strings.HasSuffix(ssmmsgEndpoint, ".vpce.amazonaws.com") {
 					// Looks like a legit endpoint, patch the WSS url
 					fmt.Printf("Custom endpoint detected %s\n", ssmmsgEndpoint)
-					session.StreamUrl = strings.Replace(streamUrl, "ssmmessages.eu-west-1.amazonaws.com", ssmmsgEndpoint, -1)
+					m := regexp.MustCompile(`ssmmessages.*amazonaws.com`)
+					session.StreamUrl = m.ReplaceAllString(streamUrl, ssmmsgEndpoint)
 				}
 			}
 		}
