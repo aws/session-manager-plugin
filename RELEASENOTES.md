@@ -1,5 +1,9 @@
 Latest
 ================
+- Disable smux keep alive to use idle session timeout feature
+
+1.2.312.0
+================
 - Support more output message payload type.
 
 1.2.295.0
