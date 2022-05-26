@@ -165,15 +165,10 @@ func (p *MuxPortForwarding) initialize(log log.T) (err error) {
 	g.Go(func() error {
 		if muxConn, err := net.Dial(listener.Addr().Network(), listener.Addr().String()); err != nil {
 			return err
+		} else if muxSession, err := smux.Client(muxConn, nil); err != nil {
+			return err
 		} else {
-			smuxConfig := smux.DefaultConfig()
-			// Disable smux KeepAlive or else it breaks Session Manager idle timeout.
-			smuxConfig.KeepAliveDisabled = true
-			if muxSession, err := smux.Client(muxConn, smuxConfig); err != nil {
-				return err
-			} else {
-				p.muxClient = &MuxClient{muxConn, muxSession}
-			}
+			p.muxClient = &MuxClient{muxConn, muxSession}
 		}
 		return nil
 	})
