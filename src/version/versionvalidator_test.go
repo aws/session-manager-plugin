@@ -148,3 +148,11 @@ func TestDoesAgentSupportTerminateSessionFlagForNotSupportedScenario(t *testing.
 func TestDoesAgentSupportTerminateSessionFlagWhenAgentVersionIsEqualSupportedAfterVersion(t *testing.T) {
 	assert.False(t, DoesAgentSupportTerminateSessionFlag(mockLog, "2.3.722.0"))
 }
+
+func TestDoesAgentSupportDisableSmuxKeepAliveForNotSupportedScenario(t *testing.T) {
+	assert.False(t, DoesAgentSupportDisableSmuxKeepAlive(mockLog, "3.1.1476.0"))
+}
+
+func TestDoesAgentSupportDisableSmuxKeepAliveForSupportedScenario(t *testing.T) {
+	assert.True(t, DoesAgentSupportDisableSmuxKeepAlive(mockLog, "3.1.1600.0"))
+}

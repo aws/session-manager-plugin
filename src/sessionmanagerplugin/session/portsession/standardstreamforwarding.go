@@ -46,7 +46,7 @@ func (p *StandardStreamForwarding) Stop() {
 }
 
 // InitializeStreams initializes the streams with its file descriptors
-func (p *StandardStreamForwarding) InitializeStreams(log log.T) (err error) {
+func (p *StandardStreamForwarding) InitializeStreams(log log.T, agentVersion string) (err error) {
 	p.inputStream = os.Stdin
 	p.outputStream = os.Stdout
 	return

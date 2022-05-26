@@ -24,6 +24,11 @@ func DoesAgentSupportTCPMultiplexing(log log.T, agentVersion string) (supported 
 	return isAgentVersionGreaterThanSupportedVersion(log, agentVersion, config.TCPMultiplexingSupportedAfterThisAgentVersion)
 }
 
+// DoesAgentSupportDisableSmuxKeepAlive returns true if given agentVersion disables smux KeepAlive in TCP multiplexing in port plugin, false otherwise
+func DoesAgentSupportDisableSmuxKeepAlive(log log.T, agentVersion string) (supported bool) {
+	return isAgentVersionGreaterThanSupportedVersion(log, agentVersion, config.TCPMultiplexingWithSmuxKeepAliveDisabledAfterThisAgentVersion)
+}
+
 // DoesAgentSupportTerminateSessionFlag returns true if given agentVersion supports TerminateSession flag, false otherwise
 func DoesAgentSupportTerminateSessionFlag(log log.T, agentVersion string) (supported bool) {
 	return isAgentVersionGreaterThanSupportedVersion(log, agentVersion, config.TerminateSessionFlagSupportedAfterThisAgentVersion)

@@ -35,7 +35,7 @@ type PortSession struct {
 
 type IPortSession interface {
 	IsStreamNotSet() (status bool)
-	InitializeStreams(log log.T) (err error)
+	InitializeStreams(log log.T, agentVersion string) (err error)
 	ReadStream(log log.T) (err error)
 	WriteStream(outputMessage message.ClientMessage) (err error)
 	Stop()
@@ -111,7 +111,7 @@ func (s *PortSession) Stop() {
 
 // StartSession redirects inputStream/outputStream data to datachannel.
 func (s *PortSession) SetSessionHandlers(log log.T) (err error) {
-	if err = s.portSessionType.InitializeStreams(log); err != nil {
+	if err = s.portSessionType.InitializeStreams(log, s.DataChannel.GetAgentVersion()); err != nil {
 		return err
 	}
 

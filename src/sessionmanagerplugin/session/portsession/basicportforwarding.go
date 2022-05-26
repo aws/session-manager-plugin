@@ -65,7 +65,7 @@ func (p *BasicPortForwarding) Stop() {
 }
 
 // InitializeStreams establishes connection and initializes the stream
-func (p *BasicPortForwarding) InitializeStreams(log log.T) (err error) {
+func (p *BasicPortForwarding) InitializeStreams(log log.T, agentVersion string) (err error) {
 	p.handleControlSignals(log)
 	if err = p.startLocalConn(log); err != nil {
 		return
