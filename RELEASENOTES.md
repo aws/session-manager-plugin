@@ -1,5 +1,9 @@
 Latest
 ================
+- Fix port session premature close when local server is not connected before timeout
+
+1.2.323.0
+================
 - Disable smux keep alive to use idle session timeout feature
 
 1.2.312.0
