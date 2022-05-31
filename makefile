@@ -1,5 +1,6 @@
 COPY := cp -p
 GO_BUILD := go build -i
+GO111MODULE := auto
 
 # Default build configuration, can be overridden at build time.
 GOARCH?=$(shell go env GOARCH)
@@ -12,6 +13,7 @@ GOPATH:=$(GOTEMPPATH):$(GO_SPACE)/vendor:$(GOPATH)
 
 export GOPATH
 export GO_SPACE
+export GO111MODULE
 
 checkstyle::
 #   Run checkstyle script
