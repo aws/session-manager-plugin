@@ -122,9 +122,9 @@ build-darwin-amd64: checkstyle copy-src pre-build
 .PHONY: build-darwin-arm64
 build-darwin-arm64: checkstyle copy-src pre-build
 	@echo "Build for darwin platform"
-	GOOS=darwin GOARCH=arm64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_amd64_plugin/session-manager-plugin -v \
+	GOOS=darwin GOARCH=arm64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_arm64_plugin/session-manager-plugin -v \
 		$(GO_SPACE)/src/sessionmanagerplugin-main/main.go
-	GOOS=darwin GOARCH=arm64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_amd64/ssmcli -v \
+	GOOS=darwin GOARCH=arm64 $(GO_BUILD) -ldflags "-s -w" -o $(GO_SPACE)/bin/darwin_arm64/ssmcli -v \
     		$(GO_SPACE)/src/ssmcli-main/main.go
 
 .PHONY: build-windows-amd64
