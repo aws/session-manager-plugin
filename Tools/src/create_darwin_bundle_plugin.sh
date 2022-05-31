@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 ARCH=$1
-if [ -z "${ARCH}" ]; then
-    echo "Usage: $0 [${ARCH}|arm64]"
-    exit 1
-elif [ ${ARCH} -ne "amd64" -o ${ARCH} -ne "arm64" ]; then
-    echo "Usage: $0 [${ARCH}|arm64]"
-    exit 1
-fi
+case $ARCH in
+    amd64 | arm64)
+        ;;
+    *)
+        echo "Usage: $0 [amd64|arm64]"
+        exit 1
+esac
 
 echo "**********************************************"
 echo "Creating bundle zip file Mac OS X $ARCH Plugin"
