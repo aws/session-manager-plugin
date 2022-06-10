@@ -1,5 +1,9 @@
 Latest
 ================
+- Fix idle session timeout for port sessions
+
+1.2.331.0
+================
 - Fix port session premature close when local server is not connected before timeout
 
 1.2.323.0
