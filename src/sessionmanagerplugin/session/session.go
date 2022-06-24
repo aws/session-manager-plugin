@@ -211,7 +211,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 
 //Execute create data channel and start the session
 func (s *Session) Execute(log log.T) (err error) {
-	fmt.Fprintf(os.Stdout, "\nStarting session with SessionId: %s\n", s.SessionId)
+	fmt.Fprintf(os.Stderr, "\nStarting session with SessionId: %s\n", s.SessionId)
 
 	// sets the display mode
 	s.DisplayMode = sessionutil.NewDisplayMode(log)

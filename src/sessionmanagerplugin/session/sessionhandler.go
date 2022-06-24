@@ -129,7 +129,7 @@ func (s *Session) ResumeSessionHandler(log log.T) (err error) {
 		return
 	} else if s.TokenValue == "" {
 		log.Debugf("Session: %s timed out", s.SessionId)
-		fmt.Fprintf(os.Stdout, "Session: %s timed out.\n", s.SessionId)
+		fmt.Fprintf(os.Stderr, "Session: %s timed out.\n", s.SessionId)
 		os.Exit(0)
 	}
 	s.DataChannel.GetWsChannel().SetChannelToken(s.TokenValue)
