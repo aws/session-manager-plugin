@@ -165,7 +165,7 @@ func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (
 
 // handleControlSignals handles terminate signals
 func (p *BasicPortForwarding) handleControlSignals(log log.T) {
-	c := make(chan os.Signal)
+	c := make(chan os.Signal, 1)
 	signal.Notify(c, sessionutil.ControlSignals...)
 	go func() {
 		<-c

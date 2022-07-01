@@ -186,7 +186,7 @@ func (p *MuxPortForwarding) initialize(log log.T, agentVersion string) (err erro
 
 // handleControlSignals handles terminate signals
 func (p *MuxPortForwarding) handleControlSignals(log log.T) {
-	c := make(chan os.Signal)
+	c := make(chan os.Signal, 1)
 	signal.Notify(c, sessionutil.ControlSignals...)
 	go func() {
 		<-c
