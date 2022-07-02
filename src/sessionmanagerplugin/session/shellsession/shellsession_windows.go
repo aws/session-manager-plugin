@@ -21,8 +21,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/aws/SSMCLI/src/log"
-	"github.com/aws/SSMCLI/src/message"
+	"github.com/aws/session-manager-plugin/src/log"
+	"github.com/aws/session-manager-plugin/src/message"
 	"github.com/eiannone/keyboard"
 )
 

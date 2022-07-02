@@ -14,7 +14,7 @@
 // Package sessionutil provides utility for sessions.
 package sessionutil
 
-import "github.com/aws/SSMCLI/src/log"
+import "github.com/aws/session-manager-plugin/src/log"
 
 func NewDisplayMode(log log.T) DisplayMode {
 	displayMode := DisplayMode{}

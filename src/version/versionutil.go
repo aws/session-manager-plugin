@@ -46,7 +46,7 @@ func (thisVersion version) compare(otherVersion version) (int, error) {
 		otherVersionSlice int
 		err               error
 	)
-	for i, _ := range thisVersion.version {
+	for i := range thisVersion.version {
 		if thisVersionSlice, err = strconv.Atoi(thisVersion.version[i]); err != nil {
 			return -1, err
 		}

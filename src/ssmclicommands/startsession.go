@@ -21,16 +21,16 @@ import (
 	"html/template"
 	"strings"
 
-	"github.com/aws/SSMCLI/src/datachannel"
-	"github.com/aws/SSMCLI/src/jsonutil"
-	"github.com/aws/SSMCLI/src/log"
-	"github.com/aws/SSMCLI/src/sdkutil"
-	"github.com/aws/SSMCLI/src/sessionmanagerplugin/session"
-	_ "github.com/aws/SSMCLI/src/sessionmanagerplugin/session/portsession"
-	_ "github.com/aws/SSMCLI/src/sessionmanagerplugin/session/shellsession"
-	"github.com/aws/SSMCLI/src/ssmclicommands/utils"
 	sdkSession "github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
+	"github.com/aws/session-manager-plugin/src/datachannel"
+	"github.com/aws/session-manager-plugin/src/jsonutil"
+	"github.com/aws/session-manager-plugin/src/log"
+	"github.com/aws/session-manager-plugin/src/sdkutil"
+	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session"
+	_ "github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/portsession"
+	_ "github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/shellsession"
+	"github.com/aws/session-manager-plugin/src/ssmclicommands/utils"
 	"github.com/twinj/uuid"
 )
 
@@ -214,7 +214,7 @@ func (StartSessionCommand) validateStartSessionInput(parameters map[string][]str
 			utils.FormatFlag(INSTANCE_ID)))
 	}
 
-	for key, _ := range parameters {
+	for key := range parameters {
 		if !contains(ParameterKeys, key) {
 			validation = append(validation, fmt.Sprintf("%v not a valid command parameter flag", key))
 		}

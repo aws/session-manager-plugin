@@ -1,12 +1,13 @@
 .DS_Store
 .idea/
+.vscode/
 *.iml
 /Tools/bin/
 /Tools/pkg/
 /Tools/src/github.com/
 /Tools/src/golang.org/
-bin/
-build
 /vendor/bin/
 /vendor/pkg/
-.vscode/
+bin/
+build
+vendor/src/github.com/aws/session-manager-plugin

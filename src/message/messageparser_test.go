@@ -24,7 +24,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aws/SSMCLI/src/log"
+	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/stretchr/testify/assert"
 	"github.com/twinj/uuid"
 )

@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/aws/SSMCLI/src/log"
 	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
+	"github.com/aws/session-manager-plugin/src/log"
 )
 
 const (

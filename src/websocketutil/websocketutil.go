@@ -17,7 +17,7 @@ package websocketutil
 import (
 	"errors"
 
-	"github.com/aws/SSMCLI/src/log"
+	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/gorilla/websocket"
 )
 

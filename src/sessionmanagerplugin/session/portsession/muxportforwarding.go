@@ -29,12 +29,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aws/SSMCLI/src/config"
-	"github.com/aws/SSMCLI/src/log"
-	"github.com/aws/SSMCLI/src/message"
-	"github.com/aws/SSMCLI/src/sessionmanagerplugin/session"
-	"github.com/aws/SSMCLI/src/sessionmanagerplugin/session/sessionutil"
-	"github.com/aws/SSMCLI/src/version"
+	"github.com/aws/session-manager-plugin/src/config"
+	"github.com/aws/session-manager-plugin/src/log"
+	"github.com/aws/session-manager-plugin/src/message"
+	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session"
+	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/sessionutil"
+	"github.com/aws/session-manager-plugin/src/version"
 	"github.com/xtaci/smux"
 	"golang.org/x/sync/errgroup"
 )

@@ -23,7 +23,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/aws/SSMCLI/src/log"
+	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/gorilla/websocket"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"

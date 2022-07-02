@@ -29,5 +29,5 @@ if [[ -n $unformatted ]]; then
 fi
 
 echo "Run 'go vet'"
-ln -s `pwd` `pwd`/vendor/src/github.com/aws/SSMCLI
+ln -s `pwd` `pwd`/vendor/src/github.com/aws/session-manager-plugin
 go vet ./src/...
