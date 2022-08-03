@@ -73,7 +73,7 @@ quick-test:
 	# if you want to test a specific package, you can add the package name instead of the dots. Sample below
 	# go test -gcflags "-N -l" github.com/aws/SSMCLI/src/datachannel
 	go clean -testcache
-	go test -cover -gcflags "-N -l" github.com/aws/SSMCLI/src/...
+	go test -cover -gcflags "-N -l" github.com/aws/SSMCLI/src/... -test.paniconexit0=false
 
 .PHONY: create-package-folder
 create-package-folder:
