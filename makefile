@@ -12,6 +12,7 @@ GOPATH:=$(GOTEMPPATH):$(GO_SPACE)/vendor:$(GOPATH)
 
 export GOPATH
 export GO_SPACE
+export GO111MODULE=auto
 
 checkstyle::
 #   Run checkstyle script
