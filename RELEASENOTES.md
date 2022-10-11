@@ -1,5 +1,11 @@
 Latest
 ================
+- Support golang version 1.17
+- Update default session-manager-plugin runner for macOS to be python3
+- Update import path from SSMCLI to session-manager-plugin
+ 
+1.2.339.0
+================
 - Fix idle session timeout for port sessions
 
 1.2.331.0
