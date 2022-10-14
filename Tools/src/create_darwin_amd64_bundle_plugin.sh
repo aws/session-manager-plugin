@@ -25,7 +25,7 @@ echo "Copying install script"
 cp ${GO_SPACE}/Tools/src/darwin/install ${GO_SPACE}/bin/darwin_amd64_plugin/sessionmanager-bundle/install
 chmod 755 ${GO_SPACE}/bin/darwin_amd64_plugin/sessionmanager-bundle/install;
 
-cd ${GO_SPACE}/bin/darwin_amd64_plugin/sessionmanager-bundle/bin/; strip --strip-unneeded session-manager-plugin; cd ~-
+cd ${GO_SPACE}/bin/darwin_amd64_plugin/sessionmanager-bundle/bin/; strip session-manager-plugin; cd ~-
 
 echo "Creating the bundle zip file"
 
