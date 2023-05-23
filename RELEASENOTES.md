@@ -1,5 +1,10 @@
 Latest
 ================
+- Support ARM64 for Apple Mac M1
+- Remove unused start/stop steps in packaging scripts
+	  
+1.2.398.0
+================
 - Support golang version 1.17
 - Update default session-manager-plugin runner for macOS to be python3
 - Update import path from SSMCLI to session-manager-plugin

@@ -28,57 +28,11 @@ This package provides Amazon SSM SessionManager for managing shell experience us
 %config(noreplace) /etc/init/session-manager-plugin.conf
 %config(noreplace) /etc/systemd/system/session-manager-plugin.service
 
-# The scriptlets in %pre and %post are run before and after a package is installed.
-# The scriptlets %preun and %postun are run before and after a package is uninstalled.
-# The scriptlets %pretrans and %posttrans are run at start and end of a transaction.
-
-# Examples for the scriptlets are run for clean install, uninstall and upgrade
-
-# Clean install: %posttrans
-# Uninstall:     %preun
-# Upgrade:       %pre, %posttrans
-
-%pre
-# Stop the plugin before the upgrade
-if [ $1 -ge 2 ]; then
-    /sbin/init --version &> stdout.txt
-    if [[ `cat stdout.txt` =~ upstart ]]; then
-        /sbin/stop session-manager-plugin
-    elif [[ `systemctl` =~ -\.mount ]]; then
-        systemctl stop session-manager-plugin
-        systemctl daemon-reload
-    fi
-    rm stdout.txt
-fi
-
-%preun
-# Stop the plugin after uninstall
-if [ $1 -eq 0 ] ; then
-    /sbin/init --version &> stdout.txt
-    if [[ `cat stdout.txt` =~ upstart ]]; then
-        /sbin/stop session-manager-plugin
-        sleep 1
-    elif [[ `systemctl` =~ -\.mount ]]; then
-        systemctl stop session-manager-plugin
-        systemctl disable session-manager-plugin
-        systemctl daemon-reload
-    fi
-    rm stdout.txt
-fi
+# The scriptlet %postun runs after a package is uninstalled.
+# The scriptlet %posttrans runs at the end of a transaction.
 
 %posttrans
-# Start the plugin after initial install or upgrade
-if [ $1 -ge 0 ]; then
-    /sbin/init --version &> stdout.txt
-    if [[ `cat stdout.txt` =~ upstart ]]; then
-        /sbin/start session-manager-plugin
-    elif [[ `systemctl` =~ -\.mount ]]; then
-        systemctl enable session-manager-plugin
-        systemctl start session-manager-plugin
-        systemctl daemon-reload
-    fi
-    rm stdout.txt
-fi
+# Create symbolic link for plugin
 ln -s /usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/session-manager-plugin
 
 %postun

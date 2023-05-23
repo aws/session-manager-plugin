@@ -1,13 +1,4 @@
-echo "Starting session-manager-plugin"
-if [ $(cat /proc/1/comm) = init ]
-then
-    start session-manager-plugin || true
-elif [ $(cat /proc/1/comm) = systemd ]
-then
-    systemctl enable session-manager-plugin
-    systemctl start session-manager-plugin
-    systemctl daemon-reload
-fi
+echo "Creating symbolic link for session-manager-plugin"
 if [ -f /usr/local/bin/session-manager-plugin ]
 then
     rm /usr/local/bin/session-manager-plugin
