@@ -20,7 +20,7 @@ import (
 	"github.com/aws/session-manager-plugin/src/ssmclicommands"
 )
 
-//Created a ssmcli binary, used for testing purpose only.
+// Created a ssmcli binary, used for testing purpose only.
 func main() {
 	ssmclicommands.ValidateInput(os.Args, os.Stdout)
 }

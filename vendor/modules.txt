@@ -1,0 +1,129 @@
+# github.com/aws/aws-sdk-go v1.44.271
+## explicit; go 1.11
+github.com/aws/aws-sdk-go/aws
+github.com/aws/aws-sdk-go/aws/awserr
+github.com/aws/aws-sdk-go/aws/awsutil
+github.com/aws/aws-sdk-go/aws/client
+github.com/aws/aws-sdk-go/aws/client/metadata
+github.com/aws/aws-sdk-go/aws/corehandlers
+github.com/aws/aws-sdk-go/aws/credentials
+github.com/aws/aws-sdk-go/aws/credentials/ec2rolecreds
+github.com/aws/aws-sdk-go/aws/credentials/endpointcreds
+github.com/aws/aws-sdk-go/aws/credentials/processcreds
+github.com/aws/aws-sdk-go/aws/credentials/ssocreds
+github.com/aws/aws-sdk-go/aws/credentials/stscreds
+github.com/aws/aws-sdk-go/aws/csm
+github.com/aws/aws-sdk-go/aws/defaults
+github.com/aws/aws-sdk-go/aws/ec2metadata
+github.com/aws/aws-sdk-go/aws/endpoints
+github.com/aws/aws-sdk-go/aws/request
+github.com/aws/aws-sdk-go/aws/session
+github.com/aws/aws-sdk-go/aws/signer/v4
+github.com/aws/aws-sdk-go/internal/context
+github.com/aws/aws-sdk-go/internal/ini
+github.com/aws/aws-sdk-go/internal/sdkio
+github.com/aws/aws-sdk-go/internal/sdkmath
+github.com/aws/aws-sdk-go/internal/sdkrand
+github.com/aws/aws-sdk-go/internal/sdkuri
+github.com/aws/aws-sdk-go/internal/shareddefaults
+github.com/aws/aws-sdk-go/internal/strings
+github.com/aws/aws-sdk-go/internal/sync/singleflight
+github.com/aws/aws-sdk-go/private/protocol
+github.com/aws/aws-sdk-go/private/protocol/json/jsonutil
+github.com/aws/aws-sdk-go/private/protocol/jsonrpc
+github.com/aws/aws-sdk-go/private/protocol/query
+github.com/aws/aws-sdk-go/private/protocol/query/queryutil
+github.com/aws/aws-sdk-go/private/protocol/rest
+github.com/aws/aws-sdk-go/private/protocol/restjson
+github.com/aws/aws-sdk-go/private/protocol/xml/xmlutil
+github.com/aws/aws-sdk-go/service/kms
+github.com/aws/aws-sdk-go/service/kms/kmsiface
+github.com/aws/aws-sdk-go/service/ssm
+github.com/aws/aws-sdk-go/service/sso
+github.com/aws/aws-sdk-go/service/sso/ssoiface
+github.com/aws/aws-sdk-go/service/sts
+github.com/aws/aws-sdk-go/service/sts/stsiface
+# github.com/aws/session-manager-plugin v0.0.0-20230315220744-7b544e9f381d
+## explicit
+github.com/aws/session-manager-plugin/src/communicator
+github.com/aws/session-manager-plugin/src/communicator/mocks
+github.com/aws/session-manager-plugin/src/config
+github.com/aws/session-manager-plugin/src/datachannel
+github.com/aws/session-manager-plugin/src/datachannel/mocks
+github.com/aws/session-manager-plugin/src/encryption
+github.com/aws/session-manager-plugin/src/encryption/mocks
+github.com/aws/session-manager-plugin/src/jsonutil
+github.com/aws/session-manager-plugin/src/log
+github.com/aws/session-manager-plugin/src/message
+github.com/aws/session-manager-plugin/src/retry
+github.com/aws/session-manager-plugin/src/sdkutil
+github.com/aws/session-manager-plugin/src/sdkutil/retryer
+github.com/aws/session-manager-plugin/src/service
+github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session
+github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/portsession
+github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/sessionutil
+github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/shellsession
+github.com/aws/session-manager-plugin/src/ssmclicommands
+github.com/aws/session-manager-plugin/src/ssmclicommands/utils
+github.com/aws/session-manager-plugin/src/version
+github.com/aws/session-manager-plugin/src/websocketutil
+# github.com/cihub/seelog v0.0.0-20170130134532-f561c5e57575
+## explicit
+github.com/cihub/seelog
+github.com/cihub/seelog/archive
+github.com/cihub/seelog/archive/gzip
+github.com/cihub/seelog/archive/tar
+github.com/cihub/seelog/archive/zip
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
+# github.com/eiannone/keyboard v0.0.0-20220611211555-0d226195f203
+## explicit; go 1.18
+github.com/eiannone/keyboard
+# github.com/fsnotify/fsnotify v1.6.0
+## explicit; go 1.16
+github.com/fsnotify/fsnotify
+# github.com/gorilla/websocket v1.5.0
+## explicit; go 1.12
+github.com/gorilla/websocket
+# github.com/jmespath/go-jmespath v0.4.0
+## explicit; go 1.14
+github.com/jmespath/go-jmespath
+# github.com/pmezard/go-difflib v1.0.0
+## explicit
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/objx v0.5.0
+## explicit; go 1.12
+github.com/stretchr/objx
+# github.com/stretchr/testify v1.8.3
+## explicit; go 1.20
+github.com/stretchr/testify/assert
+github.com/stretchr/testify/mock
+# github.com/twinj/uuid v0.0.0-20151029044442-89173bcdda19
+## explicit
+github.com/twinj/uuid
+# github.com/xtaci/smux v1.5.24
+## explicit; go 1.13
+github.com/xtaci/smux
+# golang.org/x/crypto v0.9.0
+## explicit; go 1.17
+golang.org/x/crypto/ssh/terminal
+# golang.org/x/mod v0.10.0
+## explicit; go 1.17
+# golang.org/x/sync v0.2.0
+## explicit
+golang.org/x/sync/errgroup
+# golang.org/x/sys v0.8.0
+## explicit; go 1.17
+golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# golang.org/x/term v0.8.0
+## explicit; go 1.17
+golang.org/x/term
+# golang.org/x/tools v0.9.1
+## explicit; go 1.18
+# gopkg.in/yaml.v3 v3.0.1
+## explicit
+gopkg.in/yaml.v3
