@@ -1,5 +1,9 @@
 Latest
 ================
+- Upgrade Go SDK to v1.44.302
+
+1.2.463.0
+================
 - Support ARM64 for Apple Mac M1
 - Remove unused start/stop steps in packaging scripts
 	  
