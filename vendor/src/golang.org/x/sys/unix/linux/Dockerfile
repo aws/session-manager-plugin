@@ -1,4 +1,4 @@
-FROM ubuntu:17.10
+FROM public.ecr.aws/ubuntu/ubuntu:18.04
 
 # Dependencies to get the git sources and go binaries
 RUN apt-get update && apt-get install -y  --no-install-recommends \
