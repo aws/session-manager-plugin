@@ -58,7 +58,7 @@ func (s *ShellSession) Stop() {
 	os.Exit(0)
 }
 
-//handleKeyboardInput handles input entered by customer on terminal
+// handleKeyboardInput handles input entered by customer on terminal
 func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 	var (
 		character rune         //character input from keyboard
