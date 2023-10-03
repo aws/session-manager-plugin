@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/aws/session-manager-plugin/src/config"
@@ -162,7 +163,14 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	for argsIndex := 1; argsIndex < len(args); argsIndex++ {
 		switch argsIndex {
 		case 1:
-			response = []byte(args[1])
+			if strings.HasPrefix(args[1], "AWS_SSM_START_SESSION_RESPONSE") == true {
+				response = []byte(os.Getenv(args[1]))
+				if err = os.Unsetenv(args[1]); err != nil {
+					log.Errorf("Failed to remove temporary session env parameter: %v", err)
+				}
+			} else {
+				response = []byte(args[1])
+			}
 		case 2:
 			region = args[2]
 		case 3:
