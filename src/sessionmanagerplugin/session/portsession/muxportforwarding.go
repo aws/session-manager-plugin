@@ -170,7 +170,7 @@ func (p *MuxPortForwarding) initialize(log log.T, agentVersion string) (err erro
 			smuxConfig := smux.DefaultConfig()
 			if version.DoesAgentSupportDisableSmuxKeepAlive(log, agentVersion) {
 				// Disable smux KeepAlive or else it breaks Session Manager idle timeout.
-				smuxConfig.KeepAliveDisabled = true
+				smuxConfig.KeepAliveDisabled = false
 			}
 			if muxSession, err := smux.Client(muxConn, smuxConfig); err != nil {
 				return err
