@@ -1,5 +1,10 @@
 Latest
 ================
+- Support reading StartSession API response parameters from environment variable
+- Migrate to use images from ECR repository
+
+1.2.497.0
+================
 - Upgrade Go SDK to v1.44.302
 
 1.2.463.0
