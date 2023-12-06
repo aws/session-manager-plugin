@@ -26,9 +26,10 @@ import (
 
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/message"
+	"golang.org/x/term"
 )
 
-//disableEchoAndInputBuffering disables echo to avoid double echo and disable input buffering
+// disableEchoAndInputBuffering disables echo to avoid double echo and disable input buffering
 func (s *ShellSession) disableEchoAndInputBuffering() {
 	getState(&s.originalSttyState)
 	setState(bytes.NewBufferString("cbreak"))
@@ -58,7 +59,7 @@ func (s *ShellSession) Stop() {
 	os.Exit(0)
 }
 
-//handleKeyboardInput handles input entered by customer on terminal
+// handleKeyboardInput handles input entered by customer on terminal
 func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 	var (
 		stdinBytesLen int
@@ -66,6 +67,14 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 
 	//handle double echo and disable input buffering
 	s.disableEchoAndInputBuffering()
+
+	//switch terminal in raw mode
+	oldState, err := term.MakeRaw(int(os.Stdin.Fd()))
+	if err != nil {
+		log.Errorf("Error switching terminal to raw mode: %s", err)
+		return
+	}
+	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
 	stdinBytes := make([]byte, StdinBufferLimit)
 	reader := bufio.NewReader(os.Stdin)
