@@ -252,10 +252,8 @@ func (p *MuxPortForwarding) handleClientConnections(log log.T, ctx context.Conte
 	defer listener.Close()
 
 	log.Infof(displayMsg)
-	fmt.Printf(displayMsg)
 
 	log.Infof("Waiting for connections...\n")
-	fmt.Printf("\nWaiting for connections...\n")
 
 	var once sync.Once
 	for {
