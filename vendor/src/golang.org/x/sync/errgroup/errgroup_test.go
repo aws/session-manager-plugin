@@ -10,7 +10,9 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"sync/atomic"
 	"testing"
+	"time"
 
 	"golang.org/x/sync/errgroup"
 )
@@ -34,7 +36,7 @@ func fakeSearch(kind string) Search {
 // simplify goroutine counting and error handling. This example is derived from
 // the sync.WaitGroup example at https://golang.org/pkg/sync/#example_WaitGroup.
 func ExampleGroup_justErrors() {
-	var g errgroup.Group
+	g := new(errgroup.Group)
 	var urls = []string{
 		"http://www.golang.org/",
 		"http://www.google.com/",
@@ -114,7 +116,7 @@ func TestZeroGroup(t *testing.T) {
 	}
 
 	for _, tc := range cases {
-		var g errgroup.Group
+		g := new(errgroup.Group)
 
 		var firstErr error
 		for i, err := range tc.errs {
@@ -173,4 +175,88 @@ func TestWithContext(t *testing.T) {
 				g, tc.errs)
 		}
 	}
+}
+
+func TestTryGo(t *testing.T) {
+	g := &errgroup.Group{}
+	n := 42
+	g.SetLimit(42)
+	ch := make(chan struct{})
+	fn := func() error {
+		ch <- struct{}{}
+		return nil
+	}
+	for i := 0; i < n; i++ {
+		if !g.TryGo(fn) {
+			t.Fatalf("TryGo should succeed but got fail at %d-th call.", i)
+		}
+	}
+	if g.TryGo(fn) {
+		t.Fatalf("TryGo is expected to fail but succeeded.")
+	}
+	go func() {
+		for i := 0; i < n; i++ {
+			<-ch
+		}
+	}()
+	g.Wait()
+
+	if !g.TryGo(fn) {
+		t.Fatalf("TryGo should success but got fail after all goroutines.")
+	}
+	go func() { <-ch }()
+	g.Wait()
+
+	// Switch limit.
+	g.SetLimit(1)
+	if !g.TryGo(fn) {
+		t.Fatalf("TryGo should success but got failed.")
+	}
+	if g.TryGo(fn) {
+		t.Fatalf("TryGo should fail but succeeded.")
+	}
+	go func() { <-ch }()
+	g.Wait()
+
+	// Block all calls.
+	g.SetLimit(0)
+	for i := 0; i < 1<<10; i++ {
+		if g.TryGo(fn) {
+			t.Fatalf("TryGo should fail but got succeded.")
+		}
+	}
+	g.Wait()
+}
+
+func TestGoLimit(t *testing.T) {
+	const limit = 10
+
+	g := &errgroup.Group{}
+	g.SetLimit(limit)
+	var active int32
+	for i := 0; i <= 1<<10; i++ {
+		g.Go(func() error {
+			n := atomic.AddInt32(&active, 1)
+			if n > limit {
+				return fmt.Errorf("saw %d active goroutines; want ≤ %d", n, limit)
+			}
+			time.Sleep(1 * time.Microsecond) // Give other goroutines a chance to increment active.
+			atomic.AddInt32(&active, -1)
+			return nil
+		})
+	}
+	if err := g.Wait(); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func BenchmarkGo(b *testing.B) {
+	fn := func() {}
+	g := &errgroup.Group{}
+	b.ResetTimer()
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		g.Go(func() error { fn(); return nil })
+	}
+	g.Wait()
 }

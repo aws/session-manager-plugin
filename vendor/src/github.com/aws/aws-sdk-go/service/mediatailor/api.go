@@ -3774,7 +3774,7 @@ type AccessConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// The type of authentication used to access content from HttpConfiguration::BaseUrl
-	// on your source location. Accepted value: S3_SIGV4.
+	// on your source location.
 	//
 	// S3_SIGV4 - AWS Signature Version 4 authentication for Amazon S3 hosted virtual-style
 	// access. If your source location base URL is an Amazon S3 bucket, MediaTailor
@@ -3791,6 +3791,40 @@ type AccessConfiguration struct {
 	//
 	// • The mediatailor.amazonaws.com service principal must have permissions
 	// to read all top level manifests referenced by the VodSource packaging configurations.
+	//
+	// • The caller of the API must have s3:GetObject IAM permissions to read
+	// all top level manifests referenced by your MediaTailor VodSource packaging
+	// configurations.
+	//
+	// AUTODETECT_SIGV4 - AWS Signature Version 4 authentication for a set of supported
+	// services: MediaPackage Version 2 and Amazon S3 hosted virtual-style access.
+	// If your source location base URL is a MediaPackage Version 2 endpoint or
+	// an Amazon S3 bucket, MediaTailor can use AWS Signature Version 4 (SigV4)
+	// authentication to access the resource where your source content is stored.
+	//
+	// Before you can use AUTODETECT_SIGV4 with a MediaPackage Version 2 endpoint,
+	// you must meet these requirements:
+	//
+	// • You must grant MediaTailor access to your MediaPackage endpoint by granting
+	// mediatailor.amazonaws.com principal access in an Origin Access policy on
+	// the endpoint.
+	//
+	// • Your MediaTailor source location base URL must be a MediaPackage V2 endpoint.
+	//
+	// • The caller of the API must have mediapackagev2:GetObject IAM permissions
+	// to read all top level manifests referenced by the MediaTailor source packaging
+	// configurations.
+	//
+	// Before you can use AUTODETECT_SIGV4 with an Amazon S3 bucket, you must meet
+	// these requirements:
+	//
+	// • You must grant MediaTailor access to your S3 bucket by granting mediatailor.amazonaws.com
+	// principal access in IAM. For more information about configuring access in
+	// IAM, see Access management (https://docs.aws.amazon.com/IAM/latest/UserGuide/access.html)
+	// in the IAM User Guide..
+	//
+	// • The mediatailor.amazonaws.com service principal must have permissions
+	// to read all top-level manifests referenced by the VodSource packaging configurations.
 	//
 	// • The caller of the API must have s3:GetObject IAM permissions to read
 	// all top level manifests referenced by your MediaTailor VodSource packaging
@@ -3936,6 +3970,42 @@ func (s *AdBreak) SetSpliceInsertMessage(v *SpliceInsertMessage) *AdBreak {
 // SetTimeSignalMessage sets the TimeSignalMessage field's value.
 func (s *AdBreak) SetTimeSignalMessage(v *TimeSignalMessage) *AdBreak {
 	s.TimeSignalMessage = v
+	return s
+}
+
+// A location at which a zero-duration ad marker was detected in a VOD source
+// manifest.
+type AdBreakOpportunity struct {
+	_ struct{} `type:"structure"`
+
+	// The offset in milliseconds from the start of the VOD source at which an ad
+	// marker was detected.
+	//
+	// OffsetMillis is a required field
+	OffsetMillis *int64 `type:"long" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AdBreakOpportunity) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AdBreakOpportunity) GoString() string {
+	return s.String()
+}
+
+// SetOffsetMillis sets the OffsetMillis field's value.
+func (s *AdBreakOpportunity) SetOffsetMillis(v int64) *AdBreakOpportunity {
+	s.OffsetMillis = &v
 	return s
 }
 
@@ -4814,6 +4884,9 @@ type CreateChannelInput struct {
 
 	// The tier of the channel.
 	Tier *string `type:"string" enum:"Tier"`
+
+	// The time-shifted viewing configuration you want to associate to the channel.
+	TimeShiftConfiguration *TimeShiftConfiguration `type:"structure"`
 }
 
 // String returns the string representation.
@@ -4859,6 +4932,11 @@ func (s *CreateChannelInput) Validate() error {
 			}
 		}
 	}
+	if s.TimeShiftConfiguration != nil {
+		if err := s.TimeShiftConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("TimeShiftConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -4902,6 +4980,12 @@ func (s *CreateChannelInput) SetTier(v string) *CreateChannelInput {
 	return s
 }
 
+// SetTimeShiftConfiguration sets the TimeShiftConfiguration field's value.
+func (s *CreateChannelInput) SetTimeShiftConfiguration(v *TimeShiftConfiguration) *CreateChannelInput {
+	s.TimeShiftConfiguration = v
+	return s
+}
+
 type CreateChannelOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -4938,6 +5022,9 @@ type CreateChannelOutput struct {
 
 	// The tier of the channel.
 	Tier *string `type:"string"`
+
+	// The time-shifted viewing configuration assigned to the channel.
+	TimeShiftConfiguration *TimeShiftConfiguration `type:"structure"`
 }
 
 // String returns the string representation.
@@ -5015,6 +5102,12 @@ func (s *CreateChannelOutput) SetTags(v map[string]*string) *CreateChannelOutput
 // SetTier sets the Tier field's value.
 func (s *CreateChannelOutput) SetTier(v string) *CreateChannelOutput {
 	s.Tier = &v
+	return s
+}
+
+// SetTimeShiftConfiguration sets the TimeShiftConfiguration field's value.
+func (s *CreateChannelOutput) SetTimeShiftConfiguration(v *TimeShiftConfiguration) *CreateChannelOutput {
+	s.TimeShiftConfiguration = v
 	return s
 }
 
@@ -7023,6 +7116,9 @@ type DescribeChannelOutput struct {
 
 	// The channel's tier.
 	Tier *string `type:"string"`
+
+	// The time-shifted viewing configuration for the channel.
+	TimeShiftConfiguration *TimeShiftConfiguration `type:"structure"`
 }
 
 // String returns the string representation.
@@ -7106,6 +7202,12 @@ func (s *DescribeChannelOutput) SetTags(v map[string]*string) *DescribeChannelOu
 // SetTier sets the Tier field's value.
 func (s *DescribeChannelOutput) SetTier(v string) *DescribeChannelOutput {
 	s.Tier = &v
+	return s
+}
+
+// SetTimeShiftConfiguration sets the TimeShiftConfiguration field's value.
+func (s *DescribeChannelOutput) SetTimeShiftConfiguration(v *TimeShiftConfiguration) *DescribeChannelOutput {
+	s.TimeShiftConfiguration = v
 	return s
 }
 
@@ -7676,6 +7778,9 @@ func (s *DescribeVodSourceInput) SetVodSourceName(v string) *DescribeVodSourceIn
 type DescribeVodSourceOutput struct {
 	_ struct{} `type:"structure"`
 
+	// The ad break opportunities within the VOD source.
+	AdBreakOpportunities []*AdBreakOpportunity `type:"list"`
+
 	// The ARN of the VOD source.
 	Arn *string `type:"string"`
 
@@ -7717,6 +7822,12 @@ func (s DescribeVodSourceOutput) String() string {
 // value will be replaced with "sensitive".
 func (s DescribeVodSourceOutput) GoString() string {
 	return s.String()
+}
+
+// SetAdBreakOpportunities sets the AdBreakOpportunities field's value.
+func (s *DescribeVodSourceOutput) SetAdBreakOpportunities(v []*AdBreakOpportunity) *DescribeVodSourceOutput {
+	s.AdBreakOpportunities = v
+	return s
 }
 
 // SetArn sets the Arn field's value.
@@ -11831,6 +11942,55 @@ func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
 
+// The configuration for time-shifted viewing.
+type TimeShiftConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The maximum time delay for time-shifted viewing. The minimum allowed maximum
+	// time delay is 0 seconds, and the maximum allowed maximum time delay is 21600
+	// seconds (6 hours).
+	//
+	// MaxTimeDelaySeconds is a required field
+	MaxTimeDelaySeconds *int64 `type:"integer" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TimeShiftConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TimeShiftConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TimeShiftConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TimeShiftConfiguration"}
+	if s.MaxTimeDelaySeconds == nil {
+		invalidParams.Add(request.NewErrParamRequired("MaxTimeDelaySeconds"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxTimeDelaySeconds sets the MaxTimeDelaySeconds field's value.
+func (s *TimeShiftConfiguration) SetMaxTimeDelaySeconds(v int64) *TimeShiftConfiguration {
+	s.MaxTimeDelaySeconds = &v
+	return s
+}
+
 // The SCTE-35 time_signal message can be sent with one or more segmentation_descriptor
 // messages. A time_signal message can be sent only if a single segmentation_descriptor
 // message is sent.
@@ -12080,6 +12240,9 @@ type UpdateChannelInput struct {
 	//
 	// Outputs is a required field
 	Outputs []*RequestOutputItem `type:"list" required:"true"`
+
+	// The time-shifted viewing configuration you want to associate to the channel.
+	TimeShiftConfiguration *TimeShiftConfiguration `type:"structure"`
 }
 
 // String returns the string representation.
@@ -12122,6 +12285,11 @@ func (s *UpdateChannelInput) Validate() error {
 			}
 		}
 	}
+	if s.TimeShiftConfiguration != nil {
+		if err := s.TimeShiftConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("TimeShiftConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -12144,6 +12312,12 @@ func (s *UpdateChannelInput) SetFillerSlate(v *SlateSource) *UpdateChannelInput 
 // SetOutputs sets the Outputs field's value.
 func (s *UpdateChannelInput) SetOutputs(v []*RequestOutputItem) *UpdateChannelInput {
 	s.Outputs = v
+	return s
+}
+
+// SetTimeShiftConfiguration sets the TimeShiftConfiguration field's value.
+func (s *UpdateChannelInput) SetTimeShiftConfiguration(v *TimeShiftConfiguration) *UpdateChannelInput {
+	s.TimeShiftConfiguration = v
 	return s
 }
 
@@ -12189,6 +12363,9 @@ type UpdateChannelOutput struct {
 
 	// The tier associated with this Channel.
 	Tier *string `type:"string"`
+
+	// The time-shifted viewing configuration for the channel.
+	TimeShiftConfiguration *TimeShiftConfiguration `type:"structure"`
 }
 
 // String returns the string representation.
@@ -12266,6 +12443,12 @@ func (s *UpdateChannelOutput) SetTags(v map[string]*string) *UpdateChannelOutput
 // SetTier sets the Tier field's value.
 func (s *UpdateChannelOutput) SetTier(v string) *UpdateChannelOutput {
 	s.Tier = &v
+	return s
+}
+
+// SetTimeShiftConfiguration sets the TimeShiftConfiguration field's value.
+func (s *UpdateChannelOutput) SetTimeShiftConfiguration(v *TimeShiftConfiguration) *UpdateChannelOutput {
+	s.TimeShiftConfiguration = v
 	return s
 }
 
@@ -13255,6 +13438,9 @@ const (
 
 	// AccessTypeSecretsManagerAccessToken is a AccessType enum value
 	AccessTypeSecretsManagerAccessToken = "SECRETS_MANAGER_ACCESS_TOKEN"
+
+	// AccessTypeAutodetectSigv4 is a AccessType enum value
+	AccessTypeAutodetectSigv4 = "AUTODETECT_SIGV4"
 )
 
 // AccessType_Values returns all elements of the AccessType enum
@@ -13262,6 +13448,7 @@ func AccessType_Values() []string {
 	return []string{
 		AccessTypeS3Sigv4,
 		AccessTypeSecretsManagerAccessToken,
+		AccessTypeAutodetectSigv4,
 	}
 }
 

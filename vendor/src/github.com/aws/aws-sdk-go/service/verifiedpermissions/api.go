@@ -13,6 +13,160 @@ import (
 	"github.com/aws/aws-sdk-go/private/protocol/jsonrpc"
 )
 
+const opBatchIsAuthorized = "BatchIsAuthorized"
+
+// BatchIsAuthorizedRequest generates a "aws/request.Request" representing the
+// client's request for the BatchIsAuthorized operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See BatchIsAuthorized for more information on using the BatchIsAuthorized
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the BatchIsAuthorizedRequest method.
+//	req, resp := client.BatchIsAuthorizedRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/verifiedpermissions-2021-12-01/BatchIsAuthorized
+func (c *VerifiedPermissions) BatchIsAuthorizedRequest(input *BatchIsAuthorizedInput) (req *request.Request, output *BatchIsAuthorizedOutput) {
+	op := &request.Operation{
+		Name:       opBatchIsAuthorized,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &BatchIsAuthorizedInput{}
+	}
+
+	output = &BatchIsAuthorizedOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// BatchIsAuthorized API operation for Amazon Verified Permissions.
+//
+// Makes a series of decisions about multiple authorization requests for one
+// principal or resource. Each request contains the equivalent content of an
+// IsAuthorized request: principal, action, resource, and context. Either the
+// principal or the resource parameter must be identical across all requests.
+// For example, Verified Permissions won't evaluate a pair of requests where
+// bob views photo1 and alice views photo2. Authorization of bob to view photo1
+// and photo2, or bob and alice to view photo1, are valid batches.
+//
+// The request is evaluated against all policies in the specified policy store
+// that match the entities that you declare. The result of the decisions is
+// a series of Allow or Deny responses, along with the IDs of the policies that
+// produced each decision.
+//
+// The entities of a BatchIsAuthorized API request can contain up to 100 principals
+// and up to 100 resources. The requests of a BatchIsAuthorized API request
+// can contain up to 30 requests.
+//
+// The BatchIsAuthorized operation doesn't have its own IAM permission. To authorize
+// this operation for Amazon Web Services principals, include the permission
+// verifiedpermissions:IsAuthorized in their IAM policies.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Verified Permissions's
+// API operation BatchIsAuthorized for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request failed because one or more input parameters don't satisfy their
+//     constraint requirements. The output is provided as a list of fields and a
+//     reason for each field that isn't valid.
+//
+//     The possible reasons include the following:
+//
+//   - UnrecognizedEntityType The policy includes an entity type that isn't
+//     found in the schema.
+//
+//   - UnrecognizedActionId The policy includes an action id that isn't found
+//     in the schema.
+//
+//   - InvalidActionApplication The policy includes an action that, according
+//     to the schema, doesn't support the specified principal and resource.
+//
+//   - UnexpectedType The policy included an operand that isn't a valid type
+//     for the specified operation.
+//
+//   - IncompatibleTypes The types of elements included in a set, or the types
+//     of expressions used in an if...then...else clause aren't compatible in
+//     this context.
+//
+//   - MissingAttribute The policy attempts to access a record or entity attribute
+//     that isn't specified in the schema. Test for the existence of the attribute
+//     first before attempting to access its value. For more information, see
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
+//     in the Cedar Policy Language Guide.
+//
+//   - UnsafeOptionalAttributeAccess The policy attempts to access a record
+//     or entity attribute that is optional and isn't guaranteed to be present.
+//     Test for the existence of the attribute first before attempting to access
+//     its value. For more information, see the has (presence of attribute test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
+//     in the Cedar Policy Language Guide.
+//
+//   - ImpossiblePolicy Cedar has determined that a policy condition always
+//     evaluates to false. If the policy is always false, it can never apply
+//     to any query, and so it can never affect an authorization decision.
+//
+//   - WrongNumberArguments The policy references an extension type with the
+//     wrong number of arguments.
+//
+//   - FunctionArgumentValidationError Cedar couldn't parse the argument passed
+//     to an extension type. For example, a string that is to be parsed as an
+//     IPv4 address can contain only digits and the period character.
+//
+//   - AccessDeniedException
+//     You don't have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     The request failed because it references a resource that doesn't exist.
+//
+//   - ThrottlingException
+//     The request failed because it exceeded a throttling quota.
+//
+//   - InternalServerException
+//     The request failed because of an internal error. Try your request again later
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/verifiedpermissions-2021-12-01/BatchIsAuthorized
+func (c *VerifiedPermissions) BatchIsAuthorized(input *BatchIsAuthorizedInput) (*BatchIsAuthorizedOutput, error) {
+	req, out := c.BatchIsAuthorizedRequest(input)
+	return out, req.Send()
+}
+
+// BatchIsAuthorizedWithContext is the same as BatchIsAuthorized with the addition of
+// the ability to pass a context and additional request options.
+//
+// See BatchIsAuthorized for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *VerifiedPermissions) BatchIsAuthorizedWithContext(ctx aws.Context, input *BatchIsAuthorizedInput, opts ...request.Option) (*BatchIsAuthorizedOutput, error) {
+	req, out := c.BatchIsAuthorizedRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateIdentitySource = "CreateIdentitySource"
 
 // CreateIdentitySourceRequest generates a "aws/request.Request" representing the
@@ -85,6 +239,11 @@ func (c *VerifiedPermissions) CreateIdentitySourceRequest(input *CreateIdentityS
 // parameter for this operation. The CognitoUserPoolId and CognitoClientId are
 // defined by the Amazon Cognito user pool.
 //
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -120,14 +279,14 @@ func (c *VerifiedPermissions) CreateIdentitySourceRequest(input *CreateIdentityS
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -143,6 +302,10 @@ func (c *VerifiedPermissions) CreateIdentitySourceRequest(input *CreateIdentityS
 //
 //   - ServiceQuotaExceededException
 //     The request failed because it would cause a service quota to be exceeded.
+//
+//   - ConflictException
+//     The request failed because another request to modify a resource occurred
+//     at the same.
 //
 //   - AccessDeniedException
 //     You don't have sufficient access to perform this action.
@@ -237,6 +400,11 @@ func (c *VerifiedPermissions) CreatePolicyRequest(input *CreatePolicyInput) (req
 // store. If the policy doesn't pass validation, the operation fails and the
 // policy isn't stored.
 //
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -272,14 +440,14 @@ func (c *VerifiedPermissions) CreatePolicyRequest(input *CreatePolicyInput) (req
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -295,6 +463,10 @@ func (c *VerifiedPermissions) CreatePolicyRequest(input *CreatePolicyInput) (req
 //
 //   - ServiceQuotaExceededException
 //     The request failed because it would cause a service quota to be exceeded.
+//
+//   - ConflictException
+//     The request failed because another request to modify a resource occurred
+//     at the same.
 //
 //   - AccessDeniedException
 //     You don't have sufficient access to perform this action.
@@ -375,8 +547,13 @@ func (c *VerifiedPermissions) CreatePolicyStoreRequest(input *CreatePolicyStoreI
 //
 // Creates a policy store. A policy store is a container for policy resources.
 //
-// Although Cedar supports multiple namespaces (https://docs.cedarpolicy.com/schema.html#namespace),
+// Although Cedar supports multiple namespaces (https://docs.cedarpolicy.com/schema/schema.html#namespace),
 // Verified Permissions currently supports only one namespace per policy store.
+//
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -413,14 +590,14 @@ func (c *VerifiedPermissions) CreatePolicyStoreRequest(input *CreatePolicyStoreI
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -436,6 +613,10 @@ func (c *VerifiedPermissions) CreatePolicyStoreRequest(input *CreatePolicyStoreI
 //
 //   - ServiceQuotaExceededException
 //     The request failed because it would cause a service quota to be exceeded.
+//
+//   - ConflictException
+//     The request failed because another request to modify a resource occurred
+//     at the same.
 //
 //   - AccessDeniedException
 //     You don't have sufficient access to perform this action.
@@ -519,6 +700,11 @@ func (c *VerifiedPermissions) CreatePolicyTemplateRequest(input *CreatePolicyTem
 // is dynamically linked to the template. If the template changes, then any
 // policies that are linked to that template are immediately updated as well.
 //
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -554,14 +740,14 @@ func (c *VerifiedPermissions) CreatePolicyTemplateRequest(input *CreatePolicyTem
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -577,6 +763,10 @@ func (c *VerifiedPermissions) CreatePolicyTemplateRequest(input *CreatePolicyTem
 //
 //   - ServiceQuotaExceededException
 //     The request failed because it would cause a service quota to be exceeded.
+//
+//   - ConflictException
+//     The request failed because another request to modify a resource occurred
+//     at the same.
 //
 //   - AccessDeniedException
 //     You don't have sufficient access to perform this action.
@@ -697,14 +887,14 @@ func (c *VerifiedPermissions) DeleteIdentitySourceRequest(input *DeleteIdentityS
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -840,14 +1030,14 @@ func (c *VerifiedPermissions) DeletePolicyRequest(input *DeletePolicyInput) (req
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -984,14 +1174,14 @@ func (c *VerifiedPermissions) DeletePolicyStoreRequest(input *DeletePolicyStoreI
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -1121,14 +1311,14 @@ func (c *VerifiedPermissions) DeletePolicyTemplateRequest(input *DeletePolicyTem
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -1260,14 +1450,14 @@ func (c *VerifiedPermissions) GetIdentitySourceRequest(input *GetIdentitySourceI
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -1395,14 +1585,14 @@ func (c *VerifiedPermissions) GetPolicyRequest(input *GetPolicyInput) (req *requ
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -1530,14 +1720,14 @@ func (c *VerifiedPermissions) GetPolicyStoreRequest(input *GetPolicyStoreInput) 
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -1666,14 +1856,14 @@ func (c *VerifiedPermissions) GetPolicyTemplateRequest(input *GetPolicyTemplateI
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -1801,14 +1991,14 @@ func (c *VerifiedPermissions) GetSchemaRequest(input *GetSchemaInput) (req *requ
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -1941,14 +2131,14 @@ func (c *VerifiedPermissions) IsAuthorizedRequest(input *IsAuthorizedInput) (req
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -2041,11 +2231,25 @@ func (c *VerifiedPermissions) IsAuthorizedWithTokenRequest(input *IsAuthorizedWi
 //
 // Makes an authorization decision about a service request described in the
 // parameters. The principal in this request comes from an external identity
-// source. The information in the parameters can also define additional context
-// that Verified Permissions can include in the evaluation. The request is evaluated
-// against all matching policies in the specified policy store. The result of
-// the decision is either Allow or Deny, along with a list of the policies that
-// resulted in the decision.
+// source in the form of an identity token formatted as a JSON web token (JWT)
+// (https://wikipedia.org/wiki/JSON_Web_Token). The information in the parameters
+// can also define additional context that Verified Permissions can include
+// in the evaluation. The request is evaluated against all matching policies
+// in the specified policy store. The result of the decision is either Allow
+// or Deny, along with a list of the policies that resulted in the decision.
+//
+// If you specify the identityToken parameter, then this operation derives the
+// principal from that token. You must not also include that principal in the
+// entities parameter or the operation fails and reports a conflict between
+// the two entity sources.
+//
+// If you provide only an accessToken, then you can include the entity as part
+// of the entities parameter to provide additional attributes.
+//
+// At this time, Verified Permissions accepts tokens from only Amazon Cognito.
+//
+// Verified Permissions validates each token that is specified in a request
+// by checking its expiration date and its signature.
 //
 // If you delete a Amazon Cognito user pool or user, tokens from that deleted
 // pool or that deleted user continue to be usable until they expire.
@@ -2085,14 +2289,14 @@ func (c *VerifiedPermissions) IsAuthorizedWithTokenRequest(input *IsAuthorizedWi
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -2227,14 +2431,14 @@ func (c *VerifiedPermissions) ListIdentitySourcesRequest(input *ListIdentitySour
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -2419,14 +2623,14 @@ func (c *VerifiedPermissions) ListPoliciesRequest(input *ListPoliciesInput) (req
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -2612,14 +2816,14 @@ func (c *VerifiedPermissions) ListPolicyStoresRequest(input *ListPolicyStoresInp
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -2802,14 +3006,14 @@ func (c *VerifiedPermissions) ListPolicyTemplatesRequest(input *ListPolicyTempla
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -2958,6 +3162,11 @@ func (c *VerifiedPermissions) PutSchemaRequest(input *PutSchemaInput) (req *requ
 // re-evaluated against the changed schema. If you later update a policy, then
 // it is evaluated against the new schema at that time.
 //
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -2993,14 +3202,14 @@ func (c *VerifiedPermissions) PutSchemaRequest(input *PutSchemaInput) (req *requ
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -3102,6 +3311,11 @@ func (c *VerifiedPermissions) UpdateIdentitySourceRequest(input *UpdateIdentityS
 // source, or to change the mapping of identities from the IdP to a different
 // principal entity type.
 //
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -3137,14 +3351,14 @@ func (c *VerifiedPermissions) UpdateIdentitySourceRequest(input *UpdateIdentityS
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -3245,10 +3459,24 @@ func (c *VerifiedPermissions) UpdatePolicyRequest(input *UpdatePolicyInput) (req
 // policy, you must update the template instead, using UpdatePolicyTemplate
 // (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_UpdatePolicyTemplate.html).
 //
-// If policy validation is enabled in the policy store, then updating a static
-// policy causes Verified Permissions to validate the policy against the schema
-// in the policy store. If the updated static policy doesn't pass validation,
-// the operation fails and the update isn't stored.
+//   - If policy validation is enabled in the policy store, then updating a
+//     static policy causes Verified Permissions to validate the policy against
+//     the schema in the policy store. If the updated static policy doesn't pass
+//     validation, the operation fails and the update isn't stored.
+//
+//   - When you edit a static policy, You can change only certain elements
+//     of a static policy: The action referenced by the policy. A condition clause,
+//     such as when and unless. You can't change these elements of a static policy:
+//     Changing a policy from a static policy to a template-linked policy. Changing
+//     the effect of a static policy from permit or forbid. The principal referenced
+//     by a static policy. The resource referenced by a static policy.
+//
+//   - To update a template-linked policy, you must update the template instead.
+//
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3285,14 +3513,14 @@ func (c *VerifiedPermissions) UpdatePolicyRequest(input *UpdatePolicyInput) (req
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -3392,6 +3620,11 @@ func (c *VerifiedPermissions) UpdatePolicyStoreRequest(input *UpdatePolicyStoreI
 //
 // Modifies the validation setting for a policy store.
 //
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -3427,14 +3660,14 @@ func (c *VerifiedPermissions) UpdatePolicyStoreRequest(input *UpdatePolicyStoreI
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -3532,9 +3765,14 @@ func (c *VerifiedPermissions) UpdatePolicyTemplateRequest(input *UpdatePolicyTem
 // Updates the specified policy template. You can update only the description
 // and the some elements of the policyBody (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_UpdatePolicyTemplate.html#amazonverifiedpermissions-UpdatePolicyTemplate-request-policyBody).
 //
-// Changes you make to the policy template content are immediately reflected
-// in authorization decisions that involve all template-linked policies instantiated
-// from this template.
+// Changes you make to the policy template content are immediately (within the
+// constraints of eventual consistency) reflected in authorization decisions
+// that involve all template-linked policies instantiated from this template.
+//
+// Verified Permissions is eventually consistent (https://wikipedia.org/wiki/Eventual_consistency)
+// . It can take a few seconds for a new or changed element to be propagate
+// through the service and be visible in the results of other Verified Permissions
+// operations.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3571,14 +3809,14 @@ func (c *VerifiedPermissions) UpdatePolicyTemplateRequest(input *UpdatePolicyTem
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always
@@ -3697,7 +3935,8 @@ func (s *AccessDeniedException) RequestID() string {
 // Contains information about an action for a request for which an authorization
 // decision is made.
 //
-// This data type is used as an request parameter to the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html)
+// This data type is used as a request parameter to the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html),
+// BatchIsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html),
 // and IsAuthorizedWithToken (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html)
 // operations.
 //
@@ -3707,13 +3946,21 @@ type ActionIdentifier struct {
 
 	// The ID of an action.
 	//
+	// ActionId is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ActionIdentifier's
+	// String and GoString methods.
+	//
 	// ActionId is a required field
-	ActionId *string `locationName:"actionId" min:"1" type:"string" required:"true"`
+	ActionId *string `locationName:"actionId" min:"1" type:"string" required:"true" sensitive:"true"`
 
 	// The type of an action.
 	//
+	// ActionType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ActionIdentifier's
+	// String and GoString methods.
+	//
 	// ActionType is a required field
-	ActionType *string `locationName:"actionType" min:"1" type:"string" required:"true"`
+	ActionType *string `locationName:"actionType" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -3774,17 +4021,22 @@ func (s *ActionIdentifier) SetActionType(v string) *ActionIdentifier {
 // authorization decision is made.
 //
 // This data type is used as a member of the ContextDefinition (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_ContextDefinition.html)
-// structure which is uses as a request parameter for the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html)
+// structure which is uses as a request parameter for the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html),
+// BatchIsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html),
 // and IsAuthorizedWithToken (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html)
 // operations.
 type AttributeValue struct {
 	_ struct{} `type:"structure"`
 
-	// An attribute value of Boolean (https://docs.cedarpolicy.com/syntax-datatypes.html#boolean)
+	// An attribute value of Boolean (https://docs.cedarpolicy.com/policies/syntax-datatypes.html#boolean)
 	// type.
 	//
 	// Example: {"boolean": true}
-	Boolean *bool `locationName:"boolean" type:"boolean"`
+	//
+	// Boolean is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AttributeValue's
+	// String and GoString methods.
+	Boolean *bool `locationName:"boolean" type:"boolean" sensitive:"true"`
 
 	// An attribute value of type EntityIdentifier (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EntityIdentifier.html).
 	//
@@ -3792,29 +4044,37 @@ type AttributeValue struct {
 	// type>"}
 	EntityIdentifier *EntityIdentifier `locationName:"entityIdentifier" type:"structure"`
 
-	// An attribute value of Long (https://docs.cedarpolicy.com/syntax-datatypes.html#long)
+	// An attribute value of Long (https://docs.cedarpolicy.com/policies/syntax-datatypes.html#long)
 	// type.
 	//
 	// Example: {"long": 0}
-	Long *int64 `locationName:"long" type:"long"`
+	//
+	// Long is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AttributeValue's
+	// String and GoString methods.
+	Long *int64 `locationName:"long" type:"long" sensitive:"true"`
 
-	// An attribute value of Record (https://docs.cedarpolicy.com/syntax-datatypes.html#record)
+	// An attribute value of Record (https://docs.cedarpolicy.com/policies/syntax-datatypes.html#record)
 	// type.
 	//
 	// Example: {"record": { "keyName": {} } }
 	Record map[string]*AttributeValue `locationName:"record" type:"map"`
 
-	// An attribute value of Set (https://docs.cedarpolicy.com/syntax-datatypes.html#set)
+	// An attribute value of Set (https://docs.cedarpolicy.com/policies/syntax-datatypes.html#set)
 	// type.
 	//
 	// Example: {"set": [ {} ] }
 	Set []*AttributeValue `locationName:"set" type:"list"`
 
-	// An attribute value of String (https://docs.cedarpolicy.com/syntax-datatypes.html#string)
+	// An attribute value of String (https://docs.cedarpolicy.com/policies/syntax-datatypes.html#string)
 	// type.
 	//
 	// Example: {"string": "abc"}
-	String_ *string `locationName:"string" type:"string"`
+	//
+	// String_ is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AttributeValue's
+	// String and GoString methods.
+	String_ *string `locationName:"string" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -3903,6 +4163,302 @@ func (s *AttributeValue) SetSet(v []*AttributeValue) *AttributeValue {
 // SetString_ sets the String_ field's value.
 func (s *AttributeValue) SetString_(v string) *AttributeValue {
 	s.String_ = &v
+	return s
+}
+
+type BatchIsAuthorizedInput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the list of resources and principals and their associated attributes
+	// that Verified Permissions can examine when evaluating the policies.
+	//
+	// You can include only principal and resource entities in this parameter; you
+	// can't include actions. You must specify actions in the schema.
+	Entities *EntitiesDefinition `locationName:"entities" type:"structure"`
+
+	// Specifies the ID of the policy store. Policies in this policy store will
+	// be used to make the authorization decisions for the input.
+	//
+	// PolicyStoreId is a required field
+	PolicyStoreId *string `locationName:"policyStoreId" min:"1" type:"string" required:"true"`
+
+	// An array of up to 30 requests that you want Verified Permissions to evaluate.
+	//
+	// Requests is a required field
+	Requests []*BatchIsAuthorizedInputItem `locationName:"requests" min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BatchIsAuthorizedInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BatchIsAuthorizedInput"}
+	if s.PolicyStoreId == nil {
+		invalidParams.Add(request.NewErrParamRequired("PolicyStoreId"))
+	}
+	if s.PolicyStoreId != nil && len(*s.PolicyStoreId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("PolicyStoreId", 1))
+	}
+	if s.Requests == nil {
+		invalidParams.Add(request.NewErrParamRequired("Requests"))
+	}
+	if s.Requests != nil && len(s.Requests) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Requests", 1))
+	}
+	if s.Entities != nil {
+		if err := s.Entities.Validate(); err != nil {
+			invalidParams.AddNested("Entities", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Requests != nil {
+		for i, v := range s.Requests {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Requests", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEntities sets the Entities field's value.
+func (s *BatchIsAuthorizedInput) SetEntities(v *EntitiesDefinition) *BatchIsAuthorizedInput {
+	s.Entities = v
+	return s
+}
+
+// SetPolicyStoreId sets the PolicyStoreId field's value.
+func (s *BatchIsAuthorizedInput) SetPolicyStoreId(v string) *BatchIsAuthorizedInput {
+	s.PolicyStoreId = &v
+	return s
+}
+
+// SetRequests sets the Requests field's value.
+func (s *BatchIsAuthorizedInput) SetRequests(v []*BatchIsAuthorizedInputItem) *BatchIsAuthorizedInput {
+	s.Requests = v
+	return s
+}
+
+// An authorization request that you include in a BatchIsAuthorized API request.
+type BatchIsAuthorizedInputItem struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the requested action to be authorized. For example, is the principal
+	// authorized to perform this action on the resource?
+	Action *ActionIdentifier `locationName:"action" type:"structure"`
+
+	// Specifies additional context that can be used to make more granular authorization
+	// decisions.
+	Context *ContextDefinition `locationName:"context" type:"structure"`
+
+	// Specifies the principal for which the authorization decision is to be made.
+	Principal *EntityIdentifier `locationName:"principal" type:"structure"`
+
+	// Specifies the resource for which the authorization decision is to be made.
+	Resource *EntityIdentifier `locationName:"resource" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedInputItem) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedInputItem) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BatchIsAuthorizedInputItem) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BatchIsAuthorizedInputItem"}
+	if s.Action != nil {
+		if err := s.Action.Validate(); err != nil {
+			invalidParams.AddNested("Action", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Context != nil {
+		if err := s.Context.Validate(); err != nil {
+			invalidParams.AddNested("Context", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Principal != nil {
+		if err := s.Principal.Validate(); err != nil {
+			invalidParams.AddNested("Principal", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Resource != nil {
+		if err := s.Resource.Validate(); err != nil {
+			invalidParams.AddNested("Resource", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAction sets the Action field's value.
+func (s *BatchIsAuthorizedInputItem) SetAction(v *ActionIdentifier) *BatchIsAuthorizedInputItem {
+	s.Action = v
+	return s
+}
+
+// SetContext sets the Context field's value.
+func (s *BatchIsAuthorizedInputItem) SetContext(v *ContextDefinition) *BatchIsAuthorizedInputItem {
+	s.Context = v
+	return s
+}
+
+// SetPrincipal sets the Principal field's value.
+func (s *BatchIsAuthorizedInputItem) SetPrincipal(v *EntityIdentifier) *BatchIsAuthorizedInputItem {
+	s.Principal = v
+	return s
+}
+
+// SetResource sets the Resource field's value.
+func (s *BatchIsAuthorizedInputItem) SetResource(v *EntityIdentifier) *BatchIsAuthorizedInputItem {
+	s.Resource = v
+	return s
+}
+
+type BatchIsAuthorizedOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A series of Allow or Deny decisions for each request, and the policies that
+	// produced them.
+	//
+	// Results is a required field
+	Results []*BatchIsAuthorizedOutputItem `locationName:"results" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedOutput) GoString() string {
+	return s.String()
+}
+
+// SetResults sets the Results field's value.
+func (s *BatchIsAuthorizedOutput) SetResults(v []*BatchIsAuthorizedOutputItem) *BatchIsAuthorizedOutput {
+	s.Results = v
+	return s
+}
+
+// The decision, based on policy evaluation, from an individual authorization
+// request in a BatchIsAuthorized API request.
+type BatchIsAuthorizedOutputItem struct {
+	_ struct{} `type:"structure"`
+
+	// An authorization decision that indicates if the authorization request should
+	// be allowed or denied.
+	//
+	// Decision is a required field
+	Decision *string `locationName:"decision" type:"string" required:"true" enum:"Decision"`
+
+	// The list of determining policies used to make the authorization decision.
+	// For example, if there are two matching policies, where one is a forbid and
+	// the other is a permit, then the forbid policy will be the determining policy.
+	// In the case of multiple matching permit policies then there would be multiple
+	// determining policies. In the case that no policies match, and hence the response
+	// is DENY, there would be no determining policies.
+	//
+	// DeterminingPolicies is a required field
+	DeterminingPolicies []*DeterminingPolicyItem `locationName:"determiningPolicies" type:"list" required:"true"`
+
+	// Errors that occurred while making an authorization decision, for example,
+	// a policy references an Entity or entity Attribute that does not exist in
+	// the slice.
+	//
+	// Errors is a required field
+	Errors []*EvaluationErrorItem `locationName:"errors" type:"list" required:"true"`
+
+	// The authorization request that initiated the decision.
+	//
+	// Request is a required field
+	Request *BatchIsAuthorizedInputItem `locationName:"request" type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedOutputItem) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchIsAuthorizedOutputItem) GoString() string {
+	return s.String()
+}
+
+// SetDecision sets the Decision field's value.
+func (s *BatchIsAuthorizedOutputItem) SetDecision(v string) *BatchIsAuthorizedOutputItem {
+	s.Decision = &v
+	return s
+}
+
+// SetDeterminingPolicies sets the DeterminingPolicies field's value.
+func (s *BatchIsAuthorizedOutputItem) SetDeterminingPolicies(v []*DeterminingPolicyItem) *BatchIsAuthorizedOutputItem {
+	s.DeterminingPolicies = v
+	return s
+}
+
+// SetErrors sets the Errors field's value.
+func (s *BatchIsAuthorizedOutputItem) SetErrors(v []*EvaluationErrorItem) *BatchIsAuthorizedOutputItem {
+	s.Errors = v
+	return s
+}
+
+// SetRequest sets the Request field's value.
+func (s *BatchIsAuthorizedOutputItem) SetRequest(v *BatchIsAuthorizedInputItem) *BatchIsAuthorizedOutputItem {
+	s.Request = v
 	return s
 }
 
@@ -4114,11 +4670,12 @@ func (s *ConflictException) RequestID() string {
 // evaluates this information in an authorization request as part of the when
 // and unless clauses in a policy.
 //
-// This data type is used as a request parameter for the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html)
+// This data type is used as a request parameter for the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html),
+// BatchIsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html),
 // and IsAuthorizedWithToken (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html)
 // operations.
 //
-// Example: "context":{"Context":{"<KeyName1>":{"boolean":true},"<KeyName2>":{"long":1234}}}
+// Example: "context":{"contextMap":{"<KeyName1>":{"boolean":true},"<KeyName2>":{"long":1234}}}
 type ContextDefinition struct {
 	_ struct{} `type:"structure"`
 
@@ -4126,7 +4683,7 @@ type ContextDefinition struct {
 	// request. Each attribute in this array must include a map of a data type and
 	// its value.
 	//
-	// Example: "Context":{"<KeyName1>":{"boolean":true},"<KeyName2>":{"long":1234}}
+	// Example: "contextMap":{"<KeyName1>":{"boolean":true},"<KeyName2>":{"long":1234}}
 	ContextMap map[string]*AttributeValue `locationName:"contextMap" type:"map"`
 }
 
@@ -4210,7 +4767,11 @@ type CreateIdentitySourceInput struct {
 
 	// Specifies the namespace and data type of the principals generated for identities
 	// authenticated by the new identity source.
-	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string"`
+	//
+	// PrincipalEntityType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateIdentitySourceInput's
+	// String and GoString methods.
+	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -4557,6 +5118,14 @@ type CreatePolicyStoreInput struct {
 	// parameters, the retry fails with an IdempotentParameterMismatch error.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
+	// Descriptive text that you can provide to help with identification of the
+	// current policy store.
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreatePolicyStoreInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
+
 	// Specifies the validation setting for this policy store.
 	//
 	// Currently, the only valid and required value is Mode.
@@ -4614,6 +5183,12 @@ func (s *CreatePolicyStoreInput) Validate() error {
 // SetClientToken sets the ClientToken field's value.
 func (s *CreatePolicyStoreInput) SetClientToken(v string) *CreatePolicyStoreInput {
 	s.ClientToken = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreatePolicyStoreInput) SetDescription(v string) *CreatePolicyStoreInput {
+	s.Description = &v
 	return s
 }
 
@@ -4706,7 +5281,11 @@ type CreatePolicyTemplateInput struct {
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// Specifies a description for the policy template.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreatePolicyTemplateInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The ID of the policy store in which to create the policy template.
 	//
@@ -4716,8 +5295,12 @@ type CreatePolicyTemplateInput struct {
 	// Specifies the content that you want to use for the new policy template, written
 	// in the Cedar policy language.
 	//
+	// Statement is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreatePolicyTemplateInput's
+	// String and GoString methods.
+	//
 	// Statement is a required field
-	Statement *string `locationName:"statement" min:"1" type:"string" required:"true"`
+	Statement *string `locationName:"statement" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -5195,7 +5778,8 @@ func (s DeletePolicyTemplateOutput) GoString() string {
 // decision.
 //
 // This data type is used as an element in a response parameter for the IsAuthorized
-// (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html)
+// (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html),
+// BatchIsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html),
 // and IsAuthorizedWithToken (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html)
 // operations.
 //
@@ -5312,15 +5896,23 @@ type EntityIdentifier struct {
 	//
 	// "entityId":"identifier"
 	//
+	// EntityId is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by EntityIdentifier's
+	// String and GoString methods.
+	//
 	// EntityId is a required field
-	EntityId *string `locationName:"entityId" min:"1" type:"string" required:"true"`
+	EntityId *string `locationName:"entityId" min:"1" type:"string" required:"true" sensitive:"true"`
 
 	// The type of an entity.
 	//
 	// Example: "entityType":"typeName"
 	//
+	// EntityType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by EntityIdentifier's
+	// String and GoString methods.
+	//
 	// EntityType is a required field
-	EntityType *string `locationName:"entityType" min:"1" type:"string" required:"true"`
+	EntityType *string `locationName:"entityType" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -5380,9 +5972,9 @@ func (s *EntityIdentifier) SetEntityType(v string) *EntityIdentifier {
 // This data type is used as one of the fields in the EntitiesDefinition (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_EntitiesDefinition.html)
 // structure.
 //
-// { "id": { "entityType": "Photo", "entityId": "VacationPhoto94.jpg" }, "Attributes":
-// {}, "Parents": [ { "entityType": "Album", "entityId": "alice_folder" } ]
-// }
+// { "identifier": { "entityType": "Photo", "entityId": "VacationPhoto94.jpg"
+// }, "attributes": {}, "parents": [ { "entityType": "Album", "entityId": "alice_folder"
+// } ] }
 type EntityItem struct {
 	_ struct{} `type:"structure"`
 
@@ -5538,11 +6130,12 @@ func (s *EntityReference) SetUnspecified(v bool) *EntityReference {
 
 // Contains a description of an evaluation error.
 //
-// This data type is used as a request parameter in the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html)
+// This data type is a response parameter of the IsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorized.html),
+// BatchIsAuthorized (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_BatchIsAuthorized.html),
 // and IsAuthorizedWithToken (https://docs.aws.amazon.com/verifiedpermissions/latest/apireference/API_IsAuthorizedWithToken.html)
 // operations.
 type EvaluationErrorItem struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" sensitive:"true"`
 
 	// The error description.
 	//
@@ -5672,8 +6265,12 @@ type GetIdentitySourceOutput struct {
 	// The data type of principals generated for identities authenticated by this
 	// identity source.
 	//
+	// PrincipalEntityType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GetIdentitySourceOutput's
+	// String and GoString methods.
+	//
 	// PrincipalEntityType is a required field
-	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string" required:"true"`
+	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -5968,6 +6565,14 @@ type GetPolicyStoreOutput struct {
 	// CreatedDate is a required field
 	CreatedDate *time.Time `locationName:"createdDate" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
+	// Descriptive text that you can provide to help with identification of the
+	// current policy store.
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GetPolicyStoreOutput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
+
 	// The date and time that the policy store was last updated.
 	//
 	// LastUpdatedDate is a required field
@@ -6011,6 +6616,12 @@ func (s *GetPolicyStoreOutput) SetArn(v string) *GetPolicyStoreOutput {
 // SetCreatedDate sets the CreatedDate field's value.
 func (s *GetPolicyStoreOutput) SetCreatedDate(v time.Time) *GetPolicyStoreOutput {
 	s.CreatedDate = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *GetPolicyStoreOutput) SetDescription(v string) *GetPolicyStoreOutput {
+	s.Description = &v
 	return s
 }
 
@@ -6108,7 +6719,11 @@ type GetPolicyTemplateOutput struct {
 	CreatedDate *time.Time `locationName:"createdDate" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
 	// The description of the policy template.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GetPolicyTemplateOutput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The date and time that the policy template was most recently updated.
 	//
@@ -6128,8 +6743,12 @@ type GetPolicyTemplateOutput struct {
 	// The content of the body of the policy template written in the Cedar policy
 	// language.
 	//
+	// Statement is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GetPolicyTemplateOutput's
+	// String and GoString methods.
+	//
 	// Statement is a required field
-	Statement *string `locationName:"statement" min:"1" type:"string" required:"true"`
+	Statement *string `locationName:"statement" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -6248,6 +6867,9 @@ type GetSchemaOutput struct {
 	// LastUpdatedDate is a required field
 	LastUpdatedDate *time.Time `locationName:"lastUpdatedDate" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
+	// The namespaces of the entities referenced by this schema.
+	Namespaces []*string `locationName:"namespaces" type:"list"`
+
 	// The ID of the policy store that contains the schema.
 	//
 	// PolicyStoreId is a required field
@@ -6255,8 +6877,12 @@ type GetSchemaOutput struct {
 
 	// The body of the schema, written in Cedar schema JSON.
 	//
+	// Schema is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GetSchemaOutput's
+	// String and GoString methods.
+	//
 	// Schema is a required field
-	Schema *string `locationName:"schema" min:"1" type:"string" required:"true"`
+	Schema *string `locationName:"schema" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -6286,6 +6912,12 @@ func (s *GetSchemaOutput) SetCreatedDate(v time.Time) *GetSchemaOutput {
 // SetLastUpdatedDate sets the LastUpdatedDate field's value.
 func (s *GetSchemaOutput) SetLastUpdatedDate(v time.Time) *GetSchemaOutput {
 	s.LastUpdatedDate = &v
+	return s
+}
+
+// SetNamespaces sets the Namespaces field's value.
+func (s *GetSchemaOutput) SetNamespaces(v []*string) *GetSchemaOutput {
+	s.Namespaces = v
 	return s
 }
 
@@ -6386,7 +7018,11 @@ type IdentitySourceFilter struct {
 
 	// The Cedar entity type of the principals returned by the identity provider
 	// (IdP) associated with this identity source.
-	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string"`
+	//
+	// PrincipalEntityType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by IdentitySourceFilter's
+	// String and GoString methods.
+	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -6463,8 +7099,12 @@ type IdentitySourceItem struct {
 	// The Cedar entity type of the principals returned from the IdP associated
 	// with this identity source.
 	//
+	// PrincipalEntityType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by IdentitySourceItem's
+	// String and GoString methods.
+	//
 	// PrincipalEntityType is a required field
-	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string" required:"true"`
+	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -6852,9 +7492,13 @@ type IsAuthorizedWithTokenInput struct {
 
 	// Specifies an access token for the principal to be authorized. This token
 	// is provided to you by the identity provider (IdP) associated with the specified
-	// identity source. You must specify either an AccessToken or an IdentityToken,
-	// but not both.
-	AccessToken *string `locationName:"accessToken" min:"1" type:"string"`
+	// identity source. You must specify either an AccessToken, or an IdentityToken,
+	// or both.
+	//
+	// AccessToken is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by IsAuthorizedWithTokenInput's
+	// String and GoString methods.
+	AccessToken *string `locationName:"accessToken" min:"1" type:"string" sensitive:"true"`
 
 	// Specifies the requested action to be authorized. Is the specified principal
 	// authorized to perform this action on the specified resource.
@@ -6864,18 +7508,27 @@ type IsAuthorizedWithTokenInput struct {
 	// decisions.
 	Context *ContextDefinition `locationName:"context" type:"structure"`
 
-	// Specifies the list of resources and principals and their associated attributes
-	// that Verified Permissions can examine when evaluating the policies.
+	// Specifies the list of resources and their associated attributes that Verified
+	// Permissions can examine when evaluating the policies.
 	//
-	// You can include only principal and resource entities in this parameter; you
-	// can't include actions. You must specify actions in the schema.
+	// You can include only resource and action entities in this parameter; you
+	// can't include principals.
+	//
+	//    * The IsAuthorizedWithToken operation takes principal attributes from
+	//    only the identityToken or accessToken passed to the operation.
+	//
+	//    * For action entities, you can include only their Identifier and EntityType.
 	Entities *EntitiesDefinition `locationName:"entities" type:"structure"`
 
 	// Specifies an identity token for the principal to be authorized. This token
 	// is provided to you by the identity provider (IdP) associated with the specified
 	// identity source. You must specify either an AccessToken or an IdentityToken,
-	// but not both.
-	IdentityToken *string `locationName:"identityToken" min:"1" type:"string"`
+	// or both.
+	//
+	// IdentityToken is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by IsAuthorizedWithTokenInput's
+	// String and GoString methods.
+	IdentityToken *string `locationName:"identityToken" min:"1" type:"string" sensitive:"true"`
 
 	// Specifies the ID of the policy store. Policies in this policy store will
 	// be used to make an authorization decision for the input.
@@ -7060,15 +7713,17 @@ type ListIdentitySourcesInput struct {
 	// the output to matching identity sources.
 	Filters []*IdentitySourceFilter `locationName:"filters" type:"list"`
 
-	// Specifies the total number of results that you want included on each page
-	// of the response. If you do not include this parameter, it defaults to a value
-	// that is specific to the operation. If additional items exist beyond the number
-	// you specify, the NextToken response element is returned with a value (not
-	// null). Include the specified value as the NextToken request parameter in
-	// the next call to the operation to get the next part of the results. Note
-	// that the service might return fewer results than the maximum even when there
-	// are more results available. You should check NextToken after every operation
-	// to ensure that you receive all of the results.
+	// Specifies the total number of results that you want included in each response.
+	// If additional items exist beyond the number you specify, the NextToken response
+	// element is returned with a value (not null). Include the specified value
+	// as the NextToken request parameter in the next call to the operation to get
+	// the next set of results. Note that the service might return fewer results
+	// than the maximum even when there are more results available. You should check
+	// NextToken after every operation to ensure that you receive all of the results.
+	//
+	// If you do not specify this parameter, the operation defaults to 10 identity
+	// sources per response. You can specify a maximum of 200 identity sources per
+	// response.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// Specifies that you want to receive the next page of results. Valid only if
@@ -7213,15 +7868,16 @@ type ListPoliciesInput struct {
 	// a specified principal.
 	Filter *PolicyFilter `locationName:"filter" type:"structure"`
 
-	// Specifies the total number of results that you want included on each page
-	// of the response. If you do not include this parameter, it defaults to a value
-	// that is specific to the operation. If additional items exist beyond the number
-	// you specify, the NextToken response element is returned with a value (not
-	// null). Include the specified value as the NextToken request parameter in
-	// the next call to the operation to get the next part of the results. Note
-	// that the service might return fewer results than the maximum even when there
-	// are more results available. You should check NextToken after every operation
-	// to ensure that you receive all of the results.
+	// Specifies the total number of results that you want included in each response.
+	// If additional items exist beyond the number you specify, the NextToken response
+	// element is returned with a value (not null). Include the specified value
+	// as the NextToken request parameter in the next call to the operation to get
+	// the next set of results. Note that the service might return fewer results
+	// than the maximum even when there are more results available. You should check
+	// NextToken after every operation to ensure that you receive all of the results.
+	//
+	// If you do not specify this parameter, the operation defaults to 10 policies
+	// per response. You can specify a maximum of 50 policies per response.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// Specifies that you want to receive the next page of results. Valid only if
@@ -7355,15 +8011,16 @@ func (s *ListPoliciesOutput) SetPolicies(v []*PolicyItem) *ListPoliciesOutput {
 type ListPolicyStoresInput struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the total number of results that you want included on each page
-	// of the response. If you do not include this parameter, it defaults to a value
-	// that is specific to the operation. If additional items exist beyond the number
-	// you specify, the NextToken response element is returned with a value (not
-	// null). Include the specified value as the NextToken request parameter in
-	// the next call to the operation to get the next part of the results. Note
-	// that the service might return fewer results than the maximum even when there
-	// are more results available. You should check NextToken after every operation
-	// to ensure that you receive all of the results.
+	// Specifies the total number of results that you want included in each response.
+	// If additional items exist beyond the number you specify, the NextToken response
+	// element is returned with a value (not null). Include the specified value
+	// as the NextToken request parameter in the next call to the operation to get
+	// the next set of results. Note that the service might return fewer results
+	// than the maximum even when there are more results available. You should check
+	// NextToken after every operation to ensure that you receive all of the results.
+	//
+	// If you do not specify this parameter, the operation defaults to 10 policy
+	// stores per response. You can specify a maximum of 50 policy stores per response.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// Specifies that you want to receive the next page of results. Valid only if
@@ -7469,15 +8126,17 @@ func (s *ListPolicyStoresOutput) SetPolicyStores(v []*PolicyStoreItem) *ListPoli
 type ListPolicyTemplatesInput struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the total number of results that you want included on each page
-	// of the response. If you do not include this parameter, it defaults to a value
-	// that is specific to the operation. If additional items exist beyond the number
-	// you specify, the NextToken response element is returned with a value (not
-	// null). Include the specified value as the NextToken request parameter in
-	// the next call to the operation to get the next part of the results. Note
-	// that the service might return fewer results than the maximum even when there
-	// are more results available. You should check NextToken after every operation
-	// to ensure that you receive all of the results.
+	// Specifies the total number of results that you want included in each response.
+	// If additional items exist beyond the number you specify, the NextToken response
+	// element is returned with a value (not null). Include the specified value
+	// as the NextToken request parameter in the next call to the operation to get
+	// the next set of results. Note that the service might return fewer results
+	// than the maximum even when there are more results available. You should check
+	// NextToken after every operation to ensure that you receive all of the results.
+	//
+	// If you do not specify this parameter, the operation defaults to 10 policy
+	// templates per response. You can specify a maximum of 50 policy templates
+	// per response.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// Specifies that you want to receive the next page of results. Valid only if
@@ -7981,6 +8640,17 @@ type PolicyStoreItem struct {
 	// CreatedDate is a required field
 	CreatedDate *time.Time `locationName:"createdDate" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
+	// Descriptive text that you can provide to help with identification of the
+	// current policy store.
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PolicyStoreItem's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
+
+	// The date and time the policy store was most recently updated.
+	LastUpdatedDate *time.Time `locationName:"lastUpdatedDate" type:"timestamp" timestampFormat:"iso8601"`
+
 	// The unique identifier of the policy store.
 	//
 	// PolicyStoreId is a required field
@@ -8017,6 +8687,18 @@ func (s *PolicyStoreItem) SetCreatedDate(v time.Time) *PolicyStoreItem {
 	return s
 }
 
+// SetDescription sets the Description field's value.
+func (s *PolicyStoreItem) SetDescription(v string) *PolicyStoreItem {
+	s.Description = &v
+	return s
+}
+
+// SetLastUpdatedDate sets the LastUpdatedDate field's value.
+func (s *PolicyStoreItem) SetLastUpdatedDate(v time.Time) *PolicyStoreItem {
+	s.LastUpdatedDate = &v
+	return s
+}
+
 // SetPolicyStoreId sets the PolicyStoreId field's value.
 func (s *PolicyStoreItem) SetPolicyStoreId(v string) *PolicyStoreItem {
 	s.PolicyStoreId = &v
@@ -8037,7 +8719,11 @@ type PolicyTemplateItem struct {
 	CreatedDate *time.Time `locationName:"createdDate" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
 	// The description attached to the policy template.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PolicyTemplateItem's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The date and time that the policy template was most recently updated.
 	//
@@ -8368,7 +9054,11 @@ type SchemaDefinition struct {
 	// A JSON string representation of the schema supported by applications that
 	// use this policy store. For more information, see Policy store schema (https://docs.aws.amazon.com/verifiedpermissions/latest/userguide/schema.html)
 	// in the Amazon Verified Permissions User Guide.
-	CedarJson *string `locationName:"cedarJson" min:"1" type:"string"`
+	//
+	// CedarJson is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SchemaDefinition's
+	// String and GoString methods.
+	CedarJson *string `locationName:"cedarJson" min:"1" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -8495,12 +9185,20 @@ type StaticPolicyDefinition struct {
 	_ struct{} `type:"structure"`
 
 	// The description of the static policy.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by StaticPolicyDefinition's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The policy content of the static policy, written in the Cedar policy language.
 	//
+	// Statement is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by StaticPolicyDefinition's
+	// String and GoString methods.
+	//
 	// Statement is a required field
-	Statement *string `locationName:"statement" min:"1" type:"string" required:"true"`
+	Statement *string `locationName:"statement" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -8559,12 +9257,20 @@ type StaticPolicyDefinitionDetail struct {
 	_ struct{} `type:"structure"`
 
 	// A description of the static policy.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by StaticPolicyDefinitionDetail's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The content of the static policy written in the Cedar policy language.
 	//
+	// Statement is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by StaticPolicyDefinitionDetail's
+	// String and GoString methods.
+	//
 	// Statement is a required field
-	Statement *string `locationName:"statement" min:"1" type:"string" required:"true"`
+	Statement *string `locationName:"statement" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -8607,7 +9313,11 @@ type StaticPolicyDefinitionItem struct {
 	_ struct{} `type:"structure"`
 
 	// A description of the static policy.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by StaticPolicyDefinitionItem's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -9035,7 +9745,11 @@ type UpdateIdentitySourceInput struct {
 
 	// Specifies the data type of principals generated for identities authenticated
 	// by the identity source.
-	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string"`
+	//
+	// PrincipalEntityType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateIdentitySourceInput's
+	// String and GoString methods.
+	PrincipalEntityType *string `locationName:"principalEntityType" min:"1" type:"string" sensitive:"true"`
 
 	// Specifies the details required to communicate with the identity provider
 	// (IdP) associated with this identity source.
@@ -9444,6 +10158,14 @@ func (s *UpdatePolicyOutput) SetResource(v *EntityIdentifier) *UpdatePolicyOutpu
 type UpdatePolicyStoreInput struct {
 	_ struct{} `type:"structure"`
 
+	// Descriptive text that you can provide to help with identification of the
+	// current policy store.
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdatePolicyStoreInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
+
 	// Specifies the ID of the policy store that you want to update
 	//
 	// PolicyStoreId is a required field
@@ -9496,6 +10218,12 @@ func (s *UpdatePolicyStoreInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdatePolicyStoreInput) SetDescription(v string) *UpdatePolicyStoreInput {
+	s.Description = &v
+	return s
 }
 
 // SetPolicyStoreId sets the PolicyStoreId field's value.
@@ -9581,7 +10309,11 @@ type UpdatePolicyTemplateInput struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies a new description to apply to the policy template.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdatePolicyTemplateInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// Specifies the ID of the policy store that contains the policy template that
 	// you want to update.
@@ -9611,8 +10343,12 @@ type UpdatePolicyTemplateInput struct {
 	//
 	//    * The resource referenced by the policy template.
 	//
+	// Statement is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdatePolicyTemplateInput's
+	// String and GoString methods.
+	//
 	// Statement is a required field
-	Statement *string `locationName:"statement" min:"1" type:"string" required:"true"`
+	Statement *string `locationName:"statement" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -9756,7 +10492,11 @@ type UpdateStaticPolicyDefinition struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies the description to be added to or replaced on the static policy.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateStaticPolicyDefinition's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// Specifies the Cedar policy language text to be added to or replaced on the
 	// static policy.
@@ -9777,8 +10517,12 @@ type UpdateStaticPolicyDefinition struct {
 	//
 	//    * The resource referenced by the policy.
 	//
+	// Statement is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateStaticPolicyDefinition's
+	// String and GoString methods.
+	//
 	// Statement is a required field
-	Statement *string `locationName:"statement" min:"1" type:"string" required:"true"`
+	Statement *string `locationName:"statement" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -9852,14 +10596,14 @@ func (s *UpdateStaticPolicyDefinition) SetStatement(v string) *UpdateStaticPolic
 //   - MissingAttribute The policy attempts to access a record or entity attribute
 //     that isn't specified in the schema. Test for the existence of the attribute
 //     first before attempting to access its value. For more information, see
-//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     the has (presence of attribute test) operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - UnsafeOptionalAttributeAccess The policy attempts to access a record
 //     or entity attribute that is optional and isn't guaranteed to be present.
 //     Test for the existence of the attribute first before attempting to access
 //     its value. For more information, see the has (presence of attribute test)
-//     operator (https://docs.cedarpolicy.com/syntax-operators.html#has-presence-of-attribute-test)
+//     operator (https://docs.cedarpolicy.com/policies/syntax-operators.html#has-presence-of-attribute-test)
 //     in the Cedar Policy Language Guide.
 //
 //   - ImpossiblePolicy Cedar has determined that a policy condition always

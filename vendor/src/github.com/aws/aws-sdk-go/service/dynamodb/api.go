@@ -3417,6 +3417,10 @@ func (c *DynamoDB) ExecuteTransactionRequest(input *ExecuteTransactionInput) (re
 //
 //   - There is a user error, such as an invalid data format.
 //
+//   - There is an ongoing TransactWriteItems operation that conflicts with
+//     a concurrent TransactWriteItems request. In this case the TransactWriteItems
+//     operation fails with a TransactionCanceledException.
+//
 //     DynamoDB cancels a TransactGetItems request under the following circumstances:
 //
 //   - There is an ongoing TransactGetItems operation that conflicts with a
@@ -3991,15 +3995,19 @@ func (c *DynamoDB) ListBackupsRequest(input *ListBackupsInput) (req *request.Req
 
 // ListBackups API operation for Amazon DynamoDB.
 //
-// List backups associated with an Amazon Web Services account. To list backups
-// for a given table, specify TableName. ListBackups returns a paginated list
-// of results with at most 1 MB worth of items in a page. You can also specify
+// List DynamoDB backups that are associated with an Amazon Web Services account
+// and weren't made with Amazon Web Services Backup. To list these backups for
+// a given table, specify TableName. ListBackups returns a paginated list of
+// results with at most 1 MB worth of items in a page. You can also specify
 // a maximum number of entries to be returned in a page.
 //
 // In the request, start time is inclusive, but end time is exclusive. Note
 // that these boundaries are for the time at which the original backup was requested.
 //
 // You can call ListBackups a maximum of five times per second.
+//
+// If you want to retrieve the complete list of backups made with Amazon Web
+// Services Backup, use the Amazon Web Services Backup list API. (https://docs.aws.amazon.com/aws-backup/latest/devguide/API_ListBackupJobs.html)
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5672,17 +5680,24 @@ func (c *DynamoDB) ScanRequest(input *ScanInput) (req *request.Request, output *
 // every item in a table or a secondary index. To have DynamoDB return fewer
 // items, you can provide a FilterExpression operation.
 //
-// If the total number of scanned items exceeds the maximum dataset size limit
-// of 1 MB, the scan stops and results are returned to the user as a LastEvaluatedKey
-// value to continue the scan in a subsequent operation. The results also include
-// the number of items exceeding the limit. A scan can result in no table data
-// meeting the filter criteria.
+// If the total size of scanned items exceeds the maximum dataset size limit
+// of 1 MB, the scan completes and results are returned to the user. The LastEvaluatedKey
+// value is also returned and the requestor can use the LastEvaluatedKey to
+// continue the scan in a subsequent operation. Each scan response also includes
+// number of items that were scanned (ScannedCount) as part of the request.
+// If using a FilterExpression, a scan result can result in no items meeting
+// the criteria and the Count will result in zero. If you did not use a FilterExpression
+// in the scan request, then Count is the same as ScannedCount.
 //
-// A single Scan operation reads up to the maximum number of items set (if using
-// the Limit parameter) or a maximum of 1 MB of data and then apply any filtering
-// to the results using FilterExpression. If LastEvaluatedKey is present in
-// the response, you need to paginate the result set. For more information,
-// see Paginating the Results (https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination)
+// Count and ScannedCount only return the count of items specific to a single
+// scan request and, unless the table is less than 1MB, do not represent the
+// total number of items in the table.
+//
+// A single Scan operation first reads up to the maximum number of items set
+// (if using the Limit parameter) or a maximum of 1 MB of data and then applies
+// any filtering to the results if a FilterExpression is provided. If LastEvaluatedKey
+// is present in the response, pagination is required to complete the full table
+// scan. For more information, see Paginating the Results (https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination)
 // in the Amazon DynamoDB Developer Guide.
 //
 // Scan operations proceed sequentially; however, for faster performance on
@@ -5691,11 +5706,18 @@ func (c *DynamoDB) ScanRequest(input *ScanInput) (req *request.Request, output *
 // information, see Parallel Scan (https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.ParallelScan)
 // in the Amazon DynamoDB Developer Guide.
 //
-// Scan uses eventually consistent reads when accessing the data in a table;
-// therefore, the result set might not include the changes to data in the table
-// immediately before the operation began. If you need a consistent copy of
-// the data, as of the time that the Scan begins, you can set the ConsistentRead
-// parameter to true.
+// By default, a Scan uses eventually consistent reads when accessing the items
+// in a table. Therefore, the results from an eventually consistent Scan may
+// not include the latest item changes at the time the scan iterates through
+// each item in the table. If you require a strongly consistent read of each
+// item as the scan iterates through the items in the table, you can set the
+// ConsistentRead parameter to true. Strong consistency only relates to the
+// consistency of the read at the item level.
+//
+// DynamoDB does not provide snapshot isolation for a scan operation when the
+// ConsistentRead parameter is set to true. Thus, a DynamoDB scan operation
+// does not guarantee that all reads in a scan see a consistent snapshot of
+// the table when the scan operation was requested.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6067,6 +6089,10 @@ func (c *DynamoDB) TransactGetItemsRequest(input *TransactGetItemsInput) (req *r
 //
 //   - There is a user error, such as an invalid data format.
 //
+//   - There is an ongoing TransactWriteItems operation that conflicts with
+//     a concurrent TransactWriteItems request. In this case the TransactWriteItems
+//     operation fails with a TransactionCanceledException.
+//
 //     DynamoDB cancels a TransactGetItems request under the following circumstances:
 //
 //   - There is an ongoing TransactGetItems operation that conflicts with a
@@ -6327,6 +6353,10 @@ func (c *DynamoDB) TransactWriteItemsRequest(input *TransactWriteItemsInput) (re
 //     of changes made by the transaction.
 //
 //   - There is a user error, such as an invalid data format.
+//
+//   - There is an ongoing TransactWriteItems operation that conflicts with
+//     a concurrent TransactWriteItems request. In this case the TransactWriteItems
+//     operation fails with a TransactionCanceledException.
 //
 //     DynamoDB cancels a TransactGetItems request under the following circumstances:
 //
@@ -9018,7 +9048,8 @@ type BatchExecuteStatementOutput struct {
 	// are ordered according to the ordering of the statements.
 	ConsumedCapacity []*ConsumedCapacity `type:"list"`
 
-	// The response to each PartiQL statement in the batch.
+	// The response to each PartiQL statement in the batch. The values of the list
+	// are ordered according to the ordering of the request statements.
 	Responses []*BatchStatementResponse `type:"list"`
 }
 
@@ -14199,11 +14230,17 @@ type ExportDescription struct {
 	// Point in time from which table data was exported.
 	ExportTime *time.Time `type:"timestamp"`
 
+	// The type of export that was performed. Valid values are FULL_EXPORT or INCREMENTAL_EXPORT.
+	ExportType *string `type:"string" enum:"ExportType"`
+
 	// Status code for the result of the failed export.
 	FailureCode *string `type:"string"`
 
 	// Export failure reason description.
 	FailureMessage *string `type:"string"`
+
+	// Optional object containing the parameters specific to an incremental export.
+	IncrementalExportSpecification *IncrementalExportSpecification `type:"structure"`
 
 	// The number of items exported.
 	ItemCount *int64 `type:"long"`
@@ -14307,6 +14344,12 @@ func (s *ExportDescription) SetExportTime(v time.Time) *ExportDescription {
 	return s
 }
 
+// SetExportType sets the ExportType field's value.
+func (s *ExportDescription) SetExportType(v string) *ExportDescription {
+	s.ExportType = &v
+	return s
+}
+
 // SetFailureCode sets the FailureCode field's value.
 func (s *ExportDescription) SetFailureCode(v string) *ExportDescription {
 	s.FailureCode = &v
@@ -14316,6 +14359,12 @@ func (s *ExportDescription) SetFailureCode(v string) *ExportDescription {
 // SetFailureMessage sets the FailureMessage field's value.
 func (s *ExportDescription) SetFailureMessage(v string) *ExportDescription {
 	s.FailureMessage = &v
+	return s
+}
+
+// SetIncrementalExportSpecification sets the IncrementalExportSpecification field's value.
+func (s *ExportDescription) SetIncrementalExportSpecification(v *IncrementalExportSpecification) *ExportDescription {
+	s.IncrementalExportSpecification = v
 	return s
 }
 
@@ -14447,6 +14496,9 @@ type ExportSummary struct {
 	// Export can be in one of the following states: IN_PROGRESS, COMPLETED, or
 	// FAILED.
 	ExportStatus *string `type:"string" enum:"ExportStatus"`
+
+	// The type of export that was performed. Valid values are FULL_EXPORT or INCREMENTAL_EXPORT.
+	ExportType *string `type:"string" enum:"ExportType"`
 }
 
 // String returns the string representation.
@@ -14479,6 +14531,12 @@ func (s *ExportSummary) SetExportStatus(v string) *ExportSummary {
 	return s
 }
 
+// SetExportType sets the ExportType field's value.
+func (s *ExportSummary) SetExportType(v string) *ExportSummary {
+	s.ExportType = &v
+	return s
+}
+
 type ExportTableToPointInTimeInput struct {
 	_ struct{} `type:"structure"`
 
@@ -14503,6 +14561,15 @@ type ExportTableToPointInTimeInput struct {
 	// the start of the Unix epoch. The table export will be a snapshot of the table's
 	// state at this point in time.
 	ExportTime *time.Time `type:"timestamp"`
+
+	// Choice of whether to execute as a full export or incremental export. Valid
+	// values are FULL_EXPORT or INCREMENTAL_EXPORT. The default value is FULL_EXPORT.
+	// If INCREMENTAL_EXPORT is provided, the IncrementalExportSpecification must
+	// also be used.
+	ExportType *string `type:"string" enum:"ExportType"`
+
+	// Optional object containing the parameters specific to an incremental export.
+	IncrementalExportSpecification *IncrementalExportSpecification `type:"structure"`
 
 	// The name of the Amazon S3 bucket to export the snapshot to.
 	//
@@ -14587,6 +14654,18 @@ func (s *ExportTableToPointInTimeInput) SetExportFormat(v string) *ExportTableTo
 // SetExportTime sets the ExportTime field's value.
 func (s *ExportTableToPointInTimeInput) SetExportTime(v time.Time) *ExportTableToPointInTimeInput {
 	s.ExportTime = &v
+	return s
+}
+
+// SetExportType sets the ExportType field's value.
+func (s *ExportTableToPointInTimeInput) SetExportType(v string) *ExportTableToPointInTimeInput {
+	s.ExportType = &v
+	return s
+}
+
+// SetIncrementalExportSpecification sets the IncrementalExportSpecification field's value.
+func (s *ExportTableToPointInTimeInput) SetIncrementalExportSpecification(v *IncrementalExportSpecification) *ExportTableToPointInTimeInput {
+	s.IncrementalExportSpecification = v
 	return s
 }
 
@@ -16504,6 +16583,62 @@ func (s ImportTableOutput) GoString() string {
 // SetImportTableDescription sets the ImportTableDescription field's value.
 func (s *ImportTableOutput) SetImportTableDescription(v *ImportTableDescription) *ImportTableOutput {
 	s.ImportTableDescription = v
+	return s
+}
+
+// Optional object containing the parameters specific to an incremental export.
+type IncrementalExportSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// Time in the past which provides the inclusive start range for the export
+	// table's data, counted in seconds from the start of the Unix epoch. The incremental
+	// export will reflect the table's state including and after this point in time.
+	ExportFromTime *time.Time `type:"timestamp"`
+
+	// Time in the past which provides the exclusive end range for the export table's
+	// data, counted in seconds from the start of the Unix epoch. The incremental
+	// export will reflect the table's state just prior to this point in time. If
+	// this is not provided, the latest time with data available will be used.
+	ExportToTime *time.Time `type:"timestamp"`
+
+	// The view type that was chosen for the export. Valid values are NEW_AND_OLD_IMAGES
+	// and NEW_IMAGES. The default value is NEW_AND_OLD_IMAGES.
+	ExportViewType *string `type:"string" enum:"ExportViewType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IncrementalExportSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IncrementalExportSpecification) GoString() string {
+	return s.String()
+}
+
+// SetExportFromTime sets the ExportFromTime field's value.
+func (s *IncrementalExportSpecification) SetExportFromTime(v time.Time) *IncrementalExportSpecification {
+	s.ExportFromTime = &v
+	return s
+}
+
+// SetExportToTime sets the ExportToTime field's value.
+func (s *IncrementalExportSpecification) SetExportToTime(v time.Time) *IncrementalExportSpecification {
+	s.ExportToTime = &v
+	return s
+}
+
+// SetExportViewType sets the ExportViewType field's value.
+func (s *IncrementalExportSpecification) SetExportViewType(v string) *IncrementalExportSpecification {
+	s.ExportViewType = &v
 	return s
 }
 
@@ -22210,7 +22345,7 @@ type ScanInput struct {
 	// A FilterExpression is applied after the items have already been read; the
 	// process of filtering does not consume any additional read capacity units.
 	//
-	// For more information, see Filter Expressions (https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html#Query.FilterExpression)
+	// For more information, see Filter Expressions (https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.FilterExpression)
 	// in the Amazon DynamoDB Developer Guide.
 	FilterExpression *string `type:"string"`
 
@@ -24424,6 +24559,10 @@ func (s *TransactWriteItemsOutput) SetItemCollectionMetrics(v map[string][]*Item
 //
 //   - There is a user error, such as an invalid data format.
 //
+//   - There is an ongoing TransactWriteItems operation that conflicts with
+//     a concurrent TransactWriteItems request. In this case the TransactWriteItems
+//     operation fails with a TransactionCanceledException.
+//
 // DynamoDB cancels a TransactGetItems request under the following circumstances:
 //
 //   - There is an ongoing TransactGetItems operation that conflicts with a
@@ -24831,7 +24970,7 @@ type Update struct {
 
 	// Use ReturnValuesOnConditionCheckFailure to get the item attributes if the
 	// Update condition fails. For ReturnValuesOnConditionCheckFailure, the valid
-	// values are: NONE, ALL_OLD, UPDATED_OLD, ALL_NEW, UPDATED_NEW.
+	// values are: NONE and ALL_OLD.
 	ReturnValuesOnConditionCheckFailure *string `type:"string" enum:"ReturnValuesOnConditionCheckFailure"`
 
 	// Name of the table for the UpdateItem request.
@@ -26908,6 +27047,38 @@ func ExportStatus_Values() []string {
 		ExportStatusInProgress,
 		ExportStatusCompleted,
 		ExportStatusFailed,
+	}
+}
+
+const (
+	// ExportTypeFullExport is a ExportType enum value
+	ExportTypeFullExport = "FULL_EXPORT"
+
+	// ExportTypeIncrementalExport is a ExportType enum value
+	ExportTypeIncrementalExport = "INCREMENTAL_EXPORT"
+)
+
+// ExportType_Values returns all elements of the ExportType enum
+func ExportType_Values() []string {
+	return []string{
+		ExportTypeFullExport,
+		ExportTypeIncrementalExport,
+	}
+}
+
+const (
+	// ExportViewTypeNewImage is a ExportViewType enum value
+	ExportViewTypeNewImage = "NEW_IMAGE"
+
+	// ExportViewTypeNewAndOldImages is a ExportViewType enum value
+	ExportViewTypeNewAndOldImages = "NEW_AND_OLD_IMAGES"
+)
+
+// ExportViewType_Values returns all elements of the ExportViewType enum
+func ExportViewType_Values() []string {
+	return []string{
+		ExportViewTypeNewImage,
+		ExportViewTypeNewAndOldImages,
 	}
 }
 

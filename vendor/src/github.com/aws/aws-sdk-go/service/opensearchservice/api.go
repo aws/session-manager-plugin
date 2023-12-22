@@ -101,6 +101,108 @@ func (c *OpenSearchService) AcceptInboundConnectionWithContext(ctx aws.Context, 
 	return out, req.Send()
 }
 
+const opAddDataSource = "AddDataSource"
+
+// AddDataSourceRequest generates a "aws/request.Request" representing the
+// client's request for the AddDataSource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AddDataSource for more information on using the AddDataSource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the AddDataSourceRequest method.
+//	req, resp := client.AddDataSourceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/AddDataSource
+func (c *OpenSearchService) AddDataSourceRequest(input *AddDataSourceInput) (req *request.Request, output *AddDataSourceOutput) {
+	op := &request.Operation{
+		Name:       opAddDataSource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/dataSource",
+	}
+
+	if input == nil {
+		input = &AddDataSourceInput{}
+	}
+
+	output = &AddDataSourceOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// AddDataSource API operation for Amazon OpenSearch Service.
+//
+// Creates a new direct-query data source to the specified domain. For more
+// information, see Creating Amazon OpenSearch Service data source integrations
+// with Amazon S3 (https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation AddDataSource for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+//   - DependencyFailureException
+//     An exception for when a failure in one of the dependencies results in the
+//     service being unable to fetch details about the resource.
+//
+//   - LimitExceededException
+//     An exception for trying to create more than the allowed number of resources
+//     or sub-resources.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/AddDataSource
+func (c *OpenSearchService) AddDataSource(input *AddDataSourceInput) (*AddDataSourceOutput, error) {
+	req, out := c.AddDataSourceRequest(input)
+	return out, req.Send()
+}
+
+// AddDataSourceWithContext is the same as AddDataSource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See AddDataSource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) AddDataSourceWithContext(ctx aws.Context, input *AddDataSourceInput, opts ...request.Option) (*AddDataSourceOutput, error) {
+	req, out := c.AddDataSourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opAddTags = "AddTags"
 
 // AddTagsRequest generates a "aws/request.Request" representing the
@@ -866,6 +968,103 @@ func (c *OpenSearchService) CreateVpcEndpoint(input *CreateVpcEndpointInput) (*C
 // for more information on using Contexts.
 func (c *OpenSearchService) CreateVpcEndpointWithContext(ctx aws.Context, input *CreateVpcEndpointInput, opts ...request.Option) (*CreateVpcEndpointOutput, error) {
 	req, out := c.CreateVpcEndpointRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteDataSource = "DeleteDataSource"
+
+// DeleteDataSourceRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteDataSource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteDataSource for more information on using the DeleteDataSource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteDataSourceRequest method.
+//	req, resp := client.DeleteDataSourceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DeleteDataSource
+func (c *OpenSearchService) DeleteDataSourceRequest(input *DeleteDataSourceInput) (req *request.Request, output *DeleteDataSourceOutput) {
+	op := &request.Operation{
+		Name:       opDeleteDataSource,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/dataSource/{DataSourceName}",
+	}
+
+	if input == nil {
+		input = &DeleteDataSourceInput{}
+	}
+
+	output = &DeleteDataSourceOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteDataSource API operation for Amazon OpenSearch Service.
+//
+// Deletes a direct-query data source. For more information, see Deleting an
+// Amazon OpenSearch Service data source with Amazon S3 (https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-delete.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation DeleteDataSource for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+//   - DependencyFailureException
+//     An exception for when a failure in one of the dependencies results in the
+//     service being unable to fetch details about the resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/DeleteDataSource
+func (c *OpenSearchService) DeleteDataSource(input *DeleteDataSourceInput) (*DeleteDataSourceOutput, error) {
+	req, out := c.DeleteDataSourceRequest(input)
+	return out, req.Send()
+}
+
+// DeleteDataSourceWithContext is the same as DeleteDataSource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteDataSource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) DeleteDataSourceWithContext(ctx aws.Context, input *DeleteDataSourceInput, opts ...request.Option) (*DeleteDataSourceOutput, error) {
+	req, out := c.DeleteDataSourceRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -3213,6 +3412,194 @@ func (c *OpenSearchService) GetCompatibleVersionsWithContext(ctx aws.Context, in
 	return out, req.Send()
 }
 
+const opGetDataSource = "GetDataSource"
+
+// GetDataSourceRequest generates a "aws/request.Request" representing the
+// client's request for the GetDataSource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetDataSource for more information on using the GetDataSource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetDataSourceRequest method.
+//	req, resp := client.GetDataSourceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDataSource
+func (c *OpenSearchService) GetDataSourceRequest(input *GetDataSourceInput) (req *request.Request, output *GetDataSourceOutput) {
+	op := &request.Operation{
+		Name:       opGetDataSource,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/dataSource/{DataSourceName}",
+	}
+
+	if input == nil {
+		input = &GetDataSourceInput{}
+	}
+
+	output = &GetDataSourceOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetDataSource API operation for Amazon OpenSearch Service.
+//
+// Retrieves information about a direct query data source.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation GetDataSource for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+//   - DependencyFailureException
+//     An exception for when a failure in one of the dependencies results in the
+//     service being unable to fetch details about the resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDataSource
+func (c *OpenSearchService) GetDataSource(input *GetDataSourceInput) (*GetDataSourceOutput, error) {
+	req, out := c.GetDataSourceRequest(input)
+	return out, req.Send()
+}
+
+// GetDataSourceWithContext is the same as GetDataSource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetDataSource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) GetDataSourceWithContext(ctx aws.Context, input *GetDataSourceInput, opts ...request.Option) (*GetDataSourceOutput, error) {
+	req, out := c.GetDataSourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetDomainMaintenanceStatus = "GetDomainMaintenanceStatus"
+
+// GetDomainMaintenanceStatusRequest generates a "aws/request.Request" representing the
+// client's request for the GetDomainMaintenanceStatus operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetDomainMaintenanceStatus for more information on using the GetDomainMaintenanceStatus
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetDomainMaintenanceStatusRequest method.
+//	req, resp := client.GetDomainMaintenanceStatusRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDomainMaintenanceStatus
+func (c *OpenSearchService) GetDomainMaintenanceStatusRequest(input *GetDomainMaintenanceStatusInput) (req *request.Request, output *GetDomainMaintenanceStatusOutput) {
+	op := &request.Operation{
+		Name:       opGetDomainMaintenanceStatus,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/domainMaintenance",
+	}
+
+	if input == nil {
+		input = &GetDomainMaintenanceStatusInput{}
+	}
+
+	output = &GetDomainMaintenanceStatusOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetDomainMaintenanceStatus API operation for Amazon OpenSearch Service.
+//
+// The status of the maintenance action.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation GetDomainMaintenanceStatus for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/GetDomainMaintenanceStatus
+func (c *OpenSearchService) GetDomainMaintenanceStatus(input *GetDomainMaintenanceStatusInput) (*GetDomainMaintenanceStatusOutput, error) {
+	req, out := c.GetDomainMaintenanceStatusRequest(input)
+	return out, req.Send()
+}
+
+// GetDomainMaintenanceStatusWithContext is the same as GetDomainMaintenanceStatus with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetDomainMaintenanceStatus for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) GetDomainMaintenanceStatusWithContext(ctx aws.Context, input *GetDomainMaintenanceStatusInput, opts ...request.Option) (*GetDomainMaintenanceStatusOutput, error) {
+	req, out := c.GetDomainMaintenanceStatusRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetPackageVersionHistory = "GetPackageVersionHistory"
 
 // GetPackageVersionHistoryRequest generates a "aws/request.Request" representing the
@@ -3606,6 +3993,253 @@ func (c *OpenSearchService) GetUpgradeStatusWithContext(ctx aws.Context, input *
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+const opListDataSources = "ListDataSources"
+
+// ListDataSourcesRequest generates a "aws/request.Request" representing the
+// client's request for the ListDataSources operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListDataSources for more information on using the ListDataSources
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListDataSourcesRequest method.
+//	req, resp := client.ListDataSourcesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListDataSources
+func (c *OpenSearchService) ListDataSourcesRequest(input *ListDataSourcesInput) (req *request.Request, output *ListDataSourcesOutput) {
+	op := &request.Operation{
+		Name:       opListDataSources,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/dataSource",
+	}
+
+	if input == nil {
+		input = &ListDataSourcesInput{}
+	}
+
+	output = &ListDataSourcesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListDataSources API operation for Amazon OpenSearch Service.
+//
+// Lists direct-query data sources for a specific domain. For more information,
+// see For more information, see Working with Amazon OpenSearch Service direct
+// queries with Amazon S3 (https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation ListDataSources for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+//   - DependencyFailureException
+//     An exception for when a failure in one of the dependencies results in the
+//     service being unable to fetch details about the resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListDataSources
+func (c *OpenSearchService) ListDataSources(input *ListDataSourcesInput) (*ListDataSourcesOutput, error) {
+	req, out := c.ListDataSourcesRequest(input)
+	return out, req.Send()
+}
+
+// ListDataSourcesWithContext is the same as ListDataSources with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListDataSources for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) ListDataSourcesWithContext(ctx aws.Context, input *ListDataSourcesInput, opts ...request.Option) (*ListDataSourcesOutput, error) {
+	req, out := c.ListDataSourcesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opListDomainMaintenances = "ListDomainMaintenances"
+
+// ListDomainMaintenancesRequest generates a "aws/request.Request" representing the
+// client's request for the ListDomainMaintenances operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListDomainMaintenances for more information on using the ListDomainMaintenances
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListDomainMaintenancesRequest method.
+//	req, resp := client.ListDomainMaintenancesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListDomainMaintenances
+func (c *OpenSearchService) ListDomainMaintenancesRequest(input *ListDomainMaintenancesInput) (req *request.Request, output *ListDomainMaintenancesOutput) {
+	op := &request.Operation{
+		Name:       opListDomainMaintenances,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/domainMaintenances",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListDomainMaintenancesInput{}
+	}
+
+	output = &ListDomainMaintenancesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListDomainMaintenances API operation for Amazon OpenSearch Service.
+//
+// A list of maintenance actions for the domain.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation ListDomainMaintenances for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/ListDomainMaintenances
+func (c *OpenSearchService) ListDomainMaintenances(input *ListDomainMaintenancesInput) (*ListDomainMaintenancesOutput, error) {
+	req, out := c.ListDomainMaintenancesRequest(input)
+	return out, req.Send()
+}
+
+// ListDomainMaintenancesWithContext is the same as ListDomainMaintenances with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListDomainMaintenances for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) ListDomainMaintenancesWithContext(ctx aws.Context, input *ListDomainMaintenancesInput, opts ...request.Option) (*ListDomainMaintenancesOutput, error) {
+	req, out := c.ListDomainMaintenancesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListDomainMaintenancesPages iterates over the pages of a ListDomainMaintenances operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListDomainMaintenances method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListDomainMaintenances operation.
+//	pageNum := 0
+//	err := client.ListDomainMaintenancesPages(params,
+//	    func(page *opensearchservice.ListDomainMaintenancesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *OpenSearchService) ListDomainMaintenancesPages(input *ListDomainMaintenancesInput, fn func(*ListDomainMaintenancesOutput, bool) bool) error {
+	return c.ListDomainMaintenancesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListDomainMaintenancesPagesWithContext same as ListDomainMaintenancesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) ListDomainMaintenancesPagesWithContext(ctx aws.Context, input *ListDomainMaintenancesInput, fn func(*ListDomainMaintenancesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListDomainMaintenancesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListDomainMaintenancesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListDomainMaintenancesOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opListDomainNames = "ListDomainNames"
@@ -5155,6 +5789,100 @@ func (c *OpenSearchService) RevokeVpcEndpointAccessWithContext(ctx aws.Context, 
 	return out, req.Send()
 }
 
+const opStartDomainMaintenance = "StartDomainMaintenance"
+
+// StartDomainMaintenanceRequest generates a "aws/request.Request" representing the
+// client's request for the StartDomainMaintenance operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartDomainMaintenance for more information on using the StartDomainMaintenance
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartDomainMaintenanceRequest method.
+//	req, resp := client.StartDomainMaintenanceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/StartDomainMaintenance
+func (c *OpenSearchService) StartDomainMaintenanceRequest(input *StartDomainMaintenanceInput) (req *request.Request, output *StartDomainMaintenanceOutput) {
+	op := &request.Operation{
+		Name:       opStartDomainMaintenance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/domainMaintenance",
+	}
+
+	if input == nil {
+		input = &StartDomainMaintenanceInput{}
+	}
+
+	output = &StartDomainMaintenanceOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartDomainMaintenance API operation for Amazon OpenSearch Service.
+//
+// Starts the node maintenance process on the data node. These processes can
+// include a node reboot, an Opensearch or Elasticsearch process restart, or
+// a Dashboard or Kibana restart.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation StartDomainMaintenance for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/StartDomainMaintenance
+func (c *OpenSearchService) StartDomainMaintenance(input *StartDomainMaintenanceInput) (*StartDomainMaintenanceOutput, error) {
+	req, out := c.StartDomainMaintenanceRequest(input)
+	return out, req.Send()
+}
+
+// StartDomainMaintenanceWithContext is the same as StartDomainMaintenance with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartDomainMaintenance for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) StartDomainMaintenanceWithContext(ctx aws.Context, input *StartDomainMaintenanceInput, opts ...request.Option) (*StartDomainMaintenanceOutput, error) {
+	req, out := c.StartDomainMaintenanceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartServiceSoftwareUpdate = "StartServiceSoftwareUpdate"
 
 // StartServiceSoftwareUpdateRequest generates a "aws/request.Request" representing the
@@ -5246,6 +5974,103 @@ func (c *OpenSearchService) StartServiceSoftwareUpdateWithContext(ctx aws.Contex
 	return out, req.Send()
 }
 
+const opUpdateDataSource = "UpdateDataSource"
+
+// UpdateDataSourceRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateDataSource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateDataSource for more information on using the UpdateDataSource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateDataSourceRequest method.
+//	req, resp := client.UpdateDataSourceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/UpdateDataSource
+func (c *OpenSearchService) UpdateDataSourceRequest(input *UpdateDataSourceInput) (req *request.Request, output *UpdateDataSourceOutput) {
+	op := &request.Operation{
+		Name:       opUpdateDataSource,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/dataSource/{DataSourceName}",
+	}
+
+	if input == nil {
+		input = &UpdateDataSourceInput{}
+	}
+
+	output = &UpdateDataSourceOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateDataSource API operation for Amazon OpenSearch Service.
+//
+// Updates a direct-query data source. For more information, see Working with
+// Amazon OpenSearch Service data source integrations with Amazon S3 (https://docs.aws.amazon.com/opensearch-service/latest/developerguide/direct-query-s3-creating.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation UpdateDataSource for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+//   - DependencyFailureException
+//     An exception for when a failure in one of the dependencies results in the
+//     service being unable to fetch details about the resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/UpdateDataSource
+func (c *OpenSearchService) UpdateDataSource(input *UpdateDataSourceInput) (*UpdateDataSourceOutput, error) {
+	req, out := c.UpdateDataSourceRequest(input)
+	return out, req.Send()
+}
+
+// UpdateDataSourceWithContext is the same as UpdateDataSource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateDataSource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) UpdateDataSourceWithContext(ctx aws.Context, input *UpdateDataSourceInput, opts ...request.Option) (*UpdateDataSourceOutput, error) {
+	req, out := c.UpdateDataSourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateDomainConfig = "UpdateDomainConfig"
 
 // UpdateDomainConfigRequest generates a "aws/request.Request" representing the
@@ -5290,7 +6115,7 @@ func (c *OpenSearchService) UpdateDomainConfigRequest(input *UpdateDomainConfigI
 // UpdateDomainConfig API operation for Amazon OpenSearch Service.
 //
 // Modifies the cluster configuration of the specified Amazon OpenSearch Service
-// domain.sl
+// domain.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6001,6 +6826,133 @@ func (s *AccessPoliciesStatus) SetOptions(v string) *AccessPoliciesStatus {
 // SetStatus sets the Status field's value.
 func (s *AccessPoliciesStatus) SetStatus(v *OptionStatus) *AccessPoliciesStatus {
 	s.Status = v
+	return s
+}
+
+// Container for the parameters to the AddDataSource operation.
+type AddDataSourceInput struct {
+	_ struct{} `type:"structure"`
+
+	// The type of data source.
+	//
+	// DataSourceType is a required field
+	DataSourceType *DataSourceType `type:"structure" required:"true"`
+
+	// A description of the data source.
+	Description *string `type:"string"`
+
+	// The name of the domain to add the data source to.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// A name for the data source.
+	//
+	// Name is a required field
+	Name *string `min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddDataSourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddDataSourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AddDataSourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AddDataSourceInput"}
+	if s.DataSourceType == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSourceType"))
+	}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 3))
+	}
+	if s.DataSourceType != nil {
+		if err := s.DataSourceType.Validate(); err != nil {
+			invalidParams.AddNested("DataSourceType", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSourceType sets the DataSourceType field's value.
+func (s *AddDataSourceInput) SetDataSourceType(v *DataSourceType) *AddDataSourceInput {
+	s.DataSourceType = v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *AddDataSourceInput) SetDescription(v string) *AddDataSourceInput {
+	s.Description = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *AddDataSourceInput) SetDomainName(v string) *AddDataSourceInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *AddDataSourceInput) SetName(v string) *AddDataSourceInput {
+	s.Name = &v
+	return s
+}
+
+// The result of an AddDataSource operation.
+type AddDataSourceOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A message associated with creation of the data source.
+	Message *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddDataSourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddDataSourceOutput) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *AddDataSourceOutput) SetMessage(v string) *AddDataSourceOutput {
+	s.Message = &v
 	return s
 }
 
@@ -7596,8 +8548,8 @@ type ClusterConfig struct {
 	// OpenSearch Service instance type of the dedicated master nodes in the cluster.
 	DedicatedMasterType *string `type:"string" enum:"OpenSearchPartitionInstanceType"`
 
-	// Number of dedicated master nodes in the cluster. This number must be greater
-	// than 1, otherwise you receive a validation exception.
+	// Number of data nodes in the cluster. This number must be greater than 1,
+	// otherwise you receive a validation exception.
 	InstanceCount *int64 `type:"integer"`
 
 	// Instance type of data nodes in the cluster.
@@ -8176,6 +9128,9 @@ type CreateDomainInput struct {
 	// OpenSearch Service domains (https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomains).
 	EngineVersion *string `min:"14" type:"string"`
 
+	// The type of IP addresses supported by the endpoint for the domain.
+	IPAddressType *string `type:"string" enum:"IPAddressType"`
+
 	// Key-value pairs to configure log publishing.
 	LogPublishingOptions map[string]*LogPublishingOption `type:"map"`
 
@@ -8361,6 +9316,12 @@ func (s *CreateDomainInput) SetEncryptionAtRestOptions(v *EncryptionAtRestOption
 // SetEngineVersion sets the EngineVersion field's value.
 func (s *CreateDomainInput) SetEngineVersion(v string) *CreateDomainInput {
 	s.EngineVersion = &v
+	return s
+}
+
+// SetIPAddressType sets the IPAddressType field's value.
+func (s *CreateDomainInput) SetIPAddressType(v string) *CreateDomainInput {
+	s.IPAddressType = &v
 	return s
 }
 
@@ -8865,11 +9826,14 @@ func (s *CreateVpcEndpointOutput) SetVpcEndpoint(v *VpcEndpoint) *CreateVpcEndpo
 	return s
 }
 
-// Cross cluster search specific connection properties.
+// Cross-cluster search specific connection properties.
 type CrossClusterSearchConnectionProperties struct {
 	_ struct{} `type:"structure"`
 
-	// Status of SkipUnavailable param for outbound connection.
+	// The status of the SkipUnavailable setting for the outbound connection. This
+	// feature allows you to specify some clusters as optional and ensure that your
+	// cross-cluster queries return partial results despite failures on one or more
+	// remote clusters.
 	SkipUnavailable *string `type:"string" enum:"SkipUnavailableStatus"`
 }
 
@@ -8894,6 +9858,202 @@ func (s CrossClusterSearchConnectionProperties) GoString() string {
 // SetSkipUnavailable sets the SkipUnavailable field's value.
 func (s *CrossClusterSearchConnectionProperties) SetSkipUnavailable(v string) *CrossClusterSearchConnectionProperties {
 	s.SkipUnavailable = &v
+	return s
+}
+
+// Details about a direct-query data source.
+type DataSourceDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The type of data source.
+	DataSourceType *DataSourceType `type:"structure"`
+
+	// A description of the data source.
+	Description *string `type:"string"`
+
+	// The name of the data source.
+	Name *string `min:"3" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceDetails) GoString() string {
+	return s.String()
+}
+
+// SetDataSourceType sets the DataSourceType field's value.
+func (s *DataSourceDetails) SetDataSourceType(v *DataSourceType) *DataSourceDetails {
+	s.DataSourceType = v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *DataSourceDetails) SetDescription(v string) *DataSourceDetails {
+	s.Description = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DataSourceDetails) SetName(v string) *DataSourceDetails {
+	s.Name = &v
+	return s
+}
+
+// The type of data source.
+type DataSourceType struct {
+	_ struct{} `type:"structure"`
+
+	// An Amazon S3 data source.
+	S3GlueDataCatalog *S3GlueDataCatalog `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceType) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceType) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DataSourceType) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DataSourceType"}
+	if s.S3GlueDataCatalog != nil {
+		if err := s.S3GlueDataCatalog.Validate(); err != nil {
+			invalidParams.AddNested("S3GlueDataCatalog", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetS3GlueDataCatalog sets the S3GlueDataCatalog field's value.
+func (s *DataSourceType) SetS3GlueDataCatalog(v *S3GlueDataCatalog) *DataSourceType {
+	s.S3GlueDataCatalog = v
+	return s
+}
+
+// Container for the parameters to the DeleteDataSource operation.
+type DeleteDataSourceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the domain.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// The name of the data source to delete.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"DataSourceName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataSourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataSourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteDataSourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteDataSourceInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *DeleteDataSourceInput) SetDomainName(v string) *DeleteDataSourceInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DeleteDataSourceInput) SetName(v string) *DeleteDataSourceInput {
+	s.Name = &v
+	return s
+}
+
+// The result of a GetDataSource operation.
+type DeleteDataSourceOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A message associated with deletion of the data source.
+	Message *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataSourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataSourceOutput) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *DeleteDataSourceOutput) SetMessage(v string) *DeleteDataSourceOutput {
+	s.Message = &v
 	return s
 }
 
@@ -10065,8 +11225,7 @@ type DescribeDomainsInput struct {
 	_ struct{} `type:"structure"`
 
 	// Array of OpenSearch Service domain names that you want information about.
-	// If you don't specify any domains, OpenSearch Service returns information
-	// about all domains owned by the account.
+	// You must specify at least one domain name.
 	//
 	// DomainNames is a required field
 	DomainNames []*string `type:"list" required:"true"`
@@ -10619,7 +11778,7 @@ type DescribePackagesFilter struct {
 	Name *string `type:"string" enum:"DescribePackagesFilterName"`
 
 	// A non-empty list of values for the specified filter field.
-	Value []*string `type:"list"`
+	Value []*string `min:"1" type:"list"`
 }
 
 // String returns the string representation.
@@ -10638,6 +11797,19 @@ func (s DescribePackagesFilter) String() string {
 // value will be replaced with "sensitive".
 func (s DescribePackagesFilter) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribePackagesFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribePackagesFilter"}
+	if s.Value != nil && len(s.Value) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Value", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
 }
 
 // SetName sets the Name field's value.
@@ -10685,6 +11857,26 @@ func (s DescribePackagesInput) String() string {
 // value will be replaced with "sensitive".
 func (s DescribePackagesInput) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribePackagesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribePackagesInput"}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
 }
 
 // SetFilters sets the Filters field's value.
@@ -11264,6 +12456,9 @@ type DomainConfig struct {
 	// The OpenSearch or Elasticsearch version that the domain is running.
 	EngineVersion *VersionStatus `type:"structure"`
 
+	// The type of IP addresses supported by the endpoint for the domain.
+	IPAddressType *IPAddressTypeStatus `type:"structure"`
+
 	// Key-value pairs to configure log publishing.
 	LogPublishingOptions *LogPublishingOptionsStatus `type:"structure"`
 
@@ -11369,6 +12564,12 @@ func (s *DomainConfig) SetEngineVersion(v *VersionStatus) *DomainConfig {
 	return s
 }
 
+// SetIPAddressType sets the IPAddressType field's value.
+func (s *DomainConfig) SetIPAddressType(v *IPAddressTypeStatus) *DomainConfig {
+	s.IPAddressType = v
+	return s
+}
+
 // SetLogPublishingOptions sets the LogPublishingOptions field's value.
 func (s *DomainConfig) SetLogPublishingOptions(v *LogPublishingOptionsStatus) *DomainConfig {
 	s.LogPublishingOptions = v
@@ -11423,14 +12624,13 @@ type DomainEndpointOptions struct {
 	EnforceHTTPS *bool `type:"boolean"`
 
 	// Specify the TLS security policy to apply to the HTTPS endpoint of the domain.
+	// The policy can be one of the following values:
 	//
-	// Can be one of the following values:
+	//    * Policy-Min-TLS-1-0-2019-07: TLS security policy that supports TLS version
+	//    1.0 to TLS version 1.2
 	//
-	//    * Policy-Min-TLS-1-0-2019-07: TLS security policy which supports TLS version
-	//    1.0 and higher.
-	//
-	//    * Policy-Min-TLS-1-2-2019-07: TLS security policy which supports only
-	//    TLS version 1.2
+	//    * Policy-Min-TLS-1-2-2019-07: TLS security policy that supports only TLS
+	//    version 1.2
 	TLSSecurityPolicy *string `type:"string" enum:"TLSSecurityPolicy"`
 }
 
@@ -11629,6 +12829,101 @@ func (s *DomainInformationContainer) Validate() error {
 // SetAWSDomainInformation sets the AWSDomainInformation field's value.
 func (s *DomainInformationContainer) SetAWSDomainInformation(v *AWSDomainInformation) *DomainInformationContainer {
 	s.AWSDomainInformation = v
+	return s
+}
+
+// Container for the domain maintenance details.
+type DomainMaintenanceDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the action.
+	Action *string `type:"string" enum:"MaintenanceType"`
+
+	// The time at which the action was created.
+	CreatedAt *time.Time `type:"timestamp"`
+
+	// The name of the domain.
+	DomainName *string `min:"3" type:"string"`
+
+	// The ID of the requested action.
+	MaintenanceId *string `min:"1" type:"string"`
+
+	// The ID of the data node.
+	NodeId *string `min:"10" type:"string"`
+
+	// The status of the action.
+	Status *string `type:"string" enum:"MaintenanceStatus"`
+
+	// The status message for the action.
+	StatusMessage *string `type:"string"`
+
+	// The time at which the action was updated.
+	UpdatedAt *time.Time `type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DomainMaintenanceDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DomainMaintenanceDetails) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *DomainMaintenanceDetails) SetAction(v string) *DomainMaintenanceDetails {
+	s.Action = &v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *DomainMaintenanceDetails) SetCreatedAt(v time.Time) *DomainMaintenanceDetails {
+	s.CreatedAt = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *DomainMaintenanceDetails) SetDomainName(v string) *DomainMaintenanceDetails {
+	s.DomainName = &v
+	return s
+}
+
+// SetMaintenanceId sets the MaintenanceId field's value.
+func (s *DomainMaintenanceDetails) SetMaintenanceId(v string) *DomainMaintenanceDetails {
+	s.MaintenanceId = &v
+	return s
+}
+
+// SetNodeId sets the NodeId field's value.
+func (s *DomainMaintenanceDetails) SetNodeId(v string) *DomainMaintenanceDetails {
+	s.NodeId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DomainMaintenanceDetails) SetStatus(v string) *DomainMaintenanceDetails {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *DomainMaintenanceDetails) SetStatusMessage(v string) *DomainMaintenanceDetails {
+	s.StatusMessage = &v
+	return s
+}
+
+// SetUpdatedAt sets the UpdatedAt field's value.
+func (s *DomainMaintenanceDetails) SetUpdatedAt(v time.Time) *DomainMaintenanceDetails {
+	s.UpdatedAt = &v
 	return s
 }
 
@@ -11904,6 +13199,10 @@ type DomainStatus struct {
 	// to the domain.
 	Endpoint *string `type:"string"`
 
+	// The domain endpoint to which index and search requests are submitted. For
+	// example, search-imdb-movies-oopcnjfn6ugo.eu-west-1.es.amazonaws.com or doc-imdb-movies-oopcnjfn6u.eu-west-1.es.amazonaws.com.
+	EndpointV2 *string `type:"string"`
+
 	// The key-value pair that exists if the OpenSearch Service domain uses VPC
 	// endpoints.. Example key, value: 'vpc','vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.us-east-1.es.amazonaws.com'.
 	Endpoints map[string]*string `type:"map"`
@@ -11911,6 +13210,9 @@ type DomainStatus struct {
 	// Version of OpenSearch or Elasticsearch that the domain is running, in the
 	// format Elasticsearch_X.Y or OpenSearch_X.Y.
 	EngineVersion *string `min:"14" type:"string"`
+
+	// The type of IP addresses supported by the endpoint for the domain.
+	IPAddressType *string `type:"string" enum:"IPAddressType"`
 
 	// Log publishing options for the domain.
 	LogPublishingOptions map[string]*LogPublishingOption `type:"map"`
@@ -12059,6 +13361,12 @@ func (s *DomainStatus) SetEndpoint(v string) *DomainStatus {
 	return s
 }
 
+// SetEndpointV2 sets the EndpointV2 field's value.
+func (s *DomainStatus) SetEndpointV2(v string) *DomainStatus {
+	s.EndpointV2 = &v
+	return s
+}
+
 // SetEndpoints sets the Endpoints field's value.
 func (s *DomainStatus) SetEndpoints(v map[string]*string) *DomainStatus {
 	s.Endpoints = v
@@ -12068,6 +13376,12 @@ func (s *DomainStatus) SetEndpoints(v map[string]*string) *DomainStatus {
 // SetEngineVersion sets the EngineVersion field's value.
 func (s *DomainStatus) SetEngineVersion(v string) *DomainStatus {
 	s.EngineVersion = &v
+	return s
+}
+
+// SetIPAddressType sets the IPAddressType field's value.
+func (s *DomainStatus) SetIPAddressType(v string) *DomainStatus {
+	s.IPAddressType = &v
 	return s
 }
 
@@ -12739,6 +14053,268 @@ func (s *GetCompatibleVersionsOutput) SetCompatibleVersions(v []*CompatibleVersi
 	return s
 }
 
+// Container for the parameters to the GetDataSource operation.
+type GetDataSourceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the domain.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// The name of the data source to get information about.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"DataSourceName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetDataSourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetDataSourceInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *GetDataSourceInput) SetDomainName(v string) *GetDataSourceInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *GetDataSourceInput) SetName(v string) *GetDataSourceInput {
+	s.Name = &v
+	return s
+}
+
+// The result of a GetDataSource operation.
+type GetDataSourceOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The type of data source.
+	DataSourceType *DataSourceType `type:"structure"`
+
+	// A description of the data source.
+	Description *string `type:"string"`
+
+	// The name of the data source.
+	Name *string `min:"3" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataSourceType sets the DataSourceType field's value.
+func (s *GetDataSourceOutput) SetDataSourceType(v *DataSourceType) *GetDataSourceOutput {
+	s.DataSourceType = v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *GetDataSourceOutput) SetDescription(v string) *GetDataSourceOutput {
+	s.Description = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *GetDataSourceOutput) SetName(v string) *GetDataSourceOutput {
+	s.Name = &v
+	return s
+}
+
+// Container for the parameters to the GetDomainMaintenanceStatus operation.
+type GetDomainMaintenanceStatusInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the domain.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// The request ID of the maintenance action.
+	//
+	// MaintenanceId is a required field
+	MaintenanceId *string `location:"querystring" locationName:"maintenanceId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainMaintenanceStatusInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainMaintenanceStatusInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetDomainMaintenanceStatusInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetDomainMaintenanceStatusInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+	if s.MaintenanceId == nil {
+		invalidParams.Add(request.NewErrParamRequired("MaintenanceId"))
+	}
+	if s.MaintenanceId != nil && len(*s.MaintenanceId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MaintenanceId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *GetDomainMaintenanceStatusInput) SetDomainName(v string) *GetDomainMaintenanceStatusInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetMaintenanceId sets the MaintenanceId field's value.
+func (s *GetDomainMaintenanceStatusInput) SetMaintenanceId(v string) *GetDomainMaintenanceStatusInput {
+	s.MaintenanceId = &v
+	return s
+}
+
+// The result of a GetDomainMaintenanceStatus request that information about
+// the requested action.
+type GetDomainMaintenanceStatusOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The action name.
+	Action *string `type:"string" enum:"MaintenanceType"`
+
+	// The time at which the action was created.
+	CreatedAt *time.Time `type:"timestamp"`
+
+	// The node ID of the maintenance action.
+	NodeId *string `min:"10" type:"string"`
+
+	// The status of the maintenance action.
+	Status *string `type:"string" enum:"MaintenanceStatus"`
+
+	// The status message of the maintenance action.
+	StatusMessage *string `type:"string"`
+
+	// The time at which the action was updated.
+	UpdatedAt *time.Time `type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainMaintenanceStatusOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainMaintenanceStatusOutput) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GetDomainMaintenanceStatusOutput) SetAction(v string) *GetDomainMaintenanceStatusOutput {
+	s.Action = &v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *GetDomainMaintenanceStatusOutput) SetCreatedAt(v time.Time) *GetDomainMaintenanceStatusOutput {
+	s.CreatedAt = &v
+	return s
+}
+
+// SetNodeId sets the NodeId field's value.
+func (s *GetDomainMaintenanceStatusOutput) SetNodeId(v string) *GetDomainMaintenanceStatusOutput {
+	s.NodeId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetDomainMaintenanceStatusOutput) SetStatus(v string) *GetDomainMaintenanceStatusOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *GetDomainMaintenanceStatusOutput) SetStatusMessage(v string) *GetDomainMaintenanceStatusOutput {
+	s.StatusMessage = &v
+	return s
+}
+
+// SetUpdatedAt sets the UpdatedAt field's value.
+func (s *GetDomainMaintenanceStatusOutput) SetUpdatedAt(v time.Time) *GetDomainMaintenanceStatusOutput {
+	s.UpdatedAt = &v
+	return s
+}
+
 // Container for the request parameters to the GetPackageVersionHistory operation.
 type GetPackageVersionHistoryInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
@@ -13074,6 +14650,51 @@ func (s *GetUpgradeStatusOutput) SetUpgradeName(v string) *GetUpgradeStatusOutpu
 // SetUpgradeStep sets the UpgradeStep field's value.
 func (s *GetUpgradeStatusOutput) SetUpgradeStep(v string) *GetUpgradeStatusOutput {
 	s.UpgradeStep = &v
+	return s
+}
+
+// The IP address type status for the domain.
+type IPAddressTypeStatus struct {
+	_ struct{} `type:"structure"`
+
+	// The IP address options for the domain.
+	//
+	// Options is a required field
+	Options *string `type:"string" required:"true" enum:"IPAddressType"`
+
+	// Provides the current status of an entity.
+	//
+	// Status is a required field
+	Status *OptionStatus `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IPAddressTypeStatus) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IPAddressTypeStatus) GoString() string {
+	return s.String()
+}
+
+// SetOptions sets the Options field's value.
+func (s *IPAddressTypeStatus) SetOptions(v string) *IPAddressTypeStatus {
+	s.Options = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *IPAddressTypeStatus) SetStatus(v *OptionStatus) *IPAddressTypeStatus {
+	s.Status = v
 	return s
 }
 
@@ -13686,6 +15307,221 @@ func (s *Limits) SetInstanceLimits(v *InstanceLimits) *Limits {
 // SetStorageTypes sets the StorageTypes field's value.
 func (s *Limits) SetStorageTypes(v []*StorageType) *Limits {
 	s.StorageTypes = v
+	return s
+}
+
+// Container for the parameters to the ListDataSources operation.
+type ListDataSourcesInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the domain.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataSourcesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataSourcesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListDataSourcesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListDataSourcesInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *ListDataSourcesInput) SetDomainName(v string) *ListDataSourcesInput {
+	s.DomainName = &v
+	return s
+}
+
+// The result of a ListDataSources operation.
+type ListDataSourcesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of data sources associated with specified domain.
+	DataSources []*DataSourceDetails `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataSourcesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataSourcesOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataSources sets the DataSources field's value.
+func (s *ListDataSourcesOutput) SetDataSources(v []*DataSourceDetails) *ListDataSourcesOutput {
+	s.DataSources = v
+	return s
+}
+
+// Container for the parameters to the ListDomainMaintenances operation.
+type ListDomainMaintenancesInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the action.
+	Action *string `location:"querystring" locationName:"action" type:"string" enum:"MaintenanceType"`
+
+	// The name of the domain.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// An optional parameter that specifies the maximum number of results to return.
+	// You can use nextToken to get the next page of results.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// If your initial ListDomainMaintenances operation returns a nextToken, include
+	// the returned nextToken in subsequent ListDomainMaintenances operations, which
+	// returns results in the next page.
+	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
+
+	// The status of the action.
+	Status *string `location:"querystring" locationName:"status" type:"string" enum:"MaintenanceStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainMaintenancesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainMaintenancesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListDomainMaintenancesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListDomainMaintenancesInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAction sets the Action field's value.
+func (s *ListDomainMaintenancesInput) SetAction(v string) *ListDomainMaintenancesInput {
+	s.Action = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *ListDomainMaintenancesInput) SetDomainName(v string) *ListDomainMaintenancesInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListDomainMaintenancesInput) SetMaxResults(v int64) *ListDomainMaintenancesInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListDomainMaintenancesInput) SetNextToken(v string) *ListDomainMaintenancesInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ListDomainMaintenancesInput) SetStatus(v string) *ListDomainMaintenancesInput {
+	s.Status = &v
+	return s
+}
+
+// The result of a ListDomainMaintenances request that contains information
+// about the requested actions.
+type ListDomainMaintenancesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of the submitted maintenance actions.
+	DomainMaintenances []*DomainMaintenanceDetails `type:"list"`
+
+	// When nextToken is returned, there are more results available. The value of
+	// nextToken is a unique pagination token for each page. Make the call again
+	// using the returned token to retrieve the next page.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainMaintenancesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainMaintenancesOutput) GoString() string {
+	return s.String()
+}
+
+// SetDomainMaintenances sets the DomainMaintenances field's value.
+func (s *ListDomainMaintenancesOutput) SetDomainMaintenances(v []*DomainMaintenanceDetails) *ListDomainMaintenancesOutput {
+	s.DomainMaintenances = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListDomainMaintenancesOutput) SetNextToken(v string) *ListDomainMaintenancesOutput {
+	s.NextToken = &v
 	return s
 }
 
@@ -15362,8 +17198,16 @@ type PackageDetails struct {
 	// The package version.
 	AvailablePackageVersion *string `type:"string"`
 
+	// If the package is a ZIP-PLUGIN package, additional information about plugin
+	// properties.
+	AvailablePluginProperties *PluginProperties `type:"structure"`
+
 	// The timestamp when the package was created.
 	CreatedAt *time.Time `type:"timestamp"`
+
+	// Version of OpenSearch or Elasticsearch, in the format Elasticsearch_X.Y or
+	// OpenSearch_X.Y. Defaults to the latest version of OpenSearch.
+	EngineVersion *string `type:"string"`
 
 	// Additional information if the package is in an error state. Null otherwise.
 	ErrorDetails *ErrorDetails `type:"structure"`
@@ -15412,9 +17256,21 @@ func (s *PackageDetails) SetAvailablePackageVersion(v string) *PackageDetails {
 	return s
 }
 
+// SetAvailablePluginProperties sets the AvailablePluginProperties field's value.
+func (s *PackageDetails) SetAvailablePluginProperties(v *PluginProperties) *PackageDetails {
+	s.AvailablePluginProperties = v
+	return s
+}
+
 // SetCreatedAt sets the CreatedAt field's value.
 func (s *PackageDetails) SetCreatedAt(v time.Time) *PackageDetails {
 	s.CreatedAt = &v
+	return s
+}
+
+// SetEngineVersion sets the EngineVersion field's value.
+func (s *PackageDetails) SetEngineVersion(v string) *PackageDetails {
+	s.EngineVersion = &v
 	return s
 }
 
@@ -15529,6 +17385,10 @@ type PackageVersionHistory struct {
 
 	// The package version.
 	PackageVersion *string `type:"string"`
+
+	// Additional information about plugin properties if the package is a ZIP-PLUGIN
+	// package.
+	PluginProperties *PluginProperties `type:"structure"`
 }
 
 // String returns the string representation.
@@ -15564,6 +17424,80 @@ func (s *PackageVersionHistory) SetCreatedAt(v time.Time) *PackageVersionHistory
 // SetPackageVersion sets the PackageVersion field's value.
 func (s *PackageVersionHistory) SetPackageVersion(v string) *PackageVersionHistory {
 	s.PackageVersion = &v
+	return s
+}
+
+// SetPluginProperties sets the PluginProperties field's value.
+func (s *PackageVersionHistory) SetPluginProperties(v *PluginProperties) *PackageVersionHistory {
+	s.PluginProperties = v
+	return s
+}
+
+// Basic information about the plugin.
+type PluginProperties struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the class to load.
+	ClassName *string `type:"string"`
+
+	// The description of the plugin.
+	Description *string `type:"string"`
+
+	// The name of the plugin.
+	Name *string `type:"string"`
+
+	// The uncompressed size of the plugin.
+	UncompressedSizeInBytes *int64 `type:"long"`
+
+	// The version of the plugin.
+	Version *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PluginProperties) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PluginProperties) GoString() string {
+	return s.String()
+}
+
+// SetClassName sets the ClassName field's value.
+func (s *PluginProperties) SetClassName(v string) *PluginProperties {
+	s.ClassName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *PluginProperties) SetDescription(v string) *PluginProperties {
+	s.Description = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *PluginProperties) SetName(v string) *PluginProperties {
+	s.Name = &v
+	return s
+}
+
+// SetUncompressedSizeInBytes sets the UncompressedSizeInBytes field's value.
+func (s *PluginProperties) SetUncompressedSizeInBytes(v int64) *PluginProperties {
+	s.UncompressedSizeInBytes = &v
+	return s
+}
+
+// SetVersion sets the Version field's value.
+func (s *PluginProperties) SetVersion(v string) *PluginProperties {
+	s.Version = &v
 	return s
 }
 
@@ -16363,6 +18297,51 @@ func (s RevokeVpcEndpointAccessOutput) GoString() string {
 	return s.String()
 }
 
+// Information about the Amazon S3 Glue Data Catalog.
+type S3GlueDataCatalog struct {
+	_ struct{} `type:"structure"`
+
+	// >The Amazon Resource Name (ARN) for the S3 Glue Data Catalog.
+	RoleArn *string `min:"20" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3GlueDataCatalog) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3GlueDataCatalog) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *S3GlueDataCatalog) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "S3GlueDataCatalog"}
+	if s.RoleArn != nil && len(*s.RoleArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("RoleArn", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *S3GlueDataCatalog) SetRoleArn(v string) *S3GlueDataCatalog {
+	s.RoleArn = &v
+	return s
+}
+
 // The SAML identity povider information.
 type SAMLIdp struct {
 	_ struct{} `type:"structure"`
@@ -17110,6 +19089,115 @@ func (s *SoftwareUpdateOptionsStatus) SetStatus(v *OptionStatus) *SoftwareUpdate
 	return s
 }
 
+// Container for the parameters to the StartDomainMaintenance operation.
+type StartDomainMaintenanceInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the action.
+	//
+	// Action is a required field
+	Action *string `type:"string" required:"true" enum:"MaintenanceType"`
+
+	// The name of the domain.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// The ID of the data node.
+	NodeId *string `min:"10" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDomainMaintenanceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDomainMaintenanceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartDomainMaintenanceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartDomainMaintenanceInput"}
+	if s.Action == nil {
+		invalidParams.Add(request.NewErrParamRequired("Action"))
+	}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+	if s.NodeId != nil && len(*s.NodeId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("NodeId", 10))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAction sets the Action field's value.
+func (s *StartDomainMaintenanceInput) SetAction(v string) *StartDomainMaintenanceInput {
+	s.Action = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *StartDomainMaintenanceInput) SetDomainName(v string) *StartDomainMaintenanceInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetNodeId sets the NodeId field's value.
+func (s *StartDomainMaintenanceInput) SetNodeId(v string) *StartDomainMaintenanceInput {
+	s.NodeId = &v
+	return s
+}
+
+// The result of a StartDomainMaintenance request that information about the
+// requested action.
+type StartDomainMaintenanceOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The request ID of requested action.
+	MaintenanceId *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDomainMaintenanceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDomainMaintenanceOutput) GoString() string {
+	return s.String()
+}
+
+// SetMaintenanceId sets the MaintenanceId field's value.
+func (s *StartDomainMaintenanceOutput) SetMaintenanceId(v string) *StartDomainMaintenanceOutput {
+	s.MaintenanceId = &v
+	return s
+}
+
 // Container for the request parameters to the StartServiceSoftwareUpdate operation.
 type StartServiceSoftwareUpdateInput struct {
 	_ struct{} `type:"structure"`
@@ -17404,6 +19492,133 @@ func (s *Tag) SetValue(v string) *Tag {
 	return s
 }
 
+// Container for the parameters to the UpdateDataSource operation.
+type UpdateDataSourceInput struct {
+	_ struct{} `type:"structure"`
+
+	// The type of data source.
+	//
+	// DataSourceType is a required field
+	DataSourceType *DataSourceType `type:"structure" required:"true"`
+
+	// A new description of the data source.
+	Description *string `type:"string"`
+
+	// The name of the domain.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// The name of the data source to modify.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"DataSourceName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDataSourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDataSourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateDataSourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateDataSourceInput"}
+	if s.DataSourceType == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSourceType"))
+	}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 3))
+	}
+	if s.DataSourceType != nil {
+		if err := s.DataSourceType.Validate(); err != nil {
+			invalidParams.AddNested("DataSourceType", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSourceType sets the DataSourceType field's value.
+func (s *UpdateDataSourceInput) SetDataSourceType(v *DataSourceType) *UpdateDataSourceInput {
+	s.DataSourceType = v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateDataSourceInput) SetDescription(v string) *UpdateDataSourceInput {
+	s.Description = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *UpdateDataSourceInput) SetDomainName(v string) *UpdateDataSourceInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *UpdateDataSourceInput) SetName(v string) *UpdateDataSourceInput {
+	s.Name = &v
+	return s
+}
+
+// The result of an UpdateDataSource operation.
+type UpdateDataSourceOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A message associated with the updated data source.
+	Message *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDataSourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDataSourceOutput) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *UpdateDataSourceOutput) SetMessage(v string) *UpdateDataSourceOutput {
+	s.Message = &v
+	return s
+}
+
 // Container for the request parameters to the UpdateDomain operation.
 type UpdateDomainConfigInput struct {
 	_ struct{} `type:"structure"`
@@ -17474,6 +19689,9 @@ type UpdateDomainConfigInput struct {
 
 	// Encryption at rest options for the domain.
 	EncryptionAtRestOptions *EncryptionAtRestOptions `type:"structure"`
+
+	// The type of IP addresses supported by the endpoint for the domain.
+	IPAddressType *string `type:"string" enum:"IPAddressType"`
 
 	// Options to publish OpenSearch logs to Amazon CloudWatch Logs.
 	LogPublishingOptions map[string]*LogPublishingOption `type:"map"`
@@ -17645,6 +19863,12 @@ func (s *UpdateDomainConfigInput) SetEBSOptions(v *EBSOptions) *UpdateDomainConf
 // SetEncryptionAtRestOptions sets the EncryptionAtRestOptions field's value.
 func (s *UpdateDomainConfigInput) SetEncryptionAtRestOptions(v *EncryptionAtRestOptions) *UpdateDomainConfigInput {
 	s.EncryptionAtRestOptions = v
+	return s
+}
+
+// SetIPAddressType sets the IPAddressType field's value.
+func (s *UpdateDomainConfigInput) SetIPAddressType(v string) *UpdateDomainConfigInput {
+	s.IPAddressType = &v
 	return s
 }
 
@@ -19210,6 +21434,12 @@ const (
 
 	// DescribePackagesFilterNamePackageStatus is a DescribePackagesFilterName enum value
 	DescribePackagesFilterNamePackageStatus = "PackageStatus"
+
+	// DescribePackagesFilterNamePackageType is a DescribePackagesFilterName enum value
+	DescribePackagesFilterNamePackageType = "PackageType"
+
+	// DescribePackagesFilterNameEngineVersion is a DescribePackagesFilterName enum value
+	DescribePackagesFilterNameEngineVersion = "EngineVersion"
 )
 
 // DescribePackagesFilterName_Values returns all elements of the DescribePackagesFilterName enum
@@ -19218,6 +21448,8 @@ func DescribePackagesFilterName_Values() []string {
 		DescribePackagesFilterNamePackageId,
 		DescribePackagesFilterNamePackageName,
 		DescribePackagesFilterNamePackageStatus,
+		DescribePackagesFilterNamePackageType,
+		DescribePackagesFilterNameEngineVersion,
 	}
 }
 
@@ -19326,6 +21558,22 @@ func EngineType_Values() []string {
 }
 
 const (
+	// IPAddressTypeIpv4 is a IPAddressType enum value
+	IPAddressTypeIpv4 = "ipv4"
+
+	// IPAddressTypeDualstack is a IPAddressType enum value
+	IPAddressTypeDualstack = "dualstack"
+)
+
+// IPAddressType_Values returns all elements of the IPAddressType enum
+func IPAddressType_Values() []string {
+	return []string{
+		IPAddressTypeIpv4,
+		IPAddressTypeDualstack,
+	}
+}
+
+const (
 	// InboundConnectionStatusCodePendingAcceptance is a InboundConnectionStatusCode enum value
 	InboundConnectionStatusCodePendingAcceptance = "PENDING_ACCEPTANCE"
 
@@ -19400,6 +21648,54 @@ func LogType_Values() []string {
 		LogTypeSearchSlowLogs,
 		LogTypeEsApplicationLogs,
 		LogTypeAuditLogs,
+	}
+}
+
+const (
+	// MaintenanceStatusPending is a MaintenanceStatus enum value
+	MaintenanceStatusPending = "PENDING"
+
+	// MaintenanceStatusInProgress is a MaintenanceStatus enum value
+	MaintenanceStatusInProgress = "IN_PROGRESS"
+
+	// MaintenanceStatusCompleted is a MaintenanceStatus enum value
+	MaintenanceStatusCompleted = "COMPLETED"
+
+	// MaintenanceStatusFailed is a MaintenanceStatus enum value
+	MaintenanceStatusFailed = "FAILED"
+
+	// MaintenanceStatusTimedOut is a MaintenanceStatus enum value
+	MaintenanceStatusTimedOut = "TIMED_OUT"
+)
+
+// MaintenanceStatus_Values returns all elements of the MaintenanceStatus enum
+func MaintenanceStatus_Values() []string {
+	return []string{
+		MaintenanceStatusPending,
+		MaintenanceStatusInProgress,
+		MaintenanceStatusCompleted,
+		MaintenanceStatusFailed,
+		MaintenanceStatusTimedOut,
+	}
+}
+
+const (
+	// MaintenanceTypeRebootNode is a MaintenanceType enum value
+	MaintenanceTypeRebootNode = "REBOOT_NODE"
+
+	// MaintenanceTypeRestartSearchProcess is a MaintenanceType enum value
+	MaintenanceTypeRestartSearchProcess = "RESTART_SEARCH_PROCESS"
+
+	// MaintenanceTypeRestartDashboard is a MaintenanceType enum value
+	MaintenanceTypeRestartDashboard = "RESTART_DASHBOARD"
+)
+
+// MaintenanceType_Values returns all elements of the MaintenanceType enum
+func MaintenanceType_Values() []string {
+	return []string{
+		MaintenanceTypeRebootNode,
+		MaintenanceTypeRestartSearchProcess,
+		MaintenanceTypeRestartDashboard,
 	}
 }
 
@@ -20008,12 +22304,16 @@ func PackageStatus_Values() []string {
 const (
 	// PackageTypeTxtDictionary is a PackageType enum value
 	PackageTypeTxtDictionary = "TXT-DICTIONARY"
+
+	// PackageTypeZipPlugin is a PackageType enum value
+	PackageTypeZipPlugin = "ZIP-PLUGIN"
 )
 
 // PackageType_Values returns all elements of the PackageType enum
 func PackageType_Values() []string {
 	return []string{
 		PackageTypeTxtDictionary,
+		PackageTypeZipPlugin,
 	}
 }
 
@@ -20144,11 +22444,11 @@ func ScheduledBy_Values() []string {
 	}
 }
 
-// Status of SkipUnavailable param for outbound connection.
+// The status of SkipUnavailable setting for the outbound connection.
 //
-//   - ENABLED - The SkipUnavailable param is enabled for the connection.
+//   - ENABLED - The SkipUnavailable setting is enabled for the connection.
 //
-//   - DISABLED - The SkipUnavailable param is disabled for the connection.
+//   - DISABLED - The SkipUnavailable setting is disabled for the connection.
 const (
 	// SkipUnavailableStatusEnabled is a SkipUnavailableStatus enum value
 	SkipUnavailableStatusEnabled = "ENABLED"

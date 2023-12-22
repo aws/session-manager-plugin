@@ -2158,6 +2158,10 @@ func (c *KinesisVideo) StartEdgeConfigurationUpdateRequest(input *StartEdgeConfi
 // will be retried for 15 minutes. After 15 minutes, the status will transition
 // into the SYNC_FAILED state.
 //
+// To move an edge configuration from one device to another, use DeleteEdgeConfiguration
+// to delete the current edge configuration. You can then invoke StartEdgeConfigurationUpdate
+// with an updated Hub Device ARN.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -2664,8 +2668,6 @@ func (c *KinesisVideo) UpdateDataRetentionRequest(input *UpdateDataRetentionInpu
 // retention period, specify the Operation parameter in the request body. In
 // the request, you must specify either the StreamName or the StreamARN.
 //
-// The retention period that you specify replaces the current value.
-//
 // This operation requires permission for the KinesisVideo:UpdateDataRetention
 // action.
 //
@@ -2896,13 +2898,19 @@ func (c *KinesisVideo) UpdateMediaStorageConfigurationRequest(input *UpdateMedia
 // UpdateMediaStorageConfiguration API operation for Amazon Kinesis Video Streams.
 //
 // Associates a SignalingChannel to a stream to store the media. There are two
-// signaling modes that can specified :
+// signaling modes that you can specify :
 //
-//   - If the StorageStatus is disabled, no data will be stored, and the StreamARN
+//   - If StorageStatus is enabled, the data will be stored in the StreamARN
+//     provided. In order for WebRTC Ingestion to work, the stream must have
+//     data retention enabled.
+//
+//   - If StorageStatus is disabled, no data will be stored, and the StreamARN
 //     parameter will not be needed.
 //
-//   - If the StorageStatus is enabled, the data will be stored in the StreamARN
-//     provided.
+// If StorageStatus is enabled, direct peer-to-peer (master-viewer) connections
+// no longer occur. Peers connect directly to the storage session. You must
+// call the JoinStorageSession API to trigger an SDP offer send and establish
+// a connection between a peer and the storage session.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5505,13 +5513,12 @@ type ImageGenerationConfiguration struct {
 	ImageSelectorType *string `type:"string" required:"true" enum:"ImageSelectorType"`
 
 	// The time interval in milliseconds (ms) at which the images need to be generated
-	// from the stream. The minimum value that can be provided is 33 ms, because
-	// a camera that generates content at 30 FPS would create a frame every 33.3
-	// ms. If the timestamp range is less than the sampling interval, the Image
-	// from the StartTimestamp will be returned if available.
+	// from the stream. The minimum value that can be provided is 200 ms. If the
+	// timestamp range is less than the sampling interval, the Image from the StartTimestamp
+	// will be returned if available.
 	//
 	// SamplingInterval is a required field
-	SamplingInterval *int64 `min:"3000" type:"integer" required:"true"`
+	SamplingInterval *int64 `type:"integer" required:"true"`
 
 	// Indicates whether the ContinuousImageGenerationConfigurations API is enabled
 	// or disabled.
@@ -5566,9 +5573,6 @@ func (s *ImageGenerationConfiguration) Validate() error {
 	}
 	if s.SamplingInterval == nil {
 		invalidParams.Add(request.NewErrParamRequired("SamplingInterval"))
-	}
-	if s.SamplingInterval != nil && *s.SamplingInterval < 3000 {
-		invalidParams.Add(request.NewErrParamMinValue("SamplingInterval", 3000))
 	}
 	if s.Status == nil {
 		invalidParams.Add(request.NewErrParamRequired("Status"))
@@ -6833,6 +6837,13 @@ func (s *MediaSourceConfig) SetMediaUriType(v string) *MediaSourceConfig {
 
 // A structure that encapsulates, or contains, the media storage configuration
 // properties.
+//
+//   - If StorageStatus is enabled, the data will be stored in the StreamARN
+//     provided. In order for WebRTC Ingestion to work, the stream must have
+//     data retention enabled.
+//
+//   - If StorageStatus is disabled, no data will be stored, and the StreamARN
+//     parameter will not be needed.
 type MediaStorageConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -6841,7 +6852,7 @@ type MediaStorageConfiguration struct {
 	// Status is a required field
 	Status *string `type:"string" required:"true" enum:"MediaStorageConfigurationStatus"`
 
-	// The Amazon Resource Name (ARN) of the stream
+	// The Amazon Resource Name (ARN) of the stream.
 	StreamARN *string `min:"1" type:"string"`
 }
 
@@ -8501,8 +8512,11 @@ type UpdateDataRetentionInput struct {
 	// CurrentVersion is a required field
 	CurrentVersion *string `min:"1" type:"string" required:"true"`
 
-	// The retention period, in hours. The value you specify replaces the current
-	// value. The maximum value for this parameter is 87600 (ten years).
+	// The number of hours to adjust the current retention by. The value you specify
+	// is added to or subtracted from the current value, depending on the operation.
+	//
+	// The minimum value for data retention is 0 and the maximum value is 87600
+	// (ten years).
 	//
 	// DataRetentionChangeInHours is a required field
 	DataRetentionChangeInHours *int64 `min:"1" type:"integer" required:"true"`

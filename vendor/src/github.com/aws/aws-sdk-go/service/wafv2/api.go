@@ -69,18 +69,33 @@ func (c *WAFV2) AssociateWebACLRequest(input *AssociateWebACLInput) (req *reques
 // of the web ACL. For information, see UpdateDistribution (https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateDistribution.html)
 // in the Amazon CloudFront Developer Guide.
 //
-// When you make changes to web ACLs or web ACL components, like rules and rule
-// groups, WAF propagates the changes everywhere that the web ACL and its components
-// are stored and used. Your changes are applied within seconds, but there might
-// be a brief period of inconsistency when the changes have arrived in some
-// places and not in others. So, for example, if you change a rule action setting,
-// the action might be the old action in one area and the new action in another
-// area. Or if you add an IP address to an IP set used in a blocking rule, the
-// new address might briefly be blocked in one area while still allowed in another.
-// This temporary inconsistency can occur when you first associate a web ACL
-// with an Amazon Web Services resource and when you change a web ACL that is
-// already associated with a resource. Generally, any inconsistencies of this
-// type last only a few seconds.
+// # Required permissions for customer-managed IAM policies
+//
+// This call requires permissions that are specific to the protected resource
+// type. For details, see Permissions for AssociateWebACL (https://docs.aws.amazon.com/waf/latest/developerguide/security_iam_service-with-iam.html#security_iam_action-AssociateWebACL)
+// in the WAF Developer Guide.
+//
+// # Temporary inconsistencies during updates
+//
+// When you create or change a web ACL or other WAF resources, the changes take
+// a small amount of time to propagate to all areas where the resources are
+// stored. The propagation time can be from a few seconds to a number of minutes.
+//
+// The following are examples of the temporary inconsistencies that you might
+// notice during change propagation:
+//
+//   - After you create a web ACL, if you try to associate it with a resource,
+//     you might get an exception indicating that the web ACL is unavailable.
+//
+//   - After you add a rule group to a web ACL, the new rule group rules might
+//     be in effect in one area where the web ACL is used and not in another.
+//
+//   - After you change a rule action setting, you might see the old action
+//     in some places and the new action in others.
+//
+//   - After you add an IP address to an IP set that is in use in a blocking
+//     rule, the new address might be blocked in one area while still allowed
+//     in another.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -835,15 +850,16 @@ func (c *WAFV2) CreateWebACLRequest(input *CreateWebACLInput) (req *request.Requ
 // Creates a WebACL per the specifications provided.
 //
 // A web ACL defines a collection of rules to use to inspect and control web
-// requests. Each rule has an action defined (allow, block, or count) for requests
-// that match the statement of the rule. In the web ACL, you assign a default
-// action to take (allow, block) for any request that does not match any of
-// the rules. The rules in a web ACL can be a combination of the types Rule,
-// RuleGroup, and managed rule group. You can associate a web ACL with one or
-// more Amazon Web Services resources to protect. The resources can be an Amazon
-// CloudFront distribution, an Amazon API Gateway REST API, an Application Load
-// Balancer, an AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-// service, or an Amazon Web Services Verified Access instance.
+// requests. Each rule has a statement that defines what to look for in web
+// requests and an action that WAF applies to requests that match the statement.
+// In the web ACL, you assign a default action to take (allow, block) for any
+// request that does not match any of the rules. The rules in a web ACL can
+// be a combination of the types Rule, RuleGroup, and managed rule group. You
+// can associate a web ACL with one or more Amazon Web Services resources to
+// protect. The resources can be an Amazon CloudFront distribution, an Amazon
+// API Gateway REST API, an Application Load Balancer, an AppSync GraphQL API,
+// an Amazon Cognito user pool, an App Runner service, or an Amazon Web Services
+// Verified Access instance.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2140,6 +2156,12 @@ func (c *WAFV2) DisassociateWebACLRequest(input *DisassociateWebACLInput) (req *
 // ACL ID in the CloudFront call UpdateDistribution. For information, see UpdateDistribution
 // (https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_UpdateDistribution.html)
 // in the Amazon CloudFront API Reference.
+//
+// # Required permissions for customer-managed IAM policies
+//
+// This call requires permissions that are specific to the protected resource
+// type. For details, see Permissions for DisassociateWebACL (https://docs.aws.amazon.com/waf/latest/developerguide/security_iam_service-with-iam.html#security_iam_action-DisassociateWebACL)
+// in the WAF Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3549,6 +3571,22 @@ func (c *WAFV2) GetWebACLForResourceRequest(input *GetWebACLForResourceInput) (r
 //
 // Retrieves the WebACL for the specified resource.
 //
+// This call uses GetWebACL, to verify that your account has permission to access
+// the retrieved web ACL. If you get an error that indicates that your account
+// isn't authorized to perform wafv2:GetWebACL on the resource, that error won't
+// be included in your CloudTrail event history.
+//
+// For Amazon CloudFront, don't use this call. Instead, call the CloudFront
+// action GetDistributionConfig. For information, see GetDistributionConfig
+// (https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_GetDistributionConfig.html)
+// in the Amazon CloudFront API Reference.
+//
+// # Required permissions for customer-managed IAM policies
+//
+// This call requires permissions that are specific to the protected resource
+// type. For details, see Permissions for GetWebACLForResource (https://docs.aws.amazon.com/waf/latest/developerguide/security_iam_service-with-iam.html#security_iam_action-GetWebACLForResource)
+// in the WAF Developer Guide.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -4478,8 +4516,18 @@ func (c *WAFV2) ListResourcesForWebACLRequest(input *ListResourcesForWebACLInput
 // ListResourcesForWebACL API operation for AWS WAFV2.
 //
 // Retrieves an array of the Amazon Resource Names (ARNs) for the regional resources
-// that are associated with the specified web ACL. If you want the list of Amazon
-// CloudFront resources, use the CloudFront call ListDistributionsByWebACLId.
+// that are associated with the specified web ACL.
+//
+// For Amazon CloudFront, don't use this call. Instead, use the CloudFront call
+// ListDistributionsByWebACLId. For information, see ListDistributionsByWebACLId
+// (https://docs.aws.amazon.com/cloudfront/latest/APIReference/API_ListDistributionsByWebACLId.html)
+// in the Amazon CloudFront API Reference.
+//
+// # Required permissions for customer-managed IAM policies
+//
+// This call requires permissions that are specific to the protected resource
+// type. For details, see Permissions for ListResourcesForWebACL (https://docs.aws.amazon.com/waf/latest/developerguide/security_iam_service-with-iam.html#security_iam_action-ListResourcesForWebACL)
+// in the WAF Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5588,18 +5636,27 @@ func (c *WAFV2) UpdateIPSetRequest(input *UpdateIPSetInput) (req *request.Reques
 //
 // # Provide the complete IP set specification to this call
 //
-// When you make changes to web ACLs or web ACL components, like rules and rule
-// groups, WAF propagates the changes everywhere that the web ACL and its components
-// are stored and used. Your changes are applied within seconds, but there might
-// be a brief period of inconsistency when the changes have arrived in some
-// places and not in others. So, for example, if you change a rule action setting,
-// the action might be the old action in one area and the new action in another
-// area. Or if you add an IP address to an IP set used in a blocking rule, the
-// new address might briefly be blocked in one area while still allowed in another.
-// This temporary inconsistency can occur when you first associate a web ACL
-// with an Amazon Web Services resource and when you change a web ACL that is
-// already associated with a resource. Generally, any inconsistencies of this
-// type last only a few seconds.
+// # Temporary inconsistencies during updates
+//
+// When you create or change a web ACL or other WAF resources, the changes take
+// a small amount of time to propagate to all areas where the resources are
+// stored. The propagation time can be from a few seconds to a number of minutes.
+//
+// The following are examples of the temporary inconsistencies that you might
+// notice during change propagation:
+//
+//   - After you create a web ACL, if you try to associate it with a resource,
+//     you might get an exception indicating that the web ACL is unavailable.
+//
+//   - After you add a rule group to a web ACL, the new rule group rules might
+//     be in effect in one area where the web ACL is used and not in another.
+//
+//   - After you change a rule action setting, you might see the old action
+//     in some places and the new action in others.
+//
+//   - After you add an IP address to an IP set that is in use in a blocking
+//     rule, the new address might be blocked in one area while still allowed
+//     in another.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5851,18 +5908,27 @@ func (c *WAFV2) UpdateRegexPatternSetRequest(input *UpdateRegexPatternSetInput) 
 //
 // # Provide the complete regex pattern set specification to this call
 //
-// When you make changes to web ACLs or web ACL components, like rules and rule
-// groups, WAF propagates the changes everywhere that the web ACL and its components
-// are stored and used. Your changes are applied within seconds, but there might
-// be a brief period of inconsistency when the changes have arrived in some
-// places and not in others. So, for example, if you change a rule action setting,
-// the action might be the old action in one area and the new action in another
-// area. Or if you add an IP address to an IP set used in a blocking rule, the
-// new address might briefly be blocked in one area while still allowed in another.
-// This temporary inconsistency can occur when you first associate a web ACL
-// with an Amazon Web Services resource and when you change a web ACL that is
-// already associated with a resource. Generally, any inconsistencies of this
-// type last only a few seconds.
+// # Temporary inconsistencies during updates
+//
+// When you create or change a web ACL or other WAF resources, the changes take
+// a small amount of time to propagate to all areas where the resources are
+// stored. The propagation time can be from a few seconds to a number of minutes.
+//
+// The following are examples of the temporary inconsistencies that you might
+// notice during change propagation:
+//
+//   - After you create a web ACL, if you try to associate it with a resource,
+//     you might get an exception indicating that the web ACL is unavailable.
+//
+//   - After you add a rule group to a web ACL, the new rule group rules might
+//     be in effect in one area where the web ACL is used and not in another.
+//
+//   - After you change a rule action setting, you might see the old action
+//     in some places and the new action in others.
+//
+//   - After you add an IP address to an IP set that is in use in a blocking
+//     rule, the new address might be blocked in one area while still allowed
+//     in another.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5994,24 +6060,33 @@ func (c *WAFV2) UpdateRuleGroupRequest(input *UpdateRuleGroupInput) (req *reques
 //
 // # Provide the complete rule group specification to this call
 //
-// When you make changes to web ACLs or web ACL components, like rules and rule
-// groups, WAF propagates the changes everywhere that the web ACL and its components
-// are stored and used. Your changes are applied within seconds, but there might
-// be a brief period of inconsistency when the changes have arrived in some
-// places and not in others. So, for example, if you change a rule action setting,
-// the action might be the old action in one area and the new action in another
-// area. Or if you add an IP address to an IP set used in a blocking rule, the
-// new address might briefly be blocked in one area while still allowed in another.
-// This temporary inconsistency can occur when you first associate a web ACL
-// with an Amazon Web Services resource and when you change a web ACL that is
-// already associated with a resource. Generally, any inconsistencies of this
-// type last only a few seconds.
-//
 // A rule group defines a collection of rules to inspect and control web requests
 // that you can use in a WebACL. When you create a rule group, you define an
 // immutable capacity limit. If you update a rule group, you must stay within
 // the capacity. This allows others to reuse the rule group with confidence
 // in its capacity requirements.
+//
+// # Temporary inconsistencies during updates
+//
+// When you create or change a web ACL or other WAF resources, the changes take
+// a small amount of time to propagate to all areas where the resources are
+// stored. The propagation time can be from a few seconds to a number of minutes.
+//
+// The following are examples of the temporary inconsistencies that you might
+// notice during change propagation:
+//
+//   - After you create a web ACL, if you try to associate it with a resource,
+//     you might get an exception indicating that the web ACL is unavailable.
+//
+//   - After you add a rule group to a web ACL, the new rule group rules might
+//     be in effect in one area where the web ACL is used and not in another.
+//
+//   - After you change a rule action setting, you might see the old action
+//     in some places and the new action in others.
+//
+//   - After you add an IP address to an IP set that is in use in a blocking
+//     rule, the new address might be blocked in one area while still allowed
+//     in another.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6169,29 +6244,39 @@ func (c *WAFV2) UpdateWebACLRequest(input *UpdateWebACLInput) (req *request.Requ
 //
 // # Provide the complete web ACL specification to this call
 //
-// When you make changes to web ACLs or web ACL components, like rules and rule
-// groups, WAF propagates the changes everywhere that the web ACL and its components
-// are stored and used. Your changes are applied within seconds, but there might
-// be a brief period of inconsistency when the changes have arrived in some
-// places and not in others. So, for example, if you change a rule action setting,
-// the action might be the old action in one area and the new action in another
-// area. Or if you add an IP address to an IP set used in a blocking rule, the
-// new address might briefly be blocked in one area while still allowed in another.
-// This temporary inconsistency can occur when you first associate a web ACL
-// with an Amazon Web Services resource and when you change a web ACL that is
-// already associated with a resource. Generally, any inconsistencies of this
-// type last only a few seconds.
-//
 // A web ACL defines a collection of rules to use to inspect and control web
-// requests. Each rule has an action defined (allow, block, or count) for requests
-// that match the statement of the rule. In the web ACL, you assign a default
-// action to take (allow, block) for any request that does not match any of
-// the rules. The rules in a web ACL can be a combination of the types Rule,
-// RuleGroup, and managed rule group. You can associate a web ACL with one or
-// more Amazon Web Services resources to protect. The resources can be an Amazon
-// CloudFront distribution, an Amazon API Gateway REST API, an Application Load
-// Balancer, an AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-// service, or an Amazon Web Services Verified Access instance.
+// requests. Each rule has a statement that defines what to look for in web
+// requests and an action that WAF applies to requests that match the statement.
+// In the web ACL, you assign a default action to take (allow, block) for any
+// request that does not match any of the rules. The rules in a web ACL can
+// be a combination of the types Rule, RuleGroup, and managed rule group. You
+// can associate a web ACL with one or more Amazon Web Services resources to
+// protect. The resources can be an Amazon CloudFront distribution, an Amazon
+// API Gateway REST API, an Application Load Balancer, an AppSync GraphQL API,
+// an Amazon Cognito user pool, an App Runner service, or an Amazon Web Services
+// Verified Access instance.
+//
+// # Temporary inconsistencies during updates
+//
+// When you create or change a web ACL or other WAF resources, the changes take
+// a small amount of time to propagate to all areas where the resources are
+// stored. The propagation time can be from a few seconds to a number of minutes.
+//
+// The following are examples of the temporary inconsistencies that you might
+// notice during change propagation:
+//
+//   - After you create a web ACL, if you try to associate it with a resource,
+//     you might get an exception indicating that the web ACL is unavailable.
+//
+//   - After you add a rule group to a web ACL, the new rule group rules might
+//     be in effect in one area where the web ACL is used and not in another.
+//
+//   - After you change a rule action setting, you might see the old action
+//     in some places and the new action in others.
+//
+//   - After you add an IP address to an IP set that is in use in a blocking
+//     rule, the new address might be blocked in one area while still allowed
+//     in another.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6376,8 +6461,12 @@ type AWSManagedRulesACFPRuleSet struct {
 	// page on your website that accepts the completed registration form for a new
 	// user. This page must accept POST requests.
 	//
-	// For example, for the URL https://example.com/web/signup, you would provide
-	// the path /web/signup.
+	// For example, for the URL https://example.com/web/newaccount, you would provide
+	// the path /web/newaccount. Account creation page paths that start with the
+	// path that you provide are considered a match. For example /web/newaccount
+	// matches the account creation paths /web/newaccount, /web/newaccount/, /web/newaccountPage,
+	// and /web/newaccount/thisPage, but doesn't match the path /home/web/newaccount
+	// or /website/newaccount.
 	//
 	// CreationPath is a required field
 	CreationPath *string `min:"1" type:"string" required:"true"`
@@ -6391,8 +6480,12 @@ type AWSManagedRulesACFPRuleSet struct {
 	//
 	// This page must accept GET text/html requests.
 	//
-	// For example, for the URL https://example.com/web/register, you would provide
-	// the path /web/register.
+	// For example, for the URL https://example.com/web/registration, you would
+	// provide the path /web/registration. Registration page paths that start with
+	// the path that you provide are considered a match. For example /web/registration
+	// matches the registration paths /web/registration, /web/registration/, /web/registrationPage,
+	// and /web/registration/thisPage, but doesn't match the path /home/web/registration
+	// or /website/registration.
 	//
 	// RegistrationPagePath is a required field
 	RegistrationPagePath *string `min:"1" type:"string" required:"true"`
@@ -6511,6 +6604,10 @@ type AWSManagedRulesATPRuleSet struct {
 
 	// The path of the login endpoint for your application. For example, for the
 	// URL https://example.com/web/login, you would provide the path /web/login.
+	// Login paths that start with the path that you provide are considered a match.
+	// For example /web/login matches the login paths /web/login, /web/login/, /web/loginPage,
+	// and /web/login/thisPage, but doesn't match the login path /home/web/login
+	// or /website/login.
 	//
 	// The rule group inspects only HTTP POST requests to your specified login endpoint.
 	//
@@ -6606,6 +6703,21 @@ func (s *AWSManagedRulesATPRuleSet) SetResponseInspection(v *ResponseInspection)
 type AWSManagedRulesBotControlRuleSet struct {
 	_ struct{} `type:"structure"`
 
+	// Applies only to the targeted inspection level.
+	//
+	// Determines whether to use machine learning (ML) to analyze your web traffic
+	// for bot-related activity. Machine learning is required for the Bot Control
+	// rules TGT_ML_CoordinatedActivityLow and TGT_ML_CoordinatedActivityMedium,
+	// which inspect for anomalous behavior that might indicate distributed, coordinated
+	// bot activity.
+	//
+	// For more information about this choice, see the listing for these rules in
+	// the table at Bot Control rules listing (https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-bot.html#aws-managed-rule-groups-bot-rules)
+	// in the WAF Developer Guide.
+	//
+	// Default: TRUE
+	EnableMachineLearning *bool `type:"boolean"`
+
 	// The inspection level to use for the Bot Control rule group. The common level
 	// is the least expensive. The targeted level includes all common level rules
 	// and adds rules with more advanced inspection criteria. For details, see WAF
@@ -6645,6 +6757,12 @@ func (s *AWSManagedRulesBotControlRuleSet) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetEnableMachineLearning sets the EnableMachineLearning field's value.
+func (s *AWSManagedRulesBotControlRuleSet) SetEnableMachineLearning(v bool) *AWSManagedRulesBotControlRuleSet {
+	s.EnableMachineLearning = &v
+	return s
 }
 
 // SetInspectionLevel sets the InspectionLevel field's value.
@@ -7046,7 +7164,7 @@ func (s AssociateWebACLOutput) GoString() string {
 //
 // Use this to customize the maximum size of the request body that your protected
 // CloudFront distributions forward to WAF for inspection. The default is 16
-// KB (16,384 kilobytes).
+// KB (16,384 bytes).
 //
 // You are charged additional fees when your protected resources forward body
 // sizes that are larger than the default. For more information, see WAF Pricing
@@ -7056,7 +7174,7 @@ type AssociationConfig struct {
 
 	// Customizes the maximum size of the request body that your protected CloudFront
 	// distributions forward to WAF for inspection. The default size is 16 KB (16,384
-	// kilobytes).
+	// bytes).
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
@@ -7177,8 +7295,8 @@ type Body struct {
 	// the underlying host service only forwards the contents that are below the
 	// limit to WAF for inspection.
 	//
-	// The default limit is 8 KB (8,192 kilobytes) for regional resources and 16
-	// KB (16,384 kilobytes) for CloudFront distributions. For CloudFront distributions,
+	// The default limit is 8 KB (8,192 bytes) for regional resources and 16 KB
+	// (16,384 bytes) for CloudFront distributions. For CloudFront distributions,
 	// you can increase the limit in the web ACL AssociationConfig, for additional
 	// processing fees.
 	//
@@ -7291,9 +7409,19 @@ type ByteMatchStatement struct {
 	//    * UriPath: The value that you want WAF to search for in the URI path,
 	//    for example, /images/daily-ad.jpg.
 	//
-	//    * HeaderOrder: The comma-separated list of header names to match for.
-	//    WAF creates a string that contains the ordered list of header names, from
-	//    the headers in the web request, and then matches against that string.
+	//    * JA3Fingerprint: Match against the request's JA3 fingerprint. The JA3
+	//    fingerprint is a 32-character hash derived from the TLS Client Hello of
+	//    an incoming request. This fingerprint serves as a unique identifier for
+	//    the client's TLS configuration. You can use this choice only with a string
+	//    match ByteMatchStatement with the PositionalConstraint set to EXACTLY.
+	//    You can obtain the JA3 fingerprint for client requests from the web ACL
+	//    logs. If WAF is able to calculate the fingerprint, it includes it in the
+	//    logs. For information about the logging fields, see Log fields (https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html)
+	//    in the WAF Developer Guide.
+	//
+	//    * HeaderOrder: The list of header names to match for. WAF creates a string
+	//    that contains the ordered list of header names, from the headers in the
+	//    web request, and then matches against that string.
 	//
 	// If SearchString includes alphabetic characters A-Z and a-z, note that the
 	// value is case sensitive.
@@ -7324,7 +7452,7 @@ type ByteMatchStatement struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -7949,8 +8077,8 @@ func (s *Condition) SetLabelNameCondition(v *LabelNameCondition) *Condition {
 //
 // You must specify exactly one setting: either All, IncludedCookies, or ExcludedCookies.
 //
-// Example JSON: "MatchPattern": { "IncludedCookies": {"KeyToInclude1", "KeyToInclude2",
-// "KeyToInclude3"} }
+// Example JSON: "MatchPattern": { "IncludedCookies": [ "session-id-time", "session-id"
+// ] }
 type CookieMatchPattern struct {
 	_ struct{} `type:"structure"`
 
@@ -8034,14 +8162,20 @@ type Cookies struct {
 	//
 	// You must specify exactly one setting: either All, IncludedCookies, or ExcludedCookies.
 	//
-	// Example JSON: "MatchPattern": { "IncludedCookies": {"KeyToInclude1", "KeyToInclude2",
-	// "KeyToInclude3"} }
+	// Example JSON: "MatchPattern": { "IncludedCookies": [ "session-id-time", "session-id"
+	// ] }
 	//
 	// MatchPattern is a required field
 	MatchPattern *CookieMatchPattern `type:"structure" required:"true"`
 
 	// The parts of the cookies to inspect with the rule inspection criteria. If
-	// you specify All, WAF inspects both keys and values.
+	// you specify ALL, WAF inspects both keys and values.
+	//
+	// All does not require a match to be found in the keys and a match to be found
+	// in the values. It requires a match to be found in the keys or the values
+	// or both. To require a match in the keys and in the values, use a logical
+	// AND statement to combine two match rules, one that inspects the keys and
+	// another that inspects the values.
 	//
 	// MatchScope is a required field
 	MatchScope *string `type:"string" required:"true" enum:"MapMatchScope"`
@@ -8297,24 +8431,23 @@ type CreateIPSetInput struct {
 	_ struct{} `type:"structure"`
 
 	// Contains an array of strings that specifies zero or more IP addresses or
-	// blocks of IP addresses. All addresses must be specified using Classless Inter-Domain
-	// Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except
-	// for /0.
+	// blocks of IP addresses that you want WAF to inspect for in incoming requests.
+	// All addresses must be specified using Classless Inter-Domain Routing (CIDR)
+	// notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0.
 	//
 	// Example address strings:
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from the IP address 192.0.2.44, specify 192.0.2.44/32.
+	//    * For requests that originated from the IP address 192.0.2.44, specify
+	//    192.0.2.44/32.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from IP addresses from 192.0.2.0 to 192.0.2.255, specify 192.0.2.0/24.
+	//    * For requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255,
+	//    specify 192.0.2.0/24.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify 1111:0000:0000:0000:0000:0000:0000:0111/128.
+	//    * For requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111,
+	//    specify 1111:0000:0000:0000:0000:0000:0000:0111/128.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff,
-	//    specify 1111:0000:0000:0000:0000:0000:0000:0000/64.
+	//    * For requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000
+	//    to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify 1111:0000:0000:0000:0000:0000:0000:0000/64.
 	//
 	// For more information about CIDR notation, see the Wikipedia entry Classless
 	// Inter-Domain Routing (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
@@ -8709,10 +8842,9 @@ type CreateRuleGroupInput struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The Rule statements used to identify the web requests that you want to allow,
-	// block, or count. Each rule includes one top-level statement that WAF uses
-	// to identify matching web requests, and parameters that govern how WAF handles
-	// them.
+	// The Rule statements used to identify the web requests that you want to manage.
+	// Each rule includes one top-level statement that WAF uses to identify matching
+	// web requests, and parameters that govern how WAF handles them.
 	Rules []*Rule `type:"list"`
 
 	// Specifies whether this is for an Amazon CloudFront distribution or for a
@@ -8921,7 +9053,7 @@ type CreateWebACLInput struct {
 	//
 	// Use this to customize the maximum size of the request body that your protected
 	// CloudFront distributions forward to WAF for inspection. The default is 16
-	// KB (16,384 kilobytes).
+	// KB (16,384 bytes).
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
@@ -8966,10 +9098,9 @@ type CreateWebACLInput struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The Rule statements used to identify the web requests that you want to allow,
-	// block, or count. Each rule includes one top-level statement that WAF uses
-	// to identify matching web requests, and parameters that govern how WAF handles
-	// them.
+	// The Rule statements used to identify the web requests that you want to manage.
+	// Each rule includes one top-level statement that WAF uses to identify matching
+	// web requests, and parameters that govern how WAF handles them.
 	Rules []*Rule `type:"list"`
 
 	// Specifies whether this is for an Amazon CloudFront distribution or for a
@@ -9395,7 +9526,8 @@ type CustomResponse struct {
 	// ResponseCode is a required field
 	ResponseCode *int64 `min:"200" type:"integer" required:"true"`
 
-	// The HTTP headers to use in the response. Duplicate header names are not allowed.
+	// The HTTP headers to use in the response. You can specify any header name
+	// except for content-type. Duplicate header names are not allowed.
 	//
 	// For information about the limits on count and size for custom request and
 	// response settings, see WAF quotas (https://docs.aws.amazon.com/waf/latest/developerguide/limits.html)
@@ -11074,7 +11206,7 @@ type FieldToMatch struct {
 	//
 	// A limited amount of the request body is forwarded to WAF for inspection by
 	// the underlying host service. For regional resources, the limit is 8 KB (8,192
-	// kilobytes) and for CloudFront distributions, the limit is 16 KB (16,384 kilobytes).
+	// bytes) and for CloudFront distributions, the limit is 16 KB (16,384 bytes).
 	// For CloudFront distributions, you can increase the limit in the web ACL's
 	// AssociationConfig, for additional processing fees.
 	//
@@ -11111,6 +11243,24 @@ type FieldToMatch struct {
 	// from the underlying host service.
 	Headers *Headers `type:"structure"`
 
+	// Match against the request's JA3 fingerprint. The JA3 fingerprint is a 32-character
+	// hash derived from the TLS Client Hello of an incoming request. This fingerprint
+	// serves as a unique identifier for the client's TLS configuration. WAF calculates
+	// and logs this fingerprint for each request that has enough TLS Client Hello
+	// information for the calculation. Almost all web requests include this information.
+	//
+	// You can use this choice only with a string match ByteMatchStatement with
+	// the PositionalConstraint set to EXACTLY.
+	//
+	// You can obtain the JA3 fingerprint for client requests from the web ACL logs.
+	// If WAF is able to calculate the fingerprint, it includes it in the logs.
+	// For information about the logging fields, see Log fields (https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html)
+	// in the WAF Developer Guide.
+	//
+	// Provide the JA3 fingerprint string from the logs in your string match statement
+	// specification, to match with any future requests that have the same TLS configuration.
+	JA3Fingerprint *JA3Fingerprint `type:"structure"`
+
 	// Inspect the request body as JSON. The request body immediately follows the
 	// request headers. This is the part of a request that contains any additional
 	// data that you want to send to your web server as the HTTP request body, such
@@ -11118,7 +11268,7 @@ type FieldToMatch struct {
 	//
 	// A limited amount of the request body is forwarded to WAF for inspection by
 	// the underlying host service. For regional resources, the limit is 8 KB (8,192
-	// kilobytes) and for CloudFront distributions, the limit is 16 KB (16,384 kilobytes).
+	// bytes) and for CloudFront distributions, the limit is 16 KB (16,384 bytes).
 	// For CloudFront distributions, you can increase the limit in the web ACL's
 	// AssociationConfig, for additional processing fees.
 	//
@@ -11191,6 +11341,11 @@ func (s *FieldToMatch) Validate() error {
 			invalidParams.AddNested("Headers", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.JA3Fingerprint != nil {
+		if err := s.JA3Fingerprint.Validate(); err != nil {
+			invalidParams.AddNested("JA3Fingerprint", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.JsonBody != nil {
 		if err := s.JsonBody.Validate(); err != nil {
 			invalidParams.AddNested("JsonBody", err.(request.ErrInvalidParams))
@@ -11240,6 +11395,12 @@ func (s *FieldToMatch) SetHeaderOrder(v *HeaderOrder) *FieldToMatch {
 // SetHeaders sets the Headers field's value.
 func (s *FieldToMatch) SetHeaders(v *Headers) *FieldToMatch {
 	s.Headers = v
+	return s
+}
+
+// SetJA3Fingerprint sets the JA3Fingerprint field's value.
+func (s *FieldToMatch) SetJA3Fingerprint(v *JA3Fingerprint) *FieldToMatch {
+	s.JA3Fingerprint = v
 	return s
 }
 
@@ -13496,8 +13657,8 @@ func (s *HTTPRequest) SetURI(v string) *HTTPRequest {
 //
 // You must specify exactly one setting: either All, IncludedHeaders, or ExcludedHeaders.
 //
-// Example JSON: "MatchPattern": { "ExcludedHeaders": {"KeyToExclude1", "KeyToExclude2"}
-// }
+// Example JSON: "MatchPattern": { "ExcludedHeaders": [ "KeyToExclude1", "KeyToExclude2"
+// ] }
 type HeaderMatchPattern struct {
 	_ struct{} `type:"structure"`
 
@@ -13649,14 +13810,20 @@ type Headers struct {
 	//
 	// You must specify exactly one setting: either All, IncludedHeaders, or ExcludedHeaders.
 	//
-	// Example JSON: "MatchPattern": { "ExcludedHeaders": {"KeyToExclude1", "KeyToExclude2"}
-	// }
+	// Example JSON: "MatchPattern": { "ExcludedHeaders": [ "KeyToExclude1", "KeyToExclude2"
+	// ] }
 	//
 	// MatchPattern is a required field
 	MatchPattern *HeaderMatchPattern `type:"structure" required:"true"`
 
 	// The parts of the headers to match with the rule inspection criteria. If you
-	// specify All, WAF inspects both keys and values.
+	// specify ALL, WAF inspects both keys and values.
+	//
+	// All does not require a match to be found in the keys and a match to be found
+	// in the values. It requires a match to be found in the keys or the values
+	// or both. To require a match in the keys and in the values, use a logical
+	// AND statement to combine two match rules, one that inspects the keys and
+	// another that inspects the values.
 	//
 	// MatchScope is a required field
 	MatchScope *string `type:"string" required:"true" enum:"MapMatchScope"`
@@ -13757,24 +13924,23 @@ type IPSet struct {
 	ARN *string `min:"20" type:"string" required:"true"`
 
 	// Contains an array of strings that specifies zero or more IP addresses or
-	// blocks of IP addresses. All addresses must be specified using Classless Inter-Domain
-	// Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except
-	// for /0.
+	// blocks of IP addresses that you want WAF to inspect for in incoming requests.
+	// All addresses must be specified using Classless Inter-Domain Routing (CIDR)
+	// notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0.
 	//
 	// Example address strings:
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from the IP address 192.0.2.44, specify 192.0.2.44/32.
+	//    * For requests that originated from the IP address 192.0.2.44, specify
+	//    192.0.2.44/32.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from IP addresses from 192.0.2.0 to 192.0.2.255, specify 192.0.2.0/24.
+	//    * For requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255,
+	//    specify 192.0.2.0/24.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify 1111:0000:0000:0000:0000:0000:0000:0111/128.
+	//    * For requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111,
+	//    specify 1111:0000:0000:0000:0000:0000:0000:0111/128.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff,
-	//    specify 1111:0000:0000:0000:0000:0000:0000:0000/64.
+	//    * For requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000
+	//    to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify 1111:0000:0000:0000:0000:0000:0000:0000/64.
 	//
 	// For more information about CIDR notation, see the Wikipedia entry Classless
 	// Inter-Domain Routing (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
@@ -14198,6 +14364,76 @@ func (s *ImmunityTimeProperty) SetImmunityTime(v int64) *ImmunityTimeProperty {
 	return s
 }
 
+// Match against the request's JA3 fingerprint. The JA3 fingerprint is a 32-character
+// hash derived from the TLS Client Hello of an incoming request. This fingerprint
+// serves as a unique identifier for the client's TLS configuration. WAF calculates
+// and logs this fingerprint for each request that has enough TLS Client Hello
+// information for the calculation. Almost all web requests include this information.
+//
+// You can use this choice only with a string match ByteMatchStatement with
+// the PositionalConstraint set to EXACTLY.
+//
+// You can obtain the JA3 fingerprint for client requests from the web ACL logs.
+// If WAF is able to calculate the fingerprint, it includes it in the logs.
+// For information about the logging fields, see Log fields (https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html)
+// in the WAF Developer Guide.
+//
+// Provide the JA3 fingerprint string from the logs in your string match statement
+// specification, to match with any future requests that have the same TLS configuration.
+type JA3Fingerprint struct {
+	_ struct{} `type:"structure"`
+
+	// The match status to assign to the web request if the request doesn't have
+	// a JA3 fingerprint.
+	//
+	// You can specify the following fallback behaviors:
+	//
+	//    * MATCH - Treat the web request as matching the rule statement. WAF applies
+	//    the rule action to the request.
+	//
+	//    * NO_MATCH - Treat the web request as not matching the rule statement.
+	//
+	// FallbackBehavior is a required field
+	FallbackBehavior *string `type:"string" required:"true" enum:"FallbackBehavior"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JA3Fingerprint) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JA3Fingerprint) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *JA3Fingerprint) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "JA3Fingerprint"}
+	if s.FallbackBehavior == nil {
+		invalidParams.Add(request.NewErrParamRequired("FallbackBehavior"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFallbackBehavior sets the FallbackBehavior field's value.
+func (s *JA3Fingerprint) SetFallbackBehavior(v string) *JA3Fingerprint {
+	s.FallbackBehavior = &v
+	return s
+}
+
 // Inspect the body of the web request as JSON. The body immediately follows
 // the request headers.
 //
@@ -14248,7 +14484,13 @@ type JsonBody struct {
 	MatchPattern *JsonMatchPattern `type:"structure" required:"true"`
 
 	// The parts of the JSON to match against using the MatchPattern. If you specify
-	// All, WAF matches against keys and values.
+	// ALL, WAF matches against keys and values.
+	//
+	// All does not require a match to be found in the keys and a match to be found
+	// in the values. It requires a match to be found in the keys or the values
+	// or both. To require a match in the keys and in the values, use a logical
+	// AND statement to combine two match rules, one that inspects the keys and
+	// another that inspects the values.
 	//
 	// MatchScope is a required field
 	MatchScope *string `type:"string" required:"true" enum:"JsonMatchScope"`
@@ -14259,8 +14501,8 @@ type JsonBody struct {
 	// the underlying host service only forwards the contents that are below the
 	// limit to WAF for inspection.
 	//
-	// The default limit is 8 KB (8,192 kilobytes) for regional resources and 16
-	// KB (16,384 kilobytes) for CloudFront distributions. For CloudFront distributions,
+	// The default limit is 8 KB (8,192 bytes) for regional resources and 16 KB
+	// (16,384 bytes) for CloudFront distributions. For CloudFront distributions,
 	// you can increase the limit in the web ACL AssociationConfig, for additional
 	// processing fees.
 	//
@@ -16765,8 +17007,9 @@ func (s *ManagedRuleGroupConfig) SetUsernameField(v *UsernameField) *ManagedRule
 // in this statement. You can retrieve the required names by calling ListAvailableManagedRuleGroups.
 //
 // You cannot nest a ManagedRuleGroupStatement, for example for use inside a
-// NotStatement or OrStatement. It can only be referenced as a top-level statement
-// within a rule.
+// NotStatement or OrStatement. You cannot use a managed rule group inside another
+// rule group. You can only reference a managed rule group as a top-level statement
+// within a rule that you define in a web ACL.
 //
 // You are charged additional fees when you use the WAF Bot Control managed
 // rule group AWSManagedRulesBotControlRuleSet, the WAF Fraud Control account
@@ -18633,6 +18876,11 @@ type RateBasedStatementCustomKey struct {
 	// contributes to the aggregation instance. If you use just the query string
 	// as your custom key, then each string fully defines an aggregation instance.
 	QueryString *RateLimitQueryString `type:"structure"`
+
+	// Use the request's URI path as an aggregate key. Each distinct URI path contributes
+	// to the aggregation instance. If you use just the URI path as your custom
+	// key, then each URI path fully defines an aggregation instance.
+	UriPath *RateLimitUriPath `type:"structure"`
 }
 
 // String returns the string representation.
@@ -18679,6 +18927,11 @@ func (s *RateBasedStatementCustomKey) Validate() error {
 	if s.QueryString != nil {
 		if err := s.QueryString.Validate(); err != nil {
 			invalidParams.AddNested("QueryString", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.UriPath != nil {
+		if err := s.UriPath.Validate(); err != nil {
+			invalidParams.AddNested("UriPath", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -18733,6 +18986,12 @@ func (s *RateBasedStatementCustomKey) SetQueryArgument(v *RateLimitQueryArgument
 // SetQueryString sets the QueryString field's value.
 func (s *RateBasedStatementCustomKey) SetQueryString(v *RateLimitQueryString) *RateBasedStatementCustomKey {
 	s.QueryString = v
+	return s
+}
+
+// SetUriPath sets the UriPath field's value.
+func (s *RateBasedStatementCustomKey) SetUriPath(v *RateLimitUriPath) *RateBasedStatementCustomKey {
+	s.UriPath = v
 	return s
 }
 
@@ -18809,7 +19068,7 @@ type RateLimitCookie struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -18965,7 +19224,7 @@ type RateLimitHeader struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -19144,7 +19403,7 @@ type RateLimitQueryArgument struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -19226,7 +19485,7 @@ type RateLimitQueryString struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -19278,6 +19537,76 @@ func (s *RateLimitQueryString) Validate() error {
 
 // SetTextTransformations sets the TextTransformations field's value.
 func (s *RateLimitQueryString) SetTextTransformations(v []*TextTransformation) *RateLimitQueryString {
+	s.TextTransformations = v
+	return s
+}
+
+// Specifies the request's URI path as an aggregate key for a rate-based rule.
+// Each distinct URI path contributes to the aggregation instance. If you use
+// just the URI path as your custom key, then each URI path fully defines an
+// aggregation instance.
+type RateLimitUriPath struct {
+	_ struct{} `type:"structure"`
+
+	// Text transformations eliminate some of the unusual formatting that attackers
+	// use in web requests in an effort to bypass detection. Text transformations
+	// are used in rule match statements, to transform the FieldToMatch request
+	// component before inspecting it, and they're used in rate-based rule statements,
+	// to transform request components before using them as custom aggregation keys.
+	// If you specify one or more transformations to apply, WAF performs all transformations
+	// on the specified content, starting from the lowest priority setting, and
+	// then uses the transformed component contents.
+	//
+	// TextTransformations is a required field
+	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RateLimitUriPath) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RateLimitUriPath) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RateLimitUriPath) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RateLimitUriPath"}
+	if s.TextTransformations == nil {
+		invalidParams.Add(request.NewErrParamRequired("TextTransformations"))
+	}
+	if s.TextTransformations != nil && len(s.TextTransformations) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TextTransformations", 1))
+	}
+	if s.TextTransformations != nil {
+		for i, v := range s.TextTransformations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "TextTransformations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTextTransformations sets the TextTransformations field's value.
+func (s *RateLimitUriPath) SetTextTransformations(v []*TextTransformation) *RateLimitUriPath {
 	s.TextTransformations = v
 	return s
 }
@@ -19349,7 +19678,7 @@ type RegexMatchStatement struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -19535,7 +19864,7 @@ type RegexPatternSetReferenceStatement struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -19740,7 +20069,7 @@ func (s *ReleaseSummary) SetTimestamp(v time.Time) *ReleaseSummary {
 
 // Customizes the maximum size of the request body that your protected CloudFront
 // distributions forward to WAF for inspection. The default size is 16 KB (16,384
-// kilobytes).
+// bytes).
 //
 // You are charged additional fees when your protected resources forward body
 // sizes that are larger than the default. For more information, see WAF Pricing
@@ -19754,7 +20083,7 @@ type RequestBodyAssociatedResourceTypeConfig struct {
 	// CloudFront distribution should send to WAF for inspection. This applies to
 	// statements in the web ACL that inspect the body or JSON body.
 	//
-	// Default: 16 KB (16,384 kilobytes)
+	// Default: 16 KB (16,384 bytes)
 	//
 	// DefaultSizeInspectionLimit is a required field
 	DefaultSizeInspectionLimit *string `type:"string" required:"true" enum:"SizeInspectionLimit"`
@@ -20618,9 +20947,9 @@ func (s *ResponseInspectionStatusCode) SetSuccessCodes(v []*int64) *ResponseInsp
 }
 
 // A single rule, which you can use in a WebACL or RuleGroup to identify web
-// requests that you want to allow, block, or count. Each rule includes one
-// top-level Statement that WAF uses to identify matching web requests, and
-// parameters that govern how WAF handles them.
+// requests that you want to manage in some way. Each rule includes one top-level
+// Statement that WAF uses to identify matching web requests, and parameters
+// that govern how WAF handles them.
 type Rule struct {
 	_ struct{} `type:"structure"`
 
@@ -20649,8 +20978,12 @@ type Rule struct {
 	// this, WAF uses the challenge configuration that's defined for the web ACL.
 	ChallengeConfig *ChallengeConfig `type:"structure"`
 
-	// The name of the rule. You can't change the name of a Rule after you create
-	// it.
+	// The name of the rule.
+	//
+	// If you change the name of a Rule after you create it and you want the rule's
+	// metric name to reflect the change, update the metric name in the rule's VisibilityConfig
+	// settings. WAF doesn't automatically update the metric name when you update
+	// the rule name.
 	//
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
@@ -20706,6 +21039,10 @@ type Rule struct {
 	Statement *Statement `type:"structure" required:"true"`
 
 	// Defines and enables Amazon CloudWatch metrics and web request sample collection.
+	//
+	// If you change the name of a Rule after you create it and you want the rule's
+	// metric name to reflect the change, update the metric name as well. WAF doesn't
+	// automatically update the metric name.
 	//
 	// VisibilityConfig is a required field
 	VisibilityConfig *VisibilityConfig `type:"structure" required:"true"`
@@ -21115,10 +21452,9 @@ type RuleGroup struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The Rule statements used to identify the web requests that you want to allow,
-	// block, or count. Each rule includes one top-level statement that WAF uses
-	// to identify matching web requests, and parameters that govern how WAF handles
-	// them.
+	// The Rule statements used to identify the web requests that you want to manage.
+	// Each rule includes one top-level statement that WAF uses to identify matching
+	// web requests, and parameters that govern how WAF handles them.
 	Rules []*Rule `type:"list"`
 
 	// Defines and enables Amazon CloudWatch metrics and web request sample collection.
@@ -21216,8 +21552,9 @@ func (s *RuleGroup) SetVisibilityConfig(v *VisibilityConfig) *RuleGroup {
 // rule group in this statement.
 //
 // You cannot nest a RuleGroupReferenceStatement, for example for use inside
-// a NotStatement or OrStatement. You can only use a rule group reference statement
-// at the top level inside a web ACL.
+// a NotStatement or OrStatement. You cannot use a rule group reference statement
+// inside another rule group. You can only reference a rule group as a top-level
+// statement within a rule that you define in a web ACL.
 type RuleGroupReferenceStatement struct {
 	_ struct{} `type:"structure"`
 
@@ -21712,12 +22049,12 @@ func (s *SingleQueryArgument) SetName(v string) *SingleQueryArgument {
 //
 // If you configure WAF to inspect the request body, WAF inspects only the number
 // of bytes of the body up to the limit for the web ACL. By default, for regional
-// web ACLs, this limit is 8 KB (8,192 kilobytes) and for CloudFront web ACLs,
-// this limit is 16 KB (16,384 kilobytes). For CloudFront web ACLs, you can
-// increase the limit in the web ACL AssociationConfig, for additional fees.
-// If you know that the request body for your web requests should never exceed
-// the inspection limit, you could use a size constraint statement to block
-// requests that have a larger request body size.
+// web ACLs, this limit is 8 KB (8,192 bytes) and for CloudFront web ACLs, this
+// limit is 16 KB (16,384 bytes). For CloudFront web ACLs, you can increase
+// the limit in the web ACL AssociationConfig, for additional fees. If you know
+// that the request body for your web requests should never exceed the inspection
+// limit, you could use a size constraint statement to block requests that have
+// a larger request body size.
 //
 // If you choose URI for the value of Part of the request to filter on, the
 // slash (/) in the URI counts as one character. For example, the URI /logo.jpg
@@ -21747,7 +22084,7 @@ type SizeConstraintStatement struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -21867,7 +22204,7 @@ type SqliMatchStatement struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`
@@ -22021,8 +22358,9 @@ type Statement struct {
 	// in this statement. You can retrieve the required names by calling ListAvailableManagedRuleGroups.
 	//
 	// You cannot nest a ManagedRuleGroupStatement, for example for use inside a
-	// NotStatement or OrStatement. It can only be referenced as a top-level statement
-	// within a rule.
+	// NotStatement or OrStatement. You cannot use a managed rule group inside another
+	// rule group. You can only reference a managed rule group as a top-level statement
+	// within a rule that you define in a web ACL.
 	//
 	// You are charged additional fees when you use the WAF Bot Control managed
 	// rule group AWSManagedRulesBotControlRuleSet, the WAF Fraud Control account
@@ -22141,8 +22479,9 @@ type Statement struct {
 	// rule group in this statement.
 	//
 	// You cannot nest a RuleGroupReferenceStatement, for example for use inside
-	// a NotStatement or OrStatement. You can only use a rule group reference statement
-	// at the top level inside a web ACL.
+	// a NotStatement or OrStatement. You cannot use a rule group reference statement
+	// inside another rule group. You can only reference a rule group as a top-level
+	// statement within a rule that you define in a web ACL.
 	RuleGroupReferenceStatement *RuleGroupReferenceStatement `type:"structure"`
 
 	// A rule statement that compares a number of bytes against the size of a request
@@ -22152,12 +22491,12 @@ type Statement struct {
 	//
 	// If you configure WAF to inspect the request body, WAF inspects only the number
 	// of bytes of the body up to the limit for the web ACL. By default, for regional
-	// web ACLs, this limit is 8 KB (8,192 kilobytes) and for CloudFront web ACLs,
-	// this limit is 16 KB (16,384 kilobytes). For CloudFront web ACLs, you can
-	// increase the limit in the web ACL AssociationConfig, for additional fees.
-	// If you know that the request body for your web requests should never exceed
-	// the inspection limit, you could use a size constraint statement to block
-	// requests that have a larger request body size.
+	// web ACLs, this limit is 8 KB (8,192 bytes) and for CloudFront web ACLs, this
+	// limit is 16 KB (16,384 bytes). For CloudFront web ACLs, you can increase
+	// the limit in the web ACL AssociationConfig, for additional fees. If you know
+	// that the request body for your web requests should never exceed the inspection
+	// limit, you could use a size constraint statement to block requests that have
+	// a larger request body size.
 	//
 	// If you choose URI for the value of Part of the request to filter on, the
 	// slash (/) in the URI counts as one character. For example, the URI /logo.jpg
@@ -22609,116 +22948,9 @@ type TextTransformation struct {
 	// Priority is a required field
 	Priority *int64 `type:"integer" required:"true"`
 
-	// You can specify the following transformation types:
-	//
-	// BASE64_DECODE - Decode a Base64-encoded string.
-	//
-	// BASE64_DECODE_EXT - Decode a Base64-encoded string, but use a forgiving implementation
-	// that ignores characters that aren't valid.
-	//
-	// CMD_LINE - Command-line transformations. These are helpful in reducing effectiveness
-	// of attackers who inject an operating system command-line command and use
-	// unusual formatting to disguise some or all of the command.
-	//
-	//    * Delete the following characters: \ " ' ^
-	//
-	//    * Delete spaces before the following characters: / (
-	//
-	//    * Replace the following characters with a space: , ;
-	//
-	//    * Replace multiple spaces with one space
-	//
-	//    * Convert uppercase letters (A-Z) to lowercase (a-z)
-	//
-	// COMPRESS_WHITE_SPACE - Replace these characters with a space character (decimal
-	// 32):
-	//
-	//    * \f, formfeed, decimal 12
-	//
-	//    * \t, tab, decimal 9
-	//
-	//    * \n, newline, decimal 10
-	//
-	//    * \r, carriage return, decimal 13
-	//
-	//    * \v, vertical tab, decimal 11
-	//
-	//    * Non-breaking space, decimal 160
-	//
-	// COMPRESS_WHITE_SPACE also replaces multiple spaces with one space.
-	//
-	// CSS_DECODE - Decode characters that were encoded using CSS 2.x escape rules
-	// syndata.html#characters. This function uses up to two bytes in the decoding
-	// process, so it can help to uncover ASCII characters that were encoded using
-	// CSS encoding that wouldn’t typically be encoded. It's also useful in countering
-	// evasion, which is a combination of a backslash and non-hexadecimal characters.
-	// For example, ja\vascript for javascript.
-	//
-	// ESCAPE_SEQ_DECODE - Decode the following ANSI C escape sequences: \a, \b,
-	// \f, \n, \r, \t, \v, \\, \?, \', \", \xHH (hexadecimal), \0OOO (octal). Encodings
-	// that aren't valid remain in the output.
-	//
-	// HEX_DECODE - Decode a string of hexadecimal characters into a binary.
-	//
-	// HTML_ENTITY_DECODE - Replace HTML-encoded characters with unencoded characters.
-	// HTML_ENTITY_DECODE performs these operations:
-	//
-	//    * Replaces (ampersand)quot; with "
-	//
-	//    * Replaces (ampersand)nbsp; with a non-breaking space, decimal 160
-	//
-	//    * Replaces (ampersand)lt; with a "less than" symbol
-	//
-	//    * Replaces (ampersand)gt; with >
-	//
-	//    * Replaces characters that are represented in hexadecimal format, (ampersand)#xhhhh;,
-	//    with the corresponding characters
-	//
-	//    * Replaces characters that are represented in decimal format, (ampersand)#nnnn;,
-	//    with the corresponding characters
-	//
-	// JS_DECODE - Decode JavaScript escape sequences. If a \ u HHHH code is in
-	// the full-width ASCII code range of FF01-FF5E, then the higher byte is used
-	// to detect and adjust the lower byte. If not, only the lower byte is used
-	// and the higher byte is zeroed, causing a possible loss of information.
-	//
-	// LOWERCASE - Convert uppercase letters (A-Z) to lowercase (a-z).
-	//
-	// MD5 - Calculate an MD5 hash from the data in the input. The computed hash
-	// is in a raw binary form.
-	//
-	// NONE - Specify NONE if you don't want any text transformations.
-	//
-	// NORMALIZE_PATH - Remove multiple slashes, directory self-references, and
-	// directory back-references that are not at the beginning of the input from
-	// an input string.
-	//
-	// NORMALIZE_PATH_WIN - This is the same as NORMALIZE_PATH, but first converts
-	// backslash characters to forward slashes.
-	//
-	// REMOVE_NULLS - Remove all NULL bytes from the input.
-	//
-	// REPLACE_COMMENTS - Replace each occurrence of a C-style comment (/* ... */)
-	// with a single space. Multiple consecutive occurrences are not compressed.
-	// Unterminated comments are also replaced with a space (ASCII 0x20). However,
-	// a standalone termination of a comment (*/) is not acted upon.
-	//
-	// REPLACE_NULLS - Replace NULL bytes in the input with space characters (ASCII
-	// 0x20).
-	//
-	// SQL_HEX_DECODE - Decode SQL hex data. Example (0x414243) will be decoded
-	// to (ABC).
-	//
-	// URL_DECODE - Decode a URL-encoded value.
-	//
-	// URL_DECODE_UNI - Like URL_DECODE, but with support for Microsoft-specific
-	// %u encoding. If the code is in the full-width ASCII code range of FF01-FF5E,
-	// the higher byte is used to detect and adjust the lower byte. Otherwise, only
-	// the lower byte is used and the higher byte is zeroed.
-	//
-	// UTF8_TO_UNICODE - Convert all UTF-8 character sequences to Unicode. This
-	// helps input normalization, and minimizing false-positives and false-negatives
-	// for non-English languages.
+	// For detailed descriptions of each of the transformation types, see Text transformations
+	// (https://docs.aws.amazon.com/waf/latest/developerguide/waf-rule-statement-transformation.html)
+	// in the WAF Developer Guide.
 	//
 	// Type is a required field
 	Type *string `type:"string" required:"true" enum:"TextTransformationType"`
@@ -22944,24 +23176,23 @@ type UpdateIPSetInput struct {
 	_ struct{} `type:"structure"`
 
 	// Contains an array of strings that specifies zero or more IP addresses or
-	// blocks of IP addresses. All addresses must be specified using Classless Inter-Domain
-	// Routing (CIDR) notation. WAF supports all IPv4 and IPv6 CIDR ranges except
-	// for /0.
+	// blocks of IP addresses that you want WAF to inspect for in incoming requests.
+	// All addresses must be specified using Classless Inter-Domain Routing (CIDR)
+	// notation. WAF supports all IPv4 and IPv6 CIDR ranges except for /0.
 	//
 	// Example address strings:
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from the IP address 192.0.2.44, specify 192.0.2.44/32.
+	//    * For requests that originated from the IP address 192.0.2.44, specify
+	//    192.0.2.44/32.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from IP addresses from 192.0.2.0 to 192.0.2.255, specify 192.0.2.0/24.
+	//    * For requests that originated from IP addresses from 192.0.2.0 to 192.0.2.255,
+	//    specify 192.0.2.0/24.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from the IP address 1111:0000:0000:0000:0000:0000:0000:0111, specify 1111:0000:0000:0000:0000:0000:0000:0111/128.
+	//    * For requests that originated from the IP address 1111:0000:0000:0000:0000:0000:0000:0111,
+	//    specify 1111:0000:0000:0000:0000:0000:0000:0111/128.
 	//
-	//    * To configure WAF to allow, block, or count requests that originated
-	//    from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000 to 1111:0000:0000:0000:ffff:ffff:ffff:ffff,
-	//    specify 1111:0000:0000:0000:0000:0000:0000:0000/64.
+	//    * For requests that originated from IP addresses 1111:0000:0000:0000:0000:0000:0000:0000
+	//    to 1111:0000:0000:0000:ffff:ffff:ffff:ffff, specify 1111:0000:0000:0000:0000:0000:0000:0000/64.
 	//
 	// For more information about CIDR notation, see the Wikipedia entry Classless
 	// Inter-Domain Routing (https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
@@ -23591,10 +23822,9 @@ type UpdateRuleGroupInput struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The Rule statements used to identify the web requests that you want to allow,
-	// block, or count. Each rule includes one top-level statement that WAF uses
-	// to identify matching web requests, and parameters that govern how WAF handles
-	// them.
+	// The Rule statements used to identify the web requests that you want to manage.
+	// Each rule includes one top-level statement that WAF uses to identify matching
+	// web requests, and parameters that govern how WAF handles them.
 	Rules []*Rule `type:"list"`
 
 	// Specifies whether this is for an Amazon CloudFront distribution or for a
@@ -23791,7 +24021,7 @@ type UpdateWebACLInput struct {
 	//
 	// Use this to customize the maximum size of the request body that your protected
 	// CloudFront distributions forward to WAF for inspection. The default is 16
-	// KB (16,384 kilobytes).
+	// KB (16,384 bytes).
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
@@ -23855,10 +24085,9 @@ type UpdateWebACLInput struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The Rule statements used to identify the web requests that you want to allow,
-	// block, or count. Each rule includes one top-level statement that WAF uses
-	// to identify matching web requests, and parameters that govern how WAF handles
-	// them.
+	// The Rule statements used to identify the web requests that you want to manage.
+	// Each rule includes one top-level statement that WAF uses to identify matching
+	// web requests, and parameters that govern how WAF handles them.
 	Rules []*Rule `type:"list"`
 
 	// Specifies whether this is for an Amazon CloudFront distribution or for a
@@ -25665,15 +25894,16 @@ func (s *WAFUnsupportedAggregateKeyTypeException) RequestID() string {
 }
 
 // A web ACL defines a collection of rules to use to inspect and control web
-// requests. Each rule has an action defined (allow, block, or count) for requests
-// that match the statement of the rule. In the web ACL, you assign a default
-// action to take (allow, block) for any request that does not match any of
-// the rules. The rules in a web ACL can be a combination of the types Rule,
-// RuleGroup, and managed rule group. You can associate a web ACL with one or
-// more Amazon Web Services resources to protect. The resources can be an Amazon
-// CloudFront distribution, an Amazon API Gateway REST API, an Application Load
-// Balancer, an AppSync GraphQL API, an Amazon Cognito user pool, an App Runner
-// service, or an Amazon Web Services Verified Access instance.
+// requests. Each rule has a statement that defines what to look for in web
+// requests and an action that WAF applies to requests that match the statement.
+// In the web ACL, you assign a default action to take (allow, block) for any
+// request that does not match any of the rules. The rules in a web ACL can
+// be a combination of the types Rule, RuleGroup, and managed rule group. You
+// can associate a web ACL with one or more Amazon Web Services resources to
+// protect. The resources can be an Amazon CloudFront distribution, an Amazon
+// API Gateway REST API, an Application Load Balancer, an AppSync GraphQL API,
+// an Amazon Cognito user pool, an App Runner service, or an Amazon Web Services
+// Verified Access instance.
 type WebACL struct {
 	_ struct{} `type:"structure"`
 
@@ -25688,7 +25918,7 @@ type WebACL struct {
 	//
 	// Use this to customize the maximum size of the request body that your protected
 	// CloudFront distributions forward to WAF for inspection. The default is 16
-	// KB (16,384 kilobytes).
+	// KB (16,384 bytes).
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
@@ -25792,10 +26022,9 @@ type WebACL struct {
 	// groups, to determine their relative processing order.
 	PreProcessFirewallManagerRuleGroups []*FirewallManagerRuleGroup `type:"list"`
 
-	// The Rule statements used to identify the web requests that you want to allow,
-	// block, or count. Each rule includes one top-level statement that WAF uses
-	// to identify matching web requests, and parameters that govern how WAF handles
-	// them.
+	// The Rule statements used to identify the web requests that you want to manage.
+	// Each rule includes one top-level statement that WAF uses to identify matching
+	// web requests, and parameters that govern how WAF handles them.
 	Rules []*Rule `type:"list"`
 
 	// Specifies the domains that WAF should accept in a web request token. This
@@ -26031,7 +26260,7 @@ type XssMatchStatement struct {
 	// to transform request components before using them as custom aggregation keys.
 	// If you specify one or more transformations to apply, WAF performs all transformations
 	// on the specified content, starting from the lowest priority setting, and
-	// then uses the component contents.
+	// then uses the transformed component contents.
 	//
 	// TextTransformations is a required field
 	TextTransformations []*TextTransformation `min:"1" type:"list" required:"true"`

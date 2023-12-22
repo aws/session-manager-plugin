@@ -294,6 +294,96 @@ func (c *Inspector2) BatchGetCodeSnippetWithContext(ctx aws.Context, input *Batc
 	return out, req.Send()
 }
 
+const opBatchGetFindingDetails = "BatchGetFindingDetails"
+
+// BatchGetFindingDetailsRequest generates a "aws/request.Request" representing the
+// client's request for the BatchGetFindingDetails operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See BatchGetFindingDetails for more information on using the BatchGetFindingDetails
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the BatchGetFindingDetailsRequest method.
+//	req, resp := client.BatchGetFindingDetailsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/BatchGetFindingDetails
+func (c *Inspector2) BatchGetFindingDetailsRequest(input *BatchGetFindingDetailsInput) (req *request.Request, output *BatchGetFindingDetailsOutput) {
+	op := &request.Operation{
+		Name:       opBatchGetFindingDetails,
+		HTTPMethod: "POST",
+		HTTPPath:   "/findings/details/batch/get",
+	}
+
+	if input == nil {
+		input = &BatchGetFindingDetailsInput{}
+	}
+
+	output = &BatchGetFindingDetailsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// BatchGetFindingDetails API operation for Inspector2.
+//
+// Gets vulnerability details for findings.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Inspector2's
+// API operation BatchGetFindingDetails for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request has failed validation due to missing required fields or having
+//     invalid inputs.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The limit on the number of requests per second was exceeded.
+//
+//   - InternalServerException
+//     The request has failed due to an internal failure of the Amazon Inspector
+//     service.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/inspector2-2020-06-08/BatchGetFindingDetails
+func (c *Inspector2) BatchGetFindingDetails(input *BatchGetFindingDetailsInput) (*BatchGetFindingDetailsOutput, error) {
+	req, out := c.BatchGetFindingDetailsRequest(input)
+	return out, req.Send()
+}
+
+// BatchGetFindingDetailsWithContext is the same as BatchGetFindingDetails with the addition of
+// the ability to pass a context and additional request options.
+//
+// See BatchGetFindingDetails for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Inspector2) BatchGetFindingDetailsWithContext(ctx aws.Context, input *BatchGetFindingDetailsInput, opts ...request.Option) (*BatchGetFindingDetailsOutput, error) {
+	req, out := c.BatchGetFindingDetailsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opBatchGetFreeTrialInfo = "BatchGetFreeTrialInfo"
 
 // BatchGetFreeTrialInfoRequest generates a "aws/request.Request" representing the
@@ -799,7 +889,8 @@ func (c *Inspector2) CreateFilterRequest(input *CreateFilterInput) (req *request
 
 // CreateFilter API operation for Inspector2.
 //
-// Creates a filter resource using specified filter criteria.
+// Creates a filter resource using specified filter criteria. When the filter
+// action is set to SUPPRESS this action creates a suppression rule.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6523,6 +6614,95 @@ func (s *BatchGetCodeSnippetOutput) SetErrors(v []*CodeSnippetError) *BatchGetCo
 	return s
 }
 
+type BatchGetFindingDetailsInput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of finding ARNs.
+	//
+	// FindingArns is a required field
+	FindingArns []*string `locationName:"findingArns" min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFindingDetailsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFindingDetailsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BatchGetFindingDetailsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BatchGetFindingDetailsInput"}
+	if s.FindingArns == nil {
+		invalidParams.Add(request.NewErrParamRequired("FindingArns"))
+	}
+	if s.FindingArns != nil && len(s.FindingArns) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("FindingArns", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFindingArns sets the FindingArns field's value.
+func (s *BatchGetFindingDetailsInput) SetFindingArns(v []*string) *BatchGetFindingDetailsInput {
+	s.FindingArns = v
+	return s
+}
+
+type BatchGetFindingDetailsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Error information for findings that details could not be returned for.
+	Errors []*FindingDetailsError `locationName:"errors" type:"list"`
+
+	// A finding's vulnerability details.
+	FindingDetails []*FindingDetail `locationName:"findingDetails" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFindingDetailsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFindingDetailsOutput) GoString() string {
+	return s.String()
+}
+
+// SetErrors sets the Errors field's value.
+func (s *BatchGetFindingDetailsOutput) SetErrors(v []*FindingDetailsError) *BatchGetFindingDetailsOutput {
+	s.Errors = v
+	return s
+}
+
+// SetFindingDetails sets the FindingDetails field's value.
+func (s *BatchGetFindingDetailsOutput) SetFindingDetails(v []*FindingDetail) *BatchGetFindingDetailsOutput {
+	s.FindingDetails = v
+	return s
+}
+
 type BatchGetFreeTrialInfoInput struct {
 	_ struct{} `type:"structure"`
 
@@ -7539,7 +7719,9 @@ type CoverageFilterCriteria struct {
 	// for. The values can be AWS_EC2_INSTANCE, AWS_LAMBDA_FUNCTION or AWS_ECR_REPOSITORY.
 	ResourceType []*CoverageStringFilter `locationName:"resourceType" min:"1" type:"list"`
 
-	// The scan status code to filter on.
+	// The scan status code to filter on. Valid values are: ValidationException,
+	// InternalServerException, ResourceNotFoundException, BadRequestException,
+	// and ThrottlingException.
 	ScanStatusCode []*CoverageStringFilter `locationName:"scanStatusCode" min:"1" type:"list"`
 
 	// The scan status reason to filter on.
@@ -8979,7 +9161,7 @@ type Destination struct {
 	// BucketName is a required field
 	BucketName *string `locationName:"bucketName" type:"string" required:"true"`
 
-	// The prefix of the Amazon S3 bucket used to export findings.
+	// The prefix that the findings will be written under.
 	KeyPrefix *string `locationName:"keyPrefix" type:"string"`
 
 	// The ARN of the KMS key used to encrypt data when exporting findings.
@@ -10056,6 +10238,56 @@ func (s *EpssDetails) SetScore(v float64) *EpssDetails {
 	return s
 }
 
+// Details of the evidence for a vulnerability identified in a finding.
+type Evidence struct {
+	_ struct{} `type:"structure"`
+
+	// The evidence details.
+	EvidenceDetail *string `locationName:"evidenceDetail" type:"string"`
+
+	// The evidence rule.
+	EvidenceRule *string `locationName:"evidenceRule" type:"string"`
+
+	// The evidence severity.
+	Severity *string `locationName:"severity" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Evidence) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Evidence) GoString() string {
+	return s.String()
+}
+
+// SetEvidenceDetail sets the EvidenceDetail field's value.
+func (s *Evidence) SetEvidenceDetail(v string) *Evidence {
+	s.EvidenceDetail = &v
+	return s
+}
+
+// SetEvidenceRule sets the EvidenceRule field's value.
+func (s *Evidence) SetEvidenceRule(v string) *Evidence {
+	s.EvidenceRule = &v
+	return s
+}
+
+// SetSeverity sets the Severity field's value.
+func (s *Evidence) SetSeverity(v string) *Evidence {
+	s.Severity = &v
+	return s
+}
+
 // Contains information on when this exploit was observed.
 type ExploitObserved struct {
 	_ struct{} `type:"structure"`
@@ -10490,7 +10722,7 @@ type FilterCriteria struct {
 	// Details on the date and time a finding was last seen used to filter findings.
 	LastObservedAt []*DateFilter `locationName:"lastObservedAt" min:"1" type:"list"`
 
-	// Details on the ingress source addresses used to filter findings.
+	// Details on network protocol used to filter findings.
 	NetworkProtocol []*StringFilter `locationName:"networkProtocol" min:"1" type:"list"`
 
 	// Details on the port ranges used to filter findings.
@@ -11342,12 +11574,18 @@ type Finding struct {
 	// Remediation is a required field
 	Remediation *Remediation `locationName:"remediation" type:"structure" required:"true"`
 
-	// Contains information on the resources involved in a finding.
+	// Contains information on the resources involved in a finding. The resource
+	// value determines the valid values for type in your request. For more information,
+	// see Finding types (https://docs.aws.amazon.com/inspector/latest/user/findings-types.html)
+	// in the Amazon Inspector user guide.
 	//
 	// Resources is a required field
 	Resources []*Resource `locationName:"resources" min:"1" type:"list" required:"true"`
 
-	// The severity of the finding.
+	// The severity of the finding. UNTRIAGED applies to PACKAGE_VULNERABILITY type
+	// findings that the vendor has not assigned a severity yet. For more information,
+	// see Severity levels for findings (https://docs.aws.amazon.com/inspector/latest/user/findings-understanding-severity.html)
+	// in the Amazon Inspector user guide.
 	//
 	// Severity is a required field
 	Severity *string `locationName:"severity" type:"string" required:"true" enum:"Severity"`
@@ -11360,7 +11598,9 @@ type Finding struct {
 	// The title of the finding.
 	Title *string `locationName:"title" min:"1" type:"string"`
 
-	// The type of the finding.
+	// The type of the finding. The type value determines the valid values for resource
+	// in your request. For more information, see Finding types (https://docs.aws.amazon.com/inspector/latest/user/findings-types.html)
+	// in the Amazon Inspector user guide.
 	//
 	// Type is a required field
 	Type *string `locationName:"type" type:"string" required:"true" enum:"FindingType"`
@@ -11510,6 +11750,178 @@ func (s *Finding) SetType(v string) *Finding {
 // SetUpdatedAt sets the UpdatedAt field's value.
 func (s *Finding) SetUpdatedAt(v time.Time) *Finding {
 	s.UpdatedAt = &v
+	return s
+}
+
+// Details of the vulnerability identified in a finding.
+type FindingDetail struct {
+	_ struct{} `type:"structure"`
+
+	// The Cybersecurity and Infrastructure Security Agency (CISA) details for a
+	// specific vulnerability.
+	CisaData *CisaData `locationName:"cisaData" type:"structure"`
+
+	// The Common Weakness Enumerations (CWEs) associated with the vulnerability.
+	Cwes []*string `locationName:"cwes" type:"list"`
+
+	// The Exploit Prediction Scoring System (EPSS) score of the vulnerability.
+	EpssScore *float64 `locationName:"epssScore" type:"double"`
+
+	// Information on the evidence of the vulnerability.
+	Evidences []*Evidence `locationName:"evidences" type:"list"`
+
+	// Contains information on when this exploit was observed.
+	ExploitObserved *ExploitObserved `locationName:"exploitObserved" type:"structure"`
+
+	// The finding ARN that the vulnerability details are associated with.
+	FindingArn *string `locationName:"findingArn" min:"1" type:"string"`
+
+	// The reference URLs for the vulnerability data.
+	ReferenceUrls []*string `locationName:"referenceUrls" type:"list"`
+
+	// The risk score of the vulnerability.
+	RiskScore *int64 `locationName:"riskScore" type:"integer"`
+
+	// The known malware tools or kits that can exploit the vulnerability.
+	Tools []*string `locationName:"tools" type:"list"`
+
+	// The MITRE adversary tactics, techniques, or procedures (TTPs) associated
+	// with the vulnerability.
+	Ttps []*string `locationName:"ttps" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FindingDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FindingDetail) GoString() string {
+	return s.String()
+}
+
+// SetCisaData sets the CisaData field's value.
+func (s *FindingDetail) SetCisaData(v *CisaData) *FindingDetail {
+	s.CisaData = v
+	return s
+}
+
+// SetCwes sets the Cwes field's value.
+func (s *FindingDetail) SetCwes(v []*string) *FindingDetail {
+	s.Cwes = v
+	return s
+}
+
+// SetEpssScore sets the EpssScore field's value.
+func (s *FindingDetail) SetEpssScore(v float64) *FindingDetail {
+	s.EpssScore = &v
+	return s
+}
+
+// SetEvidences sets the Evidences field's value.
+func (s *FindingDetail) SetEvidences(v []*Evidence) *FindingDetail {
+	s.Evidences = v
+	return s
+}
+
+// SetExploitObserved sets the ExploitObserved field's value.
+func (s *FindingDetail) SetExploitObserved(v *ExploitObserved) *FindingDetail {
+	s.ExploitObserved = v
+	return s
+}
+
+// SetFindingArn sets the FindingArn field's value.
+func (s *FindingDetail) SetFindingArn(v string) *FindingDetail {
+	s.FindingArn = &v
+	return s
+}
+
+// SetReferenceUrls sets the ReferenceUrls field's value.
+func (s *FindingDetail) SetReferenceUrls(v []*string) *FindingDetail {
+	s.ReferenceUrls = v
+	return s
+}
+
+// SetRiskScore sets the RiskScore field's value.
+func (s *FindingDetail) SetRiskScore(v int64) *FindingDetail {
+	s.RiskScore = &v
+	return s
+}
+
+// SetTools sets the Tools field's value.
+func (s *FindingDetail) SetTools(v []*string) *FindingDetail {
+	s.Tools = v
+	return s
+}
+
+// SetTtps sets the Ttps field's value.
+func (s *FindingDetail) SetTtps(v []*string) *FindingDetail {
+	s.Ttps = v
+	return s
+}
+
+// Details about an error encountered when trying to return vulnerability data
+// for a finding.
+type FindingDetailsError struct {
+	_ struct{} `type:"structure"`
+
+	// The error code.
+	//
+	// ErrorCode is a required field
+	ErrorCode *string `locationName:"errorCode" type:"string" required:"true" enum:"FindingDetailsErrorCode"`
+
+	// The error message.
+	//
+	// ErrorMessage is a required field
+	ErrorMessage *string `locationName:"errorMessage" min:"1" type:"string" required:"true"`
+
+	// The finding ARN that returned an error.
+	//
+	// FindingArn is a required field
+	FindingArn *string `locationName:"findingArn" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FindingDetailsError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FindingDetailsError) GoString() string {
+	return s.String()
+}
+
+// SetErrorCode sets the ErrorCode field's value.
+func (s *FindingDetailsError) SetErrorCode(v string) *FindingDetailsError {
+	s.ErrorCode = &v
+	return s
+}
+
+// SetErrorMessage sets the ErrorMessage field's value.
+func (s *FindingDetailsError) SetErrorMessage(v string) *FindingDetailsError {
+	s.ErrorMessage = &v
+	return s
+}
+
+// SetFindingArn sets the FindingArn field's value.
+func (s *FindingDetailsError) SetFindingArn(v string) *FindingDetailsError {
+	s.FindingArn = &v
 	return s
 }
 
@@ -13217,13 +13629,16 @@ func (s *LambdaVpcConfig) SetVpcId(v string) *LambdaVpcConfig {
 type ListAccountPermissionsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the NextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
 	// The service scan type to check permissions for.
@@ -13331,13 +13746,16 @@ type ListCoverageInput struct {
 	// for your environment.
 	FilterCriteria *CoverageFilterCriteria `locationName:"filterCriteria" type:"structure"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the nextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
@@ -13563,13 +13981,16 @@ func (s *ListCoverageStatisticsOutput) SetTotalCounts(v int64) *ListCoverageStat
 type ListDelegatedAdminAccountsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the nextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
@@ -13668,13 +14089,16 @@ type ListFiltersInput struct {
 	// The Amazon resource number (ARN) of the filter.
 	Arns []*string `locationName:"arns" type:"list"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the nextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
@@ -13794,13 +14218,16 @@ type ListFindingAggregationsInput struct {
 	// AggregationType is a required field
 	AggregationType *string `locationName:"aggregationType" type:"string" required:"true" enum:"AggregationType"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the nextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
@@ -13946,13 +14373,16 @@ type ListFindingsInput struct {
 	// Details on the filters to apply to your finding results.
 	FilterCriteria *FilterCriteria `locationName:"filterCriteria" type:"structure"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the nextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
 	// Details on the sort criteria to apply to your finding results.
@@ -14070,13 +14500,16 @@ func (s *ListFindingsOutput) SetNextToken(v string) *ListFindingsOutput {
 type ListMembersInput struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the nextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
 	// Specifies whether to list only currently associated members if True or to
@@ -14260,13 +14693,16 @@ type ListUsageTotalsInput struct {
 	// The Amazon Web Services account IDs to retrieve usage totals for.
 	AccountIds []*string `locationName:"accountIds" min:"1" type:"list"`
 
-	// The maximum number of results to return in the response.
+	// The maximum number of results the response can return. If your request would
+	// return more than the maximum the response will return a nextToken value,
+	// use this value when you call the action again to get the remaining results.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// A token to use for paginating results that are returned in the response.
 	// Set the value of this parameter to null for the first request to a list action.
-	// For subsequent calls, use the NextToken value returned from the previous
-	// request to continue listing results after the first page.
+	// If your response returns more than the maxResults maximum value it will also
+	// return a nextToken value. For subsequent calls, use the nextToken value returned
+	// from the previous request to continue listing results after the first page.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -16288,7 +16724,99 @@ func (s *ResourceStringFilter) SetValue(v string) *ResourceStringFilter {
 type ScanStatus struct {
 	_ struct{} `type:"structure"`
 
-	// The reason for the scan.
+	// The scan status. Possible return values and descriptions are:
+	//
+	// PENDING_INITIAL_SCAN - This resource has been identified for scanning, results
+	// will be available soon.
+	//
+	// ACCESS_DENIED - Resource access policy restricting Amazon Inspector access.
+	// Please update the IAM policy.
+	//
+	// INTERNAL_ERROR - Amazon Inspector has encountered an internal error for this
+	// resource. Amazon Inspector service will automatically resolve the issue and
+	// resume the scanning. No action required from the user.
+	//
+	// UNMANAGED_EC2_INSTANCE - The EC2 instance is not managed by SSM, please use
+	// the following SSM automation to remediate the issue: https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html
+	// (https://docs.aws.amazon.com/systems-manager-automation-runbooks/latest/userguide/automation-awssupport-troubleshoot-managed-instance.html).
+	// Once the instance becomes managed by SSM, Inspector will automatically begin
+	// scanning this instance.
+	//
+	// UNSUPPORTED_OS - Amazon Inspector does not support this OS, architecture,
+	// or image manifest type at this time. To see a complete list of supported
+	// operating systems see: https://docs.aws.amazon.com/inspector/latest/user/supported.html
+	// (https://docs.aws.amazon.com/inspector/latest/user/supported.html).
+	//
+	// SCAN_ELIGIBILITY_EXPIRED - The configured scan duration has lapsed for this
+	// image.
+	//
+	// RESOURCE_TERMINATED - This resource has been terminated. The findings and
+	// coverage associated with this resource are in the process of being cleaned
+	// up.
+	//
+	// SUCCESSFUL - The scan was successful.
+	//
+	// NO_RESOURCES_FOUND - Reserved for future use.
+	//
+	// IMAGE_SIZE_EXCEEDED - Reserved for future use.
+	//
+	// SCAN_FREQUENCY_MANUAL - This image will not be covered by Amazon Inspector
+	// due to the repository scan frequency configuration.
+	//
+	// SCAN_FREQUENCY_SCAN_ON_PUSH - This image will be scanned one time and will
+	// not new findings because of the scan frequency configuration.
+	//
+	// EC2_INSTANCE_STOPPED - This EC2 instance is in a stopped state, therefore,
+	// Amazon Inspector will pause scanning. The existing findings will continue
+	// to exist until the instance is terminated. Once the instance is re-started,
+	// Inspector will automatically start scanning the instance again. Please note
+	// that you will not be charged for this instance while it’s in a stopped
+	// state.
+	//
+	// PENDING_DISABLE - This resource is pending cleanup during disablement. The
+	// customer will not be billed while a resource is in the pending disable status.
+	//
+	// NO INVENTORY - Amazon Inspector couldn’t find software application inventory
+	// to scan for vulnerabilities. This might be caused due to required Amazon
+	// Inspector associations being deleted or failing to run on your resource.
+	// Please verify the status of InspectorInventoryCollection-do-not-delete association
+	// in the SSM console for the resource. Additionally, you can verify the instance’s
+	// inventory in the SSM Fleet Manager console.
+	//
+	// STALE_INVENTORY - Amazon Inspector wasn’t able to collect an updated software
+	// application inventory in the last 7 days. Please confirm the required Amazon
+	// Inspector associations still exist and you can still see an updated inventory
+	// in the SSM console.
+	//
+	// EXCLUDED_BY_TAG - This resource was not scanned because it has been excluded
+	// by a tag.
+	//
+	// UNSUPPORTED_RUNTIME - The function was not scanned because it has an unsupported
+	// runtime. To see a complete list of supported runtimes see: https://docs.aws.amazon.com/inspector/latest/user/supported.html
+	// (https://docs.aws.amazon.com/inspector/latest/user/supported.html).
+	//
+	// UNSUPPORTED_MEDIA_TYPE - The ECR image has an unsupported media type.
+	//
+	// UNSUPPORTED_CONFIG_FILE - Reserved for future use.
+	//
+	// DEEP_INSPECTION_PACKAGE_COLLECTION_LIMIT_EXCEEDED - The instance has exceeded
+	// the 5000 package limit for Amazon Inspector Deep inspection. To resume Deep
+	// inspection for this instance you can try to adjust the custom paths associated
+	// with the account.
+	//
+	// DEEP_INSPECTION_DAILY_SSM_INVENTORY_LIMIT_EXCEEDED - The SSM agent couldn't
+	// send inventory to Amazon Inspector because the SSM quota for Inventory data
+	// collected per instance per day has already been reached for this instance.
+	//
+	// DEEP_INSPECTION_COLLECTION_TIME_LIMIT_EXCEEDED - Amazon Inspector failed
+	// to extract the package inventory because the package collection time exceeding
+	// the maximum threshold of 15 minutes.
+	//
+	// DEEP_INSPECTION_NO_INVENTORY The Amazon Inspector plugin hasn't yet been
+	// able to collect an inventory of packages for this instance. This is usually
+	// the result of a pending scan, however, if this status persists after 6 hours,
+	// use SSM to ensure that the required Amazon Inspector associations exist and
+	// are running for the instance.
 	//
 	// Reason is a required field
 	Reason *string `locationName:"reason" type:"string" required:"true" enum:"ScanStatusReason"`
@@ -18129,7 +18657,8 @@ type Vulnerability struct {
 	// A list of related vulnerabilities.
 	RelatedVulnerabilities []*string `locationName:"relatedVulnerabilities" type:"list"`
 
-	// The source of the vulnerability information.
+	// The source of the vulnerability information. Possible results are RHEL, AMAZON_CVE,
+	// DEBIAN or NVD.
 	Source *string `locationName:"source" type:"string" enum:"VulnerabilitySource"`
 
 	// A link to the official source material for this vulnerability.
@@ -18725,6 +19254,9 @@ const (
 
 	// Ec2PlatformUnknown is a Ec2Platform enum value
 	Ec2PlatformUnknown = "UNKNOWN"
+
+	// Ec2PlatformMacos is a Ec2Platform enum value
+	Ec2PlatformMacos = "MACOS"
 )
 
 // Ec2Platform_Values returns all elements of the Ec2Platform enum
@@ -18733,6 +19265,7 @@ func Ec2Platform_Values() []string {
 		Ec2PlatformWindows,
 		Ec2PlatformLinux,
 		Ec2PlatformUnknown,
+		Ec2PlatformMacos,
 	}
 }
 
@@ -18913,6 +19446,30 @@ func FilterAction_Values() []string {
 	return []string{
 		FilterActionNone,
 		FilterActionSuppress,
+	}
+}
+
+const (
+	// FindingDetailsErrorCodeInternalError is a FindingDetailsErrorCode enum value
+	FindingDetailsErrorCodeInternalError = "INTERNAL_ERROR"
+
+	// FindingDetailsErrorCodeAccessDenied is a FindingDetailsErrorCode enum value
+	FindingDetailsErrorCodeAccessDenied = "ACCESS_DENIED"
+
+	// FindingDetailsErrorCodeFindingDetailsNotFound is a FindingDetailsErrorCode enum value
+	FindingDetailsErrorCodeFindingDetailsNotFound = "FINDING_DETAILS_NOT_FOUND"
+
+	// FindingDetailsErrorCodeInvalidInput is a FindingDetailsErrorCode enum value
+	FindingDetailsErrorCodeInvalidInput = "INVALID_INPUT"
+)
+
+// FindingDetailsErrorCode_Values returns all elements of the FindingDetailsErrorCode enum
+func FindingDetailsErrorCode_Values() []string {
+	return []string{
+		FindingDetailsErrorCodeInternalError,
+		FindingDetailsErrorCodeAccessDenied,
+		FindingDetailsErrorCodeFindingDetailsNotFound,
+		FindingDetailsErrorCodeInvalidInput,
 	}
 }
 

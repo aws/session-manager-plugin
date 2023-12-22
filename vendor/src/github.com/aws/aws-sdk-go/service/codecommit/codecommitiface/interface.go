@@ -270,6 +270,13 @@ type CodeCommitAPI interface {
 	ListBranchesPages(*codecommit.ListBranchesInput, func(*codecommit.ListBranchesOutput, bool) bool) error
 	ListBranchesPagesWithContext(aws.Context, *codecommit.ListBranchesInput, func(*codecommit.ListBranchesOutput, bool) bool, ...request.Option) error
 
+	ListFileCommitHistory(*codecommit.ListFileCommitHistoryInput) (*codecommit.ListFileCommitHistoryOutput, error)
+	ListFileCommitHistoryWithContext(aws.Context, *codecommit.ListFileCommitHistoryInput, ...request.Option) (*codecommit.ListFileCommitHistoryOutput, error)
+	ListFileCommitHistoryRequest(*codecommit.ListFileCommitHistoryInput) (*request.Request, *codecommit.ListFileCommitHistoryOutput)
+
+	ListFileCommitHistoryPages(*codecommit.ListFileCommitHistoryInput, func(*codecommit.ListFileCommitHistoryOutput, bool) bool) error
+	ListFileCommitHistoryPagesWithContext(aws.Context, *codecommit.ListFileCommitHistoryInput, func(*codecommit.ListFileCommitHistoryOutput, bool) bool, ...request.Option) error
+
 	ListPullRequests(*codecommit.ListPullRequestsInput) (*codecommit.ListPullRequestsOutput, error)
 	ListPullRequestsWithContext(aws.Context, *codecommit.ListPullRequestsInput, ...request.Option) (*codecommit.ListPullRequestsOutput, error)
 	ListPullRequestsRequest(*codecommit.ListPullRequestsInput) (*request.Request, *codecommit.ListPullRequestsOutput)
@@ -402,6 +409,10 @@ type CodeCommitAPI interface {
 	UpdateRepositoryDescription(*codecommit.UpdateRepositoryDescriptionInput) (*codecommit.UpdateRepositoryDescriptionOutput, error)
 	UpdateRepositoryDescriptionWithContext(aws.Context, *codecommit.UpdateRepositoryDescriptionInput, ...request.Option) (*codecommit.UpdateRepositoryDescriptionOutput, error)
 	UpdateRepositoryDescriptionRequest(*codecommit.UpdateRepositoryDescriptionInput) (*request.Request, *codecommit.UpdateRepositoryDescriptionOutput)
+
+	UpdateRepositoryEncryptionKey(*codecommit.UpdateRepositoryEncryptionKeyInput) (*codecommit.UpdateRepositoryEncryptionKeyOutput, error)
+	UpdateRepositoryEncryptionKeyWithContext(aws.Context, *codecommit.UpdateRepositoryEncryptionKeyInput, ...request.Option) (*codecommit.UpdateRepositoryEncryptionKeyOutput, error)
+	UpdateRepositoryEncryptionKeyRequest(*codecommit.UpdateRepositoryEncryptionKeyInput) (*request.Request, *codecommit.UpdateRepositoryEncryptionKeyOutput)
 
 	UpdateRepositoryName(*codecommit.UpdateRepositoryNameInput) (*codecommit.UpdateRepositoryNameOutput, error)
 	UpdateRepositoryNameWithContext(aws.Context, *codecommit.UpdateRepositoryNameInput, ...request.Option) (*codecommit.UpdateRepositoryNameOutput, error)

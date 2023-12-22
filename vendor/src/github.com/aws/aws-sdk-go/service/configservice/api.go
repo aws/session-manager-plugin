@@ -7614,6 +7614,10 @@ func (c *ConfigService) GetResourceConfigHistoryRequest(input *GetResourceConfig
 
 // GetResourceConfigHistory API operation for AWS Config.
 //
+// For accurate reporting on the compliance status, you must record the AWS::Config::ResourceCompliance
+// resource type. For more information, see Selecting Which Resources Config
+// Records (https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html).
+//
 // Returns a list of ConfigurationItems for the specified resource. The list
 // contains details about each state of the resource during the specified time
 // interval. If you specified a retention period to retain your ConfigurationItems
@@ -9336,6 +9340,17 @@ func (c *ConfigService) PutConfigurationRecorderRequest(input *PutConfigurationR
 //     You have reached the limit of the number of configuration recorders you can
 //     create.
 //
+//   - ValidationException
+//     The requested action is not valid.
+//
+//     For PutStoredQuery, you will see this exception if there are missing required
+//     fields or if the input value fails the validation, or if you are trying to
+//     create more than 300 queries.
+//
+//     For GetStoredQuery, ListStoredQuery, and DeleteStoredQuery you will see this
+//     exception if there are missing required fields or if the input value fails
+//     the validation.
+//
 //   - InvalidConfigurationRecorderNameException
 //     You have provided a name for the configuration recorder that is not valid.
 //
@@ -9571,8 +9586,10 @@ func (c *ConfigService) PutDeliveryChannelRequest(input *PutDeliveryChannelInput
 
 // PutDeliveryChannel API operation for AWS Config.
 //
-// Creates a delivery channel object to deliver configuration information to
-// an Amazon S3 bucket and Amazon SNS topic.
+// Creates a delivery channel object to deliver configuration information and
+// other compliance information to an Amazon S3 bucket and Amazon SNS topic.
+// For more information, see Notifications that Config Sends to an Amazon SNS
+// topic (https://docs.aws.amazon.com/config/latest/developerguide/notifications-for-AWS-Config.html).
 //
 // Before you can create a delivery channel, you must create a configuration
 // recorder.
@@ -12710,7 +12727,7 @@ func (s *AggregationAuthorization) SetCreationTime(v time.Time) *AggregationAuth
 	return s
 }
 
-// The detailed configuration of a specified resource.
+// The detailed configurations of a specified resource.
 type BaseConfigurationItem struct {
 	_ struct{} `type:"structure"`
 
@@ -12729,31 +12746,35 @@ type BaseConfigurationItem struct {
 	// The description of the resource configuration.
 	Configuration *string `locationName:"configuration" type:"string"`
 
-	// The time when the configuration recording was initiated.
+	// The time when the recording of configuration changes was initiated for the
+	// resource.
 	ConfigurationItemCaptureTime *time.Time `locationName:"configurationItemCaptureTime" type:"timestamp"`
 
-	// The configuration item status. The valid values are:
+	// The time when configuration changes for the resource were delivered.
+	ConfigurationItemDeliveryTime *time.Time `locationName:"configurationItemDeliveryTime" type:"timestamp"`
+
+	// The configuration item status. Valid values include:
 	//
-	//    * OK – The resource configuration has been updated
+	//    * OK – The resource configuration has been updated.
 	//
-	//    * ResourceDiscovered – The resource was newly discovered
+	//    * ResourceDiscovered – The resource was newly discovered.
 	//
-	//    * ResourceNotRecorded – The resource was discovered but its configuration
-	//    was not recorded since the recorder excludes the recording of resources
-	//    of this type
+	//    * ResourceNotRecorded – The resource was discovered, but its configuration
+	//    was not recorded since the recorder doesn't record resources of this type.
 	//
 	//    * ResourceDeleted – The resource was deleted
 	//
-	//    * ResourceDeletedNotRecorded – The resource was deleted but its configuration
-	//    was not recorded since the recorder excludes the recording of resources
-	//    of this type
-	//
-	// The CIs do not incur any cost.
+	//    * ResourceDeletedNotRecorded – The resource was deleted, but its configuration
+	//    was not recorded since the recorder doesn't record resources of this type.
 	ConfigurationItemStatus *string `locationName:"configurationItemStatus" type:"string" enum:"ConfigurationItemStatus"`
 
 	// An identifier that indicates the ordering of the configuration items of a
 	// resource.
 	ConfigurationStateId *string `locationName:"configurationStateId" type:"string"`
+
+	// The recording frequency that Config uses to record configuration changes
+	// for the resource.
+	RecordingFrequency *string `locationName:"recordingFrequency" type:"string" enum:"RecordingFrequency"`
 
 	// The time stamp when the resource was created.
 	ResourceCreationTime *time.Time `locationName:"resourceCreationTime" type:"timestamp"`
@@ -12829,6 +12850,12 @@ func (s *BaseConfigurationItem) SetConfigurationItemCaptureTime(v time.Time) *Ba
 	return s
 }
 
+// SetConfigurationItemDeliveryTime sets the ConfigurationItemDeliveryTime field's value.
+func (s *BaseConfigurationItem) SetConfigurationItemDeliveryTime(v time.Time) *BaseConfigurationItem {
+	s.ConfigurationItemDeliveryTime = &v
+	return s
+}
+
 // SetConfigurationItemStatus sets the ConfigurationItemStatus field's value.
 func (s *BaseConfigurationItem) SetConfigurationItemStatus(v string) *BaseConfigurationItem {
 	s.ConfigurationItemStatus = &v
@@ -12838,6 +12865,12 @@ func (s *BaseConfigurationItem) SetConfigurationItemStatus(v string) *BaseConfig
 // SetConfigurationStateId sets the ConfigurationStateId field's value.
 func (s *BaseConfigurationItem) SetConfigurationStateId(v string) *BaseConfigurationItem {
 	s.ConfigurationStateId = &v
+	return s
+}
+
+// SetRecordingFrequency sets the RecordingFrequency field's value.
+func (s *BaseConfigurationItem) SetRecordingFrequency(v string) *BaseConfigurationItem {
+	s.RecordingFrequency = &v
 	return s
 }
 
@@ -14240,8 +14273,12 @@ type ConfigurationItem struct {
 	// The description of the resource configuration.
 	Configuration *string `locationName:"configuration" type:"string"`
 
-	// The time when the configuration recording was initiated.
+	// The time when the recording of configuration changes was initiated for the
+	// resource.
 	ConfigurationItemCaptureTime *time.Time `locationName:"configurationItemCaptureTime" type:"timestamp"`
+
+	// The time when configuration changes for the resource were delivered.
+	ConfigurationItemDeliveryTime *time.Time `locationName:"configurationItemDeliveryTime" type:"timestamp"`
 
 	// Unique MD5 hash that represents the configuration item's state.
 	//
@@ -14249,28 +14286,28 @@ type ConfigurationItem struct {
 	// that are associated with the same resource.
 	ConfigurationItemMD5Hash *string `locationName:"configurationItemMD5Hash" type:"string"`
 
-	// The configuration item status. The valid values are:
+	// The configuration item status. Valid values include:
 	//
 	//    * OK – The resource configuration has been updated
 	//
 	//    * ResourceDiscovered – The resource was newly discovered
 	//
 	//    * ResourceNotRecorded – The resource was discovered but its configuration
-	//    was not recorded since the recorder excludes the recording of resources
-	//    of this type
+	//    was not recorded since the recorder doesn't record resources of this type
 	//
 	//    * ResourceDeleted – The resource was deleted
 	//
 	//    * ResourceDeletedNotRecorded – The resource was deleted but its configuration
-	//    was not recorded since the recorder excludes the recording of resources
-	//    of this type
-	//
-	// The CIs do not incur any cost.
+	//    was not recorded since the recorder doesn't record resources of this type
 	ConfigurationItemStatus *string `locationName:"configurationItemStatus" type:"string" enum:"ConfigurationItemStatus"`
 
 	// An identifier that indicates the ordering of the configuration items of a
 	// resource.
 	ConfigurationStateId *string `locationName:"configurationStateId" type:"string"`
+
+	// The recording frequency that Config uses to record configuration changes
+	// for the resource.
+	RecordingFrequency *string `locationName:"recordingFrequency" type:"string" enum:"RecordingFrequency"`
 
 	// A list of CloudTrail event IDs.
 	//
@@ -14364,6 +14401,12 @@ func (s *ConfigurationItem) SetConfigurationItemCaptureTime(v time.Time) *Config
 	return s
 }
 
+// SetConfigurationItemDeliveryTime sets the ConfigurationItemDeliveryTime field's value.
+func (s *ConfigurationItem) SetConfigurationItemDeliveryTime(v time.Time) *ConfigurationItem {
+	s.ConfigurationItemDeliveryTime = &v
+	return s
+}
+
 // SetConfigurationItemMD5Hash sets the ConfigurationItemMD5Hash field's value.
 func (s *ConfigurationItem) SetConfigurationItemMD5Hash(v string) *ConfigurationItem {
 	s.ConfigurationItemMD5Hash = &v
@@ -14379,6 +14422,12 @@ func (s *ConfigurationItem) SetConfigurationItemStatus(v string) *ConfigurationI
 // SetConfigurationStateId sets the ConfigurationStateId field's value.
 func (s *ConfigurationItem) SetConfigurationStateId(v string) *ConfigurationItem {
 	s.ConfigurationStateId = &v
+	return s
+}
+
+// SetRecordingFrequency sets the RecordingFrequency field's value.
+func (s *ConfigurationItem) SetRecordingFrequency(v string) *ConfigurationItem {
+	s.RecordingFrequency = &v
 	return s
 }
 
@@ -14436,9 +14485,9 @@ func (s *ConfigurationItem) SetVersion(v string) *ConfigurationItem {
 	return s
 }
 
-// Records configuration changes to specified resource types. For more information
-// about the configuration recorder, see Managing the Configuration Recorder
-// (https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html)
+// Records configuration changes to your specified resource types. For more
+// information about the configuration recorder, see Managing the Configuration
+// Recorder (https://docs.aws.amazon.com/config/latest/developerguide/stop-start-recorder.html)
 // in the Config Developer Guide.
 type ConfigurationRecorder struct {
 	_ struct{} `type:"structure"`
@@ -14469,6 +14518,22 @@ type ConfigurationRecorder struct {
 	// you can run these types of workloads in a separate account with Config turned
 	// off to avoid increased configuration recording and rule evaluations.
 	RecordingGroup *RecordingGroup `locationName:"recordingGroup" type:"structure"`
+
+	// Specifies the default recording frequency that Config uses to record configuration
+	// changes. Config supports Continuous recording and Daily recording.
+	//
+	//    * Continuous recording allows you to record configuration changes continuously
+	//    whenever a change occurs.
+	//
+	//    * Daily recording allows you record configuration data once every 24 hours,
+	//    only if a change has occurred.
+	//
+	// Firewall Manager depends on continuous recording to monitor your resources.
+	// If you are using Firewall Manager, it is recommended that you set the recording
+	// frequency to Continuous.
+	//
+	// You can also override the recording frequency for specific resource types.
+	RecordingMode *RecordingMode `locationName:"recordingMode" type:"structure"`
 
 	// Amazon Resource Name (ARN) of the IAM role assumed by Config and used by
 	// the configuration recorder.
@@ -14518,6 +14583,11 @@ func (s *ConfigurationRecorder) Validate() error {
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
 	}
+	if s.RecordingMode != nil {
+		if err := s.RecordingMode.Validate(); err != nil {
+			invalidParams.AddNested("RecordingMode", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -14534,6 +14604,12 @@ func (s *ConfigurationRecorder) SetName(v string) *ConfigurationRecorder {
 // SetRecordingGroup sets the RecordingGroup field's value.
 func (s *ConfigurationRecorder) SetRecordingGroup(v *RecordingGroup) *ConfigurationRecorder {
 	s.RecordingGroup = v
+	return s
+}
+
+// SetRecordingMode sets the RecordingMode field's value.
+func (s *ConfigurationRecorder) SetRecordingMode(v *RecordingMode) *ConfigurationRecorder {
+	s.RecordingMode = v
 	return s
 }
 
@@ -19557,7 +19633,7 @@ func (s *EvaluationContext) SetEvaluationContextIdentifier(v string) *Evaluation
 	return s
 }
 
-// The configuration object for Config rule evaluation mode. The Supported valid
+// The configuration object for Config rule evaluation mode. The supported valid
 // values are Detective or Proactive.
 type EvaluationModeConfiguration struct {
 	_ struct{} `type:"structure"`
@@ -19834,9 +19910,46 @@ func (s *EvaluationStatus) SetStatus(v string) *EvaluationStatus {
 	return s
 }
 
-// Specifies whether the configuration recorder excludes resource types from
-// being recorded. Use the resourceTypes field to enter a comma-separated list
-// of resource types to exclude as exemptions.
+// Specifies whether the configuration recorder excludes certain resource types
+// from being recorded. Use the resourceTypes field to enter a comma-separated
+// list of resource types you want to exclude from recording.
+//
+// By default, when Config adds support for a new resource type in the Region
+// where you set up the configuration recorder, including global resource types,
+// Config starts recording resources of that type automatically.
+//
+// # How to use the exclusion recording strategy
+//
+// To use this option, you must set the useOnly field of RecordingStrategy (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html)
+// to EXCLUSION_BY_RESOURCE_TYPES.
+//
+// Config will then record configuration changes for all supported resource
+// types, except the resource types that you specify to exclude from being recorded.
+//
+// # Global resource types and the exclusion recording strategy
+//
+// Unless specifically listed as exclusions, AWS::RDS::GlobalCluster will be
+// recorded automatically in all supported Config Regions were the configuration
+// recorder is enabled.
+//
+// IAM users, groups, roles, and customer managed policies will be recorded
+// in the Region where you set up the configuration recorder if that is a Region
+// where Config was available before February 2022. You cannot be record the
+// global IAM resouce types in Regions supported by Config after February 2022.
+// This list where you cannot record the global IAM resource types includes
+// the following Regions:
+//
+//   - Asia Pacific (Hyderabad)
+//
+//   - Asia Pacific (Melbourne)
+//
+//   - Europe (Spain)
+//
+//   - Europe (Zurich)
+//
+//   - Israel (Tel Aviv)
+//
+//   - Middle East (UAE)
 type ExclusionByResourceTypes struct {
 	_ struct{} `type:"structure"`
 
@@ -22062,13 +22175,13 @@ type GetResourceConfigHistoryInput struct {
 	// are listed in reverse chronological order.
 	ChronologicalOrder *string `locationName:"chronologicalOrder" type:"string" enum:"ChronologicalOrder"`
 
-	// The time stamp that indicates an earlier time. If not specified, the action
-	// returns paginated results that contain configuration items that start when
-	// the first configuration item was recorded.
+	// The chronologically earliest time in the time range for which the history
+	// requested. If not specified, the action returns paginated results that contain
+	// configuration items that start when the first configuration item was recorded.
 	EarlierTime *time.Time `locationName:"earlierTime" type:"timestamp"`
 
-	// The time stamp that indicates a later time. If not specified, current time
-	// is taken.
+	// The chronologically latest time in the time range for which the history requested.
+	// If not specified, current time is taken.
 	LaterTime *time.Time `locationName:"laterTime" type:"timestamp"`
 
 	// The maximum number of configuration items returned on each page. The default
@@ -27209,11 +27322,11 @@ func (s *OrganizationCustomPolicyRuleMetadataNoPolicy) SetTagValueScope(v string
 	return s
 }
 
-// organization custom rule metadata such as resource type, resource ID of Amazon
-// Web Services resource, Lambda function ARN, and organization trigger types
-// that trigger Config to evaluate your Amazon Web Services resources against
-// a rule. It also provides the frequency with which you want Config to run
-// evaluations for the rule if the trigger type is periodic.
+// An object that specifies organization custom rule metadata such as resource
+// type, resource ID of Amazon Web Services resource, Lambda function ARN, and
+// organization trigger types that trigger Config to evaluate your Amazon Web
+// Services resources against a rule. It also provides the frequency with which
+// you want Config to run evaluations for the rule if the trigger type is periodic.
 type OrganizationCustomRuleMetadata struct {
 	_ struct{} `type:"structure"`
 
@@ -27373,10 +27486,10 @@ func (s *OrganizationCustomRuleMetadata) SetTagValueScope(v string) *Organizatio
 	return s
 }
 
-// organization managed rule metadata such as resource type and ID of Amazon
-// Web Services resource along with the rule identifier. It also provides the
-// frequency with which you want Config to run evaluations for the rule if the
-// trigger type is periodic.
+// An object that specifies organization managed rule metadata such as resource
+// type and ID of Amazon Web Services resource along with the rule identifier.
+// It also provides the frequency with which you want Config to run evaluations
+// for the rule if the trigger type is periodic.
 type OrganizationManagedRuleMetadata struct {
 	_ struct{} `type:"structure"`
 
@@ -28139,7 +28252,10 @@ type PutConformancePackInput struct {
 	// The uri must point to a conformance pack template (max size: 300 KB) that
 	// is located in an Amazon S3 bucket in the same Region as the conformance pack.
 	//
-	// You must have access to read Amazon S3 bucket.
+	// You must have access to read Amazon S3 bucket. In addition, in order to ensure
+	// a successful deployment, the template object must not be in an archived storage
+	// class (https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html)
+	// if this parameter is passed.
 	TemplateS3Uri *string `min:"1" type:"string"`
 
 	// An object of type TemplateSSMDocumentDetails, which contains the name or
@@ -28735,7 +28851,10 @@ type PutOrganizationConformancePackInput struct {
 	// Location of file containing the template body. The uri must point to the
 	// conformance pack template (max size: 300 KB).
 	//
-	// You must have access to read Amazon S3 bucket.
+	// You must have access to read Amazon S3 bucket. In addition, in order to ensure
+	// a successful deployment, the template object must not be in an archived storage
+	// class (https://docs.aws.amazon.com/AmazonS3/latest/userguide/storage-class-intro.html)
+	// if this parameter is passed.
 	TemplateS3Uri *string `min:"1" type:"string"`
 }
 
@@ -29449,88 +29568,130 @@ func (s *QueryInfo) SetSelectFields(v []*FieldInfo) *QueryInfo {
 }
 
 // Specifies which resource types Config records for configuration changes.
-// In the recording group, you specify whether you want to record all supported
-// resource types or to include or exclude specific types of resources.
-//
-// By default, Config records configuration changes for all supported types
-// of Regional resources that Config discovers in the Amazon Web Services Region
-// in which it is running. Regional resources are tied to a Region and can be
-// used only in that Region. Examples of Regional resources are Amazon EC2 instances
-// and Amazon EBS volumes.
-//
-// You can also have Config record supported types of global resources. Global
-// resources are not tied to a specific Region and can be used in all Regions.
-// The global resource types that Config supports include IAM users, groups,
+// By default, Config records configuration changes for all current and future
+// supported resource types in the Amazon Web Services Region where you have
+// enabled Config, excluding the global IAM resource types: IAM users, groups,
 // roles, and customer managed policies.
 //
-// Global resource types onboarded to Config recording after February 2022 will
-// be recorded only in the service's home Region for the commercial partition
-// and Amazon Web Services GovCloud (US-West) for the Amazon Web Services GovCloud
-// (US) partition. You can view the Configuration Items for these new global
-// resource types only in their home Region and Amazon Web Services GovCloud
-// (US-West).
-//
-// If you don't want Config to record all resources, you can specify which types
-// of resources Config records with the resourceTypes parameter.
-//
-// For a list of supported resource types, see Supported Resource Types (https://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources)
+// In the recording group, you specify whether you want to record all supported
+// current and future supported resource types or to include or exclude specific
+// resources types. For a list of supported resource types, see Supported Resource
+// Types (https://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources)
 // in the Config developer guide.
 //
-// For more information and a table of the Home Regions for Global Resource
-// Types Onboarded after February 2022, see Selecting Which Resources Config
-// Records (https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html)
-// in the Config developer guide.
+// If you don't want Config to record all current and future supported resource
+// types (excluding the global IAM resource types), use one of the following
+// recording strategies:
+//
+// Record all current and future resource types with exclusions (EXCLUSION_BY_RESOURCE_TYPES),
+// or
+//
+// Record specific resource types (INCLUSION_BY_RESOURCE_TYPES).
+//
+// If you use the recording strategy to Record all current and future resource
+// types (ALL_SUPPORTED_RESOURCE_TYPES), you can use the flag includeGlobalResourceTypes
+// to include the global IAM resource types in your recording.
+//
+// # Aurora global clusters are recorded in all enabled Regions
+//
+// The AWS::RDS::GlobalCluster resource type will be recorded in all supported
+// Config Regions where the configuration recorder is enabled.
+//
+// If you do not want to record AWS::RDS::GlobalCluster in all enabled Regions,
+// use the EXCLUSION_BY_RESOURCE_TYPES or INCLUSION_BY_RESOURCE_TYPES recording
+// strategy.
 type RecordingGroup struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies whether Config records configuration changes for all supported
-	// regional resource types.
+	// resource types, excluding the global IAM resource types.
 	//
-	// If you set this field to true, when Config adds support for a new type of
-	// regional resource, Config starts recording resources of that type automatically.
+	// If you set this field to true, when Config adds support for a new resource
+	// type, Config starts recording resources of that type automatically.
 	//
 	// If you set this field to true, you cannot enumerate specific resource types
 	// to record in the resourceTypes field of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html),
 	// or to exclude in the resourceTypes field of ExclusionByResourceTypes (https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html).
+	//
+	// Region availability
+	//
+	// Check Resource Coverage by Region Availability (https://docs.aws.amazon.com/config/latest/developerguide/what-is-resource-config-coverage.html)
+	// to see if a resource type is supported in the Amazon Web Services Region
+	// where you set up Config.
 	AllSupported *bool `locationName:"allSupported" type:"boolean"`
 
 	// An object that specifies how Config excludes resource types from being recorded
 	// by the configuration recorder.
 	//
+	// Required fields
+	//
 	// To use this option, you must set the useOnly field of RecordingStrategy (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html)
 	// to EXCLUSION_BY_RESOURCE_TYPES.
 	ExclusionByResourceTypes *ExclusionByResourceTypes `locationName:"exclusionByResourceTypes" type:"structure"`
 
-	// Specifies whether Config records configuration changes for all supported
-	// global resources.
+	// This option is a bundle which only applies to the global IAM resource types:
+	// IAM users, groups, roles, and customer managed policies. These global IAM
+	// resource types can only be recorded by Config in Regions where Config was
+	// available before February 2022. You cannot be record the global IAM resouce
+	// types in Regions supported by Config after February 2022. This list where
+	// you cannot record the global IAM resource types includes the following Regions:
+	//
+	//    * Asia Pacific (Hyderabad)
+	//
+	//    * Asia Pacific (Melbourne)
+	//
+	//    * Europe (Spain)
+	//
+	//    * Europe (Zurich)
+	//
+	//    * Israel (Tel Aviv)
+	//
+	//    * Middle East (UAE)
+	//
+	// Aurora global clusters are recorded in all enabled Regions
+	//
+	// The AWS::RDS::GlobalCluster resource type will be recorded in all supported
+	// Config Regions where the configuration recorder is enabled, even if includeGlobalResourceTypes
+	// is not set to true. The includeGlobalResourceTypes option is a bundle which
+	// only applies to IAM users, groups, roles, and customer managed policies.
+	//
+	// If you do not want to record AWS::RDS::GlobalCluster in all enabled Regions,
+	// use one of the following recording strategies:
+	//
+	// Record all current and future resource types with exclusions (EXCLUSION_BY_RESOURCE_TYPES),
+	// or
+	//
+	// Record specific resource types (INCLUSION_BY_RESOURCE_TYPES).
+	//
+	// For more information, see Selecting Which Resources are Recorded (https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-all)
+	// in the Config developer guide.
 	//
 	// Before you set this field to true, set the allSupported field of RecordingGroup
 	// (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
 	// to true. Optionally, you can set the useOnly field of RecordingStrategy (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html)
 	// to ALL_SUPPORTED_RESOURCE_TYPES.
 	//
-	// If you set this field to true, when Config adds support for a new type of
-	// global resource in the Region where you set up the configuration recorder,
-	// Config starts recording resources of that type automatically.
+	// Overriding fields
 	//
-	// If you set this field to false but list global resource types in the resourceTypes
-	// field of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html),
+	// If you set this field to false but list global IAM resource types in the
+	// resourceTypes field of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html),
 	// Config will still record configuration changes for those specified resource
 	// types regardless of if you set the includeGlobalResourceTypes field to false.
 	//
-	// If you do not want to record configuration changes to global resource types,
-	// make sure to not list them in the resourceTypes field in addition to setting
-	// the includeGlobalResourceTypes field to false.
+	// If you do not want to record configuration changes to the global IAM resource
+	// types (IAM users, groups, roles, and customer managed policies), make sure
+	// to not list them in the resourceTypes field in addition to setting the includeGlobalResourceTypes
+	// field to false.
 	IncludeGlobalResourceTypes *bool `locationName:"includeGlobalResourceTypes" type:"boolean"`
 
 	// An object that specifies the recording strategy for the configuration recorder.
 	//
 	//    * If you set the useOnly field of RecordingStrategy (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html)
 	//    to ALL_SUPPORTED_RESOURCE_TYPES, Config records configuration changes
-	//    for all supported regional resource types. You also must set the allSupported
-	//    field of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
-	//    to true. When Config adds support for a new type of regional resource,
-	//    Config automatically starts recording resources of that type.
+	//    for all supported resource types, excluding the global IAM resource types.
+	//    You also must set the allSupported field of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
+	//    to true. When Config adds support for a new resource type, Config automatically
+	//    starts recording resources of that type.
 	//
 	//    * If you set the useOnly field of RecordingStrategy (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html)
 	//    to INCLUSION_BY_RESOURCE_TYPES, Config records configuration changes for
@@ -29540,8 +29701,10 @@ type RecordingGroup struct {
 	//    * If you set the useOnly field of RecordingStrategy (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html)
 	//    to EXCLUSION_BY_RESOURCE_TYPES, Config records configuration changes for
 	//    all supported resource types except the resource types that you specify
-	//    as exemptions to exclude from being recorded in the resourceTypes field
-	//    of ExclusionByResourceTypes (https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html).
+	//    to exclude from being recorded in the resourceTypes field of ExclusionByResourceTypes
+	//    (https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html).
+	//
+	// Required and optional fields
 	//
 	// The recordingStrategy field is optional when you set the allSupported field
 	// of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
@@ -29553,21 +29716,54 @@ type RecordingGroup struct {
 	// The recordingStrategy field is required if you list resource types to exclude
 	// from recording in the resourceTypes field of ExclusionByResourceTypes (https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html).
 	//
+	// Overriding fields
+	//
 	// If you choose EXCLUSION_BY_RESOURCE_TYPES for the recording strategy, the
 	// exclusionByResourceTypes field will override other properties in the request.
 	//
 	// For example, even if you set includeGlobalResourceTypes to false, global
-	// resource types will still be automatically recorded in this option unless
-	// those resource types are specifically listed as exemptions in the resourceTypes
+	// IAM resource types will still be automatically recorded in this option unless
+	// those resource types are specifically listed as exclusions in the resourceTypes
 	// field of exclusionByResourceTypes.
+	//
+	// Global resources types and the resource exclusion recording strategy
 	//
 	// By default, if you choose the EXCLUSION_BY_RESOURCE_TYPES recording strategy,
 	// when Config adds support for a new resource type in the Region where you
 	// set up the configuration recorder, including global resource types, Config
 	// starts recording resources of that type automatically.
+	//
+	// Unless specifically listed as exclusions, AWS::RDS::GlobalCluster will be
+	// recorded automatically in all supported Config Regions were the configuration
+	// recorder is enabled.
+	//
+	// IAM users, groups, roles, and customer managed policies will be recorded
+	// in the Region where you set up the configuration recorder if that is a Region
+	// where Config was available before February 2022. You cannot be record the
+	// global IAM resouce types in Regions supported by Config after February 2022.
+	// This list where you cannot record the global IAM resource types includes
+	// the following Regions:
+	//
+	//    * Asia Pacific (Hyderabad)
+	//
+	//    * Asia Pacific (Melbourne)
+	//
+	//    * Europe (Spain)
+	//
+	//    * Europe (Zurich)
+	//
+	//    * Israel (Tel Aviv)
+	//
+	//    * Middle East (UAE)
 	RecordingStrategy *RecordingStrategy `locationName:"recordingStrategy" type:"structure"`
 
 	// A comma-separated list that specifies which resource types Config records.
+	//
+	// For a list of valid resourceTypes values, see the Resource Type Value column
+	// in Supported Amazon Web Services resource Types (https://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources)
+	// in the Config developer guide.
+	//
+	// Required and optional fields
 	//
 	// Optionally, you can set the useOnly field of RecordingStrategy (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingStrategy.html)
 	// to INCLUSION_BY_RESOURCE_TYPES.
@@ -29580,11 +29776,7 @@ type RecordingGroup struct {
 	// will not record resources of that type unless you manually add that type
 	// to your recording group.
 	//
-	// For a list of valid resourceTypes values, see the Resource Type Value column
-	// in Supported Amazon Web Services resource Types (https://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources)
-	// in the Config developer guide.
-	//
-	// Region Availability
+	// Region availability
 	//
 	// Before specifying a resource type for Config to track, check Resource Coverage
 	// by Region Availability (https://docs.aws.amazon.com/config/latest/developerguide/what-is-resource-config-coverage.html)
@@ -29644,6 +29836,193 @@ func (s *RecordingGroup) SetResourceTypes(v []*string) *RecordingGroup {
 	return s
 }
 
+// Specifies the default recording frequency that Config uses to record configuration
+// changes. Config supports Continuous recording and Daily recording.
+//
+//   - Continuous recording allows you to record configuration changes continuously
+//     whenever a change occurs.
+//
+//   - Daily recording allows you record configuration data once every 24 hours,
+//     only if a change has occurred.
+//
+// Firewall Manager depends on continuous recording to monitor your resources.
+// If you are using Firewall Manager, it is recommended that you set the recording
+// frequency to Continuous.
+//
+// You can also override the recording frequency for specific resource types.
+type RecordingMode struct {
+	_ struct{} `type:"structure"`
+
+	// The default recording frequency that Config uses to record configuration
+	// changes.
+	//
+	// Daily recording is not supported for the following resource types:
+	//
+	//    * AWS::Config::ResourceCompliance
+	//
+	//    * AWS::Config::ConformancePackCompliance
+	//
+	//    * AWS::Config::ConfigurationRecorder
+	//
+	// For the allSupported (ALL_SUPPORTED_RESOURCE_TYPES) recording strategy, these
+	// resource types will be set to Continuous recording.
+	//
+	// RecordingFrequency is a required field
+	RecordingFrequency *string `locationName:"recordingFrequency" type:"string" required:"true" enum:"RecordingFrequency"`
+
+	// An array of recordingModeOverride objects for you to specify your overrides
+	// for the recording mode. The recordingModeOverride object in the recordingModeOverrides
+	// array consists of three fields: a description, the new recordingFrequency,
+	// and an array of resourceTypes to override.
+	RecordingModeOverrides []*RecordingModeOverride `locationName:"recordingModeOverrides" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecordingMode) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecordingMode) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RecordingMode) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RecordingMode"}
+	if s.RecordingFrequency == nil {
+		invalidParams.Add(request.NewErrParamRequired("RecordingFrequency"))
+	}
+	if s.RecordingModeOverrides != nil {
+		for i, v := range s.RecordingModeOverrides {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "RecordingModeOverrides", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRecordingFrequency sets the RecordingFrequency field's value.
+func (s *RecordingMode) SetRecordingFrequency(v string) *RecordingMode {
+	s.RecordingFrequency = &v
+	return s
+}
+
+// SetRecordingModeOverrides sets the RecordingModeOverrides field's value.
+func (s *RecordingMode) SetRecordingModeOverrides(v []*RecordingModeOverride) *RecordingMode {
+	s.RecordingModeOverrides = v
+	return s
+}
+
+// An object for you to specify your overrides for the recording mode.
+type RecordingModeOverride struct {
+	_ struct{} `type:"structure"`
+
+	// A description that you provide for the override.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// The recording frequency that will be applied to all the resource types specified
+	// in the override.
+	//
+	//    * Continuous recording allows you to record configuration changes continuously
+	//    whenever a change occurs.
+	//
+	//    * Daily recording allows you record configuration data once every 24 hours,
+	//    only if a change has occurred.
+	//
+	// Firewall Manager depends on continuous recording to monitor your resources.
+	// If you are using Firewall Manager, it is recommended that you set the recording
+	// frequency to Continuous.
+	//
+	// RecordingFrequency is a required field
+	RecordingFrequency *string `locationName:"recordingFrequency" type:"string" required:"true" enum:"RecordingFrequency"`
+
+	// A comma-separated list that specifies which resource types Config includes
+	// in the override.
+	//
+	// Daily recording is not supported for the following resource types:
+	//
+	//    * AWS::Config::ResourceCompliance
+	//
+	//    * AWS::Config::ConformancePackCompliance
+	//
+	//    * AWS::Config::ConfigurationRecorder
+	//
+	// ResourceTypes is a required field
+	ResourceTypes []*string `locationName:"resourceTypes" type:"list" required:"true" enum:"ResourceType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecordingModeOverride) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecordingModeOverride) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RecordingModeOverride) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RecordingModeOverride"}
+	if s.Description != nil && len(*s.Description) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
+	}
+	if s.RecordingFrequency == nil {
+		invalidParams.Add(request.NewErrParamRequired("RecordingFrequency"))
+	}
+	if s.ResourceTypes == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceTypes"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *RecordingModeOverride) SetDescription(v string) *RecordingModeOverride {
+	s.Description = &v
+	return s
+}
+
+// SetRecordingFrequency sets the RecordingFrequency field's value.
+func (s *RecordingModeOverride) SetRecordingFrequency(v string) *RecordingModeOverride {
+	s.RecordingFrequency = &v
+	return s
+}
+
+// SetResourceTypes sets the ResourceTypes field's value.
+func (s *RecordingModeOverride) SetResourceTypes(v []*string) *RecordingModeOverride {
+	s.ResourceTypes = v
+	return s
+}
+
 // Specifies the recording strategy of the configuration recorder.
 type RecordingStrategy struct {
 	_ struct{} `type:"structure"`
@@ -29651,11 +30030,12 @@ type RecordingStrategy struct {
 	// The recording strategy for the configuration recorder.
 	//
 	//    * If you set this option to ALL_SUPPORTED_RESOURCE_TYPES, Config records
-	//    configuration changes for all supported regional resource types. You also
-	//    must set the allSupported field of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
-	//    to true. When Config adds support for a new type of regional resource,
-	//    Config automatically starts recording resources of that type. For a list
-	//    of supported resource types, see Supported Resource Types (https://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources)
+	//    configuration changes for all supported resource types, excluding the
+	//    global IAM resource types. You also must set the allSupported field of
+	//    RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
+	//    to true. When Config adds support for a new resource type, Config automatically
+	//    starts recording resources of that type. For a list of supported resource
+	//    types, see Supported Resource Types (https://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources)
 	//    in the Config developer guide.
 	//
 	//    * If you set this option to INCLUSION_BY_RESOURCE_TYPES, Config records
@@ -29664,8 +30044,10 @@ type RecordingStrategy struct {
 	//
 	//    * If you set this option to EXCLUSION_BY_RESOURCE_TYPES, Config records
 	//    configuration changes for all supported resource types, except the resource
-	//    types that you specify as exemptions to exclude from being recorded in
-	//    the resourceTypes field of ExclusionByResourceTypes (https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html).
+	//    types that you specify to exclude from being recorded in the resourceTypes
+	//    field of ExclusionByResourceTypes (https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html).
+	//
+	// Required and optional fields
 	//
 	// The recordingStrategy field is optional when you set the allSupported field
 	// of RecordingGroup (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
@@ -29677,18 +30059,45 @@ type RecordingStrategy struct {
 	// The recordingStrategy field is required if you list resource types to exclude
 	// from recording in the resourceTypes field of ExclusionByResourceTypes (https://docs.aws.amazon.com/config/latest/APIReference/API_ExclusionByResourceTypes.html).
 	//
+	// Overriding fields
+	//
 	// If you choose EXCLUSION_BY_RESOURCE_TYPES for the recording strategy, the
 	// exclusionByResourceTypes field will override other properties in the request.
 	//
 	// For example, even if you set includeGlobalResourceTypes to false, global
-	// resource types will still be automatically recorded in this option unless
-	// those resource types are specifically listed as exemptions in the resourceTypes
+	// IAM resource types will still be automatically recorded in this option unless
+	// those resource types are specifically listed as exclusions in the resourceTypes
 	// field of exclusionByResourceTypes.
+	//
+	// Global resource types and the exclusion recording strategy
 	//
 	// By default, if you choose the EXCLUSION_BY_RESOURCE_TYPES recording strategy,
 	// when Config adds support for a new resource type in the Region where you
 	// set up the configuration recorder, including global resource types, Config
 	// starts recording resources of that type automatically.
+	//
+	// Unless specifically listed as exclusions, AWS::RDS::GlobalCluster will be
+	// recorded automatically in all supported Config Regions were the configuration
+	// recorder is enabled.
+	//
+	// IAM users, groups, roles, and customer managed policies will be recorded
+	// in the Region where you set up the configuration recorder if that is a Region
+	// where Config was available before February 2022. You cannot be record the
+	// global IAM resouce types in Regions supported by Config after February 2022.
+	// This list where you cannot record the global IAM resource types includes
+	// the following Regions:
+	//
+	//    * Asia Pacific (Hyderabad)
+	//
+	//    * Asia Pacific (Melbourne)
+	//
+	//    * Europe (Spain)
+	//
+	//    * Europe (Zurich)
+	//
+	//    * Israel (Tel Aviv)
+	//
+	//    * Middle East (UAE)
 	UseOnly *string `locationName:"useOnly" type:"string" enum:"RecordingStrategyType"`
 }
 
@@ -33702,6 +34111,22 @@ func RecorderStatus_Values() []string {
 }
 
 const (
+	// RecordingFrequencyContinuous is a RecordingFrequency enum value
+	RecordingFrequencyContinuous = "CONTINUOUS"
+
+	// RecordingFrequencyDaily is a RecordingFrequency enum value
+	RecordingFrequencyDaily = "DAILY"
+)
+
+// RecordingFrequency_Values returns all elements of the RecordingFrequency enum
+func RecordingFrequency_Values() []string {
+	return []string{
+		RecordingFrequencyContinuous,
+		RecordingFrequencyDaily,
+	}
+}
+
+const (
 	// RecordingStrategyTypeAllSupportedResourceTypes is a RecordingStrategyType enum value
 	RecordingStrategyTypeAllSupportedResourceTypes = "ALL_SUPPORTED_RESOURCE_TYPES"
 
@@ -34783,6 +35208,219 @@ const (
 
 	// ResourceTypeAwsKinesisFirehoseDeliveryStream is a ResourceType enum value
 	ResourceTypeAwsKinesisFirehoseDeliveryStream = "AWS::KinesisFirehose::DeliveryStream"
+
+	// ResourceTypeAwsAmplifyBranch is a ResourceType enum value
+	ResourceTypeAwsAmplifyBranch = "AWS::Amplify::Branch"
+
+	// ResourceTypeAwsAppIntegrationsEventIntegration is a ResourceType enum value
+	ResourceTypeAwsAppIntegrationsEventIntegration = "AWS::AppIntegrations::EventIntegration"
+
+	// ResourceTypeAwsAppMeshRoute is a ResourceType enum value
+	ResourceTypeAwsAppMeshRoute = "AWS::AppMesh::Route"
+
+	// ResourceTypeAwsAthenaPreparedStatement is a ResourceType enum value
+	ResourceTypeAwsAthenaPreparedStatement = "AWS::Athena::PreparedStatement"
+
+	// ResourceTypeAwsEc2Ipamscope is a ResourceType enum value
+	ResourceTypeAwsEc2Ipamscope = "AWS::EC2::IPAMScope"
+
+	// ResourceTypeAwsEvidentlyLaunch is a ResourceType enum value
+	ResourceTypeAwsEvidentlyLaunch = "AWS::Evidently::Launch"
+
+	// ResourceTypeAwsForecastDatasetGroup is a ResourceType enum value
+	ResourceTypeAwsForecastDatasetGroup = "AWS::Forecast::DatasetGroup"
+
+	// ResourceTypeAwsGreengrassV2ComponentVersion is a ResourceType enum value
+	ResourceTypeAwsGreengrassV2ComponentVersion = "AWS::GreengrassV2::ComponentVersion"
+
+	// ResourceTypeAwsGroundStationMissionProfile is a ResourceType enum value
+	ResourceTypeAwsGroundStationMissionProfile = "AWS::GroundStation::MissionProfile"
+
+	// ResourceTypeAwsMediaConnectFlowEntitlement is a ResourceType enum value
+	ResourceTypeAwsMediaConnectFlowEntitlement = "AWS::MediaConnect::FlowEntitlement"
+
+	// ResourceTypeAwsMediaConnectFlowVpcInterface is a ResourceType enum value
+	ResourceTypeAwsMediaConnectFlowVpcInterface = "AWS::MediaConnect::FlowVpcInterface"
+
+	// ResourceTypeAwsMediaTailorPlaybackConfiguration is a ResourceType enum value
+	ResourceTypeAwsMediaTailorPlaybackConfiguration = "AWS::MediaTailor::PlaybackConfiguration"
+
+	// ResourceTypeAwsMskConfiguration is a ResourceType enum value
+	ResourceTypeAwsMskConfiguration = "AWS::MSK::Configuration"
+
+	// ResourceTypeAwsPersonalizeDataset is a ResourceType enum value
+	ResourceTypeAwsPersonalizeDataset = "AWS::Personalize::Dataset"
+
+	// ResourceTypeAwsPersonalizeSchema is a ResourceType enum value
+	ResourceTypeAwsPersonalizeSchema = "AWS::Personalize::Schema"
+
+	// ResourceTypeAwsPersonalizeSolution is a ResourceType enum value
+	ResourceTypeAwsPersonalizeSolution = "AWS::Personalize::Solution"
+
+	// ResourceTypeAwsPinpointEmailTemplate is a ResourceType enum value
+	ResourceTypeAwsPinpointEmailTemplate = "AWS::Pinpoint::EmailTemplate"
+
+	// ResourceTypeAwsPinpointEventStream is a ResourceType enum value
+	ResourceTypeAwsPinpointEventStream = "AWS::Pinpoint::EventStream"
+
+	// ResourceTypeAwsResilienceHubApp is a ResourceType enum value
+	ResourceTypeAwsResilienceHubApp = "AWS::ResilienceHub::App"
+
+	// ResourceTypeAwsAcmpcaCertificateAuthority is a ResourceType enum value
+	ResourceTypeAwsAcmpcaCertificateAuthority = "AWS::ACMPCA::CertificateAuthority"
+
+	// ResourceTypeAwsAppConfigHostedConfigurationVersion is a ResourceType enum value
+	ResourceTypeAwsAppConfigHostedConfigurationVersion = "AWS::AppConfig::HostedConfigurationVersion"
+
+	// ResourceTypeAwsAppMeshVirtualGateway is a ResourceType enum value
+	ResourceTypeAwsAppMeshVirtualGateway = "AWS::AppMesh::VirtualGateway"
+
+	// ResourceTypeAwsAppMeshVirtualRouter is a ResourceType enum value
+	ResourceTypeAwsAppMeshVirtualRouter = "AWS::AppMesh::VirtualRouter"
+
+	// ResourceTypeAwsAppRunnerService is a ResourceType enum value
+	ResourceTypeAwsAppRunnerService = "AWS::AppRunner::Service"
+
+	// ResourceTypeAwsCustomerProfilesObjectType is a ResourceType enum value
+	ResourceTypeAwsCustomerProfilesObjectType = "AWS::CustomerProfiles::ObjectType"
+
+	// ResourceTypeAwsDmsEndpoint is a ResourceType enum value
+	ResourceTypeAwsDmsEndpoint = "AWS::DMS::Endpoint"
+
+	// ResourceTypeAwsEc2CapacityReservation is a ResourceType enum value
+	ResourceTypeAwsEc2CapacityReservation = "AWS::EC2::CapacityReservation"
+
+	// ResourceTypeAwsEc2ClientVpnEndpoint is a ResourceType enum value
+	ResourceTypeAwsEc2ClientVpnEndpoint = "AWS::EC2::ClientVpnEndpoint"
+
+	// ResourceTypeAwsKendraIndex is a ResourceType enum value
+	ResourceTypeAwsKendraIndex = "AWS::Kendra::Index"
+
+	// ResourceTypeAwsKinesisVideoStream is a ResourceType enum value
+	ResourceTypeAwsKinesisVideoStream = "AWS::KinesisVideo::Stream"
+
+	// ResourceTypeAwsLogsDestination is a ResourceType enum value
+	ResourceTypeAwsLogsDestination = "AWS::Logs::Destination"
+
+	// ResourceTypeAwsPinpointEmailChannel is a ResourceType enum value
+	ResourceTypeAwsPinpointEmailChannel = "AWS::Pinpoint::EmailChannel"
+
+	// ResourceTypeAwsS3AccessPoint is a ResourceType enum value
+	ResourceTypeAwsS3AccessPoint = "AWS::S3::AccessPoint"
+
+	// ResourceTypeAwsNetworkManagerCustomerGatewayAssociation is a ResourceType enum value
+	ResourceTypeAwsNetworkManagerCustomerGatewayAssociation = "AWS::NetworkManager::CustomerGatewayAssociation"
+
+	// ResourceTypeAwsNetworkManagerLinkAssociation is a ResourceType enum value
+	ResourceTypeAwsNetworkManagerLinkAssociation = "AWS::NetworkManager::LinkAssociation"
+
+	// ResourceTypeAwsIoTwirelessMulticastGroup is a ResourceType enum value
+	ResourceTypeAwsIoTwirelessMulticastGroup = "AWS::IoTWireless::MulticastGroup"
+
+	// ResourceTypeAwsPersonalizeDatasetGroup is a ResourceType enum value
+	ResourceTypeAwsPersonalizeDatasetGroup = "AWS::Personalize::DatasetGroup"
+
+	// ResourceTypeAwsIoTtwinMakerComponentType is a ResourceType enum value
+	ResourceTypeAwsIoTtwinMakerComponentType = "AWS::IoTTwinMaker::ComponentType"
+
+	// ResourceTypeAwsCodeBuildReportGroup is a ResourceType enum value
+	ResourceTypeAwsCodeBuildReportGroup = "AWS::CodeBuild::ReportGroup"
+
+	// ResourceTypeAwsSageMakerFeatureGroup is a ResourceType enum value
+	ResourceTypeAwsSageMakerFeatureGroup = "AWS::SageMaker::FeatureGroup"
+
+	// ResourceTypeAwsMskBatchScramSecret is a ResourceType enum value
+	ResourceTypeAwsMskBatchScramSecret = "AWS::MSK::BatchScramSecret"
+
+	// ResourceTypeAwsAppStreamStack is a ResourceType enum value
+	ResourceTypeAwsAppStreamStack = "AWS::AppStream::Stack"
+
+	// ResourceTypeAwsIoTJobTemplate is a ResourceType enum value
+	ResourceTypeAwsIoTJobTemplate = "AWS::IoT::JobTemplate"
+
+	// ResourceTypeAwsIoTwirelessFuotaTask is a ResourceType enum value
+	ResourceTypeAwsIoTwirelessFuotaTask = "AWS::IoTWireless::FuotaTask"
+
+	// ResourceTypeAwsIoTProvisioningTemplate is a ResourceType enum value
+	ResourceTypeAwsIoTProvisioningTemplate = "AWS::IoT::ProvisioningTemplate"
+
+	// ResourceTypeAwsInspectorV2Filter is a ResourceType enum value
+	ResourceTypeAwsInspectorV2Filter = "AWS::InspectorV2::Filter"
+
+	// ResourceTypeAwsRoute53resolverResolverQueryLoggingConfigAssociation is a ResourceType enum value
+	ResourceTypeAwsRoute53resolverResolverQueryLoggingConfigAssociation = "AWS::Route53Resolver::ResolverQueryLoggingConfigAssociation"
+
+	// ResourceTypeAwsServiceDiscoveryInstance is a ResourceType enum value
+	ResourceTypeAwsServiceDiscoveryInstance = "AWS::ServiceDiscovery::Instance"
+
+	// ResourceTypeAwsTransferCertificate is a ResourceType enum value
+	ResourceTypeAwsTransferCertificate = "AWS::Transfer::Certificate"
+
+	// ResourceTypeAwsMediaConnectFlowSource is a ResourceType enum value
+	ResourceTypeAwsMediaConnectFlowSource = "AWS::MediaConnect::FlowSource"
+
+	// ResourceTypeAwsApsRuleGroupsNamespace is a ResourceType enum value
+	ResourceTypeAwsApsRuleGroupsNamespace = "AWS::APS::RuleGroupsNamespace"
+
+	// ResourceTypeAwsCodeGuruProfilerProfilingGroup is a ResourceType enum value
+	ResourceTypeAwsCodeGuruProfilerProfilingGroup = "AWS::CodeGuruProfiler::ProfilingGroup"
+
+	// ResourceTypeAwsRoute53resolverResolverQueryLoggingConfig is a ResourceType enum value
+	ResourceTypeAwsRoute53resolverResolverQueryLoggingConfig = "AWS::Route53Resolver::ResolverQueryLoggingConfig"
+
+	// ResourceTypeAwsBatchSchedulingPolicy is a ResourceType enum value
+	ResourceTypeAwsBatchSchedulingPolicy = "AWS::Batch::SchedulingPolicy"
+
+	// ResourceTypeAwsAcmpcaCertificateAuthorityActivation is a ResourceType enum value
+	ResourceTypeAwsAcmpcaCertificateAuthorityActivation = "AWS::ACMPCA::CertificateAuthorityActivation"
+
+	// ResourceTypeAwsAppMeshGatewayRoute is a ResourceType enum value
+	ResourceTypeAwsAppMeshGatewayRoute = "AWS::AppMesh::GatewayRoute"
+
+	// ResourceTypeAwsAppMeshMesh is a ResourceType enum value
+	ResourceTypeAwsAppMeshMesh = "AWS::AppMesh::Mesh"
+
+	// ResourceTypeAwsConnectInstance is a ResourceType enum value
+	ResourceTypeAwsConnectInstance = "AWS::Connect::Instance"
+
+	// ResourceTypeAwsConnectQuickConnect is a ResourceType enum value
+	ResourceTypeAwsConnectQuickConnect = "AWS::Connect::QuickConnect"
+
+	// ResourceTypeAwsEc2CarrierGateway is a ResourceType enum value
+	ResourceTypeAwsEc2CarrierGateway = "AWS::EC2::CarrierGateway"
+
+	// ResourceTypeAwsEc2Ipampool is a ResourceType enum value
+	ResourceTypeAwsEc2Ipampool = "AWS::EC2::IPAMPool"
+
+	// ResourceTypeAwsEc2TransitGatewayConnect is a ResourceType enum value
+	ResourceTypeAwsEc2TransitGatewayConnect = "AWS::EC2::TransitGatewayConnect"
+
+	// ResourceTypeAwsEc2TransitGatewayMulticastDomain is a ResourceType enum value
+	ResourceTypeAwsEc2TransitGatewayMulticastDomain = "AWS::EC2::TransitGatewayMulticastDomain"
+
+	// ResourceTypeAwsEcsCapacityProvider is a ResourceType enum value
+	ResourceTypeAwsEcsCapacityProvider = "AWS::ECS::CapacityProvider"
+
+	// ResourceTypeAwsIamInstanceProfile is a ResourceType enum value
+	ResourceTypeAwsIamInstanceProfile = "AWS::IAM::InstanceProfile"
+
+	// ResourceTypeAwsIoTCacertificate is a ResourceType enum value
+	ResourceTypeAwsIoTCacertificate = "AWS::IoT::CACertificate"
+
+	// ResourceTypeAwsIoTtwinMakerSyncJob is a ResourceType enum value
+	ResourceTypeAwsIoTtwinMakerSyncJob = "AWS::IoTTwinMaker::SyncJob"
+
+	// ResourceTypeAwsKafkaConnectConnector is a ResourceType enum value
+	ResourceTypeAwsKafkaConnectConnector = "AWS::KafkaConnect::Connector"
+
+	// ResourceTypeAwsLambdaCodeSigningConfig is a ResourceType enum value
+	ResourceTypeAwsLambdaCodeSigningConfig = "AWS::Lambda::CodeSigningConfig"
+
+	// ResourceTypeAwsNetworkManagerConnectPeer is a ResourceType enum value
+	ResourceTypeAwsNetworkManagerConnectPeer = "AWS::NetworkManager::ConnectPeer"
+
+	// ResourceTypeAwsResourceExplorer2Index is a ResourceType enum value
+	ResourceTypeAwsResourceExplorer2Index = "AWS::ResourceExplorer2::Index"
 )
 
 // ResourceType_Values returns all elements of the ResourceType enum
@@ -35106,6 +35744,77 @@ func ResourceType_Values() []string {
 		ResourceTypeAwsTransferAgreement,
 		ResourceTypeAwsTransferConnector,
 		ResourceTypeAwsKinesisFirehoseDeliveryStream,
+		ResourceTypeAwsAmplifyBranch,
+		ResourceTypeAwsAppIntegrationsEventIntegration,
+		ResourceTypeAwsAppMeshRoute,
+		ResourceTypeAwsAthenaPreparedStatement,
+		ResourceTypeAwsEc2Ipamscope,
+		ResourceTypeAwsEvidentlyLaunch,
+		ResourceTypeAwsForecastDatasetGroup,
+		ResourceTypeAwsGreengrassV2ComponentVersion,
+		ResourceTypeAwsGroundStationMissionProfile,
+		ResourceTypeAwsMediaConnectFlowEntitlement,
+		ResourceTypeAwsMediaConnectFlowVpcInterface,
+		ResourceTypeAwsMediaTailorPlaybackConfiguration,
+		ResourceTypeAwsMskConfiguration,
+		ResourceTypeAwsPersonalizeDataset,
+		ResourceTypeAwsPersonalizeSchema,
+		ResourceTypeAwsPersonalizeSolution,
+		ResourceTypeAwsPinpointEmailTemplate,
+		ResourceTypeAwsPinpointEventStream,
+		ResourceTypeAwsResilienceHubApp,
+		ResourceTypeAwsAcmpcaCertificateAuthority,
+		ResourceTypeAwsAppConfigHostedConfigurationVersion,
+		ResourceTypeAwsAppMeshVirtualGateway,
+		ResourceTypeAwsAppMeshVirtualRouter,
+		ResourceTypeAwsAppRunnerService,
+		ResourceTypeAwsCustomerProfilesObjectType,
+		ResourceTypeAwsDmsEndpoint,
+		ResourceTypeAwsEc2CapacityReservation,
+		ResourceTypeAwsEc2ClientVpnEndpoint,
+		ResourceTypeAwsKendraIndex,
+		ResourceTypeAwsKinesisVideoStream,
+		ResourceTypeAwsLogsDestination,
+		ResourceTypeAwsPinpointEmailChannel,
+		ResourceTypeAwsS3AccessPoint,
+		ResourceTypeAwsNetworkManagerCustomerGatewayAssociation,
+		ResourceTypeAwsNetworkManagerLinkAssociation,
+		ResourceTypeAwsIoTwirelessMulticastGroup,
+		ResourceTypeAwsPersonalizeDatasetGroup,
+		ResourceTypeAwsIoTtwinMakerComponentType,
+		ResourceTypeAwsCodeBuildReportGroup,
+		ResourceTypeAwsSageMakerFeatureGroup,
+		ResourceTypeAwsMskBatchScramSecret,
+		ResourceTypeAwsAppStreamStack,
+		ResourceTypeAwsIoTJobTemplate,
+		ResourceTypeAwsIoTwirelessFuotaTask,
+		ResourceTypeAwsIoTProvisioningTemplate,
+		ResourceTypeAwsInspectorV2Filter,
+		ResourceTypeAwsRoute53resolverResolverQueryLoggingConfigAssociation,
+		ResourceTypeAwsServiceDiscoveryInstance,
+		ResourceTypeAwsTransferCertificate,
+		ResourceTypeAwsMediaConnectFlowSource,
+		ResourceTypeAwsApsRuleGroupsNamespace,
+		ResourceTypeAwsCodeGuruProfilerProfilingGroup,
+		ResourceTypeAwsRoute53resolverResolverQueryLoggingConfig,
+		ResourceTypeAwsBatchSchedulingPolicy,
+		ResourceTypeAwsAcmpcaCertificateAuthorityActivation,
+		ResourceTypeAwsAppMeshGatewayRoute,
+		ResourceTypeAwsAppMeshMesh,
+		ResourceTypeAwsConnectInstance,
+		ResourceTypeAwsConnectQuickConnect,
+		ResourceTypeAwsEc2CarrierGateway,
+		ResourceTypeAwsEc2Ipampool,
+		ResourceTypeAwsEc2TransitGatewayConnect,
+		ResourceTypeAwsEc2TransitGatewayMulticastDomain,
+		ResourceTypeAwsEcsCapacityProvider,
+		ResourceTypeAwsIamInstanceProfile,
+		ResourceTypeAwsIoTCacertificate,
+		ResourceTypeAwsIoTtwinMakerSyncJob,
+		ResourceTypeAwsKafkaConnectConnector,
+		ResourceTypeAwsLambdaCodeSigningConfig,
+		ResourceTypeAwsNetworkManagerConnectPeer,
+		ResourceTypeAwsResourceExplorer2Index,
 	}
 }
 

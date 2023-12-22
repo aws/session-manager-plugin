@@ -6618,10 +6618,20 @@ type Cluster struct {
 	// Amazon EBS-backed Linux AMI if the cluster uses a custom AMI.
 	CustomAmiId *string `type:"string"`
 
+	// The IOPS, of the Amazon EBS root device volume of the Linux AMI that is used
+	// for each Amazon EC2 instance. Available in Amazon EMR releases 6.15.0 and
+	// later.
+	EbsRootVolumeIops *int64 `type:"integer"`
+
 	// The size, in GiB, of the Amazon EBS root device volume of the Linux AMI that
 	// is used for each Amazon EC2 instance. Available in Amazon EMR releases 4.x
 	// and later.
 	EbsRootVolumeSize *int64 `type:"integer"`
+
+	// The throughput, in MiB/s, of the Amazon EBS root device volume of the Linux
+	// AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases
+	// 6.15.0 and later.
+	EbsRootVolumeThroughput *int64 `type:"integer"`
 
 	// Provides information about the Amazon EC2 instances in a cluster grouped
 	// by category. For example, key name, subnet ID, IAM instance profile, and
@@ -6803,9 +6813,21 @@ func (s *Cluster) SetCustomAmiId(v string) *Cluster {
 	return s
 }
 
+// SetEbsRootVolumeIops sets the EbsRootVolumeIops field's value.
+func (s *Cluster) SetEbsRootVolumeIops(v int64) *Cluster {
+	s.EbsRootVolumeIops = &v
+	return s
+}
+
 // SetEbsRootVolumeSize sets the EbsRootVolumeSize field's value.
 func (s *Cluster) SetEbsRootVolumeSize(v int64) *Cluster {
 	s.EbsRootVolumeSize = &v
+	return s
+}
+
+// SetEbsRootVolumeThroughput sets the EbsRootVolumeThroughput field's value.
+func (s *Cluster) SetEbsRootVolumeThroughput(v int64) *Cluster {
+	s.EbsRootVolumeThroughput = &v
 	return s
 }
 
@@ -7531,12 +7553,24 @@ type CreateStudioInput struct {
 	// A detailed description of the Amazon EMR Studio.
 	Description *string `type:"string"`
 
+	// The KMS key identifier (ARN) used to encrypt Amazon EMR Studio workspace
+	// and notebook files when backed up to Amazon S3.
+	EncryptionKeyArn *string `type:"string"`
+
 	// The ID of the Amazon EMR Studio Engine security group. The Engine security
 	// group allows inbound network traffic from the Workspace security group, and
 	// it must be in the same VPC specified by VpcId.
 	//
 	// EngineSecurityGroupId is a required field
 	EngineSecurityGroupId *string `type:"string" required:"true"`
+
+	// The ARN of the IAM Identity Center instance to create the Studio application.
+	IdcInstanceArn *string `min:"20" type:"string"`
+
+	// Specifies whether IAM Identity Center user assignment is REQUIRED or OPTIONAL.
+	// If the value is set to REQUIRED, users must be explicitly assigned to the
+	// Studio application to access the Studio.
+	IdcUserAssignment *string `type:"string" enum:"IdcUserAssignment"`
 
 	// The authentication endpoint of your identity provider (IdP). Specify this
 	// value when you use IAM authentication and want to let federated users log
@@ -7573,6 +7607,10 @@ type CreateStudioInput struct {
 	// key-value pairs that consist of a required key string with a maximum of 128
 	// characters, and an optional value string with a maximum of 256 characters.
 	Tags []*Tag `type:"list"`
+
+	// A Boolean indicating whether to enable Trusted identity propagation for the
+	// Studio. The default value is false.
+	TrustedIdentityPropagationEnabled *bool `type:"boolean"`
 
 	// The IAM user role that users and groups assume when logged in to an Amazon
 	// EMR Studio. Only specify a UserRole when you use IAM Identity Center authentication.
@@ -7624,6 +7662,9 @@ func (s *CreateStudioInput) Validate() error {
 	if s.EngineSecurityGroupId == nil {
 		invalidParams.Add(request.NewErrParamRequired("EngineSecurityGroupId"))
 	}
+	if s.IdcInstanceArn != nil && len(*s.IdcInstanceArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("IdcInstanceArn", 20))
+	}
 	if s.Name == nil {
 		invalidParams.Add(request.NewErrParamRequired("Name"))
 	}
@@ -7664,9 +7705,27 @@ func (s *CreateStudioInput) SetDescription(v string) *CreateStudioInput {
 	return s
 }
 
+// SetEncryptionKeyArn sets the EncryptionKeyArn field's value.
+func (s *CreateStudioInput) SetEncryptionKeyArn(v string) *CreateStudioInput {
+	s.EncryptionKeyArn = &v
+	return s
+}
+
 // SetEngineSecurityGroupId sets the EngineSecurityGroupId field's value.
 func (s *CreateStudioInput) SetEngineSecurityGroupId(v string) *CreateStudioInput {
 	s.EngineSecurityGroupId = &v
+	return s
+}
+
+// SetIdcInstanceArn sets the IdcInstanceArn field's value.
+func (s *CreateStudioInput) SetIdcInstanceArn(v string) *CreateStudioInput {
+	s.IdcInstanceArn = &v
+	return s
+}
+
+// SetIdcUserAssignment sets the IdcUserAssignment field's value.
+func (s *CreateStudioInput) SetIdcUserAssignment(v string) *CreateStudioInput {
+	s.IdcUserAssignment = &v
 	return s
 }
 
@@ -7703,6 +7762,12 @@ func (s *CreateStudioInput) SetSubnetIds(v []*string) *CreateStudioInput {
 // SetTags sets the Tags field's value.
 func (s *CreateStudioInput) SetTags(v []*Tag) *CreateStudioInput {
 	s.Tags = v
+	return s
+}
+
+// SetTrustedIdentityPropagationEnabled sets the TrustedIdentityPropagationEnabled field's value.
+func (s *CreateStudioInput) SetTrustedIdentityPropagationEnabled(v bool) *CreateStudioInput {
+	s.TrustedIdentityPropagationEnabled = &v
 	return s
 }
 
@@ -9530,9 +9595,7 @@ type GetClusterSessionCredentialsInput struct {
 	// submission on the cluster. The runtime role can be a cross-account IAM role.
 	// The runtime role ARN is a combination of account ID, role name, and role
 	// type using the following format: arn:partition:service:region:account:resource.
-	//
-	// ExecutionRoleArn is a required field
-	ExecutionRoleArn *string `min:"20" type:"string" required:"true"`
+	ExecutionRoleArn *string `min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -9558,9 +9621,6 @@ func (s *GetClusterSessionCredentialsInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "GetClusterSessionCredentialsInput"}
 	if s.ClusterId == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClusterId"))
-	}
-	if s.ExecutionRoleArn == nil {
-		invalidParams.Add(request.NewErrParamRequired("ExecutionRoleArn"))
 	}
 	if s.ExecutionRoleArn != nil && len(*s.ExecutionRoleArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("ExecutionRoleArn", 20))
@@ -16357,10 +16417,20 @@ type RunJobFlowInput struct {
 	// about finding an AMI ID, see Finding a Linux AMI (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/finding-an-ami.html).
 	CustomAmiId *string `type:"string"`
 
+	// The IOPS, of the Amazon EBS root device volume of the Linux AMI that is used
+	// for each Amazon EC2 instance. Available in Amazon EMR releases 6.15.0 and
+	// later.
+	EbsRootVolumeIops *int64 `type:"integer"`
+
 	// The size, in GiB, of the Amazon EBS root device volume of the Linux AMI that
 	// is used for each Amazon EC2 instance. Available in Amazon EMR releases 4.x
 	// and later.
 	EbsRootVolumeSize *int64 `type:"integer"`
+
+	// The throughput, in MiB/s, of the Amazon EBS root device volume of the Linux
+	// AMI that is used for each Amazon EC2 instance. Available in Amazon EMR releases
+	// 6.15.0 and later.
+	EbsRootVolumeThroughput *int64 `type:"integer"`
 
 	// A specification of the number and type of Amazon EC2 instances.
 	//
@@ -16641,9 +16711,21 @@ func (s *RunJobFlowInput) SetCustomAmiId(v string) *RunJobFlowInput {
 	return s
 }
 
+// SetEbsRootVolumeIops sets the EbsRootVolumeIops field's value.
+func (s *RunJobFlowInput) SetEbsRootVolumeIops(v int64) *RunJobFlowInput {
+	s.EbsRootVolumeIops = &v
+	return s
+}
+
 // SetEbsRootVolumeSize sets the EbsRootVolumeSize field's value.
 func (s *RunJobFlowInput) SetEbsRootVolumeSize(v int64) *RunJobFlowInput {
 	s.EbsRootVolumeSize = &v
+	return s
+}
+
+// SetEbsRootVolumeThroughput sets the EbsRootVolumeThroughput field's value.
+func (s *RunJobFlowInput) SetEbsRootVolumeThroughput(v int64) *RunJobFlowInput {
+	s.EbsRootVolumeThroughput = &v
 	return s
 }
 
@@ -17720,10 +17802,15 @@ func (s *SimplifiedApplication) SetVersion(v string) *SimplifiedApplication {
 type SpotProvisioningSpecification struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the strategy to use in launching Spot Instance fleets. Currently,
-	// the only option is capacity-optimized (the default), which launches instances
-	// from Spot Instance pools with optimal capacity for the number of instances
-	// that are launching.
+	// Specifies one of the following strategies to launch Spot Instance fleets:
+	// price-capacity-optimized, capacity-optimized, lowest-price, or diversified.
+	// For more information on the provisioning strategies, see Allocation strategies
+	// for Spot Instances (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-fleet-allocation-strategy.html)
+	// in the Amazon EC2 User Guide for Linux Instances.
+	//
+	// When you launch a Spot Instance fleet with the old console, it automatically
+	// launches with the capacity-optimized strategy. You can't change the allocation
+	// strategy from the old console.
 	AllocationStrategy *string `type:"string" enum:"SpotProvisioningAllocationStrategy"`
 
 	// The defined duration for Spot Instances (also known as Spot blocks) in minutes.
@@ -18696,10 +18783,23 @@ type Studio struct {
 	// The detailed description of the Amazon EMR Studio.
 	Description *string `type:"string"`
 
+	// The KMS key identifier (ARN) used to encrypt Amazon EMR Studio workspace
+	// and notebook files when backed up to Amazon S3.
+	EncryptionKeyArn *string `type:"string"`
+
 	// The ID of the Engine security group associated with the Amazon EMR Studio.
 	// The Engine security group allows inbound network traffic from resources in
 	// the Workspace security group.
 	EngineSecurityGroupId *string `type:"string"`
+
+	// The ARN of the IAM Identity Center instance the Studio application belongs
+	// to.
+	IdcInstanceArn *string `min:"20" type:"string"`
+
+	// Indicates whether the Studio has REQUIRED or OPTIONAL IAM Identity Center
+	// user assignment. If the value is set to REQUIRED, users must be explicitly
+	// assigned to the Studio application to access the Studio.
+	IdcUserAssignment *string `type:"string" enum:"IdcUserAssignment"`
 
 	// Your identity provider's authentication endpoint. Amazon EMR Studio redirects
 	// federated users to this endpoint for authentication when logging in to a
@@ -18726,6 +18826,10 @@ type Studio struct {
 
 	// A list of tags associated with the Amazon EMR Studio.
 	Tags []*Tag `type:"list"`
+
+	// Indicates whether the Studio has Trusted identity propagation enabled. The
+	// default value is false.
+	TrustedIdentityPropagationEnabled *bool `type:"boolean"`
 
 	// The unique access URL of the Amazon EMR Studio.
 	Url *string `type:"string"`
@@ -18785,9 +18889,27 @@ func (s *Studio) SetDescription(v string) *Studio {
 	return s
 }
 
+// SetEncryptionKeyArn sets the EncryptionKeyArn field's value.
+func (s *Studio) SetEncryptionKeyArn(v string) *Studio {
+	s.EncryptionKeyArn = &v
+	return s
+}
+
 // SetEngineSecurityGroupId sets the EngineSecurityGroupId field's value.
 func (s *Studio) SetEngineSecurityGroupId(v string) *Studio {
 	s.EngineSecurityGroupId = &v
+	return s
+}
+
+// SetIdcInstanceArn sets the IdcInstanceArn field's value.
+func (s *Studio) SetIdcInstanceArn(v string) *Studio {
+	s.IdcInstanceArn = &v
+	return s
+}
+
+// SetIdcUserAssignment sets the IdcUserAssignment field's value.
+func (s *Studio) SetIdcUserAssignment(v string) *Studio {
+	s.IdcUserAssignment = &v
 	return s
 }
 
@@ -18839,6 +18961,12 @@ func (s *Studio) SetTags(v []*Tag) *Studio {
 	return s
 }
 
+// SetTrustedIdentityPropagationEnabled sets the TrustedIdentityPropagationEnabled field's value.
+func (s *Studio) SetTrustedIdentityPropagationEnabled(v bool) *Studio {
+	s.TrustedIdentityPropagationEnabled = &v
+	return s
+}
+
 // SetUrl sets the Url field's value.
 func (s *Studio) SetUrl(v string) *Studio {
 	s.Url = &v
@@ -18864,8 +18992,8 @@ func (s *Studio) SetWorkspaceSecurityGroupId(v string) *Studio {
 }
 
 // Details for an Amazon EMR Studio, including ID, Name, VPC, and Description.
-// The details do not include subnets, IAM roles, security groups, or tags associated
-// with the Studio.
+// To fetch additional details such as subnets, IAM roles, security groups,
+// and tags for the Studio, use the DescribeStudio API.
 type StudioSummary struct {
 	_ struct{} `type:"structure"`
 
@@ -19249,6 +19377,10 @@ type UpdateStudioInput struct {
 	// A detailed description to assign to the Amazon EMR Studio.
 	Description *string `type:"string"`
 
+	// The KMS key identifier (ARN) used to encrypt Amazon EMR Studio workspace
+	// and notebook files when backed up to Amazon S3.
+	EncryptionKeyArn *string `type:"string"`
+
 	// A descriptive name for the Amazon EMR Studio.
 	Name *string `type:"string"`
 
@@ -19305,6 +19437,12 @@ func (s *UpdateStudioInput) SetDefaultS3Location(v string) *UpdateStudioInput {
 // SetDescription sets the Description field's value.
 func (s *UpdateStudioInput) SetDescription(v string) *UpdateStudioInput {
 	s.Description = &v
+	return s
+}
+
+// SetEncryptionKeyArn sets the EncryptionKeyArn field's value.
+func (s *UpdateStudioInput) SetEncryptionKeyArn(v string) *UpdateStudioInput {
+	s.EncryptionKeyArn = &v
 	return s
 }
 
@@ -19855,6 +19993,22 @@ const (
 func ExecutionEngineType_Values() []string {
 	return []string{
 		ExecutionEngineTypeEmr,
+	}
+}
+
+const (
+	// IdcUserAssignmentRequired is a IdcUserAssignment enum value
+	IdcUserAssignmentRequired = "REQUIRED"
+
+	// IdcUserAssignmentOptional is a IdcUserAssignment enum value
+	IdcUserAssignmentOptional = "OPTIONAL"
+)
+
+// IdcUserAssignment_Values returns all elements of the IdcUserAssignment enum
+func IdcUserAssignment_Values() []string {
+	return []string{
+		IdcUserAssignmentRequired,
+		IdcUserAssignmentOptional,
 	}
 }
 

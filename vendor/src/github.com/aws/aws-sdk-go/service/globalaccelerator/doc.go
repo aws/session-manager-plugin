@@ -24,7 +24,7 @@
 // Global Accelerator is a global service that supports endpoints in multiple
 // Amazon Web Services Regions but you must specify the US West (Oregon) Region
 // to create, update, or otherwise work with accelerators. That is, for example,
-// specify --region us-west-2 on AWS CLI commands.
+// specify --region us-west-2 on Amazon Web Services CLI commands.
 //
 // By default, Global Accelerator provides you with static IP addresses that
 // you associate with your accelerator. The static IP addresses are anycast
@@ -33,7 +33,7 @@
 // total of four addresses: two static IPv4 addresses and two static IPv6 addresses.
 // With a standard accelerator for IPv4, instead of using the addresses that
 // Global Accelerator provides, you can configure these entry points to be IPv4
-// addresses from your own IP address ranges that you bring toGlobal Accelerator
+// addresses from your own IP address ranges that you bring to Global Accelerator
 // (BYOIP).
 //
 // For a standard accelerator, they distribute incoming application traffic

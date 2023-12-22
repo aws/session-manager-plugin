@@ -80,12 +80,13 @@ func (c *CodeCommit) AssociateApprovalRuleTemplateWithRepositoryRequest(input *A
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - MaximumRuleTemplatesAssociatedWithRepositoryException
 //     The maximum number of approval rule templates for a repository has been exceeded.
@@ -202,12 +203,13 @@ func (c *CodeCommit) BatchAssociateApprovalRuleTemplateWithRepositoriesRequest(i
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - RepositoryNamesRequiredException
 //     At least one repository name object is required, but was not specified.
@@ -463,12 +465,13 @@ func (c *CodeCommit) BatchDisassociateApprovalRuleTemplateFromRepositoriesReques
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - RepositoryNamesRequiredException
 //     At least one repository name object is required, but was not specified.
@@ -782,10 +785,10 @@ func (c *CodeCommit) CreateApprovalRuleTemplateRequest(input *CreateApprovalRule
 // CreateApprovalRuleTemplate API operation for AWS CodeCommit.
 //
 // Creates a template for approval rules that can then be associated with one
-// or more repositories in your AWS account. When you associate a template with
-// a repository, AWS CodeCommit creates an approval rule that matches the conditions
-// of the template for all pull requests that meet the conditions of the template.
-// For more information, see AssociateApprovalRuleTemplateWithRepository.
+// or more repositories in your Amazon Web Services account. When you associate
+// a template with a repository, CodeCommit creates an approval rule that matches
+// the conditions of the template for all pull requests that meet the conditions
+// of the template. For more information, see AssociateApprovalRuleTemplateWithRepository.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -802,12 +805,13 @@ func (c *CodeCommit) CreateApprovalRuleTemplateRequest(input *CreateApprovalRule
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateNameAlreadyExistsException
 //     You cannot create an approval rule template with that name because a template
-//     with that name already exists in this AWS Region for your AWS account. Approval
-//     rule template names must be unique.
+//     with that name already exists in this Amazon Web Services Region for your
+//     Amazon Web Services account. Approval rule template names must be unique.
 //
 //   - ApprovalRuleTemplateContentRequiredException
 //     The content for the approval rule template is empty. You must provide some
@@ -819,11 +823,12 @@ func (c *CodeCommit) CreateApprovalRuleTemplateRequest(input *CreateApprovalRule
 //   - InvalidApprovalRuleTemplateDescriptionException
 //     The description for the approval rule template is not valid because it exceeds
 //     the maximum characters allowed for a description. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - NumberOfRuleTemplatesExceededException
 //     The maximum number of approval rule templates has been exceeded for this
-//     AWS Region.
+//     Amazon Web Services Region.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/CreateApprovalRuleTemplate
 func (c *CodeCommit) CreateApprovalRuleTemplate(input *CreateApprovalRuleTemplateInput) (*CreateApprovalRuleTemplateOutput, error) {
@@ -1310,7 +1315,7 @@ func (c *CodeCommit) CreatePullRequestRequest(input *CreatePullRequestInput) (re
 //
 //   - InvalidReferenceNameException
 //     The specified reference name format is not valid. Reference names must conform
-//     to the Git references format (for example, refs/heads/master). For more information,
+//     to the Git references format (for example, refs/heads/main). For more information,
 //     see Git Internals - Git References (https://git-scm.com/book/en/v2/Git-Internals-Git-References)
 //     or consult your Git documentation.
 //
@@ -1601,11 +1606,19 @@ func (c *CodeCommit) CreateRepositoryRequest(input *CreateRepositoryInput) (req 
 //   - EncryptionKeyUnavailableException
 //     The encryption key is not available.
 //
+//   - EncryptionKeyInvalidIdException
+//     The Key Management Service encryption key is not valid.
+//
+//   - EncryptionKeyInvalidUsageException
+//     A KMS encryption key was used to try and encrypt or decrypt a repository,
+//     but either the repository or the key was not in a valid state to support
+//     the operation.
+//
 //   - InvalidTagsMapException
 //     The map of tags is not valid.
 //
 //   - TooManyTagsException
-//     The maximum number of tags for an AWS CodeCommit resource has been exceeded.
+//     The maximum number of tags for an CodeCommit resource has been exceeded.
 //
 //   - InvalidSystemTagUsageException
 //     The specified tag is not valid. Key names cannot be prefixed with aws:.
@@ -1912,7 +1925,8 @@ func (c *CodeCommit) DeleteApprovalRuleTemplateRequest(input *DeleteApprovalRule
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateInUseException
 //     The approval rule template is associated with one or more repositories. You
@@ -2832,7 +2846,8 @@ func (c *CodeCommit) DescribePullRequestEventsRequest(input *DescribePullRequest
 //     and then try again.
 //
 //   - ActorDoesNotExistException
-//     The specified Amazon Resource Name (ARN) does not exist in the AWS account.
+//     The specified Amazon Resource Name (ARN) does not exist in the Amazon Web
+//     Services account.
 //
 //   - InvalidMaxResultsException
 //     The specified number of maximum results is not valid.
@@ -2992,12 +3007,13 @@ func (c *CodeCommit) DisassociateApprovalRuleTemplateFromRepositoryRequest(input
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - RepositoryNameRequiredException
 //     A repository name is required, but was not specified.
@@ -3223,12 +3239,13 @@ func (c *CodeCommit) GetApprovalRuleTemplateRequest(input *GetApprovalRuleTempla
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetApprovalRuleTemplate
 func (c *CodeCommit) GetApprovalRuleTemplate(input *GetApprovalRuleTemplateInput) (*GetApprovalRuleTemplateOutput, error) {
@@ -3344,9 +3361,9 @@ func (c *CodeCommit) GetBlobRequest(input *GetBlobInput) (req *request.Request, 
 //     The encryption key is not available.
 //
 //   - FileTooLargeException
-//     The specified file exceeds the file size limit for AWS CodeCommit. For more
-//     information about limits in AWS CodeCommit, see AWS CodeCommit User Guide
-//     (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     The specified file exceeds the file size limit for CodeCommit. For more information
+//     about limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetBlob
 func (c *CodeCommit) GetBlob(input *GetBlobInput) (*GetBlobOutput, error) {
@@ -4533,9 +4550,9 @@ func (c *CodeCommit) GetFileRequest(input *GetFileInput) (req *request.Request, 
 //     The encryption key is not available.
 //
 //   - FileTooLargeException
-//     The specified file exceeds the file size limit for AWS CodeCommit. For more
-//     information about limits in AWS CodeCommit, see AWS CodeCommit User Guide
-//     (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     The specified file exceeds the file size limit for CodeCommit. For more information
+//     about limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/GetFile
 func (c *CodeCommit) GetFile(input *GetFileInput) (*GetFileOutput, error) {
@@ -5733,9 +5750,10 @@ func (c *CodeCommit) ListApprovalRuleTemplatesRequest(input *ListApprovalRuleTem
 
 // ListApprovalRuleTemplates API operation for AWS CodeCommit.
 //
-// Lists all approval rule templates in the specified AWS Region in your AWS
-// account. If an AWS Region is not specified, the AWS Region where you are
-// signed in is used.
+// Lists all approval rule templates in the specified Amazon Web Services Region
+// in your Amazon Web Services account. If an Amazon Web Services Region is
+// not specified, the Amazon Web Services Region where you are signed in is
+// used.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6156,6 +6174,188 @@ func (c *CodeCommit) ListBranchesPagesWithContext(ctx aws.Context, input *ListBr
 	return p.Err()
 }
 
+const opListFileCommitHistory = "ListFileCommitHistory"
+
+// ListFileCommitHistoryRequest generates a "aws/request.Request" representing the
+// client's request for the ListFileCommitHistory operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListFileCommitHistory for more information on using the ListFileCommitHistory
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListFileCommitHistoryRequest method.
+//	req, resp := client.ListFileCommitHistoryRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListFileCommitHistory
+func (c *CodeCommit) ListFileCommitHistoryRequest(input *ListFileCommitHistoryInput) (req *request.Request, output *ListFileCommitHistoryOutput) {
+	op := &request.Operation{
+		Name:       opListFileCommitHistory,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListFileCommitHistoryInput{}
+	}
+
+	output = &ListFileCommitHistoryOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListFileCommitHistory API operation for AWS CodeCommit.
+//
+// Retrieves a list of commits and changes to a specified file.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodeCommit's
+// API operation ListFileCommitHistory for usage and error information.
+//
+// Returned Error Types:
+//
+//   - RepositoryNameRequiredException
+//     A repository name is required, but was not specified.
+//
+//   - InvalidRepositoryNameException
+//     A specified repository name is not valid.
+//
+//     This exception occurs only when a specified repository name is not valid.
+//     Other exceptions occur when a required repository parameter is missing, or
+//     when a specified repository does not exist.
+//
+//   - RepositoryDoesNotExistException
+//     The specified repository does not exist.
+//
+//   - InvalidContinuationTokenException
+//     The specified continuation token is not valid.
+//
+//   - InvalidMaxResultsException
+//     The specified number of maximum results is not valid.
+//
+//   - TipsDivergenceExceededException
+//     The divergence between the tips of the provided commit specifiers is too
+//     great to determine whether there might be any merge conflicts. Locally compare
+//     the specifiers using git diff or a diff tool.
+//
+//   - CommitRequiredException
+//     A commit was not specified.
+//
+//   - InvalidCommitException
+//     The specified commit is not valid.
+//
+//   - CommitDoesNotExistException
+//     The specified commit does not exist or no commit was specified, and the specified
+//     repository has no default branch.
+//
+//   - EncryptionIntegrityChecksFailedException
+//     An encryption integrity check failed.
+//
+//   - EncryptionKeyAccessDeniedException
+//     An encryption key could not be accessed.
+//
+//   - EncryptionKeyDisabledException
+//     The encryption key is disabled.
+//
+//   - EncryptionKeyNotFoundException
+//     No encryption key was found.
+//
+//   - EncryptionKeyUnavailableException
+//     The encryption key is not available.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListFileCommitHistory
+func (c *CodeCommit) ListFileCommitHistory(input *ListFileCommitHistoryInput) (*ListFileCommitHistoryOutput, error) {
+	req, out := c.ListFileCommitHistoryRequest(input)
+	return out, req.Send()
+}
+
+// ListFileCommitHistoryWithContext is the same as ListFileCommitHistory with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListFileCommitHistory for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeCommit) ListFileCommitHistoryWithContext(ctx aws.Context, input *ListFileCommitHistoryInput, opts ...request.Option) (*ListFileCommitHistoryOutput, error) {
+	req, out := c.ListFileCommitHistoryRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListFileCommitHistoryPages iterates over the pages of a ListFileCommitHistory operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListFileCommitHistory method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListFileCommitHistory operation.
+//	pageNum := 0
+//	err := client.ListFileCommitHistoryPages(params,
+//	    func(page *codecommit.ListFileCommitHistoryOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *CodeCommit) ListFileCommitHistoryPages(input *ListFileCommitHistoryInput, fn func(*ListFileCommitHistoryOutput, bool) bool) error {
+	return c.ListFileCommitHistoryPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListFileCommitHistoryPagesWithContext same as ListFileCommitHistoryPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeCommit) ListFileCommitHistoryPagesWithContext(ctx aws.Context, input *ListFileCommitHistoryInput, fn func(*ListFileCommitHistoryOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListFileCommitHistoryInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListFileCommitHistoryRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListFileCommitHistoryOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListPullRequests = "ListPullRequests"
 
 // ListPullRequestsRequest generates a "aws/request.Request" representing the
@@ -6226,7 +6426,8 @@ func (c *CodeCommit) ListPullRequestsRequest(input *ListPullRequestsInput) (req 
 //     the full ARN for the author of the pull request, and then try again.
 //
 //   - AuthorDoesNotExistException
-//     The specified Amazon Resource Name (ARN) does not exist in the AWS account.
+//     The specified Amazon Resource Name (ARN) does not exist in the Amazon Web
+//     Services account.
 //
 //   - RepositoryNameRequiredException
 //     A repository name is required, but was not specified.
@@ -6543,12 +6744,13 @@ func (c *CodeCommit) ListRepositoriesForApprovalRuleTemplateRequest(input *ListR
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - InvalidMaxResultsException
 //     The specified number of maximum results is not valid.
@@ -6687,10 +6889,10 @@ func (c *CodeCommit) ListTagsForResourceRequest(input *ListTagsForResourceInput)
 
 // ListTagsForResource API operation for AWS CodeCommit.
 //
-// Gets information about AWS tags for a specified Amazon Resource Name (ARN)
-// in AWS CodeCommit. For a list of valid resources in AWS CodeCommit, see CodeCommit
-// Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-// in the AWS CodeCommit User Guide.
+// Gets information about Amazon Web Servicestags for a specified Amazon Resource
+// Name (ARN) in CodeCommit. For a list of valid resources in CodeCommit, see
+// CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+// in the CodeCommit User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6712,15 +6914,15 @@ func (c *CodeCommit) ListTagsForResourceRequest(input *ListTagsForResourceInput)
 //     when a specified repository does not exist.
 //
 //   - ResourceArnRequiredException
-//     A valid Amazon Resource Name (ARN) for an AWS CodeCommit resource is required.
-//     For a list of valid resources in AWS CodeCommit, see CodeCommit Resources
-//     and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-//     in the AWS CodeCommit User Guide.
+//     A valid Amazon Resource Name (ARN) for an CodeCommit resource is required.
+//     For a list of valid resources in CodeCommit, see CodeCommit Resources and
+//     Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+//     in the CodeCommit User Guide.
 //
 //   - InvalidResourceArnException
 //     The value for the resource ARN is not valid. For more information about resources
-//     in AWS CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-//     in the AWS CodeCommit User Guide.
+//     in CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+//     in the CodeCommit User Guide.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/ListTagsForResource
 func (c *CodeCommit) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
@@ -8137,7 +8339,7 @@ func (c *CodeCommit) PostCommentForComparedCommitRequest(input *PostCommentForCo
 //     cannot be null.
 //
 //   - CommentContentSizeLimitExceededException
-//     The comment is too large. Comments are limited to 1,000 characters.
+//     The comment is too large. Comments are limited to 10,240 characters.
 //
 //   - InvalidFileLocationException
 //     The location of the file is not valid. Make sure that you include the file
@@ -8317,7 +8519,7 @@ func (c *CodeCommit) PostCommentForPullRequestRequest(input *PostCommentForPullR
 //     cannot be null.
 //
 //   - CommentContentSizeLimitExceededException
-//     The comment is too large. Comments are limited to 1,000 characters.
+//     The comment is too large. Comments are limited to 10,240 characters.
 //
 //   - InvalidFileLocationException
 //     The location of the file is not valid. Make sure that you include the file
@@ -8468,7 +8670,7 @@ func (c *CodeCommit) PostCommentReplyRequest(input *PostCommentReplyInput) (req 
 //     cannot be null.
 //
 //   - CommentContentSizeLimitExceededException
-//     The comment is too large. Comments are limited to 1,000 characters.
+//     The comment is too large. Comments are limited to 10,240 characters.
 //
 //   - CommentDoesNotExistException
 //     No comment exists with the provided ID. Verify that you have used the correct
@@ -8572,8 +8774,8 @@ func (c *CodeCommit) PutCommentReactionRequest(input *PutCommentReactionInput) (
 //     the full comment ID.
 //
 //   - InvalidReactionValueException
-//     The value of the reaction is not valid. For more information, see the AWS
-//     CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html).
+//     The value of the reaction is not valid. For more information, see the CodeCommit
+//     User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html).
 //
 //   - ReactionValueRequiredException
 //     A reaction value is required.
@@ -8651,7 +8853,7 @@ func (c *CodeCommit) PutFileRequest(input *PutFileInput) (req *request.Request, 
 
 // PutFile API operation for AWS CodeCommit.
 //
-// Adds or updates a file in a branch in an AWS CodeCommit repository, and generates
+// Adds or updates a file in a branch in an CodeCommit repository, and generates
 // a commit for the addition in the specified branch.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -8890,9 +9092,9 @@ func (c *CodeCommit) PutRepositoryTriggersRequest(input *PutRepositoryTriggersIn
 //     meet the requirements for the service type.
 //
 //   - InvalidRepositoryTriggerRegionException
-//     The AWS Region for the trigger target does not match the AWS Region for the
-//     repository. Triggers must be created in the same Region as the target for
-//     the trigger.
+//     The Amazon Web Services Region for the trigger target does not match the
+//     Amazon Web Services Region for the repository. Triggers must be created in
+//     the same Amazon Web Services Region as the target for the trigger.
 //
 //   - InvalidRepositoryTriggerCustomDataException
 //     The custom data provided for the trigger is not valid.
@@ -9002,9 +9204,9 @@ func (c *CodeCommit) TagResourceRequest(input *TagResourceInput) (req *request.R
 
 // TagResource API operation for AWS CodeCommit.
 //
-// Adds or updates tags for a resource in AWS CodeCommit. For a list of valid
-// resources in AWS CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-// in the AWS CodeCommit User Guide.
+// Adds or updates tags for a resource in CodeCommit. For a list of valid resources
+// in CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+// in the CodeCommit User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9026,15 +9228,15 @@ func (c *CodeCommit) TagResourceRequest(input *TagResourceInput) (req *request.R
 //     when a specified repository does not exist.
 //
 //   - ResourceArnRequiredException
-//     A valid Amazon Resource Name (ARN) for an AWS CodeCommit resource is required.
-//     For a list of valid resources in AWS CodeCommit, see CodeCommit Resources
-//     and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-//     in the AWS CodeCommit User Guide.
+//     A valid Amazon Resource Name (ARN) for an CodeCommit resource is required.
+//     For a list of valid resources in CodeCommit, see CodeCommit Resources and
+//     Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+//     in the CodeCommit User Guide.
 //
 //   - InvalidResourceArnException
 //     The value for the resource ARN is not valid. For more information about resources
-//     in AWS CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-//     in the AWS CodeCommit User Guide.
+//     in CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+//     in the CodeCommit User Guide.
 //
 //   - TagsMapRequiredException
 //     A map of tags is required.
@@ -9043,7 +9245,7 @@ func (c *CodeCommit) TagResourceRequest(input *TagResourceInput) (req *request.R
 //     The map of tags is not valid.
 //
 //   - TooManyTagsException
-//     The maximum number of tags for an AWS CodeCommit resource has been exceeded.
+//     The maximum number of tags for an CodeCommit resource has been exceeded.
 //
 //   - InvalidSystemTagUsageException
 //     The specified tag is not valid. Key names cannot be prefixed with aws:.
@@ -9158,9 +9360,9 @@ func (c *CodeCommit) TestRepositoryTriggersRequest(input *TestRepositoryTriggers
 //     meet the requirements for the service type.
 //
 //   - InvalidRepositoryTriggerRegionException
-//     The AWS Region for the trigger target does not match the AWS Region for the
-//     repository. Triggers must be created in the same Region as the target for
-//     the trigger.
+//     The Amazon Web Services Region for the trigger target does not match the
+//     Amazon Web Services Region for the repository. Triggers must be created in
+//     the same Amazon Web Services Region as the target for the trigger.
 //
 //   - InvalidRepositoryTriggerCustomDataException
 //     The custom data provided for the trigger is not valid.
@@ -9270,9 +9472,9 @@ func (c *CodeCommit) UntagResourceRequest(input *UntagResourceInput) (req *reque
 
 // UntagResource API operation for AWS CodeCommit.
 //
-// Removes tags for a resource in AWS CodeCommit. For a list of valid resources
-// in AWS CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-// in the AWS CodeCommit User Guide.
+// Removes tags for a resource in CodeCommit. For a list of valid resources
+// in CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+// in the CodeCommit User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9294,15 +9496,15 @@ func (c *CodeCommit) UntagResourceRequest(input *UntagResourceInput) (req *reque
 //     when a specified repository does not exist.
 //
 //   - ResourceArnRequiredException
-//     A valid Amazon Resource Name (ARN) for an AWS CodeCommit resource is required.
-//     For a list of valid resources in AWS CodeCommit, see CodeCommit Resources
-//     and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-//     in the AWS CodeCommit User Guide.
+//     A valid Amazon Resource Name (ARN) for an CodeCommit resource is required.
+//     For a list of valid resources in CodeCommit, see CodeCommit Resources and
+//     Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+//     in the CodeCommit User Guide.
 //
 //   - InvalidResourceArnException
 //     The value for the resource ARN is not valid. For more information about resources
-//     in AWS CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-//     in the AWS CodeCommit User Guide.
+//     in CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+//     in the CodeCommit User Guide.
 //
 //   - TagKeysListRequiredException
 //     A list of tag keys is required. The list cannot be empty or null.
@@ -9311,7 +9513,7 @@ func (c *CodeCommit) UntagResourceRequest(input *UntagResourceInput) (req *reque
 //     The list of tags is not valid.
 //
 //   - TooManyTagsException
-//     The maximum number of tags for an AWS CodeCommit resource has been exceeded.
+//     The maximum number of tags for an CodeCommit resource has been exceeded.
 //
 //   - InvalidSystemTagUsageException
 //     The specified tag is not valid. Key names cannot be prefixed with aws:.
@@ -9400,15 +9602,16 @@ func (c *CodeCommit) UpdateApprovalRuleTemplateContentRequest(input *UpdateAppro
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateNameRequiredException
 //     An approval rule template name is required, but was not specified.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - InvalidApprovalRuleTemplateContentException
 //     The content of the approval rule template is not valid.
@@ -9499,20 +9702,22 @@ func (c *CodeCommit) UpdateApprovalRuleTemplateDescriptionRequest(input *UpdateA
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateNameRequiredException
 //     An approval rule template name is required, but was not specified.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - InvalidApprovalRuleTemplateDescriptionException
 //     The description for the approval rule template is not valid because it exceeds
 //     the maximum characters allowed for a description. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateApprovalRuleTemplateDescription
 func (c *CodeCommit) UpdateApprovalRuleTemplateDescription(input *UpdateApprovalRuleTemplateDescriptionInput) (*UpdateApprovalRuleTemplateDescriptionOutput, error) {
@@ -9593,20 +9798,21 @@ func (c *CodeCommit) UpdateApprovalRuleTemplateNameRequest(input *UpdateApproval
 //   - InvalidApprovalRuleTemplateNameException
 //     The name of the approval rule template is not valid. Template names must
 //     be between 1 and 100 valid characters in length. For more information about
-//     limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+//     limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+//     in the CodeCommit User Guide.
 //
 //   - ApprovalRuleTemplateNameRequiredException
 //     An approval rule template name is required, but was not specified.
 //
 //   - ApprovalRuleTemplateDoesNotExistException
 //     The specified approval rule template does not exist. Verify that the name
-//     is correct and that you are signed in to the AWS Region where the template
-//     was created, and then try again.
+//     is correct and that you are signed in to the Amazon Web Services Region where
+//     the template was created, and then try again.
 //
 //   - ApprovalRuleTemplateNameAlreadyExistsException
 //     You cannot create an approval rule template with that name because a template
-//     with that name already exists in this AWS Region for your AWS account. Approval
-//     rule template names must be unique.
+//     with that name already exists in this Amazon Web Services Region for your
+//     Amazon Web Services account. Approval rule template names must be unique.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateApprovalRuleTemplateName
 func (c *CodeCommit) UpdateApprovalRuleTemplateName(input *UpdateApprovalRuleTemplateNameInput) (*UpdateApprovalRuleTemplateNameOutput, error) {
@@ -9689,7 +9895,7 @@ func (c *CodeCommit) UpdateCommentRequest(input *UpdateCommentInput) (req *reque
 //     cannot be null.
 //
 //   - CommentContentSizeLimitExceededException
-//     The comment is too large. Comments are limited to 1,000 characters.
+//     The comment is too large. Comments are limited to 10,240 characters.
 //
 //   - CommentDoesNotExistException
 //     No comment exists with the provided ID. Verify that you have used the correct
@@ -10536,6 +10742,122 @@ func (c *CodeCommit) UpdateRepositoryDescriptionWithContext(ctx aws.Context, inp
 	return out, req.Send()
 }
 
+const opUpdateRepositoryEncryptionKey = "UpdateRepositoryEncryptionKey"
+
+// UpdateRepositoryEncryptionKeyRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateRepositoryEncryptionKey operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateRepositoryEncryptionKey for more information on using the UpdateRepositoryEncryptionKey
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateRepositoryEncryptionKeyRequest method.
+//	req, resp := client.UpdateRepositoryEncryptionKeyRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateRepositoryEncryptionKey
+func (c *CodeCommit) UpdateRepositoryEncryptionKeyRequest(input *UpdateRepositoryEncryptionKeyInput) (req *request.Request, output *UpdateRepositoryEncryptionKeyOutput) {
+	op := &request.Operation{
+		Name:       opUpdateRepositoryEncryptionKey,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &UpdateRepositoryEncryptionKeyInput{}
+	}
+
+	output = &UpdateRepositoryEncryptionKeyOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateRepositoryEncryptionKey API operation for AWS CodeCommit.
+//
+// Updates the Key Management Service encryption key used to encrypt and decrypt
+// a CodeCommit repository.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodeCommit's
+// API operation UpdateRepositoryEncryptionKey for usage and error information.
+//
+// Returned Error Types:
+//
+//   - RepositoryNameRequiredException
+//     A repository name is required, but was not specified.
+//
+//   - RepositoryDoesNotExistException
+//     The specified repository does not exist.
+//
+//   - InvalidRepositoryNameException
+//     A specified repository name is not valid.
+//
+//     This exception occurs only when a specified repository name is not valid.
+//     Other exceptions occur when a required repository parameter is missing, or
+//     when a specified repository does not exist.
+//
+//   - EncryptionKeyRequiredException
+//     A KMS encryption key ID is required but was not specified.
+//
+//   - EncryptionIntegrityChecksFailedException
+//     An encryption integrity check failed.
+//
+//   - EncryptionKeyAccessDeniedException
+//     An encryption key could not be accessed.
+//
+//   - EncryptionKeyInvalidIdException
+//     The Key Management Service encryption key is not valid.
+//
+//   - EncryptionKeyInvalidUsageException
+//     A KMS encryption key was used to try and encrypt or decrypt a repository,
+//     but either the repository or the key was not in a valid state to support
+//     the operation.
+//
+//   - EncryptionKeyDisabledException
+//     The encryption key is disabled.
+//
+//   - EncryptionKeyNotFoundException
+//     No encryption key was found.
+//
+//   - EncryptionKeyUnavailableException
+//     The encryption key is not available.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codecommit-2015-04-13/UpdateRepositoryEncryptionKey
+func (c *CodeCommit) UpdateRepositoryEncryptionKey(input *UpdateRepositoryEncryptionKeyInput) (*UpdateRepositoryEncryptionKeyOutput, error) {
+	req, out := c.UpdateRepositoryEncryptionKeyRequest(input)
+	return out, req.Send()
+}
+
+// UpdateRepositoryEncryptionKeyWithContext is the same as UpdateRepositoryEncryptionKey with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateRepositoryEncryptionKey for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeCommit) UpdateRepositoryEncryptionKeyWithContext(ctx aws.Context, input *UpdateRepositoryEncryptionKeyInput, opts ...request.Option) (*UpdateRepositoryEncryptionKeyOutput, error) {
+	req, out := c.UpdateRepositoryEncryptionKeyRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateRepositoryName = "UpdateRepositoryName"
 
 // UpdateRepositoryNameRequest generates a "aws/request.Request" representing the
@@ -10581,11 +10903,11 @@ func (c *CodeCommit) UpdateRepositoryNameRequest(input *UpdateRepositoryNameInpu
 // UpdateRepositoryName API operation for AWS CodeCommit.
 //
 // Renames a repository. The repository name must be unique across the calling
-// AWS account. Repository names are limited to 100 alphanumeric, dash, and
-// underscore characters, and cannot include certain characters. The suffix
-// .git is prohibited. For more information about the limits on repository names,
-// see Limits (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
-// in the AWS CodeCommit User Guide.
+// Amazon Web Services account. Repository names are limited to 100 alphanumeric,
+// dash, and underscore characters, and cannot include certain characters. The
+// suffix .git is prohibited. For more information about the limits on repository
+// names, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+// in the CodeCommit User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -10634,7 +10956,8 @@ func (c *CodeCommit) UpdateRepositoryNameWithContext(ctx aws.Context, input *Upd
 	return out, req.Send()
 }
 
-// The specified Amazon Resource Name (ARN) does not exist in the AWS account.
+// The specified Amazon Resource Name (ARN) does not exist in the Amazon Web
+// Services account.
 type ActorDoesNotExistException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -11348,8 +11671,8 @@ func (s *ApprovalRuleTemplateContentRequiredException) RequestID() string {
 }
 
 // The specified approval rule template does not exist. Verify that the name
-// is correct and that you are signed in to the AWS Region where the template
-// was created, and then try again.
+// is correct and that you are signed in to the Amazon Web Services Region where
+// the template was created, and then try again.
 type ApprovalRuleTemplateDoesNotExistException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -11480,8 +11803,8 @@ func (s *ApprovalRuleTemplateInUseException) RequestID() string {
 }
 
 // You cannot create an approval rule template with that name because a template
-// with that name already exists in this AWS Region for your AWS account. Approval
-// rule template names must be unique.
+// with that name already exists in this Amazon Web Services Region for your
+// Amazon Web Services account. Approval rule template names must be unique.
 type ApprovalRuleTemplateNameAlreadyExistsException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -11802,7 +12125,8 @@ func (s AssociateApprovalRuleTemplateWithRepositoryOutput) GoString() string {
 	return s.String()
 }
 
-// The specified Amazon Resource Name (ARN) does not exist in the AWS account.
+// The specified Amazon Resource Name (ARN) does not exist in the Amazon Web
+// Services account.
 type AuthorDoesNotExistException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -12655,6 +12979,68 @@ func (s *BatchGetCommitsOutput) SetErrors(v []*BatchGetCommitsError) *BatchGetCo
 	return s
 }
 
+// Returns information about errors in a BatchGetRepositories operation.
+type BatchGetRepositoriesError struct {
+	_ struct{} `type:"structure"`
+
+	// An error code that specifies the type of failure.
+	ErrorCode *string `locationName:"errorCode" type:"string" enum:"BatchGetRepositoriesErrorCodeEnum"`
+
+	// An error message that provides detail about why the repository either was
+	// not found or was not in a valid state.
+	ErrorMessage *string `locationName:"errorMessage" type:"string"`
+
+	// The ID of a repository that either could not be found or was not in a valid
+	// state.
+	RepositoryId *string `locationName:"repositoryId" type:"string"`
+
+	// The name of a repository that either could not be found or was not in a valid
+	// state.
+	RepositoryName *string `locationName:"repositoryName" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetRepositoriesError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetRepositoriesError) GoString() string {
+	return s.String()
+}
+
+// SetErrorCode sets the ErrorCode field's value.
+func (s *BatchGetRepositoriesError) SetErrorCode(v string) *BatchGetRepositoriesError {
+	s.ErrorCode = &v
+	return s
+}
+
+// SetErrorMessage sets the ErrorMessage field's value.
+func (s *BatchGetRepositoriesError) SetErrorMessage(v string) *BatchGetRepositoriesError {
+	s.ErrorMessage = &v
+	return s
+}
+
+// SetRepositoryId sets the RepositoryId field's value.
+func (s *BatchGetRepositoriesError) SetRepositoryId(v string) *BatchGetRepositoriesError {
+	s.RepositoryId = &v
+	return s
+}
+
+// SetRepositoryName sets the RepositoryName field's value.
+func (s *BatchGetRepositoriesError) SetRepositoryName(v string) *BatchGetRepositoriesError {
+	s.RepositoryName = &v
+	return s
+}
+
 // Represents the input of a batch get repositories operation.
 type BatchGetRepositoriesInput struct {
 	_ struct{} `type:"structure"`
@@ -12709,6 +13095,10 @@ func (s *BatchGetRepositoriesInput) SetRepositoryNames(v []*string) *BatchGetRep
 type BatchGetRepositoriesOutput struct {
 	_ struct{} `type:"structure"`
 
+	// Returns information about any errors returned when attempting to retrieve
+	// information about the repositories.
+	Errors []*BatchGetRepositoriesError `locationName:"errors" type:"list"`
+
 	// A list of repositories returned by the batch get repositories operation.
 	Repositories []*RepositoryMetadata `locationName:"repositories" type:"list"`
 
@@ -12732,6 +13122,12 @@ func (s BatchGetRepositoriesOutput) String() string {
 // value will be replaced with "sensitive".
 func (s BatchGetRepositoriesOutput) GoString() string {
 	return s.String()
+}
+
+// SetErrors sets the Errors field's value.
+func (s *BatchGetRepositoriesOutput) SetErrors(v []*BatchGetRepositoriesError) *BatchGetRepositoriesOutput {
+	s.Errors = v
+	return s
 }
 
 // SetRepositories sets the Repositories field's value.
@@ -13678,7 +14074,7 @@ func (s *CommentContentRequiredException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The comment is too large. Comments are limited to 1,000 characters.
+// The comment is too large. Comments are limited to 10,240 characters.
 type CommentContentSizeLimitExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -15069,14 +15465,14 @@ type CreateApprovalRuleTemplateInput struct {
 	// When you create the content of the approval rule template, you can specify
 	// approvers in an approval pool in one of two ways:
 	//
-	//    * CodeCommitApprovers: This option only requires an AWS account and a
-	//    resource. It can be used for both IAM users and federated access users
-	//    whose name matches the provided resource name. This is a very powerful
-	//    option that offers a great deal of flexibility. For example, if you specify
-	//    the AWS account 123456789012 and Mary_Major, all of the following are
-	//    counted as approvals coming from that user: An IAM user in the account
-	//    (arn:aws:iam::123456789012:user/Mary_Major) A federated user identified
-	//    in IAM as Mary_Major (arn:aws:sts::123456789012:federated-user/Mary_Major)
+	//    * CodeCommitApprovers: This option only requires an Amazon Web Services
+	//    account and a resource. It can be used for both IAM users and federated
+	//    access users whose name matches the provided resource name. This is a
+	//    very powerful option that offers a great deal of flexibility. For example,
+	//    if you specify the Amazon Web Services account 123456789012 and Mary_Major,
+	//    all of the following are counted as approvals coming from that user: An
+	//    IAM user in the account (arn:aws:iam::123456789012:user/Mary_Major) A
+	//    federated user identified in IAM as Mary_Major (arn:aws:sts::123456789012:federated-user/Mary_Major)
 	//    This option does not recognize an active session of someone assuming the
 	//    role of CodeCommitReview with a role session name of Mary_Major (arn:aws:sts::123456789012:assumed-role/CodeCommitReview/Mary_Major)
 	//    unless you include a wildcard (*Mary_Major).
@@ -15544,19 +15940,19 @@ type CreatePullRequestApprovalRuleInput struct {
 
 	// The content of the approval rule, including the number of approvals needed
 	// and the structure of an approval pool defined for approvals, if any. For
-	// more information about approval pools, see the AWS CodeCommit User Guide.
+	// more information about approval pools, see the CodeCommit User Guide.
 	//
 	// When you create the content of the approval rule, you can specify approvers
 	// in an approval pool in one of two ways:
 	//
-	//    * CodeCommitApprovers: This option only requires an AWS account and a
-	//    resource. It can be used for both IAM users and federated access users
-	//    whose name matches the provided resource name. This is a very powerful
-	//    option that offers a great deal of flexibility. For example, if you specify
-	//    the AWS account 123456789012 and Mary_Major, all of the following would
-	//    be counted as approvals coming from that user: An IAM user in the account
-	//    (arn:aws:iam::123456789012:user/Mary_Major) A federated user identified
-	//    in IAM as Mary_Major (arn:aws:sts::123456789012:federated-user/Mary_Major)
+	//    * CodeCommitApprovers: This option only requires an Amazon Web Services
+	//    account and a resource. It can be used for both IAM users and federated
+	//    access users whose name matches the provided resource name. This is a
+	//    very powerful option that offers a great deal of flexibility. For example,
+	//    if you specify the Amazon Web Services account 123456789012 and Mary_Major,
+	//    all of the following would be counted as approvals coming from that user:
+	//    An IAM user in the account (arn:aws:iam::123456789012:user/Mary_Major)
+	//    A federated user identified in IAM as Mary_Major (arn:aws:sts::123456789012:federated-user/Mary_Major)
 	//    This option does not recognize an active session of someone assuming the
 	//    role of CodeCommitReview with a role session name of Mary_Major (arn:aws:sts::123456789012:assumed-role/CodeCommitReview/Mary_Major)
 	//    unless you include a wildcard (*Mary_Major).
@@ -15685,8 +16081,8 @@ type CreatePullRequestInput struct {
 	// is received with the same parameters and a token is included, the request
 	// returns information about the initial request that used that token.
 	//
-	// The AWS SDKs prepopulate client request tokens. If you are using an AWS SDK,
-	// an idempotency token is created for you.
+	// The Amazon Web ServicesSDKs prepopulate client request tokens. If you are
+	// using an Amazon Web ServicesSDK, an idempotency token is created for you.
 	ClientRequestToken *string `locationName:"clientRequestToken" type:"string" idempotencyToken:"true"`
 
 	// A description of the pull request.
@@ -15812,6 +16208,15 @@ func (s *CreatePullRequestOutput) SetPullRequest(v *PullRequest) *CreatePullRequ
 type CreateRepositoryInput struct {
 	_ struct{} `type:"structure"`
 
+	// The ID of the encryption key. You can view the ID of an encryption key in
+	// the KMS console, or use the KMS APIs to programmatically retrieve a key ID.
+	// For more information about acceptable values for kmsKeyID, see KeyId (https://docs.aws.amazon.com/APIReference/API_Decrypt.html#KMS-Decrypt-request-KeyId)
+	// in the Decrypt API description in the Key Management Service API Reference.
+	//
+	// If no key is specified, the default aws/codecommit Amazon Web Services managed
+	// key is used.
+	KmsKeyId *string `locationName:"kmsKeyId" type:"string"`
+
 	// A comment or description about the new repository.
 	//
 	// The description field for a repository accepts all HTML characters and all
@@ -15823,11 +16228,11 @@ type CreateRepositoryInput struct {
 
 	// The name of the new repository to be created.
 	//
-	// The repository name must be unique across the calling AWS account. Repository
-	// names are limited to 100 alphanumeric, dash, and underscore characters, and
-	// cannot include certain characters. For more information about the limits
-	// on repository names, see Limits (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
-	// in the AWS CodeCommit User Guide. The suffix .git is prohibited.
+	// The repository name must be unique across the calling Amazon Web Services
+	// account. Repository names are limited to 100 alphanumeric, dash, and underscore
+	// characters, and cannot include certain characters. For more information about
+	// the limits on repository names, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+	// in the CodeCommit User Guide. The suffix .git is prohibited.
 	//
 	// RepositoryName is a required field
 	RepositoryName *string `locationName:"repositoryName" min:"1" type:"string" required:"true"`
@@ -15868,6 +16273,12 @@ func (s *CreateRepositoryInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetKmsKeyId sets the KmsKeyId field's value.
+func (s *CreateRepositoryInput) SetKmsKeyId(v string) *CreateRepositoryInput {
+	s.KmsKeyId = &v
+	return s
 }
 
 // SetRepositoryDescription sets the RepositoryDescription field's value.
@@ -17668,6 +18079,136 @@ func (s *EncryptionKeyDisabledException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The Key Management Service encryption key is not valid.
+type EncryptionKeyInvalidIdException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionKeyInvalidIdException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionKeyInvalidIdException) GoString() string {
+	return s.String()
+}
+
+func newErrorEncryptionKeyInvalidIdException(v protocol.ResponseMetadata) error {
+	return &EncryptionKeyInvalidIdException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *EncryptionKeyInvalidIdException) Code() string {
+	return "EncryptionKeyInvalidIdException"
+}
+
+// Message returns the exception's message.
+func (s *EncryptionKeyInvalidIdException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *EncryptionKeyInvalidIdException) OrigErr() error {
+	return nil
+}
+
+func (s *EncryptionKeyInvalidIdException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *EncryptionKeyInvalidIdException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *EncryptionKeyInvalidIdException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// A KMS encryption key was used to try and encrypt or decrypt a repository,
+// but either the repository or the key was not in a valid state to support
+// the operation.
+type EncryptionKeyInvalidUsageException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionKeyInvalidUsageException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionKeyInvalidUsageException) GoString() string {
+	return s.String()
+}
+
+func newErrorEncryptionKeyInvalidUsageException(v protocol.ResponseMetadata) error {
+	return &EncryptionKeyInvalidUsageException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *EncryptionKeyInvalidUsageException) Code() string {
+	return "EncryptionKeyInvalidUsageException"
+}
+
+// Message returns the exception's message.
+func (s *EncryptionKeyInvalidUsageException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *EncryptionKeyInvalidUsageException) OrigErr() error {
+	return nil
+}
+
+func (s *EncryptionKeyInvalidUsageException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *EncryptionKeyInvalidUsageException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *EncryptionKeyInvalidUsageException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // No encryption key was found.
 type EncryptionKeyNotFoundException struct {
 	_            struct{}                  `type:"structure"`
@@ -17729,6 +18270,70 @@ func (s *EncryptionKeyNotFoundException) StatusCode() int {
 
 // RequestID returns the service's response RequestID for request.
 func (s *EncryptionKeyNotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// A KMS encryption key ID is required but was not specified.
+type EncryptionKeyRequiredException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionKeyRequiredException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionKeyRequiredException) GoString() string {
+	return s.String()
+}
+
+func newErrorEncryptionKeyRequiredException(v protocol.ResponseMetadata) error {
+	return &EncryptionKeyRequiredException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *EncryptionKeyRequiredException) Code() string {
+	return "EncryptionKeyRequiredException"
+}
+
+// Message returns the exception's message.
+func (s *EncryptionKeyRequiredException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *EncryptionKeyRequiredException) OrigErr() error {
+	return nil
+}
+
+func (s *EncryptionKeyRequiredException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *EncryptionKeyRequiredException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *EncryptionKeyRequiredException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
@@ -18691,9 +19296,9 @@ func (s *FileSizes) SetSource(v int64) *FileSizes {
 	return s
 }
 
-// The specified file exceeds the file size limit for AWS CodeCommit. For more
-// information about limits in AWS CodeCommit, see AWS CodeCommit User Guide
-// (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+// The specified file exceeds the file size limit for CodeCommit. For more information
+// about limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+// in the CodeCommit User Guide.
 type FileTooLargeException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -18755,6 +19360,69 @@ func (s *FileTooLargeException) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *FileTooLargeException) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+// Information about a version of a file.
+type FileVersion struct {
+	_ struct{} `type:"structure"`
+
+	// The blob ID of the object that represents the content of the file in this
+	// version.
+	BlobId *string `locationName:"blobId" type:"string"`
+
+	// Returns information about a specific commit.
+	Commit *Commit `locationName:"commit" type:"structure"`
+
+	// The name and path of the file at which this blob is indexed which contains
+	// the data for this version of the file. This value will vary between file
+	// versions if a file is renamed or if its path changes.
+	Path *string `locationName:"path" type:"string"`
+
+	// An array of commit IDs that contain more recent versions of this file. If
+	// there are no additional versions of the file, this array will be empty.
+	RevisionChildren []*string `locationName:"revisionChildren" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FileVersion) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FileVersion) GoString() string {
+	return s.String()
+}
+
+// SetBlobId sets the BlobId field's value.
+func (s *FileVersion) SetBlobId(v string) *FileVersion {
+	s.BlobId = &v
+	return s
+}
+
+// SetCommit sets the Commit field's value.
+func (s *FileVersion) SetCommit(v *Commit) *FileVersion {
+	s.Commit = v
+	return s
+}
+
+// SetPath sets the Path field's value.
+func (s *FileVersion) SetPath(v string) *FileVersion {
+	s.Path = &v
+	return s
+}
+
+// SetRevisionChildren sets the RevisionChildren field's value.
+func (s *FileVersion) SetRevisionChildren(v []*string) *FileVersion {
+	s.RevisionChildren = v
+	return s
 }
 
 // Returns information about a folder in a repository.
@@ -19548,11 +20216,13 @@ type GetCommentsForPullRequestInput struct {
 	_ struct{} `type:"structure"`
 
 	// The full commit ID of the commit in the source branch that was the tip of
-	// the branch at the time the comment was made.
+	// the branch at the time the comment was made. Requirement is conditional:
+	// afterCommitId must be specified when repositoryName is included.
 	AfterCommitId *string `locationName:"afterCommitId" type:"string"`
 
 	// The full commit ID of the commit in the destination branch that was the tip
-	// of the branch at the time the pull request was created.
+	// of the branch at the time the pull request was created. Requirement is conditional:
+	// beforeCommitId must be specified when repositoryName is included.
 	BeforeCommitId *string `locationName:"beforeCommitId" type:"string"`
 
 	// A non-zero, non-negative integer used to limit the number of returned results.
@@ -19569,7 +20239,9 @@ type GetCommentsForPullRequestInput struct {
 	// PullRequestId is a required field
 	PullRequestId *string `locationName:"pullRequestId" type:"string" required:"true"`
 
-	// The name of the repository that contains the pull request.
+	// The name of the repository that contains the pull request. Requirement is
+	// conditional: repositoryName must be specified when beforeCommitId and afterCommitId
+	// are included.
 	RepositoryName *string `locationName:"repositoryName" min:"1" type:"string"`
 }
 
@@ -19948,7 +20620,7 @@ type GetFileInput struct {
 
 	// The fully quaified reference that identifies the commit that contains the
 	// file. For example, you can specify a full commit ID, a tag, a branch name,
-	// or a reference such as refs/heads/master. If none is provided, the head commit
+	// or a reference such as refs/heads/main. If none is provided, the head commit
 	// is used.
 	CommitSpecifier *string `locationName:"commitSpecifier" type:"string"`
 
@@ -21617,7 +22289,8 @@ func (s *InvalidApprovalRuleTemplateContentException) RequestID() string {
 
 // The description for the approval rule template is not valid because it exceeds
 // the maximum characters allowed for a description. For more information about
-// limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+// limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+// in the CodeCommit User Guide.
 type InvalidApprovalRuleTemplateDescriptionException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -21683,7 +22356,8 @@ func (s *InvalidApprovalRuleTemplateDescriptionException) RequestID() string {
 
 // The name of the approval rule template is not valid. Template names must
 // be between 1 and 100 valid characters in length. For more information about
-// limits in AWS CodeCommit, see AWS CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html).
+// limits in CodeCommit, see Quotas (https://docs.aws.amazon.com/codecommit/latest/userguide/limits.html)
+// in the CodeCommit User Guide.
 type InvalidApprovalRuleTemplateNameException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -23812,8 +24486,8 @@ func (s *InvalidReactionUserArnException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The value of the reaction is not valid. For more information, see the AWS
-// CodeCommit User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html).
+// The value of the reaction is not valid. For more information, see the CodeCommit
+// User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/welcome.html).
 type InvalidReactionValueException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -23878,7 +24552,7 @@ func (s *InvalidReactionValueException) RequestID() string {
 }
 
 // The specified reference name format is not valid. Reference names must conform
-// to the Git references format (for example, refs/heads/master). For more information,
+// to the Git references format (for example, refs/heads/main). For more information,
 // see Git Internals - Git References (https://git-scm.com/book/en/v2/Git-Internals-Git-References)
 // or consult your Git documentation.
 type InvalidReferenceNameException struct {
@@ -24594,9 +25268,9 @@ func (s *InvalidRepositoryTriggerNameException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The AWS Region for the trigger target does not match the AWS Region for the
-// repository. Triggers must be created in the same Region as the target for
-// the trigger.
+// The Amazon Web Services Region for the trigger target does not match the
+// Amazon Web Services Region for the repository. Triggers must be created in
+// the same Amazon Web Services Region as the target for the trigger.
 type InvalidRepositoryTriggerRegionException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -24661,8 +25335,8 @@ func (s *InvalidRepositoryTriggerRegionException) RequestID() string {
 }
 
 // The value for the resource ARN is not valid. For more information about resources
-// in AWS CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-// in the AWS CodeCommit User Guide.
+// in CodeCommit, see CodeCommit Resources and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+// in the CodeCommit User Guide.
 type InvalidResourceArnException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -25535,8 +26209,8 @@ func (s *ListApprovalRuleTemplatesInput) SetNextToken(v string) *ListApprovalRul
 type ListApprovalRuleTemplatesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The names of all the approval rule templates found in the AWS Region for
-	// your AWS account.
+	// The names of all the approval rule templates found in the Amazon Web Services
+	// Region for your Amazon Web Services account.
 	ApprovalRuleTemplateNames []*string `locationName:"approvalRuleTemplateNames" type:"list"`
 
 	// An enumeration token that allows the operation to batch the next results
@@ -25781,6 +26455,143 @@ func (s *ListBranchesOutput) SetBranches(v []*string) *ListBranchesOutput {
 // SetNextToken sets the NextToken field's value.
 func (s *ListBranchesOutput) SetNextToken(v string) *ListBranchesOutput {
 	s.NextToken = &v
+	return s
+}
+
+type ListFileCommitHistoryInput struct {
+	_ struct{} `type:"structure"`
+
+	// The fully quaified reference that identifies the commit that contains the
+	// file. For example, you can specify a full commit ID, a tag, a branch name,
+	// or a reference such as refs/heads/main. If none is provided, the head commit
+	// is used.
+	CommitSpecifier *string `locationName:"commitSpecifier" type:"string"`
+
+	// The full path of the file whose history you want to retrieve, including the
+	// name of the file.
+	//
+	// FilePath is a required field
+	FilePath *string `locationName:"filePath" type:"string" required:"true"`
+
+	// A non-zero, non-negative integer used to limit the number of returned results.
+	MaxResults *int64 `locationName:"maxResults" type:"integer"`
+
+	// An enumeration token that allows the operation to batch the results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The name of the repository that contains the file.
+	//
+	// RepositoryName is a required field
+	RepositoryName *string `locationName:"repositoryName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFileCommitHistoryInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFileCommitHistoryInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListFileCommitHistoryInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListFileCommitHistoryInput"}
+	if s.FilePath == nil {
+		invalidParams.Add(request.NewErrParamRequired("FilePath"))
+	}
+	if s.RepositoryName == nil {
+		invalidParams.Add(request.NewErrParamRequired("RepositoryName"))
+	}
+	if s.RepositoryName != nil && len(*s.RepositoryName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RepositoryName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCommitSpecifier sets the CommitSpecifier field's value.
+func (s *ListFileCommitHistoryInput) SetCommitSpecifier(v string) *ListFileCommitHistoryInput {
+	s.CommitSpecifier = &v
+	return s
+}
+
+// SetFilePath sets the FilePath field's value.
+func (s *ListFileCommitHistoryInput) SetFilePath(v string) *ListFileCommitHistoryInput {
+	s.FilePath = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListFileCommitHistoryInput) SetMaxResults(v int64) *ListFileCommitHistoryInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListFileCommitHistoryInput) SetNextToken(v string) *ListFileCommitHistoryInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetRepositoryName sets the RepositoryName field's value.
+func (s *ListFileCommitHistoryInput) SetRepositoryName(v string) *ListFileCommitHistoryInput {
+	s.RepositoryName = &v
+	return s
+}
+
+type ListFileCommitHistoryOutput struct {
+	_ struct{} `type:"structure"`
+
+	// An enumeration token that can be used to return the next batch of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// An array of FileVersion objects that form a directed acyclic graph (DAG)
+	// of the changes to the file made by the commits that changed the file.
+	//
+	// RevisionDag is a required field
+	RevisionDag []*FileVersion `locationName:"revisionDag" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFileCommitHistoryOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFileCommitHistoryOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListFileCommitHistoryOutput) SetNextToken(v string) *ListFileCommitHistoryOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetRevisionDag sets the RevisionDag field's value.
+func (s *ListFileCommitHistoryOutput) SetRevisionDag(v []*FileVersion) *ListFileCommitHistoryOutput {
+	s.RevisionDag = v
 	return s
 }
 
@@ -26033,7 +26844,7 @@ type ListRepositoriesInput struct {
 
 	// An enumeration token that allows the operation to batch the results of the
 	// operation. Batch sizes are 1,000 for list repository operations. When the
-	// client sends the token back to AWS CodeCommit, another page of 1,000 records
+	// client sends the token back to CodeCommit, another page of 1,000 records
 	// is retrieved.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
@@ -26086,7 +26897,7 @@ type ListRepositoriesOutput struct {
 
 	// An enumeration token that allows the operation to batch the results of the
 	// operation. Batch sizes are 1,000 for list repository operations. When the
-	// client sends the token back to AWS CodeCommit, another page of 1,000 records
+	// client sends the token back to CodeCommit, another page of 1,000 records
 	// is retrieved.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
@@ -28556,7 +29367,7 @@ func (s *NoChangeException) RequestID() string {
 }
 
 // The maximum number of approval rule templates has been exceeded for this
-// AWS Region.
+// Amazon Web Services Region.
 type NumberOfRuleTemplatesExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -30814,8 +31625,8 @@ type PutCommentReactionInput struct {
 
 	// The emoji reaction you want to add or update. To remove a reaction, provide
 	// a value of blank or null. You can also provide the value of none. For information
-	// about emoji reaction values supported in AWS CodeCommit, see the AWS CodeCommit
-	// User Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-commit-comment.html#emoji-reaction-table).
+	// about emoji reaction values supported in CodeCommit, see the CodeCommit User
+	// Guide (https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-commit-comment.html#emoji-reaction-table).
 	//
 	// ReactionValue is a required field
 	ReactionValue *string `locationName:"reactionValue" type:"string" required:"true"`
@@ -31469,7 +32280,7 @@ func (s *ReactionLimitExceededException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Information about the values for reactions to a comment. AWS CodeCommit supports
+// Information about the values for reactions to a comment. CodeCommit supports
 // a limited set of reactions.
 type ReactionValueFormats struct {
 	_ struct{} `type:"structure"`
@@ -32119,7 +32930,7 @@ func (s *RepositoryLimitExceededException) RequestID() string {
 type RepositoryMetadata struct {
 	_ struct{} `type:"structure"`
 
-	// The ID of the AWS account associated with the repository.
+	// The ID of the Amazon Web Services account associated with the repository.
 	AccountId *string `locationName:"accountId" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the repository.
@@ -32136,6 +32947,10 @@ type RepositoryMetadata struct {
 
 	// The repository's default branch name.
 	DefaultBranch *string `locationName:"defaultBranch" min:"1" type:"string"`
+
+	// The ID of the Key Management Service encryption key used to encrypt and decrypt
+	// the repository.
+	KmsKeyId *string `locationName:"kmsKeyId" type:"string"`
 
 	// The date and time the repository was last modified, in timestamp format.
 	LastModifiedDate *time.Time `locationName:"lastModifiedDate" type:"timestamp"`
@@ -32201,6 +33016,12 @@ func (s *RepositoryMetadata) SetCreationDate(v time.Time) *RepositoryMetadata {
 // SetDefaultBranch sets the DefaultBranch field's value.
 func (s *RepositoryMetadata) SetDefaultBranch(v string) *RepositoryMetadata {
 	s.DefaultBranch = &v
+	return s
+}
+
+// SetKmsKeyId sets the KmsKeyId field's value.
+func (s *RepositoryMetadata) SetKmsKeyId(v string) *RepositoryMetadata {
+	s.KmsKeyId = &v
 	return s
 }
 
@@ -32528,6 +33349,10 @@ func (s *RepositoryNotAssociatedWithPullRequestException) RequestID() string {
 }
 
 // Information about a trigger for a repository.
+//
+// If you want to receive notifications about repository events, consider using
+// notifications instead of triggers. For more information, see Configuring
+// notifications for repository events (https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-repository-email.html).
 type RepositoryTrigger struct {
 	_ struct{} `type:"structure"`
 
@@ -32992,10 +33817,10 @@ func (s *RepositoryTriggersListRequiredException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// A valid Amazon Resource Name (ARN) for an AWS CodeCommit resource is required.
-// For a list of valid resources in AWS CodeCommit, see CodeCommit Resources
-// and Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
-// in the AWS CodeCommit User Guide.
+// A valid Amazon Resource Name (ARN) for an CodeCommit resource is required.
+// For a list of valid resources in CodeCommit, see CodeCommit Resources and
+// Operations (https://docs.aws.amazon.com/codecommit/latest/userguide/auth-and-access-control-iam-access-control-identity-based.html#arn-formats)
+// in the CodeCommit User Guide.
 type ResourceArnRequiredException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -34537,7 +35362,7 @@ func (s *TitleRequiredException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The maximum number of tags for an AWS CodeCommit resource has been exceeded.
+// The maximum number of tags for an CodeCommit resource has been exceeded.
 type TooManyTagsException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -35086,12 +35911,13 @@ func (s *UpdateCommentOutput) SetComment(v *Comment) *UpdateCommentOutput {
 type UpdateDefaultBranchInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the branch to set as the default.
+	// The name of the branch to set as the default branch.
 	//
 	// DefaultBranchName is a required field
 	DefaultBranchName *string `locationName:"defaultBranchName" min:"1" type:"string" required:"true"`
 
-	// The name of the repository to set or change the default branch for.
+	// The name of the repository for which you want to set or change the default
+	// branch.
 	//
 	// RepositoryName is a required field
 	RepositoryName *string `locationName:"repositoryName" min:"1" type:"string" required:"true"`
@@ -35188,14 +36014,14 @@ type UpdatePullRequestApprovalRuleContentInput struct {
 	// When you update the content of the approval rule, you can specify approvers
 	// in an approval pool in one of two ways:
 	//
-	//    * CodeCommitApprovers: This option only requires an AWS account and a
-	//    resource. It can be used for both IAM users and federated access users
-	//    whose name matches the provided resource name. This is a very powerful
-	//    option that offers a great deal of flexibility. For example, if you specify
-	//    the AWS account 123456789012 and Mary_Major, all of the following are
-	//    counted as approvals coming from that user: An IAM user in the account
-	//    (arn:aws:iam::123456789012:user/Mary_Major) A federated user identified
-	//    in IAM as Mary_Major (arn:aws:sts::123456789012:federated-user/Mary_Major)
+	//    * CodeCommitApprovers: This option only requires an Amazon Web Services
+	//    account and a resource. It can be used for both IAM users and federated
+	//    access users whose name matches the provided resource name. This is a
+	//    very powerful option that offers a great deal of flexibility. For example,
+	//    if you specify the Amazon Web Services account 123456789012 and Mary_Major,
+	//    all of the following are counted as approvals coming from that user: An
+	//    IAM user in the account (arn:aws:iam::123456789012:user/Mary_Major) A
+	//    federated user identified in IAM as Mary_Major (arn:aws:sts::123456789012:federated-user/Mary_Major)
 	//    This option does not recognize an active session of someone assuming the
 	//    role of CodeCommitReview with a role session name of Mary_Major (arn:aws:sts::123456789012:assumed-role/CodeCommitReview/Mary_Major)
 	//    unless you include a wildcard (*Mary_Major).
@@ -35775,6 +36601,122 @@ func (s UpdateRepositoryDescriptionOutput) GoString() string {
 	return s.String()
 }
 
+type UpdateRepositoryEncryptionKeyInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the encryption key. You can view the ID of an encryption key in
+	// the KMS console, or use the KMS APIs to programmatically retrieve a key ID.
+	// For more information about acceptable values for keyID, see KeyId (https://docs.aws.amazon.com/APIReference/API_Decrypt.html#KMS-Decrypt-request-KeyId)
+	// in the Decrypt API description in the Key Management Service API Reference.
+	//
+	// KmsKeyId is a required field
+	KmsKeyId *string `locationName:"kmsKeyId" type:"string" required:"true"`
+
+	// The name of the repository for which you want to update the KMS encryption
+	// key used to encrypt and decrypt the repository.
+	//
+	// RepositoryName is a required field
+	RepositoryName *string `locationName:"repositoryName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRepositoryEncryptionKeyInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRepositoryEncryptionKeyInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateRepositoryEncryptionKeyInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateRepositoryEncryptionKeyInput"}
+	if s.KmsKeyId == nil {
+		invalidParams.Add(request.NewErrParamRequired("KmsKeyId"))
+	}
+	if s.RepositoryName == nil {
+		invalidParams.Add(request.NewErrParamRequired("RepositoryName"))
+	}
+	if s.RepositoryName != nil && len(*s.RepositoryName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RepositoryName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetKmsKeyId sets the KmsKeyId field's value.
+func (s *UpdateRepositoryEncryptionKeyInput) SetKmsKeyId(v string) *UpdateRepositoryEncryptionKeyInput {
+	s.KmsKeyId = &v
+	return s
+}
+
+// SetRepositoryName sets the RepositoryName field's value.
+func (s *UpdateRepositoryEncryptionKeyInput) SetRepositoryName(v string) *UpdateRepositoryEncryptionKeyInput {
+	s.RepositoryName = &v
+	return s
+}
+
+type UpdateRepositoryEncryptionKeyOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the encryption key.
+	KmsKeyId *string `locationName:"kmsKeyId" type:"string"`
+
+	// The ID of the encryption key formerly used to encrypt and decrypt the repository.
+	OriginalKmsKeyId *string `locationName:"originalKmsKeyId" type:"string"`
+
+	// The ID of the repository.
+	RepositoryId *string `locationName:"repositoryId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRepositoryEncryptionKeyOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRepositoryEncryptionKeyOutput) GoString() string {
+	return s.String()
+}
+
+// SetKmsKeyId sets the KmsKeyId field's value.
+func (s *UpdateRepositoryEncryptionKeyOutput) SetKmsKeyId(v string) *UpdateRepositoryEncryptionKeyOutput {
+	s.KmsKeyId = &v
+	return s
+}
+
+// SetOriginalKmsKeyId sets the OriginalKmsKeyId field's value.
+func (s *UpdateRepositoryEncryptionKeyOutput) SetOriginalKmsKeyId(v string) *UpdateRepositoryEncryptionKeyOutput {
+	s.OriginalKmsKeyId = &v
+	return s
+}
+
+// SetRepositoryId sets the RepositoryId field's value.
+func (s *UpdateRepositoryEncryptionKeyOutput) SetRepositoryId(v string) *UpdateRepositoryEncryptionKeyOutput {
+	s.RepositoryId = &v
+	return s
+}
+
 // Represents the input of an update repository description operation.
 type UpdateRepositoryNameInput struct {
 	_ struct{} `type:"structure"`
@@ -35928,6 +36870,38 @@ func ApprovalState_Values() []string {
 	return []string{
 		ApprovalStateApprove,
 		ApprovalStateRevoke,
+	}
+}
+
+const (
+	// BatchGetRepositoriesErrorCodeEnumEncryptionIntegrityChecksFailedException is a BatchGetRepositoriesErrorCodeEnum enum value
+	BatchGetRepositoriesErrorCodeEnumEncryptionIntegrityChecksFailedException = "EncryptionIntegrityChecksFailedException"
+
+	// BatchGetRepositoriesErrorCodeEnumEncryptionKeyAccessDeniedException is a BatchGetRepositoriesErrorCodeEnum enum value
+	BatchGetRepositoriesErrorCodeEnumEncryptionKeyAccessDeniedException = "EncryptionKeyAccessDeniedException"
+
+	// BatchGetRepositoriesErrorCodeEnumEncryptionKeyDisabledException is a BatchGetRepositoriesErrorCodeEnum enum value
+	BatchGetRepositoriesErrorCodeEnumEncryptionKeyDisabledException = "EncryptionKeyDisabledException"
+
+	// BatchGetRepositoriesErrorCodeEnumEncryptionKeyNotFoundException is a BatchGetRepositoriesErrorCodeEnum enum value
+	BatchGetRepositoriesErrorCodeEnumEncryptionKeyNotFoundException = "EncryptionKeyNotFoundException"
+
+	// BatchGetRepositoriesErrorCodeEnumEncryptionKeyUnavailableException is a BatchGetRepositoriesErrorCodeEnum enum value
+	BatchGetRepositoriesErrorCodeEnumEncryptionKeyUnavailableException = "EncryptionKeyUnavailableException"
+
+	// BatchGetRepositoriesErrorCodeEnumRepositoryDoesNotExistException is a BatchGetRepositoriesErrorCodeEnum enum value
+	BatchGetRepositoriesErrorCodeEnumRepositoryDoesNotExistException = "RepositoryDoesNotExistException"
+)
+
+// BatchGetRepositoriesErrorCodeEnum_Values returns all elements of the BatchGetRepositoriesErrorCodeEnum enum
+func BatchGetRepositoriesErrorCodeEnum_Values() []string {
+	return []string{
+		BatchGetRepositoriesErrorCodeEnumEncryptionIntegrityChecksFailedException,
+		BatchGetRepositoriesErrorCodeEnumEncryptionKeyAccessDeniedException,
+		BatchGetRepositoriesErrorCodeEnumEncryptionKeyDisabledException,
+		BatchGetRepositoriesErrorCodeEnumEncryptionKeyNotFoundException,
+		BatchGetRepositoriesErrorCodeEnumEncryptionKeyUnavailableException,
+		BatchGetRepositoriesErrorCodeEnumRepositoryDoesNotExistException,
 	}
 }
 

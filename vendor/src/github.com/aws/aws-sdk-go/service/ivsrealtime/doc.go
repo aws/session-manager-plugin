@@ -5,30 +5,38 @@
 //
 // # Introduction
 //
-// The Amazon Interactive Video Service (IVS) stage API is REST compatible,
+// The Amazon Interactive Video Service (IVS) real-time API is REST compatible,
 // using a standard HTTP API and an AWS EventBridge event stream for responses.
 // JSON is used for both requests and responses, including errors.
 //
 // Terminology:
 //
-//   - The IVS stage API sometimes is referred to as the IVS RealTime API.
+//   - A stage is a virtual space where participants can exchange video in
+//     real time.
 //
-//   - A participant token is an authorization token used to publish/subscribe
-//     to a stage.
+//   - A participant token is a token that authenticates a participant when
+//     they join a stage.
 //
 //   - A participant object represents participants (people) in the stage and
 //     contains information about them. When a token is created, it includes
 //     a participant ID; when a participant uses that token to join a stage,
-//     the participant is associated with that participant ID There is a 1:1
+//     the participant is associated with that participant ID. There is a 1:1
 //     mapping between participant tokens and participants.
+//
+//   - Server-side composition: The composition process composites participants
+//     of a stage into a single video and forwards it to a set of outputs (e.g.,
+//     IVS channels). Composition endpoints support this process.
+//
+//   - Server-side composition: A composition controls the look of the outputs,
+//     including how participants are positioned in the video.
 //
 // # Resources
 //
 // The following resources contain information about your IVS live stream (see
-// Getting Started with Amazon IVS (https://docs.aws.amazon.com/ivs/latest/userguide/getting-started.html)):
+// Getting Started with Amazon IVS Real-Time Streaming (https://docs.aws.amazon.com/ivs/latest/RealTimeUserGuide/getting-started.html)):
 //
-//   - Stage — A stage is a virtual space where multiple participants can
-//     exchange audio and video in real time.
+//   - Stage — A stage is a virtual space where participants can exchange
+//     video in real time.
 //
 // # Tagging
 //
@@ -43,8 +51,9 @@
 // you can use the same tag for different resources to indicate that they are
 // related. You can also use tags to manage access (see Access Tags (https://docs.aws.amazon.com/IAM/latest/UserGuide/access_tags.html)).
 //
-// The Amazon IVS stage API has these tag-related endpoints: TagResource, UntagResource,
-// and ListTagsForResource. The following resource supports tagging: Stage.
+// The Amazon IVS real-time API has these tag-related endpoints: TagResource,
+// UntagResource, and ListTagsForResource. The following resource supports tagging:
+// Stage.
 //
 // At most 50 tags can be applied to a resource.
 //
@@ -79,6 +88,49 @@
 //   - ListStageSessions — Gets all sessions for a specified stage.
 //
 //   - UpdateStage — Updates a stage’s configuration.
+//
+// Composition Endpoints
+//
+//   - GetComposition — Gets information about the specified Composition
+//     resource.
+//
+//   - ListCompositions — Gets summary information about all Compositions
+//     in your account, in the AWS region where the API request is processed.
+//
+//   - StartComposition — Starts a Composition from a stage based on the
+//     configuration provided in the request.
+//
+//   - StopComposition — Stops and deletes a Composition resource. Any broadcast
+//     from the Composition resource is stopped.
+//
+// EncoderConfiguration Endpoints
+//
+//   - CreateEncoderConfiguration — Creates an EncoderConfiguration object.
+//
+//   - DeleteEncoderConfiguration — Deletes an EncoderConfiguration resource.
+//     Ensures that no Compositions are using this template; otherwise, returns
+//     an error.
+//
+//   - GetEncoderConfiguration — Gets information about the specified EncoderConfiguration
+//     resource.
+//
+//   - ListEncoderConfigurations — Gets summary information about all EncoderConfigurations
+//     in your account, in the AWS region where the API request is processed.
+//
+// StorageConfiguration Endpoints
+//
+//   - CreateStorageConfiguration — Creates a new storage configuration,
+//     used to enable recording to Amazon S3.
+//
+//   - DeleteStorageConfiguration — Deletes the storage configuration for
+//     the specified ARN.
+//
+//   - GetStorageConfiguration — Gets the storage configuration for the specified
+//     ARN.
+//
+//   - ListStorageConfigurations — Gets summary information about all storage
+//     configurations in your account, in the AWS region where the API request
+//     is processed.
 //
 // Tags Endpoints
 //

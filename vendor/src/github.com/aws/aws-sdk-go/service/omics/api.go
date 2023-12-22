@@ -53,7 +53,6 @@ func (c *Omics) AbortMultipartReadSetUploadRequest(input *AbortMultipartReadSetU
 
 	output = &AbortMultipartReadSetUploadOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -119,6 +118,105 @@ func (c *Omics) AbortMultipartReadSetUploadWithContext(ctx aws.Context, input *A
 	return out, req.Send()
 }
 
+const opAcceptShare = "AcceptShare"
+
+// AcceptShareRequest generates a "aws/request.Request" representing the
+// client's request for the AcceptShare operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AcceptShare for more information on using the AcceptShare
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the AcceptShareRequest method.
+//	req, resp := client.AcceptShareRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/AcceptShare
+func (c *Omics) AcceptShareRequest(input *AcceptShareInput) (req *request.Request, output *AcceptShareOutput) {
+	op := &request.Operation{
+		Name:       opAcceptShare,
+		HTTPMethod: "POST",
+		HTTPPath:   "/share/{shareId}",
+	}
+
+	if input == nil {
+		input = &AcceptShareInput{}
+	}
+
+	output = &AcceptShareOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// AcceptShare API operation for Amazon Omics.
+//
+// Accepts a share for an analytics store.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation AcceptShare for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ServiceQuotaExceededException
+//     The request exceeds a service quota.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     The request cannot be applied to the target resource in its current state.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/AcceptShare
+func (c *Omics) AcceptShare(input *AcceptShareInput) (*AcceptShareOutput, error) {
+	req, out := c.AcceptShareRequest(input)
+	return out, req.Send()
+}
+
+// AcceptShareWithContext is the same as AcceptShare with the addition of
+// the ability to pass a context and additional request options.
+//
+// See AcceptShare for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) AcceptShareWithContext(ctx aws.Context, input *AcceptShareInput, opts ...request.Option) (*AcceptShareOutput, error) {
+	req, out := c.AcceptShareRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opBatchDeleteReadSet = "BatchDeleteReadSet"
 
 // BatchDeleteReadSetRequest generates a "aws/request.Request" representing the
@@ -157,7 +255,6 @@ func (c *Omics) BatchDeleteReadSetRequest(input *BatchDeleteReadSetInput) (req *
 
 	output = &BatchDeleteReadSetOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -254,7 +351,6 @@ func (c *Omics) CancelAnnotationImportJobRequest(input *CancelAnnotationImportJo
 
 	output = &CancelAnnotationImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -349,7 +445,6 @@ func (c *Omics) CancelRunRequest(input *CancelRunInput) (req *request.Request, o
 
 	output = &CancelRunOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -453,7 +548,6 @@ func (c *Omics) CancelVariantImportJobRequest(input *CancelVariantImportJobInput
 
 	output = &CancelVariantImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -548,7 +642,6 @@ func (c *Omics) CompleteMultipartReadSetUploadRequest(input *CompleteMultipartRe
 
 	output = &CompleteMultipartReadSetUploadOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -651,7 +744,6 @@ func (c *Omics) CreateAnnotationStoreRequest(input *CreateAnnotationStoreInput) 
 
 	output = &CreateAnnotationStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -713,6 +805,105 @@ func (c *Omics) CreateAnnotationStoreWithContext(ctx aws.Context, input *CreateA
 	return out, req.Send()
 }
 
+const opCreateAnnotationStoreVersion = "CreateAnnotationStoreVersion"
+
+// CreateAnnotationStoreVersionRequest generates a "aws/request.Request" representing the
+// client's request for the CreateAnnotationStoreVersion operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateAnnotationStoreVersion for more information on using the CreateAnnotationStoreVersion
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateAnnotationStoreVersionRequest method.
+//	req, resp := client.CreateAnnotationStoreVersionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateAnnotationStoreVersion
+func (c *Omics) CreateAnnotationStoreVersionRequest(input *CreateAnnotationStoreVersionInput) (req *request.Request, output *CreateAnnotationStoreVersionOutput) {
+	op := &request.Operation{
+		Name:       opCreateAnnotationStoreVersion,
+		HTTPMethod: "POST",
+		HTTPPath:   "/annotationStore/{name}/version",
+	}
+
+	if input == nil {
+		input = &CreateAnnotationStoreVersionInput{}
+	}
+
+	output = &CreateAnnotationStoreVersionOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// CreateAnnotationStoreVersion API operation for Amazon Omics.
+//
+// Creates a new version of an annotation store.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation CreateAnnotationStoreVersion for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ServiceQuotaExceededException
+//     The request exceeds a service quota.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     The request cannot be applied to the target resource in its current state.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateAnnotationStoreVersion
+func (c *Omics) CreateAnnotationStoreVersion(input *CreateAnnotationStoreVersionInput) (*CreateAnnotationStoreVersionOutput, error) {
+	req, out := c.CreateAnnotationStoreVersionRequest(input)
+	return out, req.Send()
+}
+
+// CreateAnnotationStoreVersionWithContext is the same as CreateAnnotationStoreVersion with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateAnnotationStoreVersion for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) CreateAnnotationStoreVersionWithContext(ctx aws.Context, input *CreateAnnotationStoreVersionInput, opts ...request.Option) (*CreateAnnotationStoreVersionOutput, error) {
+	req, out := c.CreateAnnotationStoreVersionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateMultipartReadSetUpload = "CreateMultipartReadSetUpload"
 
 // CreateMultipartReadSetUploadRequest generates a "aws/request.Request" representing the
@@ -751,7 +942,6 @@ func (c *Omics) CreateMultipartReadSetUploadRequest(input *CreateMultipartReadSe
 
 	output = &CreateMultipartReadSetUploadOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -854,7 +1044,6 @@ func (c *Omics) CreateReferenceStoreRequest(input *CreateReferenceStoreInput) (r
 
 	output = &CreateReferenceStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -951,7 +1140,6 @@ func (c *Omics) CreateRunGroupRequest(input *CreateRunGroupInput) (req *request.
 
 	output = &CreateRunGroupOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -1054,7 +1242,6 @@ func (c *Omics) CreateSequenceStoreRequest(input *CreateSequenceStoreInput) (req
 
 	output = &CreateSequenceStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -1113,6 +1300,106 @@ func (c *Omics) CreateSequenceStoreWithContext(ctx aws.Context, input *CreateSeq
 	return out, req.Send()
 }
 
+const opCreateShare = "CreateShare"
+
+// CreateShareRequest generates a "aws/request.Request" representing the
+// client's request for the CreateShare operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateShare for more information on using the CreateShare
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateShareRequest method.
+//	req, resp := client.CreateShareRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateShare
+func (c *Omics) CreateShareRequest(input *CreateShareInput) (req *request.Request, output *CreateShareOutput) {
+	op := &request.Operation{
+		Name:       opCreateShare,
+		HTTPMethod: "POST",
+		HTTPPath:   "/share",
+	}
+
+	if input == nil {
+		input = &CreateShareInput{}
+	}
+
+	output = &CreateShareOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// CreateShare API operation for Amazon Omics.
+//
+// Creates a share offer that can be accepted outside the account by a subscriber.
+// The share is created by the owner and accepted by the principal subscriber.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation CreateShare for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ServiceQuotaExceededException
+//     The request exceeds a service quota.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     The request cannot be applied to the target resource in its current state.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/CreateShare
+func (c *Omics) CreateShare(input *CreateShareInput) (*CreateShareOutput, error) {
+	req, out := c.CreateShareRequest(input)
+	return out, req.Send()
+}
+
+// CreateShareWithContext is the same as CreateShare with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateShare for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) CreateShareWithContext(ctx aws.Context, input *CreateShareInput, opts ...request.Option) (*CreateShareOutput, error) {
+	req, out := c.CreateShareRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateVariantStore = "CreateVariantStore"
 
 // CreateVariantStoreRequest generates a "aws/request.Request" representing the
@@ -1151,7 +1438,6 @@ func (c *Omics) CreateVariantStoreRequest(input *CreateVariantStoreInput) (req *
 
 	output = &CreateVariantStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -1251,7 +1537,6 @@ func (c *Omics) CreateWorkflowRequest(input *CreateWorkflowInput) (req *request.
 
 	output = &CreateWorkflowOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -1354,7 +1639,6 @@ func (c *Omics) DeleteAnnotationStoreRequest(input *DeleteAnnotationStoreInput) 
 
 	output = &DeleteAnnotationStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -1413,6 +1697,102 @@ func (c *Omics) DeleteAnnotationStoreWithContext(ctx aws.Context, input *DeleteA
 	return out, req.Send()
 }
 
+const opDeleteAnnotationStoreVersions = "DeleteAnnotationStoreVersions"
+
+// DeleteAnnotationStoreVersionsRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteAnnotationStoreVersions operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteAnnotationStoreVersions for more information on using the DeleteAnnotationStoreVersions
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteAnnotationStoreVersionsRequest method.
+//	req, resp := client.DeleteAnnotationStoreVersionsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteAnnotationStoreVersions
+func (c *Omics) DeleteAnnotationStoreVersionsRequest(input *DeleteAnnotationStoreVersionsInput) (req *request.Request, output *DeleteAnnotationStoreVersionsOutput) {
+	op := &request.Operation{
+		Name:       opDeleteAnnotationStoreVersions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/annotationStore/{name}/versions/delete",
+	}
+
+	if input == nil {
+		input = &DeleteAnnotationStoreVersionsInput{}
+	}
+
+	output = &DeleteAnnotationStoreVersionsOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// DeleteAnnotationStoreVersions API operation for Amazon Omics.
+//
+// Deletes one or multiple versions of an annotation store.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation DeleteAnnotationStoreVersions for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     The request cannot be applied to the target resource in its current state.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteAnnotationStoreVersions
+func (c *Omics) DeleteAnnotationStoreVersions(input *DeleteAnnotationStoreVersionsInput) (*DeleteAnnotationStoreVersionsOutput, error) {
+	req, out := c.DeleteAnnotationStoreVersionsRequest(input)
+	return out, req.Send()
+}
+
+// DeleteAnnotationStoreVersionsWithContext is the same as DeleteAnnotationStoreVersions with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteAnnotationStoreVersions for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) DeleteAnnotationStoreVersionsWithContext(ctx aws.Context, input *DeleteAnnotationStoreVersionsInput, opts ...request.Option) (*DeleteAnnotationStoreVersionsOutput, error) {
+	req, out := c.DeleteAnnotationStoreVersionsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteReference = "DeleteReference"
 
 // DeleteReferenceRequest generates a "aws/request.Request" representing the
@@ -1451,7 +1831,6 @@ func (c *Omics) DeleteReferenceRequest(input *DeleteReferenceInput) (req *reques
 
 	output = &DeleteReferenceOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -1552,7 +1931,6 @@ func (c *Omics) DeleteReferenceStoreRequest(input *DeleteReferenceStoreInput) (r
 
 	output = &DeleteReferenceStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -1653,7 +2031,6 @@ func (c *Omics) DeleteRunRequest(input *DeleteRunInput) (req *request.Request, o
 
 	output = &DeleteRunOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -1757,7 +2134,6 @@ func (c *Omics) DeleteRunGroupRequest(input *DeleteRunGroupInput) (req *request.
 
 	output = &DeleteRunGroupOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -1861,7 +2237,6 @@ func (c *Omics) DeleteSequenceStoreRequest(input *DeleteSequenceStoreInput) (req
 
 	output = &DeleteSequenceStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -1924,6 +2299,105 @@ func (c *Omics) DeleteSequenceStoreWithContext(ctx aws.Context, input *DeleteSeq
 	return out, req.Send()
 }
 
+const opDeleteShare = "DeleteShare"
+
+// DeleteShareRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteShare operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteShare for more information on using the DeleteShare
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteShareRequest method.
+//	req, resp := client.DeleteShareRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteShare
+func (c *Omics) DeleteShareRequest(input *DeleteShareInput) (req *request.Request, output *DeleteShareOutput) {
+	op := &request.Operation{
+		Name:       opDeleteShare,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/share/{shareId}",
+	}
+
+	if input == nil {
+		input = &DeleteShareInput{}
+	}
+
+	output = &DeleteShareOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// DeleteShare API operation for Amazon Omics.
+//
+// Deletes a share of an analytics store.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation DeleteShare for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ServiceQuotaExceededException
+//     The request exceeds a service quota.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     The request cannot be applied to the target resource in its current state.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/DeleteShare
+func (c *Omics) DeleteShare(input *DeleteShareInput) (*DeleteShareOutput, error) {
+	req, out := c.DeleteShareRequest(input)
+	return out, req.Send()
+}
+
+// DeleteShareWithContext is the same as DeleteShare with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteShare for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) DeleteShareWithContext(ctx aws.Context, input *DeleteShareInput, opts ...request.Option) (*DeleteShareOutput, error) {
+	req, out := c.DeleteShareRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteVariantStore = "DeleteVariantStore"
 
 // DeleteVariantStoreRequest generates a "aws/request.Request" representing the
@@ -1962,7 +2436,6 @@ func (c *Omics) DeleteVariantStoreRequest(input *DeleteVariantStoreInput) (req *
 
 	output = &DeleteVariantStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2059,7 +2532,6 @@ func (c *Omics) DeleteWorkflowRequest(input *DeleteWorkflowInput) (req *request.
 
 	output = &DeleteWorkflowOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -2163,7 +2635,6 @@ func (c *Omics) GetAnnotationImportJobRequest(input *GetAnnotationImportJobInput
 
 	output = &GetAnnotationImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2257,7 +2728,6 @@ func (c *Omics) GetAnnotationStoreRequest(input *GetAnnotationStoreInput) (req *
 
 	output = &GetAnnotationStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2313,6 +2783,99 @@ func (c *Omics) GetAnnotationStoreWithContext(ctx aws.Context, input *GetAnnotat
 	return out, req.Send()
 }
 
+const opGetAnnotationStoreVersion = "GetAnnotationStoreVersion"
+
+// GetAnnotationStoreVersionRequest generates a "aws/request.Request" representing the
+// client's request for the GetAnnotationStoreVersion operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetAnnotationStoreVersion for more information on using the GetAnnotationStoreVersion
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetAnnotationStoreVersionRequest method.
+//	req, resp := client.GetAnnotationStoreVersionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetAnnotationStoreVersion
+func (c *Omics) GetAnnotationStoreVersionRequest(input *GetAnnotationStoreVersionInput) (req *request.Request, output *GetAnnotationStoreVersionOutput) {
+	op := &request.Operation{
+		Name:       opGetAnnotationStoreVersion,
+		HTTPMethod: "GET",
+		HTTPPath:   "/annotationStore/{name}/version/{versionName}",
+	}
+
+	if input == nil {
+		input = &GetAnnotationStoreVersionInput{}
+	}
+
+	output = &GetAnnotationStoreVersionOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// GetAnnotationStoreVersion API operation for Amazon Omics.
+//
+// Retrieves the metadata for an annotation store version.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation GetAnnotationStoreVersion for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetAnnotationStoreVersion
+func (c *Omics) GetAnnotationStoreVersion(input *GetAnnotationStoreVersionInput) (*GetAnnotationStoreVersionOutput, error) {
+	req, out := c.GetAnnotationStoreVersionRequest(input)
+	return out, req.Send()
+}
+
+// GetAnnotationStoreVersionWithContext is the same as GetAnnotationStoreVersion with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetAnnotationStoreVersion for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) GetAnnotationStoreVersionWithContext(ctx aws.Context, input *GetAnnotationStoreVersionInput, opts ...request.Option) (*GetAnnotationStoreVersionOutput, error) {
+	req, out := c.GetAnnotationStoreVersionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetReadSet = "GetReadSet"
 
 // GetReadSetRequest generates a "aws/request.Request" representing the
@@ -2351,7 +2914,6 @@ func (c *Omics) GetReadSetRequest(input *GetReadSetInput) (req *request.Request,
 
 	output = &GetReadSetOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2454,7 +3016,6 @@ func (c *Omics) GetReadSetActivationJobRequest(input *GetReadSetActivationJobInp
 
 	output = &GetReadSetActivationJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2551,7 +3112,6 @@ func (c *Omics) GetReadSetExportJobRequest(input *GetReadSetExportJobInput) (req
 
 	output = &GetReadSetExportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2648,7 +3208,6 @@ func (c *Omics) GetReadSetImportJobRequest(input *GetReadSetImportJobInput) (req
 
 	output = &GetReadSetImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2745,7 +3304,6 @@ func (c *Omics) GetReadSetMetadataRequest(input *GetReadSetMetadataInput) (req *
 
 	output = &GetReadSetMetadataOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2842,7 +3400,6 @@ func (c *Omics) GetReferenceRequest(input *GetReferenceInput) (req *request.Requ
 
 	output = &GetReferenceOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -2942,7 +3499,6 @@ func (c *Omics) GetReferenceImportJobRequest(input *GetReferenceImportJobInput) 
 
 	output = &GetReferenceImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3039,7 +3595,6 @@ func (c *Omics) GetReferenceMetadataRequest(input *GetReferenceMetadataInput) (r
 
 	output = &GetReferenceMetadataOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3136,7 +3691,6 @@ func (c *Omics) GetReferenceStoreRequest(input *GetReferenceStoreInput) (req *re
 
 	output = &GetReferenceStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3233,7 +3787,6 @@ func (c *Omics) GetRunRequest(input *GetRunInput) (req *request.Request, output 
 
 	output = &GetRunOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3336,7 +3889,6 @@ func (c *Omics) GetRunGroupRequest(input *GetRunGroupInput) (req *request.Reques
 
 	output = &GetRunGroupOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3439,7 +3991,6 @@ func (c *Omics) GetRunTaskRequest(input *GetRunTaskInput) (req *request.Request,
 
 	output = &GetRunTaskOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3542,7 +4093,6 @@ func (c *Omics) GetSequenceStoreRequest(input *GetSequenceStoreInput) (req *requ
 
 	output = &GetSequenceStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3601,6 +4151,105 @@ func (c *Omics) GetSequenceStoreWithContext(ctx aws.Context, input *GetSequenceS
 	return out, req.Send()
 }
 
+const opGetShare = "GetShare"
+
+// GetShareRequest generates a "aws/request.Request" representing the
+// client's request for the GetShare operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetShare for more information on using the GetShare
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetShareRequest method.
+//	req, resp := client.GetShareRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetShare
+func (c *Omics) GetShareRequest(input *GetShareInput) (req *request.Request, output *GetShareOutput) {
+	op := &request.Operation{
+		Name:       opGetShare,
+		HTTPMethod: "GET",
+		HTTPPath:   "/share/{shareId}",
+	}
+
+	if input == nil {
+		input = &GetShareInput{}
+	}
+
+	output = &GetShareOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// GetShare API operation for Amazon Omics.
+//
+// Retrieves the metadata for a share.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation GetShare for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ServiceQuotaExceededException
+//     The request exceeds a service quota.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     The request cannot be applied to the target resource in its current state.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/GetShare
+func (c *Omics) GetShare(input *GetShareInput) (*GetShareOutput, error) {
+	req, out := c.GetShareRequest(input)
+	return out, req.Send()
+}
+
+// GetShareWithContext is the same as GetShare with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetShare for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) GetShareWithContext(ctx aws.Context, input *GetShareInput, opts ...request.Option) (*GetShareOutput, error) {
+	req, out := c.GetShareRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetVariantImportJob = "GetVariantImportJob"
 
 // GetVariantImportJobRequest generates a "aws/request.Request" representing the
@@ -3639,7 +4288,6 @@ func (c *Omics) GetVariantImportJobRequest(input *GetVariantImportJobInput) (req
 
 	output = &GetVariantImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3733,7 +4381,6 @@ func (c *Omics) GetVariantStoreRequest(input *GetVariantStoreInput) (req *reques
 
 	output = &GetVariantStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3827,7 +4474,6 @@ func (c *Omics) GetWorkflowRequest(input *GetWorkflowInput) (req *request.Reques
 
 	output = &GetWorkflowOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -3936,7 +4582,6 @@ func (c *Omics) ListAnnotationImportJobsRequest(input *ListAnnotationImportJobsI
 
 	output = &ListAnnotationImportJobsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -4043,6 +4688,156 @@ func (c *Omics) ListAnnotationImportJobsPagesWithContext(ctx aws.Context, input 
 	return p.Err()
 }
 
+const opListAnnotationStoreVersions = "ListAnnotationStoreVersions"
+
+// ListAnnotationStoreVersionsRequest generates a "aws/request.Request" representing the
+// client's request for the ListAnnotationStoreVersions operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListAnnotationStoreVersions for more information on using the ListAnnotationStoreVersions
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListAnnotationStoreVersionsRequest method.
+//	req, resp := client.ListAnnotationStoreVersionsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListAnnotationStoreVersions
+func (c *Omics) ListAnnotationStoreVersionsRequest(input *ListAnnotationStoreVersionsInput) (req *request.Request, output *ListAnnotationStoreVersionsOutput) {
+	op := &request.Operation{
+		Name:       opListAnnotationStoreVersions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/annotationStore/{name}/versions",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListAnnotationStoreVersionsInput{}
+	}
+
+	output = &ListAnnotationStoreVersionsOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// ListAnnotationStoreVersions API operation for Amazon Omics.
+//
+// Lists the versions of an annotation store.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation ListAnnotationStoreVersions for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListAnnotationStoreVersions
+func (c *Omics) ListAnnotationStoreVersions(input *ListAnnotationStoreVersionsInput) (*ListAnnotationStoreVersionsOutput, error) {
+	req, out := c.ListAnnotationStoreVersionsRequest(input)
+	return out, req.Send()
+}
+
+// ListAnnotationStoreVersionsWithContext is the same as ListAnnotationStoreVersions with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListAnnotationStoreVersions for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) ListAnnotationStoreVersionsWithContext(ctx aws.Context, input *ListAnnotationStoreVersionsInput, opts ...request.Option) (*ListAnnotationStoreVersionsOutput, error) {
+	req, out := c.ListAnnotationStoreVersionsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListAnnotationStoreVersionsPages iterates over the pages of a ListAnnotationStoreVersions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListAnnotationStoreVersions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListAnnotationStoreVersions operation.
+//	pageNum := 0
+//	err := client.ListAnnotationStoreVersionsPages(params,
+//	    func(page *omics.ListAnnotationStoreVersionsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Omics) ListAnnotationStoreVersionsPages(input *ListAnnotationStoreVersionsInput, fn func(*ListAnnotationStoreVersionsOutput, bool) bool) error {
+	return c.ListAnnotationStoreVersionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListAnnotationStoreVersionsPagesWithContext same as ListAnnotationStoreVersionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) ListAnnotationStoreVersionsPagesWithContext(ctx aws.Context, input *ListAnnotationStoreVersionsInput, fn func(*ListAnnotationStoreVersionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListAnnotationStoreVersionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListAnnotationStoreVersionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListAnnotationStoreVersionsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListAnnotationStores = "ListAnnotationStores"
 
 // ListAnnotationStoresRequest generates a "aws/request.Request" representing the
@@ -4087,7 +4882,6 @@ func (c *Omics) ListAnnotationStoresRequest(input *ListAnnotationStoresInput) (r
 
 	output = &ListAnnotationStoresOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -4238,7 +5032,6 @@ func (c *Omics) ListMultipartReadSetUploadsRequest(input *ListMultipartReadSetUp
 
 	output = &ListMultipartReadSetUploadsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -4398,7 +5191,6 @@ func (c *Omics) ListReadSetActivationJobsRequest(input *ListReadSetActivationJob
 
 	output = &ListReadSetActivationJobsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -4552,7 +5344,6 @@ func (c *Omics) ListReadSetExportJobsRequest(input *ListReadSetExportJobsInput) 
 
 	output = &ListReadSetExportJobsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -4706,7 +5497,6 @@ func (c *Omics) ListReadSetImportJobsRequest(input *ListReadSetImportJobsInput) 
 
 	output = &ListReadSetImportJobsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -4860,7 +5650,6 @@ func (c *Omics) ListReadSetUploadPartsRequest(input *ListReadSetUploadPartsInput
 
 	output = &ListReadSetUploadPartsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -5021,7 +5810,6 @@ func (c *Omics) ListReadSetsRequest(input *ListReadSetsInput) (req *request.Requ
 
 	output = &ListReadSetsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -5175,7 +5963,6 @@ func (c *Omics) ListReferenceImportJobsRequest(input *ListReferenceImportJobsInp
 
 	output = &ListReferenceImportJobsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -5329,7 +6116,6 @@ func (c *Omics) ListReferenceStoresRequest(input *ListReferenceStoresInput) (req
 
 	output = &ListReferenceStoresOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -5480,7 +6266,6 @@ func (c *Omics) ListReferencesRequest(input *ListReferencesInput) (req *request.
 
 	output = &ListReferencesOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -5634,7 +6419,6 @@ func (c *Omics) ListRunGroupsRequest(input *ListRunGroupsInput) (req *request.Re
 
 	output = &ListRunGroupsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -5794,7 +6578,6 @@ func (c *Omics) ListRunTasksRequest(input *ListRunTasksInput) (req *request.Requ
 
 	output = &ListRunTasksOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -5954,7 +6737,6 @@ func (c *Omics) ListRunsRequest(input *ListRunsInput) (req *request.Request, out
 
 	output = &ListRunsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -6114,7 +6896,6 @@ func (c *Omics) ListSequenceStoresRequest(input *ListSequenceStoresInput) (req *
 
 	output = &ListSequenceStoresOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -6221,6 +7002,162 @@ func (c *Omics) ListSequenceStoresPagesWithContext(ctx aws.Context, input *ListS
 	return p.Err()
 }
 
+const opListShares = "ListShares"
+
+// ListSharesRequest generates a "aws/request.Request" representing the
+// client's request for the ListShares operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListShares for more information on using the ListShares
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListSharesRequest method.
+//	req, resp := client.ListSharesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListShares
+func (c *Omics) ListSharesRequest(input *ListSharesInput) (req *request.Request, output *ListSharesOutput) {
+	op := &request.Operation{
+		Name:       opListShares,
+		HTTPMethod: "POST",
+		HTTPPath:   "/shares",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListSharesInput{}
+	}
+
+	output = &ListSharesOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// ListShares API operation for Amazon Omics.
+//
+// Lists all shares associated with an account.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation ListShares for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ServiceQuotaExceededException
+//     The request exceeds a service quota.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     The request cannot be applied to the target resource in its current state.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/ListShares
+func (c *Omics) ListShares(input *ListSharesInput) (*ListSharesOutput, error) {
+	req, out := c.ListSharesRequest(input)
+	return out, req.Send()
+}
+
+// ListSharesWithContext is the same as ListShares with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListShares for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) ListSharesWithContext(ctx aws.Context, input *ListSharesInput, opts ...request.Option) (*ListSharesOutput, error) {
+	req, out := c.ListSharesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListSharesPages iterates over the pages of a ListShares operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListShares method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListShares operation.
+//	pageNum := 0
+//	err := client.ListSharesPages(params,
+//	    func(page *omics.ListSharesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Omics) ListSharesPages(input *ListSharesInput, fn func(*ListSharesOutput, bool) bool) error {
+	return c.ListSharesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListSharesPagesWithContext same as ListSharesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) ListSharesPagesWithContext(ctx aws.Context, input *ListSharesInput, fn func(*ListSharesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListSharesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListSharesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListSharesOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListTagsForResource = "ListTagsForResource"
 
 // ListTagsForResourceRequest generates a "aws/request.Request" representing the
@@ -6259,7 +7196,6 @@ func (c *Omics) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req
 
 	output = &ListTagsForResourceOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("tags-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -6368,7 +7304,6 @@ func (c *Omics) ListVariantImportJobsRequest(input *ListVariantImportJobsInput) 
 
 	output = &ListVariantImportJobsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -6519,7 +7454,6 @@ func (c *Omics) ListVariantStoresRequest(input *ListVariantStoresInput) (req *re
 
 	output = &ListVariantStoresOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -6670,7 +7604,6 @@ func (c *Omics) ListWorkflowsRequest(input *ListWorkflowsInput) (req *request.Re
 
 	output = &ListWorkflowsOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -6824,7 +7757,6 @@ func (c *Omics) StartAnnotationImportJobRequest(input *StartAnnotationImportJobI
 
 	output = &StartAnnotationImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -6921,7 +7853,6 @@ func (c *Omics) StartReadSetActivationJobRequest(input *StartReadSetActivationJo
 
 	output = &StartReadSetActivationJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -7022,7 +7953,6 @@ func (c *Omics) StartReadSetExportJobRequest(input *StartReadSetExportJobInput) 
 
 	output = &StartReadSetExportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -7122,7 +8052,6 @@ func (c *Omics) StartReadSetImportJobRequest(input *StartReadSetImportJobInput) 
 
 	output = &StartReadSetImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -7222,7 +8151,6 @@ func (c *Omics) StartReferenceImportJobRequest(input *StartReferenceImportJobInp
 
 	output = &StartReferenceImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("control-storage-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -7322,7 +8250,6 @@ func (c *Omics) StartRunRequest(input *StartRunInput) (req *request.Request, out
 
 	output = &StartRunOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -7330,7 +8257,13 @@ func (c *Omics) StartRunRequest(input *StartRunInput) (req *request.Request, out
 
 // StartRun API operation for Amazon Omics.
 //
-// Starts a run.
+// Starts a workflow run. To duplicate a run, specify the run's ID and a role
+// ARN. The remaining parameters are copied from the previous run.
+//
+// The total number of runs in your account is subject to a quota per Region.
+// To avoid needing to delete runs manually, you can set the retention mode
+// to REMOVE. Runs with this setting are deleted automatically when the run
+// quoata is exceeded.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7425,7 +8358,6 @@ func (c *Omics) StartVariantImportJobRequest(input *StartVariantImportJobInput) 
 
 	output = &StartVariantImportJobOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -7522,7 +8454,6 @@ func (c *Omics) TagResourceRequest(input *TagResourceInput) (req *request.Reques
 
 	output = &TagResourceOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("tags-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -7626,7 +8557,6 @@ func (c *Omics) UntagResourceRequest(input *UntagResourceInput) (req *request.Re
 
 	output = &UntagResourceOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("tags-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -7730,7 +8660,6 @@ func (c *Omics) UpdateAnnotationStoreRequest(input *UpdateAnnotationStoreInput) 
 
 	output = &UpdateAnnotationStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -7786,6 +8715,99 @@ func (c *Omics) UpdateAnnotationStoreWithContext(ctx aws.Context, input *UpdateA
 	return out, req.Send()
 }
 
+const opUpdateAnnotationStoreVersion = "UpdateAnnotationStoreVersion"
+
+// UpdateAnnotationStoreVersionRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateAnnotationStoreVersion operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateAnnotationStoreVersion for more information on using the UpdateAnnotationStoreVersion
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateAnnotationStoreVersionRequest method.
+//	req, resp := client.UpdateAnnotationStoreVersionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateAnnotationStoreVersion
+func (c *Omics) UpdateAnnotationStoreVersionRequest(input *UpdateAnnotationStoreVersionInput) (req *request.Request, output *UpdateAnnotationStoreVersionOutput) {
+	op := &request.Operation{
+		Name:       opUpdateAnnotationStoreVersion,
+		HTTPMethod: "POST",
+		HTTPPath:   "/annotationStore/{name}/version/{versionName}",
+	}
+
+	if input == nil {
+		input = &UpdateAnnotationStoreVersionInput{}
+	}
+
+	output = &UpdateAnnotationStoreVersionOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
+	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
+	return
+}
+
+// UpdateAnnotationStoreVersion API operation for Amazon Omics.
+//
+// Updates the description of an annotation store version.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Omics's
+// API operation UpdateAnnotationStoreVersion for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An unexpected error occurred. Try the request again.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ResourceNotFoundException
+//     The target resource was not found in the current Region.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/omics-2022-11-28/UpdateAnnotationStoreVersion
+func (c *Omics) UpdateAnnotationStoreVersion(input *UpdateAnnotationStoreVersionInput) (*UpdateAnnotationStoreVersionOutput, error) {
+	req, out := c.UpdateAnnotationStoreVersionRequest(input)
+	return out, req.Send()
+}
+
+// UpdateAnnotationStoreVersionWithContext is the same as UpdateAnnotationStoreVersion with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateAnnotationStoreVersion for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Omics) UpdateAnnotationStoreVersionWithContext(ctx aws.Context, input *UpdateAnnotationStoreVersionInput, opts ...request.Option) (*UpdateAnnotationStoreVersionOutput, error) {
+	req, out := c.UpdateAnnotationStoreVersionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateRunGroup = "UpdateRunGroup"
 
 // UpdateRunGroupRequest generates a "aws/request.Request" representing the
@@ -7824,7 +8846,6 @@ func (c *Omics) UpdateRunGroupRequest(input *UpdateRunGroupInput) (req *request.
 
 	output = &UpdateRunGroupOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -7928,7 +8949,6 @@ func (c *Omics) UpdateVariantStoreRequest(input *UpdateVariantStoreInput) (req *
 
 	output = &UpdateVariantStoreOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("analytics-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
 	return
@@ -8022,7 +9042,6 @@ func (c *Omics) UpdateWorkflowRequest(input *UpdateWorkflowInput) (req *request.
 
 	output = &UpdateWorkflowOutput{}
 	req = c.newRequest(op, input, output)
-
 	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
 	req.Handlers.Build.PushBackNamed(protocol.NewHostPrefixHandler("workflows-", nil))
 	req.Handlers.Build.PushBackNamed(protocol.ValidateEndpointHostHandler)
@@ -8281,6 +9300,86 @@ func (s AbortMultipartReadSetUploadOutput) String() string {
 // value will be replaced with "sensitive".
 func (s AbortMultipartReadSetUploadOutput) GoString() string {
 	return s.String()
+}
+
+type AcceptShareInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID for a share offer for analytics store data.
+	//
+	// ShareId is a required field
+	ShareId *string `location:"uri" locationName:"shareId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AcceptShareInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AcceptShareInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AcceptShareInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AcceptShareInput"}
+	if s.ShareId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ShareId"))
+	}
+	if s.ShareId != nil && len(*s.ShareId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ShareId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetShareId sets the ShareId field's value.
+func (s *AcceptShareInput) SetShareId(v string) *AcceptShareInput {
+	s.ShareId = &v
+	return s
+}
+
+type AcceptShareOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The status of an analytics store share.
+	Status *string `locationName:"status" type:"string" enum:"ShareStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AcceptShareOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AcceptShareOutput) GoString() string {
+	return s.String()
+}
+
+// SetStatus sets the Status field's value.
+func (s *AcceptShareOutput) SetStatus(v string) *AcceptShareOutput {
+	s.Status = &v
+	return s
 }
 
 // You do not have sufficient access to perform this action.
@@ -8661,6 +9760,11 @@ type AnnotationImportJobItem struct {
 	//
 	// UpdateTime is a required field
 	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The name of the annotation store version.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
 }
 
 // String returns the string representation.
@@ -8732,6 +9836,12 @@ func (s *AnnotationImportJobItem) SetStatus(v string) *AnnotationImportJobItem {
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *AnnotationImportJobItem) SetUpdateTime(v time.Time) *AnnotationImportJobItem {
 	s.UpdateTime = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *AnnotationImportJobItem) SetVersionName(v string) *AnnotationImportJobItem {
+	s.VersionName = &v
 	return s
 }
 
@@ -8887,6 +9997,150 @@ func (s *AnnotationStoreItem) SetStoreSizeBytes(v int64) *AnnotationStoreItem {
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *AnnotationStoreItem) SetUpdateTime(v time.Time) *AnnotationStoreItem {
 	s.UpdateTime = &v
+	return s
+}
+
+// Annotation store versions.
+type AnnotationStoreVersionItem struct {
+	_ struct{} `type:"structure"`
+
+	// The time stamp for when an annotation store version was created.
+	//
+	// CreationTime is a required field
+	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The description of an annotation store version.
+	//
+	// Description is a required field
+	Description *string `locationName:"description" type:"string" required:"true"`
+
+	// The annotation store version ID.
+	//
+	// Id is a required field
+	Id *string `locationName:"id" type:"string" required:"true"`
+
+	// A name given to an annotation store version to distinguish it from others.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" min:"3" type:"string" required:"true"`
+
+	// The status of an annotation store version.
+	//
+	// Status is a required field
+	Status *string `locationName:"status" type:"string" required:"true" enum:"VersionStatus"`
+
+	// The status of an annotation store version.
+	//
+	// StatusMessage is a required field
+	StatusMessage *string `locationName:"statusMessage" type:"string" required:"true"`
+
+	// The store ID for an annotation store version.
+	//
+	// StoreId is a required field
+	StoreId *string `locationName:"storeId" type:"string" required:"true"`
+
+	// The time stamp for when an annotation store version was updated.
+	//
+	// UpdateTime is a required field
+	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The Arn for an annotation store version.
+	//
+	// VersionArn is a required field
+	VersionArn *string `locationName:"versionArn" min:"20" type:"string" required:"true"`
+
+	// The name of an annotation store version.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
+
+	// The size of an annotation store version in Bytes.
+	//
+	// VersionSizeBytes is a required field
+	VersionSizeBytes *int64 `locationName:"versionSizeBytes" type:"long" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnnotationStoreVersionItem) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnnotationStoreVersionItem) GoString() string {
+	return s.String()
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *AnnotationStoreVersionItem) SetCreationTime(v time.Time) *AnnotationStoreVersionItem {
+	s.CreationTime = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *AnnotationStoreVersionItem) SetDescription(v string) *AnnotationStoreVersionItem {
+	s.Description = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *AnnotationStoreVersionItem) SetId(v string) *AnnotationStoreVersionItem {
+	s.Id = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *AnnotationStoreVersionItem) SetName(v string) *AnnotationStoreVersionItem {
+	s.Name = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *AnnotationStoreVersionItem) SetStatus(v string) *AnnotationStoreVersionItem {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *AnnotationStoreVersionItem) SetStatusMessage(v string) *AnnotationStoreVersionItem {
+	s.StatusMessage = &v
+	return s
+}
+
+// SetStoreId sets the StoreId field's value.
+func (s *AnnotationStoreVersionItem) SetStoreId(v string) *AnnotationStoreVersionItem {
+	s.StoreId = &v
+	return s
+}
+
+// SetUpdateTime sets the UpdateTime field's value.
+func (s *AnnotationStoreVersionItem) SetUpdateTime(v time.Time) *AnnotationStoreVersionItem {
+	s.UpdateTime = &v
+	return s
+}
+
+// SetVersionArn sets the VersionArn field's value.
+func (s *AnnotationStoreVersionItem) SetVersionArn(v string) *AnnotationStoreVersionItem {
+	s.VersionArn = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *AnnotationStoreVersionItem) SetVersionName(v string) *AnnotationStoreVersionItem {
+	s.VersionName = &v
+	return s
+}
+
+// SetVersionSizeBytes sets the VersionSizeBytes field's value.
+func (s *AnnotationStoreVersionItem) SetVersionSizeBytes(v int64) *AnnotationStoreVersionItem {
+	s.VersionSizeBytes = &v
 	return s
 }
 
@@ -9473,7 +10727,7 @@ type CreateAnnotationStoreInput struct {
 	Description *string `locationName:"description" type:"string"`
 
 	// A name for the store.
-	Name *string `locationName:"name" type:"string"`
+	Name *string `locationName:"name" min:"3" type:"string"`
 
 	// The genome reference for the store's annotations.
 	Reference *ReferenceItem `locationName:"reference" type:"structure"`
@@ -9491,6 +10745,10 @@ type CreateAnnotationStoreInput struct {
 
 	// Tags for the store.
 	Tags map[string]*string `locationName:"tags" type:"map"`
+
+	// The name given to an annotation store version to distinguish it from other
+	// versions.
+	VersionName *string `locationName:"versionName" min:"3" type:"string"`
 }
 
 // String returns the string representation.
@@ -9514,8 +10772,14 @@ func (s CreateAnnotationStoreInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateAnnotationStoreInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateAnnotationStoreInput"}
+	if s.Name != nil && len(*s.Name) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 3))
+	}
 	if s.StoreFormat == nil {
 		invalidParams.Add(request.NewErrParamRequired("StoreFormat"))
+	}
+	if s.VersionName != nil && len(*s.VersionName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VersionName", 3))
 	}
 	if s.Reference != nil {
 		if err := s.Reference.Validate(); err != nil {
@@ -9581,6 +10845,12 @@ func (s *CreateAnnotationStoreInput) SetTags(v map[string]*string) *CreateAnnota
 	return s
 }
 
+// SetVersionName sets the VersionName field's value.
+func (s *CreateAnnotationStoreInput) SetVersionName(v string) *CreateAnnotationStoreInput {
+	s.VersionName = &v
+	return s
+}
+
 type CreateAnnotationStoreOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -9613,6 +10883,12 @@ type CreateAnnotationStoreOutput struct {
 
 	// The store's file parsing options.
 	StoreOptions *StoreOptions `locationName:"storeOptions" type:"structure"`
+
+	// The name given to an annotation store version to distinguish it from other
+	// versions.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
 }
 
 // String returns the string representation.
@@ -9675,6 +10951,210 @@ func (s *CreateAnnotationStoreOutput) SetStoreOptions(v *StoreOptions) *CreateAn
 	return s
 }
 
+// SetVersionName sets the VersionName field's value.
+func (s *CreateAnnotationStoreOutput) SetVersionName(v string) *CreateAnnotationStoreOutput {
+	s.VersionName = &v
+	return s
+}
+
+type CreateAnnotationStoreVersionInput struct {
+	_ struct{} `type:"structure"`
+
+	// The description of an annotation store version.
+	Description *string `locationName:"description" type:"string"`
+
+	// The name of an annotation store version from which versions are being created.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"name" min:"3" type:"string" required:"true"`
+
+	// Any tags added to annotation store version.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+
+	// The name given to an annotation store version to distinguish it from other
+	// versions.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
+
+	// The options for an annotation store version.
+	VersionOptions *VersionOptions `locationName:"versionOptions" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateAnnotationStoreVersionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateAnnotationStoreVersionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateAnnotationStoreVersionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateAnnotationStoreVersionInput"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 3))
+	}
+	if s.VersionName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VersionName"))
+	}
+	if s.VersionName != nil && len(*s.VersionName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VersionName", 3))
+	}
+	if s.VersionOptions != nil {
+		if err := s.VersionOptions.Validate(); err != nil {
+			invalidParams.AddNested("VersionOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateAnnotationStoreVersionInput) SetDescription(v string) *CreateAnnotationStoreVersionInput {
+	s.Description = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CreateAnnotationStoreVersionInput) SetName(v string) *CreateAnnotationStoreVersionInput {
+	s.Name = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateAnnotationStoreVersionInput) SetTags(v map[string]*string) *CreateAnnotationStoreVersionInput {
+	s.Tags = v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *CreateAnnotationStoreVersionInput) SetVersionName(v string) *CreateAnnotationStoreVersionInput {
+	s.VersionName = &v
+	return s
+}
+
+// SetVersionOptions sets the VersionOptions field's value.
+func (s *CreateAnnotationStoreVersionInput) SetVersionOptions(v *VersionOptions) *CreateAnnotationStoreVersionInput {
+	s.VersionOptions = v
+	return s
+}
+
+type CreateAnnotationStoreVersionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The time stamp for the creation of an annotation store version.
+	//
+	// CreationTime is a required field
+	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// A generated ID for the annotation store
+	//
+	// Id is a required field
+	Id *string `locationName:"id" type:"string" required:"true"`
+
+	// The name given to an annotation store version to distinguish it from other
+	// versions.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" min:"3" type:"string" required:"true"`
+
+	// The status of a annotation store version.
+	//
+	// Status is a required field
+	Status *string `locationName:"status" type:"string" required:"true" enum:"VersionStatus"`
+
+	// The ID for the annotation store from which new versions are being created.
+	//
+	// StoreId is a required field
+	StoreId *string `locationName:"storeId" type:"string" required:"true"`
+
+	// The name given to an annotation store version to distinguish it from other
+	// versions.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
+
+	// The options for an annotation store version.
+	VersionOptions *VersionOptions `locationName:"versionOptions" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateAnnotationStoreVersionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateAnnotationStoreVersionOutput) GoString() string {
+	return s.String()
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *CreateAnnotationStoreVersionOutput) SetCreationTime(v time.Time) *CreateAnnotationStoreVersionOutput {
+	s.CreationTime = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *CreateAnnotationStoreVersionOutput) SetId(v string) *CreateAnnotationStoreVersionOutput {
+	s.Id = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CreateAnnotationStoreVersionOutput) SetName(v string) *CreateAnnotationStoreVersionOutput {
+	s.Name = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *CreateAnnotationStoreVersionOutput) SetStatus(v string) *CreateAnnotationStoreVersionOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStoreId sets the StoreId field's value.
+func (s *CreateAnnotationStoreVersionOutput) SetStoreId(v string) *CreateAnnotationStoreVersionOutput {
+	s.StoreId = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *CreateAnnotationStoreVersionOutput) SetVersionName(v string) *CreateAnnotationStoreVersionOutput {
+	s.VersionName = &v
+	return s
+}
+
+// SetVersionOptions sets the VersionOptions field's value.
+func (s *CreateAnnotationStoreVersionOutput) SetVersionOptions(v *VersionOptions) *CreateAnnotationStoreVersionOutput {
+	s.VersionOptions = v
+	return s
+}
+
 type CreateMultipartReadSetUploadInput struct {
 	_ struct{} `type:"structure"`
 
@@ -9694,9 +11174,7 @@ type CreateMultipartReadSetUploadInput struct {
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
 	// The ARN of the reference.
-	//
-	// ReferenceArn is a required field
-	ReferenceArn *string `locationName:"referenceArn" min:"1" type:"string" required:"true"`
+	ReferenceArn *string `locationName:"referenceArn" min:"1" type:"string"`
 
 	// The source's sample ID.
 	//
@@ -9758,9 +11236,6 @@ func (s *CreateMultipartReadSetUploadInput) Validate() error {
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
-	if s.ReferenceArn == nil {
-		invalidParams.Add(request.NewErrParamRequired("ReferenceArn"))
 	}
 	if s.ReferenceArn != nil && len(*s.ReferenceArn) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ReferenceArn", 1))
@@ -10527,6 +12002,128 @@ func (s *CreateSequenceStoreOutput) SetSseConfig(v *SseConfig) *CreateSequenceSt
 	return s
 }
 
+type CreateShareInput struct {
+	_ struct{} `type:"structure"`
+
+	// The principal subscriber is the account being given access to the analytics
+	// store data through the share offer.
+	//
+	// PrincipalSubscriber is a required field
+	PrincipalSubscriber *string `locationName:"principalSubscriber" type:"string" required:"true"`
+
+	// The resource ARN for the analytics store to be shared.
+	//
+	// ResourceArn is a required field
+	ResourceArn *string `locationName:"resourceArn" type:"string" required:"true"`
+
+	// A name given to the share.
+	ShareName *string `locationName:"shareName" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateShareInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateShareInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateShareInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateShareInput"}
+	if s.PrincipalSubscriber == nil {
+		invalidParams.Add(request.NewErrParamRequired("PrincipalSubscriber"))
+	}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+	if s.ShareName != nil && len(*s.ShareName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ShareName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPrincipalSubscriber sets the PrincipalSubscriber field's value.
+func (s *CreateShareInput) SetPrincipalSubscriber(v string) *CreateShareInput {
+	s.PrincipalSubscriber = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *CreateShareInput) SetResourceArn(v string) *CreateShareInput {
+	s.ResourceArn = &v
+	return s
+}
+
+// SetShareName sets the ShareName field's value.
+func (s *CreateShareInput) SetShareName(v string) *CreateShareInput {
+	s.ShareName = &v
+	return s
+}
+
+type CreateShareOutput struct {
+	_ struct{} `type:"structure"`
+
+	// An ID generated for the share.
+	ShareId *string `locationName:"shareId" type:"string"`
+
+	// A name given to the share.
+	ShareName *string `locationName:"shareName" min:"1" type:"string"`
+
+	// The status of a share.
+	Status *string `locationName:"status" type:"string" enum:"ShareStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateShareOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateShareOutput) GoString() string {
+	return s.String()
+}
+
+// SetShareId sets the ShareId field's value.
+func (s *CreateShareOutput) SetShareId(v string) *CreateShareOutput {
+	s.ShareId = &v
+	return s
+}
+
+// SetShareName sets the ShareName field's value.
+func (s *CreateShareOutput) SetShareName(v string) *CreateShareOutput {
+	s.ShareName = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *CreateShareOutput) SetStatus(v string) *CreateShareOutput {
+	s.Status = &v
+	return s
+}
+
 type CreateVariantStoreInput struct {
 	_ struct{} `type:"structure"`
 
@@ -10534,7 +12131,7 @@ type CreateVariantStoreInput struct {
 	Description *string `locationName:"description" type:"string"`
 
 	// A name for the store.
-	Name *string `locationName:"name" type:"string"`
+	Name *string `locationName:"name" min:"3" type:"string"`
 
 	// The genome reference for the store's variants.
 	//
@@ -10569,6 +12166,9 @@ func (s CreateVariantStoreInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateVariantStoreInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateVariantStoreInput"}
+	if s.Name != nil && len(*s.Name) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 3))
+	}
 	if s.Reference == nil {
 		invalidParams.Add(request.NewErrParamRequired("Reference"))
 	}
@@ -11000,6 +12600,112 @@ func (s *DeleteAnnotationStoreOutput) SetStatus(v string) *DeleteAnnotationStore
 	return s
 }
 
+type DeleteAnnotationStoreVersionsInput struct {
+	_ struct{} `type:"structure"`
+
+	// Forces the deletion of an annotation store version when imports are in-progress..
+	Force *bool `location:"querystring" locationName:"force" type:"boolean"`
+
+	// The name of the annotation store from which versions are being deleted.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"name" type:"string" required:"true"`
+
+	// The versions of an annotation store to be deleted.
+	//
+	// Versions is a required field
+	Versions []*string `locationName:"versions" min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAnnotationStoreVersionsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAnnotationStoreVersionsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteAnnotationStoreVersionsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteAnnotationStoreVersionsInput"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.Versions == nil {
+		invalidParams.Add(request.NewErrParamRequired("Versions"))
+	}
+	if s.Versions != nil && len(s.Versions) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Versions", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetForce sets the Force field's value.
+func (s *DeleteAnnotationStoreVersionsInput) SetForce(v bool) *DeleteAnnotationStoreVersionsInput {
+	s.Force = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DeleteAnnotationStoreVersionsInput) SetName(v string) *DeleteAnnotationStoreVersionsInput {
+	s.Name = &v
+	return s
+}
+
+// SetVersions sets the Versions field's value.
+func (s *DeleteAnnotationStoreVersionsInput) SetVersions(v []*string) *DeleteAnnotationStoreVersionsInput {
+	s.Versions = v
+	return s
+}
+
+type DeleteAnnotationStoreVersionsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Any errors that occur when attempting to delete an annotation store version.
+	Errors []*VersionDeleteError `locationName:"errors" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAnnotationStoreVersionsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAnnotationStoreVersionsOutput) GoString() string {
+	return s.String()
+}
+
+// SetErrors sets the Errors field's value.
+func (s *DeleteAnnotationStoreVersionsOutput) SetErrors(v []*VersionDeleteError) *DeleteAnnotationStoreVersionsOutput {
+	s.Errors = v
+	return s
+}
+
 type DeleteReferenceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -11372,6 +13078,86 @@ func (s DeleteSequenceStoreOutput) GoString() string {
 	return s.String()
 }
 
+type DeleteShareInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID for the share request to be deleted.
+	//
+	// ShareId is a required field
+	ShareId *string `location:"uri" locationName:"shareId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteShareInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteShareInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteShareInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteShareInput"}
+	if s.ShareId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ShareId"))
+	}
+	if s.ShareId != nil && len(*s.ShareId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ShareId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetShareId sets the ShareId field's value.
+func (s *DeleteShareInput) SetShareId(v string) *DeleteShareInput {
+	s.ShareId = &v
+	return s
+}
+
+type DeleteShareOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The status of the share being deleted.
+	Status *string `locationName:"status" type:"string" enum:"ShareStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteShareOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteShareOutput) GoString() string {
+	return s.String()
+}
+
+// SetStatus sets the Status field's value.
+func (s *DeleteShareOutput) SetStatus(v string) *DeleteShareOutput {
+	s.Status = &v
+	return s
+}
+
 type DeleteVariantStoreInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -11532,6 +13318,56 @@ func (s DeleteWorkflowOutput) String() string {
 // value will be replaced with "sensitive".
 func (s DeleteWorkflowOutput) GoString() string {
 	return s.String()
+}
+
+// The entity tag (ETag) is a hash of the object representing its semantic content.
+type ETag struct {
+	_ struct{} `type:"structure"`
+
+	// The algorithm used to calculate the read set’s ETag(s).
+	Algorithm *string `locationName:"algorithm" type:"string" enum:"ETagAlgorithm"`
+
+	// The ETag hash calculated on Source1 of the read set.
+	Source1 *string `locationName:"source1" type:"string"`
+
+	// The ETag hash calculated on Source2 of the read set.
+	Source2 *string `locationName:"source2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ETag) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ETag) GoString() string {
+	return s.String()
+}
+
+// SetAlgorithm sets the Algorithm field's value.
+func (s *ETag) SetAlgorithm(v string) *ETag {
+	s.Algorithm = &v
+	return s
+}
+
+// SetSource1 sets the Source1 field's value.
+func (s *ETag) SetSource1(v string) *ETag {
+	s.Source1 = &v
+	return s
+}
+
+// SetSource2 sets the Source2 field's value.
+func (s *ETag) SetSource2(v string) *ETag {
+	s.Source2 = &v
+	return s
 }
 
 // A read set.
@@ -11825,6 +13661,61 @@ func (s *FileInformation) SetTotalParts(v int64) *FileInformation {
 	return s
 }
 
+// Use filters to focus the returned annotation store versions on a specific
+// parameter, such as the status of the annotation store.
+type Filter struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Number (Arn) for an analytics store.
+	ResourceArns []*string `locationName:"resourceArns" min:"1" type:"list"`
+
+	// The status of an annotation store version.
+	Status []*string `locationName:"status" type:"list" enum:"ShareStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Filter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Filter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *Filter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "Filter"}
+	if s.ResourceArns != nil && len(s.ResourceArns) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ResourceArns", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceArns sets the ResourceArns field's value.
+func (s *Filter) SetResourceArns(v []*string) *Filter {
+	s.ResourceArns = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *Filter) SetStatus(v []*string) *Filter {
+	s.Status = v
+	return s
+}
+
 // Formatting options for a file.
 type FormatOptions struct {
 	_ struct{} `type:"structure"`
@@ -11990,6 +13881,11 @@ type GetAnnotationImportJobOutput struct {
 	//
 	// UpdateTime is a required field
 	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The name of the annotation store version.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
 }
 
 // String returns the string representation.
@@ -12082,6 +13978,12 @@ func (s *GetAnnotationImportJobOutput) SetUpdateTime(v time.Time) *GetAnnotation
 	return s
 }
 
+// SetVersionName sets the VersionName field's value.
+func (s *GetAnnotationImportJobOutput) SetVersionName(v string) *GetAnnotationImportJobOutput {
+	s.VersionName = &v
+	return s
+}
+
 type GetAnnotationStoreInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -12153,6 +14055,11 @@ type GetAnnotationStoreOutput struct {
 	//
 	// Name is a required field
 	Name *string `locationName:"name" type:"string" required:"true"`
+
+	// An integer indicating how many versions of an annotation store exist.
+	//
+	// NumVersions is a required field
+	NumVersions *int64 `locationName:"numVersions" type:"integer" required:"true"`
 
 	// The store's genome reference.
 	//
@@ -12243,6 +14150,12 @@ func (s *GetAnnotationStoreOutput) SetName(v string) *GetAnnotationStoreOutput {
 	return s
 }
 
+// SetNumVersions sets the NumVersions field's value.
+func (s *GetAnnotationStoreOutput) SetNumVersions(v int64) *GetAnnotationStoreOutput {
+	s.NumVersions = &v
+	return s
+}
+
 // SetReference sets the Reference field's value.
 func (s *GetAnnotationStoreOutput) SetReference(v *ReferenceItem) *GetAnnotationStoreOutput {
 	s.Reference = v
@@ -12300,6 +14213,235 @@ func (s *GetAnnotationStoreOutput) SetTags(v map[string]*string) *GetAnnotationS
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *GetAnnotationStoreOutput) SetUpdateTime(v time.Time) *GetAnnotationStoreOutput {
 	s.UpdateTime = &v
+	return s
+}
+
+type GetAnnotationStoreVersionInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name given to an annotation store version to distinguish it from others.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"name" type:"string" required:"true"`
+
+	// The name given to an annotation store version to distinguish it from others.
+	//
+	// VersionName is a required field
+	VersionName *string `location:"uri" locationName:"versionName" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetAnnotationStoreVersionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetAnnotationStoreVersionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetAnnotationStoreVersionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetAnnotationStoreVersionInput"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.VersionName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VersionName"))
+	}
+	if s.VersionName != nil && len(*s.VersionName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VersionName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetName sets the Name field's value.
+func (s *GetAnnotationStoreVersionInput) SetName(v string) *GetAnnotationStoreVersionInput {
+	s.Name = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *GetAnnotationStoreVersionInput) SetVersionName(v string) *GetAnnotationStoreVersionInput {
+	s.VersionName = &v
+	return s
+}
+
+type GetAnnotationStoreVersionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The time stamp for when an annotation store version was created.
+	//
+	// CreationTime is a required field
+	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The description for an annotation store version.
+	//
+	// Description is a required field
+	Description *string `locationName:"description" type:"string" required:"true"`
+
+	// The annotation store version ID.
+	//
+	// Id is a required field
+	Id *string `locationName:"id" type:"string" required:"true"`
+
+	// The name of the annotation store.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" min:"3" type:"string" required:"true"`
+
+	// The status of an annotation store version.
+	//
+	// Status is a required field
+	Status *string `locationName:"status" type:"string" required:"true" enum:"VersionStatus"`
+
+	// The status of an annotation store version.
+	//
+	// StatusMessage is a required field
+	StatusMessage *string `locationName:"statusMessage" type:"string" required:"true"`
+
+	// The store ID for annotation store version.
+	//
+	// StoreId is a required field
+	StoreId *string `locationName:"storeId" type:"string" required:"true"`
+
+	// Any tags associated with an annotation store version.
+	//
+	// Tags is a required field
+	Tags map[string]*string `locationName:"tags" type:"map" required:"true"`
+
+	// The time stamp for when an annotation store version was updated.
+	//
+	// UpdateTime is a required field
+	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The Arn for the annotation store.
+	//
+	// VersionArn is a required field
+	VersionArn *string `locationName:"versionArn" min:"20" type:"string" required:"true"`
+
+	// The name given to an annotation store version to distinguish it from others.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
+
+	// The options for an annotation store version.
+	VersionOptions *VersionOptions `locationName:"versionOptions" type:"structure"`
+
+	// The size of the annotation store version in Bytes.
+	//
+	// VersionSizeBytes is a required field
+	VersionSizeBytes *int64 `locationName:"versionSizeBytes" type:"long" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetAnnotationStoreVersionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetAnnotationStoreVersionOutput) GoString() string {
+	return s.String()
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *GetAnnotationStoreVersionOutput) SetCreationTime(v time.Time) *GetAnnotationStoreVersionOutput {
+	s.CreationTime = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *GetAnnotationStoreVersionOutput) SetDescription(v string) *GetAnnotationStoreVersionOutput {
+	s.Description = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *GetAnnotationStoreVersionOutput) SetId(v string) *GetAnnotationStoreVersionOutput {
+	s.Id = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *GetAnnotationStoreVersionOutput) SetName(v string) *GetAnnotationStoreVersionOutput {
+	s.Name = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetAnnotationStoreVersionOutput) SetStatus(v string) *GetAnnotationStoreVersionOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *GetAnnotationStoreVersionOutput) SetStatusMessage(v string) *GetAnnotationStoreVersionOutput {
+	s.StatusMessage = &v
+	return s
+}
+
+// SetStoreId sets the StoreId field's value.
+func (s *GetAnnotationStoreVersionOutput) SetStoreId(v string) *GetAnnotationStoreVersionOutput {
+	s.StoreId = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *GetAnnotationStoreVersionOutput) SetTags(v map[string]*string) *GetAnnotationStoreVersionOutput {
+	s.Tags = v
+	return s
+}
+
+// SetUpdateTime sets the UpdateTime field's value.
+func (s *GetAnnotationStoreVersionOutput) SetUpdateTime(v time.Time) *GetAnnotationStoreVersionOutput {
+	s.UpdateTime = &v
+	return s
+}
+
+// SetVersionArn sets the VersionArn field's value.
+func (s *GetAnnotationStoreVersionOutput) SetVersionArn(v string) *GetAnnotationStoreVersionOutput {
+	s.VersionArn = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *GetAnnotationStoreVersionOutput) SetVersionName(v string) *GetAnnotationStoreVersionOutput {
+	s.VersionName = &v
+	return s
+}
+
+// SetVersionOptions sets the VersionOptions field's value.
+func (s *GetAnnotationStoreVersionOutput) SetVersionOptions(v *VersionOptions) *GetAnnotationStoreVersionOutput {
+	s.VersionOptions = v
+	return s
+}
+
+// SetVersionSizeBytes sets the VersionSizeBytes field's value.
+func (s *GetAnnotationStoreVersionOutput) SetVersionSizeBytes(v int64) *GetAnnotationStoreVersionOutput {
+	s.VersionSizeBytes = &v
 	return s
 }
 
@@ -12975,8 +15117,15 @@ type GetReadSetMetadataOutput struct {
 	// CreationTime is a required field
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
+	// The creation type of the read set.
+	CreationType *string `locationName:"creationType" type:"string" enum:"CreationType"`
+
 	// The read set's description.
 	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// The entity tag (ETag) is a hash of the object meant to represent its semantic
+	// content.
+	Etag *ETag `locationName:"etag" type:"structure"`
 
 	// The read set's file type.
 	//
@@ -13051,9 +15200,21 @@ func (s *GetReadSetMetadataOutput) SetCreationTime(v time.Time) *GetReadSetMetad
 	return s
 }
 
+// SetCreationType sets the CreationType field's value.
+func (s *GetReadSetMetadataOutput) SetCreationType(v string) *GetReadSetMetadataOutput {
+	s.CreationType = &v
+	return s
+}
+
 // SetDescription sets the Description field's value.
 func (s *GetReadSetMetadataOutput) SetDescription(v string) *GetReadSetMetadataOutput {
 	s.Description = &v
+	return s
+}
+
+// SetEtag sets the Etag field's value.
+func (s *GetReadSetMetadataOutput) SetEtag(v *ETag) *GetReadSetMetadataOutput {
+	s.Etag = v
 	return s
 }
 
@@ -14010,11 +16171,17 @@ type GetRunOutput struct {
 	// The run's digest.
 	Digest *string `locationName:"digest" min:"1" type:"string"`
 
+	// The reason a run has failed.
+	FailureReason *string `locationName:"failureReason" min:"1" type:"string"`
+
 	// The run's ID.
 	Id *string `locationName:"id" min:"1" type:"string"`
 
 	// The run's log level.
 	LogLevel *string `locationName:"logLevel" min:"1" type:"string" enum:"RunLogLevel"`
+
+	// The location of the run log.
+	LogLocation *RunLogLocation `locationName:"logLocation" type:"structure"`
 
 	// The run's name.
 	Name *string `locationName:"name" min:"1" type:"string"`
@@ -14028,6 +16195,9 @@ type GetRunOutput struct {
 	// The run's resource digests.
 	ResourceDigests map[string]*string `locationName:"resourceDigests" type:"map"`
 
+	// The run's retention mode.
+	RetentionMode *string `locationName:"retentionMode" min:"1" type:"string" enum:"RunRetentionMode"`
+
 	// The run's service role ARN.
 	RoleArn *string `locationName:"roleArn" min:"1" type:"string"`
 
@@ -14036,6 +16206,9 @@ type GetRunOutput struct {
 
 	// The run's ID.
 	RunId *string `locationName:"runId" min:"1" type:"string"`
+
+	// The destination for workflow outputs.
+	RunOutputUri *string `locationName:"runOutputUri" min:"1" type:"string"`
 
 	// When the run started.
 	StartTime *time.Time `locationName:"startTime" type:"timestamp" timestampFormat:"iso8601"`
@@ -14057,6 +16230,9 @@ type GetRunOutput struct {
 
 	// The run's tags.
 	Tags map[string]*string `locationName:"tags" type:"map"`
+
+	// The universally unique identifier for a run.
+	Uuid *string `locationName:"uuid" min:"1" type:"string"`
 
 	// The run's workflow ID.
 	WorkflowId *string `locationName:"workflowId" min:"1" type:"string"`
@@ -14113,6 +16289,12 @@ func (s *GetRunOutput) SetDigest(v string) *GetRunOutput {
 	return s
 }
 
+// SetFailureReason sets the FailureReason field's value.
+func (s *GetRunOutput) SetFailureReason(v string) *GetRunOutput {
+	s.FailureReason = &v
+	return s
+}
+
 // SetId sets the Id field's value.
 func (s *GetRunOutput) SetId(v string) *GetRunOutput {
 	s.Id = &v
@@ -14122,6 +16304,12 @@ func (s *GetRunOutput) SetId(v string) *GetRunOutput {
 // SetLogLevel sets the LogLevel field's value.
 func (s *GetRunOutput) SetLogLevel(v string) *GetRunOutput {
 	s.LogLevel = &v
+	return s
+}
+
+// SetLogLocation sets the LogLocation field's value.
+func (s *GetRunOutput) SetLogLocation(v *RunLogLocation) *GetRunOutput {
+	s.LogLocation = v
 	return s
 }
 
@@ -14149,6 +16337,12 @@ func (s *GetRunOutput) SetResourceDigests(v map[string]*string) *GetRunOutput {
 	return s
 }
 
+// SetRetentionMode sets the RetentionMode field's value.
+func (s *GetRunOutput) SetRetentionMode(v string) *GetRunOutput {
+	s.RetentionMode = &v
+	return s
+}
+
 // SetRoleArn sets the RoleArn field's value.
 func (s *GetRunOutput) SetRoleArn(v string) *GetRunOutput {
 	s.RoleArn = &v
@@ -14164,6 +16358,12 @@ func (s *GetRunOutput) SetRunGroupId(v string) *GetRunOutput {
 // SetRunId sets the RunId field's value.
 func (s *GetRunOutput) SetRunId(v string) *GetRunOutput {
 	s.RunId = &v
+	return s
+}
+
+// SetRunOutputUri sets the RunOutputUri field's value.
+func (s *GetRunOutput) SetRunOutputUri(v string) *GetRunOutput {
+	s.RunOutputUri = &v
 	return s
 }
 
@@ -14209,6 +16409,12 @@ func (s *GetRunOutput) SetTags(v map[string]*string) *GetRunOutput {
 	return s
 }
 
+// SetUuid sets the Uuid field's value.
+func (s *GetRunOutput) SetUuid(v string) *GetRunOutput {
+	s.Uuid = &v
+	return s
+}
+
 // SetWorkflowId sets the WorkflowId field's value.
 func (s *GetRunOutput) SetWorkflowId(v string) *GetRunOutput {
 	s.WorkflowId = &v
@@ -14224,7 +16430,7 @@ func (s *GetRunOutput) SetWorkflowType(v string) *GetRunOutput {
 type GetRunTaskInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The task's ID.
+	// The workflow run ID.
 	//
 	// Id is a required field
 	Id *string `location:"uri" locationName:"id" min:"1" type:"string" required:"true"`
@@ -14296,8 +16502,14 @@ type GetRunTaskOutput struct {
 	// When the task was created.
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601"`
 
+	// The reason a task has failed.
+	FailureReason *string `locationName:"failureReason" min:"1" type:"string"`
+
 	// The number of Graphics Processing Units (GPU) specified in the task.
 	Gpus *int64 `locationName:"gpus" type:"integer"`
+
+	// The instance type for a task.
+	InstanceType *string `locationName:"instanceType" type:"string"`
 
 	// The task's log stream.
 	LogStream *string `locationName:"logStream" type:"string"`
@@ -14354,9 +16566,21 @@ func (s *GetRunTaskOutput) SetCreationTime(v time.Time) *GetRunTaskOutput {
 	return s
 }
 
+// SetFailureReason sets the FailureReason field's value.
+func (s *GetRunTaskOutput) SetFailureReason(v string) *GetRunTaskOutput {
+	s.FailureReason = &v
+	return s
+}
+
 // SetGpus sets the Gpus field's value.
 func (s *GetRunTaskOutput) SetGpus(v int64) *GetRunTaskOutput {
 	s.Gpus = &v
+	return s
+}
+
+// SetInstanceType sets the InstanceType field's value.
+func (s *GetRunTaskOutput) SetInstanceType(v string) *GetRunTaskOutput {
+	s.InstanceType = &v
 	return s
 }
 
@@ -14545,6 +16769,87 @@ func (s *GetSequenceStoreOutput) SetName(v string) *GetSequenceStoreOutput {
 // SetSseConfig sets the SseConfig field's value.
 func (s *GetSequenceStoreOutput) SetSseConfig(v *SseConfig) *GetSequenceStoreOutput {
 	s.SseConfig = v
+	return s
+}
+
+type GetShareInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The generated ID for a share.
+	//
+	// ShareId is a required field
+	ShareId *string `location:"uri" locationName:"shareId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetShareInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetShareInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetShareInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetShareInput"}
+	if s.ShareId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ShareId"))
+	}
+	if s.ShareId != nil && len(*s.ShareId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ShareId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetShareId sets the ShareId field's value.
+func (s *GetShareInput) SetShareId(v string) *GetShareInput {
+	s.ShareId = &v
+	return s
+}
+
+type GetShareOutput struct {
+	_ struct{} `type:"structure"`
+
+	// An analytic store share details object. contains status, resourceArn, ownerId,
+	// etc.
+	Share *ShareDetails `locationName:"share" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetShareOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetShareOutput) GoString() string {
+	return s.String()
+}
+
+// SetShare sets the Share field's value.
+func (s *GetShareOutput) SetShare(v *ShareDetails) *GetShareOutput {
+	s.Share = v
 	return s
 }
 
@@ -15786,7 +18091,7 @@ type ListAnnotationImportJobsInput struct {
 	// The maximum number of jobs to return in one page of results.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// Specify the pagination token from a previous request to retrieve the next
+	// Specifies the pagination token from a previous request to retrieve the next
 	// page of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
@@ -15858,7 +18163,8 @@ type ListAnnotationImportJobsOutput struct {
 	// A list of jobs.
 	AnnotationImportJobs []*AnnotationImportJobItem `locationName:"annotationImportJobs" type:"list"`
 
-	// A pagination token that's included if more results are available.
+	// Specifies the pagination token from a previous request to retrieve the next
+	// page of results.
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
@@ -15888,6 +18194,164 @@ func (s *ListAnnotationImportJobsOutput) SetAnnotationImportJobs(v []*Annotation
 
 // SetNextToken sets the NextToken field's value.
 func (s *ListAnnotationImportJobsOutput) SetNextToken(v string) *ListAnnotationImportJobsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// Use filters to focus the returned annotation store versions on a specific
+// parameter, such as the status of the annotation store.
+type ListAnnotationStoreVersionsFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The status of an annotation store version.
+	Status *string `locationName:"status" type:"string" enum:"VersionStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAnnotationStoreVersionsFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAnnotationStoreVersionsFilter) GoString() string {
+	return s.String()
+}
+
+// SetStatus sets the Status field's value.
+func (s *ListAnnotationStoreVersionsFilter) SetStatus(v string) *ListAnnotationStoreVersionsFilter {
+	s.Status = &v
+	return s
+}
+
+type ListAnnotationStoreVersionsInput struct {
+	_ struct{} `type:"structure"`
+
+	// A filter to apply to the list of annotation store versions.
+	Filter *ListAnnotationStoreVersionsFilter `locationName:"filter" type:"structure"`
+
+	// The maximum number of annotation store versions to return in one page of
+	// results.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// The name of an annotation store.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"name" type:"string" required:"true"`
+
+	// Specifies the pagination token from a previous request to retrieve the next
+	// page of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAnnotationStoreVersionsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAnnotationStoreVersionsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListAnnotationStoreVersionsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListAnnotationStoreVersionsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilter sets the Filter field's value.
+func (s *ListAnnotationStoreVersionsInput) SetFilter(v *ListAnnotationStoreVersionsFilter) *ListAnnotationStoreVersionsInput {
+	s.Filter = v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListAnnotationStoreVersionsInput) SetMaxResults(v int64) *ListAnnotationStoreVersionsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ListAnnotationStoreVersionsInput) SetName(v string) *ListAnnotationStoreVersionsInput {
+	s.Name = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAnnotationStoreVersionsInput) SetNextToken(v string) *ListAnnotationStoreVersionsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListAnnotationStoreVersionsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Lists all versions of an annotation store.
+	AnnotationStoreVersions []*AnnotationStoreVersionItem `locationName:"annotationStoreVersions" type:"list"`
+
+	// Specifies the pagination token from a previous request to retrieve the next
+	// page of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAnnotationStoreVersionsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAnnotationStoreVersionsOutput) GoString() string {
+	return s.String()
+}
+
+// SetAnnotationStoreVersions sets the AnnotationStoreVersions field's value.
+func (s *ListAnnotationStoreVersionsOutput) SetAnnotationStoreVersions(v []*AnnotationStoreVersionItem) *ListAnnotationStoreVersionsOutput {
+	s.AnnotationStoreVersions = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAnnotationStoreVersionsOutput) SetNextToken(v string) *ListAnnotationStoreVersionsOutput {
 	s.NextToken = &v
 	return s
 }
@@ -17658,6 +20122,128 @@ func (s *ListSequenceStoresOutput) SetSequenceStores(v []*SequenceStoreDetail) *
 	return s
 }
 
+type ListSharesInput struct {
+	_ struct{} `type:"structure"`
+
+	// Attributes used to filter for a specific subset of shares.
+	Filter *Filter `locationName:"filter" type:"structure"`
+
+	// The maximum number of shares to return in one page of results.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// Next token returned in the response of a previous ListReadSetUploadPartsRequest
+	// call. Used to get the next page of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
+
+	// The account that owns the analytics store shared.
+	//
+	// ResourceOwner is a required field
+	ResourceOwner *string `locationName:"resourceOwner" type:"string" required:"true" enum:"ResourceOwner"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSharesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSharesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListSharesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListSharesInput"}
+	if s.ResourceOwner == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceOwner"))
+	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilter sets the Filter field's value.
+func (s *ListSharesInput) SetFilter(v *Filter) *ListSharesInput {
+	s.Filter = v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListSharesInput) SetMaxResults(v int64) *ListSharesInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListSharesInput) SetNextToken(v string) *ListSharesInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetResourceOwner sets the ResourceOwner field's value.
+func (s *ListSharesInput) SetResourceOwner(v string) *ListSharesInput {
+	s.ResourceOwner = &v
+	return s
+}
+
+type ListSharesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Next token returned in the response of a previous ListSharesResponse call.
+	// Used to get the next page of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The shares available and their meta details.
+	//
+	// Shares is a required field
+	Shares []*ShareDetails `locationName:"shares" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSharesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSharesOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListSharesOutput) SetNextToken(v string) *ListSharesOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetShares sets the Shares field's value.
+func (s *ListSharesOutput) SetShares(v []*ShareDetails) *ListSharesOutput {
+	s.Shares = v
+	return s
+}
+
 type ListTagsForResourceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -18685,6 +21271,9 @@ type ReadSetFilter struct {
 	// The filter's end date.
 	CreatedBefore *time.Time `locationName:"createdBefore" type:"timestamp" timestampFormat:"iso8601"`
 
+	// The creation type of the read set.
+	CreationType *string `locationName:"creationType" type:"string" enum:"CreationType"`
+
 	// Where the source originated.
 	GeneratedFrom *string `locationName:"generatedFrom" min:"1" type:"string"`
 
@@ -18692,7 +21281,7 @@ type ReadSetFilter struct {
 	Name *string `locationName:"name" min:"1" type:"string"`
 
 	// A genome reference ARN to filter on.
-	ReferenceArn *string `locationName:"referenceArn" min:"1" type:"string"`
+	ReferenceArn *string `locationName:"referenceArn" type:"string"`
 
 	// The read set source's sample ID.
 	SampleId *string `locationName:"sampleId" min:"1" type:"string"`
@@ -18731,9 +21320,6 @@ func (s *ReadSetFilter) Validate() error {
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
 	}
-	if s.ReferenceArn != nil && len(*s.ReferenceArn) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("ReferenceArn", 1))
-	}
 	if s.SampleId != nil && len(*s.SampleId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("SampleId", 1))
 	}
@@ -18756,6 +21342,12 @@ func (s *ReadSetFilter) SetCreatedAfter(v time.Time) *ReadSetFilter {
 // SetCreatedBefore sets the CreatedBefore field's value.
 func (s *ReadSetFilter) SetCreatedBefore(v time.Time) *ReadSetFilter {
 	s.CreatedBefore = &v
+	return s
+}
+
+// SetCreationType sets the CreationType field's value.
+func (s *ReadSetFilter) SetCreationType(v string) *ReadSetFilter {
+	s.CreationType = &v
 	return s
 }
 
@@ -18809,8 +21401,14 @@ type ReadSetListItem struct {
 	// CreationTime is a required field
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
+	// The creation type of the read set.
+	CreationType *string `locationName:"creationType" type:"string" enum:"CreationType"`
+
 	// The read set's description.
 	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// The entity tag (ETag) is a hash of the object representing its semantic content.
+	Etag *ETag `locationName:"etag" type:"structure"`
 
 	// The read set's file type.
 	//
@@ -18882,9 +21480,21 @@ func (s *ReadSetListItem) SetCreationTime(v time.Time) *ReadSetListItem {
 	return s
 }
 
+// SetCreationType sets the CreationType field's value.
+func (s *ReadSetListItem) SetCreationType(v string) *ReadSetListItem {
+	s.CreationType = &v
+	return s
+}
+
 // SetDescription sets the Description field's value.
 func (s *ReadSetListItem) SetDescription(v string) *ReadSetListItem {
 	s.Description = &v
+	return s
+}
+
+// SetEtag sets the Etag field's value.
+func (s *ReadSetListItem) SetEtag(v *ETag) *ReadSetListItem {
+	s.Etag = v
 	return s
 }
 
@@ -19836,6 +22446,47 @@ func (s *RunListItem) SetWorkflowId(v string) *RunListItem {
 	return s
 }
 
+// The URI for the run log.
+type RunLogLocation struct {
+	_ struct{} `type:"structure"`
+
+	// The log stream ARN for the engine log.
+	EngineLogStream *string `locationName:"engineLogStream" type:"string"`
+
+	// The log stream ARN for the run log.
+	RunLogStream *string `locationName:"runLogStream" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RunLogLocation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RunLogLocation) GoString() string {
+	return s.String()
+}
+
+// SetEngineLogStream sets the EngineLogStream field's value.
+func (s *RunLogLocation) SetEngineLogStream(v string) *RunLogLocation {
+	s.EngineLogStream = &v
+	return s
+}
+
+// SetRunLogStream sets the RunLogStream field's value.
+func (s *RunLogLocation) SetRunLogStream(v string) *RunLogLocation {
+	s.RunLogStream = &v
+	return s
+}
+
 // Details about a sequence.
 type SequenceInformation struct {
 	_ struct{} `type:"structure"`
@@ -20114,6 +22765,112 @@ func (s *ServiceQuotaExceededException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The details of a share.
+type ShareDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The timestamp for when the share was created.
+	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The account ID for the data owner. The owner creates the share offer.
+	OwnerId *string `locationName:"ownerId" type:"string"`
+
+	// The principal subscriber is the account the analytics store data is being
+	// shared with.
+	PrincipalSubscriber *string `locationName:"principalSubscriber" type:"string"`
+
+	// The resource Arn of the analytics store being shared.
+	ResourceArn *string `locationName:"resourceArn" type:"string"`
+
+	// The ID for a share offer for an analytics store .
+	ShareId *string `locationName:"shareId" type:"string"`
+
+	// The name of the share.
+	ShareName *string `locationName:"shareName" min:"1" type:"string"`
+
+	// The status of a share.
+	Status *string `locationName:"status" type:"string" enum:"ShareStatus"`
+
+	// The status message for a share. It provides more details on the status of
+	// the share.
+	StatusMessage *string `locationName:"statusMessage" type:"string"`
+
+	// The timestamp of the share update.
+	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ShareDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ShareDetails) GoString() string {
+	return s.String()
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *ShareDetails) SetCreationTime(v time.Time) *ShareDetails {
+	s.CreationTime = &v
+	return s
+}
+
+// SetOwnerId sets the OwnerId field's value.
+func (s *ShareDetails) SetOwnerId(v string) *ShareDetails {
+	s.OwnerId = &v
+	return s
+}
+
+// SetPrincipalSubscriber sets the PrincipalSubscriber field's value.
+func (s *ShareDetails) SetPrincipalSubscriber(v string) *ShareDetails {
+	s.PrincipalSubscriber = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *ShareDetails) SetResourceArn(v string) *ShareDetails {
+	s.ResourceArn = &v
+	return s
+}
+
+// SetShareId sets the ShareId field's value.
+func (s *ShareDetails) SetShareId(v string) *ShareDetails {
+	s.ShareId = &v
+	return s
+}
+
+// SetShareName sets the ShareName field's value.
+func (s *ShareDetails) SetShareName(v string) *ShareDetails {
+	s.ShareName = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ShareDetails) SetStatus(v string) *ShareDetails {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *ShareDetails) SetStatusMessage(v string) *ShareDetails {
+	s.StatusMessage = &v
+	return s
+}
+
+// SetUpdateTime sets the UpdateTime field's value.
+func (s *ShareDetails) SetUpdateTime(v time.Time) *ShareDetails {
+	s.UpdateTime = &v
+	return s
+}
+
 // Source files for a sequence.
 type SourceFiles struct {
 	_ struct{} `type:"structure"`
@@ -20255,6 +23012,9 @@ type StartAnnotationImportJobInput struct {
 
 	// The job's left normalization setting.
 	RunLeftNormalization *bool `locationName:"runLeftNormalization" type:"boolean"`
+
+	// The name of the annotation store version.
+	VersionName *string `locationName:"versionName" min:"3" type:"string"`
 }
 
 // String returns the string representation.
@@ -20295,6 +23055,9 @@ func (s *StartAnnotationImportJobInput) Validate() error {
 	}
 	if s.RoleArn != nil && len(*s.RoleArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("RoleArn", 20))
+	}
+	if s.VersionName != nil && len(*s.VersionName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VersionName", 3))
 	}
 	if s.FormatOptions != nil {
 		if err := s.FormatOptions.Validate(); err != nil {
@@ -20351,6 +23114,12 @@ func (s *StartAnnotationImportJobInput) SetRoleArn(v string) *StartAnnotationImp
 // SetRunLeftNormalization sets the RunLeftNormalization field's value.
 func (s *StartAnnotationImportJobInput) SetRunLeftNormalization(v bool) *StartAnnotationImportJobInput {
 	s.RunLeftNormalization = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *StartAnnotationImportJobInput) SetVersionName(v string) *StartAnnotationImportJobInput {
+	s.VersionName = &v
 	return s
 }
 
@@ -20986,9 +23755,7 @@ type StartReadSetImportJobSourceItem struct {
 	Name *string `locationName:"name" min:"1" type:"string"`
 
 	// The source's reference ARN.
-	//
-	// ReferenceArn is a required field
-	ReferenceArn *string `locationName:"referenceArn" min:"1" type:"string" required:"true"`
+	ReferenceArn *string `locationName:"referenceArn" min:"1" type:"string"`
 
 	// The source's sample ID.
 	//
@@ -21043,9 +23810,6 @@ func (s *StartReadSetImportJobSourceItem) Validate() error {
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
-	if s.ReferenceArn == nil {
-		invalidParams.Add(request.NewErrParamRequired("ReferenceArn"))
 	}
 	if s.ReferenceArn != nil && len(*s.ReferenceArn) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ReferenceArn", 1))
@@ -21421,6 +24185,9 @@ type StartRunInput struct {
 	// each request.
 	RequestId *string `locationName:"requestId" min:"1" type:"string" idempotencyToken:"true"`
 
+	// The retention mode for the run.
+	RetentionMode *string `locationName:"retentionMode" min:"1" type:"string" enum:"RunRetentionMode"`
+
 	// A service role for the run.
 	//
 	// RoleArn is a required field
@@ -21429,7 +24196,7 @@ type StartRunInput struct {
 	// The run's group ID.
 	RunGroupId *string `locationName:"runGroupId" min:"1" type:"string"`
 
-	// The run's ID.
+	// The ID of a run to duplicate.
 	RunId *string `locationName:"runId" min:"1" type:"string"`
 
 	// A storage capacity for the run in gigabytes.
@@ -21441,7 +24208,7 @@ type StartRunInput struct {
 	// The run's workflow ID.
 	WorkflowId *string `locationName:"workflowId" min:"1" type:"string"`
 
-	// The run's workflows type.
+	// The run's workflow type.
 	WorkflowType *string `locationName:"workflowType" min:"1" type:"string" enum:"WorkflowType"`
 }
 
@@ -21477,6 +24244,9 @@ func (s *StartRunInput) Validate() error {
 	}
 	if s.RequestId != nil && len(*s.RequestId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("RequestId", 1))
+	}
+	if s.RetentionMode != nil && len(*s.RetentionMode) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RetentionMode", 1))
 	}
 	if s.RoleArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
@@ -21533,6 +24303,12 @@ func (s *StartRunInput) SetRequestId(v string) *StartRunInput {
 	return s
 }
 
+// SetRetentionMode sets the RetentionMode field's value.
+func (s *StartRunInput) SetRetentionMode(v string) *StartRunInput {
+	s.RetentionMode = &v
+	return s
+}
+
 // SetRoleArn sets the RoleArn field's value.
 func (s *StartRunInput) SetRoleArn(v string) *StartRunInput {
 	s.RoleArn = &v
@@ -21584,11 +24360,17 @@ type StartRunOutput struct {
 	// The run's ID.
 	Id *string `locationName:"id" min:"1" type:"string"`
 
+	// The destination for workflow outputs.
+	RunOutputUri *string `locationName:"runOutputUri" min:"1" type:"string"`
+
 	// The run's status.
 	Status *string `locationName:"status" min:"1" type:"string" enum:"RunStatus"`
 
 	// The run's tags.
 	Tags map[string]*string `locationName:"tags" type:"map"`
+
+	// The universally unique identifier for a run.
+	Uuid *string `locationName:"uuid" min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -21621,6 +24403,12 @@ func (s *StartRunOutput) SetId(v string) *StartRunOutput {
 	return s
 }
 
+// SetRunOutputUri sets the RunOutputUri field's value.
+func (s *StartRunOutput) SetRunOutputUri(v string) *StartRunOutput {
+	s.RunOutputUri = &v
+	return s
+}
+
 // SetStatus sets the Status field's value.
 func (s *StartRunOutput) SetStatus(v string) *StartRunOutput {
 	s.Status = &v
@@ -21630,6 +24418,12 @@ func (s *StartRunOutput) SetStatus(v string) *StartRunOutput {
 // SetTags sets the Tags field's value.
 func (s *StartRunOutput) SetTags(v map[string]*string) *StartRunOutput {
 	s.Tags = v
+	return s
+}
+
+// SetUuid sets the Uuid field's value.
+func (s *StartRunOutput) SetUuid(v string) *StartRunOutput {
+	s.Uuid = &v
 	return s
 }
 
@@ -21922,6 +24716,9 @@ type TaskListItem struct {
 	// The number of Graphics Processing Units (GPU) specified for the task.
 	Gpus *int64 `locationName:"gpus" type:"integer"`
 
+	// The instance type for a task.
+	InstanceType *string `locationName:"instanceType" type:"string"`
+
 	// The task's memory use in gigabyes.
 	Memory *int64 `locationName:"memory" min:"1" type:"integer"`
 
@@ -21974,6 +24771,12 @@ func (s *TaskListItem) SetCreationTime(v time.Time) *TaskListItem {
 // SetGpus sets the Gpus field's value.
 func (s *TaskListItem) SetGpus(v int64) *TaskListItem {
 	s.Gpus = &v
+	return s
+}
+
+// SetInstanceType sets the InstanceType field's value.
+func (s *TaskListItem) SetInstanceType(v string) *TaskListItem {
+	s.InstanceType = &v
 	return s
 }
 
@@ -22183,6 +24986,69 @@ func (s *TsvStoreOptions) SetFormatToHeader(v map[string]*string) *TsvStoreOptio
 
 // SetSchema sets the Schema field's value.
 func (s *TsvStoreOptions) SetSchema(v []map[string]*string) *TsvStoreOptions {
+	s.Schema = v
+	return s
+}
+
+// The options for a TSV file.
+type TsvVersionOptions struct {
+	_ struct{} `type:"structure"`
+
+	// The store version's annotation type.
+	AnnotationType *string `locationName:"annotationType" type:"string" enum:"AnnotationType"`
+
+	// The annotation store version's header key to column name mapping.
+	FormatToHeader map[string]*string `locationName:"formatToHeader" type:"map"`
+
+	// The TSV schema for an annotation store version.
+	Schema []map[string]*string `locationName:"schema" min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TsvVersionOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TsvVersionOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TsvVersionOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TsvVersionOptions"}
+	if s.Schema != nil && len(s.Schema) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Schema", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAnnotationType sets the AnnotationType field's value.
+func (s *TsvVersionOptions) SetAnnotationType(v string) *TsvVersionOptions {
+	s.AnnotationType = &v
+	return s
+}
+
+// SetFormatToHeader sets the FormatToHeader field's value.
+func (s *TsvVersionOptions) SetFormatToHeader(v map[string]*string) *TsvVersionOptions {
+	s.FormatToHeader = v
+	return s
+}
+
+// SetSchema sets the Schema field's value.
+func (s *TsvVersionOptions) SetSchema(v []map[string]*string) *TsvVersionOptions {
 	s.Schema = v
 	return s
 }
@@ -22444,6 +25310,191 @@ func (s *UpdateAnnotationStoreOutput) SetStoreOptions(v *StoreOptions) *UpdateAn
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *UpdateAnnotationStoreOutput) SetUpdateTime(v time.Time) *UpdateAnnotationStoreOutput {
 	s.UpdateTime = &v
+	return s
+}
+
+type UpdateAnnotationStoreVersionInput struct {
+	_ struct{} `type:"structure"`
+
+	// The description of an annotation store.
+	Description *string `locationName:"description" type:"string"`
+
+	// The name of an annotation store.
+	//
+	// Name is a required field
+	Name *string `location:"uri" locationName:"name" type:"string" required:"true"`
+
+	// The name of an annotation store version.
+	//
+	// VersionName is a required field
+	VersionName *string `location:"uri" locationName:"versionName" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAnnotationStoreVersionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAnnotationStoreVersionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateAnnotationStoreVersionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateAnnotationStoreVersionInput"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.VersionName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VersionName"))
+	}
+	if s.VersionName != nil && len(*s.VersionName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VersionName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateAnnotationStoreVersionInput) SetDescription(v string) *UpdateAnnotationStoreVersionInput {
+	s.Description = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *UpdateAnnotationStoreVersionInput) SetName(v string) *UpdateAnnotationStoreVersionInput {
+	s.Name = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *UpdateAnnotationStoreVersionInput) SetVersionName(v string) *UpdateAnnotationStoreVersionInput {
+	s.VersionName = &v
+	return s
+}
+
+type UpdateAnnotationStoreVersionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The time stamp for when an annotation store version was created.
+	//
+	// CreationTime is a required field
+	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The description of an annotation store version.
+	//
+	// Description is a required field
+	Description *string `locationName:"description" type:"string" required:"true"`
+
+	// The annotation store version ID.
+	//
+	// Id is a required field
+	Id *string `locationName:"id" type:"string" required:"true"`
+
+	// The name of an annotation store.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" min:"3" type:"string" required:"true"`
+
+	// The status of an annotation store version.
+	//
+	// Status is a required field
+	Status *string `locationName:"status" type:"string" required:"true" enum:"VersionStatus"`
+
+	// The annotation store ID.
+	//
+	// StoreId is a required field
+	StoreId *string `locationName:"storeId" type:"string" required:"true"`
+
+	// The time stamp for when an annotation store version was updated.
+	//
+	// UpdateTime is a required field
+	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The name of an annotation store version.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAnnotationStoreVersionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAnnotationStoreVersionOutput) GoString() string {
+	return s.String()
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetCreationTime(v time.Time) *UpdateAnnotationStoreVersionOutput {
+	s.CreationTime = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetDescription(v string) *UpdateAnnotationStoreVersionOutput {
+	s.Description = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetId(v string) *UpdateAnnotationStoreVersionOutput {
+	s.Id = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetName(v string) *UpdateAnnotationStoreVersionOutput {
+	s.Name = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetStatus(v string) *UpdateAnnotationStoreVersionOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStoreId sets the StoreId field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetStoreId(v string) *UpdateAnnotationStoreVersionOutput {
+	s.StoreId = &v
+	return s
+}
+
+// SetUpdateTime sets the UpdateTime field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetUpdateTime(v time.Time) *UpdateAnnotationStoreVersionOutput {
+	s.UpdateTime = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *UpdateAnnotationStoreVersionOutput) SetVersionName(v string) *UpdateAnnotationStoreVersionOutput {
+	s.VersionName = &v
 	return s
 }
 
@@ -23446,6 +26497,98 @@ func (s *VcfOptions) SetIgnoreQualField(v bool) *VcfOptions {
 	return s
 }
 
+// The error preventing deletion of the annotation store version.
+type VersionDeleteError struct {
+	_ struct{} `type:"structure"`
+
+	// The message explaining the error in annotation store deletion.
+	//
+	// Message is a required field
+	Message *string `locationName:"message" type:"string" required:"true"`
+
+	// The name given to an annotation store version.
+	//
+	// VersionName is a required field
+	VersionName *string `locationName:"versionName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s VersionDeleteError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s VersionDeleteError) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *VersionDeleteError) SetMessage(v string) *VersionDeleteError {
+	s.Message = &v
+	return s
+}
+
+// SetVersionName sets the VersionName field's value.
+func (s *VersionDeleteError) SetVersionName(v string) *VersionDeleteError {
+	s.VersionName = &v
+	return s
+}
+
+// The options for an annotation store version.
+type VersionOptions struct {
+	_ struct{} `type:"structure"`
+
+	// File settings for a version of a TSV store.
+	TsvVersionOptions *TsvVersionOptions `locationName:"tsvVersionOptions" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s VersionOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s VersionOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *VersionOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "VersionOptions"}
+	if s.TsvVersionOptions != nil {
+		if err := s.TsvVersionOptions.Validate(); err != nil {
+			invalidParams.AddNested("TsvVersionOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTsvVersionOptions sets the TsvVersionOptions field's value.
+func (s *VersionOptions) SetTsvVersionOptions(v *TsvVersionOptions) *VersionOptions {
+	s.TsvVersionOptions = v
+	return s
+}
+
 // A workflow.
 type WorkflowListItem struct {
 	_ struct{} `type:"structure"`
@@ -23632,6 +26775,42 @@ func AnnotationType_Values() []string {
 }
 
 const (
+	// CreationTypeImport is a CreationType enum value
+	CreationTypeImport = "IMPORT"
+
+	// CreationTypeUpload is a CreationType enum value
+	CreationTypeUpload = "UPLOAD"
+)
+
+// CreationType_Values returns all elements of the CreationType enum
+func CreationType_Values() []string {
+	return []string{
+		CreationTypeImport,
+		CreationTypeUpload,
+	}
+}
+
+const (
+	// ETagAlgorithmFastqMd5up is a ETagAlgorithm enum value
+	ETagAlgorithmFastqMd5up = "FASTQ_MD5up"
+
+	// ETagAlgorithmBamMd5up is a ETagAlgorithm enum value
+	ETagAlgorithmBamMd5up = "BAM_MD5up"
+
+	// ETagAlgorithmCramMd5up is a ETagAlgorithm enum value
+	ETagAlgorithmCramMd5up = "CRAM_MD5up"
+)
+
+// ETagAlgorithm_Values returns all elements of the ETagAlgorithm enum
+func ETagAlgorithm_Values() []string {
+	return []string{
+		ETagAlgorithmFastqMd5up,
+		ETagAlgorithmBamMd5up,
+		ETagAlgorithmCramMd5up,
+	}
+}
+
+const (
 	// EncryptionTypeKms is a EncryptionType enum value
 	EncryptionTypeKms = "KMS"
 )
@@ -23652,6 +26831,9 @@ const (
 
 	// FileTypeCram is a FileType enum value
 	FileTypeCram = "CRAM"
+
+	// FileTypeUbam is a FileType enum value
+	FileTypeUbam = "UBAM"
 )
 
 // FileType_Values returns all elements of the FileType enum
@@ -23660,6 +26842,7 @@ func FileType_Values() []string {
 		FileTypeFastq,
 		FileTypeBam,
 		FileTypeCram,
+		FileTypeUbam,
 	}
 }
 
@@ -24076,6 +27259,22 @@ func ReferenceStatus_Values() []string {
 }
 
 const (
+	// ResourceOwnerSelf is a ResourceOwner enum value
+	ResourceOwnerSelf = "SELF"
+
+	// ResourceOwnerOther is a ResourceOwner enum value
+	ResourceOwnerOther = "OTHER"
+)
+
+// ResourceOwner_Values returns all elements of the ResourceOwner enum
+func ResourceOwner_Values() []string {
+	return []string{
+		ResourceOwnerSelf,
+		ResourceOwnerOther,
+	}
+}
+
+const (
 	// RunExportDefinition is a RunExport enum value
 	RunExportDefinition = "DEFINITION"
 )
@@ -24108,6 +27307,22 @@ func RunLogLevel_Values() []string {
 		RunLogLevelFatal,
 		RunLogLevelError,
 		RunLogLevelAll,
+	}
+}
+
+const (
+	// RunRetentionModeRetain is a RunRetentionMode enum value
+	RunRetentionModeRetain = "RETAIN"
+
+	// RunRetentionModeRemove is a RunRetentionMode enum value
+	RunRetentionModeRemove = "REMOVE"
+)
+
+// RunRetentionMode_Values returns all elements of the RunRetentionMode enum
+func RunRetentionMode_Values() []string {
+	return []string{
+		RunRetentionModeRetain,
+		RunRetentionModeRemove,
 	}
 }
 
@@ -24180,6 +27395,38 @@ func SchemaValueType_Values() []string {
 		SchemaValueTypeFloat,
 		SchemaValueTypeDouble,
 		SchemaValueTypeBoolean,
+	}
+}
+
+const (
+	// ShareStatusPending is a ShareStatus enum value
+	ShareStatusPending = "PENDING"
+
+	// ShareStatusActivating is a ShareStatus enum value
+	ShareStatusActivating = "ACTIVATING"
+
+	// ShareStatusActive is a ShareStatus enum value
+	ShareStatusActive = "ACTIVE"
+
+	// ShareStatusDeleting is a ShareStatus enum value
+	ShareStatusDeleting = "DELETING"
+
+	// ShareStatusDeleted is a ShareStatus enum value
+	ShareStatusDeleted = "DELETED"
+
+	// ShareStatusFailed is a ShareStatus enum value
+	ShareStatusFailed = "FAILED"
+)
+
+// ShareStatus_Values returns all elements of the ShareStatus enum
+func ShareStatus_Values() []string {
+	return []string{
+		ShareStatusPending,
+		ShareStatusActivating,
+		ShareStatusActive,
+		ShareStatusDeleting,
+		ShareStatusDeleted,
+		ShareStatusFailed,
 	}
 }
 
@@ -24264,6 +27511,34 @@ func TaskStatus_Values() []string {
 		TaskStatusCompleted,
 		TaskStatusCancelled,
 		TaskStatusFailed,
+	}
+}
+
+const (
+	// VersionStatusCreating is a VersionStatus enum value
+	VersionStatusCreating = "CREATING"
+
+	// VersionStatusUpdating is a VersionStatus enum value
+	VersionStatusUpdating = "UPDATING"
+
+	// VersionStatusDeleting is a VersionStatus enum value
+	VersionStatusDeleting = "DELETING"
+
+	// VersionStatusActive is a VersionStatus enum value
+	VersionStatusActive = "ACTIVE"
+
+	// VersionStatusFailed is a VersionStatus enum value
+	VersionStatusFailed = "FAILED"
+)
+
+// VersionStatus_Values returns all elements of the VersionStatus enum
+func VersionStatus_Values() []string {
+	return []string{
+		VersionStatusCreating,
+		VersionStatusUpdating,
+		VersionStatusDeleting,
+		VersionStatusActive,
+		VersionStatusFailed,
 	}
 }
 

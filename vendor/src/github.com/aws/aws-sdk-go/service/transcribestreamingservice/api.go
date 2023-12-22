@@ -165,6 +165,7 @@ func (c *TranscribeStreamingService) StartCallAnalyticsStreamTranscriptionWithCo
 }
 
 var _ awserr.Error
+var _ time.Time
 
 // StartCallAnalyticsStreamTranscriptionEventStream provides the event stream handling for the StartCallAnalyticsStreamTranscription.
 //
@@ -557,6 +558,7 @@ func (c *TranscribeStreamingService) StartMedicalStreamTranscriptionWithContext(
 }
 
 var _ awserr.Error
+var _ time.Time
 
 // StartMedicalStreamTranscriptionEventStream provides the event stream handling for the StartMedicalStreamTranscription.
 //
@@ -884,7 +886,7 @@ func (c *TranscribeStreamingService) StartStreamTranscriptionRequest(input *Star
 //
 // The following parameters are required:
 //
-//   - language-code or identify-language
+//   - language-code or identify-language or identify-multiple-language
 //
 //   - media-encoding
 //
@@ -947,6 +949,7 @@ func (c *TranscribeStreamingService) StartStreamTranscriptionWithContext(ctx aws
 }
 
 var _ awserr.Error
+var _ time.Time
 
 // StartStreamTranscriptionEventStream provides the event stream handling for the StartStreamTranscription.
 //
@@ -4387,12 +4390,32 @@ type StartStreamTranscriptionInput struct {
 	// channel, and you've enabled channel identification, automatic language identification
 	// identifies the dominant language on each audio channel.
 	//
-	// Note that you must include either LanguageCode or IdentifyLanguage in your
-	// request. If you include both parameters, your request fails.
+	// Note that you must include either LanguageCode or IdentifyLanguage or IdentifyMultipleLanguages
+	// in your request. If you include more than one of these parameters, your transcription
+	// job fails.
 	//
 	// Streaming language identification can't be combined with custom language
 	// models or redaction.
 	IdentifyLanguage *bool `location:"header" locationName:"x-amzn-transcribe-identify-language" type:"boolean"`
+
+	// Enables automatic multi-language identification in your transcription job
+	// request. Use this parameter if your stream contains more than one language.
+	// If your stream contains only one language, use IdentifyLanguage instead.
+	//
+	// If you include IdentifyMultipleLanguages, you can optionally include a list
+	// of language codes, using LanguageOptions, that you think may be present in
+	// your stream. Including LanguageOptions restricts IdentifyMultipleLanguages
+	// to only the language options that you specify, which can improve transcription
+	// accuracy.
+	//
+	// If you want to apply a custom vocabulary or a custom vocabulary filter to
+	// your automatic multiple language identification request, include VocabularyNames
+	// or VocabularyFilterNames.
+	//
+	// Note that you must include one of LanguageCode, IdentifyLanguage, or IdentifyMultipleLanguages
+	// in your request. If you include more than one of these parameters, your transcription
+	// job fails.
+	IdentifyMultipleLanguages *bool `location:"header" locationName:"x-amzn-transcribe-identify-multiple-languages" type:"boolean"`
 
 	// Specify the language code that represents the language spoken in your audio.
 	//
@@ -4664,6 +4687,12 @@ func (s *StartStreamTranscriptionInput) SetIdentifyLanguage(v bool) *StartStream
 	return s
 }
 
+// SetIdentifyMultipleLanguages sets the IdentifyMultipleLanguages field's value.
+func (s *StartStreamTranscriptionInput) SetIdentifyMultipleLanguages(v bool) *StartStreamTranscriptionInput {
+	s.IdentifyMultipleLanguages = &v
+	return s
+}
+
 // SetLanguageCode sets the LanguageCode field's value.
 func (s *StartStreamTranscriptionInput) SetLanguageCode(v string) *StartStreamTranscriptionInput {
 	s.LanguageCode = &v
@@ -4780,6 +4809,10 @@ type StartStreamTranscriptionOutput struct {
 	// Shows whether automatic language identification was enabled for your transcription.
 	IdentifyLanguage *bool `location:"header" locationName:"x-amzn-transcribe-identify-language" type:"boolean"`
 
+	// Shows whether automatic multi-language identification was enabled for your
+	// transcription.
+	IdentifyMultipleLanguages *bool `location:"header" locationName:"x-amzn-transcribe-identify-multiple-languages" type:"boolean"`
+
 	// Provides the language code that you specified in your request.
 	LanguageCode *string `location:"header" locationName:"x-amzn-transcribe-language-code" type:"string" enum:"LanguageCode"`
 
@@ -4881,6 +4914,12 @@ func (s *StartStreamTranscriptionOutput) SetEnablePartialResultsStabilization(v 
 // SetIdentifyLanguage sets the IdentifyLanguage field's value.
 func (s *StartStreamTranscriptionOutput) SetIdentifyLanguage(v bool) *StartStreamTranscriptionOutput {
 	s.IdentifyLanguage = &v
+	return s
+}
+
+// SetIdentifyMultipleLanguages sets the IdentifyMultipleLanguages field's value.
+func (s *StartStreamTranscriptionOutput) SetIdentifyMultipleLanguages(v bool) *StartStreamTranscriptionOutput {
+	s.IdentifyMultipleLanguages = &v
 	return s
 }
 

@@ -589,10 +589,6 @@ func (c *Athena) CreateNamedQueryRequest(input *CreateNamedQueryInput) (req *req
 // Creates a named query in the specified workgroup. Requires that you have
 // access to the workgroup.
 //
-// For code samples using the Amazon Web Services SDK for Java, see Examples
-// and Code Samples (http://docs.aws.amazon.com/athena/latest/ug/code-samples.html)
-// in the Amazon Athena User Guide.
-//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -1201,10 +1197,6 @@ func (c *Athena) DeleteNamedQueryRequest(input *DeleteNamedQueryInput) (req *req
 //
 // Deletes the named query if you have access to the workgroup in which the
 // query was saved.
-//
-// For code samples using the Amazon Web Services SDK for Java, see Examples
-// and Code Samples (http://docs.aws.amazon.com/athena/latest/ug/code-samples.html)
-// in the Amazon Athena User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4297,10 +4289,6 @@ func (c *Athena) ListNamedQueriesRequest(input *ListNamedQueriesInput) (req *req
 // workgroup. Requires that you have access to the specified workgroup. If a
 // workgroup is not specified, lists the saved queries for the primary workgroup.
 //
-// For code samples using the Amazon Web Services SDK for Java, see Examples
-// and Code Samples (http://docs.aws.amazon.com/athena/latest/ug/code-samples.html)
-// in the Amazon Athena User Guide.
-//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -4758,13 +4746,9 @@ func (c *Athena) ListQueryExecutionsRequest(input *ListQueryExecutionsInput) (re
 // ListQueryExecutions API operation for Amazon Athena.
 //
 // Provides a list of available query execution IDs for the queries in the specified
-// workgroup. If a workgroup is not specified, returns a list of query execution
-// IDs for the primary workgroup. Requires you to have access to the workgroup
-// in which the queries ran.
-//
-// For code samples using the Amazon Web Services SDK for Java, see Examples
-// and Code Samples (http://docs.aws.amazon.com/athena/latest/ug/code-samples.html)
-// in the Amazon Athena User Guide.
+// workgroup. Athena keeps a query history for 45 days. If a workgroup is not
+// specified, returns a list of query execution IDs for the primary workgroup.
+// Requires you to have access to the workgroup in which the queries ran.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5568,6 +5552,11 @@ func (c *Athena) StartCalculationExecutionRequest(input *StartCalculationExecuti
 // Submits calculations for execution within a session. You can supply the code
 // to run as an inline code block within the request.
 //
+// The request syntax requires the StartCalculationExecutionRequest$CodeBlock
+// parameter or the CalculationConfiguration$CodeBlock parameter, but not both.
+// Because CalculationConfiguration$CodeBlock is deprecated, use the StartCalculationExecutionRequest$CodeBlock
+// parameter instead.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -5936,10 +5925,6 @@ func (c *Athena) StopQueryExecutionRequest(input *StopQueryExecutionInput) (req 
 //
 // Stops a query execution. Requires you to have access to the workgroup in
 // which the query ran.
-//
-// For code samples using the Amazon Web Services SDK for Java, see Examples
-// and Code Samples (http://docs.aws.amazon.com/athena/latest/ug/code-samples.html)
-// in the Amazon Athena User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7957,7 +7942,7 @@ type ColumnInfo struct {
 	// Name is a required field
 	Name *string `type:"string" required:"true"`
 
-	// Indicates the column's nullable status.
+	// Unsupported constraint. This value always shows as UNKNOWN.
 	Nullable *string `type:"string" enum:"ColumnNullable"`
 
 	// For DECIMAL data types, specifies the total number of digits, up to 38. For
@@ -8197,11 +8182,7 @@ type CreateDataCatalogInput struct {
 	//    is the account ID of the Amazon Web Services account to which the Glue
 	//    Data Catalog belongs. catalog-id=catalog_id The GLUE data catalog type
 	//    also applies to the default AwsDataCatalog that already exists in your
-	//    account, of which you can have only one and cannot modify. Queries that
-	//    specify a Glue Data Catalog other than the default AwsDataCatalog must
-	//    be run on Athena engine version 2. In Regions where Athena engine version
-	//    2 is not available, creating new Glue data catalogs results in an INVALID_INPUT
-	//    error.
+	//    account, of which you can have only one and cannot modify.
 	Parameters map[string]*string `type:"map"`
 
 	// A list of comma separated tags to add to the data catalog that is created.
@@ -8920,12 +8901,14 @@ func (s CreateWorkGroupOutput) GoString() string {
 	return s.String()
 }
 
-// Specifies the KMS key that is used to encrypt the user's data stores in Athena.
-// This setting does not apply to Athena SQL workgroups.
+// Specifies the customer managed KMS key that is used to encrypt the user's
+// data stores in Athena. When an Amazon Web Services managed key is used, this
+// value is null. This setting does not apply to Athena SQL workgroups.
 type CustomerContentEncryptionConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The KMS key that is used to encrypt the user's data stores in Athena.
+	// The customer managed KMS key that is used to encrypt the user's data stores
+	// in Athena.
 	//
 	// KmsKey is a required field
 	KmsKey *string `min:"1" type:"string" required:"true"`
@@ -9007,9 +8990,7 @@ type DataCatalog struct {
 	//    is the account ID of the Amazon Web Services account to which the Glue
 	//    catalog belongs. catalog-id=catalog_id The GLUE data catalog type also
 	//    applies to the default AwsDataCatalog that already exists in your account,
-	//    of which you can have only one and cannot modify. Queries that specify
-	//    a Glue Data Catalog other than the default AwsDataCatalog must be run
-	//    on Athena engine version 2.
+	//    of which you can have only one and cannot modify.
 	Parameters map[string]*string `type:"map"`
 
 	// The type of data catalog to create: LAMBDA for a federated catalog, HIVE
@@ -10567,6 +10548,9 @@ type GetDataCatalogInput struct {
 	//
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
+
+	// The name of the workgroup. Required if making an IAM Identity Center request.
+	WorkGroup *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -10606,6 +10590,12 @@ func (s *GetDataCatalogInput) Validate() error {
 // SetName sets the Name field's value.
 func (s *GetDataCatalogInput) SetName(v string) *GetDataCatalogInput {
 	s.Name = &v
+	return s
+}
+
+// SetWorkGroup sets the WorkGroup field's value.
+func (s *GetDataCatalogInput) SetWorkGroup(v string) *GetDataCatalogInput {
+	s.WorkGroup = &v
 	return s
 }
 
@@ -10652,6 +10642,10 @@ type GetDatabaseInput struct {
 	//
 	// DatabaseName is a required field
 	DatabaseName *string `min:"1" type:"string" required:"true"`
+
+	// The name of the workgroup for which the metadata is being fetched. Required
+	// if requesting an IAM Identity Center enabled Glue Data Catalog.
+	WorkGroup *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -10703,6 +10697,12 @@ func (s *GetDatabaseInput) SetCatalogName(v string) *GetDatabaseInput {
 // SetDatabaseName sets the DatabaseName field's value.
 func (s *GetDatabaseInput) SetDatabaseName(v string) *GetDatabaseInput {
 	s.DatabaseName = &v
+	return s
+}
+
+// SetWorkGroup sets the WorkGroup field's value.
+func (s *GetDatabaseInput) SetWorkGroup(v string) *GetDatabaseInput {
+	s.WorkGroup = &v
 	return s
 }
 
@@ -11539,6 +11539,10 @@ type GetTableMetadataInput struct {
 	//
 	// TableName is a required field
 	TableName *string `min:"1" type:"string" required:"true"`
+
+	// The name of the workgroup for which the metadata is being fetched. Required
+	// if requesting an IAM Identity Center enabled Glue Data Catalog.
+	WorkGroup *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -11602,6 +11606,12 @@ func (s *GetTableMetadataInput) SetDatabaseName(v string) *GetTableMetadataInput
 // SetTableName sets the TableName field's value.
 func (s *GetTableMetadataInput) SetTableName(v string) *GetTableMetadataInput {
 	s.TableName = &v
+	return s
+}
+
+// SetWorkGroup sets the WorkGroup field's value.
+func (s *GetTableMetadataInput) SetWorkGroup(v string) *GetTableMetadataInput {
+	s.WorkGroup = &v
 	return s
 }
 
@@ -11710,6 +11720,47 @@ func (s GetWorkGroupOutput) GoString() string {
 // SetWorkGroup sets the WorkGroup field's value.
 func (s *GetWorkGroupOutput) SetWorkGroup(v *WorkGroup) *GetWorkGroupOutput {
 	s.WorkGroup = v
+	return s
+}
+
+// Specifies whether the workgroup is IAM Identity Center supported.
+type IdentityCenterConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies whether the workgroup is IAM Identity Center supported.
+	EnableIdentityCenter *bool `type:"boolean"`
+
+	// The IAM Identity Center instance ARN that the workgroup associates to.
+	IdentityCenterInstanceArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IdentityCenterConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IdentityCenterConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetEnableIdentityCenter sets the EnableIdentityCenter field's value.
+func (s *IdentityCenterConfiguration) SetEnableIdentityCenter(v bool) *IdentityCenterConfiguration {
+	s.EnableIdentityCenter = &v
+	return s
+}
+
+// SetIdentityCenterInstanceArn sets the IdentityCenterInstanceArn field's value.
+func (s *IdentityCenterConfiguration) SetIdentityCenterInstanceArn(v string) *IdentityCenterConfiguration {
+	s.IdentityCenterInstanceArn = &v
 	return s
 }
 
@@ -12347,6 +12398,9 @@ type ListDataCatalogsInput struct {
 	// pages, pass in the NextToken from the response object of the previous page
 	// call.
 	NextToken *string `min:"1" type:"string"`
+
+	// The name of the workgroup. Required if making an IAM Identity Center request.
+	WorkGroup *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -12392,6 +12446,12 @@ func (s *ListDataCatalogsInput) SetMaxResults(v int64) *ListDataCatalogsInput {
 // SetNextToken sets the NextToken field's value.
 func (s *ListDataCatalogsInput) SetNextToken(v string) *ListDataCatalogsInput {
 	s.NextToken = &v
+	return s
+}
+
+// SetWorkGroup sets the WorkGroup field's value.
+func (s *ListDataCatalogsInput) SetWorkGroup(v string) *ListDataCatalogsInput {
+	s.WorkGroup = &v
 	return s
 }
 
@@ -12454,6 +12514,10 @@ type ListDatabasesInput struct {
 	// pages, pass in the NextToken from the response object of the previous page
 	// call.
 	NextToken *string `min:"1" type:"string"`
+
+	// The name of the workgroup for which the metadata is being fetched. Required
+	// if requesting an IAM Identity Center enabled Glue Data Catalog.
+	WorkGroup *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -12511,6 +12575,12 @@ func (s *ListDatabasesInput) SetMaxResults(v int64) *ListDatabasesInput {
 // SetNextToken sets the NextToken field's value.
 func (s *ListDatabasesInput) SetNextToken(v string) *ListDatabasesInput {
 	s.NextToken = &v
+	return s
+}
+
+// SetWorkGroup sets the WorkGroup field's value.
+func (s *ListDatabasesInput) SetWorkGroup(v string) *ListDatabasesInput {
+	s.WorkGroup = &v
 	return s
 }
 
@@ -13552,6 +13622,10 @@ type ListTableMetadataInput struct {
 	// pages, pass in the NextToken from the response object of the previous page
 	// call.
 	NextToken *string `min:"1" type:"string"`
+
+	// The name of the workgroup for which the metadata is being fetched. Required
+	// if requesting an IAM Identity Center enabled Glue Data Catalog.
+	WorkGroup *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -13627,6 +13701,12 @@ func (s *ListTableMetadataInput) SetMaxResults(v int64) *ListTableMetadataInput 
 // SetNextToken sets the NextToken field's value.
 func (s *ListTableMetadataInput) SetNextToken(v string) *ListTableMetadataInput {
 	s.NextToken = &v
+	return s
+}
+
+// SetWorkGroup sets the WorkGroup field's value.
+func (s *ListTableMetadataInput) SetWorkGroup(v string) *ListTableMetadataInput {
+	s.WorkGroup = &v
 	return s
 }
 
@@ -14378,6 +14458,9 @@ type QueryExecution struct {
 	// The unique identifier for each query execution.
 	QueryExecutionId *string `min:"1" type:"string"`
 
+	// Specifies whether Amazon S3 access grants are enabled for query results.
+	QueryResultsS3AccessGrantsConfiguration *QueryResultsS3AccessGrantsConfiguration `type:"structure"`
+
 	// The location in Amazon S3 where query and calculation results are stored
 	// and the encryption option, if any, used for query results. These are known
 	// as "client-side settings". If workgroup settings override client-side settings,
@@ -14455,6 +14538,12 @@ func (s *QueryExecution) SetQueryExecutionContext(v *QueryExecutionContext) *Que
 // SetQueryExecutionId sets the QueryExecutionId field's value.
 func (s *QueryExecution) SetQueryExecutionId(v string) *QueryExecution {
 	s.QueryExecutionId = &v
+	return s
+}
+
+// SetQueryResultsS3AccessGrantsConfiguration sets the QueryResultsS3AccessGrantsConfiguration field's value.
+func (s *QueryExecution) SetQueryResultsS3AccessGrantsConfiguration(v *QueryResultsS3AccessGrantsConfiguration) *QueryExecution {
+	s.QueryResultsS3AccessGrantsConfiguration = v
 	return s
 }
 
@@ -14594,6 +14683,10 @@ type QueryExecutionStatistics struct {
 	// the query.
 	ResultReuseInformation *ResultReuseInformation `type:"structure"`
 
+	// The number of milliseconds that Athena took to preprocess the query before
+	// submitting the query to the query engine.
+	ServicePreProcessingTimeInMillis *int64 `type:"long"`
+
 	// The number of milliseconds that Athena took to finalize and publish the query
 	// results after the query engine finished running the query.
 	ServiceProcessingTimeInMillis *int64 `type:"long"`
@@ -14653,6 +14746,12 @@ func (s *QueryExecutionStatistics) SetQueryQueueTimeInMillis(v int64) *QueryExec
 // SetResultReuseInformation sets the ResultReuseInformation field's value.
 func (s *QueryExecutionStatistics) SetResultReuseInformation(v *ResultReuseInformation) *QueryExecutionStatistics {
 	s.ResultReuseInformation = v
+	return s
+}
+
+// SetServicePreProcessingTimeInMillis sets the ServicePreProcessingTimeInMillis field's value.
+func (s *QueryExecutionStatistics) SetServicePreProcessingTimeInMillis(v int64) *QueryExecutionStatistics {
+	s.ServicePreProcessingTimeInMillis = &v
 	return s
 }
 
@@ -14743,6 +14842,78 @@ func (s *QueryExecutionStatus) SetStateChangeReason(v string) *QueryExecutionSta
 // SetSubmissionDateTime sets the SubmissionDateTime field's value.
 func (s *QueryExecutionStatus) SetSubmissionDateTime(v time.Time) *QueryExecutionStatus {
 	s.SubmissionDateTime = &v
+	return s
+}
+
+// Specifies whether Amazon S3 access grants are enabled for query results.
+type QueryResultsS3AccessGrantsConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The authentication type used for Amazon S3 access grants. Currently, only
+	// DIRECTORY_IDENTITY is supported.
+	//
+	// AuthenticationType is a required field
+	AuthenticationType *string `type:"string" required:"true" enum:"AuthenticationType"`
+
+	// When enabled, appends the user ID as an Amazon S3 path prefix to the query
+	// result output location.
+	CreateUserLevelPrefix *bool `type:"boolean"`
+
+	// Specifies whether Amazon S3 access grants are enabled for query results.
+	//
+	// EnableS3AccessGrants is a required field
+	EnableS3AccessGrants *bool `type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QueryResultsS3AccessGrantsConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QueryResultsS3AccessGrantsConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *QueryResultsS3AccessGrantsConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "QueryResultsS3AccessGrantsConfiguration"}
+	if s.AuthenticationType == nil {
+		invalidParams.Add(request.NewErrParamRequired("AuthenticationType"))
+	}
+	if s.EnableS3AccessGrants == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnableS3AccessGrants"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthenticationType sets the AuthenticationType field's value.
+func (s *QueryResultsS3AccessGrantsConfiguration) SetAuthenticationType(v string) *QueryResultsS3AccessGrantsConfiguration {
+	s.AuthenticationType = &v
+	return s
+}
+
+// SetCreateUserLevelPrefix sets the CreateUserLevelPrefix field's value.
+func (s *QueryResultsS3AccessGrantsConfiguration) SetCreateUserLevelPrefix(v bool) *QueryResultsS3AccessGrantsConfiguration {
+	s.CreateUserLevelPrefix = &v
+	return s
+}
+
+// SetEnableS3AccessGrants sets the EnableS3AccessGrants field's value.
+func (s *QueryResultsS3AccessGrantsConfiguration) SetEnableS3AccessGrants(v bool) *QueryResultsS3AccessGrantsConfiguration {
+	s.EnableS3AccessGrants = &v
 	return s
 }
 
@@ -14880,6 +15051,10 @@ type QueryRuntimeStatisticsTimeline struct {
 	// add the query back to the queue.
 	QueryQueueTimeInMillis *int64 `type:"long"`
 
+	// The number of milliseconds that Athena spends on preprocessing before it
+	// submits the query to the engine.
+	ServicePreProcessingTimeInMillis *int64 `type:"long"`
+
 	// The number of milliseconds that Athena took to finalize and publish the query
 	// results after the query engine finished running the query.
 	ServiceProcessingTimeInMillis *int64 `type:"long"`
@@ -14921,6 +15096,12 @@ func (s *QueryRuntimeStatisticsTimeline) SetQueryPlanningTimeInMillis(v int64) *
 // SetQueryQueueTimeInMillis sets the QueryQueueTimeInMillis field's value.
 func (s *QueryRuntimeStatisticsTimeline) SetQueryQueueTimeInMillis(v int64) *QueryRuntimeStatisticsTimeline {
 	s.QueryQueueTimeInMillis = &v
+	return s
+}
+
+// SetServicePreProcessingTimeInMillis sets the ServicePreProcessingTimeInMillis field's value.
+func (s *QueryRuntimeStatisticsTimeline) SetServicePreProcessingTimeInMillis(v int64) *QueryRuntimeStatisticsTimeline {
+	s.ServicePreProcessingTimeInMillis = &v
 	return s
 }
 
@@ -15767,7 +15948,9 @@ type SessionConfiguration struct {
 	// encryption option used (for example, SSE_KMS or CSE_KMS) and key information.
 	EncryptionConfiguration *EncryptionConfiguration `type:"structure"`
 
-	// The ARN of the execution role used for the session.
+	// The ARN of the execution role used to access user resources for Spark sessions
+	// and Identity Center enabled workgroups. This property applies only to Spark
+	// enabled workgroups and Identity Center enabled workgroups.
 	ExecutionRole *string `min:"20" type:"string"`
 
 	// The idle timeout in seconds for the session.
@@ -16034,7 +16217,8 @@ type StartCalculationExecutionInput struct {
 	// Services CLI, you must provide this token or the action will fail.
 	ClientRequestToken *string `min:"32" type:"string"`
 
-	// A string that contains the code of the calculation.
+	// A string that contains the code of the calculation. Use this parameter instead
+	// of CalculationConfiguration$CodeBlock, which is deprecated.
 	CodeBlock *string `type:"string"`
 
 	// A description of the calculation.
@@ -16178,7 +16362,10 @@ type StartQueryExecutionInput struct {
 	// A unique case-sensitive string used to ensure the request to create the query
 	// is idempotent (executes only once). If another StartQueryExecution request
 	// is received, the same response is returned and another query is not created.
-	// If a parameter has changed, for example, the QueryString, an error is returned.
+	// An error is returned if a parameter, such as QueryString, has changed. A
+	// call to StartQueryExecution that uses a previous client request token returns
+	// the same QueryExecutionId even if the requester doesn't have permission on
+	// the tables specified in QueryString.
 	//
 	// This token is listed as not required because Amazon Web Services SDKs (for
 	// example the Amazon Web Services SDK for Java) auto-generate the token for
@@ -18154,6 +18341,10 @@ type WorkGroup struct {
 	// The workgroup description.
 	Description *string `type:"string"`
 
+	// The ARN of the IAM Identity Center enabled application associated with the
+	// workgroup.
+	IdentityCenterApplicationArn *string `type:"string"`
+
 	// The workgroup name.
 	//
 	// Name is a required field
@@ -18196,6 +18387,12 @@ func (s *WorkGroup) SetCreationTime(v time.Time) *WorkGroup {
 // SetDescription sets the Description field's value.
 func (s *WorkGroup) SetDescription(v string) *WorkGroup {
 	s.Description = &v
+	return s
+}
+
+// SetIdentityCenterApplicationArn sets the IdentityCenterApplicationArn field's value.
+func (s *WorkGroup) SetIdentityCenterApplicationArn(v string) *WorkGroup {
+	s.IdentityCenterApplicationArn = &v
 	return s
 }
 
@@ -18253,11 +18450,19 @@ type WorkGroupConfiguration struct {
 	// regardless of this setting.
 	EngineVersion *EngineVersion `type:"structure"`
 
-	// Role used in a session for accessing the user's resources.
+	// The ARN of the execution role used to access user resources for Spark sessions
+	// and Identity Center enabled workgroups. This property applies only to Spark
+	// enabled workgroups and Identity Center enabled workgroups.
 	ExecutionRole *string `min:"20" type:"string"`
+
+	// Specifies whether the workgroup is IAM Identity Center supported.
+	IdentityCenterConfiguration *IdentityCenterConfiguration `type:"structure"`
 
 	// Indicates that the Amazon CloudWatch metrics are enabled for the workgroup.
 	PublishCloudWatchMetricsEnabled *bool `type:"boolean"`
+
+	// Specifies whether Amazon S3 access grants are enabled for query results.
+	QueryResultsS3AccessGrantsConfiguration *QueryResultsS3AccessGrantsConfiguration `type:"structure"`
 
 	// If set to true, allows members assigned to a workgroup to reference Amazon
 	// S3 Requester Pays buckets in queries. If set to false, workgroup members
@@ -18319,6 +18524,11 @@ func (s *WorkGroupConfiguration) Validate() error {
 			invalidParams.AddNested("EngineVersion", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.QueryResultsS3AccessGrantsConfiguration != nil {
+		if err := s.QueryResultsS3AccessGrantsConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("QueryResultsS3AccessGrantsConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.ResultConfiguration != nil {
 		if err := s.ResultConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("ResultConfiguration", err.(request.ErrInvalidParams))
@@ -18373,9 +18583,21 @@ func (s *WorkGroupConfiguration) SetExecutionRole(v string) *WorkGroupConfigurat
 	return s
 }
 
+// SetIdentityCenterConfiguration sets the IdentityCenterConfiguration field's value.
+func (s *WorkGroupConfiguration) SetIdentityCenterConfiguration(v *IdentityCenterConfiguration) *WorkGroupConfiguration {
+	s.IdentityCenterConfiguration = v
+	return s
+}
+
 // SetPublishCloudWatchMetricsEnabled sets the PublishCloudWatchMetricsEnabled field's value.
 func (s *WorkGroupConfiguration) SetPublishCloudWatchMetricsEnabled(v bool) *WorkGroupConfiguration {
 	s.PublishCloudWatchMetricsEnabled = &v
+	return s
+}
+
+// SetQueryResultsS3AccessGrantsConfiguration sets the QueryResultsS3AccessGrantsConfiguration field's value.
+func (s *WorkGroupConfiguration) SetQueryResultsS3AccessGrantsConfiguration(v *QueryResultsS3AccessGrantsConfiguration) *WorkGroupConfiguration {
+	s.QueryResultsS3AccessGrantsConfiguration = v
 	return s
 }
 
@@ -18407,8 +18629,9 @@ type WorkGroupConfigurationUpdates struct {
 	// is allowed to scan.
 	BytesScannedCutoffPerQuery *int64 `min:"1e+07" type:"long"`
 
-	// Specifies the KMS key that is used to encrypt the user's data stores in Athena.
-	// This setting does not apply to Athena SQL workgroups.
+	// Specifies the customer managed KMS key that is used to encrypt the user's
+	// data stores in Athena. When an Amazon Web Services managed key is used, this
+	// value is null. This setting does not apply to Athena SQL workgroups.
 	CustomerContentEncryptionConfiguration *CustomerContentEncryptionConfiguration `type:"structure"`
 
 	// Enforces a minimal level of encryption for the workgroup for query and calculation
@@ -18432,11 +18655,16 @@ type WorkGroupConfigurationUpdates struct {
 	// workgroup run on the preview engine regardless of this setting.
 	EngineVersion *EngineVersion `type:"structure"`
 
-	// Contains the ARN of the execution role for the workgroup
+	// The ARN of the execution role used to access user resources for Spark sessions
+	// and Identity Center enabled workgroups. This property applies only to Spark
+	// enabled workgroups and Identity Center enabled workgroups.
 	ExecutionRole *string `min:"20" type:"string"`
 
 	// Indicates whether this workgroup enables publishing metrics to Amazon CloudWatch.
 	PublishCloudWatchMetricsEnabled *bool `type:"boolean"`
+
+	// Specifies whether Amazon S3 access grants are enabled for query results.
+	QueryResultsS3AccessGrantsConfiguration *QueryResultsS3AccessGrantsConfiguration `type:"structure"`
 
 	// Indicates that the data usage control limit per query is removed. WorkGroupConfiguration$BytesScannedCutoffPerQuery
 	RemoveBytesScannedCutoffPerQuery *bool `type:"boolean"`
@@ -18500,6 +18728,11 @@ func (s *WorkGroupConfigurationUpdates) Validate() error {
 			invalidParams.AddNested("EngineVersion", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.QueryResultsS3AccessGrantsConfiguration != nil {
+		if err := s.QueryResultsS3AccessGrantsConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("QueryResultsS3AccessGrantsConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.ResultConfigurationUpdates != nil {
 		if err := s.ResultConfigurationUpdates.Validate(); err != nil {
 			invalidParams.AddNested("ResultConfigurationUpdates", err.(request.ErrInvalidParams))
@@ -18560,6 +18793,12 @@ func (s *WorkGroupConfigurationUpdates) SetPublishCloudWatchMetricsEnabled(v boo
 	return s
 }
 
+// SetQueryResultsS3AccessGrantsConfiguration sets the QueryResultsS3AccessGrantsConfiguration field's value.
+func (s *WorkGroupConfigurationUpdates) SetQueryResultsS3AccessGrantsConfiguration(v *QueryResultsS3AccessGrantsConfiguration) *WorkGroupConfigurationUpdates {
+	s.QueryResultsS3AccessGrantsConfiguration = v
+	return s
+}
+
 // SetRemoveBytesScannedCutoffPerQuery sets the RemoveBytesScannedCutoffPerQuery field's value.
 func (s *WorkGroupConfigurationUpdates) SetRemoveBytesScannedCutoffPerQuery(v bool) *WorkGroupConfigurationUpdates {
 	s.RemoveBytesScannedCutoffPerQuery = &v
@@ -18599,6 +18838,10 @@ type WorkGroupSummary struct {
 	// AmazonAthenaPreviewFunctionality workgroup run on the preview engine regardless
 	// of this setting.
 	EngineVersion *EngineVersion `type:"structure"`
+
+	// The ARN of the IAM Identity Center enabled application associated with the
+	// workgroup.
+	IdentityCenterApplicationArn *string `type:"string"`
 
 	// The name of the workgroup.
 	Name *string `type:"string"`
@@ -18643,6 +18886,12 @@ func (s *WorkGroupSummary) SetEngineVersion(v *EngineVersion) *WorkGroupSummary 
 	return s
 }
 
+// SetIdentityCenterApplicationArn sets the IdentityCenterApplicationArn field's value.
+func (s *WorkGroupSummary) SetIdentityCenterApplicationArn(v string) *WorkGroupSummary {
+	s.IdentityCenterApplicationArn = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *WorkGroupSummary) SetName(v string) *WorkGroupSummary {
 	s.Name = &v
@@ -18653,6 +18902,18 @@ func (s *WorkGroupSummary) SetName(v string) *WorkGroupSummary {
 func (s *WorkGroupSummary) SetState(v string) *WorkGroupSummary {
 	s.State = &v
 	return s
+}
+
+const (
+	// AuthenticationTypeDirectoryIdentity is a AuthenticationType enum value
+	AuthenticationTypeDirectoryIdentity = "DIRECTORY_IDENTITY"
+)
+
+// AuthenticationType_Values returns all elements of the AuthenticationType enum
+func AuthenticationType_Values() []string {
+	return []string{
+		AuthenticationTypeDirectoryIdentity,
+	}
 }
 
 const (

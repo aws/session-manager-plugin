@@ -1,25 +1,29 @@
-FROM public.ecr.aws/ubuntu/ubuntu:18.04
+FROM ubuntu:20.04
+
+# Disable interactive prompts on package installation
+ENV DEBIAN_FRONTEND noninteractive
 
 # Dependencies to get the git sources and go binaries
 RUN apt-get update && apt-get install -y  --no-install-recommends \
         ca-certificates \
         curl \
         git \
+        rsync \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # Get the git sources. If not cached, this takes O(5 minutes).
 WORKDIR /git
 RUN git config --global advice.detachedHead false
-# Linux Kernel: Released 01 Apr 2018
-RUN git clone --branch v4.16 --depth 1 https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux
-# GNU C library: Released 01 Feb 2018 (we should try to get a secure way to clone this)
-RUN git clone --branch glibc-2.27 --depth 1 git://sourceware.org/git/glibc.git
+# Linux Kernel: Released 30 October 2023
+RUN git clone --branch v6.6 --depth 1 https://kernel.googlesource.com/pub/scm/linux/kernel/git/torvalds/linux
+# GNU C library: Released 1 Feb 2023
+RUN git clone --branch release/2.37/master --depth 1 https://sourceware.org/git/glibc.git
 
 # Get Go
-ENV GOLANG_VERSION 1.10.1
+ENV GOLANG_VERSION 1.21.0
 ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
-ENV GOLANG_DOWNLOAD_SHA256 72d820dec546752e5a8303b33b009079c15c2390ce76d67cf514991646c6127b
+ENV GOLANG_DOWNLOAD_SHA256 d0398903a16ba2232b389fb31032ddf57cac34efda306a0eebac34f0965a0742
 
 RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
     && echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
@@ -30,10 +34,10 @@ ENV PATH /usr/local/go/bin:$PATH
 
 # Linux and Glibc build dependencies and emulator
 RUN apt-get update && apt-get install -y  --no-install-recommends \
-        bison gawk make python \
+        bison gawk make python3 \
         gcc gcc-multilib \
         gettext texinfo \
-        qemu \
+        qemu-user \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 # Cross compilers (install recommended packages to get cross libc-dev)
@@ -41,12 +45,28 @@ RUN apt-get update && apt-get install -y \
         gcc-aarch64-linux-gnu       gcc-arm-linux-gnueabi     \
         gcc-mips-linux-gnu          gcc-mips64-linux-gnuabi64 \
         gcc-mips64el-linux-gnuabi64 gcc-mipsel-linux-gnu      \
-        gcc-powerpc64-linux-gnu     gcc-powerpc64le-linux-gnu \
+        gcc-powerpc-linux-gnu       gcc-powerpc64-linux-gnu   \
+        gcc-powerpc64le-linux-gnu   gcc-riscv64-linux-gnu     \
         gcc-s390x-linux-gnu         gcc-sparc64-linux-gnu     \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+# Only for loong64, getting tools of qemu-user and gcc-cross-compiler
+ENV LOONG64_BASE_URL https://github.com/loongson/build-tools/releases/download/2023.08.08
+ENV LOONG64_GCC  CLFS-loongarch64-8.1-x86_64-cross-tools-gcc-glibc.tar.xz
+ENV LOONG64_QEMU qemu-loongarch64
+ENV LOONG64_GCC_DOWNLOAD_URL  $LOONG64_BASE_URL/$LOONG64_GCC
+ENV LOONG64_QEMU_DOWNLOAD_URL $LOONG64_BASE_URL/$LOONG64_QEMU
+
+RUN apt-get update && apt-get install xz-utils -y && mkdir /loong64 && cd /loong64 \
+    && curl -fsSL "$LOONG64_QEMU_DOWNLOAD_URL" -o /usr/bin/"$LOONG64_QEMU" \
+    && chmod +x /usr/bin/"$LOONG64_QEMU" \
+    && curl -fsSL "$LOONG64_GCC_DOWNLOAD_URL" -o "$LOONG64_GCC" \
+    && tar xf "$LOONG64_GCC" -C /usr/local/ \
+    && ln -s /usr/local/cross-tools/bin/loongarch64-unknown-linux-gnu-gcc /usr/bin/loongarch64-linux-gnu-gcc \
+    && rm -rf /loong64
+
 # Let the scripts know they are in the docker environment
 ENV GOLANG_SYS_BUILD docker
-WORKDIR /build
+WORKDIR /build/unix
 ENTRYPOINT ["go", "run", "linux/mkall.go", "/git/linux", "/git/glibc"]

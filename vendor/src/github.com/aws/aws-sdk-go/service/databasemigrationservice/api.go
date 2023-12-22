@@ -358,6 +358,92 @@ func (c *DatabaseMigrationService) CancelReplicationTaskAssessmentRunWithContext
 	return out, req.Send()
 }
 
+const opCreateDataProvider = "CreateDataProvider"
+
+// CreateDataProviderRequest generates a "aws/request.Request" representing the
+// client's request for the CreateDataProvider operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateDataProvider for more information on using the CreateDataProvider
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateDataProviderRequest method.
+//	req, resp := client.CreateDataProviderRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateDataProvider
+func (c *DatabaseMigrationService) CreateDataProviderRequest(input *CreateDataProviderInput) (req *request.Request, output *CreateDataProviderOutput) {
+	op := &request.Operation{
+		Name:       opCreateDataProvider,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateDataProviderInput{}
+	}
+
+	output = &CreateDataProviderOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateDataProvider API operation for AWS Database Migration Service.
+//
+// Creates a data provider using the provided settings. A data provider stores
+// a data store type and location information about your database.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation CreateDataProvider for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateDataProvider
+func (c *DatabaseMigrationService) CreateDataProvider(input *CreateDataProviderInput) (*CreateDataProviderOutput, error) {
+	req, out := c.CreateDataProviderRequest(input)
+	return out, req.Send()
+}
+
+// CreateDataProviderWithContext is the same as CreateDataProvider with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateDataProvider for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) CreateDataProviderWithContext(ctx aws.Context, input *CreateDataProviderInput, opts ...request.Option) (*CreateDataProviderOutput, error) {
+	req, out := c.CreateDataProviderRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateEndpoint = "CreateEndpoint"
 
 // CreateEndpointRequest generates a "aws/request.Request" representing the
@@ -678,6 +764,205 @@ func (c *DatabaseMigrationService) CreateFleetAdvisorCollectorWithContext(ctx aw
 	return out, req.Send()
 }
 
+const opCreateInstanceProfile = "CreateInstanceProfile"
+
+// CreateInstanceProfileRequest generates a "aws/request.Request" representing the
+// client's request for the CreateInstanceProfile operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateInstanceProfile for more information on using the CreateInstanceProfile
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateInstanceProfileRequest method.
+//	req, resp := client.CreateInstanceProfileRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateInstanceProfile
+func (c *DatabaseMigrationService) CreateInstanceProfileRequest(input *CreateInstanceProfileInput) (req *request.Request, output *CreateInstanceProfileOutput) {
+	op := &request.Operation{
+		Name:       opCreateInstanceProfile,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateInstanceProfileInput{}
+	}
+
+	output = &CreateInstanceProfileOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateInstanceProfile API operation for AWS Database Migration Service.
+//
+// Creates the instance profile using the specified parameters.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation CreateInstanceProfile for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateInstanceProfile
+func (c *DatabaseMigrationService) CreateInstanceProfile(input *CreateInstanceProfileInput) (*CreateInstanceProfileOutput, error) {
+	req, out := c.CreateInstanceProfileRequest(input)
+	return out, req.Send()
+}
+
+// CreateInstanceProfileWithContext is the same as CreateInstanceProfile with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateInstanceProfile for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) CreateInstanceProfileWithContext(ctx aws.Context, input *CreateInstanceProfileInput, opts ...request.Option) (*CreateInstanceProfileOutput, error) {
+	req, out := c.CreateInstanceProfileRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opCreateMigrationProject = "CreateMigrationProject"
+
+// CreateMigrationProjectRequest generates a "aws/request.Request" representing the
+// client's request for the CreateMigrationProject operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateMigrationProject for more information on using the CreateMigrationProject
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateMigrationProjectRequest method.
+//	req, resp := client.CreateMigrationProjectRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateMigrationProject
+func (c *DatabaseMigrationService) CreateMigrationProjectRequest(input *CreateMigrationProjectInput) (req *request.Request, output *CreateMigrationProjectOutput) {
+	op := &request.Operation{
+		Name:       opCreateMigrationProject,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateMigrationProjectInput{}
+	}
+
+	output = &CreateMigrationProjectOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateMigrationProject API operation for AWS Database Migration Service.
+//
+// Creates the migration project using the specified parameters.
+//
+// You can run this action only after you create an instance profile and data
+// providers using CreateInstanceProfile (https://docs.aws.amazon.com/dms/latest/APIReference/API_CreateInstanceProfile.html)
+// and CreateDataProvider (https://docs.aws.amazon.com/dms/latest/APIReference/API_CreateDataProvider.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation CreateMigrationProject for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/CreateMigrationProject
+func (c *DatabaseMigrationService) CreateMigrationProject(input *CreateMigrationProjectInput) (*CreateMigrationProjectOutput, error) {
+	req, out := c.CreateMigrationProjectRequest(input)
+	return out, req.Send()
+}
+
+// CreateMigrationProjectWithContext is the same as CreateMigrationProject with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateMigrationProject for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) CreateMigrationProjectWithContext(ctx aws.Context, input *CreateMigrationProjectInput, opts ...request.Option) (*CreateMigrationProjectOutput, error) {
+	req, out := c.CreateMigrationProjectRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateReplicationConfig = "CreateReplicationConfig"
 
 // CreateReplicationConfigRequest generates a "aws/request.Request" representing the
@@ -832,6 +1117,10 @@ func (c *DatabaseMigrationService) CreateReplicationInstanceRequest(input *Creat
 // roles, see Creating the IAM Roles to Use With the CLI and DMS API (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html#CHAP_Security.APIRole).
 // For information on the required permissions, see IAM Permissions Needed to
 // Use DMS (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Security.html#CHAP_Security.IAMPermissions).
+//
+// If you don't specify a version when creating a replication instance, DMS
+// will create the instance using the default engine version. For information
+// about the default engine version, see Release Notes (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_ReleaseNotes.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1267,6 +1556,95 @@ func (c *DatabaseMigrationService) DeleteConnectionWithContext(ctx aws.Context, 
 	return out, req.Send()
 }
 
+const opDeleteDataProvider = "DeleteDataProvider"
+
+// DeleteDataProviderRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteDataProvider operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteDataProvider for more information on using the DeleteDataProvider
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteDataProviderRequest method.
+//	req, resp := client.DeleteDataProviderRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DeleteDataProvider
+func (c *DatabaseMigrationService) DeleteDataProviderRequest(input *DeleteDataProviderInput) (req *request.Request, output *DeleteDataProviderOutput) {
+	op := &request.Operation{
+		Name:       opDeleteDataProvider,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteDataProviderInput{}
+	}
+
+	output = &DeleteDataProviderOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteDataProvider API operation for AWS Database Migration Service.
+//
+// Deletes the specified data provider.
+//
+// All migration projects associated with the data provider must be deleted
+// or modified before you can delete the data provider.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DeleteDataProvider for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DeleteDataProvider
+func (c *DatabaseMigrationService) DeleteDataProvider(input *DeleteDataProviderInput) (*DeleteDataProviderOutput, error) {
+	req, out := c.DeleteDataProviderRequest(input)
+	return out, req.Send()
+}
+
+// DeleteDataProviderWithContext is the same as DeleteDataProvider with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteDataProvider for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DeleteDataProviderWithContext(ctx aws.Context, input *DeleteDataProviderInput, opts ...request.Option) (*DeleteDataProviderOutput, error) {
+	req, out := c.DeleteDataProviderRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteEndpoint = "DeleteEndpoint"
 
 // DeleteEndpointRequest generates a "aws/request.Request" representing the
@@ -1597,6 +1975,183 @@ func (c *DatabaseMigrationService) DeleteFleetAdvisorDatabases(input *DeleteFlee
 // for more information on using Contexts.
 func (c *DatabaseMigrationService) DeleteFleetAdvisorDatabasesWithContext(ctx aws.Context, input *DeleteFleetAdvisorDatabasesInput, opts ...request.Option) (*DeleteFleetAdvisorDatabasesOutput, error) {
 	req, out := c.DeleteFleetAdvisorDatabasesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteInstanceProfile = "DeleteInstanceProfile"
+
+// DeleteInstanceProfileRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteInstanceProfile operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteInstanceProfile for more information on using the DeleteInstanceProfile
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteInstanceProfileRequest method.
+//	req, resp := client.DeleteInstanceProfileRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DeleteInstanceProfile
+func (c *DatabaseMigrationService) DeleteInstanceProfileRequest(input *DeleteInstanceProfileInput) (req *request.Request, output *DeleteInstanceProfileOutput) {
+	op := &request.Operation{
+		Name:       opDeleteInstanceProfile,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteInstanceProfileInput{}
+	}
+
+	output = &DeleteInstanceProfileOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteInstanceProfile API operation for AWS Database Migration Service.
+//
+// Deletes the specified instance profile.
+//
+// All migration projects associated with the instance profile must be deleted
+// or modified before you can delete the instance profile.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DeleteInstanceProfile for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DeleteInstanceProfile
+func (c *DatabaseMigrationService) DeleteInstanceProfile(input *DeleteInstanceProfileInput) (*DeleteInstanceProfileOutput, error) {
+	req, out := c.DeleteInstanceProfileRequest(input)
+	return out, req.Send()
+}
+
+// DeleteInstanceProfileWithContext is the same as DeleteInstanceProfile with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteInstanceProfile for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DeleteInstanceProfileWithContext(ctx aws.Context, input *DeleteInstanceProfileInput, opts ...request.Option) (*DeleteInstanceProfileOutput, error) {
+	req, out := c.DeleteInstanceProfileRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteMigrationProject = "DeleteMigrationProject"
+
+// DeleteMigrationProjectRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteMigrationProject operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteMigrationProject for more information on using the DeleteMigrationProject
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteMigrationProjectRequest method.
+//	req, resp := client.DeleteMigrationProjectRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DeleteMigrationProject
+func (c *DatabaseMigrationService) DeleteMigrationProjectRequest(input *DeleteMigrationProjectInput) (req *request.Request, output *DeleteMigrationProjectOutput) {
+	op := &request.Operation{
+		Name:       opDeleteMigrationProject,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteMigrationProjectInput{}
+	}
+
+	output = &DeleteMigrationProjectOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteMigrationProject API operation for AWS Database Migration Service.
+//
+// Deletes the specified migration project.
+//
+// The migration project must be closed before you can delete it.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DeleteMigrationProject for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DeleteMigrationProject
+func (c *DatabaseMigrationService) DeleteMigrationProject(input *DeleteMigrationProjectInput) (*DeleteMigrationProjectOutput, error) {
+	req, out := c.DeleteMigrationProjectRequest(input)
+	return out, req.Send()
+}
+
+// DeleteMigrationProjectWithContext is the same as DeleteMigrationProject with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteMigrationProject for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DeleteMigrationProjectWithContext(ctx aws.Context, input *DeleteMigrationProjectInput, opts ...request.Option) (*DeleteMigrationProjectOutput, error) {
+	req, out := c.DeleteMigrationProjectRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -2550,6 +3105,224 @@ func (c *DatabaseMigrationService) DescribeConnectionsPagesWithContext(ctx aws.C
 	return p.Err()
 }
 
+const opDescribeConversionConfiguration = "DescribeConversionConfiguration"
+
+// DescribeConversionConfigurationRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeConversionConfiguration operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeConversionConfiguration for more information on using the DescribeConversionConfiguration
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeConversionConfigurationRequest method.
+//	req, resp := client.DescribeConversionConfigurationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeConversionConfiguration
+func (c *DatabaseMigrationService) DescribeConversionConfigurationRequest(input *DescribeConversionConfigurationInput) (req *request.Request, output *DescribeConversionConfigurationOutput) {
+	op := &request.Operation{
+		Name:       opDescribeConversionConfiguration,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeConversionConfigurationInput{}
+	}
+
+	output = &DescribeConversionConfigurationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeConversionConfiguration API operation for AWS Database Migration Service.
+//
+// Returns configuration parameters for a schema conversion project.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeConversionConfiguration for usage and error information.
+//
+// Returned Error Types:
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeConversionConfiguration
+func (c *DatabaseMigrationService) DescribeConversionConfiguration(input *DescribeConversionConfigurationInput) (*DescribeConversionConfigurationOutput, error) {
+	req, out := c.DescribeConversionConfigurationRequest(input)
+	return out, req.Send()
+}
+
+// DescribeConversionConfigurationWithContext is the same as DescribeConversionConfiguration with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeConversionConfiguration for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeConversionConfigurationWithContext(ctx aws.Context, input *DescribeConversionConfigurationInput, opts ...request.Option) (*DescribeConversionConfigurationOutput, error) {
+	req, out := c.DescribeConversionConfigurationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDescribeDataProviders = "DescribeDataProviders"
+
+// DescribeDataProvidersRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeDataProviders operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeDataProviders for more information on using the DescribeDataProviders
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeDataProvidersRequest method.
+//	req, resp := client.DescribeDataProvidersRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeDataProviders
+func (c *DatabaseMigrationService) DescribeDataProvidersRequest(input *DescribeDataProvidersInput) (req *request.Request, output *DescribeDataProvidersOutput) {
+	op := &request.Operation{
+		Name:       opDescribeDataProviders,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeDataProvidersInput{}
+	}
+
+	output = &DescribeDataProvidersOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeDataProviders API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of data providers for your account in the current
+// region.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeDataProviders for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeDataProviders
+func (c *DatabaseMigrationService) DescribeDataProviders(input *DescribeDataProvidersInput) (*DescribeDataProvidersOutput, error) {
+	req, out := c.DescribeDataProvidersRequest(input)
+	return out, req.Send()
+}
+
+// DescribeDataProvidersWithContext is the same as DescribeDataProviders with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeDataProviders for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeDataProvidersWithContext(ctx aws.Context, input *DescribeDataProvidersInput, opts ...request.Option) (*DescribeDataProvidersOutput, error) {
+	req, out := c.DescribeDataProvidersRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeDataProvidersPages iterates over the pages of a DescribeDataProviders operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeDataProviders method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeDataProviders operation.
+//	pageNum := 0
+//	err := client.DescribeDataProvidersPages(params,
+//	    func(page *databasemigrationservice.DescribeDataProvidersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeDataProvidersPages(input *DescribeDataProvidersInput, fn func(*DescribeDataProvidersOutput, bool) bool) error {
+	return c.DescribeDataProvidersPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeDataProvidersPagesWithContext same as DescribeDataProvidersPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeDataProvidersPagesWithContext(ctx aws.Context, input *DescribeDataProvidersInput, fn func(*DescribeDataProvidersOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeDataProvidersInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeDataProvidersRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeDataProvidersOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opDescribeEndpointSettings = "DescribeEndpointSettings"
 
 // DescribeEndpointSettingsRequest generates a "aws/request.Request" representing the
@@ -2946,6 +3719,136 @@ func (c *DatabaseMigrationService) DescribeEndpointsPagesWithContext(ctx aws.Con
 	return p.Err()
 }
 
+const opDescribeEngineVersions = "DescribeEngineVersions"
+
+// DescribeEngineVersionsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeEngineVersions operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeEngineVersions for more information on using the DescribeEngineVersions
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeEngineVersionsRequest method.
+//	req, resp := client.DescribeEngineVersionsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeEngineVersions
+func (c *DatabaseMigrationService) DescribeEngineVersionsRequest(input *DescribeEngineVersionsInput) (req *request.Request, output *DescribeEngineVersionsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeEngineVersions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeEngineVersionsInput{}
+	}
+
+	output = &DescribeEngineVersionsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeEngineVersions API operation for AWS Database Migration Service.
+//
+// Returns information about the replication instance versions used in the project.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeEngineVersions for usage and error information.
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeEngineVersions
+func (c *DatabaseMigrationService) DescribeEngineVersions(input *DescribeEngineVersionsInput) (*DescribeEngineVersionsOutput, error) {
+	req, out := c.DescribeEngineVersionsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeEngineVersionsWithContext is the same as DescribeEngineVersions with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeEngineVersions for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeEngineVersionsWithContext(ctx aws.Context, input *DescribeEngineVersionsInput, opts ...request.Option) (*DescribeEngineVersionsOutput, error) {
+	req, out := c.DescribeEngineVersionsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeEngineVersionsPages iterates over the pages of a DescribeEngineVersions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeEngineVersions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeEngineVersions operation.
+//	pageNum := 0
+//	err := client.DescribeEngineVersionsPages(params,
+//	    func(page *databasemigrationservice.DescribeEngineVersionsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeEngineVersionsPages(input *DescribeEngineVersionsInput, fn func(*DescribeEngineVersionsOutput, bool) bool) error {
+	return c.DescribeEngineVersionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeEngineVersionsPagesWithContext same as DescribeEngineVersionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeEngineVersionsPagesWithContext(ctx aws.Context, input *DescribeEngineVersionsInput, fn func(*DescribeEngineVersionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeEngineVersionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeEngineVersionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeEngineVersionsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opDescribeEventCategories = "DescribeEventCategories"
 
 // DescribeEventCategoriesRequest generates a "aws/request.Request" representing the
@@ -3288,6 +4191,139 @@ func (c *DatabaseMigrationService) DescribeEventsPagesWithContext(ctx aws.Contex
 
 	for p.Next() {
 		if !fn(p.Page().(*DescribeEventsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeExtensionPackAssociations = "DescribeExtensionPackAssociations"
+
+// DescribeExtensionPackAssociationsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeExtensionPackAssociations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeExtensionPackAssociations for more information on using the DescribeExtensionPackAssociations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeExtensionPackAssociationsRequest method.
+//	req, resp := client.DescribeExtensionPackAssociationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeExtensionPackAssociations
+func (c *DatabaseMigrationService) DescribeExtensionPackAssociationsRequest(input *DescribeExtensionPackAssociationsInput) (req *request.Request, output *DescribeExtensionPackAssociationsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeExtensionPackAssociations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeExtensionPackAssociationsInput{}
+	}
+
+	output = &DescribeExtensionPackAssociationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeExtensionPackAssociations API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of extension pack associations for the specified
+// migration project. An extension pack is an add-on module that emulates functions
+// present in a source database that are required when converting objects to
+// the target database.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeExtensionPackAssociations for usage and error information.
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeExtensionPackAssociations
+func (c *DatabaseMigrationService) DescribeExtensionPackAssociations(input *DescribeExtensionPackAssociationsInput) (*DescribeExtensionPackAssociationsOutput, error) {
+	req, out := c.DescribeExtensionPackAssociationsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeExtensionPackAssociationsWithContext is the same as DescribeExtensionPackAssociations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeExtensionPackAssociations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeExtensionPackAssociationsWithContext(ctx aws.Context, input *DescribeExtensionPackAssociationsInput, opts ...request.Option) (*DescribeExtensionPackAssociationsOutput, error) {
+	req, out := c.DescribeExtensionPackAssociationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeExtensionPackAssociationsPages iterates over the pages of a DescribeExtensionPackAssociations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeExtensionPackAssociations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeExtensionPackAssociations operation.
+//	pageNum := 0
+//	err := client.DescribeExtensionPackAssociationsPages(params,
+//	    func(page *databasemigrationservice.DescribeExtensionPackAssociationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeExtensionPackAssociationsPages(input *DescribeExtensionPackAssociationsInput, fn func(*DescribeExtensionPackAssociationsOutput, bool) bool) error {
+	return c.DescribeExtensionPackAssociationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeExtensionPackAssociationsPagesWithContext same as DescribeExtensionPackAssociationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeExtensionPackAssociationsPagesWithContext(ctx aws.Context, input *DescribeExtensionPackAssociationsInput, fn func(*DescribeExtensionPackAssociationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeExtensionPackAssociationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeExtensionPackAssociationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeExtensionPackAssociationsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -3969,6 +5005,962 @@ func (c *DatabaseMigrationService) DescribeFleetAdvisorSchemasPagesWithContext(c
 
 	for p.Next() {
 		if !fn(p.Page().(*DescribeFleetAdvisorSchemasOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeInstanceProfiles = "DescribeInstanceProfiles"
+
+// DescribeInstanceProfilesRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeInstanceProfiles operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeInstanceProfiles for more information on using the DescribeInstanceProfiles
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeInstanceProfilesRequest method.
+//	req, resp := client.DescribeInstanceProfilesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeInstanceProfiles
+func (c *DatabaseMigrationService) DescribeInstanceProfilesRequest(input *DescribeInstanceProfilesInput) (req *request.Request, output *DescribeInstanceProfilesOutput) {
+	op := &request.Operation{
+		Name:       opDescribeInstanceProfiles,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeInstanceProfilesInput{}
+	}
+
+	output = &DescribeInstanceProfilesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeInstanceProfiles API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of instance profiles for your account in the current
+// region.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeInstanceProfiles for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeInstanceProfiles
+func (c *DatabaseMigrationService) DescribeInstanceProfiles(input *DescribeInstanceProfilesInput) (*DescribeInstanceProfilesOutput, error) {
+	req, out := c.DescribeInstanceProfilesRequest(input)
+	return out, req.Send()
+}
+
+// DescribeInstanceProfilesWithContext is the same as DescribeInstanceProfiles with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeInstanceProfiles for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeInstanceProfilesWithContext(ctx aws.Context, input *DescribeInstanceProfilesInput, opts ...request.Option) (*DescribeInstanceProfilesOutput, error) {
+	req, out := c.DescribeInstanceProfilesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeInstanceProfilesPages iterates over the pages of a DescribeInstanceProfiles operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeInstanceProfiles method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeInstanceProfiles operation.
+//	pageNum := 0
+//	err := client.DescribeInstanceProfilesPages(params,
+//	    func(page *databasemigrationservice.DescribeInstanceProfilesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeInstanceProfilesPages(input *DescribeInstanceProfilesInput, fn func(*DescribeInstanceProfilesOutput, bool) bool) error {
+	return c.DescribeInstanceProfilesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeInstanceProfilesPagesWithContext same as DescribeInstanceProfilesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeInstanceProfilesPagesWithContext(ctx aws.Context, input *DescribeInstanceProfilesInput, fn func(*DescribeInstanceProfilesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeInstanceProfilesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeInstanceProfilesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeInstanceProfilesOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeMetadataModelAssessments = "DescribeMetadataModelAssessments"
+
+// DescribeMetadataModelAssessmentsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeMetadataModelAssessments operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeMetadataModelAssessments for more information on using the DescribeMetadataModelAssessments
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeMetadataModelAssessmentsRequest method.
+//	req, resp := client.DescribeMetadataModelAssessmentsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelAssessments
+func (c *DatabaseMigrationService) DescribeMetadataModelAssessmentsRequest(input *DescribeMetadataModelAssessmentsInput) (req *request.Request, output *DescribeMetadataModelAssessmentsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeMetadataModelAssessments,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeMetadataModelAssessmentsInput{}
+	}
+
+	output = &DescribeMetadataModelAssessmentsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeMetadataModelAssessments API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of metadata model assessments for your account in
+// the current region.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeMetadataModelAssessments for usage and error information.
+//
+// Returned Error Types:
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelAssessments
+func (c *DatabaseMigrationService) DescribeMetadataModelAssessments(input *DescribeMetadataModelAssessmentsInput) (*DescribeMetadataModelAssessmentsOutput, error) {
+	req, out := c.DescribeMetadataModelAssessmentsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelAssessmentsWithContext is the same as DescribeMetadataModelAssessments with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeMetadataModelAssessments for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelAssessmentsWithContext(ctx aws.Context, input *DescribeMetadataModelAssessmentsInput, opts ...request.Option) (*DescribeMetadataModelAssessmentsOutput, error) {
+	req, out := c.DescribeMetadataModelAssessmentsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelAssessmentsPages iterates over the pages of a DescribeMetadataModelAssessments operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeMetadataModelAssessments method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeMetadataModelAssessments operation.
+//	pageNum := 0
+//	err := client.DescribeMetadataModelAssessmentsPages(params,
+//	    func(page *databasemigrationservice.DescribeMetadataModelAssessmentsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeMetadataModelAssessmentsPages(input *DescribeMetadataModelAssessmentsInput, fn func(*DescribeMetadataModelAssessmentsOutput, bool) bool) error {
+	return c.DescribeMetadataModelAssessmentsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeMetadataModelAssessmentsPagesWithContext same as DescribeMetadataModelAssessmentsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelAssessmentsPagesWithContext(ctx aws.Context, input *DescribeMetadataModelAssessmentsInput, fn func(*DescribeMetadataModelAssessmentsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeMetadataModelAssessmentsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeMetadataModelAssessmentsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeMetadataModelAssessmentsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeMetadataModelConversions = "DescribeMetadataModelConversions"
+
+// DescribeMetadataModelConversionsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeMetadataModelConversions operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeMetadataModelConversions for more information on using the DescribeMetadataModelConversions
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeMetadataModelConversionsRequest method.
+//	req, resp := client.DescribeMetadataModelConversionsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelConversions
+func (c *DatabaseMigrationService) DescribeMetadataModelConversionsRequest(input *DescribeMetadataModelConversionsInput) (req *request.Request, output *DescribeMetadataModelConversionsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeMetadataModelConversions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeMetadataModelConversionsInput{}
+	}
+
+	output = &DescribeMetadataModelConversionsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeMetadataModelConversions API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of metadata model conversions for a migration project.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeMetadataModelConversions for usage and error information.
+//
+// Returned Error Types:
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelConversions
+func (c *DatabaseMigrationService) DescribeMetadataModelConversions(input *DescribeMetadataModelConversionsInput) (*DescribeMetadataModelConversionsOutput, error) {
+	req, out := c.DescribeMetadataModelConversionsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelConversionsWithContext is the same as DescribeMetadataModelConversions with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeMetadataModelConversions for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelConversionsWithContext(ctx aws.Context, input *DescribeMetadataModelConversionsInput, opts ...request.Option) (*DescribeMetadataModelConversionsOutput, error) {
+	req, out := c.DescribeMetadataModelConversionsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelConversionsPages iterates over the pages of a DescribeMetadataModelConversions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeMetadataModelConversions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeMetadataModelConversions operation.
+//	pageNum := 0
+//	err := client.DescribeMetadataModelConversionsPages(params,
+//	    func(page *databasemigrationservice.DescribeMetadataModelConversionsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeMetadataModelConversionsPages(input *DescribeMetadataModelConversionsInput, fn func(*DescribeMetadataModelConversionsOutput, bool) bool) error {
+	return c.DescribeMetadataModelConversionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeMetadataModelConversionsPagesWithContext same as DescribeMetadataModelConversionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelConversionsPagesWithContext(ctx aws.Context, input *DescribeMetadataModelConversionsInput, fn func(*DescribeMetadataModelConversionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeMetadataModelConversionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeMetadataModelConversionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeMetadataModelConversionsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeMetadataModelExportsAsScript = "DescribeMetadataModelExportsAsScript"
+
+// DescribeMetadataModelExportsAsScriptRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeMetadataModelExportsAsScript operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeMetadataModelExportsAsScript for more information on using the DescribeMetadataModelExportsAsScript
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeMetadataModelExportsAsScriptRequest method.
+//	req, resp := client.DescribeMetadataModelExportsAsScriptRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelExportsAsScript
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsAsScriptRequest(input *DescribeMetadataModelExportsAsScriptInput) (req *request.Request, output *DescribeMetadataModelExportsAsScriptOutput) {
+	op := &request.Operation{
+		Name:       opDescribeMetadataModelExportsAsScript,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeMetadataModelExportsAsScriptInput{}
+	}
+
+	output = &DescribeMetadataModelExportsAsScriptOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeMetadataModelExportsAsScript API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of metadata model exports.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeMetadataModelExportsAsScript for usage and error information.
+//
+// Returned Error Types:
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelExportsAsScript
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsAsScript(input *DescribeMetadataModelExportsAsScriptInput) (*DescribeMetadataModelExportsAsScriptOutput, error) {
+	req, out := c.DescribeMetadataModelExportsAsScriptRequest(input)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelExportsAsScriptWithContext is the same as DescribeMetadataModelExportsAsScript with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeMetadataModelExportsAsScript for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsAsScriptWithContext(ctx aws.Context, input *DescribeMetadataModelExportsAsScriptInput, opts ...request.Option) (*DescribeMetadataModelExportsAsScriptOutput, error) {
+	req, out := c.DescribeMetadataModelExportsAsScriptRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelExportsAsScriptPages iterates over the pages of a DescribeMetadataModelExportsAsScript operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeMetadataModelExportsAsScript method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeMetadataModelExportsAsScript operation.
+//	pageNum := 0
+//	err := client.DescribeMetadataModelExportsAsScriptPages(params,
+//	    func(page *databasemigrationservice.DescribeMetadataModelExportsAsScriptOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsAsScriptPages(input *DescribeMetadataModelExportsAsScriptInput, fn func(*DescribeMetadataModelExportsAsScriptOutput, bool) bool) error {
+	return c.DescribeMetadataModelExportsAsScriptPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeMetadataModelExportsAsScriptPagesWithContext same as DescribeMetadataModelExportsAsScriptPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsAsScriptPagesWithContext(ctx aws.Context, input *DescribeMetadataModelExportsAsScriptInput, fn func(*DescribeMetadataModelExportsAsScriptOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeMetadataModelExportsAsScriptInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeMetadataModelExportsAsScriptRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeMetadataModelExportsAsScriptOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeMetadataModelExportsToTarget = "DescribeMetadataModelExportsToTarget"
+
+// DescribeMetadataModelExportsToTargetRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeMetadataModelExportsToTarget operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeMetadataModelExportsToTarget for more information on using the DescribeMetadataModelExportsToTarget
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeMetadataModelExportsToTargetRequest method.
+//	req, resp := client.DescribeMetadataModelExportsToTargetRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelExportsToTarget
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsToTargetRequest(input *DescribeMetadataModelExportsToTargetInput) (req *request.Request, output *DescribeMetadataModelExportsToTargetOutput) {
+	op := &request.Operation{
+		Name:       opDescribeMetadataModelExportsToTarget,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeMetadataModelExportsToTargetInput{}
+	}
+
+	output = &DescribeMetadataModelExportsToTargetOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeMetadataModelExportsToTarget API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of metadata model exports.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeMetadataModelExportsToTarget for usage and error information.
+//
+// Returned Error Types:
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelExportsToTarget
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsToTarget(input *DescribeMetadataModelExportsToTargetInput) (*DescribeMetadataModelExportsToTargetOutput, error) {
+	req, out := c.DescribeMetadataModelExportsToTargetRequest(input)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelExportsToTargetWithContext is the same as DescribeMetadataModelExportsToTarget with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeMetadataModelExportsToTarget for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsToTargetWithContext(ctx aws.Context, input *DescribeMetadataModelExportsToTargetInput, opts ...request.Option) (*DescribeMetadataModelExportsToTargetOutput, error) {
+	req, out := c.DescribeMetadataModelExportsToTargetRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelExportsToTargetPages iterates over the pages of a DescribeMetadataModelExportsToTarget operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeMetadataModelExportsToTarget method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeMetadataModelExportsToTarget operation.
+//	pageNum := 0
+//	err := client.DescribeMetadataModelExportsToTargetPages(params,
+//	    func(page *databasemigrationservice.DescribeMetadataModelExportsToTargetOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsToTargetPages(input *DescribeMetadataModelExportsToTargetInput, fn func(*DescribeMetadataModelExportsToTargetOutput, bool) bool) error {
+	return c.DescribeMetadataModelExportsToTargetPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeMetadataModelExportsToTargetPagesWithContext same as DescribeMetadataModelExportsToTargetPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelExportsToTargetPagesWithContext(ctx aws.Context, input *DescribeMetadataModelExportsToTargetInput, fn func(*DescribeMetadataModelExportsToTargetOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeMetadataModelExportsToTargetInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeMetadataModelExportsToTargetRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeMetadataModelExportsToTargetOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeMetadataModelImports = "DescribeMetadataModelImports"
+
+// DescribeMetadataModelImportsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeMetadataModelImports operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeMetadataModelImports for more information on using the DescribeMetadataModelImports
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeMetadataModelImportsRequest method.
+//	req, resp := client.DescribeMetadataModelImportsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelImports
+func (c *DatabaseMigrationService) DescribeMetadataModelImportsRequest(input *DescribeMetadataModelImportsInput) (req *request.Request, output *DescribeMetadataModelImportsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeMetadataModelImports,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeMetadataModelImportsInput{}
+	}
+
+	output = &DescribeMetadataModelImportsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeMetadataModelImports API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of metadata model imports.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeMetadataModelImports for usage and error information.
+//
+// Returned Error Types:
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMetadataModelImports
+func (c *DatabaseMigrationService) DescribeMetadataModelImports(input *DescribeMetadataModelImportsInput) (*DescribeMetadataModelImportsOutput, error) {
+	req, out := c.DescribeMetadataModelImportsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelImportsWithContext is the same as DescribeMetadataModelImports with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeMetadataModelImports for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelImportsWithContext(ctx aws.Context, input *DescribeMetadataModelImportsInput, opts ...request.Option) (*DescribeMetadataModelImportsOutput, error) {
+	req, out := c.DescribeMetadataModelImportsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeMetadataModelImportsPages iterates over the pages of a DescribeMetadataModelImports operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeMetadataModelImports method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeMetadataModelImports operation.
+//	pageNum := 0
+//	err := client.DescribeMetadataModelImportsPages(params,
+//	    func(page *databasemigrationservice.DescribeMetadataModelImportsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeMetadataModelImportsPages(input *DescribeMetadataModelImportsInput, fn func(*DescribeMetadataModelImportsOutput, bool) bool) error {
+	return c.DescribeMetadataModelImportsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeMetadataModelImportsPagesWithContext same as DescribeMetadataModelImportsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMetadataModelImportsPagesWithContext(ctx aws.Context, input *DescribeMetadataModelImportsInput, fn func(*DescribeMetadataModelImportsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeMetadataModelImportsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeMetadataModelImportsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeMetadataModelImportsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opDescribeMigrationProjects = "DescribeMigrationProjects"
+
+// DescribeMigrationProjectsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeMigrationProjects operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeMigrationProjects for more information on using the DescribeMigrationProjects
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeMigrationProjectsRequest method.
+//	req, resp := client.DescribeMigrationProjectsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMigrationProjects
+func (c *DatabaseMigrationService) DescribeMigrationProjectsRequest(input *DescribeMigrationProjectsInput) (req *request.Request, output *DescribeMigrationProjectsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeMigrationProjects,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeMigrationProjectsInput{}
+	}
+
+	output = &DescribeMigrationProjectsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeMigrationProjects API operation for AWS Database Migration Service.
+//
+// Returns a paginated list of migration projects for your account in the current
+// region.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation DescribeMigrationProjects for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/DescribeMigrationProjects
+func (c *DatabaseMigrationService) DescribeMigrationProjects(input *DescribeMigrationProjectsInput) (*DescribeMigrationProjectsOutput, error) {
+	req, out := c.DescribeMigrationProjectsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeMigrationProjectsWithContext is the same as DescribeMigrationProjects with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeMigrationProjects for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMigrationProjectsWithContext(ctx aws.Context, input *DescribeMigrationProjectsInput, opts ...request.Option) (*DescribeMigrationProjectsOutput, error) {
+	req, out := c.DescribeMigrationProjectsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeMigrationProjectsPages iterates over the pages of a DescribeMigrationProjects operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeMigrationProjects method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeMigrationProjects operation.
+//	pageNum := 0
+//	err := client.DescribeMigrationProjectsPages(params,
+//	    func(page *databasemigrationservice.DescribeMigrationProjectsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *DatabaseMigrationService) DescribeMigrationProjectsPages(input *DescribeMigrationProjectsInput, fn func(*DescribeMigrationProjectsOutput, bool) bool) error {
+	return c.DescribeMigrationProjectsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeMigrationProjectsPagesWithContext same as DescribeMigrationProjectsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) DescribeMigrationProjectsPagesWithContext(ctx aws.Context, input *DescribeMigrationProjectsInput, fn func(*DescribeMigrationProjectsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeMigrationProjectsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeMigrationProjectsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeMigrationProjectsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -6273,6 +8265,86 @@ func (c *DatabaseMigrationService) DescribeTableStatisticsPagesWithContext(ctx a
 	return p.Err()
 }
 
+const opExportMetadataModelAssessment = "ExportMetadataModelAssessment"
+
+// ExportMetadataModelAssessmentRequest generates a "aws/request.Request" representing the
+// client's request for the ExportMetadataModelAssessment operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ExportMetadataModelAssessment for more information on using the ExportMetadataModelAssessment
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ExportMetadataModelAssessmentRequest method.
+//	req, resp := client.ExportMetadataModelAssessmentRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ExportMetadataModelAssessment
+func (c *DatabaseMigrationService) ExportMetadataModelAssessmentRequest(input *ExportMetadataModelAssessmentInput) (req *request.Request, output *ExportMetadataModelAssessmentOutput) {
+	op := &request.Operation{
+		Name:       opExportMetadataModelAssessment,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ExportMetadataModelAssessmentInput{}
+	}
+
+	output = &ExportMetadataModelAssessmentOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ExportMetadataModelAssessment API operation for AWS Database Migration Service.
+//
+// Saves a copy of a database migration assessment report to your Amazon S3
+// bucket. DMS can save your assessment report as a comma-separated value (CSV)
+// or a PDF file.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation ExportMetadataModelAssessment for usage and error information.
+//
+// Returned Error Types:
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ExportMetadataModelAssessment
+func (c *DatabaseMigrationService) ExportMetadataModelAssessment(input *ExportMetadataModelAssessmentInput) (*ExportMetadataModelAssessmentOutput, error) {
+	req, out := c.ExportMetadataModelAssessmentRequest(input)
+	return out, req.Send()
+}
+
+// ExportMetadataModelAssessmentWithContext is the same as ExportMetadataModelAssessment with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ExportMetadataModelAssessment for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) ExportMetadataModelAssessmentWithContext(ctx aws.Context, input *ExportMetadataModelAssessmentInput, opts ...request.Option) (*ExportMetadataModelAssessmentOutput, error) {
+	req, out := c.ExportMetadataModelAssessmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opImportCertificate = "ImportCertificate"
 
 // ImportCertificateRequest generates a "aws/request.Request" representing the
@@ -6434,6 +8506,179 @@ func (c *DatabaseMigrationService) ListTagsForResource(input *ListTagsForResourc
 // for more information on using Contexts.
 func (c *DatabaseMigrationService) ListTagsForResourceWithContext(ctx aws.Context, input *ListTagsForResourceInput, opts ...request.Option) (*ListTagsForResourceOutput, error) {
 	req, out := c.ListTagsForResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opModifyConversionConfiguration = "ModifyConversionConfiguration"
+
+// ModifyConversionConfigurationRequest generates a "aws/request.Request" representing the
+// client's request for the ModifyConversionConfiguration operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyConversionConfiguration for more information on using the ModifyConversionConfiguration
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ModifyConversionConfigurationRequest method.
+//	req, resp := client.ModifyConversionConfigurationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyConversionConfiguration
+func (c *DatabaseMigrationService) ModifyConversionConfigurationRequest(input *ModifyConversionConfigurationInput) (req *request.Request, output *ModifyConversionConfigurationOutput) {
+	op := &request.Operation{
+		Name:       opModifyConversionConfiguration,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ModifyConversionConfigurationInput{}
+	}
+
+	output = &ModifyConversionConfigurationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ModifyConversionConfiguration API operation for AWS Database Migration Service.
+//
+// Modifies the specified schema conversion configuration using the provided
+// parameters.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation ModifyConversionConfiguration for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyConversionConfiguration
+func (c *DatabaseMigrationService) ModifyConversionConfiguration(input *ModifyConversionConfigurationInput) (*ModifyConversionConfigurationOutput, error) {
+	req, out := c.ModifyConversionConfigurationRequest(input)
+	return out, req.Send()
+}
+
+// ModifyConversionConfigurationWithContext is the same as ModifyConversionConfiguration with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ModifyConversionConfiguration for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) ModifyConversionConfigurationWithContext(ctx aws.Context, input *ModifyConversionConfigurationInput, opts ...request.Option) (*ModifyConversionConfigurationOutput, error) {
+	req, out := c.ModifyConversionConfigurationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opModifyDataProvider = "ModifyDataProvider"
+
+// ModifyDataProviderRequest generates a "aws/request.Request" representing the
+// client's request for the ModifyDataProvider operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyDataProvider for more information on using the ModifyDataProvider
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ModifyDataProviderRequest method.
+//	req, resp := client.ModifyDataProviderRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyDataProvider
+func (c *DatabaseMigrationService) ModifyDataProviderRequest(input *ModifyDataProviderInput) (req *request.Request, output *ModifyDataProviderOutput) {
+	op := &request.Operation{
+		Name:       opModifyDataProvider,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ModifyDataProviderInput{}
+	}
+
+	output = &ModifyDataProviderOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ModifyDataProvider API operation for AWS Database Migration Service.
+//
+// Modifies the specified data provider using the provided settings.
+//
+// You must remove the data provider from all migration projects before you
+// can modify it.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation ModifyDataProvider for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyDataProvider
+func (c *DatabaseMigrationService) ModifyDataProvider(input *ModifyDataProviderInput) (*ModifyDataProviderOutput, error) {
+	req, out := c.ModifyDataProviderRequest(input)
+	return out, req.Send()
+}
+
+// ModifyDataProviderWithContext is the same as ModifyDataProvider with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ModifyDataProvider for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) ModifyDataProviderWithContext(ctx aws.Context, input *ModifyDataProviderInput, opts ...request.Option) (*ModifyDataProviderOutput, error) {
+	req, out := c.ModifyDataProviderRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -6637,6 +8882,198 @@ func (c *DatabaseMigrationService) ModifyEventSubscription(input *ModifyEventSub
 // for more information on using Contexts.
 func (c *DatabaseMigrationService) ModifyEventSubscriptionWithContext(ctx aws.Context, input *ModifyEventSubscriptionInput, opts ...request.Option) (*ModifyEventSubscriptionOutput, error) {
 	req, out := c.ModifyEventSubscriptionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opModifyInstanceProfile = "ModifyInstanceProfile"
+
+// ModifyInstanceProfileRequest generates a "aws/request.Request" representing the
+// client's request for the ModifyInstanceProfile operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyInstanceProfile for more information on using the ModifyInstanceProfile
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ModifyInstanceProfileRequest method.
+//	req, resp := client.ModifyInstanceProfileRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyInstanceProfile
+func (c *DatabaseMigrationService) ModifyInstanceProfileRequest(input *ModifyInstanceProfileInput) (req *request.Request, output *ModifyInstanceProfileOutput) {
+	op := &request.Operation{
+		Name:       opModifyInstanceProfile,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ModifyInstanceProfileInput{}
+	}
+
+	output = &ModifyInstanceProfileOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ModifyInstanceProfile API operation for AWS Database Migration Service.
+//
+// Modifies the specified instance profile using the provided parameters.
+//
+// All migration projects associated with the instance profile must be deleted
+// or modified before you can modify the instance profile.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation ModifyInstanceProfile for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyInstanceProfile
+func (c *DatabaseMigrationService) ModifyInstanceProfile(input *ModifyInstanceProfileInput) (*ModifyInstanceProfileOutput, error) {
+	req, out := c.ModifyInstanceProfileRequest(input)
+	return out, req.Send()
+}
+
+// ModifyInstanceProfileWithContext is the same as ModifyInstanceProfile with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ModifyInstanceProfile for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) ModifyInstanceProfileWithContext(ctx aws.Context, input *ModifyInstanceProfileInput, opts ...request.Option) (*ModifyInstanceProfileOutput, error) {
+	req, out := c.ModifyInstanceProfileRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opModifyMigrationProject = "ModifyMigrationProject"
+
+// ModifyMigrationProjectRequest generates a "aws/request.Request" representing the
+// client's request for the ModifyMigrationProject operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyMigrationProject for more information on using the ModifyMigrationProject
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ModifyMigrationProjectRequest method.
+//	req, resp := client.ModifyMigrationProjectRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyMigrationProject
+func (c *DatabaseMigrationService) ModifyMigrationProjectRequest(input *ModifyMigrationProjectInput) (req *request.Request, output *ModifyMigrationProjectOutput) {
+	op := &request.Operation{
+		Name:       opModifyMigrationProject,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ModifyMigrationProjectInput{}
+	}
+
+	output = &ModifyMigrationProjectOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ModifyMigrationProject API operation for AWS Database Migration Service.
+//
+// Modifies the specified migration project using the provided parameters.
+//
+// The migration project must be closed before you can modify it.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation ModifyMigrationProject for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/ModifyMigrationProject
+func (c *DatabaseMigrationService) ModifyMigrationProject(input *ModifyMigrationProjectInput) (*ModifyMigrationProjectOutput, error) {
+	req, out := c.ModifyMigrationProjectRequest(input)
+	return out, req.Send()
+}
+
+// ModifyMigrationProjectWithContext is the same as ModifyMigrationProject with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ModifyMigrationProject for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) ModifyMigrationProjectWithContext(ctx aws.Context, input *ModifyMigrationProjectInput, opts ...request.Option) (*ModifyMigrationProjectOutput, error) {
+	req, out := c.ModifyMigrationProjectRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -7648,6 +10085,623 @@ func (c *DatabaseMigrationService) RunFleetAdvisorLsaAnalysisWithContext(ctx aws
 	return out, req.Send()
 }
 
+const opStartExtensionPackAssociation = "StartExtensionPackAssociation"
+
+// StartExtensionPackAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the StartExtensionPackAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartExtensionPackAssociation for more information on using the StartExtensionPackAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartExtensionPackAssociationRequest method.
+//	req, resp := client.StartExtensionPackAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartExtensionPackAssociation
+func (c *DatabaseMigrationService) StartExtensionPackAssociationRequest(input *StartExtensionPackAssociationInput) (req *request.Request, output *StartExtensionPackAssociationOutput) {
+	op := &request.Operation{
+		Name:       opStartExtensionPackAssociation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartExtensionPackAssociationInput{}
+	}
+
+	output = &StartExtensionPackAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartExtensionPackAssociation API operation for AWS Database Migration Service.
+//
+// Applies the extension pack to your target database. An extension pack is
+// an add-on module that emulates functions present in a source database that
+// are required when converting objects to the target database.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation StartExtensionPackAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartExtensionPackAssociation
+func (c *DatabaseMigrationService) StartExtensionPackAssociation(input *StartExtensionPackAssociationInput) (*StartExtensionPackAssociationOutput, error) {
+	req, out := c.StartExtensionPackAssociationRequest(input)
+	return out, req.Send()
+}
+
+// StartExtensionPackAssociationWithContext is the same as StartExtensionPackAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartExtensionPackAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) StartExtensionPackAssociationWithContext(ctx aws.Context, input *StartExtensionPackAssociationInput, opts ...request.Option) (*StartExtensionPackAssociationOutput, error) {
+	req, out := c.StartExtensionPackAssociationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartMetadataModelAssessment = "StartMetadataModelAssessment"
+
+// StartMetadataModelAssessmentRequest generates a "aws/request.Request" representing the
+// client's request for the StartMetadataModelAssessment operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartMetadataModelAssessment for more information on using the StartMetadataModelAssessment
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartMetadataModelAssessmentRequest method.
+//	req, resp := client.StartMetadataModelAssessmentRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelAssessment
+func (c *DatabaseMigrationService) StartMetadataModelAssessmentRequest(input *StartMetadataModelAssessmentInput) (req *request.Request, output *StartMetadataModelAssessmentOutput) {
+	op := &request.Operation{
+		Name:       opStartMetadataModelAssessment,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartMetadataModelAssessmentInput{}
+	}
+
+	output = &StartMetadataModelAssessmentOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartMetadataModelAssessment API operation for AWS Database Migration Service.
+//
+// Creates a database migration assessment report by assessing the migration
+// complexity for your source database. A database migration assessment report
+// summarizes all of the schema conversion tasks. It also details the action
+// items for database objects that can't be converted to the database engine
+// of your target database instance.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation StartMetadataModelAssessment for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelAssessment
+func (c *DatabaseMigrationService) StartMetadataModelAssessment(input *StartMetadataModelAssessmentInput) (*StartMetadataModelAssessmentOutput, error) {
+	req, out := c.StartMetadataModelAssessmentRequest(input)
+	return out, req.Send()
+}
+
+// StartMetadataModelAssessmentWithContext is the same as StartMetadataModelAssessment with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartMetadataModelAssessment for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) StartMetadataModelAssessmentWithContext(ctx aws.Context, input *StartMetadataModelAssessmentInput, opts ...request.Option) (*StartMetadataModelAssessmentOutput, error) {
+	req, out := c.StartMetadataModelAssessmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartMetadataModelConversion = "StartMetadataModelConversion"
+
+// StartMetadataModelConversionRequest generates a "aws/request.Request" representing the
+// client's request for the StartMetadataModelConversion operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartMetadataModelConversion for more information on using the StartMetadataModelConversion
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartMetadataModelConversionRequest method.
+//	req, resp := client.StartMetadataModelConversionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelConversion
+func (c *DatabaseMigrationService) StartMetadataModelConversionRequest(input *StartMetadataModelConversionInput) (req *request.Request, output *StartMetadataModelConversionOutput) {
+	op := &request.Operation{
+		Name:       opStartMetadataModelConversion,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartMetadataModelConversionInput{}
+	}
+
+	output = &StartMetadataModelConversionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartMetadataModelConversion API operation for AWS Database Migration Service.
+//
+// Converts your source database objects to a format compatible with the target
+// database.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation StartMetadataModelConversion for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelConversion
+func (c *DatabaseMigrationService) StartMetadataModelConversion(input *StartMetadataModelConversionInput) (*StartMetadataModelConversionOutput, error) {
+	req, out := c.StartMetadataModelConversionRequest(input)
+	return out, req.Send()
+}
+
+// StartMetadataModelConversionWithContext is the same as StartMetadataModelConversion with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartMetadataModelConversion for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) StartMetadataModelConversionWithContext(ctx aws.Context, input *StartMetadataModelConversionInput, opts ...request.Option) (*StartMetadataModelConversionOutput, error) {
+	req, out := c.StartMetadataModelConversionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartMetadataModelExportAsScript = "StartMetadataModelExportAsScript"
+
+// StartMetadataModelExportAsScriptRequest generates a "aws/request.Request" representing the
+// client's request for the StartMetadataModelExportAsScript operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartMetadataModelExportAsScript for more information on using the StartMetadataModelExportAsScript
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartMetadataModelExportAsScriptRequest method.
+//	req, resp := client.StartMetadataModelExportAsScriptRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelExportAsScript
+func (c *DatabaseMigrationService) StartMetadataModelExportAsScriptRequest(input *StartMetadataModelExportAsScriptInput) (req *request.Request, output *StartMetadataModelExportAsScriptOutput) {
+	op := &request.Operation{
+		Name:       opStartMetadataModelExportAsScript,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartMetadataModelExportAsScriptInput{}
+	}
+
+	output = &StartMetadataModelExportAsScriptOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartMetadataModelExportAsScript API operation for AWS Database Migration Service.
+//
+// Saves your converted code to a file as a SQL script, and stores this file
+// on your Amazon S3 bucket.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation StartMetadataModelExportAsScript for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelExportAsScript
+func (c *DatabaseMigrationService) StartMetadataModelExportAsScript(input *StartMetadataModelExportAsScriptInput) (*StartMetadataModelExportAsScriptOutput, error) {
+	req, out := c.StartMetadataModelExportAsScriptRequest(input)
+	return out, req.Send()
+}
+
+// StartMetadataModelExportAsScriptWithContext is the same as StartMetadataModelExportAsScript with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartMetadataModelExportAsScript for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) StartMetadataModelExportAsScriptWithContext(ctx aws.Context, input *StartMetadataModelExportAsScriptInput, opts ...request.Option) (*StartMetadataModelExportAsScriptOutput, error) {
+	req, out := c.StartMetadataModelExportAsScriptRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartMetadataModelExportToTarget = "StartMetadataModelExportToTarget"
+
+// StartMetadataModelExportToTargetRequest generates a "aws/request.Request" representing the
+// client's request for the StartMetadataModelExportToTarget operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartMetadataModelExportToTarget for more information on using the StartMetadataModelExportToTarget
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartMetadataModelExportToTargetRequest method.
+//	req, resp := client.StartMetadataModelExportToTargetRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelExportToTarget
+func (c *DatabaseMigrationService) StartMetadataModelExportToTargetRequest(input *StartMetadataModelExportToTargetInput) (req *request.Request, output *StartMetadataModelExportToTargetOutput) {
+	op := &request.Operation{
+		Name:       opStartMetadataModelExportToTarget,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartMetadataModelExportToTargetInput{}
+	}
+
+	output = &StartMetadataModelExportToTargetOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartMetadataModelExportToTarget API operation for AWS Database Migration Service.
+//
+// Applies converted database objects to your target database.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation StartMetadataModelExportToTarget for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelExportToTarget
+func (c *DatabaseMigrationService) StartMetadataModelExportToTarget(input *StartMetadataModelExportToTargetInput) (*StartMetadataModelExportToTargetOutput, error) {
+	req, out := c.StartMetadataModelExportToTargetRequest(input)
+	return out, req.Send()
+}
+
+// StartMetadataModelExportToTargetWithContext is the same as StartMetadataModelExportToTarget with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartMetadataModelExportToTarget for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) StartMetadataModelExportToTargetWithContext(ctx aws.Context, input *StartMetadataModelExportToTargetInput, opts ...request.Option) (*StartMetadataModelExportToTargetOutput, error) {
+	req, out := c.StartMetadataModelExportToTargetRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartMetadataModelImport = "StartMetadataModelImport"
+
+// StartMetadataModelImportRequest generates a "aws/request.Request" representing the
+// client's request for the StartMetadataModelImport operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartMetadataModelImport for more information on using the StartMetadataModelImport
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartMetadataModelImportRequest method.
+//	req, resp := client.StartMetadataModelImportRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelImport
+func (c *DatabaseMigrationService) StartMetadataModelImportRequest(input *StartMetadataModelImportInput) (req *request.Request, output *StartMetadataModelImportOutput) {
+	op := &request.Operation{
+		Name:       opStartMetadataModelImport,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartMetadataModelImportInput{}
+	}
+
+	output = &StartMetadataModelImportOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartMetadataModelImport API operation for AWS Database Migration Service.
+//
+// Loads the metadata for all the dependent database objects of the parent object.
+//
+// This operation uses your project's Amazon S3 bucket as a metadata cache to
+// improve performance.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Database Migration Service's
+// API operation StartMetadataModelImport for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedFault
+//     DMS was denied access to the endpoint. Check that the role is correctly configured.
+//
+//   - InvalidResourceStateFault
+//     The resource is in a state that prevents it from being used for database
+//     migration.
+//
+//   - ResourceAlreadyExistsFault
+//     The resource you are attempting to create already exists.
+//
+//   - ResourceNotFoundFault
+//     The resource could not be found.
+//
+//   - KMSKeyNotAccessibleFault
+//     DMS cannot access the KMS key.
+//
+//   - ResourceQuotaExceededFault
+//     The quota for this resource quota has been exceeded.
+//
+//   - S3ResourceNotFoundFault
+//     A specified Amazon S3 bucket, bucket folder, or other object can't be found.
+//
+//   - S3AccessDeniedFault
+//     Insufficient privileges are preventing access to an Amazon S3 object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/dms-2016-01-01/StartMetadataModelImport
+func (c *DatabaseMigrationService) StartMetadataModelImport(input *StartMetadataModelImportInput) (*StartMetadataModelImportOutput, error) {
+	req, out := c.StartMetadataModelImportRequest(input)
+	return out, req.Send()
+}
+
+// StartMetadataModelImportWithContext is the same as StartMetadataModelImport with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartMetadataModelImport for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *DatabaseMigrationService) StartMetadataModelImportWithContext(ctx aws.Context, input *StartMetadataModelImportInput, opts ...request.Option) (*StartMetadataModelImportOutput, error) {
+	req, out := c.StartMetadataModelImportRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartRecommendations = "StartRecommendations"
 
 // StartRecommendationsRequest generates a "aws/request.Request" representing the
@@ -8447,11 +11501,11 @@ func (c *DatabaseMigrationService) UpdateSubscriptionsToEventBridgeRequest(input
 // Migrates 10 active and enabled Amazon SNS subscriptions at a time and converts
 // them to corresponding Amazon EventBridge rules. By default, this operation
 // migrates subscriptions only when all your replication instance versions are
-// 3.4.6 or higher. If any replication instances are from versions earlier than
-// 3.4.6, the operation raises an error and tells you to upgrade these instances
-// to version 3.4.6 or higher. To enable migration regardless of version, set
+// 3.4.5 or higher. If any replication instances are from versions earlier than
+// 3.4.5, the operation raises an error and tells you to upgrade these instances
+// to version 3.4.5 or higher. To enable migration regardless of version, set
 // the Force option to true. However, if you don't upgrade instances earlier
-// than version 3.4.6, some types of events might not be available when you
+// than version 3.4.5, some types of events might not be available when you
 // use Amazon EventBridge.
 //
 // To call this operation, make sure that you have certain permissions added
@@ -9522,22 +12576,22 @@ type ComputeConfig struct {
 
 	// Specifies the maximum value of the DMS capacity units (DCUs) for which a
 	// given DMS Serverless replication can be provisioned. A single DCU is 2GB
-	// of RAM, with 2 DCUs as the minimum value allowed. The list of valid DCU values
-	// includes 2, 4, 8, 16, 32, 64, 128, 192, 256, and 384. So, the maximum value
-	// that you can specify for DMS Serverless is 384. The MaxCapacityUnits parameter
-	// is the only DCU parameter you are required to specify.
+	// of RAM, with 1 DCU as the minimum value allowed. The list of valid DCU values
+	// includes 1, 2, 4, 8, 16, 32, 64, 128, 192, 256, and 384. So, the maximum
+	// value that you can specify for DMS Serverless is 384. The MaxCapacityUnits
+	// parameter is the only DCU parameter you are required to specify.
 	MaxCapacityUnits *int64 `type:"integer"`
 
 	// Specifies the minimum value of the DMS capacity units (DCUs) for which a
 	// given DMS Serverless replication can be provisioned. A single DCU is 2GB
-	// of RAM, with 2 DCUs as the minimum value allowed. The list of valid DCU values
-	// includes 2, 4, 8, 16, 32, 64, 128, 192, 256, and 384. So, the minimum DCU
-	// value that you can specify for DMS Serverless is 2. You don't have to specify
-	// a value for the MinCapacityUnits parameter. If you don't set this value,
-	// DMS scans the current activity of available source tables to identify an
-	// optimum setting for this parameter. If there is no current source activity
+	// of RAM, with 1 DCU as the minimum value allowed. The list of valid DCU values
+	// includes 1, 2, 4, 8, 16, 32, 64, 128, 192, 256, and 384. So, the minimum
+	// DCU value that you can specify for DMS Serverless is 1. You don't have to
+	// specify a value for the MinCapacityUnits parameter. If you don't set this
+	// value, DMS scans the current activity of available source tables to identify
+	// an optimum setting for this parameter. If there is no current source activity
 	// or DMS can't otherwise identify a more appropriate value, it sets this parameter
-	// to the minimum DCU value allowed, 2.
+	// to the minimum DCU value allowed, 1.
 	MinCapacityUnits *int64 `type:"integer"`
 
 	// Specifies whether the DMS Serverless replication is a Multi-AZ deployment.
@@ -9725,6 +12779,127 @@ func (s *Connection) SetReplicationInstanceIdentifier(v string) *Connection {
 // SetStatus sets the Status field's value.
 func (s *Connection) SetStatus(v string) *Connection {
 	s.Status = &v
+	return s
+}
+
+type CreateDataProviderInput struct {
+	_ struct{} `type:"structure"`
+
+	// A user-friendly name for the data provider.
+	DataProviderName *string `type:"string"`
+
+	// A user-friendly description of the data provider.
+	Description *string `type:"string"`
+
+	// The type of database engine for the data provider. Valid values include "aurora",
+	// "aurora-postgresql", "mysql", "oracle", "postgres", "sqlserver", redshift,
+	// mariadb, mongodb, and docdb. A value of "aurora" represents Amazon Aurora
+	// MySQL-Compatible Edition.
+	//
+	// Engine is a required field
+	Engine *string `type:"string" required:"true"`
+
+	// The settings in JSON format for a data provider.
+	//
+	// Settings is a required field
+	Settings *DataProviderSettings `type:"structure" required:"true"`
+
+	// One or more tags to be assigned to the data provider.
+	Tags []*Tag `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataProviderInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataProviderInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateDataProviderInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateDataProviderInput"}
+	if s.Engine == nil {
+		invalidParams.Add(request.NewErrParamRequired("Engine"))
+	}
+	if s.Settings == nil {
+		invalidParams.Add(request.NewErrParamRequired("Settings"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataProviderName sets the DataProviderName field's value.
+func (s *CreateDataProviderInput) SetDataProviderName(v string) *CreateDataProviderInput {
+	s.DataProviderName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateDataProviderInput) SetDescription(v string) *CreateDataProviderInput {
+	s.Description = &v
+	return s
+}
+
+// SetEngine sets the Engine field's value.
+func (s *CreateDataProviderInput) SetEngine(v string) *CreateDataProviderInput {
+	s.Engine = &v
+	return s
+}
+
+// SetSettings sets the Settings field's value.
+func (s *CreateDataProviderInput) SetSettings(v *DataProviderSettings) *CreateDataProviderInput {
+	s.Settings = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateDataProviderInput) SetTags(v []*Tag) *CreateDataProviderInput {
+	s.Tags = v
+	return s
+}
+
+type CreateDataProviderOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The data provider that was created.
+	DataProvider *DataProvider `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataProviderOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataProviderOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataProvider sets the DataProvider field's value.
+func (s *CreateDataProviderOutput) SetDataProvider(v *DataProvider) *CreateDataProviderOutput {
+	s.DataProvider = v
 	return s
 }
 
@@ -10543,6 +13718,336 @@ func (s *CreateFleetAdvisorCollectorOutput) SetServiceAccessRoleArn(v string) *C
 	return s
 }
 
+type CreateInstanceProfileInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Availability Zone where the instance profile will be created. The default
+	// value is a random, system-chosen Availability Zone in the Amazon Web Services
+	// Region where your data provider is created, for examplem us-east-1d.
+	AvailabilityZone *string `type:"string"`
+
+	// A user-friendly description of the instance profile.
+	Description *string `type:"string"`
+
+	// A user-friendly name for the instance profile.
+	InstanceProfileName *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) of the KMS key that is used to encrypt the
+	// connection parameters for the instance profile.
+	//
+	// If you don't specify a value for the KmsKeyArn parameter, then DMS uses your
+	// default encryption key.
+	//
+	// KMS creates the default encryption key for your Amazon Web Services account.
+	// Your Amazon Web Services account has a different default encryption key for
+	// each Amazon Web Services Region.
+	KmsKeyArn *string `type:"string"`
+
+	// Specifies the network type for the instance profile. A value of IPV4 represents
+	// an instance profile with IPv4 network type and only supports IPv4 addressing.
+	// A value of IPV6 represents an instance profile with IPv6 network type and
+	// only supports IPv6 addressing. A value of DUAL represents an instance profile
+	// with dual network type that supports IPv4 and IPv6 addressing.
+	NetworkType *string `type:"string"`
+
+	// Specifies the accessibility options for the instance profile. A value of
+	// true represents an instance profile with a public IP address. A value of
+	// false represents an instance profile with a private IP address. The default
+	// value is true.
+	PubliclyAccessible *bool `type:"boolean"`
+
+	// A subnet group to associate with the instance profile.
+	SubnetGroupIdentifier *string `type:"string"`
+
+	// One or more tags to be assigned to the instance profile.
+	Tags []*Tag `type:"list"`
+
+	// Specifies the VPC security group names to be used with the instance profile.
+	// The VPC security group must work with the VPC containing the instance profile.
+	VpcSecurityGroups []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateInstanceProfileInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateInstanceProfileInput) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *CreateInstanceProfileInput) SetAvailabilityZone(v string) *CreateInstanceProfileInput {
+	s.AvailabilityZone = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateInstanceProfileInput) SetDescription(v string) *CreateInstanceProfileInput {
+	s.Description = &v
+	return s
+}
+
+// SetInstanceProfileName sets the InstanceProfileName field's value.
+func (s *CreateInstanceProfileInput) SetInstanceProfileName(v string) *CreateInstanceProfileInput {
+	s.InstanceProfileName = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *CreateInstanceProfileInput) SetKmsKeyArn(v string) *CreateInstanceProfileInput {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetNetworkType sets the NetworkType field's value.
+func (s *CreateInstanceProfileInput) SetNetworkType(v string) *CreateInstanceProfileInput {
+	s.NetworkType = &v
+	return s
+}
+
+// SetPubliclyAccessible sets the PubliclyAccessible field's value.
+func (s *CreateInstanceProfileInput) SetPubliclyAccessible(v bool) *CreateInstanceProfileInput {
+	s.PubliclyAccessible = &v
+	return s
+}
+
+// SetSubnetGroupIdentifier sets the SubnetGroupIdentifier field's value.
+func (s *CreateInstanceProfileInput) SetSubnetGroupIdentifier(v string) *CreateInstanceProfileInput {
+	s.SubnetGroupIdentifier = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateInstanceProfileInput) SetTags(v []*Tag) *CreateInstanceProfileInput {
+	s.Tags = v
+	return s
+}
+
+// SetVpcSecurityGroups sets the VpcSecurityGroups field's value.
+func (s *CreateInstanceProfileInput) SetVpcSecurityGroups(v []*string) *CreateInstanceProfileInput {
+	s.VpcSecurityGroups = v
+	return s
+}
+
+type CreateInstanceProfileOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The instance profile that was created.
+	InstanceProfile *InstanceProfile `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateInstanceProfileOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateInstanceProfileOutput) GoString() string {
+	return s.String()
+}
+
+// SetInstanceProfile sets the InstanceProfile field's value.
+func (s *CreateInstanceProfileOutput) SetInstanceProfile(v *InstanceProfile) *CreateInstanceProfileOutput {
+	s.InstanceProfile = v
+	return s
+}
+
+type CreateMigrationProjectInput struct {
+	_ struct{} `type:"structure"`
+
+	// A user-friendly description of the migration project.
+	Description *string `type:"string"`
+
+	// The identifier of the associated instance profile. Identifiers must begin
+	// with a letter and must contain only ASCII letters, digits, and hyphens. They
+	// can't end with a hyphen, or contain two consecutive hyphens.
+	//
+	// InstanceProfileIdentifier is a required field
+	InstanceProfileIdentifier *string `type:"string" required:"true"`
+
+	// A user-friendly name for the migration project.
+	MigrationProjectName *string `type:"string"`
+
+	// The schema conversion application attributes, including the Amazon S3 bucket
+	// name and Amazon S3 role ARN.
+	SchemaConversionApplicationAttributes *SCApplicationAttributes `type:"structure"`
+
+	// Information about the source data provider, including the name, ARN, and
+	// Secrets Manager parameters.
+	//
+	// SourceDataProviderDescriptors is a required field
+	SourceDataProviderDescriptors []*DataProviderDescriptorDefinition `type:"list" required:"true"`
+
+	// One or more tags to be assigned to the migration project.
+	Tags []*Tag `type:"list"`
+
+	// Information about the target data provider, including the name, ARN, and
+	// Amazon Web Services Secrets Manager parameters.
+	//
+	// TargetDataProviderDescriptors is a required field
+	TargetDataProviderDescriptors []*DataProviderDescriptorDefinition `type:"list" required:"true"`
+
+	// The settings in JSON format for migration rules. Migration rules make it
+	// possible for you to change the object names according to the rules that you
+	// specify. For example, you can change an object name to lowercase or uppercase,
+	// add or remove a prefix or suffix, or rename objects.
+	TransformationRules *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMigrationProjectInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMigrationProjectInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateMigrationProjectInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateMigrationProjectInput"}
+	if s.InstanceProfileIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("InstanceProfileIdentifier"))
+	}
+	if s.SourceDataProviderDescriptors == nil {
+		invalidParams.Add(request.NewErrParamRequired("SourceDataProviderDescriptors"))
+	}
+	if s.TargetDataProviderDescriptors == nil {
+		invalidParams.Add(request.NewErrParamRequired("TargetDataProviderDescriptors"))
+	}
+	if s.SourceDataProviderDescriptors != nil {
+		for i, v := range s.SourceDataProviderDescriptors {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "SourceDataProviderDescriptors", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.TargetDataProviderDescriptors != nil {
+		for i, v := range s.TargetDataProviderDescriptors {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "TargetDataProviderDescriptors", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateMigrationProjectInput) SetDescription(v string) *CreateMigrationProjectInput {
+	s.Description = &v
+	return s
+}
+
+// SetInstanceProfileIdentifier sets the InstanceProfileIdentifier field's value.
+func (s *CreateMigrationProjectInput) SetInstanceProfileIdentifier(v string) *CreateMigrationProjectInput {
+	s.InstanceProfileIdentifier = &v
+	return s
+}
+
+// SetMigrationProjectName sets the MigrationProjectName field's value.
+func (s *CreateMigrationProjectInput) SetMigrationProjectName(v string) *CreateMigrationProjectInput {
+	s.MigrationProjectName = &v
+	return s
+}
+
+// SetSchemaConversionApplicationAttributes sets the SchemaConversionApplicationAttributes field's value.
+func (s *CreateMigrationProjectInput) SetSchemaConversionApplicationAttributes(v *SCApplicationAttributes) *CreateMigrationProjectInput {
+	s.SchemaConversionApplicationAttributes = v
+	return s
+}
+
+// SetSourceDataProviderDescriptors sets the SourceDataProviderDescriptors field's value.
+func (s *CreateMigrationProjectInput) SetSourceDataProviderDescriptors(v []*DataProviderDescriptorDefinition) *CreateMigrationProjectInput {
+	s.SourceDataProviderDescriptors = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateMigrationProjectInput) SetTags(v []*Tag) *CreateMigrationProjectInput {
+	s.Tags = v
+	return s
+}
+
+// SetTargetDataProviderDescriptors sets the TargetDataProviderDescriptors field's value.
+func (s *CreateMigrationProjectInput) SetTargetDataProviderDescriptors(v []*DataProviderDescriptorDefinition) *CreateMigrationProjectInput {
+	s.TargetDataProviderDescriptors = v
+	return s
+}
+
+// SetTransformationRules sets the TransformationRules field's value.
+func (s *CreateMigrationProjectInput) SetTransformationRules(v string) *CreateMigrationProjectInput {
+	s.TransformationRules = &v
+	return s
+}
+
+type CreateMigrationProjectOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project that was created.
+	MigrationProject *MigrationProject `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMigrationProjectOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMigrationProjectOutput) GoString() string {
+	return s.String()
+}
+
+// SetMigrationProject sets the MigrationProject field's value.
+func (s *CreateMigrationProjectOutput) SetMigrationProject(v *MigrationProject) *CreateMigrationProjectOutput {
+	s.MigrationProject = v
+	return s
+}
+
 type CreateReplicationConfigInput struct {
 	_ struct{} `type:"structure"`
 
@@ -10767,14 +14272,6 @@ type CreateReplicationInstanceInput struct {
 	// defaults to true.
 	//
 	// Default: true
-	//
-	// When AutoMinorVersionUpgrade is enabled, DMS uses the current default engine
-	// version when you create a replication instance. For example, if you set EngineVersion
-	// to a lower version number than the current default version, DMS uses the
-	// default version.
-	//
-	// If AutoMinorVersionUpgrade isn’t enabled when you create a replication
-	// instance, DMS uses the engine version specified by the EngineVersion parameter.
 	AutoMinorVersionUpgrade *bool `type:"boolean"`
 
 	// The Availability Zone where the replication instance will be created. The
@@ -11063,7 +14560,7 @@ type CreateReplicationSubnetGroupInput struct {
 	// ReplicationSubnetGroupIdentifier is a required field
 	ReplicationSubnetGroupIdentifier *string `type:"string" required:"true"`
 
-	// One or more subnet IDs to be assigned to the subnet group.
+	// Two or more subnet IDs to be assigned to the subnet group.
 	//
 	// SubnetIds is a required field
 	SubnetIds []*string `type:"list" required:"true"`
@@ -11198,7 +14695,7 @@ type CreateReplicationTaskInput struct {
 	//
 	// Server time example: --cdc-stop-position “server_time:2018-02-09T12:12:12”
 	//
-	// Commit time example: --cdc-stop-position “commit_time: 2018-02-09T12:12:12“
+	// Commit time example: --cdc-stop-position “commit_time:2018-02-09T12:12:12“
 	CdcStopPosition *string `type:"string"`
 
 	// The migration type. Valid values: full-load | cdc | full-load-and-cdc
@@ -11418,6 +14915,310 @@ func (s CreateReplicationTaskOutput) GoString() string {
 // SetReplicationTask sets the ReplicationTask field's value.
 func (s *CreateReplicationTaskOutput) SetReplicationTask(v *ReplicationTask) *CreateReplicationTaskOutput {
 	s.ReplicationTask = v
+	return s
+}
+
+// Provides information that defines a data provider.
+type DataProvider struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) string that uniquely identifies the data provider.
+	DataProviderArn *string `type:"string"`
+
+	// The time the data provider was created.
+	DataProviderCreationTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	// The name of the data provider.
+	DataProviderName *string `type:"string"`
+
+	// A description of the data provider. Descriptions can have up to 31 characters.
+	// A description can contain only ASCII letters, digits, and hyphens ('-').
+	// Also, it can't end with a hyphen or contain two consecutive hyphens, and
+	// can only begin with a letter.
+	Description *string `type:"string"`
+
+	// The type of database engine for the data provider. Valid values include "aurora",
+	// "aurora-postgresql", "mysql", "oracle", "postgres", "sqlserver", redshift,
+	// mariadb, mongodb, and docdb. A value of "aurora" represents Amazon Aurora
+	// MySQL-Compatible Edition.
+	Engine *string `type:"string"`
+
+	// The settings in JSON format for a data provider.
+	Settings *DataProviderSettings `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProvider) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProvider) GoString() string {
+	return s.String()
+}
+
+// SetDataProviderArn sets the DataProviderArn field's value.
+func (s *DataProvider) SetDataProviderArn(v string) *DataProvider {
+	s.DataProviderArn = &v
+	return s
+}
+
+// SetDataProviderCreationTime sets the DataProviderCreationTime field's value.
+func (s *DataProvider) SetDataProviderCreationTime(v time.Time) *DataProvider {
+	s.DataProviderCreationTime = &v
+	return s
+}
+
+// SetDataProviderName sets the DataProviderName field's value.
+func (s *DataProvider) SetDataProviderName(v string) *DataProvider {
+	s.DataProviderName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *DataProvider) SetDescription(v string) *DataProvider {
+	s.Description = &v
+	return s
+}
+
+// SetEngine sets the Engine field's value.
+func (s *DataProvider) SetEngine(v string) *DataProvider {
+	s.Engine = &v
+	return s
+}
+
+// SetSettings sets the Settings field's value.
+func (s *DataProvider) SetSettings(v *DataProviderSettings) *DataProvider {
+	s.Settings = v
+	return s
+}
+
+// Information about a data provider.
+type DataProviderDescriptor struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the data provider.
+	DataProviderArn *string `type:"string"`
+
+	// The user-friendly name of the data provider.
+	DataProviderName *string `type:"string"`
+
+	// The ARN of the role used to access Amazon Web Services Secrets Manager.
+	SecretsManagerAccessRoleArn *string `type:"string"`
+
+	// The identifier of the Amazon Web Services Secrets Manager Secret used to
+	// store access credentials for the data provider.
+	SecretsManagerSecretId *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProviderDescriptor) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProviderDescriptor) GoString() string {
+	return s.String()
+}
+
+// SetDataProviderArn sets the DataProviderArn field's value.
+func (s *DataProviderDescriptor) SetDataProviderArn(v string) *DataProviderDescriptor {
+	s.DataProviderArn = &v
+	return s
+}
+
+// SetDataProviderName sets the DataProviderName field's value.
+func (s *DataProviderDescriptor) SetDataProviderName(v string) *DataProviderDescriptor {
+	s.DataProviderName = &v
+	return s
+}
+
+// SetSecretsManagerAccessRoleArn sets the SecretsManagerAccessRoleArn field's value.
+func (s *DataProviderDescriptor) SetSecretsManagerAccessRoleArn(v string) *DataProviderDescriptor {
+	s.SecretsManagerAccessRoleArn = &v
+	return s
+}
+
+// SetSecretsManagerSecretId sets the SecretsManagerSecretId field's value.
+func (s *DataProviderDescriptor) SetSecretsManagerSecretId(v string) *DataProviderDescriptor {
+	s.SecretsManagerSecretId = &v
+	return s
+}
+
+// Information about a data provider.
+type DataProviderDescriptorDefinition struct {
+	_ struct{} `type:"structure"`
+
+	// The name or Amazon Resource Name (ARN) of the data provider.
+	//
+	// DataProviderIdentifier is a required field
+	DataProviderIdentifier *string `type:"string" required:"true"`
+
+	// The ARN of the role used to access Amazon Web Services Secrets Manager.
+	SecretsManagerAccessRoleArn *string `type:"string"`
+
+	// The identifier of the Amazon Web Services Secrets Manager Secret used to
+	// store access credentials for the data provider.
+	SecretsManagerSecretId *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProviderDescriptorDefinition) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProviderDescriptorDefinition) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DataProviderDescriptorDefinition) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DataProviderDescriptorDefinition"}
+	if s.DataProviderIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataProviderIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataProviderIdentifier sets the DataProviderIdentifier field's value.
+func (s *DataProviderDescriptorDefinition) SetDataProviderIdentifier(v string) *DataProviderDescriptorDefinition {
+	s.DataProviderIdentifier = &v
+	return s
+}
+
+// SetSecretsManagerAccessRoleArn sets the SecretsManagerAccessRoleArn field's value.
+func (s *DataProviderDescriptorDefinition) SetSecretsManagerAccessRoleArn(v string) *DataProviderDescriptorDefinition {
+	s.SecretsManagerAccessRoleArn = &v
+	return s
+}
+
+// SetSecretsManagerSecretId sets the SecretsManagerSecretId field's value.
+func (s *DataProviderDescriptorDefinition) SetSecretsManagerSecretId(v string) *DataProviderDescriptorDefinition {
+	s.SecretsManagerSecretId = &v
+	return s
+}
+
+// Provides information that defines a data provider.
+type DataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// Provides information that defines a DocumentDB data provider.
+	DocDbSettings *DocDbDataProviderSettings `type:"structure"`
+
+	// Provides information that defines a MariaDB data provider.
+	MariaDbSettings *MariaDbDataProviderSettings `type:"structure"`
+
+	// Provides information that defines a Microsoft SQL Server data provider.
+	MicrosoftSqlServerSettings *MicrosoftSqlServerDataProviderSettings `type:"structure"`
+
+	// Provides information that defines a MongoDB data provider.
+	MongoDbSettings *MongoDbDataProviderSettings `type:"structure"`
+
+	// Provides information that defines a MySQL data provider.
+	MySqlSettings *MySqlDataProviderSettings `type:"structure"`
+
+	// Provides information that defines an Oracle data provider.
+	OracleSettings *OracleDataProviderSettings `type:"structure"`
+
+	// Provides information that defines a PostgreSQL data provider.
+	PostgreSqlSettings *PostgreSqlDataProviderSettings `type:"structure"`
+
+	// Provides information that defines an Amazon Redshift data provider.
+	RedshiftSettings *RedshiftDataProviderSettings `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetDocDbSettings sets the DocDbSettings field's value.
+func (s *DataProviderSettings) SetDocDbSettings(v *DocDbDataProviderSettings) *DataProviderSettings {
+	s.DocDbSettings = v
+	return s
+}
+
+// SetMariaDbSettings sets the MariaDbSettings field's value.
+func (s *DataProviderSettings) SetMariaDbSettings(v *MariaDbDataProviderSettings) *DataProviderSettings {
+	s.MariaDbSettings = v
+	return s
+}
+
+// SetMicrosoftSqlServerSettings sets the MicrosoftSqlServerSettings field's value.
+func (s *DataProviderSettings) SetMicrosoftSqlServerSettings(v *MicrosoftSqlServerDataProviderSettings) *DataProviderSettings {
+	s.MicrosoftSqlServerSettings = v
+	return s
+}
+
+// SetMongoDbSettings sets the MongoDbSettings field's value.
+func (s *DataProviderSettings) SetMongoDbSettings(v *MongoDbDataProviderSettings) *DataProviderSettings {
+	s.MongoDbSettings = v
+	return s
+}
+
+// SetMySqlSettings sets the MySqlSettings field's value.
+func (s *DataProviderSettings) SetMySqlSettings(v *MySqlDataProviderSettings) *DataProviderSettings {
+	s.MySqlSettings = v
+	return s
+}
+
+// SetOracleSettings sets the OracleSettings field's value.
+func (s *DataProviderSettings) SetOracleSettings(v *OracleDataProviderSettings) *DataProviderSettings {
+	s.OracleSettings = v
+	return s
+}
+
+// SetPostgreSqlSettings sets the PostgreSqlSettings field's value.
+func (s *DataProviderSettings) SetPostgreSqlSettings(v *PostgreSqlDataProviderSettings) *DataProviderSettings {
+	s.PostgreSqlSettings = v
+	return s
+}
+
+// SetRedshiftSettings sets the RedshiftSettings field's value.
+func (s *DataProviderSettings) SetRedshiftSettings(v *RedshiftDataProviderSettings) *DataProviderSettings {
+	s.RedshiftSettings = v
 	return s
 }
 
@@ -11658,6 +15459,38 @@ func (s *DatabaseShortInfoResponse) SetDatabaseName(v string) *DatabaseShortInfo
 	return s
 }
 
+// Provides error information about a schema conversion operation.
+type DefaultErrorDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The error message.
+	Message *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DefaultErrorDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DefaultErrorDetails) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *DefaultErrorDetails) SetMessage(v string) *DefaultErrorDetails {
+	s.Message = &v
+	return s
+}
+
 type DeleteCertificateInput struct {
 	_ struct{} `type:"structure"`
 
@@ -11823,6 +15656,83 @@ func (s DeleteConnectionOutput) GoString() string {
 // SetConnection sets the Connection field's value.
 func (s *DeleteConnectionOutput) SetConnection(v *Connection) *DeleteConnectionOutput {
 	s.Connection = v
+	return s
+}
+
+type DeleteDataProviderInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the data provider to delete.
+	//
+	// DataProviderIdentifier is a required field
+	DataProviderIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataProviderInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataProviderInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteDataProviderInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteDataProviderInput"}
+	if s.DataProviderIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataProviderIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataProviderIdentifier sets the DataProviderIdentifier field's value.
+func (s *DeleteDataProviderInput) SetDataProviderIdentifier(v string) *DeleteDataProviderInput {
+	s.DataProviderIdentifier = &v
+	return s
+}
+
+type DeleteDataProviderOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The data provider that was deleted.
+	DataProvider *DataProvider `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataProviderOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDataProviderOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataProvider sets the DataProvider field's value.
+func (s *DeleteDataProviderOutput) SetDataProvider(v *DataProvider) *DeleteDataProviderOutput {
+	s.DataProvider = v
 	return s
 }
 
@@ -12122,6 +16032,160 @@ func (s DeleteFleetAdvisorDatabasesOutput) GoString() string {
 // SetDatabaseIds sets the DatabaseIds field's value.
 func (s *DeleteFleetAdvisorDatabasesOutput) SetDatabaseIds(v []*string) *DeleteFleetAdvisorDatabasesOutput {
 	s.DatabaseIds = v
+	return s
+}
+
+type DeleteInstanceProfileInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the instance profile to delete.
+	//
+	// InstanceProfileIdentifier is a required field
+	InstanceProfileIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteInstanceProfileInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteInstanceProfileInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteInstanceProfileInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteInstanceProfileInput"}
+	if s.InstanceProfileIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("InstanceProfileIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInstanceProfileIdentifier sets the InstanceProfileIdentifier field's value.
+func (s *DeleteInstanceProfileInput) SetInstanceProfileIdentifier(v string) *DeleteInstanceProfileInput {
+	s.InstanceProfileIdentifier = &v
+	return s
+}
+
+type DeleteInstanceProfileOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The instance profile that was deleted.
+	InstanceProfile *InstanceProfile `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteInstanceProfileOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteInstanceProfileOutput) GoString() string {
+	return s.String()
+}
+
+// SetInstanceProfile sets the InstanceProfile field's value.
+func (s *DeleteInstanceProfileOutput) SetInstanceProfile(v *InstanceProfile) *DeleteInstanceProfileOutput {
+	s.InstanceProfile = v
+	return s
+}
+
+type DeleteMigrationProjectInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name or Amazon Resource Name (ARN) of the migration project to delete.
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMigrationProjectInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMigrationProjectInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteMigrationProjectInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteMigrationProjectInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DeleteMigrationProjectInput) SetMigrationProjectIdentifier(v string) *DeleteMigrationProjectInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DeleteMigrationProjectOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project that was deleted.
+	MigrationProject *MigrationProject `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMigrationProjectOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMigrationProjectOutput) GoString() string {
+	return s.String()
+}
+
+// SetMigrationProject sets the MigrationProject field's value.
+func (s *DeleteMigrationProjectOutput) SetMigrationProject(v *MigrationProject) *DeleteMigrationProjectOutput {
+	s.MigrationProject = v
 	return s
 }
 
@@ -12953,6 +17017,221 @@ func (s *DescribeConnectionsOutput) SetMarker(v string) *DescribeConnectionsOutp
 	return s
 }
 
+type DescribeConversionConfigurationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name or Amazon Resource Name (ARN) for the schema conversion project
+	// to describe.
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeConversionConfigurationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeConversionConfigurationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeConversionConfigurationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeConversionConfigurationInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeConversionConfigurationInput) SetMigrationProjectIdentifier(v string) *DescribeConversionConfigurationInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeConversionConfigurationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The configuration parameters for the schema conversion project.
+	ConversionConfiguration *string `type:"string"`
+
+	// The name or Amazon Resource Name (ARN) for the schema conversion project.
+	MigrationProjectIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeConversionConfigurationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeConversionConfigurationOutput) GoString() string {
+	return s.String()
+}
+
+// SetConversionConfiguration sets the ConversionConfiguration field's value.
+func (s *DescribeConversionConfigurationOutput) SetConversionConfiguration(v string) *DescribeConversionConfigurationOutput {
+	s.ConversionConfiguration = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeConversionConfigurationOutput) SetMigrationProjectIdentifier(v string) *DescribeConversionConfigurationOutput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeDataProvidersInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the data providers described in the form of key-value
+	// pairs.
+	//
+	// Valid filter names: data-provider-identifier
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataProvidersInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataProvidersInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeDataProvidersInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeDataProvidersInput"}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeDataProvidersInput) SetFilters(v []*Filter) *DescribeDataProvidersInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeDataProvidersInput) SetMarker(v string) *DescribeDataProvidersInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeDataProvidersInput) SetMaxRecords(v int64) *DescribeDataProvidersInput {
+	s.MaxRecords = &v
+	return s
+}
+
+type DescribeDataProvidersOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A description of data providers.
+	DataProviders []*DataProvider `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataProvidersOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataProvidersOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataProviders sets the DataProviders field's value.
+func (s *DescribeDataProvidersOutput) SetDataProviders(v []*DataProvider) *DescribeDataProvidersOutput {
+	s.DataProviders = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeDataProvidersOutput) SetMarker(v string) *DescribeDataProvidersOutput {
+	s.Marker = &v
+	return s
+}
+
 type DescribeEndpointSettingsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -13302,6 +17581,93 @@ func (s *DescribeEndpointsOutput) SetEndpoints(v []*Endpoint) *DescribeEndpoints
 
 // SetMarker sets the Marker field's value.
 func (s *DescribeEndpointsOutput) SetMarker(v string) *DescribeEndpointsOutput {
+	s.Marker = &v
+	return s
+}
+
+type DescribeEngineVersionsInput struct {
+	_ struct{} `type:"structure"`
+
+	// An optional pagination token provided by a previous request. If this parameter
+	// is specified, the response includes only records beyond the marker, up to
+	// the value specified by MaxRecords.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, a pagination token called a marker
+	// is included in the response so that the remaining results can be retrieved.
+	MaxRecords *int64 `type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeEngineVersionsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeEngineVersionsInput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeEngineVersionsInput) SetMarker(v string) *DescribeEngineVersionsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeEngineVersionsInput) SetMaxRecords(v int64) *DescribeEngineVersionsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+type DescribeEngineVersionsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Returned EngineVersion objects that describe the replication instance engine
+	// versions used in the project.
+	EngineVersions []*EngineVersion `type:"list"`
+
+	// An optional pagination token provided by a previous request. If this parameter
+	// is specified, the response includes only records beyond the marker, up to
+	// the value specified by MaxRecords.
+	Marker *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeEngineVersionsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeEngineVersionsOutput) GoString() string {
+	return s.String()
+}
+
+// SetEngineVersions sets the EngineVersions field's value.
+func (s *DescribeEngineVersionsOutput) SetEngineVersions(v []*EngineVersion) *DescribeEngineVersionsOutput {
+	s.EngineVersions = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeEngineVersionsOutput) SetMarker(v string) *DescribeEngineVersionsOutput {
 	s.Marker = &v
 	return s
 }
@@ -13701,6 +18067,147 @@ func (s *DescribeEventsOutput) SetEvents(v []*Event) *DescribeEventsOutput {
 // SetMarker sets the Marker field's value.
 func (s *DescribeEventsOutput) SetMarker(v string) *DescribeEventsOutput {
 	s.Marker = &v
+	return s
+}
+
+type DescribeExtensionPackAssociationsInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the extension pack associations described in the form
+	// of key-value pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+
+	// The name or Amazon Resource Name (ARN) for the migration project.
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeExtensionPackAssociationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeExtensionPackAssociationsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeExtensionPackAssociationsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeExtensionPackAssociationsInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeExtensionPackAssociationsInput) SetFilters(v []*Filter) *DescribeExtensionPackAssociationsInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeExtensionPackAssociationsInput) SetMarker(v string) *DescribeExtensionPackAssociationsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeExtensionPackAssociationsInput) SetMaxRecords(v int64) *DescribeExtensionPackAssociationsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeExtensionPackAssociationsInput) SetMigrationProjectIdentifier(v string) *DescribeExtensionPackAssociationsInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeExtensionPackAssociationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A paginated list of extension pack associations for the specified migration
+	// project.
+	Requests []*SchemaConversionRequest `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeExtensionPackAssociationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeExtensionPackAssociationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeExtensionPackAssociationsOutput) SetMarker(v string) *DescribeExtensionPackAssociationsOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRequests sets the Requests field's value.
+func (s *DescribeExtensionPackAssociationsOutput) SetRequests(v []*SchemaConversionRequest) *DescribeExtensionPackAssociationsOutput {
+	s.Requests = v
 	return s
 }
 
@@ -14298,6 +18805,957 @@ func (s *DescribeFleetAdvisorSchemasOutput) SetFleetAdvisorSchemas(v []*SchemaRe
 // SetNextToken sets the NextToken field's value.
 func (s *DescribeFleetAdvisorSchemasOutput) SetNextToken(v string) *DescribeFleetAdvisorSchemasOutput {
 	s.NextToken = &v
+	return s
+}
+
+type DescribeInstanceProfilesInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the instance profiles described in the form of key-value
+	// pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInstanceProfilesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInstanceProfilesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeInstanceProfilesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeInstanceProfilesInput"}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeInstanceProfilesInput) SetFilters(v []*Filter) *DescribeInstanceProfilesInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeInstanceProfilesInput) SetMarker(v string) *DescribeInstanceProfilesInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeInstanceProfilesInput) SetMaxRecords(v int64) *DescribeInstanceProfilesInput {
+	s.MaxRecords = &v
+	return s
+}
+
+type DescribeInstanceProfilesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A description of instance profiles.
+	InstanceProfiles []*InstanceProfile `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInstanceProfilesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInstanceProfilesOutput) GoString() string {
+	return s.String()
+}
+
+// SetInstanceProfiles sets the InstanceProfiles field's value.
+func (s *DescribeInstanceProfilesOutput) SetInstanceProfiles(v []*InstanceProfile) *DescribeInstanceProfilesOutput {
+	s.InstanceProfiles = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeInstanceProfilesOutput) SetMarker(v string) *DescribeInstanceProfilesOutput {
+	s.Marker = &v
+	return s
+}
+
+type DescribeMetadataModelAssessmentsInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the metadata model assessments described in the form of
+	// key-value pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+
+	// The name or Amazon Resource Name (ARN) of the migration project.
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelAssessmentsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelAssessmentsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeMetadataModelAssessmentsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeMetadataModelAssessmentsInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeMetadataModelAssessmentsInput) SetFilters(v []*Filter) *DescribeMetadataModelAssessmentsInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelAssessmentsInput) SetMarker(v string) *DescribeMetadataModelAssessmentsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeMetadataModelAssessmentsInput) SetMaxRecords(v int64) *DescribeMetadataModelAssessmentsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeMetadataModelAssessmentsInput) SetMigrationProjectIdentifier(v string) *DescribeMetadataModelAssessmentsInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeMetadataModelAssessmentsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A paginated list of metadata model assessments for the specified migration
+	// project.
+	Requests []*SchemaConversionRequest `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelAssessmentsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelAssessmentsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelAssessmentsOutput) SetMarker(v string) *DescribeMetadataModelAssessmentsOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRequests sets the Requests field's value.
+func (s *DescribeMetadataModelAssessmentsOutput) SetRequests(v []*SchemaConversionRequest) *DescribeMetadataModelAssessmentsOutput {
+	s.Requests = v
+	return s
+}
+
+type DescribeMetadataModelConversionsInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the metadata model conversions described in the form of
+	// key-value pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelConversionsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelConversionsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeMetadataModelConversionsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeMetadataModelConversionsInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeMetadataModelConversionsInput) SetFilters(v []*Filter) *DescribeMetadataModelConversionsInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelConversionsInput) SetMarker(v string) *DescribeMetadataModelConversionsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeMetadataModelConversionsInput) SetMaxRecords(v int64) *DescribeMetadataModelConversionsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeMetadataModelConversionsInput) SetMigrationProjectIdentifier(v string) *DescribeMetadataModelConversionsInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeMetadataModelConversionsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A paginated list of metadata model conversions.
+	Requests []*SchemaConversionRequest `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelConversionsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelConversionsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelConversionsOutput) SetMarker(v string) *DescribeMetadataModelConversionsOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRequests sets the Requests field's value.
+func (s *DescribeMetadataModelConversionsOutput) SetRequests(v []*SchemaConversionRequest) *DescribeMetadataModelConversionsOutput {
+	s.Requests = v
+	return s
+}
+
+type DescribeMetadataModelExportsAsScriptInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the metadata model exports described in the form of key-value
+	// pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsAsScriptInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsAsScriptInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeMetadataModelExportsAsScriptInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeMetadataModelExportsAsScriptInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeMetadataModelExportsAsScriptInput) SetFilters(v []*Filter) *DescribeMetadataModelExportsAsScriptInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelExportsAsScriptInput) SetMarker(v string) *DescribeMetadataModelExportsAsScriptInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeMetadataModelExportsAsScriptInput) SetMaxRecords(v int64) *DescribeMetadataModelExportsAsScriptInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeMetadataModelExportsAsScriptInput) SetMigrationProjectIdentifier(v string) *DescribeMetadataModelExportsAsScriptInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeMetadataModelExportsAsScriptOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A paginated list of metadata model exports.
+	Requests []*SchemaConversionRequest `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsAsScriptOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsAsScriptOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelExportsAsScriptOutput) SetMarker(v string) *DescribeMetadataModelExportsAsScriptOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRequests sets the Requests field's value.
+func (s *DescribeMetadataModelExportsAsScriptOutput) SetRequests(v []*SchemaConversionRequest) *DescribeMetadataModelExportsAsScriptOutput {
+	s.Requests = v
+	return s
+}
+
+type DescribeMetadataModelExportsToTargetInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the metadata model exports described in the form of key-value
+	// pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsToTargetInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsToTargetInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeMetadataModelExportsToTargetInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeMetadataModelExportsToTargetInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeMetadataModelExportsToTargetInput) SetFilters(v []*Filter) *DescribeMetadataModelExportsToTargetInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelExportsToTargetInput) SetMarker(v string) *DescribeMetadataModelExportsToTargetInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeMetadataModelExportsToTargetInput) SetMaxRecords(v int64) *DescribeMetadataModelExportsToTargetInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeMetadataModelExportsToTargetInput) SetMigrationProjectIdentifier(v string) *DescribeMetadataModelExportsToTargetInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeMetadataModelExportsToTargetOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A paginated list of metadata model exports.
+	Requests []*SchemaConversionRequest `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsToTargetOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelExportsToTargetOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelExportsToTargetOutput) SetMarker(v string) *DescribeMetadataModelExportsToTargetOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRequests sets the Requests field's value.
+func (s *DescribeMetadataModelExportsToTargetOutput) SetRequests(v []*SchemaConversionRequest) *DescribeMetadataModelExportsToTargetOutput {
+	s.Requests = v
+	return s
+}
+
+type DescribeMetadataModelImportsInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the metadata model imports described in the form of key-value
+	// pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A paginated list of metadata model imports.
+	MaxRecords *int64 `type:"integer"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelImportsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelImportsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeMetadataModelImportsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeMetadataModelImportsInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeMetadataModelImportsInput) SetFilters(v []*Filter) *DescribeMetadataModelImportsInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelImportsInput) SetMarker(v string) *DescribeMetadataModelImportsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeMetadataModelImportsInput) SetMaxRecords(v int64) *DescribeMetadataModelImportsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *DescribeMetadataModelImportsInput) SetMigrationProjectIdentifier(v string) *DescribeMetadataModelImportsInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type DescribeMetadataModelImportsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A paginated list of metadata model imports.
+	Requests []*SchemaConversionRequest `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelImportsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMetadataModelImportsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMetadataModelImportsOutput) SetMarker(v string) *DescribeMetadataModelImportsOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRequests sets the Requests field's value.
+func (s *DescribeMetadataModelImportsOutput) SetRequests(v []*SchemaConversionRequest) *DescribeMetadataModelImportsOutput {
+	s.Requests = v
+	return s
+}
+
+type DescribeMigrationProjectsInput struct {
+	_ struct{} `type:"structure"`
+
+	// Filters applied to the migration projects described in the form of key-value
+	// pairs.
+	Filters []*Filter `type:"list"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, DMS includes a pagination token
+	// in the response so that you can retrieve the remaining results.
+	MaxRecords *int64 `type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMigrationProjectsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMigrationProjectsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeMigrationProjectsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeMigrationProjectsInput"}
+	if s.Filters != nil {
+		for i, v := range s.Filters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Filters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilters sets the Filters field's value.
+func (s *DescribeMigrationProjectsInput) SetFilters(v []*Filter) *DescribeMigrationProjectsInput {
+	s.Filters = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMigrationProjectsInput) SetMarker(v string) *DescribeMigrationProjectsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeMigrationProjectsInput) SetMaxRecords(v int64) *DescribeMigrationProjectsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+type DescribeMigrationProjectsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the unique pagination token that makes it possible to display the
+	// next page of results. If this parameter is specified, the response includes
+	// only records beyond the marker, up to the value specified by MaxRecords.
+	//
+	// If Marker is returned by a previous response, there are more results available.
+	// The value of Marker is a unique pagination token for each page. To retrieve
+	// the next page, make the call again using the returned token and keeping all
+	// other arguments unchanged.
+	Marker *string `type:"string"`
+
+	// A description of migration projects.
+	MigrationProjects []*MigrationProject `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMigrationProjectsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeMigrationProjectsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeMigrationProjectsOutput) SetMarker(v string) *DescribeMigrationProjectsOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetMigrationProjects sets the MigrationProjects field's value.
+func (s *DescribeMigrationProjectsOutput) SetMigrationProjects(v []*MigrationProject) *DescribeMigrationProjectsOutput {
+	s.MigrationProjects = v
 	return s
 }
 
@@ -16363,6 +21821,75 @@ func (s *DmsTransferSettings) SetServiceAccessRoleArn(v string) *DmsTransferSett
 	return s
 }
 
+// Provides information that defines a DocumentDB data provider.
+type DocDbDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the certificate used for SSL connection.
+	CertificateArn *string `type:"string"`
+
+	// The database name on the DocumentDB data provider.
+	DatabaseName *string `type:"string"`
+
+	// The port value for the DocumentDB data provider.
+	Port *int64 `type:"integer"`
+
+	// The name of the source DocumentDB server.
+	ServerName *string `type:"string"`
+
+	// The SSL mode used to connect to the DocumentDB data provider. The default
+	// value is none.
+	SslMode *string `type:"string" enum:"DmsSslModeValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DocDbDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DocDbDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *DocDbDataProviderSettings) SetCertificateArn(v string) *DocDbDataProviderSettings {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *DocDbDataProviderSettings) SetDatabaseName(v string) *DocDbDataProviderSettings {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *DocDbDataProviderSettings) SetPort(v int64) *DocDbDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *DocDbDataProviderSettings) SetServerName(v string) *DocDbDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
+// SetSslMode sets the SslMode field's value.
+func (s *DocDbDataProviderSettings) SetSslMode(v string) *DocDbDataProviderSettings {
+	s.SslMode = &v
+	return s
+}
+
 // Provides information that defines a DocumentDB endpoint.
 type DocDbSettings struct {
 	_ struct{} `type:"structure"`
@@ -16741,9 +22268,9 @@ type Endpoint struct {
 
 	// The database engine name. Valid values, depending on the EndpointType, include
 	// "mysql", "oracle", "postgres", "mariadb", "aurora", "aurora-postgresql",
-	// "redshift", "s3", "db2", "db2-zos", "azuredb", "sybase", "dynamodb", "mongodb",
-	// "kinesis", "kafka", "elasticsearch", "documentdb", "sqlserver", "neptune",
-	// and "babelfish".
+	// "redshift", "redshift-serverless", "s3", "db2", "db2-zos", "azuredb", "sybase",
+	// "dynamodb", "mongodb", "kinesis", "kafka", "elasticsearch", "documentdb",
+	// "sqlserver", "neptune", and "babelfish".
 	EngineName *string `type:"string"`
 
 	// Value returned by a call to CreateEndpoint that can be used for cross-account
@@ -17186,6 +22713,136 @@ func (s *EndpointSetting) SetUnits(v string) *EndpointSetting {
 	return s
 }
 
+// Provides information about a replication instance version.
+type EngineVersion struct {
+	_ struct{} `type:"structure"`
+
+	// The date when the replication instance will be automatically upgraded. This
+	// setting only applies if the auto-minor-version setting is enabled.
+	AutoUpgradeDate *time.Time `type:"timestamp"`
+
+	// The list of valid replication instance versions that you can upgrade to.
+	AvailableUpgrades []*string `type:"list"`
+
+	// The date when the replication instance version will be deprecated and can
+	// no longer be requested.
+	DeprecationDate *time.Time `type:"timestamp"`
+
+	// The date when the replication instance will have a version upgrade forced.
+	ForceUpgradeDate *time.Time `type:"timestamp"`
+
+	// The date when the replication instance version became publicly available.
+	LaunchDate *time.Time `type:"timestamp"`
+
+	// The lifecycle status of the replication instance version. Valid values are
+	// DEPRECATED, DEFAULT_VERSION, and ACTIVE.
+	Lifecycle *string `type:"string"`
+
+	// The release status of the replication instance version.
+	ReleaseStatus *string `type:"string" enum:"ReleaseStatusValues"`
+
+	// The version number of the replication instance.
+	Version *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EngineVersion) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EngineVersion) GoString() string {
+	return s.String()
+}
+
+// SetAutoUpgradeDate sets the AutoUpgradeDate field's value.
+func (s *EngineVersion) SetAutoUpgradeDate(v time.Time) *EngineVersion {
+	s.AutoUpgradeDate = &v
+	return s
+}
+
+// SetAvailableUpgrades sets the AvailableUpgrades field's value.
+func (s *EngineVersion) SetAvailableUpgrades(v []*string) *EngineVersion {
+	s.AvailableUpgrades = v
+	return s
+}
+
+// SetDeprecationDate sets the DeprecationDate field's value.
+func (s *EngineVersion) SetDeprecationDate(v time.Time) *EngineVersion {
+	s.DeprecationDate = &v
+	return s
+}
+
+// SetForceUpgradeDate sets the ForceUpgradeDate field's value.
+func (s *EngineVersion) SetForceUpgradeDate(v time.Time) *EngineVersion {
+	s.ForceUpgradeDate = &v
+	return s
+}
+
+// SetLaunchDate sets the LaunchDate field's value.
+func (s *EngineVersion) SetLaunchDate(v time.Time) *EngineVersion {
+	s.LaunchDate = &v
+	return s
+}
+
+// SetLifecycle sets the Lifecycle field's value.
+func (s *EngineVersion) SetLifecycle(v string) *EngineVersion {
+	s.Lifecycle = &v
+	return s
+}
+
+// SetReleaseStatus sets the ReleaseStatus field's value.
+func (s *EngineVersion) SetReleaseStatus(v string) *EngineVersion {
+	s.ReleaseStatus = &v
+	return s
+}
+
+// SetVersion sets the Version field's value.
+func (s *EngineVersion) SetVersion(v string) *EngineVersion {
+	s.Version = &v
+	return s
+}
+
+// Provides error information about a project.
+type ErrorDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Error information about a project.
+	DefaultErrorDetails *DefaultErrorDetails `locationName:"defaultErrorDetails" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ErrorDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ErrorDetails) GoString() string {
+	return s.String()
+}
+
+// SetDefaultErrorDetails sets the DefaultErrorDetails field's value.
+func (s *ErrorDetails) SetDefaultErrorDetails(v *DefaultErrorDetails) *ErrorDetails {
+	s.DefaultErrorDetails = v
+	return s
+}
+
 // Describes an identifiable significant activity that affects a replication
 // instance or task. This object can provide the message, the available event
 // categories, the date and source of the event, and the DMS resource type.
@@ -17420,6 +23077,210 @@ func (s *EventSubscription) SetStatus(v string) *EventSubscription {
 // SetSubscriptionCreationTime sets the SubscriptionCreationTime field's value.
 func (s *EventSubscription) SetSubscriptionCreationTime(v string) *EventSubscription {
 	s.SubscriptionCreationTime = &v
+	return s
+}
+
+type ExportMetadataModelAssessmentInput struct {
+	_ struct{} `type:"structure"`
+
+	// The file format of the assessment file.
+	AssessmentReportTypes []*string `min:"1" type:"list" enum:"AssessmentReportType"`
+
+	// The name of the assessment file to create in your Amazon S3 bucket.
+	FileName *string `type:"string"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+
+	// A value that specifies the database objects to assess.
+	//
+	// SelectionRules is a required field
+	SelectionRules *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportMetadataModelAssessmentInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportMetadataModelAssessmentInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ExportMetadataModelAssessmentInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ExportMetadataModelAssessmentInput"}
+	if s.AssessmentReportTypes != nil && len(s.AssessmentReportTypes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssessmentReportTypes", 1))
+	}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.SelectionRules == nil {
+		invalidParams.Add(request.NewErrParamRequired("SelectionRules"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssessmentReportTypes sets the AssessmentReportTypes field's value.
+func (s *ExportMetadataModelAssessmentInput) SetAssessmentReportTypes(v []*string) *ExportMetadataModelAssessmentInput {
+	s.AssessmentReportTypes = v
+	return s
+}
+
+// SetFileName sets the FileName field's value.
+func (s *ExportMetadataModelAssessmentInput) SetFileName(v string) *ExportMetadataModelAssessmentInput {
+	s.FileName = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *ExportMetadataModelAssessmentInput) SetMigrationProjectIdentifier(v string) *ExportMetadataModelAssessmentInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+// SetSelectionRules sets the SelectionRules field's value.
+func (s *ExportMetadataModelAssessmentInput) SetSelectionRules(v string) *ExportMetadataModelAssessmentInput {
+	s.SelectionRules = &v
+	return s
+}
+
+type ExportMetadataModelAssessmentOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon S3 details for an assessment exported in CSV format.
+	CsvReport *ExportMetadataModelAssessmentResultEntry `type:"structure"`
+
+	// The Amazon S3 details for an assessment exported in PDF format.
+	PdfReport *ExportMetadataModelAssessmentResultEntry `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportMetadataModelAssessmentOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportMetadataModelAssessmentOutput) GoString() string {
+	return s.String()
+}
+
+// SetCsvReport sets the CsvReport field's value.
+func (s *ExportMetadataModelAssessmentOutput) SetCsvReport(v *ExportMetadataModelAssessmentResultEntry) *ExportMetadataModelAssessmentOutput {
+	s.CsvReport = v
+	return s
+}
+
+// SetPdfReport sets the PdfReport field's value.
+func (s *ExportMetadataModelAssessmentOutput) SetPdfReport(v *ExportMetadataModelAssessmentResultEntry) *ExportMetadataModelAssessmentOutput {
+	s.PdfReport = v
+	return s
+}
+
+// Provides information about an exported metadata model assessment.
+type ExportMetadataModelAssessmentResultEntry struct {
+	_ struct{} `type:"structure"`
+
+	// The URL for the object containing the exported metadata model assessment.
+	ObjectURL *string `type:"string"`
+
+	// The object key for the object containing the exported metadata model assessment.
+	S3ObjectKey *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportMetadataModelAssessmentResultEntry) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportMetadataModelAssessmentResultEntry) GoString() string {
+	return s.String()
+}
+
+// SetObjectURL sets the ObjectURL field's value.
+func (s *ExportMetadataModelAssessmentResultEntry) SetObjectURL(v string) *ExportMetadataModelAssessmentResultEntry {
+	s.ObjectURL = &v
+	return s
+}
+
+// SetS3ObjectKey sets the S3ObjectKey field's value.
+func (s *ExportMetadataModelAssessmentResultEntry) SetS3ObjectKey(v string) *ExportMetadataModelAssessmentResultEntry {
+	s.S3ObjectKey = &v
+	return s
+}
+
+// Provides information about a metadata model assessment exported to SQL.
+type ExportSqlDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The URL for the object containing the exported metadata model assessment.
+	ObjectURL *string `type:"string"`
+
+	// The Amazon S3 object key for the object containing the exported metadata
+	// model assessment.
+	S3ObjectKey *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportSqlDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExportSqlDetails) GoString() string {
+	return s.String()
+}
+
+// SetObjectURL sets the ObjectURL field's value.
+func (s *ExportSqlDetails) SetObjectURL(v string) *ExportSqlDetails {
+	s.ObjectURL = &v
+	return s
+}
+
+// SetS3ObjectKey sets the S3ObjectKey field's value.
+func (s *ExportSqlDetails) SetS3ObjectKey(v string) *ExportSqlDetails {
+	s.S3ObjectKey = &v
 	return s
 }
 
@@ -17821,6 +23682,20 @@ type IBMDb2Settings struct {
 	// Database name for the endpoint.
 	DatabaseName *string `type:"string"`
 
+	// If true, DMS saves any .csv files to the Db2 LUW target that were used to
+	// replicate data. DMS uses these files for analysis and troubleshooting.
+	//
+	// The default value is false.
+	KeepCsvFiles *bool `type:"boolean"`
+
+	// The amount of time (in milliseconds) before DMS times out operations performed
+	// by DMS on the Db2 target. The default value is 1200 (20 minutes).
+	LoadTimeout *int64 `type:"integer"`
+
+	// Specifies the maximum size (in KB) of .csv files used to transfer data to
+	// Db2 LUW.
+	MaxFileSize *int64 `type:"integer"`
+
 	// Maximum number of bytes per read, as a NUMBER value. The default is 64 KB.
 	MaxKBytesPerRead *int64 `type:"integer"`
 
@@ -17862,6 +23737,11 @@ type IBMDb2Settings struct {
 
 	// Endpoint connection user name.
 	Username *string `type:"string"`
+
+	// The size (in KB) of the in-memory file write buffer used when generating
+	// .csv files on the local disk on the DMS replication instance. The default
+	// value is 1024 (1 MB).
+	WriteBufferSize *int64 `type:"integer"`
 }
 
 // String returns the string representation.
@@ -17891,6 +23771,24 @@ func (s *IBMDb2Settings) SetCurrentLsn(v string) *IBMDb2Settings {
 // SetDatabaseName sets the DatabaseName field's value.
 func (s *IBMDb2Settings) SetDatabaseName(v string) *IBMDb2Settings {
 	s.DatabaseName = &v
+	return s
+}
+
+// SetKeepCsvFiles sets the KeepCsvFiles field's value.
+func (s *IBMDb2Settings) SetKeepCsvFiles(v bool) *IBMDb2Settings {
+	s.KeepCsvFiles = &v
+	return s
+}
+
+// SetLoadTimeout sets the LoadTimeout field's value.
+func (s *IBMDb2Settings) SetLoadTimeout(v int64) *IBMDb2Settings {
+	s.LoadTimeout = &v
+	return s
+}
+
+// SetMaxFileSize sets the MaxFileSize field's value.
+func (s *IBMDb2Settings) SetMaxFileSize(v int64) *IBMDb2Settings {
+	s.MaxFileSize = &v
 	return s
 }
 
@@ -17939,6 +23837,12 @@ func (s *IBMDb2Settings) SetSetDataCaptureChanges(v bool) *IBMDb2Settings {
 // SetUsername sets the Username field's value.
 func (s *IBMDb2Settings) SetUsername(v string) *IBMDb2Settings {
 	s.Username = &v
+	return s
+}
+
+// SetWriteBufferSize sets the WriteBufferSize field's value.
+func (s *IBMDb2Settings) SetWriteBufferSize(v int64) *IBMDb2Settings {
+	s.WriteBufferSize = &v
 	return s
 }
 
@@ -18054,6 +23958,139 @@ func (s ImportCertificateOutput) GoString() string {
 // SetCertificate sets the Certificate field's value.
 func (s *ImportCertificateOutput) SetCertificate(v *Certificate) *ImportCertificateOutput {
 	s.Certificate = v
+	return s
+}
+
+// Provides information that defines an instance profile.
+type InstanceProfile struct {
+	_ struct{} `type:"structure"`
+
+	// The Availability Zone where the instance profile runs.
+	AvailabilityZone *string `type:"string"`
+
+	// A description of the instance profile. Descriptions can have up to 31 characters.
+	// A description can contain only ASCII letters, digits, and hyphens ('-').
+	// Also, it can't end with a hyphen or contain two consecutive hyphens, and
+	// can only begin with a letter.
+	Description *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) string that uniquely identifies the instance
+	// profile.
+	InstanceProfileArn *string `type:"string"`
+
+	// The time the instance profile was created.
+	InstanceProfileCreationTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	// The user-friendly name for the instance profile.
+	InstanceProfileName *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) of the KMS key that is used to encrypt the
+	// connection parameters for the instance profile.
+	//
+	// If you don't specify a value for the KmsKeyArn parameter, then DMS uses your
+	// default encryption key.
+	//
+	// KMS creates the default encryption key for your Amazon Web Services account.
+	// Your Amazon Web Services account has a different default encryption key for
+	// each Amazon Web Services Region.
+	KmsKeyArn *string `type:"string"`
+
+	// Specifies the network type for the instance profile. A value of IPV4 represents
+	// an instance profile with IPv4 network type and only supports IPv4 addressing.
+	// A value of IPV6 represents an instance profile with IPv6 network type and
+	// only supports IPv6 addressing. A value of DUAL represents an instance profile
+	// with dual network type that supports IPv4 and IPv6 addressing.
+	NetworkType *string `type:"string"`
+
+	// Specifies the accessibility options for the instance profile. A value of
+	// true represents an instance profile with a public IP address. A value of
+	// false represents an instance profile with a private IP address. The default
+	// value is true.
+	PubliclyAccessible *bool `type:"boolean"`
+
+	// The identifier of the subnet group that is associated with the instance profile.
+	SubnetGroupIdentifier *string `type:"string"`
+
+	// The VPC security groups that are used with the instance profile. The VPC
+	// security group must work with the VPC containing the instance profile.
+	VpcSecurityGroups []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InstanceProfile) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InstanceProfile) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *InstanceProfile) SetAvailabilityZone(v string) *InstanceProfile {
+	s.AvailabilityZone = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *InstanceProfile) SetDescription(v string) *InstanceProfile {
+	s.Description = &v
+	return s
+}
+
+// SetInstanceProfileArn sets the InstanceProfileArn field's value.
+func (s *InstanceProfile) SetInstanceProfileArn(v string) *InstanceProfile {
+	s.InstanceProfileArn = &v
+	return s
+}
+
+// SetInstanceProfileCreationTime sets the InstanceProfileCreationTime field's value.
+func (s *InstanceProfile) SetInstanceProfileCreationTime(v time.Time) *InstanceProfile {
+	s.InstanceProfileCreationTime = &v
+	return s
+}
+
+// SetInstanceProfileName sets the InstanceProfileName field's value.
+func (s *InstanceProfile) SetInstanceProfileName(v string) *InstanceProfile {
+	s.InstanceProfileName = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *InstanceProfile) SetKmsKeyArn(v string) *InstanceProfile {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetNetworkType sets the NetworkType field's value.
+func (s *InstanceProfile) SetNetworkType(v string) *InstanceProfile {
+	s.NetworkType = &v
+	return s
+}
+
+// SetPubliclyAccessible sets the PubliclyAccessible field's value.
+func (s *InstanceProfile) SetPubliclyAccessible(v bool) *InstanceProfile {
+	s.PubliclyAccessible = &v
+	return s
+}
+
+// SetSubnetGroupIdentifier sets the SubnetGroupIdentifier field's value.
+func (s *InstanceProfile) SetSubnetGroupIdentifier(v string) *InstanceProfile {
+	s.SubnetGroupIdentifier = &v
+	return s
+}
+
+// SetVpcSecurityGroups sets the VpcSecurityGroups field's value.
+func (s *InstanceProfile) SetVpcSecurityGroups(v []*string) *InstanceProfile {
+	s.VpcSecurityGroups = v
 	return s
 }
 
@@ -19423,6 +25460,66 @@ func (s *ListTagsForResourceOutput) SetTagList(v []*Tag) *ListTagsForResourceOut
 	return s
 }
 
+// Provides information that defines a MariaDB data provider.
+type MariaDbDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the certificate used for SSL connection.
+	CertificateArn *string `type:"string"`
+
+	// The port value for the MariaDB data provider
+	Port *int64 `type:"integer"`
+
+	// The name of the MariaDB server.
+	ServerName *string `type:"string"`
+
+	// The SSL mode used to connect to the MariaDB data provider. The default value
+	// is none.
+	SslMode *string `type:"string" enum:"DmsSslModeValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MariaDbDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MariaDbDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *MariaDbDataProviderSettings) SetCertificateArn(v string) *MariaDbDataProviderSettings {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *MariaDbDataProviderSettings) SetPort(v int64) *MariaDbDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *MariaDbDataProviderSettings) SetServerName(v string) *MariaDbDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
+// SetSslMode sets the SslMode field's value.
+func (s *MariaDbDataProviderSettings) SetSslMode(v string) *MariaDbDataProviderSettings {
+	s.SslMode = &v
+	return s
+}
+
 // Provides information that defines a Microsoft SQL Server endpoint.
 type MicrosoftSQLServerSettings struct {
 	_ struct{} `type:"structure"`
@@ -19511,8 +25608,9 @@ type MicrosoftSQLServerSettings struct {
 	// Indicates the mode used to fetch CDC data.
 	TlogAccessMode *string `type:"string" enum:"TlogAccessMode"`
 
-	// Use the TrimSpaceInChar source endpoint setting to trim data on CHAR and
-	// NCHAR data types during migration. The default value is true.
+	// Use the TrimSpaceInChar source endpoint setting to right-trim data on CHAR
+	// and NCHAR data types during migration. Setting TrimSpaceInChar does not left-trim
+	// data. The default value is true.
 	TrimSpaceInChar *bool `type:"boolean"`
 
 	// Use this to attribute to transfer data for full-load operations using BCP.
@@ -19645,6 +25743,422 @@ func (s *MicrosoftSQLServerSettings) SetUseThirdPartyBackupDevice(v bool) *Micro
 // SetUsername sets the Username field's value.
 func (s *MicrosoftSQLServerSettings) SetUsername(v string) *MicrosoftSQLServerSettings {
 	s.Username = &v
+	return s
+}
+
+// Provides information that defines a Microsoft SQL Server data provider.
+type MicrosoftSqlServerDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the certificate used for SSL connection.
+	CertificateArn *string `type:"string"`
+
+	// The database name on the Microsoft SQL Server data provider.
+	DatabaseName *string `type:"string"`
+
+	// The port value for the Microsoft SQL Server data provider.
+	Port *int64 `type:"integer"`
+
+	// The name of the Microsoft SQL Server server.
+	ServerName *string `type:"string"`
+
+	// The SSL mode used to connect to the Microsoft SQL Server data provider. The
+	// default value is none.
+	SslMode *string `type:"string" enum:"DmsSslModeValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MicrosoftSqlServerDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MicrosoftSqlServerDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *MicrosoftSqlServerDataProviderSettings) SetCertificateArn(v string) *MicrosoftSqlServerDataProviderSettings {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *MicrosoftSqlServerDataProviderSettings) SetDatabaseName(v string) *MicrosoftSqlServerDataProviderSettings {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *MicrosoftSqlServerDataProviderSettings) SetPort(v int64) *MicrosoftSqlServerDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *MicrosoftSqlServerDataProviderSettings) SetServerName(v string) *MicrosoftSqlServerDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
+// SetSslMode sets the SslMode field's value.
+func (s *MicrosoftSqlServerDataProviderSettings) SetSslMode(v string) *MicrosoftSqlServerDataProviderSettings {
+	s.SslMode = &v
+	return s
+}
+
+// Provides information that defines a migration project.
+type MigrationProject struct {
+	_ struct{} `type:"structure"`
+
+	// A user-friendly description of the migration project.
+	Description *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) of the instance profile for your migration
+	// project.
+	InstanceProfileArn *string `type:"string"`
+
+	// The name of the associated instance profile.
+	InstanceProfileName *string `type:"string"`
+
+	// The ARN string that uniquely identifies the migration project.
+	MigrationProjectArn *string `type:"string"`
+
+	// The time when the migration project was created.
+	MigrationProjectCreationTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	// The name of the migration project.
+	MigrationProjectName *string `type:"string"`
+
+	// The schema conversion application attributes, including the Amazon S3 bucket
+	// name and Amazon S3 role ARN.
+	SchemaConversionApplicationAttributes *SCApplicationAttributes `type:"structure"`
+
+	// Information about the source data provider, including the name or ARN, and
+	// Secrets Manager parameters.
+	SourceDataProviderDescriptors []*DataProviderDescriptor `type:"list"`
+
+	// Information about the target data provider, including the name or ARN, and
+	// Secrets Manager parameters.
+	TargetDataProviderDescriptors []*DataProviderDescriptor `type:"list"`
+
+	// The settings in JSON format for migration rules. Migration rules make it
+	// possible for you to change the object names according to the rules that you
+	// specify. For example, you can change an object name to lowercase or uppercase,
+	// add or remove a prefix or suffix, or rename objects.
+	TransformationRules *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MigrationProject) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MigrationProject) GoString() string {
+	return s.String()
+}
+
+// SetDescription sets the Description field's value.
+func (s *MigrationProject) SetDescription(v string) *MigrationProject {
+	s.Description = &v
+	return s
+}
+
+// SetInstanceProfileArn sets the InstanceProfileArn field's value.
+func (s *MigrationProject) SetInstanceProfileArn(v string) *MigrationProject {
+	s.InstanceProfileArn = &v
+	return s
+}
+
+// SetInstanceProfileName sets the InstanceProfileName field's value.
+func (s *MigrationProject) SetInstanceProfileName(v string) *MigrationProject {
+	s.InstanceProfileName = &v
+	return s
+}
+
+// SetMigrationProjectArn sets the MigrationProjectArn field's value.
+func (s *MigrationProject) SetMigrationProjectArn(v string) *MigrationProject {
+	s.MigrationProjectArn = &v
+	return s
+}
+
+// SetMigrationProjectCreationTime sets the MigrationProjectCreationTime field's value.
+func (s *MigrationProject) SetMigrationProjectCreationTime(v time.Time) *MigrationProject {
+	s.MigrationProjectCreationTime = &v
+	return s
+}
+
+// SetMigrationProjectName sets the MigrationProjectName field's value.
+func (s *MigrationProject) SetMigrationProjectName(v string) *MigrationProject {
+	s.MigrationProjectName = &v
+	return s
+}
+
+// SetSchemaConversionApplicationAttributes sets the SchemaConversionApplicationAttributes field's value.
+func (s *MigrationProject) SetSchemaConversionApplicationAttributes(v *SCApplicationAttributes) *MigrationProject {
+	s.SchemaConversionApplicationAttributes = v
+	return s
+}
+
+// SetSourceDataProviderDescriptors sets the SourceDataProviderDescriptors field's value.
+func (s *MigrationProject) SetSourceDataProviderDescriptors(v []*DataProviderDescriptor) *MigrationProject {
+	s.SourceDataProviderDescriptors = v
+	return s
+}
+
+// SetTargetDataProviderDescriptors sets the TargetDataProviderDescriptors field's value.
+func (s *MigrationProject) SetTargetDataProviderDescriptors(v []*DataProviderDescriptor) *MigrationProject {
+	s.TargetDataProviderDescriptors = v
+	return s
+}
+
+// SetTransformationRules sets the TransformationRules field's value.
+func (s *MigrationProject) SetTransformationRules(v string) *MigrationProject {
+	s.TransformationRules = &v
+	return s
+}
+
+type ModifyConversionConfigurationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The new conversion configuration.
+	//
+	// ConversionConfiguration is a required field
+	ConversionConfiguration *string `type:"string" required:"true"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyConversionConfigurationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyConversionConfigurationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ModifyConversionConfigurationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ModifyConversionConfigurationInput"}
+	if s.ConversionConfiguration == nil {
+		invalidParams.Add(request.NewErrParamRequired("ConversionConfiguration"))
+	}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetConversionConfiguration sets the ConversionConfiguration field's value.
+func (s *ModifyConversionConfigurationInput) SetConversionConfiguration(v string) *ModifyConversionConfigurationInput {
+	s.ConversionConfiguration = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *ModifyConversionConfigurationInput) SetMigrationProjectIdentifier(v string) *ModifyConversionConfigurationInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type ModifyConversionConfigurationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The name or Amazon Resource Name (ARN) of the modified configuration.
+	MigrationProjectIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyConversionConfigurationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyConversionConfigurationOutput) GoString() string {
+	return s.String()
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *ModifyConversionConfigurationOutput) SetMigrationProjectIdentifier(v string) *ModifyConversionConfigurationOutput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type ModifyDataProviderInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the data provider. Identifiers must begin with a letter
+	// and must contain only ASCII letters, digits, and hyphens. They can't end
+	// with a hyphen, or contain two consecutive hyphens.
+	//
+	// DataProviderIdentifier is a required field
+	DataProviderIdentifier *string `type:"string" required:"true"`
+
+	// The name of the data provider.
+	DataProviderName *string `type:"string"`
+
+	// A user-friendly description of the data provider.
+	Description *string `type:"string"`
+
+	// The type of database engine for the data provider. Valid values include "aurora",
+	// "aurora-postgresql", "mysql", "oracle", "postgres", "sqlserver", redshift,
+	// mariadb, mongodb, and docdb. A value of "aurora" represents Amazon Aurora
+	// MySQL-Compatible Edition.
+	Engine *string `type:"string"`
+
+	// If this attribute is Y, the current call to ModifyDataProvider replaces all
+	// existing data provider settings with the exact settings that you specify
+	// in this call. If this attribute is N, the current call to ModifyDataProvider
+	// does two things:
+	//
+	//    * It replaces any data provider settings that already exist with new values,
+	//    for settings with the same names.
+	//
+	//    * It creates new data provider settings that you specify in the call,
+	//    for settings with different names.
+	ExactSettings *bool `type:"boolean"`
+
+	// The settings in JSON format for a data provider.
+	Settings *DataProviderSettings `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyDataProviderInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyDataProviderInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ModifyDataProviderInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ModifyDataProviderInput"}
+	if s.DataProviderIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataProviderIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataProviderIdentifier sets the DataProviderIdentifier field's value.
+func (s *ModifyDataProviderInput) SetDataProviderIdentifier(v string) *ModifyDataProviderInput {
+	s.DataProviderIdentifier = &v
+	return s
+}
+
+// SetDataProviderName sets the DataProviderName field's value.
+func (s *ModifyDataProviderInput) SetDataProviderName(v string) *ModifyDataProviderInput {
+	s.DataProviderName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *ModifyDataProviderInput) SetDescription(v string) *ModifyDataProviderInput {
+	s.Description = &v
+	return s
+}
+
+// SetEngine sets the Engine field's value.
+func (s *ModifyDataProviderInput) SetEngine(v string) *ModifyDataProviderInput {
+	s.Engine = &v
+	return s
+}
+
+// SetExactSettings sets the ExactSettings field's value.
+func (s *ModifyDataProviderInput) SetExactSettings(v bool) *ModifyDataProviderInput {
+	s.ExactSettings = &v
+	return s
+}
+
+// SetSettings sets the Settings field's value.
+func (s *ModifyDataProviderInput) SetSettings(v *DataProviderSettings) *ModifyDataProviderInput {
+	s.Settings = v
+	return s
+}
+
+type ModifyDataProviderOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The data provider that was modified.
+	DataProvider *DataProvider `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyDataProviderOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyDataProviderOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataProvider sets the DataProvider field's value.
+func (s *ModifyDataProviderOutput) SetDataProvider(v *DataProvider) *ModifyDataProviderOutput {
+	s.DataProvider = v
 	return s
 }
 
@@ -20261,6 +26775,341 @@ func (s *ModifyEventSubscriptionOutput) SetEventSubscription(v *EventSubscriptio
 	return s
 }
 
+type ModifyInstanceProfileInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Availability Zone where the instance profile runs.
+	AvailabilityZone *string `type:"string"`
+
+	// A user-friendly description for the instance profile.
+	Description *string `type:"string"`
+
+	// The identifier of the instance profile. Identifiers must begin with a letter
+	// and must contain only ASCII letters, digits, and hyphens. They can't end
+	// with a hyphen, or contain two consecutive hyphens.
+	//
+	// InstanceProfileIdentifier is a required field
+	InstanceProfileIdentifier *string `type:"string" required:"true"`
+
+	// A user-friendly name for the instance profile.
+	InstanceProfileName *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) of the KMS key that is used to encrypt the
+	// connection parameters for the instance profile.
+	//
+	// If you don't specify a value for the KmsKeyArn parameter, then DMS uses your
+	// default encryption key.
+	//
+	// KMS creates the default encryption key for your Amazon Web Services account.
+	// Your Amazon Web Services account has a different default encryption key for
+	// each Amazon Web Services Region.
+	KmsKeyArn *string `type:"string"`
+
+	// Specifies the network type for the instance profile. A value of IPV4 represents
+	// an instance profile with IPv4 network type and only supports IPv4 addressing.
+	// A value of IPV6 represents an instance profile with IPv6 network type and
+	// only supports IPv6 addressing. A value of DUAL represents an instance profile
+	// with dual network type that supports IPv4 and IPv6 addressing.
+	NetworkType *string `type:"string"`
+
+	// Specifies the accessibility options for the instance profile. A value of
+	// true represents an instance profile with a public IP address. A value of
+	// false represents an instance profile with a private IP address. The default
+	// value is true.
+	PubliclyAccessible *bool `type:"boolean"`
+
+	// A subnet group to associate with the instance profile.
+	SubnetGroupIdentifier *string `type:"string"`
+
+	// Specifies the VPC security groups to be used with the instance profile. The
+	// VPC security group must work with the VPC containing the instance profile.
+	VpcSecurityGroups []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyInstanceProfileInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyInstanceProfileInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ModifyInstanceProfileInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ModifyInstanceProfileInput"}
+	if s.InstanceProfileIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("InstanceProfileIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *ModifyInstanceProfileInput) SetAvailabilityZone(v string) *ModifyInstanceProfileInput {
+	s.AvailabilityZone = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *ModifyInstanceProfileInput) SetDescription(v string) *ModifyInstanceProfileInput {
+	s.Description = &v
+	return s
+}
+
+// SetInstanceProfileIdentifier sets the InstanceProfileIdentifier field's value.
+func (s *ModifyInstanceProfileInput) SetInstanceProfileIdentifier(v string) *ModifyInstanceProfileInput {
+	s.InstanceProfileIdentifier = &v
+	return s
+}
+
+// SetInstanceProfileName sets the InstanceProfileName field's value.
+func (s *ModifyInstanceProfileInput) SetInstanceProfileName(v string) *ModifyInstanceProfileInput {
+	s.InstanceProfileName = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *ModifyInstanceProfileInput) SetKmsKeyArn(v string) *ModifyInstanceProfileInput {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetNetworkType sets the NetworkType field's value.
+func (s *ModifyInstanceProfileInput) SetNetworkType(v string) *ModifyInstanceProfileInput {
+	s.NetworkType = &v
+	return s
+}
+
+// SetPubliclyAccessible sets the PubliclyAccessible field's value.
+func (s *ModifyInstanceProfileInput) SetPubliclyAccessible(v bool) *ModifyInstanceProfileInput {
+	s.PubliclyAccessible = &v
+	return s
+}
+
+// SetSubnetGroupIdentifier sets the SubnetGroupIdentifier field's value.
+func (s *ModifyInstanceProfileInput) SetSubnetGroupIdentifier(v string) *ModifyInstanceProfileInput {
+	s.SubnetGroupIdentifier = &v
+	return s
+}
+
+// SetVpcSecurityGroups sets the VpcSecurityGroups field's value.
+func (s *ModifyInstanceProfileInput) SetVpcSecurityGroups(v []*string) *ModifyInstanceProfileInput {
+	s.VpcSecurityGroups = v
+	return s
+}
+
+type ModifyInstanceProfileOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The instance profile that was modified.
+	InstanceProfile *InstanceProfile `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyInstanceProfileOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyInstanceProfileOutput) GoString() string {
+	return s.String()
+}
+
+// SetInstanceProfile sets the InstanceProfile field's value.
+func (s *ModifyInstanceProfileOutput) SetInstanceProfile(v *InstanceProfile) *ModifyInstanceProfileOutput {
+	s.InstanceProfile = v
+	return s
+}
+
+type ModifyMigrationProjectInput struct {
+	_ struct{} `type:"structure"`
+
+	// A user-friendly description of the migration project.
+	Description *string `type:"string"`
+
+	// The name or Amazon Resource Name (ARN) for the instance profile.
+	InstanceProfileIdentifier *string `type:"string"`
+
+	// The identifier of the migration project. Identifiers must begin with a letter
+	// and must contain only ASCII letters, digits, and hyphens. They can't end
+	// with a hyphen, or contain two consecutive hyphens.
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+
+	// A user-friendly name for the migration project.
+	MigrationProjectName *string `type:"string"`
+
+	// The schema conversion application attributes, including the Amazon S3 bucket
+	// name and Amazon S3 role ARN.
+	SchemaConversionApplicationAttributes *SCApplicationAttributes `type:"structure"`
+
+	// Information about the source data provider, including the name, ARN, and
+	// Amazon Web Services Secrets Manager parameters.
+	SourceDataProviderDescriptors []*DataProviderDescriptorDefinition `type:"list"`
+
+	// Information about the target data provider, including the name, ARN, and
+	// Amazon Web Services Secrets Manager parameters.
+	TargetDataProviderDescriptors []*DataProviderDescriptorDefinition `type:"list"`
+
+	// The settings in JSON format for migration rules. Migration rules make it
+	// possible for you to change the object names according to the rules that you
+	// specify. For example, you can change an object name to lowercase or uppercase,
+	// add or remove a prefix or suffix, or rename objects.
+	TransformationRules *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyMigrationProjectInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyMigrationProjectInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ModifyMigrationProjectInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ModifyMigrationProjectInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.SourceDataProviderDescriptors != nil {
+		for i, v := range s.SourceDataProviderDescriptors {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "SourceDataProviderDescriptors", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.TargetDataProviderDescriptors != nil {
+		for i, v := range s.TargetDataProviderDescriptors {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "TargetDataProviderDescriptors", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *ModifyMigrationProjectInput) SetDescription(v string) *ModifyMigrationProjectInput {
+	s.Description = &v
+	return s
+}
+
+// SetInstanceProfileIdentifier sets the InstanceProfileIdentifier field's value.
+func (s *ModifyMigrationProjectInput) SetInstanceProfileIdentifier(v string) *ModifyMigrationProjectInput {
+	s.InstanceProfileIdentifier = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *ModifyMigrationProjectInput) SetMigrationProjectIdentifier(v string) *ModifyMigrationProjectInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+// SetMigrationProjectName sets the MigrationProjectName field's value.
+func (s *ModifyMigrationProjectInput) SetMigrationProjectName(v string) *ModifyMigrationProjectInput {
+	s.MigrationProjectName = &v
+	return s
+}
+
+// SetSchemaConversionApplicationAttributes sets the SchemaConversionApplicationAttributes field's value.
+func (s *ModifyMigrationProjectInput) SetSchemaConversionApplicationAttributes(v *SCApplicationAttributes) *ModifyMigrationProjectInput {
+	s.SchemaConversionApplicationAttributes = v
+	return s
+}
+
+// SetSourceDataProviderDescriptors sets the SourceDataProviderDescriptors field's value.
+func (s *ModifyMigrationProjectInput) SetSourceDataProviderDescriptors(v []*DataProviderDescriptorDefinition) *ModifyMigrationProjectInput {
+	s.SourceDataProviderDescriptors = v
+	return s
+}
+
+// SetTargetDataProviderDescriptors sets the TargetDataProviderDescriptors field's value.
+func (s *ModifyMigrationProjectInput) SetTargetDataProviderDescriptors(v []*DataProviderDescriptorDefinition) *ModifyMigrationProjectInput {
+	s.TargetDataProviderDescriptors = v
+	return s
+}
+
+// SetTransformationRules sets the TransformationRules field's value.
+func (s *ModifyMigrationProjectInput) SetTransformationRules(v string) *ModifyMigrationProjectInput {
+	s.TransformationRules = &v
+	return s
+}
+
+type ModifyMigrationProjectOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project that was modified.
+	MigrationProject *MigrationProject `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyMigrationProjectOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyMigrationProjectOutput) GoString() string {
+	return s.String()
+}
+
+// SetMigrationProject sets the MigrationProject field's value.
+func (s *ModifyMigrationProjectOutput) SetMigrationProject(v *MigrationProject) *ModifyMigrationProjectOutput {
+	s.MigrationProject = v
+	return s
+}
+
 type ModifyReplicationConfigInput struct {
 	_ struct{} `type:"structure"`
 
@@ -20444,14 +27293,6 @@ type ModifyReplicationInstanceInput struct {
 	//    * A newer minor version is available.
 	//
 	//    * DMS has enabled automatic patching for the given engine version.
-	//
-	// When AutoMinorVersionUpgrade is enabled, DMS uses the current default engine
-	// version when you modify a replication instance. For example, if you set EngineVersion
-	// to a lower version number than the current default version, DMS uses the
-	// default version.
-	//
-	// If AutoMinorVersionUpgrade isn’t enabled when you modify a replication
-	// instance, DMS uses the engine version specified by the EngineVersion parameter.
 	AutoMinorVersionUpgrade *bool `type:"boolean"`
 
 	// The engine version number of the replication instance.
@@ -20778,7 +27619,7 @@ type ModifyReplicationTaskInput struct {
 	//
 	// Server time example: --cdc-stop-position “server_time:2018-02-09T12:12:12”
 	//
-	// Commit time example: --cdc-stop-position “commit_time: 2018-02-09T12:12:12“
+	// Commit time example: --cdc-stop-position “commit_time:2018-02-09T12:12:12“
 	CdcStopPosition *string `type:"string"`
 
 	// The migration type. Valid values: full-load | cdc | full-load-and-cdc
@@ -20932,6 +27773,107 @@ func (s *ModifyReplicationTaskOutput) SetReplicationTask(v *ReplicationTask) *Mo
 	return s
 }
 
+// Provides information that defines a MongoDB data provider.
+type MongoDbDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The authentication method for connecting to the data provider. Valid values
+	// are DEFAULT, MONGODB_CR, or SCRAM_SHA_1.
+	AuthMechanism *string `type:"string" enum:"AuthMechanismValue"`
+
+	// The MongoDB database name. This setting isn't used when AuthType is set to
+	// "no".
+	//
+	// The default is "admin".
+	AuthSource *string `type:"string"`
+
+	// The authentication type for the database connection. Valid values are PASSWORD
+	// or NO.
+	AuthType *string `type:"string" enum:"AuthTypeValue"`
+
+	// The Amazon Resource Name (ARN) of the certificate used for SSL connection.
+	CertificateArn *string `type:"string"`
+
+	// The database name on the MongoDB data provider.
+	DatabaseName *string `type:"string"`
+
+	// The port value for the MongoDB data provider.
+	Port *int64 `type:"integer"`
+
+	// The name of the MongoDB server.
+	ServerName *string `type:"string"`
+
+	// The SSL mode used to connect to the MongoDB data provider. The default value
+	// is none.
+	SslMode *string `type:"string" enum:"DmsSslModeValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MongoDbDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MongoDbDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetAuthMechanism sets the AuthMechanism field's value.
+func (s *MongoDbDataProviderSettings) SetAuthMechanism(v string) *MongoDbDataProviderSettings {
+	s.AuthMechanism = &v
+	return s
+}
+
+// SetAuthSource sets the AuthSource field's value.
+func (s *MongoDbDataProviderSettings) SetAuthSource(v string) *MongoDbDataProviderSettings {
+	s.AuthSource = &v
+	return s
+}
+
+// SetAuthType sets the AuthType field's value.
+func (s *MongoDbDataProviderSettings) SetAuthType(v string) *MongoDbDataProviderSettings {
+	s.AuthType = &v
+	return s
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *MongoDbDataProviderSettings) SetCertificateArn(v string) *MongoDbDataProviderSettings {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *MongoDbDataProviderSettings) SetDatabaseName(v string) *MongoDbDataProviderSettings {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *MongoDbDataProviderSettings) SetPort(v int64) *MongoDbDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *MongoDbDataProviderSettings) SetServerName(v string) *MongoDbDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
+// SetSslMode sets the SslMode field's value.
+func (s *MongoDbDataProviderSettings) SetSslMode(v string) *MongoDbDataProviderSettings {
+	s.SslMode = &v
+	return s
+}
+
 // Provides information that defines a MongoDB endpoint.
 type MongoDbSettings struct {
 	_ struct{} `type:"structure"`
@@ -21022,7 +27964,8 @@ type MongoDbSettings struct {
 	// contains the MongoDB endpoint connection details.
 	SecretsManagerSecretId *string `type:"string"`
 
-	// The name of the server on the MongoDB source endpoint.
+	// The name of the server on the MongoDB source endpoint. For MongoDB Atlas,
+	// provide the server name for any of the servers in the replication set.
 	ServerName *string `type:"string"`
 
 	// If true, DMS retrieves the entire document from the MongoDB source during
@@ -21274,6 +28217,9 @@ type MySQLSettings struct {
 	// In the example, DMS checks for changes in the binary logs every five seconds.
 	EventsPollInterval *int64 `type:"integer"`
 
+	// Sets the client statement timeout (in seconds) for a MySQL source endpoint.
+	ExecuteTimeout *int64 `type:"integer"`
+
 	// Specifies the maximum size (in KB) of any .csv file used to transfer data
 	// to a MySQL-compatible database.
 	//
@@ -21390,6 +28336,12 @@ func (s *MySQLSettings) SetEventsPollInterval(v int64) *MySQLSettings {
 	return s
 }
 
+// SetExecuteTimeout sets the ExecuteTimeout field's value.
+func (s *MySQLSettings) SetExecuteTimeout(v int64) *MySQLSettings {
+	s.ExecuteTimeout = &v
+	return s
+}
+
 // SetMaxFileSize sets the MaxFileSize field's value.
 func (s *MySQLSettings) SetMaxFileSize(v int64) *MySQLSettings {
 	s.MaxFileSize = &v
@@ -21447,6 +28399,66 @@ func (s *MySQLSettings) SetTargetDbType(v string) *MySQLSettings {
 // SetUsername sets the Username field's value.
 func (s *MySQLSettings) SetUsername(v string) *MySQLSettings {
 	s.Username = &v
+	return s
+}
+
+// Provides information that defines a MySQL data provider.
+type MySqlDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the certificate used for SSL connection.
+	CertificateArn *string `type:"string"`
+
+	// The port value for the MySQL data provider.
+	Port *int64 `type:"integer"`
+
+	// The name of the MySQL server.
+	ServerName *string `type:"string"`
+
+	// The SSL mode used to connect to the MySQL data provider. The default value
+	// is none.
+	SslMode *string `type:"string" enum:"DmsSslModeValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MySqlDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MySqlDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *MySqlDataProviderSettings) SetCertificateArn(v string) *MySqlDataProviderSettings {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *MySqlDataProviderSettings) SetPort(v int64) *MySqlDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *MySqlDataProviderSettings) SetServerName(v string) *MySqlDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
+// SetSslMode sets the SslMode field's value.
+func (s *MySqlDataProviderSettings) SetSslMode(v string) *MySqlDataProviderSettings {
+	s.SslMode = &v
 	return s
 }
 
@@ -21570,6 +28582,131 @@ func (s *NeptuneSettings) SetS3BucketName(v string) *NeptuneSettings {
 // SetServiceAccessRoleArn sets the ServiceAccessRoleArn field's value.
 func (s *NeptuneSettings) SetServiceAccessRoleArn(v string) *NeptuneSettings {
 	s.ServiceAccessRoleArn = &v
+	return s
+}
+
+// Provides information that defines an Oracle data provider.
+type OracleDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The address of your Oracle Automatic Storage Management (ASM) server. You
+	// can set this value from the asm_server value. You set asm_server as part
+	// of the extra connection attribute string to access an Oracle server with
+	// Binary Reader that uses ASM. For more information, see Configuration for
+	// change data capture (CDC) on an Oracle source database (https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Source.Oracle.html#dms/latest/userguide/CHAP_Source.Oracle.html#CHAP_Source.Oracle.CDC.Configuration).
+	AsmServer *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) of the certificate used for SSL connection.
+	CertificateArn *string `type:"string"`
+
+	// The database name on the Oracle data provider.
+	DatabaseName *string `type:"string"`
+
+	// The port value for the Oracle data provider.
+	Port *int64 `type:"integer"`
+
+	// The ARN of the IAM role that provides access to the secret in Secrets Manager
+	// that contains the Oracle ASM connection details.
+	SecretsManagerOracleAsmAccessRoleArn *string `type:"string"`
+
+	// The identifier of the secret in Secrets Manager that contains the Oracle
+	// ASM connection details.
+	//
+	// Required only if your data provider uses the Oracle ASM server.
+	SecretsManagerOracleAsmSecretId *string `type:"string"`
+
+	// The ARN of the IAM role that provides access to the secret in Secrets Manager
+	// that contains the TDE password.
+	SecretsManagerSecurityDbEncryptionAccessRoleArn *string `type:"string"`
+
+	// The identifier of the secret in Secrets Manager that contains the transparent
+	// data encryption (TDE) password. DMS requires this password to access Oracle
+	// redo logs encrypted by TDE using Binary Reader.
+	SecretsManagerSecurityDbEncryptionSecretId *string `type:"string"`
+
+	// The name of the Oracle server.
+	ServerName *string `type:"string"`
+
+	// The SSL mode used to connect to the Oracle data provider. The default value
+	// is none.
+	SslMode *string `type:"string" enum:"DmsSslModeValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OracleDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OracleDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetAsmServer sets the AsmServer field's value.
+func (s *OracleDataProviderSettings) SetAsmServer(v string) *OracleDataProviderSettings {
+	s.AsmServer = &v
+	return s
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *OracleDataProviderSettings) SetCertificateArn(v string) *OracleDataProviderSettings {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *OracleDataProviderSettings) SetDatabaseName(v string) *OracleDataProviderSettings {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *OracleDataProviderSettings) SetPort(v int64) *OracleDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetSecretsManagerOracleAsmAccessRoleArn sets the SecretsManagerOracleAsmAccessRoleArn field's value.
+func (s *OracleDataProviderSettings) SetSecretsManagerOracleAsmAccessRoleArn(v string) *OracleDataProviderSettings {
+	s.SecretsManagerOracleAsmAccessRoleArn = &v
+	return s
+}
+
+// SetSecretsManagerOracleAsmSecretId sets the SecretsManagerOracleAsmSecretId field's value.
+func (s *OracleDataProviderSettings) SetSecretsManagerOracleAsmSecretId(v string) *OracleDataProviderSettings {
+	s.SecretsManagerOracleAsmSecretId = &v
+	return s
+}
+
+// SetSecretsManagerSecurityDbEncryptionAccessRoleArn sets the SecretsManagerSecurityDbEncryptionAccessRoleArn field's value.
+func (s *OracleDataProviderSettings) SetSecretsManagerSecurityDbEncryptionAccessRoleArn(v string) *OracleDataProviderSettings {
+	s.SecretsManagerSecurityDbEncryptionAccessRoleArn = &v
+	return s
+}
+
+// SetSecretsManagerSecurityDbEncryptionSecretId sets the SecretsManagerSecurityDbEncryptionSecretId field's value.
+func (s *OracleDataProviderSettings) SetSecretsManagerSecurityDbEncryptionSecretId(v string) *OracleDataProviderSettings {
+	s.SecretsManagerSecurityDbEncryptionSecretId = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *OracleDataProviderSettings) SetServerName(v string) *OracleDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
+// SetSslMode sets the SslMode field's value.
+func (s *OracleDataProviderSettings) SetSslMode(v string) *OracleDataProviderSettings {
+	s.SslMode = &v
 	return s
 }
 
@@ -21783,7 +28920,7 @@ type OracleSettings struct {
 	//
 	// You can specify one of two sets of values for these permissions. You can
 	// specify the values for this setting and SecretsManagerOracleAsmSecretId.
-	// Or you can specify clear-text values for AsmUserName, AsmPassword, and AsmServerName.
+	// Or you can specify clear-text values for AsmUser, AsmPassword, and AsmServerName.
 	// You can't specify both. For more information on creating this SecretsManagerOracleAsmSecret
 	// and the SecretsManagerOracleAsmAccessRoleArn and SecretsManagerOracleAsmSecretId
 	// required to access it, see Using secrets to access Database Migration Service
@@ -22392,9 +29529,9 @@ type PostgreSQLSettings struct {
 	// the source database.
 	CaptureDdls *bool `type:"boolean"`
 
-	// Specifies whether to use default or custom replication behavior for PostgreSQL-compatible
-	// endpoints. You can use this setting to specify replication behavior for endpoints
-	// that require additional configuration, such as Babelfish endpoints.
+	// Specifies the default behavior of the replication's handling of PostgreSQL-
+	// compatible endpoints that require some additional configuration, such as
+	// Babelfish endpoints.
 	DatabaseMode *string `type:"string" enum:"DatabaseMode"`
 
 	// Database name for the endpoint.
@@ -22431,7 +29568,8 @@ type PostgreSQLSettings struct {
 	HeartbeatSchema *string `type:"string"`
 
 	// When true, lets PostgreSQL migrate the boolean type as boolean. By default,
-	// PostgreSQL migrates booleans as varchar(5).
+	// PostgreSQL migrates booleans as varchar(5). You must set this setting on
+	// both the source and target endpoints for it to take effect.
 	MapBooleanAsBoolean *bool `type:"boolean"`
 
 	// When true, DMS migrates JSONB values as CLOB.
@@ -22676,6 +29814,75 @@ func (s *PostgreSQLSettings) SetTrimSpaceInChar(v bool) *PostgreSQLSettings {
 // SetUsername sets the Username field's value.
 func (s *PostgreSQLSettings) SetUsername(v string) *PostgreSQLSettings {
 	s.Username = &v
+	return s
+}
+
+// Provides information that defines a PostgreSQL data provider.
+type PostgreSqlDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the certificate used for SSL connection.
+	CertificateArn *string `type:"string"`
+
+	// The database name on the PostgreSQL data provider.
+	DatabaseName *string `type:"string"`
+
+	// The port value for the PostgreSQL data provider.
+	Port *int64 `type:"integer"`
+
+	// The name of the PostgreSQL server.
+	ServerName *string `type:"string"`
+
+	// The SSL mode used to connect to the PostgreSQL data provider. The default
+	// value is none.
+	SslMode *string `type:"string" enum:"DmsSslModeValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PostgreSqlDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PostgreSqlDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *PostgreSqlDataProviderSettings) SetCertificateArn(v string) *PostgreSqlDataProviderSettings {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *PostgreSqlDataProviderSettings) SetDatabaseName(v string) *PostgreSqlDataProviderSettings {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *PostgreSqlDataProviderSettings) SetPort(v int64) *PostgreSqlDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *PostgreSqlDataProviderSettings) SetServerName(v string) *PostgreSqlDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
+// SetSslMode sets the SslMode field's value.
+func (s *PostgreSqlDataProviderSettings) SetSslMode(v string) *PostgreSqlDataProviderSettings {
+	s.SslMode = &v
 	return s
 }
 
@@ -23432,6 +30639,56 @@ func (s *RedisSettings) SetSslSecurityProtocol(v string) *RedisSettings {
 	return s
 }
 
+// Provides information that defines an Amazon Redshift data provider.
+type RedshiftDataProviderSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The database name on the Amazon Redshift data provider.
+	DatabaseName *string `type:"string"`
+
+	// The port value for the Amazon Redshift data provider.
+	Port *int64 `type:"integer"`
+
+	// The name of the Amazon Redshift server.
+	ServerName *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RedshiftDataProviderSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RedshiftDataProviderSettings) GoString() string {
+	return s.String()
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *RedshiftDataProviderSettings) SetDatabaseName(v string) *RedshiftDataProviderSettings {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *RedshiftDataProviderSettings) SetPort(v int64) *RedshiftDataProviderSettings {
+	s.Port = &v
+	return s
+}
+
+// SetServerName sets the ServerName field's value.
+func (s *RedshiftDataProviderSettings) SetServerName(v string) *RedshiftDataProviderSettings {
+	s.ServerName = &v
+	return s
+}
+
 // Provides information that defines an Amazon Redshift endpoint.
 type RedshiftSettings struct {
 	_ struct{} `type:"structure"`
@@ -23537,7 +30794,8 @@ type RedshiftSettings struct {
 	LoadTimeout *int64 `type:"integer"`
 
 	// When true, lets Redshift migrate the boolean type as boolean. By default,
-	// Redshift migrates booleans as varchar(1).
+	// Redshift migrates booleans as varchar(1). You must set this setting on both
+	// the source and target endpoints for it to take effect.
 	MapBooleanAsBoolean *bool `type:"boolean"`
 
 	// The maximum size (in KB) of any .csv file used to load data on an S3 bucket
@@ -24343,6 +31601,9 @@ type Replication struct {
 	// The time the serverless replication was created.
 	ReplicationCreateTime *time.Time `type:"timestamp"`
 
+	// The timestamp when DMS will deprovision the replication.
+	ReplicationDeprovisionTime *time.Time `type:"timestamp"`
+
 	// The timestamp when replication was last stopped.
 	ReplicationLastStopTime *time.Time `type:"timestamp"`
 
@@ -24476,6 +31737,12 @@ func (s *Replication) SetReplicationConfigIdentifier(v string) *Replication {
 // SetReplicationCreateTime sets the ReplicationCreateTime field's value.
 func (s *Replication) SetReplicationCreateTime(v time.Time) *Replication {
 	s.ReplicationCreateTime = &v
+	return s
+}
+
+// SetReplicationDeprovisionTime sets the ReplicationDeprovisionTime field's value.
+func (s *Replication) SetReplicationDeprovisionTime(v time.Time) *Replication {
+	s.ReplicationDeprovisionTime = &v
 	return s
 }
 
@@ -25398,7 +32665,7 @@ type ReplicationTask struct {
 	//
 	// Server time example: --cdc-stop-position “server_time:2018-02-09T12:12:12”
 	//
-	// Commit time example: --cdc-stop-position “commit_time: 2018-02-09T12:12:12“
+	// Commit time example: --cdc-stop-position “commit_time:2018-02-09T12:12:12“
 	CdcStopPosition *string `type:"string"`
 
 	// The last error (failure) message generated for the replication task.
@@ -26789,9 +34056,9 @@ type S3Settings struct {
 	// An optional parameter that specifies how DMS treats null values. While handling
 	// the null value, you can use this parameter to pass a user-defined string
 	// as null when writing to the target. For example, when target columns are
-	// not nullable, you can use this option to differentiate between the empty
-	// string value and the null value. So, if you set this parameter value to the
-	// empty string ("" or ''), DMS treats the empty string as the null value instead
+	// nullable, you can use this option to differentiate between the empty string
+	// value and the null value. So, if you set this parameter value to the empty
+	// string ("" or ''), DMS treats the empty string as the null value instead
 	// of NULL.
 	//
 	// The default value is NULL. Valid values include any valid string.
@@ -27331,6 +34598,48 @@ func (s *S3Settings) SetUseTaskStartTimeForFullLoadTimestamp(v bool) *S3Settings
 	return s
 }
 
+// Provides information that defines a schema conversion application.
+type SCApplicationAttributes struct {
+	_ struct{} `type:"structure"`
+
+	// The path for the Amazon S3 bucket that the application uses for exporting
+	// assessment reports.
+	S3BucketPath *string `type:"string"`
+
+	// The ARN for the role the application uses to access its Amazon S3 bucket.
+	S3BucketRoleArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SCApplicationAttributes) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SCApplicationAttributes) GoString() string {
+	return s.String()
+}
+
+// SetS3BucketPath sets the S3BucketPath field's value.
+func (s *SCApplicationAttributes) SetS3BucketPath(v string) *SCApplicationAttributes {
+	s.S3BucketPath = &v
+	return s
+}
+
+// SetS3BucketRoleArn sets the S3BucketRoleArn field's value.
+func (s *SCApplicationAttributes) SetS3BucketRoleArn(v string) *SCApplicationAttributes {
+	s.S3BucketRoleArn = &v
+	return s
+}
+
 // The SNS topic is invalid.
 type SNSInvalidTopicFault struct {
 	_            struct{}                  `type:"structure"`
@@ -27457,6 +34766,74 @@ func (s *SNSNoAuthorizationFault) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *SNSNoAuthorizationFault) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+// Provides information about a schema conversion action.
+type SchemaConversionRequest struct {
+	_ struct{} `type:"structure"`
+
+	// Provides error information about a project.
+	Error *ErrorDetails `type:"structure"`
+
+	// Provides information about a metadata model assessment exported to SQL.
+	ExportSqlDetails *ExportSqlDetails `type:"structure"`
+
+	// The migration project ARN.
+	MigrationProjectArn *string `type:"string"`
+
+	// The identifier for the schema conversion action.
+	RequestIdentifier *string `type:"string"`
+
+	// The schema conversion action status.
+	Status *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaConversionRequest) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaConversionRequest) GoString() string {
+	return s.String()
+}
+
+// SetError sets the Error field's value.
+func (s *SchemaConversionRequest) SetError(v *ErrorDetails) *SchemaConversionRequest {
+	s.Error = v
+	return s
+}
+
+// SetExportSqlDetails sets the ExportSqlDetails field's value.
+func (s *SchemaConversionRequest) SetExportSqlDetails(v *ExportSqlDetails) *SchemaConversionRequest {
+	s.ExportSqlDetails = v
+	return s
+}
+
+// SetMigrationProjectArn sets the MigrationProjectArn field's value.
+func (s *SchemaConversionRequest) SetMigrationProjectArn(v string) *SchemaConversionRequest {
+	s.MigrationProjectArn = &v
+	return s
+}
+
+// SetRequestIdentifier sets the RequestIdentifier field's value.
+func (s *SchemaConversionRequest) SetRequestIdentifier(v string) *SchemaConversionRequest {
+	s.RequestIdentifier = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *SchemaConversionRequest) SetStatus(v string) *SchemaConversionRequest {
+	s.Status = &v
+	return s
 }
 
 // Describes a schema in a Fleet Advisor collector inventory.
@@ -27680,6 +35057,595 @@ func (s *ServerShortInfoResponse) SetServerId(v string) *ServerShortInfoResponse
 // SetServerName sets the ServerName field's value.
 func (s *ServerShortInfoResponse) SetServerName(v string) *ServerShortInfoResponse {
 	s.ServerName = &v
+	return s
+}
+
+type StartExtensionPackAssociationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartExtensionPackAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartExtensionPackAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartExtensionPackAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartExtensionPackAssociationInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *StartExtensionPackAssociationInput) SetMigrationProjectIdentifier(v string) *StartExtensionPackAssociationInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+type StartExtensionPackAssociationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the request operation.
+	RequestIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartExtensionPackAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartExtensionPackAssociationOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestIdentifier sets the RequestIdentifier field's value.
+func (s *StartExtensionPackAssociationOutput) SetRequestIdentifier(v string) *StartExtensionPackAssociationOutput {
+	s.RequestIdentifier = &v
+	return s
+}
+
+type StartMetadataModelAssessmentInput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+
+	// A value that specifies the database objects to assess.
+	//
+	// SelectionRules is a required field
+	SelectionRules *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelAssessmentInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelAssessmentInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartMetadataModelAssessmentInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartMetadataModelAssessmentInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.SelectionRules == nil {
+		invalidParams.Add(request.NewErrParamRequired("SelectionRules"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *StartMetadataModelAssessmentInput) SetMigrationProjectIdentifier(v string) *StartMetadataModelAssessmentInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+// SetSelectionRules sets the SelectionRules field's value.
+func (s *StartMetadataModelAssessmentInput) SetSelectionRules(v string) *StartMetadataModelAssessmentInput {
+	s.SelectionRules = &v
+	return s
+}
+
+type StartMetadataModelAssessmentOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the assessment operation.
+	RequestIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelAssessmentOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelAssessmentOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestIdentifier sets the RequestIdentifier field's value.
+func (s *StartMetadataModelAssessmentOutput) SetRequestIdentifier(v string) *StartMetadataModelAssessmentOutput {
+	s.RequestIdentifier = &v
+	return s
+}
+
+type StartMetadataModelConversionInput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+
+	// A value that specifies the database objects to convert.
+	//
+	// SelectionRules is a required field
+	SelectionRules *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelConversionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelConversionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartMetadataModelConversionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartMetadataModelConversionInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.SelectionRules == nil {
+		invalidParams.Add(request.NewErrParamRequired("SelectionRules"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *StartMetadataModelConversionInput) SetMigrationProjectIdentifier(v string) *StartMetadataModelConversionInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+// SetSelectionRules sets the SelectionRules field's value.
+func (s *StartMetadataModelConversionInput) SetSelectionRules(v string) *StartMetadataModelConversionInput {
+	s.SelectionRules = &v
+	return s
+}
+
+type StartMetadataModelConversionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the conversion operation.
+	RequestIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelConversionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelConversionOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestIdentifier sets the RequestIdentifier field's value.
+func (s *StartMetadataModelConversionOutput) SetRequestIdentifier(v string) *StartMetadataModelConversionOutput {
+	s.RequestIdentifier = &v
+	return s
+}
+
+type StartMetadataModelExportAsScriptInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the model file to create in the Amazon S3 bucket.
+	FileName *string `type:"string"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+
+	// Whether to export the metadata model from the source or the target.
+	//
+	// Origin is a required field
+	Origin *string `type:"string" required:"true" enum:"OriginTypeValue"`
+
+	// A value that specifies the database objects to export.
+	//
+	// SelectionRules is a required field
+	SelectionRules *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportAsScriptInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportAsScriptInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartMetadataModelExportAsScriptInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartMetadataModelExportAsScriptInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Origin == nil {
+		invalidParams.Add(request.NewErrParamRequired("Origin"))
+	}
+	if s.SelectionRules == nil {
+		invalidParams.Add(request.NewErrParamRequired("SelectionRules"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFileName sets the FileName field's value.
+func (s *StartMetadataModelExportAsScriptInput) SetFileName(v string) *StartMetadataModelExportAsScriptInput {
+	s.FileName = &v
+	return s
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *StartMetadataModelExportAsScriptInput) SetMigrationProjectIdentifier(v string) *StartMetadataModelExportAsScriptInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+// SetOrigin sets the Origin field's value.
+func (s *StartMetadataModelExportAsScriptInput) SetOrigin(v string) *StartMetadataModelExportAsScriptInput {
+	s.Origin = &v
+	return s
+}
+
+// SetSelectionRules sets the SelectionRules field's value.
+func (s *StartMetadataModelExportAsScriptInput) SetSelectionRules(v string) *StartMetadataModelExportAsScriptInput {
+	s.SelectionRules = &v
+	return s
+}
+
+type StartMetadataModelExportAsScriptOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the export operation.
+	RequestIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportAsScriptOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportAsScriptOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestIdentifier sets the RequestIdentifier field's value.
+func (s *StartMetadataModelExportAsScriptOutput) SetRequestIdentifier(v string) *StartMetadataModelExportAsScriptOutput {
+	s.RequestIdentifier = &v
+	return s
+}
+
+type StartMetadataModelExportToTargetInput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+
+	// Whether to overwrite the migration project extension pack. An extension pack
+	// is an add-on module that emulates functions present in a source database
+	// that are required when converting objects to the target database.
+	OverwriteExtensionPack *bool `type:"boolean"`
+
+	// A value that specifies the database objects to export.
+	//
+	// SelectionRules is a required field
+	SelectionRules *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportToTargetInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportToTargetInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartMetadataModelExportToTargetInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartMetadataModelExportToTargetInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.SelectionRules == nil {
+		invalidParams.Add(request.NewErrParamRequired("SelectionRules"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *StartMetadataModelExportToTargetInput) SetMigrationProjectIdentifier(v string) *StartMetadataModelExportToTargetInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+// SetOverwriteExtensionPack sets the OverwriteExtensionPack field's value.
+func (s *StartMetadataModelExportToTargetInput) SetOverwriteExtensionPack(v bool) *StartMetadataModelExportToTargetInput {
+	s.OverwriteExtensionPack = &v
+	return s
+}
+
+// SetSelectionRules sets the SelectionRules field's value.
+func (s *StartMetadataModelExportToTargetInput) SetSelectionRules(v string) *StartMetadataModelExportToTargetInput {
+	s.SelectionRules = &v
+	return s
+}
+
+type StartMetadataModelExportToTargetOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the export operation.
+	RequestIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportToTargetOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelExportToTargetOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestIdentifier sets the RequestIdentifier field's value.
+func (s *StartMetadataModelExportToTargetOutput) SetRequestIdentifier(v string) *StartMetadataModelExportToTargetOutput {
+	s.RequestIdentifier = &v
+	return s
+}
+
+type StartMetadataModelImportInput struct {
+	_ struct{} `type:"structure"`
+
+	// The migration project name or Amazon Resource Name (ARN).
+	//
+	// MigrationProjectIdentifier is a required field
+	MigrationProjectIdentifier *string `type:"string" required:"true"`
+
+	// Whether to load metadata to the source or target database.
+	//
+	// Origin is a required field
+	Origin *string `type:"string" required:"true" enum:"OriginTypeValue"`
+
+	// If true, DMS loads metadata for the specified objects from the source database.
+	Refresh *bool `type:"boolean"`
+
+	// A value that specifies the database objects to import.
+	//
+	// SelectionRules is a required field
+	SelectionRules *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelImportInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelImportInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartMetadataModelImportInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartMetadataModelImportInput"}
+	if s.MigrationProjectIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MigrationProjectIdentifier"))
+	}
+	if s.Origin == nil {
+		invalidParams.Add(request.NewErrParamRequired("Origin"))
+	}
+	if s.SelectionRules == nil {
+		invalidParams.Add(request.NewErrParamRequired("SelectionRules"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMigrationProjectIdentifier sets the MigrationProjectIdentifier field's value.
+func (s *StartMetadataModelImportInput) SetMigrationProjectIdentifier(v string) *StartMetadataModelImportInput {
+	s.MigrationProjectIdentifier = &v
+	return s
+}
+
+// SetOrigin sets the Origin field's value.
+func (s *StartMetadataModelImportInput) SetOrigin(v string) *StartMetadataModelImportInput {
+	s.Origin = &v
+	return s
+}
+
+// SetRefresh sets the Refresh field's value.
+func (s *StartMetadataModelImportInput) SetRefresh(v bool) *StartMetadataModelImportInput {
+	s.Refresh = &v
+	return s
+}
+
+// SetSelectionRules sets the SelectionRules field's value.
+func (s *StartMetadataModelImportInput) SetSelectionRules(v string) *StartMetadataModelImportInput {
+	s.SelectionRules = &v
+	return s
+}
+
+type StartMetadataModelImportOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the import operation.
+	RequestIdentifier *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelImportOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMetadataModelImportOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestIdentifier sets the RequestIdentifier field's value.
+func (s *StartMetadataModelImportOutput) SetRequestIdentifier(v string) *StartMetadataModelImportOutput {
+	s.RequestIdentifier = &v
 	return s
 }
 
@@ -28277,7 +36243,7 @@ type StartReplicationTaskInput struct {
 	//
 	// Server time example: --cdc-stop-position “server_time:2018-02-09T12:12:12”
 	//
-	// Commit time example: --cdc-stop-position “commit_time: 2018-02-09T12:12:12“
+	// Commit time example: --cdc-stop-position “commit_time:2018-02-09T12:12:12“
 	CdcStopPosition *string `type:"string"`
 
 	// The Amazon Resource Name (ARN) of the replication task to be started.
@@ -29517,7 +37483,7 @@ type UpdateSubscriptionsToEventBridgeInput struct {
 	// When set to true, this operation migrates DMS subscriptions for Amazon SNS
 	// notifications no matter what your replication instance version is. If not
 	// set or set to false, this operation runs only when all your replication instances
-	// are from DMS version 3.4.6 or higher.
+	// are from DMS version 3.4.5 or higher.
 	ForceMove *bool `type:"boolean"`
 }
 
@@ -29681,6 +37647,22 @@ func (s *VpcSecurityGroupMembership) SetStatus(v string) *VpcSecurityGroupMember
 func (s *VpcSecurityGroupMembership) SetVpcSecurityGroupId(v string) *VpcSecurityGroupMembership {
 	s.VpcSecurityGroupId = &v
 	return s
+}
+
+const (
+	// AssessmentReportTypePdf is a AssessmentReportType enum value
+	AssessmentReportTypePdf = "pdf"
+
+	// AssessmentReportTypeCsv is a AssessmentReportType enum value
+	AssessmentReportTypeCsv = "csv"
+)
+
+// AssessmentReportType_Values returns all elements of the AssessmentReportType enum
+func AssessmentReportType_Values() []string {
+	return []string{
+		AssessmentReportTypePdf,
+		AssessmentReportTypeCsv,
+	}
 }
 
 const (
@@ -30104,6 +38086,22 @@ func NestingLevelValue_Values() []string {
 	return []string{
 		NestingLevelValueNone,
 		NestingLevelValueOne,
+	}
+}
+
+const (
+	// OriginTypeValueSource is a OriginTypeValue enum value
+	OriginTypeValueSource = "SOURCE"
+
+	// OriginTypeValueTarget is a OriginTypeValue enum value
+	OriginTypeValueTarget = "TARGET"
+)
+
+// OriginTypeValue_Values returns all elements of the OriginTypeValue enum
+func OriginTypeValue_Values() []string {
+	return []string{
+		OriginTypeValueSource,
+		OriginTypeValueTarget,
 	}
 }
 

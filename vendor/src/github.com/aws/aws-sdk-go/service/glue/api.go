@@ -1089,6 +1089,84 @@ func (c *Glue) BatchGetPartitionWithContext(ctx aws.Context, input *BatchGetPart
 	return out, req.Send()
 }
 
+const opBatchGetTableOptimizer = "BatchGetTableOptimizer"
+
+// BatchGetTableOptimizerRequest generates a "aws/request.Request" representing the
+// client's request for the BatchGetTableOptimizer operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See BatchGetTableOptimizer for more information on using the BatchGetTableOptimizer
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the BatchGetTableOptimizerRequest method.
+//	req, resp := client.BatchGetTableOptimizerRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetTableOptimizer
+func (c *Glue) BatchGetTableOptimizerRequest(input *BatchGetTableOptimizerInput) (req *request.Request, output *BatchGetTableOptimizerOutput) {
+	op := &request.Operation{
+		Name:       opBatchGetTableOptimizer,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &BatchGetTableOptimizerInput{}
+	}
+
+	output = &BatchGetTableOptimizerOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// BatchGetTableOptimizer API operation for AWS Glue.
+//
+// Returns the configuration for the specified table optimizers.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation BatchGetTableOptimizer for usage and error information.
+//
+// Returned Error Types:
+//   - InternalServiceException
+//     An internal service error occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/BatchGetTableOptimizer
+func (c *Glue) BatchGetTableOptimizer(input *BatchGetTableOptimizerInput) (*BatchGetTableOptimizerOutput, error) {
+	req, out := c.BatchGetTableOptimizerRequest(input)
+	return out, req.Send()
+}
+
+// BatchGetTableOptimizerWithContext is the same as BatchGetTableOptimizer with the addition of
+// the ability to pass a context and additional request options.
+//
+// See BatchGetTableOptimizer for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) BatchGetTableOptimizerWithContext(ctx aws.Context, input *BatchGetTableOptimizerInput, opts ...request.Option) (*BatchGetTableOptimizerOutput, error) {
+	req, out := c.BatchGetTableOptimizerRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opBatchGetTriggers = "BatchGetTriggers"
 
 // BatchGetTriggersRequest generates a "aws/request.Request" representing the
@@ -3641,6 +3719,99 @@ func (c *Glue) CreateTableWithContext(ctx aws.Context, input *CreateTableInput, 
 	return out, req.Send()
 }
 
+const opCreateTableOptimizer = "CreateTableOptimizer"
+
+// CreateTableOptimizerRequest generates a "aws/request.Request" representing the
+// client's request for the CreateTableOptimizer operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateTableOptimizer for more information on using the CreateTableOptimizer
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateTableOptimizerRequest method.
+//	req, resp := client.CreateTableOptimizerRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateTableOptimizer
+func (c *Glue) CreateTableOptimizerRequest(input *CreateTableOptimizerInput) (req *request.Request, output *CreateTableOptimizerOutput) {
+	op := &request.Operation{
+		Name:       opCreateTableOptimizer,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateTableOptimizerInput{}
+	}
+
+	output = &CreateTableOptimizerOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// CreateTableOptimizer API operation for AWS Glue.
+//
+// Creates a new table optimizer for a specific function. compaction is the
+// only currently supported optimizer type.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation CreateTableOptimizer for usage and error information.
+//
+// Returned Error Types:
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - InvalidInputException
+//     The input provided was not valid.
+//
+//   - AccessDeniedException
+//     Access to a resource was denied.
+//
+//   - AlreadyExistsException
+//     A resource to be created or added already exists.
+//
+//   - InternalServiceException
+//     An internal service error occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/CreateTableOptimizer
+func (c *Glue) CreateTableOptimizer(input *CreateTableOptimizerInput) (*CreateTableOptimizerOutput, error) {
+	req, out := c.CreateTableOptimizerRequest(input)
+	return out, req.Send()
+}
+
+// CreateTableOptimizerWithContext is the same as CreateTableOptimizer with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateTableOptimizer for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) CreateTableOptimizerWithContext(ctx aws.Context, input *CreateTableOptimizerInput, opts ...request.Option) (*CreateTableOptimizerOutput, error) {
+	req, out := c.CreateTableOptimizerRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateTrigger = "CreateTrigger"
 
 // CreateTriggerRequest generates a "aws/request.Request" representing the
@@ -5864,6 +6035,96 @@ func (c *Glue) DeleteTableWithContext(ctx aws.Context, input *DeleteTableInput, 
 	return out, req.Send()
 }
 
+const opDeleteTableOptimizer = "DeleteTableOptimizer"
+
+// DeleteTableOptimizerRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteTableOptimizer operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteTableOptimizer for more information on using the DeleteTableOptimizer
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteTableOptimizerRequest method.
+//	req, resp := client.DeleteTableOptimizerRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteTableOptimizer
+func (c *Glue) DeleteTableOptimizerRequest(input *DeleteTableOptimizerInput) (req *request.Request, output *DeleteTableOptimizerOutput) {
+	op := &request.Operation{
+		Name:       opDeleteTableOptimizer,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteTableOptimizerInput{}
+	}
+
+	output = &DeleteTableOptimizerOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteTableOptimizer API operation for AWS Glue.
+//
+// Deletes an optimizer and all associated metadata for a table. The optimization
+// will no longer be performed on the table.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation DeleteTableOptimizer for usage and error information.
+//
+// Returned Error Types:
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - InvalidInputException
+//     The input provided was not valid.
+//
+//   - AccessDeniedException
+//     Access to a resource was denied.
+//
+//   - InternalServiceException
+//     An internal service error occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/DeleteTableOptimizer
+func (c *Glue) DeleteTableOptimizer(input *DeleteTableOptimizerInput) (*DeleteTableOptimizerOutput, error) {
+	req, out := c.DeleteTableOptimizerRequest(input)
+	return out, req.Send()
+}
+
+// DeleteTableOptimizerWithContext is the same as DeleteTableOptimizer with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteTableOptimizer for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) DeleteTableOptimizerWithContext(ctx aws.Context, input *DeleteTableOptimizerInput, opts ...request.Option) (*DeleteTableOptimizerOutput, error) {
+	req, out := c.DeleteTableOptimizerRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteTableVersion = "DeleteTableVersion"
 
 // DeleteTableVersionRequest generates a "aws/request.Request" representing the
@@ -7022,6 +7283,227 @@ func (c *Glue) GetColumnStatisticsForTableWithContext(ctx aws.Context, input *Ge
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+const opGetColumnStatisticsTaskRun = "GetColumnStatisticsTaskRun"
+
+// GetColumnStatisticsTaskRunRequest generates a "aws/request.Request" representing the
+// client's request for the GetColumnStatisticsTaskRun operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetColumnStatisticsTaskRun for more information on using the GetColumnStatisticsTaskRun
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetColumnStatisticsTaskRunRequest method.
+//	req, resp := client.GetColumnStatisticsTaskRunRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetColumnStatisticsTaskRun
+func (c *Glue) GetColumnStatisticsTaskRunRequest(input *GetColumnStatisticsTaskRunInput) (req *request.Request, output *GetColumnStatisticsTaskRunOutput) {
+	op := &request.Operation{
+		Name:       opGetColumnStatisticsTaskRun,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &GetColumnStatisticsTaskRunInput{}
+	}
+
+	output = &GetColumnStatisticsTaskRunOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetColumnStatisticsTaskRun API operation for AWS Glue.
+//
+// Get the associated metadata/information for a task run, given a task run
+// ID.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation GetColumnStatisticsTaskRun for usage and error information.
+//
+// Returned Error Types:
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - OperationTimeoutException
+//     The operation timed out.
+//
+//   - InvalidInputException
+//     The input provided was not valid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetColumnStatisticsTaskRun
+func (c *Glue) GetColumnStatisticsTaskRun(input *GetColumnStatisticsTaskRunInput) (*GetColumnStatisticsTaskRunOutput, error) {
+	req, out := c.GetColumnStatisticsTaskRunRequest(input)
+	return out, req.Send()
+}
+
+// GetColumnStatisticsTaskRunWithContext is the same as GetColumnStatisticsTaskRun with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetColumnStatisticsTaskRun for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) GetColumnStatisticsTaskRunWithContext(ctx aws.Context, input *GetColumnStatisticsTaskRunInput, opts ...request.Option) (*GetColumnStatisticsTaskRunOutput, error) {
+	req, out := c.GetColumnStatisticsTaskRunRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetColumnStatisticsTaskRuns = "GetColumnStatisticsTaskRuns"
+
+// GetColumnStatisticsTaskRunsRequest generates a "aws/request.Request" representing the
+// client's request for the GetColumnStatisticsTaskRuns operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetColumnStatisticsTaskRuns for more information on using the GetColumnStatisticsTaskRuns
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetColumnStatisticsTaskRunsRequest method.
+//	req, resp := client.GetColumnStatisticsTaskRunsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetColumnStatisticsTaskRuns
+func (c *Glue) GetColumnStatisticsTaskRunsRequest(input *GetColumnStatisticsTaskRunsInput) (req *request.Request, output *GetColumnStatisticsTaskRunsOutput) {
+	op := &request.Operation{
+		Name:       opGetColumnStatisticsTaskRuns,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &GetColumnStatisticsTaskRunsInput{}
+	}
+
+	output = &GetColumnStatisticsTaskRunsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetColumnStatisticsTaskRuns API operation for AWS Glue.
+//
+// Retrieves information about all runs associated with the specified table.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation GetColumnStatisticsTaskRuns for usage and error information.
+//
+// Returned Error Types:
+//   - OperationTimeoutException
+//     The operation timed out.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetColumnStatisticsTaskRuns
+func (c *Glue) GetColumnStatisticsTaskRuns(input *GetColumnStatisticsTaskRunsInput) (*GetColumnStatisticsTaskRunsOutput, error) {
+	req, out := c.GetColumnStatisticsTaskRunsRequest(input)
+	return out, req.Send()
+}
+
+// GetColumnStatisticsTaskRunsWithContext is the same as GetColumnStatisticsTaskRuns with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetColumnStatisticsTaskRuns for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) GetColumnStatisticsTaskRunsWithContext(ctx aws.Context, input *GetColumnStatisticsTaskRunsInput, opts ...request.Option) (*GetColumnStatisticsTaskRunsOutput, error) {
+	req, out := c.GetColumnStatisticsTaskRunsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// GetColumnStatisticsTaskRunsPages iterates over the pages of a GetColumnStatisticsTaskRuns operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See GetColumnStatisticsTaskRuns method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a GetColumnStatisticsTaskRuns operation.
+//	pageNum := 0
+//	err := client.GetColumnStatisticsTaskRunsPages(params,
+//	    func(page *glue.GetColumnStatisticsTaskRunsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Glue) GetColumnStatisticsTaskRunsPages(input *GetColumnStatisticsTaskRunsInput, fn func(*GetColumnStatisticsTaskRunsOutput, bool) bool) error {
+	return c.GetColumnStatisticsTaskRunsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// GetColumnStatisticsTaskRunsPagesWithContext same as GetColumnStatisticsTaskRunsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) GetColumnStatisticsTaskRunsPagesWithContext(ctx aws.Context, input *GetColumnStatisticsTaskRunsInput, fn func(*GetColumnStatisticsTaskRunsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *GetColumnStatisticsTaskRunsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.GetColumnStatisticsTaskRunsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*GetColumnStatisticsTaskRunsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opGetConnection = "GetConnection"
@@ -11536,6 +12018,94 @@ func (c *Glue) GetTableWithContext(ctx aws.Context, input *GetTableInput, opts .
 	return out, req.Send()
 }
 
+const opGetTableOptimizer = "GetTableOptimizer"
+
+// GetTableOptimizerRequest generates a "aws/request.Request" representing the
+// client's request for the GetTableOptimizer operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetTableOptimizer for more information on using the GetTableOptimizer
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetTableOptimizerRequest method.
+//	req, resp := client.GetTableOptimizerRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetTableOptimizer
+func (c *Glue) GetTableOptimizerRequest(input *GetTableOptimizerInput) (req *request.Request, output *GetTableOptimizerOutput) {
+	op := &request.Operation{
+		Name:       opGetTableOptimizer,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &GetTableOptimizerInput{}
+	}
+
+	output = &GetTableOptimizerOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetTableOptimizer API operation for AWS Glue.
+//
+// Returns the configuration of all optimizers associated with a specified table.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation GetTableOptimizer for usage and error information.
+//
+// Returned Error Types:
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - InvalidInputException
+//     The input provided was not valid.
+//
+//   - AccessDeniedException
+//     Access to a resource was denied.
+//
+//   - InternalServiceException
+//     An internal service error occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/GetTableOptimizer
+func (c *Glue) GetTableOptimizer(input *GetTableOptimizerInput) (*GetTableOptimizerOutput, error) {
+	req, out := c.GetTableOptimizerRequest(input)
+	return out, req.Send()
+}
+
+// GetTableOptimizerWithContext is the same as GetTableOptimizer with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetTableOptimizer for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) GetTableOptimizerWithContext(ctx aws.Context, input *GetTableOptimizerInput, opts ...request.Option) (*GetTableOptimizerOutput, error) {
+	req, out := c.GetTableOptimizerRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetTableVersion = "GetTableVersion"
 
 // GetTableVersionRequest generates a "aws/request.Request" representing the
@@ -13481,6 +14051,141 @@ func (c *Glue) ListBlueprintsPagesWithContext(ctx aws.Context, input *ListBluepr
 
 	for p.Next() {
 		if !fn(p.Page().(*ListBlueprintsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListColumnStatisticsTaskRuns = "ListColumnStatisticsTaskRuns"
+
+// ListColumnStatisticsTaskRunsRequest generates a "aws/request.Request" representing the
+// client's request for the ListColumnStatisticsTaskRuns operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListColumnStatisticsTaskRuns for more information on using the ListColumnStatisticsTaskRuns
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListColumnStatisticsTaskRunsRequest method.
+//	req, resp := client.ListColumnStatisticsTaskRunsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListColumnStatisticsTaskRuns
+func (c *Glue) ListColumnStatisticsTaskRunsRequest(input *ListColumnStatisticsTaskRunsInput) (req *request.Request, output *ListColumnStatisticsTaskRunsOutput) {
+	op := &request.Operation{
+		Name:       opListColumnStatisticsTaskRuns,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListColumnStatisticsTaskRunsInput{}
+	}
+
+	output = &ListColumnStatisticsTaskRunsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListColumnStatisticsTaskRuns API operation for AWS Glue.
+//
+// List all task runs for a particular account.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation ListColumnStatisticsTaskRuns for usage and error information.
+//
+// Returned Error Types:
+//   - OperationTimeoutException
+//     The operation timed out.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListColumnStatisticsTaskRuns
+func (c *Glue) ListColumnStatisticsTaskRuns(input *ListColumnStatisticsTaskRunsInput) (*ListColumnStatisticsTaskRunsOutput, error) {
+	req, out := c.ListColumnStatisticsTaskRunsRequest(input)
+	return out, req.Send()
+}
+
+// ListColumnStatisticsTaskRunsWithContext is the same as ListColumnStatisticsTaskRuns with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListColumnStatisticsTaskRuns for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) ListColumnStatisticsTaskRunsWithContext(ctx aws.Context, input *ListColumnStatisticsTaskRunsInput, opts ...request.Option) (*ListColumnStatisticsTaskRunsOutput, error) {
+	req, out := c.ListColumnStatisticsTaskRunsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListColumnStatisticsTaskRunsPages iterates over the pages of a ListColumnStatisticsTaskRuns operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListColumnStatisticsTaskRuns method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListColumnStatisticsTaskRuns operation.
+//	pageNum := 0
+//	err := client.ListColumnStatisticsTaskRunsPages(params,
+//	    func(page *glue.ListColumnStatisticsTaskRunsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Glue) ListColumnStatisticsTaskRunsPages(input *ListColumnStatisticsTaskRunsInput, fn func(*ListColumnStatisticsTaskRunsOutput, bool) bool) error {
+	return c.ListColumnStatisticsTaskRunsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListColumnStatisticsTaskRunsPagesWithContext same as ListColumnStatisticsTaskRunsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) ListColumnStatisticsTaskRunsPagesWithContext(ctx aws.Context, input *ListColumnStatisticsTaskRunsInput, fn func(*ListColumnStatisticsTaskRunsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListColumnStatisticsTaskRunsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListColumnStatisticsTaskRunsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListColumnStatisticsTaskRunsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -15572,6 +16277,151 @@ func (c *Glue) ListStatementsWithContext(ctx aws.Context, input *ListStatementsI
 	return out, req.Send()
 }
 
+const opListTableOptimizerRuns = "ListTableOptimizerRuns"
+
+// ListTableOptimizerRunsRequest generates a "aws/request.Request" representing the
+// client's request for the ListTableOptimizerRuns operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListTableOptimizerRuns for more information on using the ListTableOptimizerRuns
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListTableOptimizerRunsRequest method.
+//	req, resp := client.ListTableOptimizerRunsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListTableOptimizerRuns
+func (c *Glue) ListTableOptimizerRunsRequest(input *ListTableOptimizerRunsInput) (req *request.Request, output *ListTableOptimizerRunsOutput) {
+	op := &request.Operation{
+		Name:       opListTableOptimizerRuns,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListTableOptimizerRunsInput{}
+	}
+
+	output = &ListTableOptimizerRunsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListTableOptimizerRuns API operation for AWS Glue.
+//
+// Lists the history of previous optimizer runs for a specific table.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation ListTableOptimizerRuns for usage and error information.
+//
+// Returned Error Types:
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - AccessDeniedException
+//     Access to a resource was denied.
+//
+//   - InvalidInputException
+//     The input provided was not valid.
+//
+//   - InternalServiceException
+//     An internal service error occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/ListTableOptimizerRuns
+func (c *Glue) ListTableOptimizerRuns(input *ListTableOptimizerRunsInput) (*ListTableOptimizerRunsOutput, error) {
+	req, out := c.ListTableOptimizerRunsRequest(input)
+	return out, req.Send()
+}
+
+// ListTableOptimizerRunsWithContext is the same as ListTableOptimizerRuns with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListTableOptimizerRuns for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) ListTableOptimizerRunsWithContext(ctx aws.Context, input *ListTableOptimizerRunsInput, opts ...request.Option) (*ListTableOptimizerRunsOutput, error) {
+	req, out := c.ListTableOptimizerRunsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListTableOptimizerRunsPages iterates over the pages of a ListTableOptimizerRuns operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListTableOptimizerRuns method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListTableOptimizerRuns operation.
+//	pageNum := 0
+//	err := client.ListTableOptimizerRunsPages(params,
+//	    func(page *glue.ListTableOptimizerRunsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Glue) ListTableOptimizerRunsPages(input *ListTableOptimizerRunsInput, fn func(*ListTableOptimizerRunsOutput, bool) bool) error {
+	return c.ListTableOptimizerRunsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListTableOptimizerRunsPagesWithContext same as ListTableOptimizerRunsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) ListTableOptimizerRunsPagesWithContext(ctx aws.Context, input *ListTableOptimizerRunsInput, fn func(*ListTableOptimizerRunsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListTableOptimizerRunsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListTableOptimizerRunsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListTableOptimizerRunsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListTriggers = "ListTriggers"
 
 // ListTriggersRequest generates a "aws/request.Request" representing the
@@ -17051,6 +17901,101 @@ func (c *Glue) StartBlueprintRunWithContext(ctx aws.Context, input *StartBluepri
 	return out, req.Send()
 }
 
+const opStartColumnStatisticsTaskRun = "StartColumnStatisticsTaskRun"
+
+// StartColumnStatisticsTaskRunRequest generates a "aws/request.Request" representing the
+// client's request for the StartColumnStatisticsTaskRun operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartColumnStatisticsTaskRun for more information on using the StartColumnStatisticsTaskRun
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartColumnStatisticsTaskRunRequest method.
+//	req, resp := client.StartColumnStatisticsTaskRunRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StartColumnStatisticsTaskRun
+func (c *Glue) StartColumnStatisticsTaskRunRequest(input *StartColumnStatisticsTaskRunInput) (req *request.Request, output *StartColumnStatisticsTaskRunOutput) {
+	op := &request.Operation{
+		Name:       opStartColumnStatisticsTaskRun,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartColumnStatisticsTaskRunInput{}
+	}
+
+	output = &StartColumnStatisticsTaskRunOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartColumnStatisticsTaskRun API operation for AWS Glue.
+//
+// Starts a column statistics task run, for a specified table and columns.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation StartColumnStatisticsTaskRun for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     Access to a resource was denied.
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - ColumnStatisticsTaskRunningException
+//     An exception thrown when you try to start another job while running a column
+//     stats generation job.
+//
+//   - OperationTimeoutException
+//     The operation timed out.
+//
+//   - ResourceNumberLimitExceededException
+//     A resource numerical limit was exceeded.
+//
+//   - InvalidInputException
+//     The input provided was not valid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StartColumnStatisticsTaskRun
+func (c *Glue) StartColumnStatisticsTaskRun(input *StartColumnStatisticsTaskRunInput) (*StartColumnStatisticsTaskRunOutput, error) {
+	req, out := c.StartColumnStatisticsTaskRunRequest(input)
+	return out, req.Send()
+}
+
+// StartColumnStatisticsTaskRunWithContext is the same as StartColumnStatisticsTaskRun with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartColumnStatisticsTaskRun for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) StartColumnStatisticsTaskRunWithContext(ctx aws.Context, input *StartColumnStatisticsTaskRunInput, opts ...request.Option) (*StartColumnStatisticsTaskRunOutput, error) {
+	req, out := c.StartColumnStatisticsTaskRunRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartCrawler = "StartCrawler"
 
 // StartCrawlerRequest generates a "aws/request.Request" representing the
@@ -17278,6 +18223,8 @@ func (c *Glue) StartDataQualityRuleRecommendationRunRequest(input *StartDataQual
 // know what rules to write. Glue Data Quality analyzes the data and comes up
 // with recommendations for a potential ruleset. You can then triage the ruleset
 // and modify the generated ruleset to your liking.
+//
+// Recommendation runs are automatically deleted after 90 days.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -18111,6 +19058,96 @@ func (c *Glue) StartWorkflowRun(input *StartWorkflowRunInput) (*StartWorkflowRun
 // for more information on using Contexts.
 func (c *Glue) StartWorkflowRunWithContext(ctx aws.Context, input *StartWorkflowRunInput, opts ...request.Option) (*StartWorkflowRunOutput, error) {
 	req, out := c.StartWorkflowRunRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStopColumnStatisticsTaskRun = "StopColumnStatisticsTaskRun"
+
+// StopColumnStatisticsTaskRunRequest generates a "aws/request.Request" representing the
+// client's request for the StopColumnStatisticsTaskRun operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StopColumnStatisticsTaskRun for more information on using the StopColumnStatisticsTaskRun
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StopColumnStatisticsTaskRunRequest method.
+//	req, resp := client.StopColumnStatisticsTaskRunRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StopColumnStatisticsTaskRun
+func (c *Glue) StopColumnStatisticsTaskRunRequest(input *StopColumnStatisticsTaskRunInput) (req *request.Request, output *StopColumnStatisticsTaskRunOutput) {
+	op := &request.Operation{
+		Name:       opStopColumnStatisticsTaskRun,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StopColumnStatisticsTaskRunInput{}
+	}
+
+	output = &StopColumnStatisticsTaskRunOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// StopColumnStatisticsTaskRun API operation for AWS Glue.
+//
+// Stops a task run for the specified table.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation StopColumnStatisticsTaskRun for usage and error information.
+//
+// Returned Error Types:
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - ColumnStatisticsTaskNotRunningException
+//     An exception thrown when you try to stop a task run when there is no task
+//     running.
+//
+//   - ColumnStatisticsTaskStoppingException
+//     An exception thrown when you try to stop a task run.
+//
+//   - OperationTimeoutException
+//     The operation timed out.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/StopColumnStatisticsTaskRun
+func (c *Glue) StopColumnStatisticsTaskRun(input *StopColumnStatisticsTaskRunInput) (*StopColumnStatisticsTaskRunOutput, error) {
+	req, out := c.StopColumnStatisticsTaskRunRequest(input)
+	return out, req.Send()
+}
+
+// StopColumnStatisticsTaskRunWithContext is the same as StopColumnStatisticsTaskRun with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StopColumnStatisticsTaskRun for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) StopColumnStatisticsTaskRunWithContext(ctx aws.Context, input *StopColumnStatisticsTaskRunInput, opts ...request.Option) (*StopColumnStatisticsTaskRunOutput, error) {
+	req, out := c.StopColumnStatisticsTaskRunRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -20464,6 +21501,95 @@ func (c *Glue) UpdateTableWithContext(ctx aws.Context, input *UpdateTableInput, 
 	return out, req.Send()
 }
 
+const opUpdateTableOptimizer = "UpdateTableOptimizer"
+
+// UpdateTableOptimizerRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateTableOptimizer operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateTableOptimizer for more information on using the UpdateTableOptimizer
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateTableOptimizerRequest method.
+//	req, resp := client.UpdateTableOptimizerRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateTableOptimizer
+func (c *Glue) UpdateTableOptimizerRequest(input *UpdateTableOptimizerInput) (req *request.Request, output *UpdateTableOptimizerOutput) {
+	op := &request.Operation{
+		Name:       opUpdateTableOptimizer,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &UpdateTableOptimizerInput{}
+	}
+
+	output = &UpdateTableOptimizerOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// UpdateTableOptimizer API operation for AWS Glue.
+//
+// Updates the configuration for an existing table optimizer.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Glue's
+// API operation UpdateTableOptimizer for usage and error information.
+//
+// Returned Error Types:
+//
+//   - EntityNotFoundException
+//     A specified entity does not exist
+//
+//   - InvalidInputException
+//     The input provided was not valid.
+//
+//   - AccessDeniedException
+//     Access to a resource was denied.
+//
+//   - InternalServiceException
+//     An internal service error occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/glue-2017-03-31/UpdateTableOptimizer
+func (c *Glue) UpdateTableOptimizer(input *UpdateTableOptimizerInput) (*UpdateTableOptimizerOutput, error) {
+	req, out := c.UpdateTableOptimizerRequest(input)
+	return out, req.Send()
+}
+
+// UpdateTableOptimizerWithContext is the same as UpdateTableOptimizer with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateTableOptimizer for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Glue) UpdateTableOptimizerWithContext(ctx aws.Context, input *UpdateTableOptimizerInput, opts ...request.Option) (*UpdateTableOptimizerOutput, error) {
+	req, out := c.UpdateTableOptimizerRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateTrigger = "UpdateTrigger"
 
 // UpdateTriggerRequest generates a "aws/request.Request" representing the
@@ -21513,7 +22639,7 @@ func (s *AmazonRedshiftSource) SetName(v string) *AmazonRedshiftSource {
 type AmazonRedshiftTarget struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the data of the Amazon Reshift target node.
+	// Specifies the data of the Amazon Redshift target node.
 	Data *AmazonRedshiftNodeData `type:"structure"`
 
 	// The nodes that are inputs to the data target.
@@ -23301,6 +24427,250 @@ func (s *BatchGetPartitionOutput) SetUnprocessedKeys(v []*PartitionValueList) *B
 	return s
 }
 
+// Represents a table optimizer to retrieve in the BatchGetTableOptimizer operation.
+type BatchGetTableOptimizerEntry struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	CatalogId *string `locationName:"catalogId" min:"1" type:"string"`
+
+	// The name of the database in the catalog in which the table resides.
+	DatabaseName *string `locationName:"databaseName" min:"1" type:"string"`
+
+	// The name of the table.
+	TableName *string `locationName:"tableName" min:"1" type:"string"`
+
+	// The type of table optimizer.
+	Type *string `locationName:"type" type:"string" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerEntry) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerEntry) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BatchGetTableOptimizerEntry) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BatchGetTableOptimizerEntry"}
+	if s.CatalogId != nil && len(*s.CatalogId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CatalogId", 1))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *BatchGetTableOptimizerEntry) SetCatalogId(v string) *BatchGetTableOptimizerEntry {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *BatchGetTableOptimizerEntry) SetDatabaseName(v string) *BatchGetTableOptimizerEntry {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *BatchGetTableOptimizerEntry) SetTableName(v string) *BatchGetTableOptimizerEntry {
+	s.TableName = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *BatchGetTableOptimizerEntry) SetType(v string) *BatchGetTableOptimizerEntry {
+	s.Type = &v
+	return s
+}
+
+// Contains details on one of the errors in the error list returned by the BatchGetTableOptimizer
+// operation.
+type BatchGetTableOptimizerError struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	CatalogId *string `locationName:"catalogId" min:"1" type:"string"`
+
+	// The name of the database in the catalog in which the table resides.
+	DatabaseName *string `locationName:"databaseName" min:"1" type:"string"`
+
+	// An ErrorDetail object containing code and message details about the error.
+	Error *ErrorDetail `locationName:"error" type:"structure"`
+
+	// The name of the table.
+	TableName *string `locationName:"tableName" min:"1" type:"string"`
+
+	// The type of table optimizer.
+	Type *string `locationName:"type" type:"string" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerError) GoString() string {
+	return s.String()
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *BatchGetTableOptimizerError) SetCatalogId(v string) *BatchGetTableOptimizerError {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *BatchGetTableOptimizerError) SetDatabaseName(v string) *BatchGetTableOptimizerError {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetError sets the Error field's value.
+func (s *BatchGetTableOptimizerError) SetError(v *ErrorDetail) *BatchGetTableOptimizerError {
+	s.Error = v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *BatchGetTableOptimizerError) SetTableName(v string) *BatchGetTableOptimizerError {
+	s.TableName = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *BatchGetTableOptimizerError) SetType(v string) *BatchGetTableOptimizerError {
+	s.Type = &v
+	return s
+}
+
+type BatchGetTableOptimizerInput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of BatchGetTableOptimizerEntry objects specifying the table optimizers
+	// to retrieve.
+	//
+	// Entries is a required field
+	Entries []*BatchGetTableOptimizerEntry `type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BatchGetTableOptimizerInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BatchGetTableOptimizerInput"}
+	if s.Entries == nil {
+		invalidParams.Add(request.NewErrParamRequired("Entries"))
+	}
+	if s.Entries != nil {
+		for i, v := range s.Entries {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Entries", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEntries sets the Entries field's value.
+func (s *BatchGetTableOptimizerInput) SetEntries(v []*BatchGetTableOptimizerEntry) *BatchGetTableOptimizerInput {
+	s.Entries = v
+	return s
+}
+
+type BatchGetTableOptimizerOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of errors from the operation.
+	Failures []*BatchGetTableOptimizerError `type:"list"`
+
+	// A list of BatchTableOptimizer objects.
+	TableOptimizers []*BatchTableOptimizer `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetTableOptimizerOutput) GoString() string {
+	return s.String()
+}
+
+// SetFailures sets the Failures field's value.
+func (s *BatchGetTableOptimizerOutput) SetFailures(v []*BatchGetTableOptimizerError) *BatchGetTableOptimizerOutput {
+	s.Failures = v
+	return s
+}
+
+// SetTableOptimizers sets the TableOptimizers field's value.
+func (s *BatchGetTableOptimizerOutput) SetTableOptimizers(v []*BatchTableOptimizer) *BatchGetTableOptimizerOutput {
+	s.TableOptimizers = v
+	return s
+}
+
 type BatchGetTriggersInput struct {
 	_ struct{} `type:"structure"`
 
@@ -23683,6 +25053,67 @@ func (s *BatchStopJobRunSuccessfulSubmission) SetJobName(v string) *BatchStopJob
 // SetJobRunId sets the JobRunId field's value.
 func (s *BatchStopJobRunSuccessfulSubmission) SetJobRunId(v string) *BatchStopJobRunSuccessfulSubmission {
 	s.JobRunId = &v
+	return s
+}
+
+// Contains details for one of the table optimizers returned by the BatchGetTableOptimizer
+// operation.
+type BatchTableOptimizer struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	CatalogId *string `locationName:"catalogId" min:"1" type:"string"`
+
+	// The name of the database in the catalog in which the table resides.
+	DatabaseName *string `locationName:"databaseName" min:"1" type:"string"`
+
+	// The name of the table.
+	TableName *string `locationName:"tableName" min:"1" type:"string"`
+
+	// A TableOptimizer object that contains details on the configuration and last
+	// run of a table optimzer.
+	TableOptimizer *TableOptimizer `locationName:"tableOptimizer" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchTableOptimizer) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchTableOptimizer) GoString() string {
+	return s.String()
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *BatchTableOptimizer) SetCatalogId(v string) *BatchTableOptimizer {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *BatchTableOptimizer) SetDatabaseName(v string) *BatchTableOptimizer {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *BatchTableOptimizer) SetTableName(v string) *BatchTableOptimizer {
+	s.TableName = &v
+	return s
+}
+
+// SetTableOptimizer sets the TableOptimizer field's value.
+func (s *BatchTableOptimizer) SetTableOptimizer(v *TableOptimizer) *BatchTableOptimizer {
+	s.TableOptimizer = v
 	return s
 }
 
@@ -25750,6 +27181,12 @@ type CodeGenConfigurationNode struct {
 	// Specifies a target that uses a Glue Data Catalog table.
 	CatalogTarget *BasicCatalogTarget `type:"structure"`
 
+	// Specifies a source generated with standard connection options.
+	ConnectorDataSource *ConnectorDataSource `type:"structure"`
+
+	// Specifies a target generated with standard connection options.
+	ConnectorDataTarget *ConnectorDataTarget `type:"structure"`
+
 	// Specifies a transform that uses custom code you provide to perform the data
 	// transformation. The output is a collection of DynamicFrames.
 	CustomCode *CustomCode `type:"structure"`
@@ -25849,6 +27286,9 @@ type CodeGenConfigurationNode struct {
 	// Specifies a target that uses Postgres SQL.
 	PostgreSQLCatalogTarget *PostgreSQLCatalogTarget `type:"structure"`
 
+	// Specifies a Glue DataBrew recipe node.
+	Recipe *Recipe `type:"structure"`
+
 	// Specifies an Amazon Redshift data store.
 	RedshiftSource *RedshiftSource `type:"structure"`
 
@@ -25917,6 +27357,12 @@ type CodeGenConfigurationNode struct {
 	// Specifies a transform that chooses one DynamicFrame from a collection of
 	// DynamicFrames. The output is the selected DynamicFrame
 	SelectFromCollection *SelectFromCollection `type:"structure"`
+
+	// Specifies a Snowflake data source.
+	SnowflakeSource *SnowflakeSource `type:"structure"`
+
+	// Specifies a target that writes to a Snowflake data source.
+	SnowflakeTarget *SnowflakeTarget `type:"structure"`
 
 	// Specifies a connector to an Apache Spark data source.
 	SparkConnectorSource *SparkConnectorSource `type:"structure"`
@@ -26010,6 +27456,16 @@ func (s *CodeGenConfigurationNode) Validate() error {
 	if s.CatalogTarget != nil {
 		if err := s.CatalogTarget.Validate(); err != nil {
 			invalidParams.AddNested("CatalogTarget", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.ConnectorDataSource != nil {
+		if err := s.ConnectorDataSource.Validate(); err != nil {
+			invalidParams.AddNested("ConnectorDataSource", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.ConnectorDataTarget != nil {
+		if err := s.ConnectorDataTarget.Validate(); err != nil {
+			invalidParams.AddNested("ConnectorDataTarget", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.CustomCode != nil {
@@ -26152,6 +27608,11 @@ func (s *CodeGenConfigurationNode) Validate() error {
 			invalidParams.AddNested("PostgreSQLCatalogTarget", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.Recipe != nil {
+		if err := s.Recipe.Validate(); err != nil {
+			invalidParams.AddNested("Recipe", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.RedshiftSource != nil {
 		if err := s.RedshiftSource.Validate(); err != nil {
 			invalidParams.AddNested("RedshiftSource", err.(request.ErrInvalidParams))
@@ -26257,6 +27718,16 @@ func (s *CodeGenConfigurationNode) Validate() error {
 			invalidParams.AddNested("SelectFromCollection", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.SnowflakeSource != nil {
+		if err := s.SnowflakeSource.Validate(); err != nil {
+			invalidParams.AddNested("SnowflakeSource", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.SnowflakeTarget != nil {
+		if err := s.SnowflakeTarget.Validate(); err != nil {
+			invalidParams.AddNested("SnowflakeTarget", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.SparkConnectorSource != nil {
 		if err := s.SparkConnectorSource.Validate(); err != nil {
 			invalidParams.AddNested("SparkConnectorSource", err.(request.ErrInvalidParams))
@@ -26357,6 +27828,18 @@ func (s *CodeGenConfigurationNode) SetCatalogSource(v *CatalogSource) *CodeGenCo
 // SetCatalogTarget sets the CatalogTarget field's value.
 func (s *CodeGenConfigurationNode) SetCatalogTarget(v *BasicCatalogTarget) *CodeGenConfigurationNode {
 	s.CatalogTarget = v
+	return s
+}
+
+// SetConnectorDataSource sets the ConnectorDataSource field's value.
+func (s *CodeGenConfigurationNode) SetConnectorDataSource(v *ConnectorDataSource) *CodeGenConfigurationNode {
+	s.ConnectorDataSource = v
+	return s
+}
+
+// SetConnectorDataTarget sets the ConnectorDataTarget field's value.
+func (s *CodeGenConfigurationNode) SetConnectorDataTarget(v *ConnectorDataTarget) *CodeGenConfigurationNode {
+	s.ConnectorDataTarget = v
 	return s
 }
 
@@ -26528,6 +28011,12 @@ func (s *CodeGenConfigurationNode) SetPostgreSQLCatalogTarget(v *PostgreSQLCatal
 	return s
 }
 
+// SetRecipe sets the Recipe field's value.
+func (s *CodeGenConfigurationNode) SetRecipe(v *Recipe) *CodeGenConfigurationNode {
+	s.Recipe = v
+	return s
+}
+
 // SetRedshiftSource sets the RedshiftSource field's value.
 func (s *CodeGenConfigurationNode) SetRedshiftSource(v *RedshiftSource) *CodeGenConfigurationNode {
 	s.RedshiftSource = v
@@ -26651,6 +28140,18 @@ func (s *CodeGenConfigurationNode) SetSelectFields(v *SelectFields) *CodeGenConf
 // SetSelectFromCollection sets the SelectFromCollection field's value.
 func (s *CodeGenConfigurationNode) SetSelectFromCollection(v *SelectFromCollection) *CodeGenConfigurationNode {
 	s.SelectFromCollection = v
+	return s
+}
+
+// SetSnowflakeSource sets the SnowflakeSource field's value.
+func (s *CodeGenConfigurationNode) SetSnowflakeSource(v *SnowflakeSource) *CodeGenConfigurationNode {
+	s.SnowflakeSource = v
+	return s
+}
+
+// SetSnowflakeTarget sets the SnowflakeTarget field's value.
+func (s *CodeGenConfigurationNode) SetSnowflakeTarget(v *SnowflakeTarget) *CodeGenConfigurationNode {
+	s.SnowflakeTarget = v
 	return s
 }
 
@@ -27423,6 +28924,393 @@ func (s *ColumnStatisticsError) SetError(v *ErrorDetail) *ColumnStatisticsError 
 	return s
 }
 
+// An exception thrown when you try to stop a task run when there is no task
+// running.
+type ColumnStatisticsTaskNotRunningException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	// A message describing the problem.
+	Message_ *string `locationName:"Message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskNotRunningException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskNotRunningException) GoString() string {
+	return s.String()
+}
+
+func newErrorColumnStatisticsTaskNotRunningException(v protocol.ResponseMetadata) error {
+	return &ColumnStatisticsTaskNotRunningException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ColumnStatisticsTaskNotRunningException) Code() string {
+	return "ColumnStatisticsTaskNotRunningException"
+}
+
+// Message returns the exception's message.
+func (s *ColumnStatisticsTaskNotRunningException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ColumnStatisticsTaskNotRunningException) OrigErr() error {
+	return nil
+}
+
+func (s *ColumnStatisticsTaskNotRunningException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ColumnStatisticsTaskNotRunningException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ColumnStatisticsTaskNotRunningException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// The object that shows the details of the column stats run.
+type ColumnStatisticsTaskRun struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the Data Catalog where the table resides. If none is supplied,
+	// the Amazon Web Services account ID is used by default.
+	CatalogID *string `min:"1" type:"string"`
+
+	// A list of the column names. If none is supplied, all column names for the
+	// table will be used by default.
+	ColumnNameList []*string `type:"list"`
+
+	// The identifier for the particular column statistics task run.
+	ColumnStatisticsTaskRunId *string `min:"1" type:"string"`
+
+	// The time that this task was created.
+	CreationTime *time.Time `type:"timestamp"`
+
+	// The Amazon Web Services account ID.
+	CustomerId *string `type:"string"`
+
+	// The calculated DPU usage in seconds for all autoscaled workers.
+	DPUSeconds *float64 `type:"double"`
+
+	// The database where the table resides.
+	DatabaseName *string `type:"string"`
+
+	// The end time of the task.
+	EndTime *time.Time `type:"timestamp"`
+
+	// The error message for the job.
+	ErrorMessage *string `type:"string"`
+
+	// The last point in time when this task was modified.
+	LastUpdated *time.Time `type:"timestamp"`
+
+	// The number of workers used to generate column statistics. The job is preconfigured
+	// to autoscale up to 25 instances.
+	NumberOfWorkers *int64 `min:"1" type:"integer"`
+
+	// The IAM role that the service assumes to generate statistics.
+	Role *string `type:"string"`
+
+	// The percentage of rows used to generate statistics. If none is supplied,
+	// the entire table will be used to generate stats.
+	SampleSize *float64 `type:"double"`
+
+	// Name of the security configuration that is used to encrypt CloudWatch logs
+	// for the column stats task run.
+	SecurityConfiguration *string `type:"string"`
+
+	// The start time of the task.
+	StartTime *time.Time `type:"timestamp"`
+
+	// The status of the task run.
+	Status *string `type:"string" enum:"ColumnStatisticsState"`
+
+	// The name of the table for which column statistics is generated.
+	TableName *string `type:"string"`
+
+	// The type of workers being used for generating stats. The default is g.1x.
+	WorkerType *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskRun) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskRun) GoString() string {
+	return s.String()
+}
+
+// SetCatalogID sets the CatalogID field's value.
+func (s *ColumnStatisticsTaskRun) SetCatalogID(v string) *ColumnStatisticsTaskRun {
+	s.CatalogID = &v
+	return s
+}
+
+// SetColumnNameList sets the ColumnNameList field's value.
+func (s *ColumnStatisticsTaskRun) SetColumnNameList(v []*string) *ColumnStatisticsTaskRun {
+	s.ColumnNameList = v
+	return s
+}
+
+// SetColumnStatisticsTaskRunId sets the ColumnStatisticsTaskRunId field's value.
+func (s *ColumnStatisticsTaskRun) SetColumnStatisticsTaskRunId(v string) *ColumnStatisticsTaskRun {
+	s.ColumnStatisticsTaskRunId = &v
+	return s
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *ColumnStatisticsTaskRun) SetCreationTime(v time.Time) *ColumnStatisticsTaskRun {
+	s.CreationTime = &v
+	return s
+}
+
+// SetCustomerId sets the CustomerId field's value.
+func (s *ColumnStatisticsTaskRun) SetCustomerId(v string) *ColumnStatisticsTaskRun {
+	s.CustomerId = &v
+	return s
+}
+
+// SetDPUSeconds sets the DPUSeconds field's value.
+func (s *ColumnStatisticsTaskRun) SetDPUSeconds(v float64) *ColumnStatisticsTaskRun {
+	s.DPUSeconds = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *ColumnStatisticsTaskRun) SetDatabaseName(v string) *ColumnStatisticsTaskRun {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetEndTime sets the EndTime field's value.
+func (s *ColumnStatisticsTaskRun) SetEndTime(v time.Time) *ColumnStatisticsTaskRun {
+	s.EndTime = &v
+	return s
+}
+
+// SetErrorMessage sets the ErrorMessage field's value.
+func (s *ColumnStatisticsTaskRun) SetErrorMessage(v string) *ColumnStatisticsTaskRun {
+	s.ErrorMessage = &v
+	return s
+}
+
+// SetLastUpdated sets the LastUpdated field's value.
+func (s *ColumnStatisticsTaskRun) SetLastUpdated(v time.Time) *ColumnStatisticsTaskRun {
+	s.LastUpdated = &v
+	return s
+}
+
+// SetNumberOfWorkers sets the NumberOfWorkers field's value.
+func (s *ColumnStatisticsTaskRun) SetNumberOfWorkers(v int64) *ColumnStatisticsTaskRun {
+	s.NumberOfWorkers = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *ColumnStatisticsTaskRun) SetRole(v string) *ColumnStatisticsTaskRun {
+	s.Role = &v
+	return s
+}
+
+// SetSampleSize sets the SampleSize field's value.
+func (s *ColumnStatisticsTaskRun) SetSampleSize(v float64) *ColumnStatisticsTaskRun {
+	s.SampleSize = &v
+	return s
+}
+
+// SetSecurityConfiguration sets the SecurityConfiguration field's value.
+func (s *ColumnStatisticsTaskRun) SetSecurityConfiguration(v string) *ColumnStatisticsTaskRun {
+	s.SecurityConfiguration = &v
+	return s
+}
+
+// SetStartTime sets the StartTime field's value.
+func (s *ColumnStatisticsTaskRun) SetStartTime(v time.Time) *ColumnStatisticsTaskRun {
+	s.StartTime = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ColumnStatisticsTaskRun) SetStatus(v string) *ColumnStatisticsTaskRun {
+	s.Status = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *ColumnStatisticsTaskRun) SetTableName(v string) *ColumnStatisticsTaskRun {
+	s.TableName = &v
+	return s
+}
+
+// SetWorkerType sets the WorkerType field's value.
+func (s *ColumnStatisticsTaskRun) SetWorkerType(v string) *ColumnStatisticsTaskRun {
+	s.WorkerType = &v
+	return s
+}
+
+// An exception thrown when you try to start another job while running a column
+// stats generation job.
+type ColumnStatisticsTaskRunningException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	// A message describing the problem.
+	Message_ *string `locationName:"Message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskRunningException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskRunningException) GoString() string {
+	return s.String()
+}
+
+func newErrorColumnStatisticsTaskRunningException(v protocol.ResponseMetadata) error {
+	return &ColumnStatisticsTaskRunningException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ColumnStatisticsTaskRunningException) Code() string {
+	return "ColumnStatisticsTaskRunningException"
+}
+
+// Message returns the exception's message.
+func (s *ColumnStatisticsTaskRunningException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ColumnStatisticsTaskRunningException) OrigErr() error {
+	return nil
+}
+
+func (s *ColumnStatisticsTaskRunningException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ColumnStatisticsTaskRunningException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ColumnStatisticsTaskRunningException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// An exception thrown when you try to stop a task run.
+type ColumnStatisticsTaskStoppingException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	// A message describing the problem.
+	Message_ *string `locationName:"Message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskStoppingException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColumnStatisticsTaskStoppingException) GoString() string {
+	return s.String()
+}
+
+func newErrorColumnStatisticsTaskStoppingException(v protocol.ResponseMetadata) error {
+	return &ColumnStatisticsTaskStoppingException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ColumnStatisticsTaskStoppingException) Code() string {
+	return "ColumnStatisticsTaskStoppingException"
+}
+
+// Message returns the exception's message.
+func (s *ColumnStatisticsTaskStoppingException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ColumnStatisticsTaskStoppingException) OrigErr() error {
+	return nil
+}
+
+func (s *ColumnStatisticsTaskStoppingException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ColumnStatisticsTaskStoppingException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ColumnStatisticsTaskStoppingException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // Two processes are trying to modify a resource simultaneously.
 type ConcurrentModificationException struct {
 	_            struct{}                  `type:"structure"`
@@ -27952,6 +29840,9 @@ type Connection struct {
 	//    SASL SCRAM password (if the user has the Glue encrypt passwords setting
 	//    selected).
 	//
+	//    * KAFKA_SASL_SCRAM_SECRETS_ARN - The Amazon Resource Name of a secret
+	//    in Amazon Web Services Secrets Manager.
+	//
 	//    * KAFKA_SASL_GSSAPI_KEYTAB - The S3 location of a Kerberos keytab file.
 	//    A keytab stores long-term keys for one or more principals. For more information,
 	//    see MIT Kerberos Documentation: Keytab (https://web.mit.edu/kerberos/krb5-latest/doc/basic/keytab_def.html).
@@ -28337,6 +30228,223 @@ func (s ConnectionsList) GoString() string {
 // SetConnections sets the Connections field's value.
 func (s *ConnectionsList) SetConnections(v []*string) *ConnectionsList {
 	s.Connections = v
+	return s
+}
+
+// Specifies a source generated with standard connection options.
+type ConnectorDataSource struct {
+	_ struct{} `type:"structure"`
+
+	// The connectionType, as provided to the underlying Glue library. This node
+	// type supports the following connection types:
+	//
+	//    * opensearch
+	//
+	//    * azuresql
+	//
+	//    * azurecosmos
+	//
+	//    * bigquery
+	//
+	//    * saphana
+	//
+	//    * teradata
+	//
+	//    * vertica
+	//
+	// ConnectionType is a required field
+	ConnectionType *string `type:"string" required:"true"`
+
+	// A map specifying connection options for the node. You can find standard connection
+	// options for the corresponding connection type in the Connection parameters
+	// (https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html)
+	// section of the Glue documentation.
+	//
+	// Data is a required field
+	Data map[string]*string `type:"map" required:"true"`
+
+	// The name of this source node.
+	//
+	// Name is a required field
+	Name *string `type:"string" required:"true"`
+
+	// Specifies the data schema for this source.
+	OutputSchemas []*GlueSchema `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectorDataSource) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectorDataSource) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ConnectorDataSource) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ConnectorDataSource"}
+	if s.ConnectionType == nil {
+		invalidParams.Add(request.NewErrParamRequired("ConnectionType"))
+	}
+	if s.Data == nil {
+		invalidParams.Add(request.NewErrParamRequired("Data"))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.OutputSchemas != nil {
+		for i, v := range s.OutputSchemas {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "OutputSchemas", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetConnectionType sets the ConnectionType field's value.
+func (s *ConnectorDataSource) SetConnectionType(v string) *ConnectorDataSource {
+	s.ConnectionType = &v
+	return s
+}
+
+// SetData sets the Data field's value.
+func (s *ConnectorDataSource) SetData(v map[string]*string) *ConnectorDataSource {
+	s.Data = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ConnectorDataSource) SetName(v string) *ConnectorDataSource {
+	s.Name = &v
+	return s
+}
+
+// SetOutputSchemas sets the OutputSchemas field's value.
+func (s *ConnectorDataSource) SetOutputSchemas(v []*GlueSchema) *ConnectorDataSource {
+	s.OutputSchemas = v
+	return s
+}
+
+// Specifies a target generated with standard connection options.
+type ConnectorDataTarget struct {
+	_ struct{} `type:"structure"`
+
+	// The connectionType, as provided to the underlying Glue library. This node
+	// type supports the following connection types:
+	//
+	//    * opensearch
+	//
+	//    * azuresql
+	//
+	//    * azurecosmos
+	//
+	//    * bigquery
+	//
+	//    * saphana
+	//
+	//    * teradata
+	//
+	//    * vertica
+	//
+	// ConnectionType is a required field
+	ConnectionType *string `type:"string" required:"true"`
+
+	// A map specifying connection options for the node. You can find standard connection
+	// options for the corresponding connection type in the Connection parameters
+	// (https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-etl-connect.html)
+	// section of the Glue documentation.
+	//
+	// Data is a required field
+	Data map[string]*string `type:"map" required:"true"`
+
+	// The nodes that are inputs to the data target.
+	Inputs []*string `min:"1" type:"list"`
+
+	// The name of this target node.
+	//
+	// Name is a required field
+	Name *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectorDataTarget) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectorDataTarget) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ConnectorDataTarget) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ConnectorDataTarget"}
+	if s.ConnectionType == nil {
+		invalidParams.Add(request.NewErrParamRequired("ConnectionType"))
+	}
+	if s.Data == nil {
+		invalidParams.Add(request.NewErrParamRequired("Data"))
+	}
+	if s.Inputs != nil && len(s.Inputs) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Inputs", 1))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetConnectionType sets the ConnectionType field's value.
+func (s *ConnectorDataTarget) SetConnectionType(v string) *ConnectorDataTarget {
+	s.ConnectionType = &v
+	return s
+}
+
+// SetData sets the Data field's value.
+func (s *ConnectorDataTarget) SetData(v map[string]*string) *ConnectorDataTarget {
+	s.Data = v
+	return s
+}
+
+// SetInputs sets the Inputs field's value.
+func (s *ConnectorDataTarget) SetInputs(v []*string) *ConnectorDataTarget {
+	s.Inputs = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ConnectorDataTarget) SetName(v string) *ConnectorDataTarget {
+	s.Name = &v
 	return s
 }
 
@@ -29080,6 +31188,9 @@ type CrawlerTargets struct {
 	// Specifies Amazon DynamoDB targets.
 	DynamoDBTargets []*DynamoDBTarget `type:"list"`
 
+	// Specifies Apache Hudi data store targets.
+	HudiTargets []*HudiTarget `type:"list"`
+
 	// Specifies Apache Iceberg data store targets.
 	IcebergTargets []*IcebergTarget `type:"list"`
 
@@ -29146,6 +31257,12 @@ func (s *CrawlerTargets) SetDeltaTargets(v []*DeltaTarget) *CrawlerTargets {
 // SetDynamoDBTargets sets the DynamoDBTargets field's value.
 func (s *CrawlerTargets) SetDynamoDBTargets(v []*DynamoDBTarget) *CrawlerTargets {
 	s.DynamoDBTargets = v
+	return s
+}
+
+// SetHudiTargets sets the HudiTargets field's value.
+func (s *CrawlerTargets) SetHudiTargets(v []*HudiTarget) *CrawlerTargets {
+	s.HudiTargets = v
 	return s
 }
 
@@ -29828,6 +31945,12 @@ type CreateCsvClassifierRequest struct {
 	// A custom symbol to denote what combines content into a single column value.
 	// Must be different from the column delimiter.
 	QuoteSymbol *string `min:"1" type:"string"`
+
+	// Sets the SerDe for processing CSV in the classifier, which will be applied
+	// in the Data Catalog. Valid values are OpenCSVSerDe, LazySimpleSerDe, and
+	// None. You can specify the None value when you want the crawler to do the
+	// detection.
+	Serde *string `type:"string" enum:"CsvSerdeOption"`
 }
 
 // String returns the string representation.
@@ -29921,6 +32044,12 @@ func (s *CreateCsvClassifierRequest) SetName(v string) *CreateCsvClassifierReque
 // SetQuoteSymbol sets the QuoteSymbol field's value.
 func (s *CreateCsvClassifierRequest) SetQuoteSymbol(v string) *CreateCsvClassifierRequest {
 	s.QuoteSymbol = &v
+	return s
+}
+
+// SetSerde sets the Serde field's value.
+func (s *CreateCsvClassifierRequest) SetSerde(v string) *CreateCsvClassifierRequest {
+	s.Serde = &v
 	return s
 }
 
@@ -30980,28 +33109,48 @@ type CreateJobInput struct {
 	Timeout *int64 `min:"1" type:"integer"`
 
 	// The type of predefined worker that is allocated when a job runs. Accepts
-	// a value of Standard, G.1X, G.2X, or G.025X for Spark jobs. Accepts the value
+	// a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value
 	// Z.2X for Ray jobs.
 	//
-	//    * For the Standard worker type, each worker provides 4 vCPU, 16 GB of
-	//    memory and a 50GB disk, and 2 executors per worker.
+	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB
+	//    of memory) with 84GB disk (approximately 34GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of
-	//    memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB
+	//    of memory) with 128GB disk (approximately 77GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of
-	//    memory, 128 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.4X worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB
+	//    of memory) with 256GB disk (approximately 235GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs in the following Amazon Web Services Regions: US East (Ohio),
+	//    US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt),
+	//    Europe (Ireland), and Europe (Stockholm).
 	//
-	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPU, 4
-	//    GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for low volume streaming jobs. This worker type is only
-	//    available for Glue version 3.0 streaming jobs.
+	//    * For the G.8X worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB
+	//    of memory) with 512GB disk (approximately 487GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs, in the same Amazon Web Services Regions as supported for the
+	//    G.4X worker type.
 	//
-	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPU, 64 GB
-	//    of m emory, 128 GB disk), and provides up to 8 Ray workers based on the
-	//    autoscaler.
+	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPUs, 4
+	//    GB of memory) with 84GB disk (approximately 34GB free), and provides 1
+	//    executor per worker. We recommend this worker type for low volume streaming
+	//    jobs. This worker type is only available for Glue version 3.0 streaming
+	//    jobs.
+	//
+	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB
+	//    of memory) with 128 GB disk (approximately 120GB free), and provides up
+	//    to 8 Ray workers based on the autoscaler.
 	WorkerType *string `type:"string" enum:"WorkerType"`
 }
 
@@ -32564,24 +34713,43 @@ type CreateSessionInput struct {
 	// Consult the documentation for other job types.
 	Timeout *int64 `min:"1" type:"integer"`
 
-	// The type of predefined worker that is allocated to use for the session. Accepts
-	// a value of Standard, G.1X, G.2X, or G.025X.
+	// The type of predefined worker that is allocated when a job runs. Accepts
+	// a value of G.1X, G.2X, G.4X, or G.8X for Spark jobs. Accepts the value Z.2X
+	// for Ray notebooks.
 	//
-	//    * For the Standard worker type, each worker provides 4 vCPU, 16 GB of
-	//    memory and a 50GB disk, and 2 executors per worker.
+	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB
+	//    of memory) with 84GB disk (approximately 34GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of
-	//    memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB
+	//    of memory) with 128GB disk (approximately 77GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of
-	//    memory, 128 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.4X worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB
+	//    of memory) with 256GB disk (approximately 235GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs in the following Amazon Web Services Regions: US East (Ohio),
+	//    US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt),
+	//    Europe (Ireland), and Europe (Stockholm).
 	//
-	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPU, 4
-	//    GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for low volume streaming jobs. This worker type is only
-	//    available for Glue version 3.0 streaming jobs.
+	//    * For the G.8X worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB
+	//    of memory) with 512GB disk (approximately 487GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs, in the same Amazon Web Services Regions as supported for the
+	//    G.4X worker type.
+	//
+	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB
+	//    of memory) with 128 GB disk (approximately 120GB free), and provides up
+	//    to 8 Ray workers based on the autoscaler.
 	WorkerType *string `type:"string" enum:"WorkerType"`
 }
 
@@ -32896,6 +35064,145 @@ func (s *CreateTableInput) SetTableInput(v *TableInput) *CreateTableInput {
 func (s *CreateTableInput) SetTransactionId(v string) *CreateTableInput {
 	s.TransactionId = &v
 	return s
+}
+
+type CreateTableOptimizerInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	//
+	// CatalogId is a required field
+	CatalogId *string `min:"1" type:"string" required:"true"`
+
+	// The name of the database in the catalog in which the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `min:"1" type:"string" required:"true"`
+
+	// The name of the table.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+
+	// A TableOptimizerConfiguration object representing the configuration of a
+	// table optimizer.
+	//
+	// TableOptimizerConfiguration is a required field
+	TableOptimizerConfiguration *TableOptimizerConfiguration `type:"structure" required:"true"`
+
+	// The type of table optimizer. Currently, the only valid value is compaction.
+	//
+	// Type is a required field
+	Type *string `type:"string" required:"true" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateTableOptimizerInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateTableOptimizerInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateTableOptimizerInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateTableOptimizerInput"}
+	if s.CatalogId == nil {
+		invalidParams.Add(request.NewErrParamRequired("CatalogId"))
+	}
+	if s.CatalogId != nil && len(*s.CatalogId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CatalogId", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+	if s.TableOptimizerConfiguration == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableOptimizerConfiguration"))
+	}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+	if s.TableOptimizerConfiguration != nil {
+		if err := s.TableOptimizerConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("TableOptimizerConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *CreateTableOptimizerInput) SetCatalogId(v string) *CreateTableOptimizerInput {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *CreateTableOptimizerInput) SetDatabaseName(v string) *CreateTableOptimizerInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *CreateTableOptimizerInput) SetTableName(v string) *CreateTableOptimizerInput {
+	s.TableName = &v
+	return s
+}
+
+// SetTableOptimizerConfiguration sets the TableOptimizerConfiguration field's value.
+func (s *CreateTableOptimizerInput) SetTableOptimizerConfiguration(v *TableOptimizerConfiguration) *CreateTableOptimizerInput {
+	s.TableOptimizerConfiguration = v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *CreateTableOptimizerInput) SetType(v string) *CreateTableOptimizerInput {
+	s.Type = &v
+	return s
+}
+
+type CreateTableOptimizerOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateTableOptimizerOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateTableOptimizerOutput) GoString() string {
+	return s.String()
 }
 
 type CreateTableOutput struct {
@@ -33468,6 +35775,12 @@ type CsvClassifier struct {
 	// It must be different from the column delimiter.
 	QuoteSymbol *string `min:"1" type:"string"`
 
+	// Sets the SerDe for processing CSV in the classifier, which will be applied
+	// in the Data Catalog. Valid values are OpenCSVSerDe, LazySimpleSerDe, and
+	// None. You can specify the None value when you want the crawler to do the
+	// detection.
+	Serde *string `type:"string" enum:"CsvSerdeOption"`
+
 	// The version of this classifier.
 	Version *int64 `type:"long"`
 }
@@ -33553,6 +35866,12 @@ func (s *CsvClassifier) SetName(v string) *CsvClassifier {
 // SetQuoteSymbol sets the QuoteSymbol field's value.
 func (s *CsvClassifier) SetQuoteSymbol(v string) *CsvClassifier {
 	s.QuoteSymbol = &v
+	return s
+}
+
+// SetSerde sets the Serde field's value.
+func (s *CsvClassifier) SetSerde(v string) *CsvClassifier {
+	s.Serde = &v
 	return s
 }
 
@@ -33937,6 +36256,65 @@ func (s *DataLakePrincipal) SetDataLakePrincipalIdentifier(v string) *DataLakePr
 	return s
 }
 
+// Describes the result of the evaluation of a data quality analyzer.
+type DataQualityAnalyzerResult struct {
+	_ struct{} `type:"structure"`
+
+	// A description of the data quality analyzer.
+	Description *string `type:"string"`
+
+	// A map of metrics associated with the evaluation of the analyzer.
+	EvaluatedMetrics map[string]*float64 `type:"map"`
+
+	// An evaluation message.
+	EvaluationMessage *string `type:"string"`
+
+	// The name of the data quality analyzer.
+	Name *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataQualityAnalyzerResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataQualityAnalyzerResult) GoString() string {
+	return s.String()
+}
+
+// SetDescription sets the Description field's value.
+func (s *DataQualityAnalyzerResult) SetDescription(v string) *DataQualityAnalyzerResult {
+	s.Description = &v
+	return s
+}
+
+// SetEvaluatedMetrics sets the EvaluatedMetrics field's value.
+func (s *DataQualityAnalyzerResult) SetEvaluatedMetrics(v map[string]*float64) *DataQualityAnalyzerResult {
+	s.EvaluatedMetrics = v
+	return s
+}
+
+// SetEvaluationMessage sets the EvaluationMessage field's value.
+func (s *DataQualityAnalyzerResult) SetEvaluationMessage(v string) *DataQualityAnalyzerResult {
+	s.EvaluationMessage = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DataQualityAnalyzerResult) SetName(v string) *DataQualityAnalyzerResult {
+	s.Name = &v
+	return s
+}
+
 // Additional run options you can specify for an evaluation run.
 type DataQualityEvaluationRunAdditionalRunOptions struct {
 	_ struct{} `type:"structure"`
@@ -33978,9 +36356,118 @@ func (s *DataQualityEvaluationRunAdditionalRunOptions) SetResultsS3Prefix(v stri
 	return s
 }
 
+// Describes the data quality metric value according to the analysis of historical
+// data.
+type DataQualityMetricValues struct {
+	_ struct{} `type:"structure"`
+
+	// The actual value of the data quality metric.
+	ActualValue *float64 `type:"double"`
+
+	// The expected value of the data quality metric according to the analysis of
+	// historical data.
+	ExpectedValue *float64 `type:"double"`
+
+	// The lower limit of the data quality metric value according to the analysis
+	// of historical data.
+	LowerLimit *float64 `type:"double"`
+
+	// The upper limit of the data quality metric value according to the analysis
+	// of historical data.
+	UpperLimit *float64 `type:"double"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataQualityMetricValues) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataQualityMetricValues) GoString() string {
+	return s.String()
+}
+
+// SetActualValue sets the ActualValue field's value.
+func (s *DataQualityMetricValues) SetActualValue(v float64) *DataQualityMetricValues {
+	s.ActualValue = &v
+	return s
+}
+
+// SetExpectedValue sets the ExpectedValue field's value.
+func (s *DataQualityMetricValues) SetExpectedValue(v float64) *DataQualityMetricValues {
+	s.ExpectedValue = &v
+	return s
+}
+
+// SetLowerLimit sets the LowerLimit field's value.
+func (s *DataQualityMetricValues) SetLowerLimit(v float64) *DataQualityMetricValues {
+	s.LowerLimit = &v
+	return s
+}
+
+// SetUpperLimit sets the UpperLimit field's value.
+func (s *DataQualityMetricValues) SetUpperLimit(v float64) *DataQualityMetricValues {
+	s.UpperLimit = &v
+	return s
+}
+
+// Describes the observation generated after evaluating the rules and analyzers.
+type DataQualityObservation struct {
+	_ struct{} `type:"structure"`
+
+	// A description of the data quality observation.
+	Description *string `type:"string"`
+
+	// An object of type MetricBasedObservation representing the observation that
+	// is based on evaluated data quality metrics.
+	MetricBasedObservation *MetricBasedObservation `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataQualityObservation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataQualityObservation) GoString() string {
+	return s.String()
+}
+
+// SetDescription sets the Description field's value.
+func (s *DataQualityObservation) SetDescription(v string) *DataQualityObservation {
+	s.Description = &v
+	return s
+}
+
+// SetMetricBasedObservation sets the MetricBasedObservation field's value.
+func (s *DataQualityObservation) SetMetricBasedObservation(v *MetricBasedObservation) *DataQualityObservation {
+	s.MetricBasedObservation = v
+	return s
+}
+
 // Describes a data quality result.
 type DataQualityResult struct {
 	_ struct{} `type:"structure"`
+
+	// A list of DataQualityAnalyzerResult objects representing the results for
+	// each analyzer.
+	AnalyzerResults []*DataQualityAnalyzerResult `type:"list"`
 
 	// The date and time when this data quality run completed.
 	CompletedOn *time.Time `type:"timestamp"`
@@ -33999,12 +36486,16 @@ type DataQualityResult struct {
 	// The job run ID associated with the data quality result, if any.
 	JobRunId *string `min:"1" type:"string"`
 
+	// A list of DataQualityObservation objects representing the observations generated
+	// after evaluating the rules and analyzers.
+	Observations []*DataQualityObservation `type:"list"`
+
 	// A unique result ID for the data quality result.
 	ResultId *string `min:"1" type:"string"`
 
 	// A list of DataQualityRuleResult objects representing the results for each
 	// rule.
-	RuleResults []*DataQualityRuleResult `min:"1" type:"list"`
+	RuleResults []*DataQualityRuleResult `type:"list"`
 
 	// The unique run ID for the ruleset evaluation for this data quality result.
 	RulesetEvaluationRunId *string `min:"1" type:"string"`
@@ -34038,6 +36529,12 @@ func (s DataQualityResult) GoString() string {
 	return s.String()
 }
 
+// SetAnalyzerResults sets the AnalyzerResults field's value.
+func (s *DataQualityResult) SetAnalyzerResults(v []*DataQualityAnalyzerResult) *DataQualityResult {
+	s.AnalyzerResults = v
+	return s
+}
+
 // SetCompletedOn sets the CompletedOn field's value.
 func (s *DataQualityResult) SetCompletedOn(v time.Time) *DataQualityResult {
 	s.CompletedOn = &v
@@ -34065,6 +36562,12 @@ func (s *DataQualityResult) SetJobName(v string) *DataQualityResult {
 // SetJobRunId sets the JobRunId field's value.
 func (s *DataQualityResult) SetJobRunId(v string) *DataQualityResult {
 	s.JobRunId = &v
+	return s
+}
+
+// SetObservations sets the Observations field's value.
+func (s *DataQualityResult) SetObservations(v []*DataQualityObservation) *DataQualityResult {
+	s.Observations = v
 	return s
 }
 
@@ -37407,6 +39910,125 @@ func (s *DeleteTableInput) SetName(v string) *DeleteTableInput {
 func (s *DeleteTableInput) SetTransactionId(v string) *DeleteTableInput {
 	s.TransactionId = &v
 	return s
+}
+
+type DeleteTableOptimizerInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	//
+	// CatalogId is a required field
+	CatalogId *string `min:"1" type:"string" required:"true"`
+
+	// The name of the database in the catalog in which the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `min:"1" type:"string" required:"true"`
+
+	// The name of the table.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+
+	// The type of table optimizer.
+	//
+	// Type is a required field
+	Type *string `type:"string" required:"true" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteTableOptimizerInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteTableOptimizerInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteTableOptimizerInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteTableOptimizerInput"}
+	if s.CatalogId == nil {
+		invalidParams.Add(request.NewErrParamRequired("CatalogId"))
+	}
+	if s.CatalogId != nil && len(*s.CatalogId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CatalogId", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *DeleteTableOptimizerInput) SetCatalogId(v string) *DeleteTableOptimizerInput {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *DeleteTableOptimizerInput) SetDatabaseName(v string) *DeleteTableOptimizerInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *DeleteTableOptimizerInput) SetTableName(v string) *DeleteTableOptimizerInput {
+	s.TableName = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *DeleteTableOptimizerInput) SetType(v string) *DeleteTableOptimizerInput {
+	s.Type = &v
+	return s
+}
+
+type DeleteTableOptimizerOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteTableOptimizerOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteTableOptimizerOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteTableOutput struct {
@@ -41710,6 +44332,211 @@ func (s *GetColumnStatisticsForTableOutput) SetErrors(v []*ColumnError) *GetColu
 	return s
 }
 
+type GetColumnStatisticsTaskRunInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the particular column statistics task run.
+	//
+	// ColumnStatisticsTaskRunId is a required field
+	ColumnStatisticsTaskRunId *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetColumnStatisticsTaskRunInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetColumnStatisticsTaskRunInput"}
+	if s.ColumnStatisticsTaskRunId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ColumnStatisticsTaskRunId"))
+	}
+	if s.ColumnStatisticsTaskRunId != nil && len(*s.ColumnStatisticsTaskRunId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ColumnStatisticsTaskRunId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetColumnStatisticsTaskRunId sets the ColumnStatisticsTaskRunId field's value.
+func (s *GetColumnStatisticsTaskRunInput) SetColumnStatisticsTaskRunId(v string) *GetColumnStatisticsTaskRunInput {
+	s.ColumnStatisticsTaskRunId = &v
+	return s
+}
+
+type GetColumnStatisticsTaskRunOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A ColumnStatisticsTaskRun object representing the details of the column stats
+	// run.
+	ColumnStatisticsTaskRun *ColumnStatisticsTaskRun `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunOutput) GoString() string {
+	return s.String()
+}
+
+// SetColumnStatisticsTaskRun sets the ColumnStatisticsTaskRun field's value.
+func (s *GetColumnStatisticsTaskRunOutput) SetColumnStatisticsTaskRun(v *ColumnStatisticsTaskRun) *GetColumnStatisticsTaskRunOutput {
+	s.ColumnStatisticsTaskRun = v
+	return s
+}
+
+type GetColumnStatisticsTaskRunsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the database where the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `type:"string" required:"true"`
+
+	// The maximum size of the response.
+	MaxResults *int64 `min:"1" type:"integer"`
+
+	// A continuation token, if this is a continuation call.
+	NextToken *string `type:"string"`
+
+	// The name of the table.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetColumnStatisticsTaskRunsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetColumnStatisticsTaskRunsInput"}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *GetColumnStatisticsTaskRunsInput) SetDatabaseName(v string) *GetColumnStatisticsTaskRunsInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *GetColumnStatisticsTaskRunsInput) SetMaxResults(v int64) *GetColumnStatisticsTaskRunsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *GetColumnStatisticsTaskRunsInput) SetNextToken(v string) *GetColumnStatisticsTaskRunsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *GetColumnStatisticsTaskRunsInput) SetTableName(v string) *GetColumnStatisticsTaskRunsInput {
+	s.TableName = &v
+	return s
+}
+
+type GetColumnStatisticsTaskRunsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of column statistics task runs.
+	ColumnStatisticsTaskRuns []*ColumnStatisticsTaskRun `type:"list"`
+
+	// A continuation token, if not all task runs have yet been returned.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetColumnStatisticsTaskRunsOutput) GoString() string {
+	return s.String()
+}
+
+// SetColumnStatisticsTaskRuns sets the ColumnStatisticsTaskRuns field's value.
+func (s *GetColumnStatisticsTaskRunsOutput) SetColumnStatisticsTaskRuns(v []*ColumnStatisticsTaskRun) *GetColumnStatisticsTaskRunsOutput {
+	s.ColumnStatisticsTaskRuns = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *GetColumnStatisticsTaskRunsOutput) SetNextToken(v string) *GetColumnStatisticsTaskRunsOutput {
+	s.NextToken = &v
+	return s
+}
+
 type GetConnectionInput struct {
 	_ struct{} `type:"structure"`
 
@@ -42494,6 +45321,10 @@ func (s *GetDataQualityResultInput) SetResultId(v string) *GetDataQualityResultI
 type GetDataQualityResultOutput struct {
 	_ struct{} `type:"structure"`
 
+	// A list of DataQualityAnalyzerResult objects representing the results for
+	// each analyzer.
+	AnalyzerResults []*DataQualityAnalyzerResult `type:"list"`
+
 	// The date and time when the run for this data quality result was completed.
 	CompletedOn *time.Time `type:"timestamp"`
 
@@ -42511,12 +45342,16 @@ type GetDataQualityResultOutput struct {
 	// The job run ID associated with the data quality result, if any.
 	JobRunId *string `min:"1" type:"string"`
 
+	// A list of DataQualityObservation objects representing the observations generated
+	// after evaluating the rules and analyzers.
+	Observations []*DataQualityObservation `type:"list"`
+
 	// A unique result ID for the data quality result.
 	ResultId *string `min:"1" type:"string"`
 
 	// A list of DataQualityRuleResult objects representing the results for each
 	// rule.
-	RuleResults []*DataQualityRuleResult `min:"1" type:"list"`
+	RuleResults []*DataQualityRuleResult `type:"list"`
 
 	// The unique run ID associated with the ruleset evaluation.
 	RulesetEvaluationRunId *string `min:"1" type:"string"`
@@ -42550,6 +45385,12 @@ func (s GetDataQualityResultOutput) GoString() string {
 	return s.String()
 }
 
+// SetAnalyzerResults sets the AnalyzerResults field's value.
+func (s *GetDataQualityResultOutput) SetAnalyzerResults(v []*DataQualityAnalyzerResult) *GetDataQualityResultOutput {
+	s.AnalyzerResults = v
+	return s
+}
+
 // SetCompletedOn sets the CompletedOn field's value.
 func (s *GetDataQualityResultOutput) SetCompletedOn(v time.Time) *GetDataQualityResultOutput {
 	s.CompletedOn = &v
@@ -42577,6 +45418,12 @@ func (s *GetDataQualityResultOutput) SetJobName(v string) *GetDataQualityResultO
 // SetJobRunId sets the JobRunId field's value.
 func (s *GetDataQualityResultOutput) SetJobRunId(v string) *GetDataQualityResultOutput {
 	s.JobRunId = &v
+	return s
+}
+
+// SetObservations sets the Observations field's value.
+func (s *GetDataQualityResultOutput) SetObservations(v []*DataQualityObservation) *GetDataQualityResultOutput {
+	s.Observations = v
 	return s
 }
 
@@ -47069,6 +49916,161 @@ func (s *GetTableInput) SetTransactionId(v string) *GetTableInput {
 	return s
 }
 
+type GetTableOptimizerInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	//
+	// CatalogId is a required field
+	CatalogId *string `min:"1" type:"string" required:"true"`
+
+	// The name of the database in the catalog in which the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `min:"1" type:"string" required:"true"`
+
+	// The name of the table.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+
+	// The type of table optimizer.
+	//
+	// Type is a required field
+	Type *string `type:"string" required:"true" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetTableOptimizerInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetTableOptimizerInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetTableOptimizerInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetTableOptimizerInput"}
+	if s.CatalogId == nil {
+		invalidParams.Add(request.NewErrParamRequired("CatalogId"))
+	}
+	if s.CatalogId != nil && len(*s.CatalogId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CatalogId", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *GetTableOptimizerInput) SetCatalogId(v string) *GetTableOptimizerInput {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *GetTableOptimizerInput) SetDatabaseName(v string) *GetTableOptimizerInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *GetTableOptimizerInput) SetTableName(v string) *GetTableOptimizerInput {
+	s.TableName = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *GetTableOptimizerInput) SetType(v string) *GetTableOptimizerInput {
+	s.Type = &v
+	return s
+}
+
+type GetTableOptimizerOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	CatalogId *string `min:"1" type:"string"`
+
+	// The name of the database in the catalog in which the table resides.
+	DatabaseName *string `min:"1" type:"string"`
+
+	// The name of the table.
+	TableName *string `min:"1" type:"string"`
+
+	// The optimizer associated with the specified table.
+	TableOptimizer *TableOptimizer `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetTableOptimizerOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetTableOptimizerOutput) GoString() string {
+	return s.String()
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *GetTableOptimizerOutput) SetCatalogId(v string) *GetTableOptimizerOutput {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *GetTableOptimizerOutput) SetDatabaseName(v string) *GetTableOptimizerOutput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *GetTableOptimizerOutput) SetTableName(v string) *GetTableOptimizerOutput {
+	s.TableName = &v
+	return s
+}
+
+// SetTableOptimizer sets the TableOptimizer field's value.
+func (s *GetTableOptimizerOutput) SetTableOptimizer(v *TableOptimizer) *GetTableOptimizerOutput {
+	s.TableOptimizer = v
+	return s
+}
+
 type GetTableOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -49529,6 +52531,74 @@ func (s *GrokClassifier) SetVersion(v int64) *GrokClassifier {
 	return s
 }
 
+// Specifies an Apache Hudi data source.
+type HudiTarget struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the connection to use to connect to the Hudi target. If your
+	// Hudi files are stored in buckets that require VPC authorization, you can
+	// set their connection properties here.
+	ConnectionName *string `type:"string"`
+
+	// A list of glob patterns used to exclude from the crawl. For more information,
+	// see Catalog Tables with a Crawler (https://docs.aws.amazon.com/glue/latest/dg/add-crawler.html).
+	Exclusions []*string `type:"list"`
+
+	// The maximum depth of Amazon S3 paths that the crawler can traverse to discover
+	// the Hudi metadata folder in your Amazon S3 path. Used to limit the crawler
+	// run time.
+	MaximumTraversalDepth *int64 `type:"integer"`
+
+	// An array of Amazon S3 location strings for Hudi, each indicating the root
+	// folder with which the metadata files for a Hudi table resides. The Hudi folder
+	// may be located in a child folder of the root folder.
+	//
+	// The crawler will scan all folders underneath a path for a Hudi folder.
+	Paths []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s HudiTarget) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s HudiTarget) GoString() string {
+	return s.String()
+}
+
+// SetConnectionName sets the ConnectionName field's value.
+func (s *HudiTarget) SetConnectionName(v string) *HudiTarget {
+	s.ConnectionName = &v
+	return s
+}
+
+// SetExclusions sets the Exclusions field's value.
+func (s *HudiTarget) SetExclusions(v []*string) *HudiTarget {
+	s.Exclusions = v
+	return s
+}
+
+// SetMaximumTraversalDepth sets the MaximumTraversalDepth field's value.
+func (s *HudiTarget) SetMaximumTraversalDepth(v int64) *HudiTarget {
+	s.MaximumTraversalDepth = &v
+	return s
+}
+
+// SetPaths sets the Paths field's value.
+func (s *HudiTarget) SetPaths(v []*string) *HudiTarget {
+	s.Paths = v
+	return s
+}
+
 // A structure that defines an Apache Iceberg metadata table to create in the
 // catalog.
 type IcebergInput_ struct {
@@ -50834,46 +53904,48 @@ type Job struct {
 	Timeout *int64 `min:"1" type:"integer"`
 
 	// The type of predefined worker that is allocated when a job runs. Accepts
-	// a value of Standard, G.1X, G.2X, G.4X, G.8X, or G.025X for Spark jobs. Accepts
-	// the value Z.2X for Ray jobs.
+	// a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value
+	// Z.2X for Ray jobs.
 	//
-	//    * For the Standard worker type, each worker provides 4 vCPU, 16 GB of
-	//    memory and a 50GB disk, and 2 executors per worker.
+	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB
+	//    of memory) with 84GB disk (approximately 34GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of
-	//    memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for workloads such as data transforms, joins, and queries,
-	//    to offers a scalable and cost effective way to run most jobs.
+	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB
+	//    of memory) with 128GB disk (approximately 77GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of
-	//    memory, 128 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for workloads such as data transforms, joins, and queries,
-	//    to offers a scalable and cost effective way to run most jobs.
+	//    * For the G.4X worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB
+	//    of memory) with 256GB disk (approximately 235GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs in the following Amazon Web Services Regions: US East (Ohio),
+	//    US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt),
+	//    Europe (Ireland), and Europe (Stockholm).
 	//
-	//    * For the G.4X worker type, each worker maps to 4 DPU (16 vCPU, 64 GB
-	//    of memory, 256 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for jobs whose workloads contain your most demanding
-	//    transforms, aggregations, joins, and queries. This worker type is available
-	//    only for Glue version 3.0 or later Spark ETL jobs in the following Amazon
-	//    Web Services Regions: US East (Ohio), US East (N. Virginia), US West (Oregon),
-	//    Asia Pacific (Singapore), Asia Pacific (Sydney), Asia Pacific (Tokyo),
-	//    Canada (Central), Europe (Frankfurt), Europe (Ireland), and Europe (Stockholm).
+	//    * For the G.8X worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB
+	//    of memory) with 512GB disk (approximately 487GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs, in the same Amazon Web Services Regions as supported for the
+	//    G.4X worker type.
 	//
-	//    * For the G.8X worker type, each worker maps to 8 DPU (32 vCPU, 128 GB
-	//    of memory, 512 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for jobs whose workloads contain your most demanding
-	//    transforms, aggregations, joins, and queries. This worker type is available
-	//    only for Glue version 3.0 or later Spark ETL jobs, in the same Amazon
-	//    Web Services Regions as supported for the G.4X worker type.
+	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPUs, 4
+	//    GB of memory) with 84GB disk (approximately 34GB free), and provides 1
+	//    executor per worker. We recommend this worker type for low volume streaming
+	//    jobs. This worker type is only available for Glue version 3.0 streaming
+	//    jobs.
 	//
-	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPU, 4
-	//    GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for low volume streaming jobs. This worker type is only
-	//    available for Glue version 3.0 streaming jobs.
-	//
-	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPU, 64 GB
-	//    of m emory, 128 GB disk), and provides a default of 8 Ray workers (1 per
-	//    vCPU).
+	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB
+	//    of memory) with 128 GB disk (approximately 120GB free), and provides up
+	//    to 8 Ray workers based on the autoscaler.
 	WorkerType *string `type:"string" enum:"WorkerType"`
 }
 
@@ -51421,28 +54493,48 @@ type JobRun struct {
 	TriggerName *string `min:"1" type:"string"`
 
 	// The type of predefined worker that is allocated when a job runs. Accepts
-	// a value of Standard, G.1X, G.2X, or G.025X for Spark jobs. Accepts the value
+	// a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value
 	// Z.2X for Ray jobs.
 	//
-	//    * For the Standard worker type, each worker provides 4 vCPU, 16 GB of
-	//    memory and a 50GB disk, and 2 executors per worker.
+	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB
+	//    of memory) with 84GB disk (approximately 34GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of
-	//    memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB
+	//    of memory) with 128GB disk (approximately 77GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of
-	//    memory, 128 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.4X worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB
+	//    of memory) with 256GB disk (approximately 235GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs in the following Amazon Web Services Regions: US East (Ohio),
+	//    US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt),
+	//    Europe (Ireland), and Europe (Stockholm).
 	//
-	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPU, 4
-	//    GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for low volume streaming jobs. This worker type is only
-	//    available for Glue version 3.0 streaming jobs.
+	//    * For the G.8X worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB
+	//    of memory) with 512GB disk (approximately 487GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs, in the same Amazon Web Services Regions as supported for the
+	//    G.4X worker type.
 	//
-	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPU, 64 GB
-	//    of m emory, 128 GB disk), and provides up to 8 Ray workers (one per vCPU)
-	//    based on the autoscaler.
+	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPUs, 4
+	//    GB of memory) with 84GB disk (approximately 34GB free), and provides 1
+	//    executor per worker. We recommend this worker type for low volume streaming
+	//    jobs. This worker type is only available for Glue version 3.0 streaming
+	//    jobs.
+	//
+	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB
+	//    of memory) with 128 GB disk (approximately 120GB free), and provides up
+	//    to 8 Ray workers based on the autoscaler.
 	WorkerType *string `type:"string" enum:"WorkerType"`
 }
 
@@ -51752,28 +54844,48 @@ type JobUpdate struct {
 	Timeout *int64 `min:"1" type:"integer"`
 
 	// The type of predefined worker that is allocated when a job runs. Accepts
-	// a value of Standard, G.1X, G.2X, or G.025X for Spark jobs. Accepts the value
+	// a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value
 	// Z.2X for Ray jobs.
 	//
-	//    * For the Standard worker type, each worker provides 4 vCPU, 16 GB of
-	//    memory and a 50GB disk, and 2 executors per worker.
+	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB
+	//    of memory) with 84GB disk (approximately 34GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of
-	//    memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB
+	//    of memory) with 128GB disk (approximately 77GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of
-	//    memory, 128 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.4X worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB
+	//    of memory) with 256GB disk (approximately 235GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs in the following Amazon Web Services Regions: US East (Ohio),
+	//    US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt),
+	//    Europe (Ireland), and Europe (Stockholm).
 	//
-	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPU, 4
-	//    GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for low volume streaming jobs. This worker type is only
-	//    available for Glue version 3.0 streaming jobs.
+	//    * For the G.8X worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB
+	//    of memory) with 512GB disk (approximately 487GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs, in the same Amazon Web Services Regions as supported for the
+	//    G.4X worker type.
 	//
-	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPU, 64 GB
-	//    of m emory, 128 GB disk), and provides up to 8 Ray workers based on the
-	//    autoscaler.
+	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPUs, 4
+	//    GB of memory) with 84GB disk (approximately 34GB free), and provides 1
+	//    executor per worker. We recommend this worker type for low volume streaming
+	//    jobs. This worker type is only available for Glue version 3.0 streaming
+	//    jobs.
+	//
+	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB
+	//    of memory) with 128 GB disk (approximately 120GB free), and provides up
+	//    to 8 Ray workers based on the autoscaler.
 	WorkerType *string `type:"string" enum:"WorkerType"`
 }
 
@@ -53072,6 +56184,99 @@ func (s *ListBlueprintsOutput) SetBlueprints(v []*string) *ListBlueprintsOutput 
 
 // SetNextToken sets the NextToken field's value.
 func (s *ListBlueprintsOutput) SetNextToken(v string) *ListBlueprintsOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListColumnStatisticsTaskRunsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The maximum size of the response.
+	MaxResults *int64 `min:"1" type:"integer"`
+
+	// A continuation token, if this is a continuation call.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListColumnStatisticsTaskRunsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListColumnStatisticsTaskRunsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListColumnStatisticsTaskRunsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListColumnStatisticsTaskRunsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListColumnStatisticsTaskRunsInput) SetMaxResults(v int64) *ListColumnStatisticsTaskRunsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListColumnStatisticsTaskRunsInput) SetNextToken(v string) *ListColumnStatisticsTaskRunsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListColumnStatisticsTaskRunsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of column statistics task run IDs.
+	ColumnStatisticsTaskRunIds []*string `type:"list"`
+
+	// A continuation token, if not all task run IDs have yet been returned.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListColumnStatisticsTaskRunsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListColumnStatisticsTaskRunsOutput) GoString() string {
+	return s.String()
+}
+
+// SetColumnStatisticsTaskRunIds sets the ColumnStatisticsTaskRunIds field's value.
+func (s *ListColumnStatisticsTaskRunsOutput) SetColumnStatisticsTaskRunIds(v []*string) *ListColumnStatisticsTaskRunsOutput {
+	s.ColumnStatisticsTaskRunIds = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListColumnStatisticsTaskRunsOutput) SetNextToken(v string) *ListColumnStatisticsTaskRunsOutput {
 	s.NextToken = &v
 	return s
 }
@@ -54746,6 +57951,189 @@ func (s *ListStatementsOutput) SetStatements(v []*Statement) *ListStatementsOutp
 	return s
 }
 
+type ListTableOptimizerRunsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	//
+	// CatalogId is a required field
+	CatalogId *string `min:"1" type:"string" required:"true"`
+
+	// The name of the database in the catalog in which the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `min:"1" type:"string" required:"true"`
+
+	// The maximum number of optimizer runs to return on each call.
+	MaxResults *int64 `type:"integer"`
+
+	// A continuation token, if this is a continuation call.
+	NextToken *string `type:"string"`
+
+	// The name of the table.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+
+	// The type of table optimizer. Currently, the only valid value is compaction.
+	//
+	// Type is a required field
+	Type *string `type:"string" required:"true" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTableOptimizerRunsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTableOptimizerRunsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListTableOptimizerRunsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListTableOptimizerRunsInput"}
+	if s.CatalogId == nil {
+		invalidParams.Add(request.NewErrParamRequired("CatalogId"))
+	}
+	if s.CatalogId != nil && len(*s.CatalogId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CatalogId", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *ListTableOptimizerRunsInput) SetCatalogId(v string) *ListTableOptimizerRunsInput {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *ListTableOptimizerRunsInput) SetDatabaseName(v string) *ListTableOptimizerRunsInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListTableOptimizerRunsInput) SetMaxResults(v int64) *ListTableOptimizerRunsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListTableOptimizerRunsInput) SetNextToken(v string) *ListTableOptimizerRunsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *ListTableOptimizerRunsInput) SetTableName(v string) *ListTableOptimizerRunsInput {
+	s.TableName = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *ListTableOptimizerRunsInput) SetType(v string) *ListTableOptimizerRunsInput {
+	s.Type = &v
+	return s
+}
+
+type ListTableOptimizerRunsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	CatalogId *string `min:"1" type:"string"`
+
+	// The name of the database in the catalog in which the table resides.
+	DatabaseName *string `min:"1" type:"string"`
+
+	// A continuation token for paginating the returned list of optimizer runs,
+	// returned if the current segment of the list is not the last.
+	NextToken *string `type:"string"`
+
+	// The name of the table.
+	TableName *string `min:"1" type:"string"`
+
+	// A list of the optimizer runs associated with a table.
+	TableOptimizerRuns []*TableOptimizerRun `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTableOptimizerRunsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTableOptimizerRunsOutput) GoString() string {
+	return s.String()
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *ListTableOptimizerRunsOutput) SetCatalogId(v string) *ListTableOptimizerRunsOutput {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *ListTableOptimizerRunsOutput) SetDatabaseName(v string) *ListTableOptimizerRunsOutput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListTableOptimizerRunsOutput) SetNextToken(v string) *ListTableOptimizerRunsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *ListTableOptimizerRunsOutput) SetTableName(v string) *ListTableOptimizerRunsOutput {
+	s.TableName = &v
+	return s
+}
+
+// SetTableOptimizerRuns sets the TableOptimizerRuns field's value.
+func (s *ListTableOptimizerRunsOutput) SetTableOptimizerRuns(v []*TableOptimizerRun) *ListTableOptimizerRunsOutput {
+	s.TableOptimizerRuns = v
+	return s
+}
+
 type ListTriggersInput struct {
 	_ struct{} `type:"structure"`
 
@@ -55890,6 +59278,59 @@ func (s *MetadataKeyValuePair) SetMetadataKey(v string) *MetadataKeyValuePair {
 // SetMetadataValue sets the MetadataValue field's value.
 func (s *MetadataKeyValuePair) SetMetadataValue(v string) *MetadataKeyValuePair {
 	s.MetadataValue = &v
+	return s
+}
+
+// Describes the metric based observation generated based on evaluated data
+// quality metrics.
+type MetricBasedObservation struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the data quality metric used for generating the observation.
+	MetricName *string `min:"1" type:"string"`
+
+	// An object of type DataQualityMetricValues representing the analysis of the
+	// data quality metric value.
+	MetricValues *DataQualityMetricValues `type:"structure"`
+
+	// A list of new data quality rules generated as part of the observation based
+	// on the data quality metric value.
+	NewRules []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MetricBasedObservation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MetricBasedObservation) GoString() string {
+	return s.String()
+}
+
+// SetMetricName sets the MetricName field's value.
+func (s *MetricBasedObservation) SetMetricName(v string) *MetricBasedObservation {
+	s.MetricName = &v
+	return s
+}
+
+// SetMetricValues sets the MetricValues field's value.
+func (s *MetricBasedObservation) SetMetricValues(v *DataQualityMetricValues) *MetricBasedObservation {
+	s.MetricValues = v
+	return s
+}
+
+// SetNewRules sets the NewRules field's value.
+func (s *MetricBasedObservation) SetNewRules(v []*string) *MetricBasedObservation {
+	s.NewRules = v
 	return s
 }
 
@@ -58774,6 +62215,153 @@ func (s *QuerySchemaVersionMetadataOutput) SetSchemaVersionId(v string) *QuerySc
 	return s
 }
 
+// A Glue Studio node that uses a Glue DataBrew recipe in Glue jobs.
+type Recipe struct {
+	_ struct{} `type:"structure"`
+
+	// The nodes that are inputs to the recipe node, identified by id.
+	//
+	// Inputs is a required field
+	Inputs []*string `min:"1" type:"list" required:"true"`
+
+	// The name of the Glue Studio node.
+	//
+	// Name is a required field
+	Name *string `type:"string" required:"true"`
+
+	// A reference to the DataBrew recipe used by the node.
+	//
+	// RecipeReference is a required field
+	RecipeReference *RecipeReference `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Recipe) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Recipe) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *Recipe) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "Recipe"}
+	if s.Inputs == nil {
+		invalidParams.Add(request.NewErrParamRequired("Inputs"))
+	}
+	if s.Inputs != nil && len(s.Inputs) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Inputs", 1))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.RecipeReference == nil {
+		invalidParams.Add(request.NewErrParamRequired("RecipeReference"))
+	}
+	if s.RecipeReference != nil {
+		if err := s.RecipeReference.Validate(); err != nil {
+			invalidParams.AddNested("RecipeReference", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInputs sets the Inputs field's value.
+func (s *Recipe) SetInputs(v []*string) *Recipe {
+	s.Inputs = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *Recipe) SetName(v string) *Recipe {
+	s.Name = &v
+	return s
+}
+
+// SetRecipeReference sets the RecipeReference field's value.
+func (s *Recipe) SetRecipeReference(v *RecipeReference) *Recipe {
+	s.RecipeReference = v
+	return s
+}
+
+// A reference to a Glue DataBrew recipe.
+type RecipeReference struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the DataBrew recipe.
+	//
+	// RecipeArn is a required field
+	RecipeArn *string `type:"string" required:"true"`
+
+	// The RecipeVersion of the DataBrew recipe.
+	//
+	// RecipeVersion is a required field
+	RecipeVersion *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecipeReference) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecipeReference) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RecipeReference) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RecipeReference"}
+	if s.RecipeArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RecipeArn"))
+	}
+	if s.RecipeVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("RecipeVersion"))
+	}
+	if s.RecipeVersion != nil && len(*s.RecipeVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RecipeVersion", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRecipeArn sets the RecipeArn field's value.
+func (s *RecipeReference) SetRecipeArn(v string) *RecipeReference {
+	s.RecipeArn = &v
+	return s
+}
+
+// SetRecipeVersion sets the RecipeVersion field's value.
+func (s *RecipeReference) SetRecipeVersion(v string) *RecipeReference {
+	s.RecipeVersion = &v
+	return s
+}
+
 // When crawling an Amazon S3 data source after the first crawl is complete,
 // specifies whether to crawl the entire dataset again or to crawl only folders
 // that were added since the last crawler run. For more information, see Incremental
@@ -60038,6 +63626,65 @@ func (s *ResumeWorkflowRunOutput) SetNodeIds(v []*string) *ResumeWorkflowRunOutp
 // SetRunId sets the RunId field's value.
 func (s *ResumeWorkflowRunOutput) SetRunId(v string) *ResumeWorkflowRunOutput {
 	s.RunId = &v
+	return s
+}
+
+// Metrics for the optimizer run.
+type RunMetrics struct {
+	_ struct{} `type:"structure"`
+
+	// The duration of the job in hours.
+	JobDurationInHour *string `type:"string"`
+
+	// The number of bytes removed by the compaction job run.
+	NumberOfBytesCompacted *string `type:"string"`
+
+	// The number of DPU hours consumed by the job.
+	NumberOfDpus *string `type:"string"`
+
+	// The number of files removed by the compaction job run.
+	NumberOfFilesCompacted *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RunMetrics) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RunMetrics) GoString() string {
+	return s.String()
+}
+
+// SetJobDurationInHour sets the JobDurationInHour field's value.
+func (s *RunMetrics) SetJobDurationInHour(v string) *RunMetrics {
+	s.JobDurationInHour = &v
+	return s
+}
+
+// SetNumberOfBytesCompacted sets the NumberOfBytesCompacted field's value.
+func (s *RunMetrics) SetNumberOfBytesCompacted(v string) *RunMetrics {
+	s.NumberOfBytesCompacted = &v
+	return s
+}
+
+// SetNumberOfDpus sets the NumberOfDpus field's value.
+func (s *RunMetrics) SetNumberOfDpus(v string) *RunMetrics {
+	s.NumberOfDpus = &v
+	return s
+}
+
+// SetNumberOfFilesCompacted sets the NumberOfFilesCompacted field's value.
+func (s *RunMetrics) SetNumberOfFilesCompacted(v string) *RunMetrics {
+	s.NumberOfFilesCompacted = &v
 	return s
 }
 
@@ -63576,11 +67223,17 @@ type Session struct {
 	// The command object.See SessionCommand.
 	Command *SessionCommand `type:"structure"`
 
+	// The date and time that this session is completed.
+	CompletedOn *time.Time `type:"timestamp"`
+
 	// The number of connections used for the session.
 	Connections *ConnectionsList `type:"structure"`
 
 	// The time and date when the session was created.
 	CreatedOn *time.Time `type:"timestamp"`
+
+	// The DPUs consumed by the session (formula: ExecutionTime * MaxCapacity).
+	DPUSeconds *float64 `type:"double"`
 
 	// A map array of key-value pairs. Max is 75 pairs.
 	DefaultArguments map[string]*string `type:"map"`
@@ -63591,6 +67244,9 @@ type Session struct {
 	// The error message displayed during the session.
 	ErrorMessage *string `type:"string"`
 
+	// The total time the session ran for.
+	ExecutionTime *float64 `type:"double"`
+
 	// The Glue version determines the versions of Apache Spark and Python that
 	// Glue supports. The GlueVersion must be greater than 2.0.
 	GlueVersion *string `min:"1" type:"string"`
@@ -63598,10 +67254,16 @@ type Session struct {
 	// The ID of the session.
 	Id *string `min:"1" type:"string"`
 
+	// The number of minutes when idle before the session times out.
+	IdleTimeout *int64 `type:"integer"`
+
 	// The number of Glue data processing units (DPUs) that can be allocated when
 	// the job runs. A DPU is a relative measure of processing power that consists
 	// of 4 vCPUs of compute capacity and 16 GB memory.
 	MaxCapacity *float64 `type:"double"`
+
+	// The number of workers of a defined WorkerType to use for the session.
+	NumberOfWorkers *int64 `type:"integer"`
 
 	// The code execution progress of the session.
 	Progress *float64 `type:"double"`
@@ -63615,6 +67277,11 @@ type Session struct {
 
 	// The session status.
 	Status *string `type:"string" enum:"SessionStatus"`
+
+	// The type of predefined worker that is allocated when a session runs. Accepts
+	// a value of G.1X, G.2X, G.4X, or G.8X for Spark sessions. Accepts the value
+	// Z.2X for Ray sessions.
+	WorkerType *string `type:"string" enum:"WorkerType"`
 }
 
 // String returns the string representation.
@@ -63641,6 +67308,12 @@ func (s *Session) SetCommand(v *SessionCommand) *Session {
 	return s
 }
 
+// SetCompletedOn sets the CompletedOn field's value.
+func (s *Session) SetCompletedOn(v time.Time) *Session {
+	s.CompletedOn = &v
+	return s
+}
+
 // SetConnections sets the Connections field's value.
 func (s *Session) SetConnections(v *ConnectionsList) *Session {
 	s.Connections = v
@@ -63650,6 +67323,12 @@ func (s *Session) SetConnections(v *ConnectionsList) *Session {
 // SetCreatedOn sets the CreatedOn field's value.
 func (s *Session) SetCreatedOn(v time.Time) *Session {
 	s.CreatedOn = &v
+	return s
+}
+
+// SetDPUSeconds sets the DPUSeconds field's value.
+func (s *Session) SetDPUSeconds(v float64) *Session {
+	s.DPUSeconds = &v
 	return s
 }
 
@@ -63671,6 +67350,12 @@ func (s *Session) SetErrorMessage(v string) *Session {
 	return s
 }
 
+// SetExecutionTime sets the ExecutionTime field's value.
+func (s *Session) SetExecutionTime(v float64) *Session {
+	s.ExecutionTime = &v
+	return s
+}
+
 // SetGlueVersion sets the GlueVersion field's value.
 func (s *Session) SetGlueVersion(v string) *Session {
 	s.GlueVersion = &v
@@ -63683,9 +67368,21 @@ func (s *Session) SetId(v string) *Session {
 	return s
 }
 
+// SetIdleTimeout sets the IdleTimeout field's value.
+func (s *Session) SetIdleTimeout(v int64) *Session {
+	s.IdleTimeout = &v
+	return s
+}
+
 // SetMaxCapacity sets the MaxCapacity field's value.
 func (s *Session) SetMaxCapacity(v float64) *Session {
 	s.MaxCapacity = &v
+	return s
+}
+
+// SetNumberOfWorkers sets the NumberOfWorkers field's value.
+func (s *Session) SetNumberOfWorkers(v int64) *Session {
+	s.NumberOfWorkers = &v
 	return s
 }
 
@@ -63710,6 +67407,12 @@ func (s *Session) SetSecurityConfiguration(v string) *Session {
 // SetStatus sets the Status field's value.
 func (s *Session) SetStatus(v string) *Session {
 	s.Status = &v
+	return s
+}
+
+// SetWorkerType sets the WorkerType field's value.
+func (s *Session) SetWorkerType(v string) *Session {
+	s.WorkerType = &v
 	return s
 }
 
@@ -63816,6 +67519,386 @@ func (s *SkewedInfo) SetSkewedColumnValueLocationMaps(v map[string]*string) *Ske
 // SetSkewedColumnValues sets the SkewedColumnValues field's value.
 func (s *SkewedInfo) SetSkewedColumnValues(v []*string) *SkewedInfo {
 	s.SkewedColumnValues = v
+	return s
+}
+
+// Specifies configuration for Snowflake nodes in Glue Studio.
+type SnowflakeNodeData struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies what action to take when writing to a table with preexisting data.
+	// Valid values: append, merge, truncate, drop.
+	Action *string `type:"string"`
+
+	// Specifies additional options passed to the Snowflake connector. If options
+	// are specified elsewhere in this node, this will take precedence.
+	AdditionalOptions map[string]*string `type:"map"`
+
+	// Specifies whether automatic query pushdown is enabled. If pushdown is enabled,
+	// then when a query is run on Spark, if part of the query can be "pushed down"
+	// to the Snowflake server, it is pushed down. This improves performance of
+	// some queries.
+	AutoPushdown *bool `type:"boolean"`
+
+	// Specifies a Glue Data Catalog Connection to a Snowflake endpoint.
+	Connection *Option `type:"structure"`
+
+	// Specifies a Snowflake database for your node to use.
+	Database *string `type:"string"`
+
+	// Not currently used.
+	IamRole *Option `type:"structure"`
+
+	// Specifies a merge action. Valid values: simple, custom. If simple, merge
+	// behavior is defined by MergeWhenMatched and MergeWhenNotMatched. If custom,
+	// defined by MergeClause.
+	MergeAction *string `type:"string"`
+
+	// A SQL statement that specifies a custom merge behavior.
+	MergeClause *string `type:"string"`
+
+	// Specifies how to resolve records that match preexisting data when merging.
+	// Valid values: update, delete.
+	MergeWhenMatched *string `type:"string"`
+
+	// Specifies how to process records that do not match preexisting data when
+	// merging. Valid values: insert, none.
+	MergeWhenNotMatched *string `type:"string"`
+
+	// A SQL string run after the Snowflake connector performs its standard actions.
+	PostAction *string `type:"string"`
+
+	// A SQL string run before the Snowflake connector performs its standard actions.
+	PreAction *string `type:"string"`
+
+	// A SQL string used to retrieve data with the query sourcetype.
+	SampleQuery *string `type:"string"`
+
+	// Specifies a Snowflake database schema for your node to use.
+	Schema *string `type:"string"`
+
+	// Specifies the columns combined to identify a record when detecting matches
+	// for merges and upserts. A list of structures with value, label and description
+	// keys. Each structure describes a column.
+	SelectedColumns []*Option `type:"list"`
+
+	// Specifies how retrieved data is specified. Valid values: "table", "query".
+	SourceType *string `type:"string"`
+
+	// The name of a staging table used when performing merge or upsert append actions.
+	// Data is written to this table, then moved to table by a generated postaction.
+	StagingTable *string `type:"string"`
+
+	// Specifies a Snowflake table for your node to use.
+	Table *string `type:"string"`
+
+	// Manually defines the target schema for the node. A list of structures with
+	// value , label and description keys. Each structure defines a column.
+	TableSchema []*Option `type:"list"`
+
+	// Not currently used.
+	TempDir *string `type:"string"`
+
+	// Used when Action is append. Specifies the resolution behavior when a row
+	// already exists. If true, preexisting rows will be updated. If false, those
+	// rows will be inserted.
+	Upsert *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnowflakeNodeData) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnowflakeNodeData) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *SnowflakeNodeData) SetAction(v string) *SnowflakeNodeData {
+	s.Action = &v
+	return s
+}
+
+// SetAdditionalOptions sets the AdditionalOptions field's value.
+func (s *SnowflakeNodeData) SetAdditionalOptions(v map[string]*string) *SnowflakeNodeData {
+	s.AdditionalOptions = v
+	return s
+}
+
+// SetAutoPushdown sets the AutoPushdown field's value.
+func (s *SnowflakeNodeData) SetAutoPushdown(v bool) *SnowflakeNodeData {
+	s.AutoPushdown = &v
+	return s
+}
+
+// SetConnection sets the Connection field's value.
+func (s *SnowflakeNodeData) SetConnection(v *Option) *SnowflakeNodeData {
+	s.Connection = v
+	return s
+}
+
+// SetDatabase sets the Database field's value.
+func (s *SnowflakeNodeData) SetDatabase(v string) *SnowflakeNodeData {
+	s.Database = &v
+	return s
+}
+
+// SetIamRole sets the IamRole field's value.
+func (s *SnowflakeNodeData) SetIamRole(v *Option) *SnowflakeNodeData {
+	s.IamRole = v
+	return s
+}
+
+// SetMergeAction sets the MergeAction field's value.
+func (s *SnowflakeNodeData) SetMergeAction(v string) *SnowflakeNodeData {
+	s.MergeAction = &v
+	return s
+}
+
+// SetMergeClause sets the MergeClause field's value.
+func (s *SnowflakeNodeData) SetMergeClause(v string) *SnowflakeNodeData {
+	s.MergeClause = &v
+	return s
+}
+
+// SetMergeWhenMatched sets the MergeWhenMatched field's value.
+func (s *SnowflakeNodeData) SetMergeWhenMatched(v string) *SnowflakeNodeData {
+	s.MergeWhenMatched = &v
+	return s
+}
+
+// SetMergeWhenNotMatched sets the MergeWhenNotMatched field's value.
+func (s *SnowflakeNodeData) SetMergeWhenNotMatched(v string) *SnowflakeNodeData {
+	s.MergeWhenNotMatched = &v
+	return s
+}
+
+// SetPostAction sets the PostAction field's value.
+func (s *SnowflakeNodeData) SetPostAction(v string) *SnowflakeNodeData {
+	s.PostAction = &v
+	return s
+}
+
+// SetPreAction sets the PreAction field's value.
+func (s *SnowflakeNodeData) SetPreAction(v string) *SnowflakeNodeData {
+	s.PreAction = &v
+	return s
+}
+
+// SetSampleQuery sets the SampleQuery field's value.
+func (s *SnowflakeNodeData) SetSampleQuery(v string) *SnowflakeNodeData {
+	s.SampleQuery = &v
+	return s
+}
+
+// SetSchema sets the Schema field's value.
+func (s *SnowflakeNodeData) SetSchema(v string) *SnowflakeNodeData {
+	s.Schema = &v
+	return s
+}
+
+// SetSelectedColumns sets the SelectedColumns field's value.
+func (s *SnowflakeNodeData) SetSelectedColumns(v []*Option) *SnowflakeNodeData {
+	s.SelectedColumns = v
+	return s
+}
+
+// SetSourceType sets the SourceType field's value.
+func (s *SnowflakeNodeData) SetSourceType(v string) *SnowflakeNodeData {
+	s.SourceType = &v
+	return s
+}
+
+// SetStagingTable sets the StagingTable field's value.
+func (s *SnowflakeNodeData) SetStagingTable(v string) *SnowflakeNodeData {
+	s.StagingTable = &v
+	return s
+}
+
+// SetTable sets the Table field's value.
+func (s *SnowflakeNodeData) SetTable(v string) *SnowflakeNodeData {
+	s.Table = &v
+	return s
+}
+
+// SetTableSchema sets the TableSchema field's value.
+func (s *SnowflakeNodeData) SetTableSchema(v []*Option) *SnowflakeNodeData {
+	s.TableSchema = v
+	return s
+}
+
+// SetTempDir sets the TempDir field's value.
+func (s *SnowflakeNodeData) SetTempDir(v string) *SnowflakeNodeData {
+	s.TempDir = &v
+	return s
+}
+
+// SetUpsert sets the Upsert field's value.
+func (s *SnowflakeNodeData) SetUpsert(v bool) *SnowflakeNodeData {
+	s.Upsert = &v
+	return s
+}
+
+// Specifies a Snowflake data source.
+type SnowflakeSource struct {
+	_ struct{} `type:"structure"`
+
+	// Configuration for the Snowflake data source.
+	//
+	// Data is a required field
+	Data *SnowflakeNodeData `type:"structure" required:"true"`
+
+	// The name of the Snowflake data source.
+	//
+	// Name is a required field
+	Name *string `type:"string" required:"true"`
+
+	// Specifies user-defined schemas for your output data.
+	OutputSchemas []*GlueSchema `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnowflakeSource) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnowflakeSource) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnowflakeSource) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnowflakeSource"}
+	if s.Data == nil {
+		invalidParams.Add(request.NewErrParamRequired("Data"))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.OutputSchemas != nil {
+		for i, v := range s.OutputSchemas {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "OutputSchemas", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetData sets the Data field's value.
+func (s *SnowflakeSource) SetData(v *SnowflakeNodeData) *SnowflakeSource {
+	s.Data = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *SnowflakeSource) SetName(v string) *SnowflakeSource {
+	s.Name = &v
+	return s
+}
+
+// SetOutputSchemas sets the OutputSchemas field's value.
+func (s *SnowflakeSource) SetOutputSchemas(v []*GlueSchema) *SnowflakeSource {
+	s.OutputSchemas = v
+	return s
+}
+
+// Specifies a Snowflake target.
+type SnowflakeTarget struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the data of the Snowflake target node.
+	//
+	// Data is a required field
+	Data *SnowflakeNodeData `type:"structure" required:"true"`
+
+	// The nodes that are inputs to the data target.
+	Inputs []*string `min:"1" type:"list"`
+
+	// The name of the Snowflake target.
+	//
+	// Name is a required field
+	Name *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnowflakeTarget) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnowflakeTarget) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnowflakeTarget) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnowflakeTarget"}
+	if s.Data == nil {
+		invalidParams.Add(request.NewErrParamRequired("Data"))
+	}
+	if s.Inputs != nil && len(s.Inputs) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Inputs", 1))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetData sets the Data field's value.
+func (s *SnowflakeTarget) SetData(v *SnowflakeNodeData) *SnowflakeTarget {
+	s.Data = v
+	return s
+}
+
+// SetInputs sets the Inputs field's value.
+func (s *SnowflakeTarget) SetInputs(v []*string) *SnowflakeTarget {
+	s.Inputs = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *SnowflakeTarget) SetName(v string) *SnowflakeTarget {
+	s.Name = &v
 	return s
 }
 
@@ -64720,6 +68803,166 @@ func (s *StartBlueprintRunOutput) SetRunId(v string) *StartBlueprintRunOutput {
 	return s
 }
 
+type StartColumnStatisticsTaskRunInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the Data Catalog where the table reside. If none is supplied, the
+	// Amazon Web Services account ID is used by default.
+	CatalogID *string `min:"1" type:"string"`
+
+	// A list of the column names to generate statistics. If none is supplied, all
+	// column names for the table will be used by default.
+	ColumnNameList []*string `type:"list"`
+
+	// The name of the database where the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `min:"1" type:"string" required:"true"`
+
+	// The IAM role that the service assumes to generate statistics.
+	//
+	// Role is a required field
+	Role *string `min:"1" type:"string" required:"true"`
+
+	// The percentage of rows used to generate statistics. If none is supplied,
+	// the entire table will be used to generate stats.
+	SampleSize *float64 `type:"double"`
+
+	// Name of the security configuration that is used to encrypt CloudWatch logs
+	// for the column stats task run.
+	SecurityConfiguration *string `min:"1" type:"string"`
+
+	// The name of the table to generate statistics.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartColumnStatisticsTaskRunInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartColumnStatisticsTaskRunInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartColumnStatisticsTaskRunInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartColumnStatisticsTaskRunInput"}
+	if s.CatalogID != nil && len(*s.CatalogID) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CatalogID", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Role != nil && len(*s.Role) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Role", 1))
+	}
+	if s.SecurityConfiguration != nil && len(*s.SecurityConfiguration) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SecurityConfiguration", 1))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalogID sets the CatalogID field's value.
+func (s *StartColumnStatisticsTaskRunInput) SetCatalogID(v string) *StartColumnStatisticsTaskRunInput {
+	s.CatalogID = &v
+	return s
+}
+
+// SetColumnNameList sets the ColumnNameList field's value.
+func (s *StartColumnStatisticsTaskRunInput) SetColumnNameList(v []*string) *StartColumnStatisticsTaskRunInput {
+	s.ColumnNameList = v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *StartColumnStatisticsTaskRunInput) SetDatabaseName(v string) *StartColumnStatisticsTaskRunInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *StartColumnStatisticsTaskRunInput) SetRole(v string) *StartColumnStatisticsTaskRunInput {
+	s.Role = &v
+	return s
+}
+
+// SetSampleSize sets the SampleSize field's value.
+func (s *StartColumnStatisticsTaskRunInput) SetSampleSize(v float64) *StartColumnStatisticsTaskRunInput {
+	s.SampleSize = &v
+	return s
+}
+
+// SetSecurityConfiguration sets the SecurityConfiguration field's value.
+func (s *StartColumnStatisticsTaskRunInput) SetSecurityConfiguration(v string) *StartColumnStatisticsTaskRunInput {
+	s.SecurityConfiguration = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *StartColumnStatisticsTaskRunInput) SetTableName(v string) *StartColumnStatisticsTaskRunInput {
+	s.TableName = &v
+	return s
+}
+
+type StartColumnStatisticsTaskRunOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier for the column statistics task run.
+	ColumnStatisticsTaskRunId *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartColumnStatisticsTaskRunOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartColumnStatisticsTaskRunOutput) GoString() string {
+	return s.String()
+}
+
+// SetColumnStatisticsTaskRunId sets the ColumnStatisticsTaskRunId field's value.
+func (s *StartColumnStatisticsTaskRunOutput) SetColumnStatisticsTaskRunId(v string) *StartColumnStatisticsTaskRunOutput {
+	s.ColumnStatisticsTaskRunId = &v
+	return s
+}
+
 type StartCrawlerInput struct {
 	_ struct{} `type:"structure"`
 
@@ -65482,28 +69725,48 @@ type StartJobRunInput struct {
 	Timeout *int64 `min:"1" type:"integer"`
 
 	// The type of predefined worker that is allocated when a job runs. Accepts
-	// a value of Standard, G.1X, G.2X, or G.025X for Spark jobs. Accepts the value
+	// a value of G.1X, G.2X, G.4X, G.8X or G.025X for Spark jobs. Accepts the value
 	// Z.2X for Ray jobs.
 	//
-	//    * For the Standard worker type, each worker provides 4 vCPU, 16 GB of
-	//    memory and a 50GB disk, and 2 executors per worker.
+	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPUs, 16 GB
+	//    of memory) with 84GB disk (approximately 34GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.1X worker type, each worker maps to 1 DPU (4 vCPU, 16 GB of
-	//    memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPUs, 32 GB
+	//    of memory) with 128GB disk (approximately 77GB free), and provides 1 executor
+	//    per worker. We recommend this worker type for workloads such as data transforms,
+	//    joins, and queries, to offers a scalable and cost effective way to run
+	//    most jobs.
 	//
-	//    * For the G.2X worker type, each worker maps to 2 DPU (8 vCPU, 32 GB of
-	//    memory, 128 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for memory-intensive jobs.
+	//    * For the G.4X worker type, each worker maps to 4 DPU (16 vCPUs, 64 GB
+	//    of memory) with 256GB disk (approximately 235GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs in the following Amazon Web Services Regions: US East (Ohio),
+	//    US East (N. Virginia), US West (Oregon), Asia Pacific (Singapore), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Canada (Central), Europe (Frankfurt),
+	//    Europe (Ireland), and Europe (Stockholm).
 	//
-	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPU, 4
-	//    GB of memory, 64 GB disk), and provides 1 executor per worker. We recommend
-	//    this worker type for low volume streaming jobs. This worker type is only
-	//    available for Glue version 3.0 streaming jobs.
+	//    * For the G.8X worker type, each worker maps to 8 DPU (32 vCPUs, 128 GB
+	//    of memory) with 512GB disk (approximately 487GB free), and provides 1
+	//    executor per worker. We recommend this worker type for jobs whose workloads
+	//    contain your most demanding transforms, aggregations, joins, and queries.
+	//    This worker type is available only for Glue version 3.0 or later Spark
+	//    ETL jobs, in the same Amazon Web Services Regions as supported for the
+	//    G.4X worker type.
 	//
-	//    * For the Z.2X worker type, each worker maps to 2 DPU (8vCPU, 64 GB of
-	//    m emory, 128 GB disk), and provides up to 8 Ray workers (one per vCPU)
-	//    based on the autoscaler.
+	//    * For the G.025X worker type, each worker maps to 0.25 DPU (2 vCPUs, 4
+	//    GB of memory) with 84GB disk (approximately 34GB free), and provides 1
+	//    executor per worker. We recommend this worker type for low volume streaming
+	//    jobs. This worker type is only available for Glue version 3.0 streaming
+	//    jobs.
+	//
+	//    * For the Z.2X worker type, each worker maps to 2 M-DPU (8vCPUs, 64 GB
+	//    of memory) with 128 GB disk (approximately 120GB free), and provides up
+	//    to 8 Ray workers based on the autoscaler.
 	WorkerType *string `type:"string" enum:"WorkerType"`
 }
 
@@ -66232,6 +70495,91 @@ func (s *StatementOutput_) SetStatus(v string) *StatementOutput_ {
 func (s *StatementOutput_) SetTraceback(v []*string) *StatementOutput_ {
 	s.Traceback = v
 	return s
+}
+
+type StopColumnStatisticsTaskRunInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the database where the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `type:"string" required:"true"`
+
+	// The name of the table.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopColumnStatisticsTaskRunInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopColumnStatisticsTaskRunInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StopColumnStatisticsTaskRunInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StopColumnStatisticsTaskRunInput"}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *StopColumnStatisticsTaskRunInput) SetDatabaseName(v string) *StopColumnStatisticsTaskRunInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *StopColumnStatisticsTaskRunInput) SetTableName(v string) *StopColumnStatisticsTaskRunInput {
+	s.TableName = &v
+	return s
+}
+
+type StopColumnStatisticsTaskRunOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopColumnStatisticsTaskRunOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopColumnStatisticsTaskRunOutput) GoString() string {
+	return s.String()
 }
 
 type StopCrawlerInput struct {
@@ -67652,6 +72000,182 @@ func (s *TableInput) SetViewExpandedText(v string) *TableInput {
 // SetViewOriginalText sets the ViewOriginalText field's value.
 func (s *TableInput) SetViewOriginalText(v string) *TableInput {
 	s.ViewOriginalText = &v
+	return s
+}
+
+// Contains details about an optimizer associated with a table.
+type TableOptimizer struct {
+	_ struct{} `type:"structure"`
+
+	// A TableOptimizerConfiguration object that was specified when creating or
+	// updating a table optimizer.
+	Configuration *TableOptimizerConfiguration `locationName:"configuration" type:"structure"`
+
+	// A TableOptimizerRun object representing the last run of the table optimizer.
+	LastRun *TableOptimizerRun `locationName:"lastRun" type:"structure"`
+
+	// The type of table optimizer. Currently, the only valid value is compaction.
+	Type *string `locationName:"type" type:"string" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableOptimizer) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableOptimizer) GoString() string {
+	return s.String()
+}
+
+// SetConfiguration sets the Configuration field's value.
+func (s *TableOptimizer) SetConfiguration(v *TableOptimizerConfiguration) *TableOptimizer {
+	s.Configuration = v
+	return s
+}
+
+// SetLastRun sets the LastRun field's value.
+func (s *TableOptimizer) SetLastRun(v *TableOptimizerRun) *TableOptimizer {
+	s.LastRun = v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *TableOptimizer) SetType(v string) *TableOptimizer {
+	s.Type = &v
+	return s
+}
+
+// Contains details on the configuration of a table optimizer. You pass this
+// configuration when creating or updating a table optimizer.
+type TableOptimizerConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Whether table optimization is enabled.
+	Enabled *bool `locationName:"enabled" type:"boolean"`
+
+	// A role passed by the caller which gives the service permission to update
+	// the resources associated with the optimizer on the caller's behalf.
+	RoleArn *string `locationName:"roleArn" min:"20" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableOptimizerConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableOptimizerConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TableOptimizerConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TableOptimizerConfiguration"}
+	if s.RoleArn != nil && len(*s.RoleArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("RoleArn", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnabled sets the Enabled field's value.
+func (s *TableOptimizerConfiguration) SetEnabled(v bool) *TableOptimizerConfiguration {
+	s.Enabled = &v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *TableOptimizerConfiguration) SetRoleArn(v string) *TableOptimizerConfiguration {
+	s.RoleArn = &v
+	return s
+}
+
+// Contains details for a table optimizer run.
+type TableOptimizerRun struct {
+	_ struct{} `type:"structure"`
+
+	// Represents the epoch timestamp at which the compaction job ended.
+	EndTimestamp *time.Time `locationName:"endTimestamp" type:"timestamp"`
+
+	// An error that occured during the optimizer run.
+	Error *string `locationName:"error" type:"string"`
+
+	// An event type representing the status of the table optimizer run.
+	EventType *string `locationName:"eventType" type:"string" enum:"TableOptimizerEventType"`
+
+	// A RunMetrics object containing metrics for the optimizer run.
+	Metrics *RunMetrics `locationName:"metrics" type:"structure"`
+
+	// Represents the epoch timestamp at which the compaction job was started within
+	// Lake Formation.
+	StartTimestamp *time.Time `locationName:"startTimestamp" type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableOptimizerRun) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableOptimizerRun) GoString() string {
+	return s.String()
+}
+
+// SetEndTimestamp sets the EndTimestamp field's value.
+func (s *TableOptimizerRun) SetEndTimestamp(v time.Time) *TableOptimizerRun {
+	s.EndTimestamp = &v
+	return s
+}
+
+// SetError sets the Error field's value.
+func (s *TableOptimizerRun) SetError(v string) *TableOptimizerRun {
+	s.Error = &v
+	return s
+}
+
+// SetEventType sets the EventType field's value.
+func (s *TableOptimizerRun) SetEventType(v string) *TableOptimizerRun {
+	s.EventType = &v
+	return s
+}
+
+// SetMetrics sets the Metrics field's value.
+func (s *TableOptimizerRun) SetMetrics(v *RunMetrics) *TableOptimizerRun {
+	s.Metrics = v
+	return s
+}
+
+// SetStartTimestamp sets the StartTimestamp field's value.
+func (s *TableOptimizerRun) SetStartTimestamp(v time.Time) *TableOptimizerRun {
+	s.StartTimestamp = &v
 	return s
 }
 
@@ -69988,6 +74512,12 @@ type UpdateCsvClassifierRequest struct {
 	// A custom symbol to denote what combines content into a single column value.
 	// It must be different from the column delimiter.
 	QuoteSymbol *string `min:"1" type:"string"`
+
+	// Sets the SerDe for processing CSV in the classifier, which will be applied
+	// in the Data Catalog. Valid values are OpenCSVSerDe, LazySimpleSerDe, and
+	// None. You can specify the None value when you want the crawler to do the
+	// detection.
+	Serde *string `type:"string" enum:"CsvSerdeOption"`
 }
 
 // String returns the string representation.
@@ -70081,6 +74611,12 @@ func (s *UpdateCsvClassifierRequest) SetName(v string) *UpdateCsvClassifierReque
 // SetQuoteSymbol sets the QuoteSymbol field's value.
 func (s *UpdateCsvClassifierRequest) SetQuoteSymbol(v string) *UpdateCsvClassifierRequest {
 	s.QuoteSymbol = &v
+	return s
+}
+
+// SetSerde sets the Serde field's value.
+func (s *UpdateCsvClassifierRequest) SetSerde(v string) *UpdateCsvClassifierRequest {
+	s.Serde = &v
 	return s
 }
 
@@ -70554,10 +75090,12 @@ type UpdateJobFromSourceControlInput struct {
 	// The name of the Glue job to be synchronized to or from the remote repository.
 	JobName *string `min:"1" type:"string"`
 
-	// The provider for the remote repository.
+	// The provider for the remote repository. Possible values: GITHUB, AWS_CODE_COMMIT,
+	// GITLAB, BITBUCKET.
 	Provider *string `type:"string" enum:"SourceControlProvider"`
 
-	// The name of the remote repository that contains the job artifacts.
+	// The name of the remote repository that contains the job artifacts. For BitBucket
+	// providers, RepositoryName should include WorkspaceName. Use the format <WorkspaceName>/<RepositoryName>.
 	RepositoryName *string `min:"1" type:"string"`
 
 	// The owner of the remote repository that contains the job artifacts.
@@ -71476,10 +76014,12 @@ type UpdateSourceControlFromJobInput struct {
 	// The name of the Glue job to be synchronized to or from the remote repository.
 	JobName *string `min:"1" type:"string"`
 
-	// The provider for the remote repository.
+	// The provider for the remote repository. Possible values: GITHUB, AWS_CODE_COMMIT,
+	// GITLAB, BITBUCKET.
 	Provider *string `type:"string" enum:"SourceControlProvider"`
 
-	// The name of the remote repository that contains the job artifacts.
+	// The name of the remote repository that contains the job artifacts. For BitBucket
+	// providers, RepositoryName should include WorkspaceName. Use the format <WorkspaceName>/<RepositoryName>.
 	RepositoryName *string `min:"1" type:"string"`
 
 	// The owner of the remote repository that contains the job artifacts.
@@ -71735,6 +76275,145 @@ func (s *UpdateTableInput) SetTransactionId(v string) *UpdateTableInput {
 func (s *UpdateTableInput) SetVersionId(v string) *UpdateTableInput {
 	s.VersionId = &v
 	return s
+}
+
+type UpdateTableOptimizerInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Catalog ID of the table.
+	//
+	// CatalogId is a required field
+	CatalogId *string `min:"1" type:"string" required:"true"`
+
+	// The name of the database in the catalog in which the table resides.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `min:"1" type:"string" required:"true"`
+
+	// The name of the table.
+	//
+	// TableName is a required field
+	TableName *string `min:"1" type:"string" required:"true"`
+
+	// A TableOptimizerConfiguration object representing the configuration of a
+	// table optimizer.
+	//
+	// TableOptimizerConfiguration is a required field
+	TableOptimizerConfiguration *TableOptimizerConfiguration `type:"structure" required:"true"`
+
+	// The type of table optimizer. Currently, the only valid value is compaction.
+	//
+	// Type is a required field
+	Type *string `type:"string" required:"true" enum:"TableOptimizerType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateTableOptimizerInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateTableOptimizerInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateTableOptimizerInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateTableOptimizerInput"}
+	if s.CatalogId == nil {
+		invalidParams.Add(request.NewErrParamRequired("CatalogId"))
+	}
+	if s.CatalogId != nil && len(*s.CatalogId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CatalogId", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.TableName == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableName"))
+	}
+	if s.TableName != nil && len(*s.TableName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TableName", 1))
+	}
+	if s.TableOptimizerConfiguration == nil {
+		invalidParams.Add(request.NewErrParamRequired("TableOptimizerConfiguration"))
+	}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+	if s.TableOptimizerConfiguration != nil {
+		if err := s.TableOptimizerConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("TableOptimizerConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalogId sets the CatalogId field's value.
+func (s *UpdateTableOptimizerInput) SetCatalogId(v string) *UpdateTableOptimizerInput {
+	s.CatalogId = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *UpdateTableOptimizerInput) SetDatabaseName(v string) *UpdateTableOptimizerInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetTableName sets the TableName field's value.
+func (s *UpdateTableOptimizerInput) SetTableName(v string) *UpdateTableOptimizerInput {
+	s.TableName = &v
+	return s
+}
+
+// SetTableOptimizerConfiguration sets the TableOptimizerConfiguration field's value.
+func (s *UpdateTableOptimizerInput) SetTableOptimizerConfiguration(v *TableOptimizerConfiguration) *UpdateTableOptimizerInput {
+	s.TableOptimizerConfiguration = v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *UpdateTableOptimizerInput) SetType(v string) *UpdateTableOptimizerInput {
+	s.Type = &v
+	return s
+}
+
+type UpdateTableOptimizerOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateTableOptimizerOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateTableOptimizerOutput) GoString() string {
+	return s.String()
 }
 
 type UpdateTableOutput struct {
@@ -72997,12 +77676,16 @@ func (s *XMLClassifier) SetVersion(v int64) *XMLClassifier {
 const (
 	// AdditionalOptionKeysPerformanceTuningCaching is a AdditionalOptionKeys enum value
 	AdditionalOptionKeysPerformanceTuningCaching = "performanceTuning.caching"
+
+	// AdditionalOptionKeysObservationsScope is a AdditionalOptionKeys enum value
+	AdditionalOptionKeysObservationsScope = "observations.scope"
 )
 
 // AdditionalOptionKeys_Values returns all elements of the AdditionalOptionKeys enum
 func AdditionalOptionKeys_Values() []string {
 	return []string{
 		AdditionalOptionKeysPerformanceTuningCaching,
+		AdditionalOptionKeysObservationsScope,
 	}
 }
 
@@ -73179,6 +77862,34 @@ func CloudWatchEncryptionMode_Values() []string {
 	return []string{
 		CloudWatchEncryptionModeDisabled,
 		CloudWatchEncryptionModeSseKms,
+	}
+}
+
+const (
+	// ColumnStatisticsStateStarting is a ColumnStatisticsState enum value
+	ColumnStatisticsStateStarting = "STARTING"
+
+	// ColumnStatisticsStateRunning is a ColumnStatisticsState enum value
+	ColumnStatisticsStateRunning = "RUNNING"
+
+	// ColumnStatisticsStateSucceeded is a ColumnStatisticsState enum value
+	ColumnStatisticsStateSucceeded = "SUCCEEDED"
+
+	// ColumnStatisticsStateFailed is a ColumnStatisticsState enum value
+	ColumnStatisticsStateFailed = "FAILED"
+
+	// ColumnStatisticsStateStopped is a ColumnStatisticsState enum value
+	ColumnStatisticsStateStopped = "STOPPED"
+)
+
+// ColumnStatisticsState_Values returns all elements of the ColumnStatisticsState enum
+func ColumnStatisticsState_Values() []string {
+	return []string{
+		ColumnStatisticsStateStarting,
+		ColumnStatisticsStateRunning,
+		ColumnStatisticsStateSucceeded,
+		ColumnStatisticsStateFailed,
+		ColumnStatisticsStateStopped,
 	}
 }
 
@@ -73392,6 +78103,33 @@ const (
 
 	// ConnectionPropertyKeyConnectorClassName is a ConnectionPropertyKey enum value
 	ConnectionPropertyKeyConnectorClassName = "CONNECTOR_CLASS_NAME"
+
+	// ConnectionPropertyKeyKafkaSaslMechanism is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslMechanism = "KAFKA_SASL_MECHANISM"
+
+	// ConnectionPropertyKeyKafkaSaslScramUsername is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslScramUsername = "KAFKA_SASL_SCRAM_USERNAME"
+
+	// ConnectionPropertyKeyKafkaSaslScramPassword is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslScramPassword = "KAFKA_SASL_SCRAM_PASSWORD"
+
+	// ConnectionPropertyKeyKafkaSaslScramSecretsArn is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslScramSecretsArn = "KAFKA_SASL_SCRAM_SECRETS_ARN"
+
+	// ConnectionPropertyKeyEncryptedKafkaSaslScramPassword is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyEncryptedKafkaSaslScramPassword = "ENCRYPTED_KAFKA_SASL_SCRAM_PASSWORD"
+
+	// ConnectionPropertyKeyKafkaSaslGssapiKeytab is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslGssapiKeytab = "KAFKA_SASL_GSSAPI_KEYTAB"
+
+	// ConnectionPropertyKeyKafkaSaslGssapiKrb5Conf is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslGssapiKrb5Conf = "KAFKA_SASL_GSSAPI_KRB5_CONF"
+
+	// ConnectionPropertyKeyKafkaSaslGssapiService is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslGssapiService = "KAFKA_SASL_GSSAPI_SERVICE"
+
+	// ConnectionPropertyKeyKafkaSaslGssapiPrincipal is a ConnectionPropertyKey enum value
+	ConnectionPropertyKeyKafkaSaslGssapiPrincipal = "KAFKA_SASL_GSSAPI_PRINCIPAL"
 )
 
 // ConnectionPropertyKey_Values returns all elements of the ConnectionPropertyKey enum
@@ -73427,6 +78165,15 @@ func ConnectionPropertyKey_Values() []string {
 		ConnectionPropertyKeyConnectorUrl,
 		ConnectionPropertyKeyConnectorType,
 		ConnectionPropertyKeyConnectorClassName,
+		ConnectionPropertyKeyKafkaSaslMechanism,
+		ConnectionPropertyKeyKafkaSaslScramUsername,
+		ConnectionPropertyKeyKafkaSaslScramPassword,
+		ConnectionPropertyKeyKafkaSaslScramSecretsArn,
+		ConnectionPropertyKeyEncryptedKafkaSaslScramPassword,
+		ConnectionPropertyKeyKafkaSaslGssapiKeytab,
+		ConnectionPropertyKeyKafkaSaslGssapiKrb5Conf,
+		ConnectionPropertyKeyKafkaSaslGssapiService,
+		ConnectionPropertyKeyKafkaSaslGssapiPrincipal,
 	}
 }
 
@@ -73575,6 +78322,26 @@ func CsvHeaderOption_Values() []string {
 		CsvHeaderOptionUnknown,
 		CsvHeaderOptionPresent,
 		CsvHeaderOptionAbsent,
+	}
+}
+
+const (
+	// CsvSerdeOptionOpenCsvserDe is a CsvSerdeOption enum value
+	CsvSerdeOptionOpenCsvserDe = "OpenCSVSerDe"
+
+	// CsvSerdeOptionLazySimpleSerDe is a CsvSerdeOption enum value
+	CsvSerdeOptionLazySimpleSerDe = "LazySimpleSerDe"
+
+	// CsvSerdeOptionNone is a CsvSerdeOption enum value
+	CsvSerdeOptionNone = "None"
+)
+
+// CsvSerdeOption_Values returns all elements of the CsvSerdeOption enum
+func CsvSerdeOption_Values() []string {
+	return []string{
+		CsvSerdeOptionOpenCsvserDe,
+		CsvSerdeOptionLazySimpleSerDe,
+		CsvSerdeOptionNone,
 	}
 }
 
@@ -74886,6 +79653,12 @@ const (
 	// SourceControlProviderGithub is a SourceControlProvider enum value
 	SourceControlProviderGithub = "GITHUB"
 
+	// SourceControlProviderGitlab is a SourceControlProvider enum value
+	SourceControlProviderGitlab = "GITLAB"
+
+	// SourceControlProviderBitbucket is a SourceControlProvider enum value
+	SourceControlProviderBitbucket = "BITBUCKET"
+
 	// SourceControlProviderAwsCodeCommit is a SourceControlProvider enum value
 	SourceControlProviderAwsCodeCommit = "AWS_CODE_COMMIT"
 )
@@ -74894,6 +79667,8 @@ const (
 func SourceControlProvider_Values() []string {
 	return []string{
 		SourceControlProviderGithub,
+		SourceControlProviderGitlab,
+		SourceControlProviderBitbucket,
 		SourceControlProviderAwsCodeCommit,
 	}
 }
@@ -74951,6 +79726,42 @@ func StatementState_Values() []string {
 		StatementStateCancelling,
 		StatementStateCancelled,
 		StatementStateError,
+	}
+}
+
+const (
+	// TableOptimizerEventTypeStarting is a TableOptimizerEventType enum value
+	TableOptimizerEventTypeStarting = "starting"
+
+	// TableOptimizerEventTypeCompleted is a TableOptimizerEventType enum value
+	TableOptimizerEventTypeCompleted = "completed"
+
+	// TableOptimizerEventTypeFailed is a TableOptimizerEventType enum value
+	TableOptimizerEventTypeFailed = "failed"
+
+	// TableOptimizerEventTypeInProgress is a TableOptimizerEventType enum value
+	TableOptimizerEventTypeInProgress = "in_progress"
+)
+
+// TableOptimizerEventType_Values returns all elements of the TableOptimizerEventType enum
+func TableOptimizerEventType_Values() []string {
+	return []string{
+		TableOptimizerEventTypeStarting,
+		TableOptimizerEventTypeCompleted,
+		TableOptimizerEventTypeFailed,
+		TableOptimizerEventTypeInProgress,
+	}
+}
+
+const (
+	// TableOptimizerTypeCompaction is a TableOptimizerType enum value
+	TableOptimizerTypeCompaction = "compaction"
+)
+
+// TableOptimizerType_Values returns all elements of the TableOptimizerType enum
+func TableOptimizerType_Values() []string {
+	return []string{
+		TableOptimizerTypeCompaction,
 	}
 }
 

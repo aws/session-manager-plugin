@@ -72,23 +72,23 @@ func (c *Transfer) CreateAccessRequest(input *CreateAccessInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateAccess
 func (c *Transfer) CreateAccess(input *CreateAccessInput) (*CreateAccessOutput, error) {
@@ -173,26 +173,26 @@ func (c *Transfer) CreateAgreementRequest(input *CreateAgreementInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateAgreement
 func (c *Transfer) CreateAgreement(input *CreateAgreementInput) (*CreateAgreementOutput, error) {
@@ -259,10 +259,15 @@ func (c *Transfer) CreateConnectorRequest(input *CreateConnectorInput) (req *req
 
 // CreateConnector API operation for AWS Transfer Family.
 //
-// Creates the connector, which captures the parameters for an outbound connection
-// for the AS2 protocol. The connector is required for sending files to an externally
-// hosted AS2 server. For more details about connectors, see Create AS2 connectors
-// (https://docs.aws.amazon.com/transfer/latest/userguide/create-b2b-server.html#configure-as2-connector).
+// Creates the connector, which captures the parameters for a connection for
+// the AS2 or SFTP protocol. For AS2, the connector is required for sending
+// files to an externally hosted AS2 server. For SFTP, the connector is required
+// when sending files to an SFTP server or receiving files from an SFTP server.
+// For more details about connectors, see Create AS2 connectors (https://docs.aws.amazon.com/transfer/latest/userguide/create-b2b-server.html#configure-as2-connector)
+// and Create SFTP connectors (https://docs.aws.amazon.com/transfer/latest/userguide/configure-sftp-connector.html).
+//
+// You must specify exactly one configuration object: either for AS2 (As2Config)
+// or SFTP (SftpConfig).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -273,26 +278,26 @@ func (c *Transfer) CreateConnectorRequest(input *CreateConnectorInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateConnector
 func (c *Transfer) CreateConnector(input *CreateConnectorInput) (*CreateConnectorOutput, error) {
@@ -370,23 +375,22 @@ func (c *Transfer) CreateProfileRequest(input *CreateProfileInput) (req *request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateProfile
 func (c *Transfer) CreateProfile(input *CreateProfileInput) (*CreateProfileOutput, error) {
@@ -467,29 +471,29 @@ func (c *Transfer) CreateServerRequest(input *CreateServerInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - AccessDeniedException
-//     You do not have sufficient access to perform this action.
-//
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateServer
 func (c *Transfer) CreateServer(input *CreateServerInput) (*CreateServerOutput, error) {
@@ -573,23 +577,23 @@ func (c *Transfer) CreateUserRequest(input *CreateUserInput) (req *request.Reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateUser
 func (c *Transfer) CreateUser(input *CreateUserInput) (*CreateUserOutput, error) {
@@ -670,25 +674,25 @@ func (c *Transfer) CreateWorkflowRequest(input *CreateWorkflowInput) (req *reque
 //
 // Returned Error Types:
 //
-//   - AccessDeniedException
-//     You do not have sufficient access to perform this action.
+//   - InvalidRequestException
+//     This exception is thrown when the client submits a malformed request.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
 //
 //   - ServiceUnavailableException
 //     The request has failed because the Amazon Web ServicesTransfer Family service
 //     is not available.
 //
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
-//     Family service.
-//
-//   - InvalidRequestException
-//     This exception is thrown when the client submits a malformed request.
-//
 //   - ResourceExistsException
-//     The requested resource does not exist.
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
-//   - ThrottlingException
-//     The request was denied due to request throttling.
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/CreateWorkflow
 func (c *Transfer) CreateWorkflow(input *CreateWorkflowInput) (*CreateWorkflowOutput, error) {
@@ -768,20 +772,19 @@ func (c *Transfer) DeleteAccessRequest(input *DeleteAccessInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteAccess
 func (c *Transfer) DeleteAccess(input *DeleteAccessInput) (*DeleteAccessOutput, error) {
@@ -860,20 +863,19 @@ func (c *Transfer) DeleteAgreementRequest(input *DeleteAgreementInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteAgreement
 func (c *Transfer) DeleteAgreement(input *DeleteAgreementInput) (*DeleteAgreementOutput, error) {
@@ -952,20 +954,19 @@ func (c *Transfer) DeleteCertificateRequest(input *DeleteCertificateInput) (req 
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteCertificate
 func (c *Transfer) DeleteCertificate(input *DeleteCertificateInput) (*DeleteCertificateOutput, error) {
@@ -1033,7 +1034,7 @@ func (c *Transfer) DeleteConnectorRequest(input *DeleteConnectorInput) (req *req
 
 // DeleteConnector API operation for AWS Transfer Family.
 //
-// Deletes the agreement that's specified in the provided ConnectorId.
+// Deletes the connector that's specified in the provided ConnectorId.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1044,20 +1045,19 @@ func (c *Transfer) DeleteConnectorRequest(input *DeleteConnectorInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteConnector
 func (c *Transfer) DeleteConnector(input *DeleteConnectorInput) (*DeleteConnectorOutput, error) {
@@ -1136,23 +1136,22 @@ func (c *Transfer) DeleteHostKeyRequest(input *DeleteHostKeyInput) (req *request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteHostKey
 func (c *Transfer) DeleteHostKey(input *DeleteHostKeyInput) (*DeleteHostKeyOutput, error) {
@@ -1231,20 +1230,19 @@ func (c *Transfer) DeleteProfileRequest(input *DeleteProfileInput) (req *request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteProfile
 func (c *Transfer) DeleteProfile(input *DeleteProfileInput) (*DeleteProfileOutput, error) {
@@ -1325,23 +1323,22 @@ func (c *Transfer) DeleteServerRequest(input *DeleteServerInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - AccessDeniedException
-//     You do not have sufficient access to perform this action.
-//
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteServer
 func (c *Transfer) DeleteServer(input *DeleteServerInput) (*DeleteServerOutput, error) {
@@ -1420,23 +1417,22 @@ func (c *Transfer) DeleteSshPublicKeyRequest(input *DeleteSshPublicKeyInput) (re
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteSshPublicKey
 func (c *Transfer) DeleteSshPublicKey(input *DeleteSshPublicKeyInput) (*DeleteSshPublicKeyOutput, error) {
@@ -1520,20 +1516,19 @@ func (c *Transfer) DeleteUserRequest(input *DeleteUserInput) (req *request.Reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteUser
 func (c *Transfer) DeleteUser(input *DeleteUserInput) (*DeleteUserOutput, error) {
@@ -1612,23 +1607,22 @@ func (c *Transfer) DeleteWorkflowRequest(input *DeleteWorkflowInput) (req *reque
 //
 // Returned Error Types:
 //
-//   - AccessDeniedException
-//     You do not have sufficient access to perform this action.
-//
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DeleteWorkflow
 func (c *Transfer) DeleteWorkflow(input *DeleteWorkflowInput) (*DeleteWorkflowOutput, error) {
@@ -1710,20 +1704,19 @@ func (c *Transfer) DescribeAccessRequest(input *DescribeAccessInput) (req *reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeAccess
 func (c *Transfer) DescribeAccess(input *DescribeAccessInput) (*DescribeAccessOutput, error) {
@@ -1801,20 +1794,19 @@ func (c *Transfer) DescribeAgreementRequest(input *DescribeAgreementInput) (req 
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeAgreement
 func (c *Transfer) DescribeAgreement(input *DescribeAgreementInput) (*DescribeAgreementOutput, error) {
@@ -1892,20 +1884,19 @@ func (c *Transfer) DescribeCertificateRequest(input *DescribeCertificateInput) (
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeCertificate
 func (c *Transfer) DescribeCertificate(input *DescribeCertificateInput) (*DescribeCertificateOutput, error) {
@@ -1983,20 +1974,19 @@ func (c *Transfer) DescribeConnectorRequest(input *DescribeConnectorInput) (req 
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeConnector
 func (c *Transfer) DescribeConnector(input *DescribeConnectorInput) (*DescribeConnectorOutput, error) {
@@ -2081,20 +2071,19 @@ func (c *Transfer) DescribeExecutionRequest(input *DescribeExecutionInput) (req 
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeExecution
 func (c *Transfer) DescribeExecution(input *DescribeExecutionInput) (*DescribeExecutionOutput, error) {
@@ -2173,20 +2162,19 @@ func (c *Transfer) DescribeHostKeyRequest(input *DescribeHostKeyInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeHostKey
 func (c *Transfer) DescribeHostKey(input *DescribeHostKeyInput) (*DescribeHostKeyOutput, error) {
@@ -2264,20 +2252,19 @@ func (c *Transfer) DescribeProfileRequest(input *DescribeProfileInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeProfile
 func (c *Transfer) DescribeProfile(input *DescribeProfileInput) (*DescribeProfileOutput, error) {
@@ -2358,20 +2345,19 @@ func (c *Transfer) DescribeSecurityPolicyRequest(input *DescribeSecurityPolicyIn
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeSecurityPolicy
 func (c *Transfer) DescribeSecurityPolicy(input *DescribeSecurityPolicyInput) (*DescribeSecurityPolicyOutput, error) {
@@ -2453,20 +2439,19 @@ func (c *Transfer) DescribeServerRequest(input *DescribeServerInput) (req *reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeServer
 func (c *Transfer) DescribeServer(input *DescribeServerInput) (*DescribeServerOutput, error) {
@@ -2548,20 +2533,19 @@ func (c *Transfer) DescribeUserRequest(input *DescribeUserInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeUser
 func (c *Transfer) DescribeUser(input *DescribeUserInput) (*DescribeUserOutput, error) {
@@ -2639,20 +2623,19 @@ func (c *Transfer) DescribeWorkflowRequest(input *DescribeWorkflowInput) (req *r
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/DescribeWorkflow
 func (c *Transfer) DescribeWorkflow(input *DescribeWorkflowInput) (*DescribeWorkflowOutput, error) {
@@ -2731,20 +2714,19 @@ func (c *Transfer) ImportCertificateRequest(input *ImportCertificateInput) (req 
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ImportCertificate
 func (c *Transfer) ImportCertificate(input *ImportCertificateInput) (*ImportCertificateOutput, error) {
@@ -2822,26 +2804,26 @@ func (c *Transfer) ImportHostKeyRequest(input *ImportHostKeyInput) (req *request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ImportHostKey
 func (c *Transfer) ImportHostKey(input *ImportHostKeyInput) (*ImportHostKeyOutput, error) {
@@ -2924,26 +2906,26 @@ func (c *Transfer) ImportSshPublicKeyRequest(input *ImportSshPublicKeyInput) (re
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ImportSshPublicKey
 func (c *Transfer) ImportSshPublicKey(input *ImportSshPublicKeyInput) (*ImportSshPublicKeyOutput, error) {
@@ -3027,23 +3009,22 @@ func (c *Transfer) ListAccessesRequest(input *ListAccessesInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListAccesses
 func (c *Transfer) ListAccesses(input *ListAccessesInput) (*ListAccessesOutput, error) {
@@ -3182,23 +3163,22 @@ func (c *Transfer) ListAgreementsRequest(input *ListAgreementsInput) (req *reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListAgreements
 func (c *Transfer) ListAgreements(input *ListAgreementsInput) (*ListAgreementsOutput, error) {
@@ -3337,23 +3317,22 @@ func (c *Transfer) ListCertificatesRequest(input *ListCertificatesInput) (req *r
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListCertificates
 func (c *Transfer) ListCertificates(input *ListCertificatesInput) (*ListCertificatesOutput, error) {
@@ -3488,23 +3467,22 @@ func (c *Transfer) ListConnectorsRequest(input *ListConnectorsInput) (req *reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListConnectors
 func (c *Transfer) ListConnectors(input *ListConnectorsInput) (*ListConnectorsOutput, error) {
@@ -3642,23 +3620,22 @@ func (c *Transfer) ListExecutionsRequest(input *ListExecutionsInput) (req *reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListExecutions
 func (c *Transfer) ListExecutions(input *ListExecutionsInput) (*ListExecutionsOutput, error) {
@@ -3788,23 +3765,22 @@ func (c *Transfer) ListHostKeysRequest(input *ListHostKeysInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListHostKeys
 func (c *Transfer) ListHostKeys(input *ListHostKeysInput) (*ListHostKeysOutput, error) {
@@ -3891,23 +3867,22 @@ func (c *Transfer) ListProfilesRequest(input *ListProfilesInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListProfiles
 func (c *Transfer) ListProfiles(input *ListProfilesInput) (*ListProfilesOutput, error) {
@@ -4043,19 +4018,18 @@ func (c *Transfer) ListSecurityPoliciesRequest(input *ListSecurityPoliciesInput)
 //
 // Returned Error Types:
 //
+//   - InvalidRequestException
+//     This exception is thrown when the client submits a malformed request.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
 //   - ServiceUnavailableException
 //     The request has failed because the Amazon Web ServicesTransfer Family service
 //     is not available.
 //
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - InvalidNextTokenException
 //     The NextToken parameter that was passed is invalid.
-//
-//   - InvalidRequestException
-//     This exception is thrown when the client submits a malformed request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListSecurityPolicies
 func (c *Transfer) ListSecurityPolicies(input *ListSecurityPoliciesInput) (*ListSecurityPoliciesOutput, error) {
@@ -4191,19 +4165,18 @@ func (c *Transfer) ListServersRequest(input *ListServersInput) (req *request.Req
 //
 // Returned Error Types:
 //
+//   - InvalidRequestException
+//     This exception is thrown when the client submits a malformed request.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
 //   - ServiceUnavailableException
 //     The request has failed because the Amazon Web ServicesTransfer Family service
 //     is not available.
 //
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - InvalidNextTokenException
 //     The NextToken parameter that was passed is invalid.
-//
-//   - InvalidRequestException
-//     This exception is thrown when the client submits a malformed request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListServers
 func (c *Transfer) ListServers(input *ListServersInput) (*ListServersOutput, error) {
@@ -4339,19 +4312,18 @@ func (c *Transfer) ListTagsForResourceRequest(input *ListTagsForResourceInput) (
 //
 // Returned Error Types:
 //
+//   - InvalidRequestException
+//     This exception is thrown when the client submits a malformed request.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
 //   - ServiceUnavailableException
 //     The request has failed because the Amazon Web ServicesTransfer Family service
 //     is not available.
 //
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - InvalidNextTokenException
 //     The NextToken parameter that was passed is invalid.
-//
-//   - InvalidRequestException
-//     This exception is thrown when the client submits a malformed request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListTagsForResource
 func (c *Transfer) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
@@ -4487,23 +4459,22 @@ func (c *Transfer) ListUsersRequest(input *ListUsersInput) (req *request.Request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
-//
-//   - InvalidNextTokenException
-//     The NextToken parameter that was passed is invalid.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - InvalidNextTokenException
+//     The NextToken parameter that was passed is invalid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListUsers
 func (c *Transfer) ListUsers(input *ListUsersInput) (*ListUsersOutput, error) {
@@ -4639,19 +4610,18 @@ func (c *Transfer) ListWorkflowsRequest(input *ListWorkflowsInput) (req *request
 //
 // Returned Error Types:
 //
+//   - InvalidRequestException
+//     This exception is thrown when the client submits a malformed request.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
 //   - ServiceUnavailableException
 //     The request has failed because the Amazon Web ServicesTransfer Family service
 //     is not available.
 //
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - InvalidNextTokenException
 //     The NextToken parameter that was passed is invalid.
-//
-//   - InvalidRequestException
-//     This exception is thrown when the client submits a malformed request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/ListWorkflows
 func (c *Transfer) ListWorkflows(input *ListWorkflowsInput) (*ListWorkflowsOutput, error) {
@@ -4785,26 +4755,25 @@ func (c *Transfer) SendWorkflowStepStateRequest(input *SendWorkflowStepStateInpu
 //
 // Returned Error Types:
 //
-//   - AccessDeniedException
-//     You do not have sufficient access to perform this action.
-//
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/SendWorkflowStepState
 func (c *Transfer) SendWorkflowStepState(input *SendWorkflowStepStateInput) (*SendWorkflowStepStateOutput, error) {
@@ -4871,8 +4840,22 @@ func (c *Transfer) StartFileTransferRequest(input *StartFileTransferInput) (req 
 
 // StartFileTransfer API operation for AWS Transfer Family.
 //
-// Begins an outbound file transfer to a remote AS2 server. You specify the
-// ConnectorId and the file paths for where to send the files.
+// Begins a file transfer between local Amazon Web Services storage and a remote
+// AS2 or SFTP server.
+//
+//   - For an AS2 connector, you specify the ConnectorId and one or more SendFilePaths
+//     to identify the files you want to transfer.
+//
+//   - For an SFTP connector, the file transfer can be either outbound or inbound.
+//     In both cases, you specify the ConnectorId. Depending on the direction
+//     of the transfer, you also specify the following items: If you are transferring
+//     file from a partner's SFTP server to Amazon Web Services storage, you
+//     specify one or more RetreiveFilePaths to identify the files you want to
+//     transfer, and a LocalDirectoryPath to specify the destination folder.
+//     If you are transferring file to a partner's SFTP server from Amazon Web
+//     Services storage, you specify one or more SendFilePaths to identify the
+//     files you want to transfer, and a RemoteDirectoryPath to specify the destination
+//     folder.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4883,23 +4866,22 @@ func (c *Transfer) StartFileTransferRequest(input *StartFileTransferInput) (req 
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartFileTransfer
 func (c *Transfer) StartFileTransfer(input *StartFileTransferInput) (*StartFileTransferOutput, error) {
@@ -4986,23 +4968,22 @@ func (c *Transfer) StartServerRequest(input *StartServerInput) (req *request.Req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartServer
 func (c *Transfer) StartServer(input *StartServerInput) (*StartServerOutput, error) {
@@ -5093,23 +5074,22 @@ func (c *Transfer) StopServerRequest(input *StopServerInput) (req *request.Reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StopServer
 func (c *Transfer) StopServer(input *StopServerInput) (*StopServerOutput, error) {
@@ -5191,20 +5171,19 @@ func (c *Transfer) TagResourceRequest(input *TagResourceInput) (req *request.Req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/TagResource
 func (c *Transfer) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -5223,6 +5202,98 @@ func (c *Transfer) TagResource(input *TagResourceInput) (*TagResourceOutput, err
 // for more information on using Contexts.
 func (c *Transfer) TagResourceWithContext(ctx aws.Context, input *TagResourceInput, opts ...request.Option) (*TagResourceOutput, error) {
 	req, out := c.TagResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opTestConnection = "TestConnection"
+
+// TestConnectionRequest generates a "aws/request.Request" representing the
+// client's request for the TestConnection operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See TestConnection for more information on using the TestConnection
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the TestConnectionRequest method.
+//	req, resp := client.TestConnectionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/TestConnection
+func (c *Transfer) TestConnectionRequest(input *TestConnectionInput) (req *request.Request, output *TestConnectionOutput) {
+	op := &request.Operation{
+		Name:       opTestConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &TestConnectionInput{}
+	}
+
+	output = &TestConnectionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// TestConnection API operation for AWS Transfer Family.
+//
+// Tests whether your SFTP connector is set up successfully. We highly recommend
+// that you call this operation to test your ability to transfer files between
+// local Amazon Web Services storage and a trading partner's SFTP server.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Transfer Family's
+// API operation TestConnection for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
+//     Family service.
+//
+//   - InvalidRequestException
+//     This exception is thrown when the client submits a malformed request.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/TestConnection
+func (c *Transfer) TestConnection(input *TestConnectionInput) (*TestConnectionOutput, error) {
+	req, out := c.TestConnectionRequest(input)
+	return out, req.Send()
+}
+
+// TestConnectionWithContext is the same as TestConnection with the addition of
+// the ability to pass a context and additional request options.
+//
+// See TestConnection for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Transfer) TestConnectionWithContext(ctx aws.Context, input *TestConnectionInput, opts ...request.Option) (*TestConnectionOutput, error) {
+	req, out := c.TestConnectionRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -5315,20 +5386,19 @@ func (c *Transfer) TestIdentityProviderRequest(input *TestIdentityProviderInput)
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/TestIdentityProvider
 func (c *Transfer) TestIdentityProvider(input *TestIdentityProviderInput) (*TestIdentityProviderOutput, error) {
@@ -5410,20 +5480,19 @@ func (c *Transfer) UntagResourceRequest(input *UntagResourceInput) (req *request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UntagResource
 func (c *Transfer) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -5502,26 +5571,26 @@ func (c *Transfer) UpdateAccessRequest(input *UpdateAccessInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateAccess
 func (c *Transfer) UpdateAccess(input *UpdateAccessInput) (*UpdateAccessOutput, error) {
@@ -5601,26 +5670,26 @@ func (c *Transfer) UpdateAgreementRequest(input *UpdateAgreementInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateAgreement
 func (c *Transfer) UpdateAgreement(input *UpdateAgreementInput) (*UpdateAgreementOutput, error) {
@@ -5698,23 +5767,22 @@ func (c *Transfer) UpdateCertificateRequest(input *UpdateCertificateInput) (req 
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateCertificate
 func (c *Transfer) UpdateCertificate(input *UpdateCertificateInput) (*UpdateCertificateOutput, error) {
@@ -5794,26 +5862,26 @@ func (c *Transfer) UpdateConnectorRequest(input *UpdateConnectorInput) (req *req
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateConnector
 func (c *Transfer) UpdateConnector(input *UpdateConnectorInput) (*UpdateConnectorOutput, error) {
@@ -5892,23 +5960,22 @@ func (c *Transfer) UpdateHostKeyRequest(input *UpdateHostKeyInput) (req *request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateHostKey
 func (c *Transfer) UpdateHostKey(input *UpdateHostKeyInput) (*UpdateHostKeyOutput, error) {
@@ -5988,23 +6055,22 @@ func (c *Transfer) UpdateProfileRequest(input *UpdateProfileInput) (req *request
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateProfile
 func (c *Transfer) UpdateProfile(input *UpdateProfileInput) (*UpdateProfileOutput, error) {
@@ -6085,34 +6151,34 @@ func (c *Transfer) UpdateServerRequest(input *UpdateServerInput) (req *request.R
 //
 // Returned Error Types:
 //
-//   - AccessDeniedException
-//     You do not have sufficient access to perform this action.
-//
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
 //   - ConflictException
 //     This exception is thrown when the UpdateServer is called for a file transfer
 //     protocol-enabled server that has VPC as the endpoint type and the server's
 //     VpcEndpointID is not in the available state.
 //
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceExistsException
-//     The requested resource does not exist.
-//
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+//   - ResourceExistsException
+//     The requested resource does not exist, or exists in a region other than the
+//     one specified for the command.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateServer
 func (c *Transfer) UpdateServer(input *UpdateServerInput) (*UpdateServerOutput, error) {
@@ -6194,23 +6260,22 @@ func (c *Transfer) UpdateUserRequest(input *UpdateUserInput) (req *request.Reque
 //
 // Returned Error Types:
 //
-//   - ServiceUnavailableException
-//     The request has failed because the Amazon Web ServicesTransfer Family service
-//     is not available.
-//
-//   - InternalServiceError
-//     This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
 //     Family service.
 //
 //   - InvalidRequestException
 //     This exception is thrown when the client submits a malformed request.
 //
-//   - ResourceNotFoundException
-//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
-//     Family service.
-//
 //   - ThrottlingException
 //     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/UpdateUser
 func (c *Transfer) UpdateUser(input *UpdateUserInput) (*UpdateUserOutput, error) {
@@ -6298,9 +6363,9 @@ func (s *AccessDeniedException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Contains the details for a connector object. The connector object is used
-// for AS2 outbound processes, to connect the Transfer Family customer with
-// the trading partner.
+// Contains the details for an AS2 connector object. The connector object is
+// used for AS2 outbound processes, to connect the Transfer Family customer
+// with the trading partner.
 type As2ConnectorConfig struct {
 	_ struct{} `type:"structure"`
 
@@ -6661,6 +6726,8 @@ type CreateAccessInput struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// Logical directory mappings that specify what Amazon S3 or Amazon EFS paths
@@ -6686,10 +6753,15 @@ type CreateAccessInput struct {
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// A session policy for your user so that you can use the same Identity and
@@ -6896,6 +6968,12 @@ func (s *CreateAccessOutput) SetServerId(v string) *CreateAccessOutput {
 type CreateAgreementInput struct {
 	_ struct{} `type:"structure"`
 
+	// Connectors are used to send files using either the AS2 or SFTP protocol.
+	// For the access role, provide the Amazon Resource Name (ARN) of the Identity
+	// and Access Management role to use.
+	//
+	// For AS2 connectors
+	//
 	// With AS2, you can send files by calling StartFileTransfer and specifying
 	// the file paths in the request parameter, SendFilePaths. We use the file’s
 	// parent directory (for example, for --send-file-paths /bucket/dir/file.txt,
@@ -6912,6 +6990,13 @@ type CreateAgreementInput struct {
 	// If the secret is encrypted using a customer-managed key instead of the Amazon
 	// Web Services managed key in Secrets Manager, then the role also needs the
 	// kms:Decrypt permission for that key.
+	//
+	// For SFTP connectors
+	//
+	// Make sure that the access role provides read and write access to the parent
+	// directory of the file location that's used in the StartFileTransfer request.
+	// Additionally, make sure that the role provides secretsmanager:GetSecretValue
+	// permission to Secrets Manager.
 	//
 	// AccessRole is a required field
 	AccessRole *string `min:"20" type:"string" required:"true"`
@@ -7106,6 +7191,12 @@ func (s *CreateAgreementOutput) SetAgreementId(v string) *CreateAgreementOutput 
 type CreateConnectorInput struct {
 	_ struct{} `type:"structure"`
 
+	// Connectors are used to send files using either the AS2 or SFTP protocol.
+	// For the access role, provide the Amazon Resource Name (ARN) of the Identity
+	// and Access Management role to use.
+	//
+	// For AS2 connectors
+	//
 	// With AS2, you can send files by calling StartFileTransfer and specifying
 	// the file paths in the request parameter, SendFilePaths. We use the file’s
 	// parent directory (for example, for --send-file-paths /bucket/dir/file.txt,
@@ -7123,24 +7214,32 @@ type CreateConnectorInput struct {
 	// Web Services managed key in Secrets Manager, then the role also needs the
 	// kms:Decrypt permission for that key.
 	//
+	// For SFTP connectors
+	//
+	// Make sure that the access role provides read and write access to the parent
+	// directory of the file location that's used in the StartFileTransfer request.
+	// Additionally, make sure that the role provides secretsmanager:GetSecretValue
+	// permission to Secrets Manager.
+	//
 	// AccessRole is a required field
 	AccessRole *string `min:"20" type:"string" required:"true"`
 
-	// A structure that contains the parameters for a connector object.
-	//
-	// As2Config is a required field
-	As2Config *As2ConnectorConfig `type:"structure" required:"true"`
+	// A structure that contains the parameters for an AS2 connector object.
+	As2Config *As2ConnectorConfig `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
 	// role that allows a connector to turn on CloudWatch logging for Amazon S3
 	// events. When set, you can view connector activity in your CloudWatch logs.
 	LoggingRole *string `min:"20" type:"string"`
 
+	// A structure that contains the parameters for an SFTP connector object.
+	SftpConfig *SftpConnectorConfig `type:"structure"`
+
 	// Key-value pairs that can be used to group and search for connectors. Tags
 	// are metadata attached to connectors for any purpose.
 	Tags []*Tag `min:"1" type:"list"`
 
-	// The URL of the partner's AS2 endpoint.
+	// The URL of the partner's AS2 or SFTP endpoint.
 	//
 	// Url is a required field
 	Url *string `type:"string" required:"true"`
@@ -7173,9 +7272,6 @@ func (s *CreateConnectorInput) Validate() error {
 	if s.AccessRole != nil && len(*s.AccessRole) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("AccessRole", 20))
 	}
-	if s.As2Config == nil {
-		invalidParams.Add(request.NewErrParamRequired("As2Config"))
-	}
 	if s.LoggingRole != nil && len(*s.LoggingRole) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("LoggingRole", 20))
 	}
@@ -7188,6 +7284,11 @@ func (s *CreateConnectorInput) Validate() error {
 	if s.As2Config != nil {
 		if err := s.As2Config.Validate(); err != nil {
 			invalidParams.AddNested("As2Config", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.SftpConfig != nil {
+		if err := s.SftpConfig.Validate(); err != nil {
+			invalidParams.AddNested("SftpConfig", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.Tags != nil {
@@ -7222,6 +7323,12 @@ func (s *CreateConnectorInput) SetAs2Config(v *As2ConnectorConfig) *CreateConnec
 // SetLoggingRole sets the LoggingRole field's value.
 func (s *CreateConnectorInput) SetLoggingRole(v string) *CreateConnectorInput {
 	s.LoggingRole = &v
+	return s
+}
+
+// SetSftpConfig sets the SftpConfig field's value.
+func (s *CreateConnectorInput) SetSftpConfig(v *SftpConnectorConfig) *CreateConnectorInput {
+	s.SftpConfig = v
 	return s
 }
 
@@ -7545,7 +7652,7 @@ type CreateServerInput struct {
 	// role that allows a server to turn on Amazon CloudWatch logging for Amazon
 	// S3 or Amazon EFSevents. When set, you can view user activity in your CloudWatch
 	// logs.
-	LoggingRole *string `min:"20" type:"string"`
+	LoggingRole *string `type:"string"`
 
 	// Specifies a string to display when users connect to a server. This string
 	// is displayed after the user authenticates.
@@ -7618,6 +7725,14 @@ type CreateServerInput struct {
 	//    must be Amazon S3.
 	Protocols []*string `min:"1" type:"list" enum:"Protocol"`
 
+	// Specifies whether or not performance for your Amazon S3 directories is optimized.
+	// This is disabled by default.
+	//
+	// By default, home directory mappings have a TYPE of DIRECTORY. If you enable
+	// this option, you would then need to explicitly set the HomeDirectoryMapEntry
+	// Type to FILE if you want a mapping to have a file target.
+	S3StorageOptions *S3StorageOptions `type:"structure"`
+
 	// Specifies the name of the security policy that is attached to the server.
 	SecurityPolicyName *string `type:"string"`
 
@@ -7671,9 +7786,6 @@ func (s CreateServerInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateServerInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateServerInput"}
-	if s.LoggingRole != nil && len(*s.LoggingRole) < 20 {
-		invalidParams.Add(request.NewErrParamMinLen("LoggingRole", 20))
-	}
 	if s.Protocols != nil && len(s.Protocols) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Protocols", 1))
 	}
@@ -7789,6 +7901,12 @@ func (s *CreateServerInput) SetProtocols(v []*string) *CreateServerInput {
 	return s
 }
 
+// SetS3StorageOptions sets the S3StorageOptions field's value.
+func (s *CreateServerInput) SetS3StorageOptions(v *S3StorageOptions) *CreateServerInput {
+	s.S3StorageOptions = v
+	return s
+}
+
 // SetSecurityPolicyName sets the SecurityPolicyName field's value.
 func (s *CreateServerInput) SetSecurityPolicyName(v string) *CreateServerInput {
 	s.SecurityPolicyName = &v
@@ -7853,6 +7971,8 @@ type CreateUserInput struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// Logical directory mappings that specify what Amazon S3 or Amazon EFS paths
@@ -7869,7 +7989,8 @@ type CreateUserInput struct {
 	//
 	// In most cases, you can use this value instead of the session policy to lock
 	// your user down to the designated home directory ("chroot"). To do this, you
-	// can set Entry to / and set Target to the HomeDirectory parameter value.
+	// can set Entry to / and set Target to the value the user should see for their
+	// home directory when they log in.
 	//
 	// The following is an Entry and Target pair example for chroot.
 	//
@@ -7878,10 +7999,15 @@ type CreateUserInput struct {
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// A session policy for your user so that you can use the same Identity and
@@ -10443,6 +10569,8 @@ type DescribedAccess struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// Logical directory mappings that specify what Amazon S3 or Amazon EFS paths
@@ -10461,10 +10589,15 @@ type DescribedAccess struct {
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// A session policy for your user so that you can use the same Identity and
@@ -10555,6 +10688,12 @@ func (s *DescribedAccess) SetRole(v string) *DescribedAccess {
 type DescribedAgreement struct {
 	_ struct{} `type:"structure"`
 
+	// Connectors are used to send files using either the AS2 or SFTP protocol.
+	// For the access role, provide the Amazon Resource Name (ARN) of the Identity
+	// and Access Management role to use.
+	//
+	// For AS2 connectors
+	//
 	// With AS2, you can send files by calling StartFileTransfer and specifying
 	// the file paths in the request parameter, SendFilePaths. We use the file’s
 	// parent directory (for example, for --send-file-paths /bucket/dir/file.txt,
@@ -10571,6 +10710,13 @@ type DescribedAgreement struct {
 	// If the secret is encrypted using a customer-managed key instead of the Amazon
 	// Web Services managed key in Secrets Manager, then the role also needs the
 	// kms:Decrypt permission for that key.
+	//
+	// For SFTP connectors
+	//
+	// Make sure that the access role provides read and write access to the parent
+	// directory of the file location that's used in the StartFileTransfer request.
+	// Additionally, make sure that the role provides secretsmanager:GetSecretValue
+	// permission to Secrets Manager.
 	AccessRole *string `min:"20" type:"string"`
 
 	// A unique identifier for the agreement. This identifier is returned when you
@@ -10851,6 +10997,12 @@ func (s *DescribedCertificate) SetUsage(v string) *DescribedCertificate {
 type DescribedConnector struct {
 	_ struct{} `type:"structure"`
 
+	// Connectors are used to send files using either the AS2 or SFTP protocol.
+	// For the access role, provide the Amazon Resource Name (ARN) of the Identity
+	// and Access Management role to use.
+	//
+	// For AS2 connectors
+	//
 	// With AS2, you can send files by calling StartFileTransfer and specifying
 	// the file paths in the request parameter, SendFilePaths. We use the file’s
 	// parent directory (for example, for --send-file-paths /bucket/dir/file.txt,
@@ -10867,6 +11019,13 @@ type DescribedConnector struct {
 	// If the secret is encrypted using a customer-managed key instead of the Amazon
 	// Web Services managed key in Secrets Manager, then the role also needs the
 	// kms:Decrypt permission for that key.
+	//
+	// For SFTP connectors
+	//
+	// Make sure that the access role provides read and write access to the parent
+	// directory of the file location that's used in the StartFileTransfer request.
+	// Additionally, make sure that the role provides secretsmanager:GetSecretValue
+	// permission to Secrets Manager.
 	AccessRole *string `min:"20" type:"string"`
 
 	// The unique Amazon Resource Name (ARN) for the connector.
@@ -10874,7 +11033,7 @@ type DescribedConnector struct {
 	// Arn is a required field
 	Arn *string `min:"20" type:"string" required:"true"`
 
-	// A structure that contains the parameters for a connector object.
+	// A structure that contains the parameters for an AS2 connector object.
 	As2Config *As2ConnectorConfig `type:"structure"`
 
 	// The unique identifier for the connector.
@@ -10885,10 +11044,13 @@ type DescribedConnector struct {
 	// events. When set, you can view connector activity in your CloudWatch logs.
 	LoggingRole *string `min:"20" type:"string"`
 
+	// A structure that contains the parameters for an SFTP connector object.
+	SftpConfig *SftpConnectorConfig `type:"structure"`
+
 	// Key-value pairs that can be used to group and search for connectors.
 	Tags []*Tag `min:"1" type:"list"`
 
-	// The URL of the partner's AS2 endpoint.
+	// The URL of the partner's AS2 or SFTP endpoint.
 	Url *string `type:"string"`
 }
 
@@ -10937,6 +11099,12 @@ func (s *DescribedConnector) SetConnectorId(v string) *DescribedConnector {
 // SetLoggingRole sets the LoggingRole field's value.
 func (s *DescribedConnector) SetLoggingRole(v string) *DescribedConnector {
 	s.LoggingRole = &v
+	return s
+}
+
+// SetSftpConfig sets the SftpConfig field's value.
+func (s *DescribedConnector) SetSftpConfig(v *SftpConnectorConfig) *DescribedConnector {
+	s.SftpConfig = v
 	return s
 }
 
@@ -11390,7 +11558,7 @@ type DescribedServer struct {
 	// role that allows a server to turn on Amazon CloudWatch logging for Amazon
 	// S3 or Amazon EFSevents. When set, you can view user activity in your CloudWatch
 	// logs.
-	LoggingRole *string `min:"20" type:"string"`
+	LoggingRole *string `type:"string"`
 
 	// Specifies a string to display when users connect to a server. This string
 	// is displayed after the user authenticates.
@@ -11462,6 +11630,14 @@ type DescribedServer struct {
 	//    * If Protocol includes AS2, then the EndpointType must be VPC, and domain
 	//    must be Amazon S3.
 	Protocols []*string `min:"1" type:"list" enum:"Protocol"`
+
+	// Specifies whether or not performance for your Amazon S3 directories is optimized.
+	// This is disabled by default.
+	//
+	// By default, home directory mappings have a TYPE of DIRECTORY. If you enable
+	// this option, you would then need to explicitly set the HomeDirectoryMapEntry
+	// Type to FILE if you want a mapping to have a file target.
+	S3StorageOptions *S3StorageOptions `type:"structure"`
 
 	// Specifies the name of the security policy that is attached to the server.
 	SecurityPolicyName *string `type:"string"`
@@ -11608,6 +11784,12 @@ func (s *DescribedServer) SetProtocols(v []*string) *DescribedServer {
 	return s
 }
 
+// SetS3StorageOptions sets the S3StorageOptions field's value.
+func (s *DescribedServer) SetS3StorageOptions(v *S3StorageOptions) *DescribedServer {
+	s.S3StorageOptions = v
+	return s
+}
+
 // SetSecurityPolicyName sets the SecurityPolicyName field's value.
 func (s *DescribedServer) SetSecurityPolicyName(v string) *DescribedServer {
 	s.SecurityPolicyName = &v
@@ -11664,6 +11846,8 @@ type DescribedUser struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// Logical directory mappings that specify what Amazon S3 or Amazon EFS paths
@@ -11681,10 +11865,15 @@ type DescribedUser struct {
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// A session policy for your user so that you can use the same Identity and
@@ -12286,10 +12475,18 @@ type HomeDirectoryMapEntry struct {
 	// Entry is a required field
 	Entry *string `type:"string" required:"true"`
 
-	// Represents the map target that is used in a HomeDirectorymapEntry.
+	// Represents the map target that is used in a HomeDirectoryMapEntry.
 	//
 	// Target is a required field
 	Target *string `type:"string" required:"true"`
+
+	// Specifies the type of mapping. Set the type to FILE if you want the mapping
+	// to point to a file, or DIRECTORY for the directory to point to a directory.
+	//
+	// By default, home directory mappings have a Type of DIRECTORY when you create
+	// a Transfer Family server. You would need to explicitly set Type to FILE if
+	// you want a mapping to have a file target.
+	Type *string `type:"string" enum:"MapType"`
 }
 
 // String returns the string representation.
@@ -12335,6 +12532,12 @@ func (s *HomeDirectoryMapEntry) SetEntry(v string) *HomeDirectoryMapEntry {
 // SetTarget sets the Target field's value.
 func (s *HomeDirectoryMapEntry) SetTarget(v string) *HomeDirectoryMapEntry {
 	s.Target = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *HomeDirectoryMapEntry) SetType(v string) *HomeDirectoryMapEntry {
+	s.Type = &v
 	return s
 }
 
@@ -12984,8 +13187,7 @@ func (s *InputFileLocation) SetS3FileLocation(v *S3InputFileLocation) *InputFile
 	return s
 }
 
-// This exception is thrown when an error occurs in the Amazon Web ServicesTransfer
-// Family service.
+// This exception is thrown when an error occurs in the Transfer Family service.
 type InternalServiceError struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -14360,9 +14562,9 @@ type ListUsersInput struct {
 	// Specifies the number of users to return as a response to the ListUsers request.
 	MaxResults *int64 `min:"1" type:"integer"`
 
-	// When you can get additional results from the ListUsers call, a NextToken
-	// parameter is returned in the output. You can then pass in a subsequent command
-	// to the NextToken parameter to continue listing additional users.
+	// If there are additional results from the ListUsers call, a NextToken parameter
+	// is returned in the output. You can then pass the NextToken to a subsequent
+	// ListUsers command, to continue listing additional users.
 	NextToken *string `min:"1" type:"string"`
 
 	// A system-assigned unique identifier for a server that has users assigned
@@ -14614,14 +14816,21 @@ type ListedAccess struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
@@ -14874,7 +15083,7 @@ type ListedConnector struct {
 	// The unique identifier for the connector.
 	ConnectorId *string `min:"19" type:"string"`
 
-	// The URL of the partner's AS2 endpoint.
+	// The URL of the partner's AS2 or SFTP endpoint.
 	Url *string `type:"string"`
 }
 
@@ -15273,14 +15482,21 @@ type ListedUser struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
@@ -15672,7 +15888,8 @@ func (s *ProtocolDetails) SetTlsSessionResumptionMode(v string) *ProtocolDetails
 	return s
 }
 
-// The requested resource does not exist.
+// The requested resource does not exist, or exists in a region other than the
+// one specified for the command.
 type ResourceExistsException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -15940,6 +16157,43 @@ func (s *S3InputFileLocation) SetBucket(v string) *S3InputFileLocation {
 // SetKey sets the Key field's value.
 func (s *S3InputFileLocation) SetKey(v string) *S3InputFileLocation {
 	s.Key = &v
+	return s
+}
+
+// The Amazon S3 storage options that are configured for your server.
+type S3StorageOptions struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies whether or not performance for your Amazon S3 directories is optimized.
+	// This is disabled by default.
+	//
+	// By default, home directory mappings have a TYPE of DIRECTORY. If you enable
+	// this option, you would then need to explicitly set the HomeDirectoryMapEntry
+	// Type to FILE if you want a mapping to have a file target.
+	DirectoryListingOptimization *string `type:"string" enum:"DirectoryListingOptimization"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3StorageOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3StorageOptions) GoString() string {
+	return s.String()
+}
+
+// SetDirectoryListingOptimization sets the DirectoryListingOptimization field's value.
+func (s *S3StorageOptions) SetDirectoryListingOptimization(v string) *S3StorageOptions {
+	s.DirectoryListingOptimization = &v
 	return s
 }
 
@@ -16228,6 +16482,81 @@ func (s *ServiceUnavailableException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// Contains the details for an SFTP connector object. The connector object is
+// used for transferring files to and from a partner's SFTP server.
+type SftpConnectorConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The public portion of the host key, or keys, that are used to identify the
+	// external server to which you are connecting. You can use the ssh-keyscan
+	// command against the SFTP server to retrieve the necessary key.
+	//
+	// The three standard SSH public key format elements are <key type>, <body base64>,
+	// and an optional <comment>, with spaces between each element. Specify only
+	// the <key type> and <body base64>: do not enter the <comment> portion of the
+	// key.
+	//
+	// For the trusted host key, Transfer Family accepts RSA and ECDSA keys.
+	//
+	//    * For RSA keys, the <key type> string is ssh-rsa.
+	//
+	//    * For ECDSA keys, the <key type> string is either ecdsa-sha2-nistp256,
+	//    ecdsa-sha2-nistp384, or ecdsa-sha2-nistp521, depending on the size of
+	//    the key you generated.
+	TrustedHostKeys []*string `min:"1" type:"list"`
+
+	// The identifier for the secret (in Amazon Web Services Secrets Manager) that
+	// contains the SFTP user's private key, password, or both. The identifier must
+	// be the Amazon Resource Name (ARN) of the secret.
+	UserSecretId *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SftpConnectorConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SftpConnectorConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SftpConnectorConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SftpConnectorConfig"}
+	if s.TrustedHostKeys != nil && len(s.TrustedHostKeys) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TrustedHostKeys", 1))
+	}
+	if s.UserSecretId != nil && len(*s.UserSecretId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("UserSecretId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTrustedHostKeys sets the TrustedHostKeys field's value.
+func (s *SftpConnectorConfig) SetTrustedHostKeys(v []*string) *SftpConnectorConfig {
+	s.TrustedHostKeys = v
+	return s
+}
+
+// SetUserSecretId sets the UserSecretId field's value.
+func (s *SftpConnectorConfig) SetUserSecretId(v string) *SftpConnectorConfig {
+	s.UserSecretId = &v
+	return s
+}
+
 // Provides information about the public Secure Shell (SSH) key that is associated
 // with a Transfer Family user for the specific file transfer protocol-enabled
 // server (as identified by ServerId). The information returned includes the
@@ -16300,11 +16629,25 @@ type StartFileTransferInput struct {
 	// ConnectorId is a required field
 	ConnectorId *string `min:"19" type:"string" required:"true"`
 
-	// An array of strings. Each string represents the absolute path for one outbound
-	// file transfer. For example, DOC-EXAMPLE-BUCKET/myfile.txt .
+	// For an inbound transfer, the LocaDirectoryPath specifies the destination
+	// for one or more files that are transferred from the partner's SFTP server.
+	LocalDirectoryPath *string `min:"1" type:"string"`
+
+	// For an outbound transfer, the RemoteDirectoryPath specifies the destination
+	// for one or more files that are transferred to the partner's SFTP server.
+	// If you don't specify a RemoteDirectoryPath, the destination for transferred
+	// files is the SFTP user's home directory.
+	RemoteDirectoryPath *string `min:"1" type:"string"`
+
+	// One or more source paths for the partner's SFTP server. Each string represents
+	// a source file path for one inbound file transfer.
+	RetrieveFilePaths []*string `min:"1" type:"list"`
+
+	// One or more source paths for the Amazon S3 storage. Each string represents
+	// a source file path for one outbound file transfer. For example, DOC-EXAMPLE-BUCKET/myfile.txt .
 	//
-	// SendFilePaths is a required field
-	SendFilePaths []*string `min:"1" type:"list" required:"true"`
+	// Replace DOC-EXAMPLE-BUCKET with one of your actual buckets.
+	SendFilePaths []*string `min:"1" type:"list"`
 }
 
 // String returns the string representation.
@@ -16334,8 +16677,14 @@ func (s *StartFileTransferInput) Validate() error {
 	if s.ConnectorId != nil && len(*s.ConnectorId) < 19 {
 		invalidParams.Add(request.NewErrParamMinLen("ConnectorId", 19))
 	}
-	if s.SendFilePaths == nil {
-		invalidParams.Add(request.NewErrParamRequired("SendFilePaths"))
+	if s.LocalDirectoryPath != nil && len(*s.LocalDirectoryPath) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LocalDirectoryPath", 1))
+	}
+	if s.RemoteDirectoryPath != nil && len(*s.RemoteDirectoryPath) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RemoteDirectoryPath", 1))
+	}
+	if s.RetrieveFilePaths != nil && len(s.RetrieveFilePaths) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RetrieveFilePaths", 1))
 	}
 	if s.SendFilePaths != nil && len(s.SendFilePaths) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("SendFilePaths", 1))
@@ -16353,6 +16702,24 @@ func (s *StartFileTransferInput) SetConnectorId(v string) *StartFileTransferInpu
 	return s
 }
 
+// SetLocalDirectoryPath sets the LocalDirectoryPath field's value.
+func (s *StartFileTransferInput) SetLocalDirectoryPath(v string) *StartFileTransferInput {
+	s.LocalDirectoryPath = &v
+	return s
+}
+
+// SetRemoteDirectoryPath sets the RemoteDirectoryPath field's value.
+func (s *StartFileTransferInput) SetRemoteDirectoryPath(v string) *StartFileTransferInput {
+	s.RemoteDirectoryPath = &v
+	return s
+}
+
+// SetRetrieveFilePaths sets the RetrieveFilePaths field's value.
+func (s *StartFileTransferInput) SetRetrieveFilePaths(v []*string) *StartFileTransferInput {
+	s.RetrieveFilePaths = v
+	return s
+}
+
 // SetSendFilePaths sets the SendFilePaths field's value.
 func (s *StartFileTransferInput) SetSendFilePaths(v []*string) *StartFileTransferInput {
 	s.SendFilePaths = v
@@ -16362,7 +16729,7 @@ func (s *StartFileTransferInput) SetSendFilePaths(v []*string) *StartFileTransfe
 type StartFileTransferOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Returns the unique identifier for this file transfer.
+	// Returns the unique identifier for the file transfer.
 	//
 	// TransferId is a required field
 	TransferId *string `min:"1" type:"string" required:"true"`
@@ -16785,6 +17152,116 @@ func (s *TagStepDetails) SetTags(v []*S3Tag) *TagStepDetails {
 	return s
 }
 
+type TestConnectionInput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier for the connector.
+	//
+	// ConnectorId is a required field
+	ConnectorId *string `min:"19" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TestConnectionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TestConnectionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TestConnectionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TestConnectionInput"}
+	if s.ConnectorId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ConnectorId"))
+	}
+	if s.ConnectorId != nil && len(*s.ConnectorId) < 19 {
+		invalidParams.Add(request.NewErrParamMinLen("ConnectorId", 19))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetConnectorId sets the ConnectorId field's value.
+func (s *TestConnectionInput) SetConnectorId(v string) *TestConnectionInput {
+	s.ConnectorId = &v
+	return s
+}
+
+type TestConnectionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Returns the identifier of the connector object that you are testing.
+	ConnectorId *string `min:"19" type:"string"`
+
+	// Returns OK for successful test, or ERROR if the test fails.
+	Status *string `type:"string"`
+
+	// Returns Connection succeeded if the test is successful. Or, returns a descriptive
+	// error message if the test fails. The following list provides troubleshooting
+	// details, depending on the error message that you receive.
+	//
+	//    * Verify that your secret name aligns with the one in Transfer Role permissions.
+	//
+	//    * Verify the server URL in the connector configuration , and verify that
+	//    the login credentials work successfully outside of the connector.
+	//
+	//    * Verify that the secret exists and is formatted correctly.
+	//
+	//    * Verify that the trusted host key in the connector configuration matches
+	//    the ssh-keyscan output.
+	StatusMessage *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TestConnectionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TestConnectionOutput) GoString() string {
+	return s.String()
+}
+
+// SetConnectorId sets the ConnectorId field's value.
+func (s *TestConnectionOutput) SetConnectorId(v string) *TestConnectionOutput {
+	s.ConnectorId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *TestConnectionOutput) SetStatus(v string) *TestConnectionOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *TestConnectionOutput) SetStatusMessage(v string) *TestConnectionOutput {
+	s.StatusMessage = &v
+	return s
+}
+
 type TestIdentityProviderInput struct {
 	_ struct{} `type:"structure"`
 
@@ -17143,6 +17620,8 @@ type UpdateAccessInput struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// Logical directory mappings that specify what Amazon S3 or Amazon EFS paths
@@ -17168,10 +17647,15 @@ type UpdateAccessInput struct {
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// A session policy for your user so that you can use the same Identity and
@@ -17374,6 +17858,12 @@ func (s *UpdateAccessOutput) SetServerId(v string) *UpdateAccessOutput {
 type UpdateAgreementInput struct {
 	_ struct{} `type:"structure"`
 
+	// Connectors are used to send files using either the AS2 or SFTP protocol.
+	// For the access role, provide the Amazon Resource Name (ARN) of the Identity
+	// and Access Management role to use.
+	//
+	// For AS2 connectors
+	//
 	// With AS2, you can send files by calling StartFileTransfer and specifying
 	// the file paths in the request parameter, SendFilePaths. We use the file’s
 	// parent directory (for example, for --send-file-paths /bucket/dir/file.txt,
@@ -17390,6 +17880,13 @@ type UpdateAgreementInput struct {
 	// If the secret is encrypted using a customer-managed key instead of the Amazon
 	// Web Services managed key in Secrets Manager, then the role also needs the
 	// kms:Decrypt permission for that key.
+	//
+	// For SFTP connectors
+	//
+	// Make sure that the access role provides read and write access to the parent
+	// directory of the file location that's used in the StartFileTransfer request.
+	// Additionally, make sure that the role provides secretsmanager:GetSecretValue
+	// permission to Secrets Manager.
 	AccessRole *string `min:"20" type:"string"`
 
 	// A unique identifier for the agreement. This identifier is returned when you
@@ -17675,6 +18172,12 @@ func (s *UpdateCertificateOutput) SetCertificateId(v string) *UpdateCertificateO
 type UpdateConnectorInput struct {
 	_ struct{} `type:"structure"`
 
+	// Connectors are used to send files using either the AS2 or SFTP protocol.
+	// For the access role, provide the Amazon Resource Name (ARN) of the Identity
+	// and Access Management role to use.
+	//
+	// For AS2 connectors
+	//
 	// With AS2, you can send files by calling StartFileTransfer and specifying
 	// the file paths in the request parameter, SendFilePaths. We use the file’s
 	// parent directory (for example, for --send-file-paths /bucket/dir/file.txt,
@@ -17691,9 +18194,16 @@ type UpdateConnectorInput struct {
 	// If the secret is encrypted using a customer-managed key instead of the Amazon
 	// Web Services managed key in Secrets Manager, then the role also needs the
 	// kms:Decrypt permission for that key.
+	//
+	// For SFTP connectors
+	//
+	// Make sure that the access role provides read and write access to the parent
+	// directory of the file location that's used in the StartFileTransfer request.
+	// Additionally, make sure that the role provides secretsmanager:GetSecretValue
+	// permission to Secrets Manager.
 	AccessRole *string `min:"20" type:"string"`
 
-	// A structure that contains the parameters for a connector object.
+	// A structure that contains the parameters for an AS2 connector object.
 	As2Config *As2ConnectorConfig `type:"structure"`
 
 	// The unique identifier for the connector.
@@ -17706,7 +18216,10 @@ type UpdateConnectorInput struct {
 	// events. When set, you can view connector activity in your CloudWatch logs.
 	LoggingRole *string `min:"20" type:"string"`
 
-	// The URL of the partner's AS2 endpoint.
+	// A structure that contains the parameters for an SFTP connector object.
+	SftpConfig *SftpConnectorConfig `type:"structure"`
+
+	// The URL of the partner's AS2 or SFTP endpoint.
 	Url *string `type:"string"`
 }
 
@@ -17748,6 +18261,11 @@ func (s *UpdateConnectorInput) Validate() error {
 			invalidParams.AddNested("As2Config", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.SftpConfig != nil {
+		if err := s.SftpConfig.Validate(); err != nil {
+			invalidParams.AddNested("SftpConfig", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -17776,6 +18294,12 @@ func (s *UpdateConnectorInput) SetConnectorId(v string) *UpdateConnectorInput {
 // SetLoggingRole sets the LoggingRole field's value.
 func (s *UpdateConnectorInput) SetLoggingRole(v string) *UpdateConnectorInput {
 	s.LoggingRole = &v
+	return s
+}
+
+// SetSftpConfig sets the SftpConfig field's value.
+func (s *UpdateConnectorInput) SetSftpConfig(v *SftpConnectorConfig) *UpdateConnectorInput {
+	s.SftpConfig = v
 	return s
 }
 
@@ -18215,6 +18739,14 @@ type UpdateServerInput struct {
 	//    must be Amazon S3.
 	Protocols []*string `min:"1" type:"list" enum:"Protocol"`
 
+	// Specifies whether or not performance for your Amazon S3 directories is optimized.
+	// This is disabled by default.
+	//
+	// By default, home directory mappings have a TYPE of DIRECTORY. If you enable
+	// this option, you would then need to explicitly set the HomeDirectoryMapEntry
+	// Type to FILE if you want a mapping to have a file target.
+	S3StorageOptions *S3StorageOptions `type:"structure"`
+
 	// Specifies the name of the security policy that is attached to the server.
 	SecurityPolicyName *string `type:"string"`
 
@@ -18373,6 +18905,12 @@ func (s *UpdateServerInput) SetProtocols(v []*string) *UpdateServerInput {
 	return s
 }
 
+// SetS3StorageOptions sets the S3StorageOptions field's value.
+func (s *UpdateServerInput) SetS3StorageOptions(v *S3StorageOptions) *UpdateServerInput {
+	s.S3StorageOptions = v
+	return s
+}
+
 // SetSecurityPolicyName sets the SecurityPolicyName field's value.
 func (s *UpdateServerInput) SetSecurityPolicyName(v string) *UpdateServerInput {
 	s.SecurityPolicyName = &v
@@ -18438,6 +18976,8 @@ type UpdateUserInput struct {
 	// using the client.
 	//
 	// A HomeDirectory example is /bucket_name/home/mydirectory.
+	//
+	// The HomeDirectory parameter is only used if HomeDirectoryType is set to PATH.
 	HomeDirectory *string `type:"string"`
 
 	// Logical directory mappings that specify what Amazon S3 or Amazon EFS paths
@@ -18463,10 +19003,15 @@ type UpdateUserInput struct {
 
 	// The type of landing directory (folder) that you want your users' home directory
 	// to be when they log in to the server. If you set it to PATH, the user will
-	// see the absolute Amazon S3 bucket or EFS paths as is in their file transfer
-	// protocol clients. If you set it LOGICAL, you need to provide mappings in
-	// the HomeDirectoryMappings for how you want to make Amazon S3 or Amazon EFS
-	// paths visible to your users.
+	// see the absolute Amazon S3 bucket or Amazon EFS path as is in their file
+	// transfer protocol clients. If you set it to LOGICAL, you need to provide
+	// mappings in the HomeDirectoryMappings for how you want to make Amazon S3
+	// or Amazon EFS paths visible to your users.
+	//
+	// If HomeDirectoryType is LOGICAL, you must provide mappings, using the HomeDirectoryMappings
+	// parameter. If, on the other hand, HomeDirectoryType is PATH, you provide
+	// an absolute path using the HomeDirectory parameter. You cannot have both
+	// HomeDirectory and HomeDirectoryMappings in your template.
 	HomeDirectoryType *string `type:"string" enum:"HomeDirectoryType"`
 
 	// A session policy for your user so that you can use the same Identity and
@@ -19149,6 +19694,24 @@ func CustomStepStatus_Values() []string {
 	}
 }
 
+// Indicates whether optimization to directory listing on S3 servers is used.
+// Disabled by default for compatibility.
+const (
+	// DirectoryListingOptimizationEnabled is a DirectoryListingOptimization enum value
+	DirectoryListingOptimizationEnabled = "ENABLED"
+
+	// DirectoryListingOptimizationDisabled is a DirectoryListingOptimization enum value
+	DirectoryListingOptimizationDisabled = "DISABLED"
+)
+
+// DirectoryListingOptimization_Values returns all elements of the DirectoryListingOptimization enum
+func DirectoryListingOptimization_Values() []string {
+	return []string{
+		DirectoryListingOptimizationEnabled,
+		DirectoryListingOptimizationDisabled,
+	}
+}
+
 const (
 	// DomainS3 is a Domain enum value
 	DomainS3 = "S3"
@@ -19340,6 +19903,22 @@ func IdentityProviderType_Values() []string {
 		IdentityProviderTypeApiGateway,
 		IdentityProviderTypeAwsDirectoryService,
 		IdentityProviderTypeAwsLambda,
+	}
+}
+
+const (
+	// MapTypeFile is a MapType enum value
+	MapTypeFile = "FILE"
+
+	// MapTypeDirectory is a MapType enum value
+	MapTypeDirectory = "DIRECTORY"
+)
+
+// MapType_Values returns all elements of the MapType enum
+func MapType_Values() []string {
+	return []string{
+		MapTypeFile,
+		MapTypeDirectory,
 	}
 }
 

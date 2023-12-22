@@ -2,17 +2,16 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build freebsd
+//go:build freebsd
 
 package unix_test
 
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"net"
 	"os"
 	"os/exec"
-	"path"
 	"path/filepath"
 	"runtime"
 	"testing"
@@ -32,10 +31,8 @@ func TestSysctlUint64(t *testing.T) {
 // corresponding to the given key.
 
 type testProc struct {
-	fn      func()                    // should always exit instead of returning
-	arg     func(t *testing.T) string // generate argument for test
-	cleanup func(arg string) error    // for instance, delete coredumps from testing pledge
-	success bool                      // whether zero-exit means success or failure
+	fn      func() // should always exit instead of returning
+	success bool   // whether zero-exit means success or failure
 }
 
 var (
@@ -69,16 +66,7 @@ func testCmd(procName string, procArg string) (*exec.Cmd, error) {
 // a testProc with a key.
 func ExitsCorrectly(t *testing.T, procName string) {
 	s := testProcs[procName]
-	arg := "-"
-	if s.arg != nil {
-		arg = s.arg(t)
-	}
-	c, err := testCmd(procName, arg)
-	defer func(arg string) {
-		if err := s.cleanup(arg); err != nil {
-			t.Fatalf("Failed to run cleanup for %s %s %#v", procName, err, err)
-		}
-	}(arg)
+	c, err := testCmd(procName, t.TempDir())
 	if err != nil {
 		t.Fatalf("Failed to construct command for %s", procName)
 	}
@@ -112,7 +100,7 @@ const testfile = "gocapmodetest"
 const testfile2 = testfile + "2"
 
 func CapEnterTest() {
-	_, err := os.OpenFile(path.Join(procArg, testfile), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	_, err := os.OpenFile(filepath.Join(procArg, testfile), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		panic(fmt.Sprintf("OpenFile: %s", err))
 	}
@@ -122,7 +110,7 @@ func CapEnterTest() {
 		panic(fmt.Sprintf("CapEnter: %s", err))
 	}
 
-	_, err = os.OpenFile(path.Join(procArg, testfile2), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
+	_, err = os.OpenFile(filepath.Join(procArg, testfile2), os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 	if err == nil {
 		panic("OpenFile works!")
 	}
@@ -132,27 +120,9 @@ func CapEnterTest() {
 	os.Exit(0)
 }
 
-func makeTempDir(t *testing.T) string {
-	d, err := ioutil.TempDir("", "go_openat_test")
-	if err != nil {
-		t.Fatalf("TempDir failed: %s", err)
-	}
-	return d
-}
-
-func removeTempDir(arg string) error {
-	err := os.RemoveAll(arg)
-	if err != nil && err.(*os.PathError).Err == unix.ENOENT {
-		return nil
-	}
-	return err
-}
-
 func init() {
 	testProcs["cap_enter"] = testProc{
 		CapEnterTest,
-		makeTempDir,
-		removeTempDir,
 		true,
 	}
 }
@@ -219,14 +189,14 @@ func OpenatTest() {
 		panic(fmt.Sprintf("CapRightsIsSet failed: %s %#v", err, err))
 	}
 	if !b {
-		panic(fmt.Sprintf("Unexpected rights"))
+		panic("Unexpected rights")
 	}
 	b, err = unix.CapRightsIsSet(r, []uint64{unix.CAP_READ, unix.CAP_LOOKUP, unix.CAP_WRITE})
 	if err != nil {
 		panic(fmt.Sprintf("CapRightsIsSet failed: %s %#v", err, err))
 	}
 	if b {
-		panic(fmt.Sprintf("Unexpected rights (2)"))
+		panic("Unexpected rights (2)")
 	}
 
 	// Can no longer create a file
@@ -250,8 +220,6 @@ func OpenatTest() {
 func init() {
 	testProcs["openat"] = testProc{
 		OpenatTest,
-		makeTempDir,
-		removeTempDir,
 		true,
 	}
 }
@@ -293,6 +261,41 @@ func TestCapRightsSetAndClear(t *testing.T) {
 	}
 	if !b {
 		t.Fatalf("Wrong rights set")
+	}
+}
+
+func TestGetsockoptXucred(t *testing.T) {
+	fds, err := unix.Socketpair(unix.AF_LOCAL, unix.SOCK_STREAM, 0)
+	if err != nil {
+		t.Fatalf("Socketpair: %v", err)
+	}
+
+	srvFile := os.NewFile(uintptr(fds[0]), "server")
+	cliFile := os.NewFile(uintptr(fds[1]), "client")
+	defer srvFile.Close()
+	defer cliFile.Close()
+
+	srv, err := net.FileConn(srvFile)
+	if err != nil {
+		t.Fatalf("FileConn: %v", err)
+	}
+	defer srv.Close()
+
+	cli, err := net.FileConn(cliFile)
+	if err != nil {
+		t.Fatalf("FileConn: %v", err)
+	}
+	defer cli.Close()
+
+	cred, err := unix.GetsockoptXucred(fds[1], unix.SOL_LOCAL, unix.LOCAL_PEERCRED)
+	if err == unix.ENOTCONN {
+		t.Skip("GetsockoptXucred not supported with Socketpair on FreeBSD 11 and earlier")
+	} else if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("got: %+v", cred)
+	if got, want := cred.Uid, os.Getuid(); int(got) != int(want) {
+		t.Errorf("uid = %v; want %v", got, want)
 	}
 }
 

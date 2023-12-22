@@ -740,12 +740,11 @@ func (c *LexModelsV2) CreateBotVersionRequest(input *CreateBotVersionInput) (req
 
 // CreateBotVersion API operation for Amazon Lex Model Building V2.
 //
-// Creates a new version of the bot based on the DRAFT version. If the DRAFT
-// version of this resource hasn't changed since you created the last version,
-// Amazon Lex doesn't create a new version, it returns the last created version.
-//
-// When you create the first version of a bot, Amazon Lex sets the version to
-// 1. Subsequent versions increment by 1.
+// Creates an immutable version of the bot. When you create the first version
+// of a bot, Amazon Lex sets the version number to 1. Subsequent bot versions
+// increase in an increment of 1. The version number will always represent the
+// total number of versions created of the bot, not the current number of versions.
+// If a bot version is deleted, that bot version number will not be reused.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3379,6 +3378,99 @@ func (c *LexModelsV2) DescribeBotRecommendationWithContext(ctx aws.Context, inpu
 	return out, req.Send()
 }
 
+const opDescribeBotResourceGeneration = "DescribeBotResourceGeneration"
+
+// DescribeBotResourceGenerationRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeBotResourceGeneration operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeBotResourceGeneration for more information on using the DescribeBotResourceGeneration
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeBotResourceGenerationRequest method.
+//	req, resp := client.DescribeBotResourceGenerationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DescribeBotResourceGeneration
+func (c *LexModelsV2) DescribeBotResourceGenerationRequest(input *DescribeBotResourceGenerationInput) (req *request.Request, output *DescribeBotResourceGenerationOutput) {
+	op := &request.Operation{
+		Name:       opDescribeBotResourceGeneration,
+		HTTPMethod: "GET",
+		HTTPPath:   "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/generations/{generationId}",
+	}
+
+	if input == nil {
+		input = &DescribeBotResourceGenerationInput{}
+	}
+
+	output = &DescribeBotResourceGenerationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeBotResourceGeneration API operation for Amazon Lex Model Building V2.
+//
+// Returns information about a request to generate a bot through natural language
+// description, made through the StartBotResource API. Use the generatedBotLocaleUrl
+// to retrieve the Amazon S3 object containing the bot locale configuration.
+// You can then modify and import this configuration.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation DescribeBotResourceGeneration for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - ResourceNotFoundException
+//     You asked to describe a resource that doesn't exist. Check the resource that
+//     you are requesting and try again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DescribeBotResourceGeneration
+func (c *LexModelsV2) DescribeBotResourceGeneration(input *DescribeBotResourceGenerationInput) (*DescribeBotResourceGenerationOutput, error) {
+	req, out := c.DescribeBotResourceGenerationRequest(input)
+	return out, req.Send()
+}
+
+// DescribeBotResourceGenerationWithContext is the same as DescribeBotResourceGeneration with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeBotResourceGeneration for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) DescribeBotResourceGenerationWithContext(ctx aws.Context, input *DescribeBotResourceGenerationInput, opts ...request.Option) (*DescribeBotResourceGenerationOutput, error) {
+	req, out := c.DescribeBotResourceGenerationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDescribeBotVersion = "DescribeBotVersion"
 
 // DescribeBotVersionRequest generates a "aws/request.Request" representing the
@@ -4482,6 +4574,113 @@ func (c *LexModelsV2) DescribeTestSetGenerationWithContext(ctx aws.Context, inpu
 	return out, req.Send()
 }
 
+const opGenerateBotElement = "GenerateBotElement"
+
+// GenerateBotElementRequest generates a "aws/request.Request" representing the
+// client's request for the GenerateBotElement operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GenerateBotElement for more information on using the GenerateBotElement
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GenerateBotElementRequest method.
+//	req, resp := client.GenerateBotElementRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/GenerateBotElement
+func (c *LexModelsV2) GenerateBotElementRequest(input *GenerateBotElementInput) (req *request.Request, output *GenerateBotElementOutput) {
+	op := &request.Operation{
+		Name:       opGenerateBotElement,
+		HTTPMethod: "POST",
+		HTTPPath:   "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/generate",
+	}
+
+	if input == nil {
+		input = &GenerateBotElementInput{}
+	}
+
+	output = &GenerateBotElementOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GenerateBotElement API operation for Amazon Lex Model Building V2.
+//
+// Generates sample utterances for an intent.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation GenerateBotElement for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - ResourceNotFoundException
+//     You asked to describe a resource that doesn't exist. Check the resource that
+//     you are requesting and try again.
+//
+//   - ConflictException
+//     The action that you tried to perform couldn't be completed because the resource
+//     is in a conflicting state. For example, deleting a bot that is in the CREATING
+//     state. Try your request again.
+//
+//   - PreconditionFailedException
+//     Your request couldn't be completed because one or more request fields aren't
+//     valid. Check the fields in your request and try again.
+//
+//   - ConflictException
+//     The action that you tried to perform couldn't be completed because the resource
+//     is in a conflicting state. For example, deleting a bot that is in the CREATING
+//     state. Try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/GenerateBotElement
+func (c *LexModelsV2) GenerateBotElement(input *GenerateBotElementInput) (*GenerateBotElementOutput, error) {
+	req, out := c.GenerateBotElementRequest(input)
+	return out, req.Send()
+}
+
+// GenerateBotElementWithContext is the same as GenerateBotElement with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GenerateBotElement for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) GenerateBotElementWithContext(ctx aws.Context, input *GenerateBotElementInput, opts ...request.Option) (*GenerateBotElementOutput, error) {
+	req, out := c.GenerateBotElementRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetTestExecutionArtifactsUrl = "GetTestExecutionArtifactsUrl"
 
 // GetTestExecutionArtifactsUrlRequest generates a "aws/request.Request" representing the
@@ -5174,6 +5373,153 @@ func (c *LexModelsV2) ListBotRecommendationsPagesWithContext(ctx aws.Context, in
 
 	for p.Next() {
 		if !fn(p.Page().(*ListBotRecommendationsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListBotResourceGenerations = "ListBotResourceGenerations"
+
+// ListBotResourceGenerationsRequest generates a "aws/request.Request" representing the
+// client's request for the ListBotResourceGenerations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListBotResourceGenerations for more information on using the ListBotResourceGenerations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListBotResourceGenerationsRequest method.
+//	req, resp := client.ListBotResourceGenerationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotResourceGenerations
+func (c *LexModelsV2) ListBotResourceGenerationsRequest(input *ListBotResourceGenerationsInput) (req *request.Request, output *ListBotResourceGenerationsOutput) {
+	op := &request.Operation{
+		Name:       opListBotResourceGenerations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/generations",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListBotResourceGenerationsInput{}
+	}
+
+	output = &ListBotResourceGenerationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListBotResourceGenerations API operation for Amazon Lex Model Building V2.
+//
+// Lists the generation requests made for a bot locale.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation ListBotResourceGenerations for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+//   - ResourceNotFoundException
+//     You asked to describe a resource that doesn't exist. Check the resource that
+//     you are requesting and try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotResourceGenerations
+func (c *LexModelsV2) ListBotResourceGenerations(input *ListBotResourceGenerationsInput) (*ListBotResourceGenerationsOutput, error) {
+	req, out := c.ListBotResourceGenerationsRequest(input)
+	return out, req.Send()
+}
+
+// ListBotResourceGenerationsWithContext is the same as ListBotResourceGenerations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListBotResourceGenerations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) ListBotResourceGenerationsWithContext(ctx aws.Context, input *ListBotResourceGenerationsInput, opts ...request.Option) (*ListBotResourceGenerationsOutput, error) {
+	req, out := c.ListBotResourceGenerationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListBotResourceGenerationsPages iterates over the pages of a ListBotResourceGenerations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListBotResourceGenerations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListBotResourceGenerations operation.
+//	pageNum := 0
+//	err := client.ListBotResourceGenerationsPages(params,
+//	    func(page *lexmodelsv2.ListBotResourceGenerationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *LexModelsV2) ListBotResourceGenerationsPages(input *ListBotResourceGenerationsInput, fn func(*ListBotResourceGenerationsOutput, bool) bool) error {
+	return c.ListBotResourceGenerationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListBotResourceGenerationsPagesWithContext same as ListBotResourceGenerationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) ListBotResourceGenerationsPagesWithContext(ctx aws.Context, input *ListBotResourceGenerationsInput, fn func(*ListBotResourceGenerationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListBotResourceGenerationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListBotResourceGenerationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListBotResourceGenerationsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -6544,8 +6890,8 @@ func (c *LexModelsV2) ListIntentStageMetricsRequest(input *ListIntentStageMetric
 
 // ListIntentStageMetrics API operation for Amazon Lex Model Building V2.
 //
-// Retrieves summary metrics for the intent stages in your bot. The following
-// fields are required:
+// Retrieves summary metrics for the stages within intents in your bot. The
+// following fields are required:
 //
 //   - metrics – A list of AnalyticsIntentStageMetric (https://docs.aws.amazon.com/lexv2/latest/APIReference/API_AnalyticsIntentStageMetric.html)
 //     objects. In each object, use the name field to specify the metric to calculate,
@@ -8322,10 +8668,19 @@ func (c *LexModelsV2) ListUtteranceAnalyticsDataRequest(input *ListUtteranceAnal
 
 // ListUtteranceAnalyticsData API operation for Amazon Lex Model Building V2.
 //
+// To use this API operation, your IAM role must have permissions to perform
+// the ListAggregatedUtterances (https://docs.aws.amazon.com/lexv2/latest/APIReference/API_ListAggregatedUtterances.html)
+// operation, which provides access to utterance-related analytics. See Viewing
+// utterance statistics (https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-utterances.html)
+// for the IAM policy to apply to the IAM role.
+//
 // Retrieves a list of metadata for individual user utterances to your bot.
-// The startDateTime and endDateTime fields are required. These fields define
-// a time range for which you want to retrieve results. Of the optional fields,
-// you can organize the results in the following ways:
+// The following fields are required:
+//
+//   - startDateTime and endDateTime – Define a time range for which you
+//     want to retrieve results.
+//
+// Of the optional fields, you can organize the results in the following ways:
 //
 //   - Use the filters field to filter the results and the sortBy field to
 //     specify the values by which to sort the results.
@@ -8481,6 +8836,12 @@ func (c *LexModelsV2) ListUtteranceMetricsRequest(input *ListUtteranceMetricsInp
 }
 
 // ListUtteranceMetrics API operation for Amazon Lex Model Building V2.
+//
+// To use this API operation, your IAM role must have permissions to perform
+// the ListAggregatedUtterances (https://docs.aws.amazon.com/lexv2/latest/APIReference/API_ListAggregatedUtterances.html)
+// operation, which provides access to utterance-related analytics. See Viewing
+// utterance statistics (https://docs.aws.amazon.com/lexv2/latest/dg/monitoring-utterances.html)
+// for the IAM policy to apply to the IAM role.
 //
 // Retrieves summary metrics for the utterances in your bot. The following fields
 // are required:
@@ -8802,6 +9163,109 @@ func (c *LexModelsV2) StartBotRecommendation(input *StartBotRecommendationInput)
 // for more information on using Contexts.
 func (c *LexModelsV2) StartBotRecommendationWithContext(ctx aws.Context, input *StartBotRecommendationInput, opts ...request.Option) (*StartBotRecommendationOutput, error) {
 	req, out := c.StartBotRecommendationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartBotResourceGeneration = "StartBotResourceGeneration"
+
+// StartBotResourceGenerationRequest generates a "aws/request.Request" representing the
+// client's request for the StartBotResourceGeneration operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartBotResourceGeneration for more information on using the StartBotResourceGeneration
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartBotResourceGenerationRequest method.
+//	req, resp := client.StartBotResourceGenerationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/StartBotResourceGeneration
+func (c *LexModelsV2) StartBotResourceGenerationRequest(input *StartBotResourceGenerationInput) (req *request.Request, output *StartBotResourceGenerationOutput) {
+	op := &request.Operation{
+		Name:       opStartBotResourceGeneration,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/bots/{botId}/botversions/{botVersion}/botlocales/{localeId}/startgeneration",
+	}
+
+	if input == nil {
+		input = &StartBotResourceGenerationInput{}
+	}
+
+	output = &StartBotResourceGenerationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartBotResourceGeneration API operation for Amazon Lex Model Building V2.
+//
+// Starts a request for the descriptive bot builder to generate a bot locale
+// configuration based on the prompt you provide it. After you make this call,
+// use the DescribeBotResourceGeneration operation to check on the status of
+// the generation and for the generatedBotLocaleUrl when the generation is complete.
+// Use that value to retrieve the Amazon S3 object containing the bot locale
+// configuration. You can then modify and import this configuration.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation StartBotResourceGeneration for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - PreconditionFailedException
+//     Your request couldn't be completed because one or more request fields aren't
+//     valid. Check the fields in your request and try again.
+//
+//   - ConflictException
+//     The action that you tried to perform couldn't be completed because the resource
+//     is in a conflicting state. For example, deleting a bot that is in the CREATING
+//     state. Try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/StartBotResourceGeneration
+func (c *LexModelsV2) StartBotResourceGeneration(input *StartBotResourceGenerationInput) (*StartBotResourceGenerationOutput, error) {
+	req, out := c.StartBotResourceGenerationRequest(input)
+	return out, req.Send()
+}
+
+// StartBotResourceGenerationWithContext is the same as StartBotResourceGeneration with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartBotResourceGeneration for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) StartBotResourceGenerationWithContext(ctx aws.Context, input *StartBotResourceGenerationInput, opts ...request.Option) (*StartBotResourceGenerationOutput, error) {
+	req, out := c.StartBotResourceGenerationRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -12986,7 +13450,7 @@ type AnalyticsUtteranceMetricResult struct {
 	//
 	//    * Detected – The number of utterances that Amazon Lex managed to detect.
 	//
-	//    * UtteranceTimeStamp – The date and time of the utterance.
+	//    * UtteranceTimestamp – The date and time of the utterance.
 	Name *string `locationName:"name" type:"string" enum:"AnalyticsUtteranceMetricName"`
 
 	// The summary statistic that you requested to calculate.
@@ -13353,6 +13817,9 @@ type AudioLogSetting struct {
 	//
 	// Enabled is a required field
 	Enabled *bool `locationName:"enabled" type:"boolean" required:"true"`
+
+	// The option to enable selective conversation log capture for audio.
+	SelectiveLoggingEnabled *bool `locationName:"selectiveLoggingEnabled" type:"boolean"`
 }
 
 // String returns the string representation.
@@ -13403,6 +13870,12 @@ func (s *AudioLogSetting) SetDestination(v *AudioLogDestination) *AudioLogSettin
 // SetEnabled sets the Enabled field's value.
 func (s *AudioLogSetting) SetEnabled(v bool) *AudioLogSetting {
 	s.Enabled = &v
+	return s
+}
+
+// SetSelectiveLoggingEnabled sets the SelectiveLoggingEnabled field's value.
+func (s *AudioLogSetting) SetSelectiveLoggingEnabled(v bool) *AudioLogSetting {
+	s.SelectiveLoggingEnabled = &v
 	return s
 }
 
@@ -14024,6 +14497,54 @@ func (s *BatchUpdateCustomVocabularyItemOutput) SetLocaleId(v string) *BatchUpda
 // SetResources sets the Resources field's value.
 func (s *BatchUpdateCustomVocabularyItemOutput) SetResources(v []*CustomVocabularyItem) *BatchUpdateCustomVocabularyItemOutput {
 	s.Resources = v
+	return s
+}
+
+// Contains information about the Amazon Bedrock model used to interpret the
+// prompt used in descriptive bot building.
+type BedrockModelSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the foundation model used in descriptive bot building.
+	//
+	// ModelArn is a required field
+	ModelArn *string `locationName:"modelArn" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BedrockModelSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BedrockModelSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BedrockModelSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BedrockModelSpecification"}
+	if s.ModelArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ModelArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetModelArn sets the ModelArn field's value.
+func (s *BedrockModelSpecification) SetModelArn(v string) *BedrockModelSpecification {
+	s.ModelArn = &v
 	return s
 }
 
@@ -15834,6 +16355,68 @@ func (s *BuildBotLocaleOutput) SetLocaleId(v string) *BuildBotLocaleOutput {
 	return s
 }
 
+// Contains specifications about the Amazon Lex build time generative AI capabilities
+// from Amazon Bedrock that you can turn on for your bot.
+type BuildtimeSettings struct {
+	_ struct{} `type:"structure"`
+
+	// An object containing specifications for the descriptive bot building feature.
+	DescriptiveBotBuilder *DescriptiveBotBuilderSpecification `locationName:"descriptiveBotBuilder" type:"structure"`
+
+	// Contains specifications for the sample utterance generation feature.
+	SampleUtteranceGeneration *SampleUtteranceGenerationSpecification `locationName:"sampleUtteranceGeneration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BuildtimeSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BuildtimeSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BuildtimeSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BuildtimeSettings"}
+	if s.DescriptiveBotBuilder != nil {
+		if err := s.DescriptiveBotBuilder.Validate(); err != nil {
+			invalidParams.AddNested("DescriptiveBotBuilder", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.SampleUtteranceGeneration != nil {
+		if err := s.SampleUtteranceGeneration.Validate(); err != nil {
+			invalidParams.AddNested("SampleUtteranceGeneration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescriptiveBotBuilder sets the DescriptiveBotBuilder field's value.
+func (s *BuildtimeSettings) SetDescriptiveBotBuilder(v *DescriptiveBotBuilderSpecification) *BuildtimeSettings {
+	s.DescriptiveBotBuilder = v
+	return s
+}
+
+// SetSampleUtteranceGeneration sets the SampleUtteranceGeneration field's value.
+func (s *BuildtimeSettings) SetSampleUtteranceGeneration(v *SampleUtteranceGenerationSpecification) *BuildtimeSettings {
+	s.SampleUtteranceGeneration = v
+	return s
+}
+
 // Specifies attributes for sorting a list of built-in intents.
 type BuiltInIntentSortBy struct {
 	_ struct{} `type:"structure"`
@@ -17622,6 +18205,10 @@ type CreateBotLocaleInput struct {
 	// in lists.
 	Description *string `locationName:"description" type:"string"`
 
+	// Contains specifications about the generative AI capabilities from Amazon
+	// Bedrock that you can turn on for your bot.
+	GenerativeAISettings *GenerativeAISettings `locationName:"generativeAISettings" type:"structure"`
+
 	// The identifier of the language and locale that the bot will be used in. The
 	// string must match one of the supported locales. All of the intents, slot
 	// types, and slots used in the bot must have the same locale. For more information,
@@ -17695,6 +18282,11 @@ func (s *CreateBotLocaleInput) Validate() error {
 	if s.NluIntentConfidenceThreshold == nil {
 		invalidParams.Add(request.NewErrParamRequired("NluIntentConfidenceThreshold"))
 	}
+	if s.GenerativeAISettings != nil {
+		if err := s.GenerativeAISettings.Validate(); err != nil {
+			invalidParams.AddNested("GenerativeAISettings", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.VoiceSettings != nil {
 		if err := s.VoiceSettings.Validate(); err != nil {
 			invalidParams.AddNested("VoiceSettings", err.(request.ErrInvalidParams))
@@ -17722,6 +18314,12 @@ func (s *CreateBotLocaleInput) SetBotVersion(v string) *CreateBotLocaleInput {
 // SetDescription sets the Description field's value.
 func (s *CreateBotLocaleInput) SetDescription(v string) *CreateBotLocaleInput {
 	s.Description = &v
+	return s
+}
+
+// SetGenerativeAISettings sets the GenerativeAISettings field's value.
+func (s *CreateBotLocaleInput) SetGenerativeAISettings(v *GenerativeAISettings) *CreateBotLocaleInput {
+	s.GenerativeAISettings = v
 	return s
 }
 
@@ -17770,6 +18368,10 @@ type CreateBotLocaleOutput struct {
 
 	// The specified description of the bot locale.
 	Description *string `locationName:"description" type:"string"`
+
+	// Contains specifications about the generative AI capabilities from Amazon
+	// Bedrock that you can turn on for your bot.
+	GenerativeAISettings *GenerativeAISettings `locationName:"generativeAISettings" type:"structure"`
 
 	// The specified locale identifier.
 	LocaleId *string `locationName:"localeId" type:"string"`
@@ -17831,6 +18433,12 @@ func (s *CreateBotLocaleOutput) SetCreationDateTime(v time.Time) *CreateBotLocal
 // SetDescription sets the Description field's value.
 func (s *CreateBotLocaleOutput) SetDescription(v string) *CreateBotLocaleOutput {
 	s.Description = &v
+	return s
+}
+
+// SetGenerativeAISettings sets the GenerativeAISettings field's value.
+func (s *CreateBotLocaleOutput) SetGenerativeAISettings(v *GenerativeAISettings) *CreateBotLocaleOutput {
+	s.GenerativeAISettings = v
 	return s
 }
 
@@ -20279,7 +20887,7 @@ type CustomVocabularyItem struct {
 
 	// The weight assigned for the custom vocabulary item from the custom vocabulary
 	// list.
-	Weight *int64 `locationName:"weight" min:"1" type:"integer"`
+	Weight *int64 `locationName:"weight" type:"integer"`
 }
 
 // String returns the string representation.
@@ -20317,9 +20925,6 @@ func (s *CustomVocabularyItem) Validate() error {
 	}
 	if s.Phrase != nil && len(*s.Phrase) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Phrase", 1))
-	}
-	if s.Weight != nil && *s.Weight < 1 {
-		invalidParams.Add(request.NewErrParamMinValue("Weight", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -22652,6 +23257,10 @@ type DescribeBotLocaleOutput struct {
 	// the bot.
 	FailureReasons []*string `locationName:"failureReasons" type:"list"`
 
+	// Contains settings for Amazon Bedrock's generative AI features for your bot
+	// locale.
+	GenerativeAISettings *GenerativeAISettings `locationName:"generativeAISettings" type:"structure"`
+
 	// The number of intents defined for the locale.
 	IntentsCount *int64 `locationName:"intentsCount" type:"integer"`
 
@@ -22739,6 +23348,12 @@ func (s *DescribeBotLocaleOutput) SetDescription(v string) *DescribeBotLocaleOut
 // SetFailureReasons sets the FailureReasons field's value.
 func (s *DescribeBotLocaleOutput) SetFailureReasons(v []*string) *DescribeBotLocaleOutput {
 	s.FailureReasons = v
+	return s
+}
+
+// SetGenerativeAISettings sets the GenerativeAISettings field's value.
+func (s *DescribeBotLocaleOutput) SetGenerativeAISettings(v *GenerativeAISettings) *DescribeBotLocaleOutput {
+	s.GenerativeAISettings = v
 	return s
 }
 
@@ -23156,6 +23771,229 @@ func (s *DescribeBotRecommendationOutput) SetLocaleId(v string) *DescribeBotReco
 // SetTranscriptSourceSetting sets the TranscriptSourceSetting field's value.
 func (s *DescribeBotRecommendationOutput) SetTranscriptSourceSetting(v *TranscriptSourceSetting) *DescribeBotRecommendationOutput {
 	s.TranscriptSourceSetting = v
+	return s
+}
+
+type DescribeBotResourceGenerationInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The unique identifier of the bot for which to return the generation details.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The version of the bot for which to return the generation details.
+	//
+	// BotVersion is a required field
+	BotVersion *string `location:"uri" locationName:"botVersion" min:"1" type:"string" required:"true"`
+
+	// The unique identifier of the generation request for which to return the generation
+	// details.
+	//
+	// GenerationId is a required field
+	GenerationId *string `location:"uri" locationName:"generationId" min:"10" type:"string" required:"true"`
+
+	// The locale of the bot for which to return the generation details.
+	//
+	// LocaleId is a required field
+	LocaleId *string `location:"uri" locationName:"localeId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotResourceGenerationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotResourceGenerationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeBotResourceGenerationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeBotResourceGenerationInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.BotVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotVersion"))
+	}
+	if s.BotVersion != nil && len(*s.BotVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BotVersion", 1))
+	}
+	if s.GenerationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("GenerationId"))
+	}
+	if s.GenerationId != nil && len(*s.GenerationId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("GenerationId", 10))
+	}
+	if s.LocaleId == nil {
+		invalidParams.Add(request.NewErrParamRequired("LocaleId"))
+	}
+	if s.LocaleId != nil && len(*s.LocaleId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LocaleId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *DescribeBotResourceGenerationInput) SetBotId(v string) *DescribeBotResourceGenerationInput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *DescribeBotResourceGenerationInput) SetBotVersion(v string) *DescribeBotResourceGenerationInput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetGenerationId sets the GenerationId field's value.
+func (s *DescribeBotResourceGenerationInput) SetGenerationId(v string) *DescribeBotResourceGenerationInput {
+	s.GenerationId = &v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *DescribeBotResourceGenerationInput) SetLocaleId(v string) *DescribeBotResourceGenerationInput {
+	s.LocaleId = &v
+	return s
+}
+
+type DescribeBotResourceGenerationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the bot for which the generation request was made.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The version of the bot for which the generation request was made.
+	BotVersion *string `locationName:"botVersion" min:"1" type:"string"`
+
+	// The date and time at which the item was generated.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// A list of reasons why the generation of bot resources through natural language
+	// description failed.
+	FailureReasons []*string `locationName:"failureReasons" type:"list"`
+
+	// The Amazon S3 location of the generated bot locale configuration.
+	GeneratedBotLocaleUrl *string `locationName:"generatedBotLocaleUrl" min:"1" type:"string"`
+
+	// The generation ID for which to return the generation details.
+	GenerationId *string `locationName:"generationId" min:"10" type:"string"`
+
+	// The prompt used in the generation request.
+	GenerationInputPrompt *string `locationName:"generationInputPrompt" min:"100" type:"string"`
+
+	// The status of the generation request.
+	GenerationStatus *string `locationName:"generationStatus" type:"string" enum:"GenerationStatus"`
+
+	// The date and time at which the generated item was updated.
+	LastUpdatedDateTime *time.Time `locationName:"lastUpdatedDateTime" type:"timestamp"`
+
+	// The locale of the bot for which the generation request was made.
+	LocaleId *string `locationName:"localeId" type:"string"`
+
+	// The ARN of the model used to generate the bot resources.
+	ModelArn *string `locationName:"modelArn" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotResourceGenerationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotResourceGenerationOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *DescribeBotResourceGenerationOutput) SetBotId(v string) *DescribeBotResourceGenerationOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *DescribeBotResourceGenerationOutput) SetBotVersion(v string) *DescribeBotResourceGenerationOutput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *DescribeBotResourceGenerationOutput) SetCreationDateTime(v time.Time) *DescribeBotResourceGenerationOutput {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetFailureReasons sets the FailureReasons field's value.
+func (s *DescribeBotResourceGenerationOutput) SetFailureReasons(v []*string) *DescribeBotResourceGenerationOutput {
+	s.FailureReasons = v
+	return s
+}
+
+// SetGeneratedBotLocaleUrl sets the GeneratedBotLocaleUrl field's value.
+func (s *DescribeBotResourceGenerationOutput) SetGeneratedBotLocaleUrl(v string) *DescribeBotResourceGenerationOutput {
+	s.GeneratedBotLocaleUrl = &v
+	return s
+}
+
+// SetGenerationId sets the GenerationId field's value.
+func (s *DescribeBotResourceGenerationOutput) SetGenerationId(v string) *DescribeBotResourceGenerationOutput {
+	s.GenerationId = &v
+	return s
+}
+
+// SetGenerationInputPrompt sets the GenerationInputPrompt field's value.
+func (s *DescribeBotResourceGenerationOutput) SetGenerationInputPrompt(v string) *DescribeBotResourceGenerationOutput {
+	s.GenerationInputPrompt = &v
+	return s
+}
+
+// SetGenerationStatus sets the GenerationStatus field's value.
+func (s *DescribeBotResourceGenerationOutput) SetGenerationStatus(v string) *DescribeBotResourceGenerationOutput {
+	s.GenerationStatus = &v
+	return s
+}
+
+// SetLastUpdatedDateTime sets the LastUpdatedDateTime field's value.
+func (s *DescribeBotResourceGenerationOutput) SetLastUpdatedDateTime(v time.Time) *DescribeBotResourceGenerationOutput {
+	s.LastUpdatedDateTime = &v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *DescribeBotResourceGenerationOutput) SetLocaleId(v string) *DescribeBotResourceGenerationOutput {
+	s.LocaleId = &v
+	return s
+}
+
+// SetModelArn sets the ModelArn field's value.
+func (s *DescribeBotResourceGenerationOutput) SetModelArn(v string) *DescribeBotResourceGenerationOutput {
+	s.ModelArn = &v
 	return s
 }
 
@@ -25399,6 +26237,68 @@ func (s *DescribeTestSetOutput) SetTestSetName(v string) *DescribeTestSetOutput 
 	return s
 }
 
+// Contains specifications for the descriptive bot building feature.
+type DescriptiveBotBuilderSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// An object containing information about the Amazon Bedrock model used to interpret
+	// the prompt used in descriptive bot building.
+	BedrockModelSpecification *BedrockModelSpecification `locationName:"bedrockModelSpecification" type:"structure"`
+
+	// Specifies whether the descriptive bot building feature is activated or not.
+	//
+	// Enabled is a required field
+	Enabled *bool `locationName:"enabled" type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescriptiveBotBuilderSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescriptiveBotBuilderSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescriptiveBotBuilderSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescriptiveBotBuilderSpecification"}
+	if s.Enabled == nil {
+		invalidParams.Add(request.NewErrParamRequired("Enabled"))
+	}
+	if s.BedrockModelSpecification != nil {
+		if err := s.BedrockModelSpecification.Validate(); err != nil {
+			invalidParams.AddNested("BedrockModelSpecification", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBedrockModelSpecification sets the BedrockModelSpecification field's value.
+func (s *DescriptiveBotBuilderSpecification) SetBedrockModelSpecification(v *BedrockModelSpecification) *DescriptiveBotBuilderSpecification {
+	s.BedrockModelSpecification = v
+	return s
+}
+
+// SetEnabled sets the Enabled field's value.
+func (s *DescriptiveBotBuilderSpecification) SetEnabled(v bool) *DescriptiveBotBuilderSpecification {
+	s.Enabled = &v
+	return s
+}
+
 // Defines the action that the bot executes at runtime when the conversation
 // reaches this step.
 type DialogAction struct {
@@ -26639,6 +27539,364 @@ func (s *FulfillmentUpdatesSpecification) SetTimeoutInSeconds(v int64) *Fulfillm
 // SetUpdateResponse sets the UpdateResponse field's value.
 func (s *FulfillmentUpdatesSpecification) SetUpdateResponse(v *FulfillmentUpdateResponseSpecification) *FulfillmentUpdatesSpecification {
 	s.UpdateResponse = v
+	return s
+}
+
+type GenerateBotElementInput struct {
+	_ struct{} `type:"structure"`
+
+	// The bot unique Id for the bot request to generate utterances.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The bot version for the bot request to generate utterances.
+	//
+	// BotVersion is a required field
+	BotVersion *string `location:"uri" locationName:"botVersion" min:"1" type:"string" required:"true"`
+
+	// The intent unique Id for the bot request to generate utterances.
+	//
+	// IntentId is a required field
+	IntentId *string `locationName:"intentId" min:"10" type:"string" required:"true"`
+
+	// The unique locale Id for the bot request to generate utterances.
+	//
+	// LocaleId is a required field
+	LocaleId *string `location:"uri" locationName:"localeId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerateBotElementInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerateBotElementInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GenerateBotElementInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GenerateBotElementInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.BotVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotVersion"))
+	}
+	if s.BotVersion != nil && len(*s.BotVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BotVersion", 1))
+	}
+	if s.IntentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("IntentId"))
+	}
+	if s.IntentId != nil && len(*s.IntentId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("IntentId", 10))
+	}
+	if s.LocaleId == nil {
+		invalidParams.Add(request.NewErrParamRequired("LocaleId"))
+	}
+	if s.LocaleId != nil && len(*s.LocaleId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LocaleId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *GenerateBotElementInput) SetBotId(v string) *GenerateBotElementInput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *GenerateBotElementInput) SetBotVersion(v string) *GenerateBotElementInput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetIntentId sets the IntentId field's value.
+func (s *GenerateBotElementInput) SetIntentId(v string) *GenerateBotElementInput {
+	s.IntentId = &v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *GenerateBotElementInput) SetLocaleId(v string) *GenerateBotElementInput {
+	s.LocaleId = &v
+	return s
+}
+
+type GenerateBotElementOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique bot Id for the bot which received the response.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The unique bot version for the bot which received the response.
+	BotVersion *string `locationName:"botVersion" min:"5" type:"string"`
+
+	// The unique intent Id for the bot which received the response.
+	IntentId *string `locationName:"intentId" min:"10" type:"string"`
+
+	// The unique locale Id for the bot which received the response.
+	LocaleId *string `locationName:"localeId" type:"string"`
+
+	// The sample utterances for the bot which received the response.
+	SampleUtterances []*SampleUtterance `locationName:"sampleUtterances" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerateBotElementOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerateBotElementOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *GenerateBotElementOutput) SetBotId(v string) *GenerateBotElementOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *GenerateBotElementOutput) SetBotVersion(v string) *GenerateBotElementOutput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetIntentId sets the IntentId field's value.
+func (s *GenerateBotElementOutput) SetIntentId(v string) *GenerateBotElementOutput {
+	s.IntentId = &v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *GenerateBotElementOutput) SetLocaleId(v string) *GenerateBotElementOutput {
+	s.LocaleId = &v
+	return s
+}
+
+// SetSampleUtterances sets the SampleUtterances field's value.
+func (s *GenerateBotElementOutput) SetSampleUtterances(v []*SampleUtterance) *GenerateBotElementOutput {
+	s.SampleUtterances = v
+	return s
+}
+
+// Specifies the attribute and method by which to sort the generation request
+// information.
+type GenerationSortBy struct {
+	_ struct{} `type:"structure"`
+
+	// The attribute by which to sort the generation request information. You can
+	// sort by the following attributes.
+	//
+	//    * creationStartTime – The time at which the generation request was created.
+	//
+	//    * lastUpdatedTime – The time at which the generation request was last
+	//    updated.
+	//
+	// Attribute is a required field
+	Attribute *string `locationName:"attribute" type:"string" required:"true" enum:"GenerationSortByAttribute"`
+
+	// The order by which to sort the generation request information.
+	//
+	// Order is a required field
+	Order *string `locationName:"order" type:"string" required:"true" enum:"SortOrder"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerationSortBy) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerationSortBy) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GenerationSortBy) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GenerationSortBy"}
+	if s.Attribute == nil {
+		invalidParams.Add(request.NewErrParamRequired("Attribute"))
+	}
+	if s.Order == nil {
+		invalidParams.Add(request.NewErrParamRequired("Order"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAttribute sets the Attribute field's value.
+func (s *GenerationSortBy) SetAttribute(v string) *GenerationSortBy {
+	s.Attribute = &v
+	return s
+}
+
+// SetOrder sets the Order field's value.
+func (s *GenerationSortBy) SetOrder(v string) *GenerationSortBy {
+	s.Order = &v
+	return s
+}
+
+// Contains information about a generation request made for the bot locale.
+type GenerationSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The date and time at which the generation request was made.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The unique identifier of the generation request.
+	GenerationId *string `locationName:"generationId" min:"10" type:"string"`
+
+	// The status of the generation request.
+	GenerationStatus *string `locationName:"generationStatus" type:"string" enum:"GenerationStatus"`
+
+	// The date and time at which the generation request was last updated.
+	LastUpdatedDateTime *time.Time `locationName:"lastUpdatedDateTime" type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerationSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerationSummary) GoString() string {
+	return s.String()
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *GenerationSummary) SetCreationDateTime(v time.Time) *GenerationSummary {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetGenerationId sets the GenerationId field's value.
+func (s *GenerationSummary) SetGenerationId(v string) *GenerationSummary {
+	s.GenerationId = &v
+	return s
+}
+
+// SetGenerationStatus sets the GenerationStatus field's value.
+func (s *GenerationSummary) SetGenerationStatus(v string) *GenerationSummary {
+	s.GenerationStatus = &v
+	return s
+}
+
+// SetLastUpdatedDateTime sets the LastUpdatedDateTime field's value.
+func (s *GenerationSummary) SetLastUpdatedDateTime(v time.Time) *GenerationSummary {
+	s.LastUpdatedDateTime = &v
+	return s
+}
+
+// Contains specifications about the generative AI capabilities from Amazon
+// Bedrock that you can turn on for your bot.
+type GenerativeAISettings struct {
+	_ struct{} `type:"structure"`
+
+	// Contains specifications about the Amazon Lex build time generative AI capabilities
+	// from Amazon Bedrock that you can turn on for your bot.
+	BuildtimeSettings *BuildtimeSettings `locationName:"buildtimeSettings" type:"structure"`
+
+	// Contains specifications about the Amazon Lex runtime generative AI capabilities
+	// from Amazon Bedrock that you can turn on for your bot.
+	RuntimeSettings *RuntimeSettings `locationName:"runtimeSettings" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerativeAISettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerativeAISettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GenerativeAISettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GenerativeAISettings"}
+	if s.BuildtimeSettings != nil {
+		if err := s.BuildtimeSettings.Validate(); err != nil {
+			invalidParams.AddNested("BuildtimeSettings", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.RuntimeSettings != nil {
+		if err := s.RuntimeSettings.Validate(); err != nil {
+			invalidParams.AddNested("RuntimeSettings", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBuildtimeSettings sets the BuildtimeSettings field's value.
+func (s *GenerativeAISettings) SetBuildtimeSettings(v *BuildtimeSettings) *GenerativeAISettings {
+	s.BuildtimeSettings = v
+	return s
+}
+
+// SetRuntimeSettings sets the RuntimeSettings field's value.
+func (s *GenerativeAISettings) SetRuntimeSettings(v *RuntimeSettings) *GenerativeAISettings {
+	s.RuntimeSettings = v
 	return s
 }
 
@@ -29482,6 +30740,197 @@ func (s *ListBotRecommendationsOutput) SetLocaleId(v string) *ListBotRecommendat
 
 // SetNextToken sets the NextToken field's value.
 func (s *ListBotRecommendationsOutput) SetNextToken(v string) *ListBotRecommendationsOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListBotResourceGenerationsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the bot whose generation requests you want to view.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The version of the bot whose generation requests you want to view.
+	//
+	// BotVersion is a required field
+	BotVersion *string `location:"uri" locationName:"botVersion" min:"1" type:"string" required:"true"`
+
+	// The locale of the bot whose generation requests you want to view.
+	//
+	// LocaleId is a required field
+	LocaleId *string `location:"uri" locationName:"localeId" type:"string" required:"true"`
+
+	// The maximum number of results to return in the response.
+	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
+
+	// If the total number of results is greater than the number specified in the
+	// maxResults, the response returns a token in the nextToken field. Use this
+	// token when making a request to return the next batch of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// An object containing information about the attribute and the method by which
+	// to sort the results
+	SortBy *GenerationSortBy `locationName:"sortBy" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotResourceGenerationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotResourceGenerationsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListBotResourceGenerationsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListBotResourceGenerationsInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.BotVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotVersion"))
+	}
+	if s.BotVersion != nil && len(*s.BotVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BotVersion", 1))
+	}
+	if s.LocaleId == nil {
+		invalidParams.Add(request.NewErrParamRequired("LocaleId"))
+	}
+	if s.LocaleId != nil && len(*s.LocaleId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LocaleId", 1))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.SortBy != nil {
+		if err := s.SortBy.Validate(); err != nil {
+			invalidParams.AddNested("SortBy", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotResourceGenerationsInput) SetBotId(v string) *ListBotResourceGenerationsInput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *ListBotResourceGenerationsInput) SetBotVersion(v string) *ListBotResourceGenerationsInput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *ListBotResourceGenerationsInput) SetLocaleId(v string) *ListBotResourceGenerationsInput {
+	s.LocaleId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListBotResourceGenerationsInput) SetMaxResults(v int64) *ListBotResourceGenerationsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBotResourceGenerationsInput) SetNextToken(v string) *ListBotResourceGenerationsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetSortBy sets the SortBy field's value.
+func (s *ListBotResourceGenerationsInput) SetSortBy(v *GenerationSortBy) *ListBotResourceGenerationsInput {
+	s.SortBy = v
+	return s
+}
+
+type ListBotResourceGenerationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the bot for which the generation requests were made.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The version of the bot for which the generation requests were made.
+	BotVersion *string `locationName:"botVersion" min:"1" type:"string"`
+
+	// A list of objects, each containing information about a generation request
+	// for the bot locale.
+	GenerationSummaries []*GenerationSummary `locationName:"generationSummaries" type:"list"`
+
+	// The locale of the bot for which the generation requests were made.
+	LocaleId *string `locationName:"localeId" type:"string"`
+
+	// If the total number of results is greater than the number specified in the
+	// maxResults, the response returns a token in the nextToken field. Use this
+	// token when making a request to return the next batch of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotResourceGenerationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotResourceGenerationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotResourceGenerationsOutput) SetBotId(v string) *ListBotResourceGenerationsOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *ListBotResourceGenerationsOutput) SetBotVersion(v string) *ListBotResourceGenerationsOutput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetGenerationSummaries sets the GenerationSummaries field's value.
+func (s *ListBotResourceGenerationsOutput) SetGenerationSummaries(v []*GenerationSummary) *ListBotResourceGenerationsOutput {
+	s.GenerationSummaries = v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *ListBotResourceGenerationsOutput) SetLocaleId(v string) *ListBotResourceGenerationsOutput {
+	s.LocaleId = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBotResourceGenerationsOutput) SetNextToken(v string) *ListBotResourceGenerationsOutput {
 	s.NextToken = &v
 	return s
 }
@@ -34001,7 +35450,7 @@ type NewCustomVocabularyItem struct {
 
 	// The weight assigned to the new custom vocabulary item from the custom vocabulary
 	// list.
-	Weight *int64 `locationName:"weight" min:"1" type:"integer"`
+	Weight *int64 `locationName:"weight" type:"integer"`
 }
 
 // String returns the string representation.
@@ -34033,9 +35482,6 @@ func (s *NewCustomVocabularyItem) Validate() error {
 	}
 	if s.Phrase != nil && len(*s.Phrase) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Phrase", 1))
-	}
-	if s.Weight != nil && *s.Weight < 1 {
-		invalidParams.Add(request.NewErrParamMinValue("Weight", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -35513,6 +36959,54 @@ func (s *RuntimeHints) SetSlotHints(v map[string]map[string]*RuntimeHintDetails)
 	return s
 }
 
+// Contains specifications about the Amazon Lex runtime generative AI capabilities
+// from Amazon Bedrock that you can turn on for your bot.
+type RuntimeSettings struct {
+	_ struct{} `type:"structure"`
+
+	// An object containing specifications for the assisted slot resolution feature.
+	SlotResolutionImprovement *SlotResolutionImprovementSpecification `locationName:"slotResolutionImprovement" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RuntimeSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RuntimeSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RuntimeSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RuntimeSettings"}
+	if s.SlotResolutionImprovement != nil {
+		if err := s.SlotResolutionImprovement.Validate(); err != nil {
+			invalidParams.AddNested("SlotResolutionImprovement", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetSlotResolutionImprovement sets the SlotResolutionImprovement field's value.
+func (s *RuntimeSettings) SetSlotResolutionImprovement(v *SlotResolutionImprovementSpecification) *RuntimeSettings {
+	s.SlotResolutionImprovement = v
+	return s
+}
+
 // Specifies an Amazon S3 bucket for logging audio conversations
 type S3BucketLogDestination struct {
 	_ struct{} `type:"structure"`
@@ -35800,6 +37294,68 @@ func (s *SampleUtterance) Validate() error {
 // SetUtterance sets the Utterance field's value.
 func (s *SampleUtterance) SetUtterance(v string) *SampleUtterance {
 	s.Utterance = &v
+	return s
+}
+
+// Contains specifications for the sample utterance generation feature.
+type SampleUtteranceGenerationSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// Contains information about the Amazon Bedrock model used to interpret the
+	// prompt used in descriptive bot building.
+	BedrockModelSpecification *BedrockModelSpecification `locationName:"bedrockModelSpecification" type:"structure"`
+
+	// Specifies whether to enable sample utterance generation or not.
+	//
+	// Enabled is a required field
+	Enabled *bool `locationName:"enabled" type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SampleUtteranceGenerationSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SampleUtteranceGenerationSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SampleUtteranceGenerationSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SampleUtteranceGenerationSpecification"}
+	if s.Enabled == nil {
+		invalidParams.Add(request.NewErrParamRequired("Enabled"))
+	}
+	if s.BedrockModelSpecification != nil {
+		if err := s.BedrockModelSpecification.Validate(); err != nil {
+			invalidParams.AddNested("BedrockModelSpecification", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBedrockModelSpecification sets the BedrockModelSpecification field's value.
+func (s *SampleUtteranceGenerationSpecification) SetBedrockModelSpecification(v *BedrockModelSpecification) *SampleUtteranceGenerationSpecification {
+	s.BedrockModelSpecification = v
+	return s
+}
+
+// SetEnabled sets the Enabled field's value.
+func (s *SampleUtteranceGenerationSpecification) SetEnabled(v bool) *SampleUtteranceGenerationSpecification {
+	s.Enabled = &v
 	return s
 }
 
@@ -36308,7 +37864,7 @@ type SessionSpecification struct {
 	BotVersion *string `locationName:"botVersion" min:"1" type:"string"`
 
 	// The channel that is integrated with the bot that the session was held with.
-	Channel *string `locationName:"channel" type:"string" enum:"BotChannelType"`
+	Channel *string `locationName:"channel" min:"1" type:"string"`
 
 	// The duration of the conversation in seconds. A conversation is defined as
 	// a unique combination of a sessionId and an originatingRequestId.
@@ -36851,6 +38407,119 @@ func (s *SlotPriority) SetPriority(v int64) *SlotPriority {
 // SetSlotId sets the SlotId field's value.
 func (s *SlotPriority) SetSlotId(v string) *SlotPriority {
 	s.SlotId = &v
+	return s
+}
+
+// Contains specifications for the assisted slot resolution feature.
+type SlotResolutionImprovementSpecification struct {
+	_ struct{} `type:"structure"`
+
+	// An object containing information about the Amazon Bedrock model used to assist
+	// slot resolution.
+	BedrockModelSpecification *BedrockModelSpecification `locationName:"bedrockModelSpecification" type:"structure"`
+
+	// Specifies whether assisted slot resolution is turned on or off.
+	//
+	// Enabled is a required field
+	Enabled *bool `locationName:"enabled" type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SlotResolutionImprovementSpecification) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SlotResolutionImprovementSpecification) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SlotResolutionImprovementSpecification) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SlotResolutionImprovementSpecification"}
+	if s.Enabled == nil {
+		invalidParams.Add(request.NewErrParamRequired("Enabled"))
+	}
+	if s.BedrockModelSpecification != nil {
+		if err := s.BedrockModelSpecification.Validate(); err != nil {
+			invalidParams.AddNested("BedrockModelSpecification", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBedrockModelSpecification sets the BedrockModelSpecification field's value.
+func (s *SlotResolutionImprovementSpecification) SetBedrockModelSpecification(v *BedrockModelSpecification) *SlotResolutionImprovementSpecification {
+	s.BedrockModelSpecification = v
+	return s
+}
+
+// SetEnabled sets the Enabled field's value.
+func (s *SlotResolutionImprovementSpecification) SetEnabled(v bool) *SlotResolutionImprovementSpecification {
+	s.Enabled = &v
+	return s
+}
+
+// Contains information about whether assisted slot resolution is turned on
+// for the slot or not.
+type SlotResolutionSetting struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies whether assisted slot resolution is turned on for the slot or not.
+	// If the value is EnhancedFallback, assisted slot resolution is activated when
+	// Amazon Lex defaults to the AMAZON.FallbackIntent. If the value is Default,
+	// assisted slot resolution is turned off.
+	//
+	// SlotResolutionStrategy is a required field
+	SlotResolutionStrategy *string `locationName:"slotResolutionStrategy" type:"string" required:"true" enum:"SlotResolutionStrategy"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SlotResolutionSetting) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SlotResolutionSetting) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SlotResolutionSetting) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SlotResolutionSetting"}
+	if s.SlotResolutionStrategy == nil {
+		invalidParams.Add(request.NewErrParamRequired("SlotResolutionStrategy"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetSlotResolutionStrategy sets the SlotResolutionStrategy field's value.
+func (s *SlotResolutionSetting) SetSlotResolutionStrategy(v string) *SlotResolutionSetting {
+	s.SlotResolutionStrategy = &v
 	return s
 }
 
@@ -37512,6 +39181,10 @@ type SlotValueElicitationSetting struct {
 	// SlotConstraint is a required field
 	SlotConstraint *string `locationName:"slotConstraint" type:"string" required:"true" enum:"SlotConstraint"`
 
+	// An object containing information about whether assisted slot resolution is
+	// turned on for the slot or not.
+	SlotResolutionSetting *SlotResolutionSetting `locationName:"slotResolutionSetting" type:"structure"`
+
 	// Specifies the prompts that Amazon Lex uses while a bot is waiting for customer
 	// input.
 	WaitAndContinueSpecification *WaitAndContinueSpecification `locationName:"waitAndContinueSpecification" type:"structure"`
@@ -37566,6 +39239,11 @@ func (s *SlotValueElicitationSetting) Validate() error {
 			invalidParams.AddNested("SlotCaptureSetting", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.SlotResolutionSetting != nil {
+		if err := s.SlotResolutionSetting.Validate(); err != nil {
+			invalidParams.AddNested("SlotResolutionSetting", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.WaitAndContinueSpecification != nil {
 		if err := s.WaitAndContinueSpecification.Validate(); err != nil {
 			invalidParams.AddNested("WaitAndContinueSpecification", err.(request.ErrInvalidParams))
@@ -37605,6 +39283,12 @@ func (s *SlotValueElicitationSetting) SetSlotCaptureSetting(v *SlotCaptureSettin
 // SetSlotConstraint sets the SlotConstraint field's value.
 func (s *SlotValueElicitationSetting) SetSlotConstraint(v string) *SlotValueElicitationSetting {
 	s.SlotConstraint = &v
+	return s
+}
+
+// SetSlotResolutionSetting sets the SlotResolutionSetting field's value.
+func (s *SlotValueElicitationSetting) SetSlotResolutionSetting(v *SlotResolutionSetting) *SlotValueElicitationSetting {
+	s.SlotResolutionSetting = v
 	return s
 }
 
@@ -38134,6 +39818,194 @@ func (s *StartBotRecommendationOutput) SetLocaleId(v string) *StartBotRecommenda
 // SetTranscriptSourceSetting sets the TranscriptSourceSetting field's value.
 func (s *StartBotRecommendationOutput) SetTranscriptSourceSetting(v *TranscriptSourceSetting) *StartBotRecommendationOutput {
 	s.TranscriptSourceSetting = v
+	return s
+}
+
+type StartBotResourceGenerationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the bot for which to generate intents and slot types.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The version of the bot for which to generate intents and slot types.
+	//
+	// BotVersion is a required field
+	BotVersion *string `location:"uri" locationName:"botVersion" min:"1" type:"string" required:"true"`
+
+	// The prompt to generate intents and slot types for the bot locale. Your description
+	// should be both detailed and precise to help generate appropriate and sufficient
+	// intents for your bot. Include a list of actions to improve the intent creation
+	// process.
+	//
+	// GenerationInputPrompt is a required field
+	GenerationInputPrompt *string `locationName:"generationInputPrompt" min:"100" type:"string" required:"true"`
+
+	// The locale of the bot for which to generate intents and slot types.
+	//
+	// LocaleId is a required field
+	LocaleId *string `location:"uri" locationName:"localeId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartBotResourceGenerationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartBotResourceGenerationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartBotResourceGenerationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartBotResourceGenerationInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.BotVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotVersion"))
+	}
+	if s.BotVersion != nil && len(*s.BotVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BotVersion", 1))
+	}
+	if s.GenerationInputPrompt == nil {
+		invalidParams.Add(request.NewErrParamRequired("GenerationInputPrompt"))
+	}
+	if s.GenerationInputPrompt != nil && len(*s.GenerationInputPrompt) < 100 {
+		invalidParams.Add(request.NewErrParamMinLen("GenerationInputPrompt", 100))
+	}
+	if s.LocaleId == nil {
+		invalidParams.Add(request.NewErrParamRequired("LocaleId"))
+	}
+	if s.LocaleId != nil && len(*s.LocaleId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LocaleId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *StartBotResourceGenerationInput) SetBotId(v string) *StartBotResourceGenerationInput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *StartBotResourceGenerationInput) SetBotVersion(v string) *StartBotResourceGenerationInput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetGenerationInputPrompt sets the GenerationInputPrompt field's value.
+func (s *StartBotResourceGenerationInput) SetGenerationInputPrompt(v string) *StartBotResourceGenerationInput {
+	s.GenerationInputPrompt = &v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *StartBotResourceGenerationInput) SetLocaleId(v string) *StartBotResourceGenerationInput {
+	s.LocaleId = &v
+	return s
+}
+
+type StartBotResourceGenerationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the bot for which the generation request was made.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The version of the bot for which the generation request was made.
+	BotVersion *string `locationName:"botVersion" min:"1" type:"string"`
+
+	// The date and time at which the generation request was made.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The unique identifier of the generation request.
+	GenerationId *string `locationName:"generationId" min:"10" type:"string"`
+
+	// The prompt that was used generate intents and slot types for the bot locale.
+	GenerationInputPrompt *string `locationName:"generationInputPrompt" min:"100" type:"string"`
+
+	// The status of the generation request.
+	GenerationStatus *string `locationName:"generationStatus" type:"string" enum:"GenerationStatus"`
+
+	// The locale of the bot for which the generation request was made.
+	LocaleId *string `locationName:"localeId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartBotResourceGenerationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartBotResourceGenerationOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *StartBotResourceGenerationOutput) SetBotId(v string) *StartBotResourceGenerationOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *StartBotResourceGenerationOutput) SetBotVersion(v string) *StartBotResourceGenerationOutput {
+	s.BotVersion = &v
+	return s
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *StartBotResourceGenerationOutput) SetCreationDateTime(v time.Time) *StartBotResourceGenerationOutput {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetGenerationId sets the GenerationId field's value.
+func (s *StartBotResourceGenerationOutput) SetGenerationId(v string) *StartBotResourceGenerationOutput {
+	s.GenerationId = &v
+	return s
+}
+
+// SetGenerationInputPrompt sets the GenerationInputPrompt field's value.
+func (s *StartBotResourceGenerationOutput) SetGenerationInputPrompt(v string) *StartBotResourceGenerationOutput {
+	s.GenerationInputPrompt = &v
+	return s
+}
+
+// SetGenerationStatus sets the GenerationStatus field's value.
+func (s *StartBotResourceGenerationOutput) SetGenerationStatus(v string) *StartBotResourceGenerationOutput {
+	s.GenerationStatus = &v
+	return s
+}
+
+// SetLocaleId sets the LocaleId field's value.
+func (s *StartBotResourceGenerationOutput) SetLocaleId(v string) *StartBotResourceGenerationOutput {
+	s.LocaleId = &v
 	return s
 }
 
@@ -40747,6 +42619,9 @@ type TextLogSetting struct {
 	//
 	// Enabled is a required field
 	Enabled *bool `locationName:"enabled" type:"boolean" required:"true"`
+
+	// The option to enable selective conversation log capture for text.
+	SelectiveLoggingEnabled *bool `locationName:"selectiveLoggingEnabled" type:"boolean"`
 }
 
 // String returns the string representation.
@@ -40797,6 +42672,12 @@ func (s *TextLogSetting) SetDestination(v *TextLogDestination) *TextLogSetting {
 // SetEnabled sets the Enabled field's value.
 func (s *TextLogSetting) SetEnabled(v bool) *TextLogSetting {
 	s.Enabled = &v
+	return s
+}
+
+// SetSelectiveLoggingEnabled sets the SelectiveLoggingEnabled field's value.
+func (s *TextLogSetting) SetSelectiveLoggingEnabled(v bool) *TextLogSetting {
+	s.SelectiveLoggingEnabled = &v
 	return s
 }
 
@@ -41555,6 +43436,11 @@ type UpdateBotLocaleInput struct {
 	// The new description of the locale.
 	Description *string `locationName:"description" type:"string"`
 
+	// Contains settings for generative AI features powered by Amazon Bedrock for
+	// your bot locale. Use this object to turn generative AI features on and off.
+	// Pricing may differ if you turn a feature on. For more information, see LINK.
+	GenerativeAISettings *GenerativeAISettings `locationName:"generativeAISettings" type:"structure"`
+
 	// The identifier of the language and locale to update. The string must match
 	// one of the supported locales. For more information, see Supported languages
 	// (https://docs.aws.amazon.com/lexv2/latest/dg/how-languages.html).
@@ -41616,6 +43502,11 @@ func (s *UpdateBotLocaleInput) Validate() error {
 	if s.NluIntentConfidenceThreshold == nil {
 		invalidParams.Add(request.NewErrParamRequired("NluIntentConfidenceThreshold"))
 	}
+	if s.GenerativeAISettings != nil {
+		if err := s.GenerativeAISettings.Validate(); err != nil {
+			invalidParams.AddNested("GenerativeAISettings", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.VoiceSettings != nil {
 		if err := s.VoiceSettings.Validate(); err != nil {
 			invalidParams.AddNested("VoiceSettings", err.(request.ErrInvalidParams))
@@ -41643,6 +43534,12 @@ func (s *UpdateBotLocaleInput) SetBotVersion(v string) *UpdateBotLocaleInput {
 // SetDescription sets the Description field's value.
 func (s *UpdateBotLocaleInput) SetDescription(v string) *UpdateBotLocaleInput {
 	s.Description = &v
+	return s
+}
+
+// SetGenerativeAISettings sets the GenerativeAISettings field's value.
+func (s *UpdateBotLocaleInput) SetGenerativeAISettings(v *GenerativeAISettings) *UpdateBotLocaleInput {
+	s.GenerativeAISettings = v
 	return s
 }
 
@@ -41686,6 +43583,10 @@ type UpdateBotLocaleOutput struct {
 	// If the botLocaleStatus is Failed, the failureReasons field lists the errors
 	// that occurred while building the bot.
 	FailureReasons []*string `locationName:"failureReasons" type:"list"`
+
+	// Contains settings for generative AI features powered by Amazon Bedrock for
+	// your bot locale.
+	GenerativeAISettings *GenerativeAISettings `locationName:"generativeAISettings" type:"structure"`
 
 	// A timestamp of the date and time that the locale was last updated.
 	LastUpdatedDateTime *time.Time `locationName:"lastUpdatedDateTime" type:"timestamp"`
@@ -41759,6 +43660,12 @@ func (s *UpdateBotLocaleOutput) SetDescription(v string) *UpdateBotLocaleOutput 
 // SetFailureReasons sets the FailureReasons field's value.
 func (s *UpdateBotLocaleOutput) SetFailureReasons(v []*string) *UpdateBotLocaleOutput {
 	s.FailureReasons = v
+	return s
+}
+
+// SetGenerativeAISettings sets the GenerativeAISettings field's value.
+func (s *UpdateBotLocaleOutput) SetGenerativeAISettings(v *GenerativeAISettings) *UpdateBotLocaleOutput {
+	s.GenerativeAISettings = v
 	return s
 }
 
@@ -44357,7 +46264,7 @@ type UtteranceDataSortBy struct {
 	//
 	//    * Count – The number of utterances.
 	//
-	//    * UtteranceTimeStamp – The date and time of the utterance.
+	//    * UtteranceTimestamp – The date and time of the utterance.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" type:"string" required:"true" enum:"AnalyticsUtteranceSortByName"`
@@ -44572,7 +46479,7 @@ type UtteranceSpecification struct {
 	BotVersion *string `locationName:"botVersion" min:"1" type:"string"`
 
 	// The channel that is integrated with the bot that the utterance was made to.
-	Channel *string `locationName:"channel" type:"string" enum:"BotChannelType"`
+	Channel *string `locationName:"channel" min:"1" type:"string"`
 
 	// The date and time when the conversation in which the utterance took place
 	// ended. A conversation is defined as a unique combination of a sessionId and
@@ -45687,26 +47594,6 @@ func BotAliasStatus_Values() []string {
 }
 
 const (
-	// BotChannelTypeFacebook is a BotChannelType enum value
-	BotChannelTypeFacebook = "Facebook"
-
-	// BotChannelTypeSlack is a BotChannelType enum value
-	BotChannelTypeSlack = "Slack"
-
-	// BotChannelTypeTwilioSms is a BotChannelType enum value
-	BotChannelTypeTwilioSms = "TwilioSms"
-)
-
-// BotChannelType_Values returns all elements of the BotChannelType enum
-func BotChannelType_Values() []string {
-	return []string{
-		BotChannelTypeFacebook,
-		BotChannelTypeSlack,
-		BotChannelTypeTwilioSms,
-	}
-}
-
-const (
 	// BotFilterNameBotName is a BotFilterName enum value
 	BotFilterNameBotName = "BotName"
 
@@ -46187,6 +48074,42 @@ func ExportStatus_Values() []string {
 }
 
 const (
+	// GenerationSortByAttributeCreationStartTime is a GenerationSortByAttribute enum value
+	GenerationSortByAttributeCreationStartTime = "creationStartTime"
+
+	// GenerationSortByAttributeLastUpdatedTime is a GenerationSortByAttribute enum value
+	GenerationSortByAttributeLastUpdatedTime = "lastUpdatedTime"
+)
+
+// GenerationSortByAttribute_Values returns all elements of the GenerationSortByAttribute enum
+func GenerationSortByAttribute_Values() []string {
+	return []string{
+		GenerationSortByAttributeCreationStartTime,
+		GenerationSortByAttributeLastUpdatedTime,
+	}
+}
+
+const (
+	// GenerationStatusFailed is a GenerationStatus enum value
+	GenerationStatusFailed = "Failed"
+
+	// GenerationStatusComplete is a GenerationStatus enum value
+	GenerationStatusComplete = "Complete"
+
+	// GenerationStatusInProgress is a GenerationStatus enum value
+	GenerationStatusInProgress = "InProgress"
+)
+
+// GenerationStatus_Values returns all elements of the GenerationStatus enum
+func GenerationStatus_Values() []string {
+	return []string{
+		GenerationStatusFailed,
+		GenerationStatusComplete,
+		GenerationStatusInProgress,
+	}
+}
+
+const (
 	// ImportExportFileFormatLexJson is a ImportExportFileFormat enum value
 	ImportExportFileFormatLexJson = "LexJson"
 
@@ -46512,6 +48435,22 @@ func SlotFilterOperator_Values() []string {
 	return []string{
 		SlotFilterOperatorCo,
 		SlotFilterOperatorEq,
+	}
+}
+
+const (
+	// SlotResolutionStrategyEnhancedFallback is a SlotResolutionStrategy enum value
+	SlotResolutionStrategyEnhancedFallback = "EnhancedFallback"
+
+	// SlotResolutionStrategyDefault is a SlotResolutionStrategy enum value
+	SlotResolutionStrategyDefault = "Default"
+)
+
+// SlotResolutionStrategy_Values returns all elements of the SlotResolutionStrategy enum
+func SlotResolutionStrategy_Values() []string {
+	return []string{
+		SlotResolutionStrategyEnhancedFallback,
+		SlotResolutionStrategyDefault,
 	}
 }
 

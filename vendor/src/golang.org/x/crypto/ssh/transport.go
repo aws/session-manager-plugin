@@ -17,7 +17,8 @@ import (
 const debugTransport = false
 
 const (
-	gcmCipherID    = "aes128-gcm@openssh.com"
+	gcm128CipherID = "aes128-gcm@openssh.com"
+	gcm256CipherID = "aes256-gcm@openssh.com"
 	aes128cbcID    = "aes128-cbc"
 	tripledescbcID = "3des-cbc"
 )
@@ -48,19 +49,22 @@ type transport struct {
 	rand      io.Reader
 	isClient  bool
 	io.Closer
+
+	strictMode     bool
+	initialKEXDone bool
 }
 
 // packetCipher represents a combination of SSH encryption/MAC
 // protocol.  A single instance should be used for one direction only.
 type packetCipher interface {
-	// writePacket encrypts the packet and writes it to w. The
+	// writeCipherPacket encrypts the packet and writes it to w. The
 	// contents of the packet are generally scrambled.
-	writePacket(seqnum uint32, w io.Writer, rand io.Reader, packet []byte) error
+	writeCipherPacket(seqnum uint32, w io.Writer, rand io.Reader, packet []byte) error
 
-	// readPacket reads and decrypts a packet of data. The
+	// readCipherPacket reads and decrypts a packet of data. The
 	// returned packet may be overwritten by future calls of
 	// readPacket.
-	readPacket(seqnum uint32, r io.Reader) ([]byte, error)
+	readCipherPacket(seqnum uint32, r io.Reader) ([]byte, error)
 }
 
 // connectionState represents one side (read or write) of the
@@ -71,6 +75,18 @@ type connectionState struct {
 	seqNum           uint32
 	dir              direction
 	pendingKeyChange chan packetCipher
+}
+
+func (t *transport) setStrictMode() error {
+	if t.reader.seqNum != 1 {
+		return errors.New("ssh: sequence number != 1 when strict KEX mode requested")
+	}
+	t.strictMode = true
+	return nil
+}
+
+func (t *transport) setInitialKEXDone() {
+	t.initialKEXDone = true
 }
 
 // prepareKeyChange sets up key material for a keychange. The key changes in
@@ -111,11 +127,12 @@ func (t *transport) printPacket(p []byte, write bool) {
 // Read and decrypt next packet.
 func (t *transport) readPacket() (p []byte, err error) {
 	for {
-		p, err = t.reader.readPacket(t.bufReader)
+		p, err = t.reader.readPacket(t.bufReader, t.strictMode)
 		if err != nil {
 			break
 		}
-		if len(p) == 0 || (p[0] != msgIgnore && p[0] != msgDebug) {
+		// in strict mode we pass through DEBUG and IGNORE packets only during the initial KEX
+		if len(p) == 0 || (t.strictMode && !t.initialKEXDone) || (p[0] != msgIgnore && p[0] != msgDebug) {
 			break
 		}
 	}
@@ -126,8 +143,8 @@ func (t *transport) readPacket() (p []byte, err error) {
 	return p, err
 }
 
-func (s *connectionState) readPacket(r *bufio.Reader) ([]byte, error) {
-	packet, err := s.packetCipher.readPacket(s.seqNum, r)
+func (s *connectionState) readPacket(r *bufio.Reader, strictMode bool) ([]byte, error) {
+	packet, err := s.packetCipher.readCipherPacket(s.seqNum, r)
 	s.seqNum++
 	if err == nil && len(packet) == 0 {
 		err = errors.New("ssh: zero length packet")
@@ -139,6 +156,9 @@ func (s *connectionState) readPacket(r *bufio.Reader) ([]byte, error) {
 			select {
 			case cipher := <-s.pendingKeyChange:
 				s.packetCipher = cipher
+				if strictMode {
+					s.seqNum = 0
+				}
 			default:
 				return nil, errors.New("ssh: got bogus newkeys message")
 			}
@@ -169,13 +189,13 @@ func (t *transport) writePacket(packet []byte) error {
 	if debugTransport {
 		t.printPacket(packet, true)
 	}
-	return t.writer.writePacket(t.bufWriter, t.rand, packet)
+	return t.writer.writePacket(t.bufWriter, t.rand, packet, t.strictMode)
 }
 
-func (s *connectionState) writePacket(w *bufio.Writer, rand io.Reader, packet []byte) error {
+func (s *connectionState) writePacket(w *bufio.Writer, rand io.Reader, packet []byte, strictMode bool) error {
 	changeKeys := len(packet) > 0 && packet[0] == msgNewKeys
 
-	err := s.packetCipher.writePacket(s.seqNum, w, rand, packet)
+	err := s.packetCipher.writeCipherPacket(s.seqNum, w, rand, packet)
 	if err != nil {
 		return err
 	}
@@ -187,6 +207,9 @@ func (s *connectionState) writePacket(w *bufio.Writer, rand io.Reader, packet []
 		select {
 		case cipher := <-s.pendingKeyChange:
 			s.packetCipher = cipher
+			if strictMode {
+				s.seqNum = 0
+			}
 		default:
 			panic("ssh: no key material for msgNewKeys")
 		}
@@ -238,15 +261,19 @@ var (
 // (to setup server->client keys) or clientKeys (for client->server keys).
 func newPacketCipher(d direction, algs directionAlgorithms, kex *kexResult) (packetCipher, error) {
 	cipherMode := cipherModes[algs.Cipher]
-	macMode := macModes[algs.MAC]
 
 	iv := make([]byte, cipherMode.ivSize)
 	key := make([]byte, cipherMode.keySize)
-	macKey := make([]byte, macMode.keySize)
 
 	generateKeyMaterial(iv, d.ivTag, kex)
 	generateKeyMaterial(key, d.keyTag, kex)
-	generateKeyMaterial(macKey, d.macKeyTag, kex)
+
+	var macKey []byte
+	if !aeadCiphers[algs.Cipher] {
+		macMode := macModes[algs.MAC]
+		macKey = make([]byte, macMode.keySize)
+		generateKeyMaterial(macKey, d.macKeyTag, kex)
+	}
 
 	return cipherModes[algs.Cipher].create(key, iv, macKey, algs)
 }

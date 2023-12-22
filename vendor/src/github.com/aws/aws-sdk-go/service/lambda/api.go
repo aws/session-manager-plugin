@@ -3254,8 +3254,10 @@ func (c *Lambda) InvokeRequest(input *InvokeInput) (req *request.Request, output
 // Invoke API operation for AWS Lambda.
 //
 // Invokes a Lambda function. You can invoke a function synchronously (and wait
-// for the response), or asynchronously. To invoke a function asynchronously,
-// set InvocationType to Event.
+// for the response), or asynchronously. By default, Lambda invokes your function
+// synchronously (i.e. theInvocationType is RequestResponse). To invoke a function
+// asynchronously, set InvocationType to Event. Lambda passes the ClientContext
+// object to your function for synchronous invocations only.
 //
 // For synchronous invocation (https://docs.aws.amazon.com/lambda/latest/dg/invocation-sync.html),
 // details about the function response, including errors, are included in the
@@ -3737,6 +3739,7 @@ func (c *Lambda) InvokeWithResponseStreamWithContext(ctx aws.Context, input *Inv
 }
 
 var _ awserr.Error
+var _ time.Time
 
 // InvokeWithResponseStreamEventStream provides the event stream handling for the InvokeWithResponseStream.
 //
@@ -9273,6 +9276,9 @@ type CreateFunctionInput struct {
 	// ARN, including the version.
 	Layers []*string `type:"list"`
 
+	// The function's Amazon CloudWatch Logs configuration settings.
+	LoggingConfig *LoggingConfig `type:"structure"`
+
 	// The amount of memory available to the function (https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-memory-console)
 	// at runtime. Increasing the function memory also increases its CPU allocation.
 	// The default value is 128 MB. The value can be any multiple of 1 MB.
@@ -9384,6 +9390,11 @@ func (s *CreateFunctionInput) Validate() error {
 			}
 		}
 	}
+	if s.LoggingConfig != nil {
+		if err := s.LoggingConfig.Validate(); err != nil {
+			invalidParams.AddNested("LoggingConfig", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -9466,6 +9477,12 @@ func (s *CreateFunctionInput) SetKMSKeyArn(v string) *CreateFunctionInput {
 // SetLayers sets the Layers field's value.
 func (s *CreateFunctionInput) SetLayers(v []*string) *CreateFunctionInput {
 	s.Layers = v
+	return s
+}
+
+// SetLoggingConfig sets the LoggingConfig field's value.
+func (s *CreateFunctionInput) SetLoggingConfig(v *LoggingConfig) *CreateFunctionInput {
+	s.LoggingConfig = v
 	return s
 }
 
@@ -12131,6 +12148,9 @@ type FunctionConfiguration struct {
 	// The function's layers (https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html).
 	Layers []*Layer `type:"list"`
 
+	// The function's Amazon CloudWatch Logs configuration settings.
+	LoggingConfig *LoggingConfig `type:"structure"`
+
 	// For Lambda@Edge functions, the ARN of the main function.
 	MasterArn *string `type:"string"`
 
@@ -12316,6 +12336,12 @@ func (s *FunctionConfiguration) SetLastUpdateStatusReasonCode(v string) *Functio
 // SetLayers sets the Layers field's value.
 func (s *FunctionConfiguration) SetLayers(v []*Layer) *FunctionConfiguration {
 	s.Layers = v
+	return s
+}
+
+// SetLoggingConfig sets the LoggingConfig field's value.
+func (s *FunctionConfiguration) SetLoggingConfig(v *LoggingConfig) *FunctionConfiguration {
+	s.LoggingConfig = v
 	return s
 }
 
@@ -17888,6 +17914,86 @@ func (s *ListVersionsByFunctionOutput) SetVersions(v []*FunctionConfiguration) *
 	return s
 }
 
+// The function's Amazon CloudWatch Logs configuration settings.
+type LoggingConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Set this property to filter the application logs for your function that Lambda
+	// sends to CloudWatch. Lambda only sends application logs at the selected level
+	// and lower.
+	ApplicationLogLevel *string `type:"string" enum:"ApplicationLogLevel"`
+
+	// The format in which Lambda sends your function's application and system logs
+	// to CloudWatch. Select between plain text and structured JSON.
+	LogFormat *string `type:"string" enum:"LogFormat"`
+
+	// The name of the Amazon CloudWatch log group the function sends logs to. By
+	// default, Lambda functions send logs to a default log group named /aws/lambda/<function
+	// name>. To use a different log group, enter an existing log group or enter
+	// a new log group name.
+	LogGroup *string `min:"1" type:"string"`
+
+	// Set this property to filter the system logs for your function that Lambda
+	// sends to CloudWatch. Lambda only sends system logs at the selected level
+	// and lower.
+	SystemLogLevel *string `type:"string" enum:"SystemLogLevel"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LoggingConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LoggingConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LoggingConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LoggingConfig"}
+	if s.LogGroup != nil && len(*s.LogGroup) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LogGroup", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApplicationLogLevel sets the ApplicationLogLevel field's value.
+func (s *LoggingConfig) SetApplicationLogLevel(v string) *LoggingConfig {
+	s.ApplicationLogLevel = &v
+	return s
+}
+
+// SetLogFormat sets the LogFormat field's value.
+func (s *LoggingConfig) SetLogFormat(v string) *LoggingConfig {
+	s.LogFormat = &v
+	return s
+}
+
+// SetLogGroup sets the LogGroup field's value.
+func (s *LoggingConfig) SetLogGroup(v string) *LoggingConfig {
+	s.LogGroup = &v
+	return s
+}
+
+// SetSystemLogLevel sets the SystemLogLevel field's value.
+func (s *LoggingConfig) SetSystemLogLevel(v string) *LoggingConfig {
+	s.SystemLogLevel = &v
+	return s
+}
+
 // A destination for events that failed processing.
 type OnFailure struct {
 	_ struct{} `type:"structure"`
@@ -21836,6 +21942,9 @@ type UpdateFunctionConfigurationInput struct {
 	// ARN, including the version.
 	Layers []*string `type:"list"`
 
+	// The function's Amazon CloudWatch Logs configuration settings.
+	LoggingConfig *LoggingConfig `type:"structure"`
+
 	// The amount of memory available to the function (https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-memory-console)
 	// at runtime. Increasing the function memory also increases its CPU allocation.
 	// The default value is 128 MB. The value can be any multiple of 1 MB.
@@ -21925,6 +22034,11 @@ func (s *UpdateFunctionConfigurationInput) Validate() error {
 			}
 		}
 	}
+	if s.LoggingConfig != nil {
+		if err := s.LoggingConfig.Validate(); err != nil {
+			invalidParams.AddNested("LoggingConfig", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -21989,6 +22103,12 @@ func (s *UpdateFunctionConfigurationInput) SetKMSKeyArn(v string) *UpdateFunctio
 // SetLayers sets the Layers field's value.
 func (s *UpdateFunctionConfigurationInput) SetLayers(v []*string) *UpdateFunctionConfigurationInput {
 	s.Layers = v
+	return s
+}
+
+// SetLoggingConfig sets the LoggingConfig field's value.
+func (s *UpdateFunctionConfigurationInput) SetLoggingConfig(v *LoggingConfig) *UpdateFunctionConfigurationInput {
+	s.LoggingConfig = v
 	return s
 }
 
@@ -22458,6 +22578,10 @@ func (s *UpdateFunctionUrlConfigOutput) SetLastModifiedTime(v string) *UpdateFun
 type VpcConfig struct {
 	_ struct{} `type:"structure"`
 
+	// Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack
+	// subnets.
+	Ipv6AllowedForDualStack *bool `type:"boolean"`
+
 	// A list of VPC security group IDs.
 	SecurityGroupIds []*string `type:"list"`
 
@@ -22483,6 +22607,12 @@ func (s VpcConfig) GoString() string {
 	return s.String()
 }
 
+// SetIpv6AllowedForDualStack sets the Ipv6AllowedForDualStack field's value.
+func (s *VpcConfig) SetIpv6AllowedForDualStack(v bool) *VpcConfig {
+	s.Ipv6AllowedForDualStack = &v
+	return s
+}
+
 // SetSecurityGroupIds sets the SecurityGroupIds field's value.
 func (s *VpcConfig) SetSecurityGroupIds(v []*string) *VpcConfig {
 	s.SecurityGroupIds = v
@@ -22498,6 +22628,10 @@ func (s *VpcConfig) SetSubnetIds(v []*string) *VpcConfig {
 // The VPC security groups and subnets that are attached to a Lambda function.
 type VpcConfigResponse struct {
 	_ struct{} `type:"structure"`
+
+	// Allows outbound IPv6 traffic on VPC functions that are connected to dual-stack
+	// subnets.
+	Ipv6AllowedForDualStack *bool `type:"boolean"`
 
 	// A list of VPC security group IDs.
 	SecurityGroupIds []*string `type:"list"`
@@ -22527,6 +22661,12 @@ func (s VpcConfigResponse) GoString() string {
 	return s.String()
 }
 
+// SetIpv6AllowedForDualStack sets the Ipv6AllowedForDualStack field's value.
+func (s *VpcConfigResponse) SetIpv6AllowedForDualStack(v bool) *VpcConfigResponse {
+	s.Ipv6AllowedForDualStack = &v
+	return s
+}
+
 // SetSecurityGroupIds sets the SecurityGroupIds field's value.
 func (s *VpcConfigResponse) SetSecurityGroupIds(v []*string) *VpcConfigResponse {
 	s.SecurityGroupIds = v
@@ -22543,6 +22683,38 @@ func (s *VpcConfigResponse) SetSubnetIds(v []*string) *VpcConfigResponse {
 func (s *VpcConfigResponse) SetVpcId(v string) *VpcConfigResponse {
 	s.VpcId = &v
 	return s
+}
+
+const (
+	// ApplicationLogLevelTrace is a ApplicationLogLevel enum value
+	ApplicationLogLevelTrace = "TRACE"
+
+	// ApplicationLogLevelDebug is a ApplicationLogLevel enum value
+	ApplicationLogLevelDebug = "DEBUG"
+
+	// ApplicationLogLevelInfo is a ApplicationLogLevel enum value
+	ApplicationLogLevelInfo = "INFO"
+
+	// ApplicationLogLevelWarn is a ApplicationLogLevel enum value
+	ApplicationLogLevelWarn = "WARN"
+
+	// ApplicationLogLevelError is a ApplicationLogLevel enum value
+	ApplicationLogLevelError = "ERROR"
+
+	// ApplicationLogLevelFatal is a ApplicationLogLevel enum value
+	ApplicationLogLevelFatal = "FATAL"
+)
+
+// ApplicationLogLevel_Values returns all elements of the ApplicationLogLevel enum
+func ApplicationLogLevel_Values() []string {
+	return []string{
+		ApplicationLogLevelTrace,
+		ApplicationLogLevelDebug,
+		ApplicationLogLevelInfo,
+		ApplicationLogLevelWarn,
+		ApplicationLogLevelError,
+		ApplicationLogLevelFatal,
+	}
 }
 
 const (
@@ -22814,6 +22986,22 @@ func LastUpdateStatusReasonCode_Values() []string {
 }
 
 const (
+	// LogFormatJson is a LogFormat enum value
+	LogFormatJson = "JSON"
+
+	// LogFormatText is a LogFormat enum value
+	LogFormatText = "Text"
+)
+
+// LogFormat_Values returns all elements of the LogFormat enum
+func LogFormat_Values() []string {
+	return []string{
+		LogFormatJson,
+		LogFormatText,
+	}
+}
+
+const (
 	// LogTypeNone is a LogType enum value
 	LogTypeNone = "None"
 
@@ -22974,6 +23162,21 @@ const (
 
 	// RuntimeRuby32 is a Runtime enum value
 	RuntimeRuby32 = "ruby3.2"
+
+	// RuntimePython311 is a Runtime enum value
+	RuntimePython311 = "python3.11"
+
+	// RuntimeNodejs20X is a Runtime enum value
+	RuntimeNodejs20X = "nodejs20.x"
+
+	// RuntimeProvidedAl2023 is a Runtime enum value
+	RuntimeProvidedAl2023 = "provided.al2023"
+
+	// RuntimePython312 is a Runtime enum value
+	RuntimePython312 = "python3.12"
+
+	// RuntimeJava21 is a Runtime enum value
+	RuntimeJava21 = "java21"
 )
 
 // Runtime_Values returns all elements of the Runtime enum
@@ -23010,6 +23213,11 @@ func Runtime_Values() []string {
 		RuntimePython310,
 		RuntimeJava17,
 		RuntimeRuby32,
+		RuntimePython311,
+		RuntimeNodejs20X,
+		RuntimeProvidedAl2023,
+		RuntimePython312,
+		RuntimeJava21,
 	}
 }
 
@@ -23210,6 +23418,26 @@ func StateReasonCode_Values() []string {
 		StateReasonCodeInvalidRuntime,
 		StateReasonCodeInvalidZipFileException,
 		StateReasonCodeFunctionError,
+	}
+}
+
+const (
+	// SystemLogLevelDebug is a SystemLogLevel enum value
+	SystemLogLevelDebug = "DEBUG"
+
+	// SystemLogLevelInfo is a SystemLogLevel enum value
+	SystemLogLevelInfo = "INFO"
+
+	// SystemLogLevelWarn is a SystemLogLevel enum value
+	SystemLogLevelWarn = "WARN"
+)
+
+// SystemLogLevel_Values returns all elements of the SystemLogLevel enum
+func SystemLogLevel_Values() []string {
+	return []string{
+		SystemLogLevelDebug,
+		SystemLogLevelInfo,
+		SystemLogLevelWarn,
 	}
 }
 

@@ -178,6 +178,9 @@ func (c *Redshift) AddPartnerRequest(input *AddPartnerInput) (req *request.Reque
 //   - ErrCodeUnauthorizedPartnerIntegrationFault "UnauthorizedPartnerIntegration"
 //     The partner integration is not authorized.
 //
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/AddPartner
 func (c *Redshift) AddPartner(input *AddPartnerInput) (*AddPartnerOutput, error) {
 	req, out := c.AddPartnerRequest(input)
@@ -991,6 +994,9 @@ func (c *Redshift) CopyClusterSnapshotRequest(input *CopyClusterSnapshotInput) (
 //
 // Returned Error Codes:
 //
+//   - ErrCodeClusterNotFoundFault "ClusterNotFound"
+//     The ClusterIdentifier parameter does not refer to an existing cluster.
+//
 //   - ErrCodeClusterSnapshotAlreadyExistsFault "ClusterSnapshotAlreadyExists"
 //     The value specified as a snapshot identifier is already used by an existing
 //     snapshot.
@@ -1259,6 +1265,16 @@ func (c *Redshift) CreateClusterRequest(input *CreateClusterInput) (req *request
 //     The retention period specified is either in the past or is not a valid value.
 //
 //     The value must be either -1 or an integer between 1 and 3,653.
+//
+//   - ErrCodeIpv6CidrBlockNotFoundFault "Ipv6CidrBlockNotFoundFault"
+//     There are no subnets in your VPC with associated IPv6 CIDR blocks. To use
+//     dual-stack mode, associate an IPv6 CIDR block with each subnet in your VPC.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+//   - ErrCodeRedshiftIdcApplicationNotExistsFault "RedshiftIdcApplicationNotExists"
+//     The application you attempted to find doesn't exist.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/CreateCluster
 func (c *Redshift) CreateCluster(input *CreateClusterInput) (*CreateClusterOutput, error) {
@@ -2235,6 +2251,98 @@ func (c *Redshift) CreateHsmConfigurationWithContext(ctx aws.Context, input *Cre
 	return out, req.Send()
 }
 
+const opCreateRedshiftIdcApplication = "CreateRedshiftIdcApplication"
+
+// CreateRedshiftIdcApplicationRequest generates a "aws/request.Request" representing the
+// client's request for the CreateRedshiftIdcApplication operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateRedshiftIdcApplication for more information on using the CreateRedshiftIdcApplication
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateRedshiftIdcApplicationRequest method.
+//	req, resp := client.CreateRedshiftIdcApplicationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/CreateRedshiftIdcApplication
+func (c *Redshift) CreateRedshiftIdcApplicationRequest(input *CreateRedshiftIdcApplicationInput) (req *request.Request, output *CreateRedshiftIdcApplicationOutput) {
+	op := &request.Operation{
+		Name:       opCreateRedshiftIdcApplication,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateRedshiftIdcApplicationInput{}
+	}
+
+	output = &CreateRedshiftIdcApplicationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateRedshiftIdcApplication API operation for Amazon Redshift.
+//
+// Creates an Amazon Redshift application for use with IAM Identity Center.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation CreateRedshiftIdcApplication for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeRedshiftIdcApplicationAlreadyExistsFault "RedshiftIdcApplicationAlreadyExists"
+//     The application you attempted to add already exists.
+//
+//   - ErrCodeDependentServiceUnavailableFault "DependentServiceUnavailableFault"
+//     Your request cannot be completed because a dependent internal service is
+//     temporarily unavailable. Wait 30 to 60 seconds and try again.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+//   - ErrCodeDependentServiceAccessDeniedFault "DependentServiceAccessDenied"
+//     A dependent service denied access for the integration.
+//
+//   - ErrCodeRedshiftIdcApplicationQuotaExceededFault "RedshiftIdcApplicationQuotaExceeded"
+//     The maximum number of Redshift IAM Identity Center applications was exceeded.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/CreateRedshiftIdcApplication
+func (c *Redshift) CreateRedshiftIdcApplication(input *CreateRedshiftIdcApplicationInput) (*CreateRedshiftIdcApplicationOutput, error) {
+	req, out := c.CreateRedshiftIdcApplicationRequest(input)
+	return out, req.Send()
+}
+
+// CreateRedshiftIdcApplicationWithContext is the same as CreateRedshiftIdcApplication with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateRedshiftIdcApplication for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) CreateRedshiftIdcApplicationWithContext(ctx aws.Context, input *CreateRedshiftIdcApplicationInput, opts ...request.Option) (*CreateRedshiftIdcApplicationOutput, error) {
+	req, out := c.CreateRedshiftIdcApplicationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateScheduledAction = "CreateScheduledAction"
 
 // CreateScheduledActionRequest generates a "aws/request.Request" representing the
@@ -2291,6 +2399,9 @@ func (c *Redshift) CreateScheduledActionRequest(input *CreateScheduledActionInpu
 //
 // Returned Error Codes:
 //
+//   - ErrCodeClusterNotFoundFault "ClusterNotFound"
+//     The ClusterIdentifier parameter does not refer to an existing cluster.
+//
 //   - ErrCodeScheduledActionAlreadyExistsFault "ScheduledActionAlreadyExists"
 //     The scheduled action already exists.
 //
@@ -2308,6 +2419,9 @@ func (c *Redshift) CreateScheduledActionRequest(input *CreateScheduledActionInpu
 //
 //   - ErrCodeUnauthorizedOperation "UnauthorizedOperation"
 //     Your account is not authorized to perform the requested operation.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/CreateScheduledAction
 func (c *Redshift) CreateScheduledAction(input *CreateScheduledActionInput) (*CreateScheduledActionOutput, error) {
@@ -3416,6 +3530,9 @@ func (c *Redshift) DeleteCustomDomainAssociationRequest(input *DeleteCustomDomai
 //   - ErrCodeCustomCnameAssociationFault "CustomCnameAssociationFault"
 //     An error occurred when an attempt was made to change the custom domain association.
 //
+//   - ErrCodeCustomDomainAssociationNotFoundFault "CustomDomainAssociationNotFoundFault"
+//     An error occurred. The custom domain name couldn't be found.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeleteCustomDomainAssociation
 func (c *Redshift) DeleteCustomDomainAssociation(input *DeleteCustomDomainAssociationInput) (*DeleteCustomDomainAssociationOutput, error) {
 	req, out := c.DeleteCustomDomainAssociationRequest(input)
@@ -3846,6 +3963,9 @@ func (c *Redshift) DeletePartnerRequest(input *DeletePartnerInput) (req *request
 //   - ErrCodeUnauthorizedPartnerIntegrationFault "UnauthorizedPartnerIntegration"
 //     The partner integration is not authorized.
 //
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeletePartner
 func (c *Redshift) DeletePartner(input *DeletePartnerInput) (*DeletePartnerOutput, error) {
 	req, out := c.DeletePartnerRequest(input)
@@ -3863,6 +3983,179 @@ func (c *Redshift) DeletePartner(input *DeletePartnerInput) (*DeletePartnerOutpu
 // for more information on using Contexts.
 func (c *Redshift) DeletePartnerWithContext(ctx aws.Context, input *DeletePartnerInput, opts ...request.Option) (*DeletePartnerOutput, error) {
 	req, out := c.DeletePartnerRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteRedshiftIdcApplication = "DeleteRedshiftIdcApplication"
+
+// DeleteRedshiftIdcApplicationRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteRedshiftIdcApplication operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteRedshiftIdcApplication for more information on using the DeleteRedshiftIdcApplication
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteRedshiftIdcApplicationRequest method.
+//	req, resp := client.DeleteRedshiftIdcApplicationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeleteRedshiftIdcApplication
+func (c *Redshift) DeleteRedshiftIdcApplicationRequest(input *DeleteRedshiftIdcApplicationInput) (req *request.Request, output *DeleteRedshiftIdcApplicationOutput) {
+	op := &request.Operation{
+		Name:       opDeleteRedshiftIdcApplication,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteRedshiftIdcApplicationInput{}
+	}
+
+	output = &DeleteRedshiftIdcApplicationOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(query.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteRedshiftIdcApplication API operation for Amazon Redshift.
+//
+// Deletes an Amazon Redshift IAM Identity Center application.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation DeleteRedshiftIdcApplication for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeRedshiftIdcApplicationNotExistsFault "RedshiftIdcApplicationNotExists"
+//     The application you attempted to find doesn't exist.
+//
+//   - ErrCodeDependentServiceUnavailableFault "DependentServiceUnavailableFault"
+//     Your request cannot be completed because a dependent internal service is
+//     temporarily unavailable. Wait 30 to 60 seconds and try again.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+//   - ErrCodeDependentServiceAccessDeniedFault "DependentServiceAccessDenied"
+//     A dependent service denied access for the integration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeleteRedshiftIdcApplication
+func (c *Redshift) DeleteRedshiftIdcApplication(input *DeleteRedshiftIdcApplicationInput) (*DeleteRedshiftIdcApplicationOutput, error) {
+	req, out := c.DeleteRedshiftIdcApplicationRequest(input)
+	return out, req.Send()
+}
+
+// DeleteRedshiftIdcApplicationWithContext is the same as DeleteRedshiftIdcApplication with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteRedshiftIdcApplication for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) DeleteRedshiftIdcApplicationWithContext(ctx aws.Context, input *DeleteRedshiftIdcApplicationInput, opts ...request.Option) (*DeleteRedshiftIdcApplicationOutput, error) {
+	req, out := c.DeleteRedshiftIdcApplicationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteResourcePolicy = "DeleteResourcePolicy"
+
+// DeleteResourcePolicyRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteResourcePolicy operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteResourcePolicy for more information on using the DeleteResourcePolicy
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteResourcePolicyRequest method.
+//	req, resp := client.DeleteResourcePolicyRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeleteResourcePolicy
+func (c *Redshift) DeleteResourcePolicyRequest(input *DeleteResourcePolicyInput) (req *request.Request, output *DeleteResourcePolicyOutput) {
+	op := &request.Operation{
+		Name:       opDeleteResourcePolicy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteResourcePolicyInput{}
+	}
+
+	output = &DeleteResourcePolicyOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(query.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteResourcePolicy API operation for Amazon Redshift.
+//
+// Deletes the resource policy for a specified resource.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation DeleteResourcePolicy for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeResourceNotFoundFault "ResourceNotFoundFault"
+//     The resource could not be found.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DeleteResourcePolicy
+func (c *Redshift) DeleteResourcePolicy(input *DeleteResourcePolicyInput) (*DeleteResourcePolicyOutput, error) {
+	req, out := c.DeleteResourcePolicyRequest(input)
+	return out, req.Send()
+}
+
+// DeleteResourcePolicyWithContext is the same as DeleteResourcePolicy with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteResourcePolicy for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) DeleteResourcePolicyWithContext(ctx aws.Context, input *DeleteResourcePolicyInput, opts ...request.Option) (*DeleteResourcePolicyOutput, error) {
+	req, out := c.DeleteResourcePolicyRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -5827,7 +6120,7 @@ func (c *Redshift) DescribeCustomDomainAssociationsRequest(input *DescribeCustom
 
 // DescribeCustomDomainAssociations API operation for Amazon Redshift.
 //
-// Contains information for custom domain associations for a cluster.
+// Contains information about custom domain associations for a cluster.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7404,6 +7697,149 @@ func (c *Redshift) DescribeHsmConfigurationsPagesWithContext(ctx aws.Context, in
 	return p.Err()
 }
 
+const opDescribeInboundIntegrations = "DescribeInboundIntegrations"
+
+// DescribeInboundIntegrationsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeInboundIntegrations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeInboundIntegrations for more information on using the DescribeInboundIntegrations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeInboundIntegrationsRequest method.
+//	req, resp := client.DescribeInboundIntegrationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeInboundIntegrations
+func (c *Redshift) DescribeInboundIntegrationsRequest(input *DescribeInboundIntegrationsInput) (req *request.Request, output *DescribeInboundIntegrationsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeInboundIntegrations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeInboundIntegrationsInput{}
+	}
+
+	output = &DescribeInboundIntegrationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeInboundIntegrations API operation for Amazon Redshift.
+//
+// Returns a list of inbound integrations.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation DescribeInboundIntegrations for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeIntegrationNotFoundFault "IntegrationNotFoundFault"
+//     The integration can't be found.
+//
+//   - ErrCodeInvalidNamespaceFault "InvalidNamespaceFault"
+//     The namespace isn't valid because the namespace doesn't exist. Provide a
+//     valid namespace.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeInboundIntegrations
+func (c *Redshift) DescribeInboundIntegrations(input *DescribeInboundIntegrationsInput) (*DescribeInboundIntegrationsOutput, error) {
+	req, out := c.DescribeInboundIntegrationsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeInboundIntegrationsWithContext is the same as DescribeInboundIntegrations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeInboundIntegrations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) DescribeInboundIntegrationsWithContext(ctx aws.Context, input *DescribeInboundIntegrationsInput, opts ...request.Option) (*DescribeInboundIntegrationsOutput, error) {
+	req, out := c.DescribeInboundIntegrationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeInboundIntegrationsPages iterates over the pages of a DescribeInboundIntegrations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeInboundIntegrations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeInboundIntegrations operation.
+//	pageNum := 0
+//	err := client.DescribeInboundIntegrationsPages(params,
+//	    func(page *redshift.DescribeInboundIntegrationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Redshift) DescribeInboundIntegrationsPages(input *DescribeInboundIntegrationsInput, fn func(*DescribeInboundIntegrationsOutput, bool) bool) error {
+	return c.DescribeInboundIntegrationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeInboundIntegrationsPagesWithContext same as DescribeInboundIntegrationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) DescribeInboundIntegrationsPagesWithContext(ctx aws.Context, input *DescribeInboundIntegrationsInput, fn func(*DescribeInboundIntegrationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeInboundIntegrationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeInboundIntegrationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeInboundIntegrationsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opDescribeLoggingStatus = "DescribeLoggingStatus"
 
 // DescribeLoggingStatusRequest generates a "aws/request.Request" representing the
@@ -7458,8 +7894,12 @@ func (c *Redshift) DescribeLoggingStatusRequest(input *DescribeLoggingStatusInpu
 // API operation DescribeLoggingStatus for usage and error information.
 //
 // Returned Error Codes:
+//
 //   - ErrCodeClusterNotFoundFault "ClusterNotFound"
 //     The ClusterIdentifier parameter does not refer to an existing cluster.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeLoggingStatus
 func (c *Redshift) DescribeLoggingStatus(input *DescribeLoggingStatusInput) (*LoggingStatus, error) {
@@ -7832,6 +8272,9 @@ func (c *Redshift) DescribePartnersRequest(input *DescribePartnersInput) (req *r
 //   - ErrCodeUnauthorizedPartnerIntegrationFault "UnauthorizedPartnerIntegration"
 //     The partner integration is not authorized.
 //
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribePartners
 func (c *Redshift) DescribePartners(input *DescribePartnersInput) (*DescribePartnersOutput, error) {
 	req, out := c.DescribePartnersRequest(input)
@@ -7852,6 +8295,152 @@ func (c *Redshift) DescribePartnersWithContext(ctx aws.Context, input *DescribeP
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+const opDescribeRedshiftIdcApplications = "DescribeRedshiftIdcApplications"
+
+// DescribeRedshiftIdcApplicationsRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeRedshiftIdcApplications operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeRedshiftIdcApplications for more information on using the DescribeRedshiftIdcApplications
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeRedshiftIdcApplicationsRequest method.
+//	req, resp := client.DescribeRedshiftIdcApplicationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeRedshiftIdcApplications
+func (c *Redshift) DescribeRedshiftIdcApplicationsRequest(input *DescribeRedshiftIdcApplicationsInput) (req *request.Request, output *DescribeRedshiftIdcApplicationsOutput) {
+	op := &request.Operation{
+		Name:       opDescribeRedshiftIdcApplications,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &DescribeRedshiftIdcApplicationsInput{}
+	}
+
+	output = &DescribeRedshiftIdcApplicationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeRedshiftIdcApplications API operation for Amazon Redshift.
+//
+// Lists the Amazon Redshift IAM Identity Center applications.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation DescribeRedshiftIdcApplications for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeRedshiftIdcApplicationNotExistsFault "RedshiftIdcApplicationNotExists"
+//     The application you attempted to find doesn't exist.
+//
+//   - ErrCodeDependentServiceUnavailableFault "DependentServiceUnavailableFault"
+//     Your request cannot be completed because a dependent internal service is
+//     temporarily unavailable. Wait 30 to 60 seconds and try again.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+//   - ErrCodeDependentServiceAccessDeniedFault "DependentServiceAccessDenied"
+//     A dependent service denied access for the integration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeRedshiftIdcApplications
+func (c *Redshift) DescribeRedshiftIdcApplications(input *DescribeRedshiftIdcApplicationsInput) (*DescribeRedshiftIdcApplicationsOutput, error) {
+	req, out := c.DescribeRedshiftIdcApplicationsRequest(input)
+	return out, req.Send()
+}
+
+// DescribeRedshiftIdcApplicationsWithContext is the same as DescribeRedshiftIdcApplications with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeRedshiftIdcApplications for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) DescribeRedshiftIdcApplicationsWithContext(ctx aws.Context, input *DescribeRedshiftIdcApplicationsInput, opts ...request.Option) (*DescribeRedshiftIdcApplicationsOutput, error) {
+	req, out := c.DescribeRedshiftIdcApplicationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// DescribeRedshiftIdcApplicationsPages iterates over the pages of a DescribeRedshiftIdcApplications operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeRedshiftIdcApplications method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeRedshiftIdcApplications operation.
+//	pageNum := 0
+//	err := client.DescribeRedshiftIdcApplicationsPages(params,
+//	    func(page *redshift.DescribeRedshiftIdcApplicationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Redshift) DescribeRedshiftIdcApplicationsPages(input *DescribeRedshiftIdcApplicationsInput, fn func(*DescribeRedshiftIdcApplicationsOutput, bool) bool) error {
+	return c.DescribeRedshiftIdcApplicationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeRedshiftIdcApplicationsPagesWithContext same as DescribeRedshiftIdcApplicationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) DescribeRedshiftIdcApplicationsPagesWithContext(ctx aws.Context, input *DescribeRedshiftIdcApplicationsInput, fn func(*DescribeRedshiftIdcApplicationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeRedshiftIdcApplicationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeRedshiftIdcApplicationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeRedshiftIdcApplicationsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opDescribeReservedNodeExchangeStatus = "DescribeReservedNodeExchangeStatus"
@@ -8354,6 +8943,9 @@ func (c *Redshift) DescribeResizeRequest(input *DescribeResizeInput) (req *reque
 //
 //   - ErrCodeResizeNotFoundFault "ResizeNotFound"
 //     A resize operation for the specified cluster is not found.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DescribeResize
 func (c *Redshift) DescribeResize(input *DescribeResizeInput) (*DescribeResizeOutput, error) {
@@ -9382,6 +9974,9 @@ func (c *Redshift) DisableLoggingRequest(input *DisableLoggingInput) (req *reque
 //   - ErrCodeInvalidClusterStateFault "InvalidClusterState"
 //     The specified cluster is not in the available state.
 //
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DisableLogging
 func (c *Redshift) DisableLogging(input *DisableLoggingInput) (*LoggingStatus, error) {
 	req, out := c.DisableLoggingRequest(input)
@@ -9475,6 +10070,9 @@ func (c *Redshift) DisableSnapshotCopyRequest(input *DisableSnapshotCopyInput) (
 //
 //   - ErrCodeUnauthorizedOperation "UnauthorizedOperation"
 //     Your account is not authorized to perform the requested operation.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/DisableSnapshotCopy
 func (c *Redshift) DisableSnapshotCopy(input *DisableSnapshotCopyInput) (*DisableSnapshotCopyOutput, error) {
@@ -9658,6 +10256,9 @@ func (c *Redshift) EnableLoggingRequest(input *EnableLoggingInput) (req *request
 //   - ErrCodeInvalidClusterStateFault "InvalidClusterState"
 //     The specified cluster is not in the available state.
 //
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/EnableLogging
 func (c *Redshift) EnableLogging(input *EnableLoggingInput) (*LoggingStatus, error) {
 	req, out := c.EnableLoggingRequest(input)
@@ -9789,6 +10390,95 @@ func (c *Redshift) EnableSnapshotCopy(input *EnableSnapshotCopyInput) (*EnableSn
 // for more information on using Contexts.
 func (c *Redshift) EnableSnapshotCopyWithContext(ctx aws.Context, input *EnableSnapshotCopyInput, opts ...request.Option) (*EnableSnapshotCopyOutput, error) {
 	req, out := c.EnableSnapshotCopyRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opFailoverPrimaryCompute = "FailoverPrimaryCompute"
+
+// FailoverPrimaryComputeRequest generates a "aws/request.Request" representing the
+// client's request for the FailoverPrimaryCompute operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See FailoverPrimaryCompute for more information on using the FailoverPrimaryCompute
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the FailoverPrimaryComputeRequest method.
+//	req, resp := client.FailoverPrimaryComputeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/FailoverPrimaryCompute
+func (c *Redshift) FailoverPrimaryComputeRequest(input *FailoverPrimaryComputeInput) (req *request.Request, output *FailoverPrimaryComputeOutput) {
+	op := &request.Operation{
+		Name:       opFailoverPrimaryCompute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &FailoverPrimaryComputeInput{}
+	}
+
+	output = &FailoverPrimaryComputeOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// FailoverPrimaryCompute API operation for Amazon Redshift.
+//
+// Fails over the primary compute unit of the specified Multi-AZ cluster to
+// another Availability Zone.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation FailoverPrimaryCompute for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeClusterNotFoundFault "ClusterNotFound"
+//     The ClusterIdentifier parameter does not refer to an existing cluster.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+//   - ErrCodeUnauthorizedOperation "UnauthorizedOperation"
+//     Your account is not authorized to perform the requested operation.
+//
+//   - ErrCodeInvalidClusterStateFault "InvalidClusterState"
+//     The specified cluster is not in the available state.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/FailoverPrimaryCompute
+func (c *Redshift) FailoverPrimaryCompute(input *FailoverPrimaryComputeInput) (*FailoverPrimaryComputeOutput, error) {
+	req, out := c.FailoverPrimaryComputeRequest(input)
+	return out, req.Send()
+}
+
+// FailoverPrimaryComputeWithContext is the same as FailoverPrimaryCompute with the addition of
+// the ability to pass a context and additional request options.
+//
+// See FailoverPrimaryCompute for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) FailoverPrimaryComputeWithContext(ctx aws.Context, input *FailoverPrimaryComputeInput, opts ...request.Option) (*FailoverPrimaryComputeOutput, error) {
+	req, out := c.FailoverPrimaryComputeRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -10306,6 +10996,91 @@ func (c *Redshift) GetReservedNodeExchangeOfferingsPagesWithContext(ctx aws.Cont
 	return p.Err()
 }
 
+const opGetResourcePolicy = "GetResourcePolicy"
+
+// GetResourcePolicyRequest generates a "aws/request.Request" representing the
+// client's request for the GetResourcePolicy operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetResourcePolicy for more information on using the GetResourcePolicy
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetResourcePolicyRequest method.
+//	req, resp := client.GetResourcePolicyRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/GetResourcePolicy
+func (c *Redshift) GetResourcePolicyRequest(input *GetResourcePolicyInput) (req *request.Request, output *GetResourcePolicyOutput) {
+	op := &request.Operation{
+		Name:       opGetResourcePolicy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &GetResourcePolicyInput{}
+	}
+
+	output = &GetResourcePolicyOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetResourcePolicy API operation for Amazon Redshift.
+//
+// Get the resource policy for a specified resource.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation GetResourcePolicy for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeResourceNotFoundFault "ResourceNotFoundFault"
+//     The resource could not be found.
+//
+//   - ErrCodeInvalidPolicyFault "InvalidPolicyFault"
+//     The resource policy isn't valid.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/GetResourcePolicy
+func (c *Redshift) GetResourcePolicy(input *GetResourcePolicyInput) (*GetResourcePolicyOutput, error) {
+	req, out := c.GetResourcePolicyRequest(input)
+	return out, req.Send()
+}
+
+// GetResourcePolicyWithContext is the same as GetResourcePolicy with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetResourcePolicy for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) GetResourcePolicyWithContext(ctx aws.Context, input *GetResourcePolicyInput, opts ...request.Option) (*GetResourcePolicyOutput, error) {
+	req, out := c.GetResourcePolicyRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opModifyAquaConfiguration = "ModifyAquaConfiguration"
 
 // ModifyAquaConfigurationRequest generates a "aws/request.Request" representing the
@@ -10618,6 +11393,10 @@ func (c *Redshift) ModifyClusterRequest(input *ModifyClusterInput) (req *request
 //   - ErrCodeCustomCnameAssociationFault "CustomCnameAssociationFault"
 //     An error occurred when an attempt was made to change the custom domain association.
 //
+//   - ErrCodeIpv6CidrBlockNotFoundFault "Ipv6CidrBlockNotFoundFault"
+//     There are no subnets in your VPC with associated IPv6 CIDR blocks. To use
+//     dual-stack mode, associate an IPv6 CIDR block with each subnet in your VPC.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyCluster
 func (c *Redshift) ModifyCluster(input *ModifyClusterInput) (*ModifyClusterOutput, error) {
 	req, out := c.ModifyClusterRequest(input)
@@ -10703,6 +11482,9 @@ func (c *Redshift) ModifyClusterDbRevisionRequest(input *ModifyClusterDbRevision
 //
 //   - ErrCodeInvalidClusterStateFault "InvalidClusterState"
 //     The specified cluster is not in the available state.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyClusterDbRevision
 func (c *Redshift) ModifyClusterDbRevision(input *ModifyClusterDbRevisionInput) (*ModifyClusterDbRevisionOutput, error) {
@@ -11326,6 +12108,9 @@ func (c *Redshift) ModifyCustomDomainAssociationRequest(input *ModifyCustomDomai
 //   - ErrCodeCustomCnameAssociationFault "CustomCnameAssociationFault"
 //     An error occurred when an attempt was made to change the custom domain association.
 //
+//   - ErrCodeCustomDomainAssociationNotFoundFault "CustomDomainAssociationNotFoundFault"
+//     An error occurred. The custom domain name couldn't be found.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyCustomDomainAssociation
 func (c *Redshift) ModifyCustomDomainAssociation(input *ModifyCustomDomainAssociationInput) (*ModifyCustomDomainAssociationOutput, error) {
 	req, out := c.ModifyCustomDomainAssociationRequest(input)
@@ -11553,6 +12338,95 @@ func (c *Redshift) ModifyEventSubscriptionWithContext(ctx aws.Context, input *Mo
 	return out, req.Send()
 }
 
+const opModifyRedshiftIdcApplication = "ModifyRedshiftIdcApplication"
+
+// ModifyRedshiftIdcApplicationRequest generates a "aws/request.Request" representing the
+// client's request for the ModifyRedshiftIdcApplication operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ModifyRedshiftIdcApplication for more information on using the ModifyRedshiftIdcApplication
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ModifyRedshiftIdcApplicationRequest method.
+//	req, resp := client.ModifyRedshiftIdcApplicationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyRedshiftIdcApplication
+func (c *Redshift) ModifyRedshiftIdcApplicationRequest(input *ModifyRedshiftIdcApplicationInput) (req *request.Request, output *ModifyRedshiftIdcApplicationOutput) {
+	op := &request.Operation{
+		Name:       opModifyRedshiftIdcApplication,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ModifyRedshiftIdcApplicationInput{}
+	}
+
+	output = &ModifyRedshiftIdcApplicationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ModifyRedshiftIdcApplication API operation for Amazon Redshift.
+//
+// Changes an existing Amazon Redshift IAM Identity Center application.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation ModifyRedshiftIdcApplication for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeRedshiftIdcApplicationNotExistsFault "RedshiftIdcApplicationNotExists"
+//     The application you attempted to find doesn't exist.
+//
+//   - ErrCodeDependentServiceUnavailableFault "DependentServiceUnavailableFault"
+//     Your request cannot be completed because a dependent internal service is
+//     temporarily unavailable. Wait 30 to 60 seconds and try again.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+//   - ErrCodeDependentServiceAccessDeniedFault "DependentServiceAccessDenied"
+//     A dependent service denied access for the integration.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyRedshiftIdcApplication
+func (c *Redshift) ModifyRedshiftIdcApplication(input *ModifyRedshiftIdcApplicationInput) (*ModifyRedshiftIdcApplicationOutput, error) {
+	req, out := c.ModifyRedshiftIdcApplicationRequest(input)
+	return out, req.Send()
+}
+
+// ModifyRedshiftIdcApplicationWithContext is the same as ModifyRedshiftIdcApplication with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ModifyRedshiftIdcApplication for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) ModifyRedshiftIdcApplicationWithContext(ctx aws.Context, input *ModifyRedshiftIdcApplicationInput, opts ...request.Option) (*ModifyRedshiftIdcApplicationOutput, error) {
+	req, out := c.ModifyRedshiftIdcApplicationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opModifyScheduledAction = "ModifyScheduledAction"
 
 // ModifyScheduledActionRequest generates a "aws/request.Request" representing the
@@ -11607,6 +12481,9 @@ func (c *Redshift) ModifyScheduledActionRequest(input *ModifyScheduledActionInpu
 //
 // Returned Error Codes:
 //
+//   - ErrCodeClusterNotFoundFault "ClusterNotFound"
+//     The ClusterIdentifier parameter does not refer to an existing cluster.
+//
 //   - ErrCodeScheduledActionNotFoundFault "ScheduledActionNotFound"
 //     The scheduled action cannot be found.
 //
@@ -11621,6 +12498,9 @@ func (c *Redshift) ModifyScheduledActionRequest(input *ModifyScheduledActionInpu
 //
 //   - ErrCodeUnauthorizedOperation "UnauthorizedOperation"
 //     Your account is not authorized to perform the requested operation.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ModifyScheduledAction
 func (c *Redshift) ModifyScheduledAction(input *ModifyScheduledActionInput) (*ModifyScheduledActionOutput, error) {
@@ -11976,6 +12856,9 @@ func (c *Redshift) PauseClusterRequest(input *PauseClusterInput) (req *request.R
 //   - ErrCodeInvalidClusterStateFault "InvalidClusterState"
 //     The specified cluster is not in the available state.
 //
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/PauseCluster
 func (c *Redshift) PauseCluster(input *PauseClusterInput) (*PauseClusterOutput, error) {
 	req, out := c.PauseClusterRequest(input)
@@ -12091,6 +12974,94 @@ func (c *Redshift) PurchaseReservedNodeOffering(input *PurchaseReservedNodeOffer
 // for more information on using Contexts.
 func (c *Redshift) PurchaseReservedNodeOfferingWithContext(ctx aws.Context, input *PurchaseReservedNodeOfferingInput, opts ...request.Option) (*PurchaseReservedNodeOfferingOutput, error) {
 	req, out := c.PurchaseReservedNodeOfferingRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opPutResourcePolicy = "PutResourcePolicy"
+
+// PutResourcePolicyRequest generates a "aws/request.Request" representing the
+// client's request for the PutResourcePolicy operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See PutResourcePolicy for more information on using the PutResourcePolicy
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the PutResourcePolicyRequest method.
+//	req, resp := client.PutResourcePolicyRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/PutResourcePolicy
+func (c *Redshift) PutResourcePolicyRequest(input *PutResourcePolicyInput) (req *request.Request, output *PutResourcePolicyOutput) {
+	op := &request.Operation{
+		Name:       opPutResourcePolicy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &PutResourcePolicyInput{}
+	}
+
+	output = &PutResourcePolicyOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// PutResourcePolicy API operation for Amazon Redshift.
+//
+// Updates the resource policy for a specified resource.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation PutResourcePolicy for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeResourceNotFoundFault "ResourceNotFoundFault"
+//     The resource could not be found.
+//
+//   - ErrCodeInvalidPolicyFault "InvalidPolicyFault"
+//     The resource policy isn't valid.
+//
+//   - ErrCodeConflictPolicyUpdateFault "ConflictPolicyUpdateFault"
+//     There is a conflict while updating the resource policy.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/PutResourcePolicy
+func (c *Redshift) PutResourcePolicy(input *PutResourcePolicyInput) (*PutResourcePolicyOutput, error) {
+	req, out := c.PutResourcePolicyRequest(input)
+	return out, req.Send()
+}
+
+// PutResourcePolicyWithContext is the same as PutResourcePolicy with the addition of
+// the ability to pass a context and additional request options.
+//
+// See PutResourcePolicy for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) PutResourcePolicyWithContext(ctx aws.Context, input *PutResourcePolicyInput, opts ...request.Option) (*PutResourcePolicyOutput, error) {
+	req, out := c.PutResourcePolicyRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -12662,6 +13633,10 @@ func (c *Redshift) RestoreFromClusterSnapshotRequest(input *RestoreFromClusterSn
 //   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
 //     The requested operation isn't supported.
 //
+//   - ErrCodeIpv6CidrBlockNotFoundFault "Ipv6CidrBlockNotFoundFault"
+//     There are no subnets in your VPC with associated IPv6 CIDR blocks. To use
+//     dual-stack mode, associate an IPv6 CIDR block with each subnet in your VPC.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/RestoreFromClusterSnapshot
 func (c *Redshift) RestoreFromClusterSnapshot(input *RestoreFromClusterSnapshotInput) (*RestoreFromClusterSnapshotOutput, error) {
 	req, out := c.RestoreFromClusterSnapshotRequest(input)
@@ -12861,6 +13836,9 @@ func (c *Redshift) ResumeClusterRequest(input *ResumeClusterInput) (req *request
 //
 //   - ErrCodeInsufficientClusterCapacityFault "InsufficientClusterCapacity"
 //     The number of nodes specified exceeds the allotted capacity of the cluster.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ResumeCluster
 func (c *Redshift) ResumeCluster(input *ResumeClusterInput) (*ResumeClusterOutput, error) {
@@ -13232,6 +14210,9 @@ func (c *Redshift) RotateEncryptionKeyRequest(input *RotateEncryptionKeyInput) (
 //     The request cannot be completed because a dependent service is throttling
 //     requests made by Amazon Redshift on your behalf. Wait and retry the request.
 //
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/RotateEncryptionKey
 func (c *Redshift) RotateEncryptionKey(input *RotateEncryptionKeyInput) (*RotateEncryptionKeyOutput, error) {
 	req, out := c.RotateEncryptionKeyRequest(input)
@@ -13316,6 +14297,9 @@ func (c *Redshift) UpdatePartnerStatusRequest(input *UpdatePartnerStatusInput) (
 //
 //   - ErrCodeUnauthorizedPartnerIntegrationFault "UnauthorizedPartnerIntegration"
 //     The partner integration is not authorized.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/UpdatePartnerStatus
 func (c *Redshift) UpdatePartnerStatus(input *UpdatePartnerStatusInput) (*UpdatePartnerStatusOutput, error) {
@@ -13695,6 +14679,9 @@ func (s *AquaConfiguration) SetAquaStatus(v string) *AquaConfiguration {
 type AssociateDataShareConsumerInput struct {
 	_ struct{} `type:"structure"`
 
+	// If set to true, allows write operations for a datashare.
+	AllowWrites *bool `type:"boolean"`
+
 	// A value that specifies whether the datashare is associated with the entire
 	// account.
 	AssociateEntireAccount *bool `type:"boolean"`
@@ -13743,6 +14730,12 @@ func (s *AssociateDataShareConsumerInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAllowWrites sets the AllowWrites field's value.
+func (s *AssociateDataShareConsumerInput) SetAllowWrites(v bool) *AssociateDataShareConsumerInput {
+	s.AllowWrites = &v
+	return s
 }
 
 // SetAssociateEntireAccount sets the AssociateEntireAccount field's value.
@@ -14077,6 +15070,9 @@ func (s *AuthorizeClusterSecurityGroupIngressOutput) SetClusterSecurityGroup(v *
 type AuthorizeDataShareInput struct {
 	_ struct{} `type:"structure"`
 
+	// If set to true, allows write operations for a datashare.
+	AllowWrites *bool `type:"boolean"`
+
 	// The identifier of the data consumer that is authorized to access the datashare.
 	// This identifier is an Amazon Web Services account ID or a keyword, such as
 	// ADX.
@@ -14123,6 +15119,12 @@ func (s *AuthorizeDataShareInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAllowWrites sets the AllowWrites field's value.
+func (s *AuthorizeDataShareInput) SetAllowWrites(v bool) *AuthorizeDataShareInput {
+	s.AllowWrites = &v
+	return s
 }
 
 // SetConsumerIdentifier sets the ConsumerIdentifier field's value.
@@ -14485,6 +15487,49 @@ func (s AuthorizeSnapshotAccessOutput) GoString() string {
 // SetSnapshot sets the Snapshot field's value.
 func (s *AuthorizeSnapshotAccessOutput) SetSnapshot(v *Snapshot) *AuthorizeSnapshotAccessOutput {
 	s.Snapshot = v
+	return s
+}
+
+// The authorized token issuer for the Amazon Redshift IAM Identity Center application.
+type AuthorizedTokenIssuer struct {
+	_ struct{} `type:"structure"`
+
+	// The list of audiences for the authorized token issuer for integrating Amazon
+	// Redshift with IDC Identity Center.
+	AuthorizedAudiencesList []*string `type:"list"`
+
+	// The ARN for the authorized token issuer for integrating Amazon Redshift with
+	// IDC Identity Center.
+	TrustedTokenIssuerArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthorizedTokenIssuer) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthorizedTokenIssuer) GoString() string {
+	return s.String()
+}
+
+// SetAuthorizedAudiencesList sets the AuthorizedAudiencesList field's value.
+func (s *AuthorizedTokenIssuer) SetAuthorizedAudiencesList(v []*string) *AuthorizedTokenIssuer {
+	s.AuthorizedAudiencesList = v
+	return s
+}
+
+// SetTrustedTokenIssuerArn sets the TrustedTokenIssuerArn field's value.
+func (s *AuthorizedTokenIssuer) SetTrustedTokenIssuerArn(v string) *AuthorizedTokenIssuer {
+	s.TrustedTokenIssuerArn = &v
 	return s
 }
 
@@ -15214,6 +16259,9 @@ type Cluster struct {
 	// the cluster to access other Amazon Web Services services.
 	IamRoles []*ClusterIamRole `locationNameList:"ClusterIamRole" type:"list"`
 
+	// The IP address type for the cluster. Possible values are ipv4 and dualstack.
+	IpAddressType *string `type:"string"`
+
 	// The Key Management Service (KMS) key ID of the encryption key used to encrypt
 	// data in the cluster.
 	KmsKeyId *string `type:"string"`
@@ -15228,12 +16276,27 @@ type Cluster struct {
 	// The value must be either -1 or an integer between 1 and 3,653.
 	ManualSnapshotRetentionPeriod *int64 `type:"integer"`
 
+	// The Amazon Resource Name (ARN) for the cluster's admin user credentials secret.
+	MasterPasswordSecretArn *string `type:"string"`
+
+	// The ID of the Key Management Service (KMS) key used to encrypt and store
+	// the cluster's admin credentials secret.
+	MasterPasswordSecretKmsKeyId *string `type:"string"`
+
 	// The admin user name for the cluster. This name is used to connect to the
 	// database that is specified in the DBName parameter.
 	MasterUsername *string `type:"string"`
 
 	// The status of a modify operation, if any, initiated for the cluster.
 	ModifyStatus *string `type:"string"`
+
+	// A boolean value that, if true, indicates that the cluster is deployed in
+	// two Availability Zones.
+	MultiAZ *string `type:"string"`
+
+	// The secondary compute unit of a cluster, if Multi-AZ deployment is turned
+	// on.
+	MultiAZSecondary *SecondaryClusterInfo `type:"structure"`
 
 	// The date and time in UTC when system maintenance can begin.
 	NextMaintenanceWindowStartTime *time.Time `type:"timestamp"`
@@ -15518,6 +16581,12 @@ func (s *Cluster) SetIamRoles(v []*ClusterIamRole) *Cluster {
 	return s
 }
 
+// SetIpAddressType sets the IpAddressType field's value.
+func (s *Cluster) SetIpAddressType(v string) *Cluster {
+	s.IpAddressType = &v
+	return s
+}
+
 // SetKmsKeyId sets the KmsKeyId field's value.
 func (s *Cluster) SetKmsKeyId(v string) *Cluster {
 	s.KmsKeyId = &v
@@ -15536,6 +16605,18 @@ func (s *Cluster) SetManualSnapshotRetentionPeriod(v int64) *Cluster {
 	return s
 }
 
+// SetMasterPasswordSecretArn sets the MasterPasswordSecretArn field's value.
+func (s *Cluster) SetMasterPasswordSecretArn(v string) *Cluster {
+	s.MasterPasswordSecretArn = &v
+	return s
+}
+
+// SetMasterPasswordSecretKmsKeyId sets the MasterPasswordSecretKmsKeyId field's value.
+func (s *Cluster) SetMasterPasswordSecretKmsKeyId(v string) *Cluster {
+	s.MasterPasswordSecretKmsKeyId = &v
+	return s
+}
+
 // SetMasterUsername sets the MasterUsername field's value.
 func (s *Cluster) SetMasterUsername(v string) *Cluster {
 	s.MasterUsername = &v
@@ -15545,6 +16626,18 @@ func (s *Cluster) SetMasterUsername(v string) *Cluster {
 // SetModifyStatus sets the ModifyStatus field's value.
 func (s *Cluster) SetModifyStatus(v string) *Cluster {
 	s.ModifyStatus = &v
+	return s
+}
+
+// SetMultiAZ sets the MultiAZ field's value.
+func (s *Cluster) SetMultiAZ(v string) *Cluster {
+	s.MultiAZ = &v
+	return s
+}
+
+// SetMultiAZSecondary sets the MultiAZSecondary field's value.
+func (s *Cluster) SetMultiAZSecondary(v *SecondaryClusterInfo) *Cluster {
+	s.MultiAZSecondary = v
 	return s
 }
 
@@ -16267,6 +17360,10 @@ type ClusterSubnetGroup struct {
 	// A list of the VPC Subnet elements.
 	Subnets []*Subnet `locationNameList:"Subnet" type:"list"`
 
+	// The IP address types supported by this cluster subnet group. Possible values
+	// are ipv4 and dualstack.
+	SupportedClusterIpAddressTypes []*string `locationNameList:"item" type:"list"`
+
 	// The list of tags for the cluster subnet group.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
@@ -16313,6 +17410,12 @@ func (s *ClusterSubnetGroup) SetSubnetGroupStatus(v string) *ClusterSubnetGroup 
 // SetSubnets sets the Subnets field's value.
 func (s *ClusterSubnetGroup) SetSubnets(v []*Subnet) *ClusterSubnetGroup {
 	s.Subnets = v
+	return s
+}
+
+// SetSupportedClusterIpAddressTypes sets the SupportedClusterIpAddressTypes field's value.
+func (s *ClusterSubnetGroup) SetSupportedClusterIpAddressTypes(v []*string) *ClusterSubnetGroup {
+	s.SupportedClusterIpAddressTypes = v
 	return s
 }
 
@@ -16804,6 +17907,10 @@ type CreateClusterInput struct {
 	// in the Amazon Redshift Cluster Management Guide.
 	IamRoles []*string `locationNameList:"IamRoleArn" type:"list"`
 
+	// The IP address types that the cluster supports. Possible values are ipv4
+	// and dualstack.
+	IpAddressType *string `type:"string"`
+
 	// The Key Management Service (KMS) key ID of the encryption key that you want
 	// to use to encrypt data in the cluster.
 	KmsKeyId *string `type:"string"`
@@ -16816,6 +17923,12 @@ type CreateClusterInput struct {
 	// the current track.
 	MaintenanceTrackName *string `type:"string"`
 
+	// If true, Amazon Redshift uses Secrets Manager to manage this cluster's admin
+	// credentials. You can't use MasterUserPassword if ManageMasterPassword is
+	// true. If ManageMasterPassword is false or not set, Amazon Redshift uses MasterUserPassword
+	// for the admin user account's password.
+	ManageMasterPassword *bool `type:"boolean"`
+
 	// The default number of days to retain a manual snapshot. If the value is -1,
 	// the snapshot is retained indefinitely. This setting doesn't change the retention
 	// period of existing snapshots.
@@ -16823,8 +17936,15 @@ type CreateClusterInput struct {
 	// The value must be either -1 or an integer between 1 and 3,653.
 	ManualSnapshotRetentionPeriod *int64 `type:"integer"`
 
+	// The ID of the Key Management Service (KMS) key used to encrypt and store
+	// the cluster's admin credentials secret. You can only use this parameter if
+	// ManageMasterPassword is true.
+	MasterPasswordSecretKmsKeyId *string `type:"string"`
+
 	// The password associated with the admin user account for the cluster that
 	// is being created.
+	//
+	// You can't use MasterUserPassword if ManageMasterPassword is true.
 	//
 	// Constraints:
 	//
@@ -16839,8 +17959,10 @@ type CreateClusterInput struct {
 	//    * Can be any printable ASCII character (ASCII code 33-126) except ' (single
 	//    quote), " (double quote), \, /, or @.
 	//
-	// MasterUserPassword is a required field
-	MasterUserPassword *string `type:"string" required:"true"`
+	// MasterUserPassword is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateClusterInput's
+	// String and GoString methods.
+	MasterUserPassword *string `type:"string" sensitive:"true"`
 
 	// The user name associated with the admin user account for the cluster that
 	// is being created.
@@ -16863,6 +17985,10 @@ type CreateClusterInput struct {
 	//
 	// MasterUsername is a required field
 	MasterUsername *string `type:"string" required:"true"`
+
+	// If true, Amazon Redshift will deploy the cluster in two Availability Zones
+	// (AZ).
+	MultiAZ *bool `type:"boolean"`
 
 	// The node type to be provisioned for the cluster. For information about node
 	// types, go to Working with Clusters (https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#how-many-nodes)
@@ -16919,6 +18045,10 @@ type CreateClusterInput struct {
 	// If true, the cluster can be accessed from a public network.
 	PubliclyAccessible *bool `type:"boolean"`
 
+	// The Amazon resource name (ARN) of the Amazon Redshift IAM Identity Center
+	// application.
+	RedshiftIdcApplicationArn *string `type:"string"`
+
 	// A unique identifier for the snapshot schedule.
 	SnapshotScheduleIdentifier *string `type:"string"`
 
@@ -16955,9 +18085,6 @@ func (s *CreateClusterInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateClusterInput"}
 	if s.ClusterIdentifier == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClusterIdentifier"))
-	}
-	if s.MasterUserPassword == nil {
-		invalidParams.Add(request.NewErrParamRequired("MasterUserPassword"))
 	}
 	if s.MasterUsername == nil {
 		invalidParams.Add(request.NewErrParamRequired("MasterUsername"))
@@ -17092,6 +18219,12 @@ func (s *CreateClusterInput) SetIamRoles(v []*string) *CreateClusterInput {
 	return s
 }
 
+// SetIpAddressType sets the IpAddressType field's value.
+func (s *CreateClusterInput) SetIpAddressType(v string) *CreateClusterInput {
+	s.IpAddressType = &v
+	return s
+}
+
 // SetKmsKeyId sets the KmsKeyId field's value.
 func (s *CreateClusterInput) SetKmsKeyId(v string) *CreateClusterInput {
 	s.KmsKeyId = &v
@@ -17110,9 +18243,21 @@ func (s *CreateClusterInput) SetMaintenanceTrackName(v string) *CreateClusterInp
 	return s
 }
 
+// SetManageMasterPassword sets the ManageMasterPassword field's value.
+func (s *CreateClusterInput) SetManageMasterPassword(v bool) *CreateClusterInput {
+	s.ManageMasterPassword = &v
+	return s
+}
+
 // SetManualSnapshotRetentionPeriod sets the ManualSnapshotRetentionPeriod field's value.
 func (s *CreateClusterInput) SetManualSnapshotRetentionPeriod(v int64) *CreateClusterInput {
 	s.ManualSnapshotRetentionPeriod = &v
+	return s
+}
+
+// SetMasterPasswordSecretKmsKeyId sets the MasterPasswordSecretKmsKeyId field's value.
+func (s *CreateClusterInput) SetMasterPasswordSecretKmsKeyId(v string) *CreateClusterInput {
+	s.MasterPasswordSecretKmsKeyId = &v
 	return s
 }
 
@@ -17125,6 +18270,12 @@ func (s *CreateClusterInput) SetMasterUserPassword(v string) *CreateClusterInput
 // SetMasterUsername sets the MasterUsername field's value.
 func (s *CreateClusterInput) SetMasterUsername(v string) *CreateClusterInput {
 	s.MasterUsername = &v
+	return s
+}
+
+// SetMultiAZ sets the MultiAZ field's value.
+func (s *CreateClusterInput) SetMultiAZ(v bool) *CreateClusterInput {
+	s.MultiAZ = &v
 	return s
 }
 
@@ -17155,6 +18306,12 @@ func (s *CreateClusterInput) SetPreferredMaintenanceWindow(v string) *CreateClus
 // SetPubliclyAccessible sets the PubliclyAccessible field's value.
 func (s *CreateClusterInput) SetPubliclyAccessible(v bool) *CreateClusterInput {
 	s.PubliclyAccessible = &v
+	return s
+}
+
+// SetRedshiftIdcApplicationArn sets the RedshiftIdcApplicationArn field's value.
+func (s *CreateClusterInput) SetRedshiftIdcApplicationArn(v string) *CreateClusterInput {
+	s.RedshiftIdcApplicationArn = &v
 	return s
 }
 
@@ -18482,6 +19639,178 @@ func (s *CreateHsmConfigurationOutput) SetHsmConfiguration(v *HsmConfiguration) 
 	return s
 }
 
+type CreateRedshiftIdcApplicationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The token issuer list for the Amazon Redshift IAM Identity Center application
+	// instance.
+	AuthorizedTokenIssuerList []*AuthorizedTokenIssuer `type:"list"`
+
+	// The IAM role ARN for the Amazon Redshift IAM Identity Center application
+	// instance. It has the required permissions to be assumed and invoke the IDC
+	// Identity Center API.
+	//
+	// IamRoleArn is a required field
+	IamRoleArn *string `type:"string" required:"true"`
+
+	// The display name for the Amazon Redshift IAM Identity Center application
+	// instance. It appears in the console.
+	//
+	// IdcDisplayName is a required field
+	IdcDisplayName *string `min:"1" type:"string" required:"true"`
+
+	// The Amazon resource name (ARN) of the IAM Identity Center instance where
+	// Amazon Redshift creates a new managed application.
+	//
+	// IdcInstanceArn is a required field
+	IdcInstanceArn *string `type:"string" required:"true"`
+
+	// The namespace for the Amazon Redshift IAM Identity Center application instance.
+	// It determines which managed application verifies the connection token.
+	IdentityNamespace *string `min:"1" type:"string"`
+
+	// The name of the Redshift application in IAM Identity Center.
+	//
+	// RedshiftIdcApplicationName is a required field
+	RedshiftIdcApplicationName *string `min:"1" type:"string" required:"true"`
+
+	// A collection of service integrations for the Redshift IAM Identity Center
+	// application.
+	ServiceIntegrations []*ServiceIntegrationsUnion `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRedshiftIdcApplicationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRedshiftIdcApplicationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateRedshiftIdcApplicationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateRedshiftIdcApplicationInput"}
+	if s.IamRoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("IamRoleArn"))
+	}
+	if s.IdcDisplayName == nil {
+		invalidParams.Add(request.NewErrParamRequired("IdcDisplayName"))
+	}
+	if s.IdcDisplayName != nil && len(*s.IdcDisplayName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("IdcDisplayName", 1))
+	}
+	if s.IdcInstanceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("IdcInstanceArn"))
+	}
+	if s.IdentityNamespace != nil && len(*s.IdentityNamespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("IdentityNamespace", 1))
+	}
+	if s.RedshiftIdcApplicationName == nil {
+		invalidParams.Add(request.NewErrParamRequired("RedshiftIdcApplicationName"))
+	}
+	if s.RedshiftIdcApplicationName != nil && len(*s.RedshiftIdcApplicationName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RedshiftIdcApplicationName", 1))
+	}
+	if s.ServiceIntegrations != nil {
+		for i, v := range s.ServiceIntegrations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ServiceIntegrations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthorizedTokenIssuerList sets the AuthorizedTokenIssuerList field's value.
+func (s *CreateRedshiftIdcApplicationInput) SetAuthorizedTokenIssuerList(v []*AuthorizedTokenIssuer) *CreateRedshiftIdcApplicationInput {
+	s.AuthorizedTokenIssuerList = v
+	return s
+}
+
+// SetIamRoleArn sets the IamRoleArn field's value.
+func (s *CreateRedshiftIdcApplicationInput) SetIamRoleArn(v string) *CreateRedshiftIdcApplicationInput {
+	s.IamRoleArn = &v
+	return s
+}
+
+// SetIdcDisplayName sets the IdcDisplayName field's value.
+func (s *CreateRedshiftIdcApplicationInput) SetIdcDisplayName(v string) *CreateRedshiftIdcApplicationInput {
+	s.IdcDisplayName = &v
+	return s
+}
+
+// SetIdcInstanceArn sets the IdcInstanceArn field's value.
+func (s *CreateRedshiftIdcApplicationInput) SetIdcInstanceArn(v string) *CreateRedshiftIdcApplicationInput {
+	s.IdcInstanceArn = &v
+	return s
+}
+
+// SetIdentityNamespace sets the IdentityNamespace field's value.
+func (s *CreateRedshiftIdcApplicationInput) SetIdentityNamespace(v string) *CreateRedshiftIdcApplicationInput {
+	s.IdentityNamespace = &v
+	return s
+}
+
+// SetRedshiftIdcApplicationName sets the RedshiftIdcApplicationName field's value.
+func (s *CreateRedshiftIdcApplicationInput) SetRedshiftIdcApplicationName(v string) *CreateRedshiftIdcApplicationInput {
+	s.RedshiftIdcApplicationName = &v
+	return s
+}
+
+// SetServiceIntegrations sets the ServiceIntegrations field's value.
+func (s *CreateRedshiftIdcApplicationInput) SetServiceIntegrations(v []*ServiceIntegrationsUnion) *CreateRedshiftIdcApplicationInput {
+	s.ServiceIntegrations = v
+	return s
+}
+
+type CreateRedshiftIdcApplicationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Contains properties for the Redshift IDC application.
+	RedshiftIdcApplication *RedshiftIdcApplication `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRedshiftIdcApplicationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRedshiftIdcApplicationOutput) GoString() string {
+	return s.String()
+}
+
+// SetRedshiftIdcApplication sets the RedshiftIdcApplication field's value.
+func (s *CreateRedshiftIdcApplicationOutput) SetRedshiftIdcApplication(v *RedshiftIdcApplication) *CreateRedshiftIdcApplicationOutput {
+	s.RedshiftIdcApplication = v
+	return s
+}
+
 type CreateScheduledActionInput struct {
 	_ struct{} `type:"structure"`
 
@@ -19412,6 +20741,9 @@ func (s *DataShare) SetProducerArn(v string) *DataShare {
 type DataShareAssociation struct {
 	_ struct{} `type:"structure"`
 
+	// Specifies whether write operations were allowed during data share association.
+	ConsumerAcceptedWrites *bool `type:"boolean"`
+
 	// The name of the consumer accounts that have an association with a producer
 	// datashare.
 	ConsumerIdentifier *string `type:"string"`
@@ -19422,6 +20754,9 @@ type DataShareAssociation struct {
 
 	// The creation date of the datashare that is associated.
 	CreatedDate *time.Time `type:"timestamp"`
+
+	// Specifies whether write operations were allowed during data share authorization.
+	ProducerAllowedWrites *bool `type:"boolean"`
 
 	// The status of the datashare that is associated.
 	Status *string `type:"string" enum:"DataShareStatus"`
@@ -19448,6 +20783,12 @@ func (s DataShareAssociation) GoString() string {
 	return s.String()
 }
 
+// SetConsumerAcceptedWrites sets the ConsumerAcceptedWrites field's value.
+func (s *DataShareAssociation) SetConsumerAcceptedWrites(v bool) *DataShareAssociation {
+	s.ConsumerAcceptedWrites = &v
+	return s
+}
+
 // SetConsumerIdentifier sets the ConsumerIdentifier field's value.
 func (s *DataShareAssociation) SetConsumerIdentifier(v string) *DataShareAssociation {
 	s.ConsumerIdentifier = &v
@@ -19463,6 +20804,12 @@ func (s *DataShareAssociation) SetConsumerRegion(v string) *DataShareAssociation
 // SetCreatedDate sets the CreatedDate field's value.
 func (s *DataShareAssociation) SetCreatedDate(v time.Time) *DataShareAssociation {
 	s.CreatedDate = &v
+	return s
+}
+
+// SetProducerAllowedWrites sets the ProducerAllowedWrites field's value.
+func (s *DataShareAssociation) SetProducerAllowedWrites(v bool) *DataShareAssociation {
+	s.ProducerAllowedWrites = &v
 	return s
 }
 
@@ -20381,6 +21728,11 @@ type DeleteCustomDomainAssociationInput struct {
 	//
 	// ClusterIdentifier is a required field
 	ClusterIdentifier *string `type:"string" required:"true"`
+
+	// The custom domain name for the custom domain association.
+	//
+	// CustomDomainName is a required field
+	CustomDomainName *string `min:"1" type:"string" required:"true"`
 }
 
 // String returns the string representation.
@@ -20407,6 +21759,12 @@ func (s *DeleteCustomDomainAssociationInput) Validate() error {
 	if s.ClusterIdentifier == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClusterIdentifier"))
 	}
+	if s.CustomDomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("CustomDomainName"))
+	}
+	if s.CustomDomainName != nil && len(*s.CustomDomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CustomDomainName", 1))
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -20417,6 +21775,12 @@ func (s *DeleteCustomDomainAssociationInput) Validate() error {
 // SetClusterIdentifier sets the ClusterIdentifier field's value.
 func (s *DeleteCustomDomainAssociationInput) SetClusterIdentifier(v string) *DeleteCustomDomainAssociationInput {
 	s.ClusterIdentifier = &v
+	return s
+}
+
+// SetCustomDomainName sets the CustomDomainName field's value.
+func (s *DeleteCustomDomainAssociationInput) SetCustomDomainName(v string) *DeleteCustomDomainAssociationInput {
+	s.CustomDomainName = &v
 	return s
 }
 
@@ -20935,6 +22299,143 @@ func (s *DeletePartnerOutput) SetDatabaseName(v string) *DeletePartnerOutput {
 func (s *DeletePartnerOutput) SetPartnerName(v string) *DeletePartnerOutput {
 	s.PartnerName = &v
 	return s
+}
+
+type DeleteRedshiftIdcApplicationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN for a deleted Amazon Redshift IAM Identity Center application.
+	//
+	// RedshiftIdcApplicationArn is a required field
+	RedshiftIdcApplicationArn *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRedshiftIdcApplicationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRedshiftIdcApplicationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteRedshiftIdcApplicationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteRedshiftIdcApplicationInput"}
+	if s.RedshiftIdcApplicationArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RedshiftIdcApplicationArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRedshiftIdcApplicationArn sets the RedshiftIdcApplicationArn field's value.
+func (s *DeleteRedshiftIdcApplicationInput) SetRedshiftIdcApplicationArn(v string) *DeleteRedshiftIdcApplicationInput {
+	s.RedshiftIdcApplicationArn = &v
+	return s
+}
+
+type DeleteRedshiftIdcApplicationOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRedshiftIdcApplicationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRedshiftIdcApplicationOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteResourcePolicyInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the resource of which its resource policy
+	// is deleted.
+	//
+	// ResourceArn is a required field
+	ResourceArn *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteResourcePolicyInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteResourcePolicyInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteResourcePolicyInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteResourcePolicyInput"}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *DeleteResourcePolicyInput) SetResourceArn(v string) *DeleteResourcePolicyInput {
+	s.ResourceArn = &v
+	return s
+}
+
+type DeleteResourcePolicyOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteResourcePolicyOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteResourcePolicyOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteScheduledActionInput struct {
@@ -24136,6 +25637,120 @@ func (s *DescribeHsmConfigurationsOutput) SetMarker(v string) *DescribeHsmConfig
 	return s
 }
 
+type DescribeInboundIntegrationsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the inbound integration.
+	IntegrationArn *string `type:"string"`
+
+	// An optional parameter that specifies the starting point to return a set of
+	// response records. When the results of a DescribeInboundIntegrations request
+	// exceed the value specified in MaxRecords, Amazon Web Services returns a value
+	// in the Marker field of the response. You can retrieve the next set of response
+	// records by providing the returned marker value in the Marker parameter and
+	// retrying the request.
+	Marker *string `type:"string"`
+
+	// The maximum number of response records to return in each call. If the number
+	// of remaining response records exceeds the specified MaxRecords value, a value
+	// is returned in a marker field of the response. You can retrieve the next
+	// set of records by retrying the command with the returned marker value.
+	//
+	// Default: 100
+	//
+	// Constraints: minimum 20, maximum 100.
+	MaxRecords *int64 `type:"integer"`
+
+	// The Amazon Resource Name (ARN) of the target of an inbound integration.
+	TargetArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInboundIntegrationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInboundIntegrationsInput) GoString() string {
+	return s.String()
+}
+
+// SetIntegrationArn sets the IntegrationArn field's value.
+func (s *DescribeInboundIntegrationsInput) SetIntegrationArn(v string) *DescribeInboundIntegrationsInput {
+	s.IntegrationArn = &v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeInboundIntegrationsInput) SetMarker(v string) *DescribeInboundIntegrationsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeInboundIntegrationsInput) SetMaxRecords(v int64) *DescribeInboundIntegrationsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetTargetArn sets the TargetArn field's value.
+func (s *DescribeInboundIntegrationsInput) SetTargetArn(v string) *DescribeInboundIntegrationsInput {
+	s.TargetArn = &v
+	return s
+}
+
+type DescribeInboundIntegrationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of InboundIntegration instances.
+	InboundIntegrations []*InboundIntegration `locationNameList:"InboundIntegration" type:"list"`
+
+	// A value that indicates the starting point for the next set of response records
+	// in a subsequent request. If a value is returned in a response, you can retrieve
+	// the next set of records by providing this returned marker value in the Marker
+	// parameter and retrying the command. If the Marker field is empty, all response
+	// records have been retrieved for the request.
+	Marker *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInboundIntegrationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeInboundIntegrationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetInboundIntegrations sets the InboundIntegrations field's value.
+func (s *DescribeInboundIntegrationsOutput) SetInboundIntegrations(v []*InboundIntegration) *DescribeInboundIntegrationsOutput {
+	s.InboundIntegrations = v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeInboundIntegrationsOutput) SetMarker(v string) *DescribeInboundIntegrationsOutput {
+	s.Marker = &v
+	return s
+}
+
 type DescribeLoggingStatusInput struct {
 	_ struct{} `type:"structure"`
 
@@ -24589,6 +26204,106 @@ func (s DescribePartnersOutput) GoString() string {
 // SetPartnerIntegrationInfoList sets the PartnerIntegrationInfoList field's value.
 func (s *DescribePartnersOutput) SetPartnerIntegrationInfoList(v []*PartnerIntegrationInfo) *DescribePartnersOutput {
 	s.PartnerIntegrationInfoList = v
+	return s
+}
+
+type DescribeRedshiftIdcApplicationsInput struct {
+	_ struct{} `type:"structure"`
+
+	// A value that indicates the starting point for the next set of response records
+	// in a subsequent request. If a value is returned in a response, you can retrieve
+	// the next set of records by providing this returned marker value in the Marker
+	// parameter and retrying the command. If the Marker field is empty, all response
+	// records have been retrieved for the request.
+	Marker *string `type:"string"`
+
+	// The maximum number of response records to return in each call. If the number
+	// of remaining response records exceeds the specified MaxRecords value, a value
+	// is returned in a marker field of the response. You can retrieve the next
+	// set of records by retrying the command with the returned marker value.
+	MaxRecords *int64 `type:"integer"`
+
+	// The ARN for the Redshift application that integrates with IAM Identity Center.
+	RedshiftIdcApplicationArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRedshiftIdcApplicationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRedshiftIdcApplicationsInput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeRedshiftIdcApplicationsInput) SetMarker(v string) *DescribeRedshiftIdcApplicationsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *DescribeRedshiftIdcApplicationsInput) SetMaxRecords(v int64) *DescribeRedshiftIdcApplicationsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetRedshiftIdcApplicationArn sets the RedshiftIdcApplicationArn field's value.
+func (s *DescribeRedshiftIdcApplicationsInput) SetRedshiftIdcApplicationArn(v string) *DescribeRedshiftIdcApplicationsInput {
+	s.RedshiftIdcApplicationArn = &v
+	return s
+}
+
+type DescribeRedshiftIdcApplicationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A value that indicates the starting point for the next set of response records
+	// in a subsequent request. If a value is returned in a response, you can retrieve
+	// the next set of records by providing this returned marker value in the Marker
+	// parameter and retrying the command. If the Marker field is empty, all response
+	// records have been retrieved for the request.
+	Marker *string `type:"string"`
+
+	// The list of Amazon Redshift IAM Identity Center applications.
+	RedshiftIdcApplications []*RedshiftIdcApplication `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRedshiftIdcApplicationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRedshiftIdcApplicationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *DescribeRedshiftIdcApplicationsOutput) SetMarker(v string) *DescribeRedshiftIdcApplicationsOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRedshiftIdcApplications sets the RedshiftIdcApplications field's value.
+func (s *DescribeRedshiftIdcApplicationsOutput) SetRedshiftIdcApplications(v []*RedshiftIdcApplication) *DescribeRedshiftIdcApplicationsOutput {
+	s.RedshiftIdcApplications = v
 	return s
 }
 
@@ -27296,6 +29011,84 @@ func (s *EventSubscription) SetTags(v []*Tag) *EventSubscription {
 	return s
 }
 
+type FailoverPrimaryComputeInput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the cluster for which the primary compute unit will
+	// be failed over to another Availability Zone.
+	//
+	// ClusterIdentifier is a required field
+	ClusterIdentifier *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailoverPrimaryComputeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailoverPrimaryComputeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *FailoverPrimaryComputeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "FailoverPrimaryComputeInput"}
+	if s.ClusterIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("ClusterIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClusterIdentifier sets the ClusterIdentifier field's value.
+func (s *FailoverPrimaryComputeInput) SetClusterIdentifier(v string) *FailoverPrimaryComputeInput {
+	s.ClusterIdentifier = &v
+	return s
+}
+
+type FailoverPrimaryComputeOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Describes a cluster.
+	Cluster *Cluster `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailoverPrimaryComputeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailoverPrimaryComputeOutput) GoString() string {
+	return s.String()
+}
+
+// SetCluster sets the Cluster field's value.
+func (s *FailoverPrimaryComputeOutput) SetCluster(v *Cluster) *FailoverPrimaryComputeOutput {
+	s.Cluster = v
+	return s
+}
+
 // The request parameters to get cluster credentials.
 type GetClusterCredentialsInput struct {
 	_ struct{} `type:"structure"`
@@ -27894,6 +29687,84 @@ func (s *GetReservedNodeExchangeOfferingsOutput) SetReservedNodeOfferings(v []*R
 	return s
 }
 
+type GetResourcePolicyInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the resource of which its resource policy
+	// is fetched.
+	//
+	// ResourceArn is a required field
+	ResourceArn *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetResourcePolicyInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetResourcePolicyInput"}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *GetResourcePolicyInput) SetResourceArn(v string) *GetResourcePolicyInput {
+	s.ResourceArn = &v
+	return s
+}
+
+type GetResourcePolicyOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The content of the resource policy.
+	ResourcePolicy *ResourcePolicy `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyOutput) GoString() string {
+	return s.String()
+}
+
+// SetResourcePolicy sets the ResourcePolicy field's value.
+func (s *GetResourcePolicyOutput) SetResourcePolicy(v *ResourcePolicy) *GetResourcePolicyOutput {
+	s.ResourcePolicy = v
+	return s
+}
+
 // Returns information about an HSM client certificate. The certificate is stored
 // in a secure Hardware Storage Module (HSM), and used by the Amazon Redshift
 // cluster to encrypt data files.
@@ -28120,6 +29991,221 @@ func (s *IPRange) SetStatus(v string) *IPRange {
 // SetTags sets the Tags field's value.
 func (s *IPRange) SetTags(v []*Tag) *IPRange {
 	s.Tags = v
+	return s
+}
+
+// The content of an inbound integration.
+type InboundIntegration struct {
+	_ struct{} `type:"structure"`
+
+	// The creation time of an inbound integration.
+	CreateTime *time.Time `type:"timestamp"`
+
+	// The outstanding errors of an inbound integration. Each item is an "IntegrationError".
+	// This is null if there is no error.
+	Errors []*IntegrationError `locationNameList:"IntegrationError" type:"list"`
+
+	// The Amazon Resource Name (ARN) of an inbound integration.
+	IntegrationArn *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) of the source of an inbound integration.
+	SourceArn *string `type:"string"`
+
+	// The status of an inbound integration.
+	Status *string `type:"string" enum:"ZeroETLIntegrationStatus"`
+
+	// The Amazon Resource Name (ARN) of the target of an inbound integration.
+	TargetArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InboundIntegration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InboundIntegration) GoString() string {
+	return s.String()
+}
+
+// SetCreateTime sets the CreateTime field's value.
+func (s *InboundIntegration) SetCreateTime(v time.Time) *InboundIntegration {
+	s.CreateTime = &v
+	return s
+}
+
+// SetErrors sets the Errors field's value.
+func (s *InboundIntegration) SetErrors(v []*IntegrationError) *InboundIntegration {
+	s.Errors = v
+	return s
+}
+
+// SetIntegrationArn sets the IntegrationArn field's value.
+func (s *InboundIntegration) SetIntegrationArn(v string) *InboundIntegration {
+	s.IntegrationArn = &v
+	return s
+}
+
+// SetSourceArn sets the SourceArn field's value.
+func (s *InboundIntegration) SetSourceArn(v string) *InboundIntegration {
+	s.SourceArn = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *InboundIntegration) SetStatus(v string) *InboundIntegration {
+	s.Status = &v
+	return s
+}
+
+// SetTargetArn sets the TargetArn field's value.
+func (s *InboundIntegration) SetTargetArn(v string) *InboundIntegration {
+	s.TargetArn = &v
+	return s
+}
+
+// The error of an inbound integration.
+type IntegrationError struct {
+	_ struct{} `type:"structure"`
+
+	// The error code of an inbound integration error.
+	//
+	// ErrorCode is a required field
+	ErrorCode *string `type:"string" required:"true"`
+
+	// The error message of an inbound integration error.
+	ErrorMessage *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IntegrationError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IntegrationError) GoString() string {
+	return s.String()
+}
+
+// SetErrorCode sets the ErrorCode field's value.
+func (s *IntegrationError) SetErrorCode(v string) *IntegrationError {
+	s.ErrorCode = &v
+	return s
+}
+
+// SetErrorMessage sets the ErrorMessage field's value.
+func (s *IntegrationError) SetErrorMessage(v string) *IntegrationError {
+	s.ErrorMessage = &v
+	return s
+}
+
+// The Lake Formation scope.
+type LakeFormationQuery struct {
+	_ struct{} `type:"structure"`
+
+	// Determines whether the query scope is enabled or disabled.
+	//
+	// Authorization is a required field
+	Authorization *string `type:"string" required:"true" enum:"ServiceAuthorization"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LakeFormationQuery) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LakeFormationQuery) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LakeFormationQuery) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LakeFormationQuery"}
+	if s.Authorization == nil {
+		invalidParams.Add(request.NewErrParamRequired("Authorization"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthorization sets the Authorization field's value.
+func (s *LakeFormationQuery) SetAuthorization(v string) *LakeFormationQuery {
+	s.Authorization = &v
+	return s
+}
+
+// A list of scopes set up for Lake Formation integration.
+type LakeFormationScopeUnion struct {
+	_ struct{} `type:"structure"`
+
+	// The Lake Formation scope.
+	LakeFormationQuery *LakeFormationQuery `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LakeFormationScopeUnion) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LakeFormationScopeUnion) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LakeFormationScopeUnion) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LakeFormationScopeUnion"}
+	if s.LakeFormationQuery != nil {
+		if err := s.LakeFormationQuery.Validate(); err != nil {
+			invalidParams.AddNested("LakeFormationQuery", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLakeFormationQuery sets the LakeFormationQuery field's value.
+func (s *LakeFormationScopeUnion) SetLakeFormationQuery(v *LakeFormationQuery) *LakeFormationScopeUnion {
+	s.LakeFormationQuery = v
 	return s
 }
 
@@ -28786,6 +30872,10 @@ type ModifyClusterInput struct {
 	// the Amazon Redshift cluster can use to retrieve and store keys in an HSM.
 	HsmConfigurationIdentifier *string `type:"string"`
 
+	// The IP address types that the cluster supports. Possible values are ipv4
+	// and dualstack.
+	IpAddressType *string `type:"string"`
+
 	// The Key Management Service (KMS) key ID of the encryption key that you want
 	// to use to encrypt data in the cluster.
 	KmsKeyId *string `type:"string"`
@@ -28797,6 +30887,12 @@ type ModifyClusterInput struct {
 	// for the maintenance track. At this point, the maintenance track name is applied.
 	MaintenanceTrackName *string `type:"string"`
 
+	// If true, Amazon Redshift uses Secrets Manager to manage this cluster's admin
+	// credentials. You can't use MasterUserPassword if ManageMasterPassword is
+	// true. If ManageMasterPassword is false or not set, Amazon Redshift uses MasterUserPassword
+	// for the admin user account's password.
+	ManageMasterPassword *bool `type:"boolean"`
+
 	// The default for number of days that a newly created manual snapshot is retained.
 	// If the value is -1, the manual snapshot is retained indefinitely. This value
 	// doesn't retroactively change the retention periods of existing manual snapshots.
@@ -28806,10 +30902,17 @@ type ModifyClusterInput struct {
 	// The default value is -1.
 	ManualSnapshotRetentionPeriod *int64 `type:"integer"`
 
+	// The ID of the Key Management Service (KMS) key used to encrypt and store
+	// the cluster's admin credentials secret. You can only use this parameter if
+	// ManageMasterPassword is true.
+	MasterPasswordSecretKmsKeyId *string `type:"string"`
+
 	// The new password for the cluster admin user. This change is asynchronously
 	// applied as soon as possible. Between the time of the request and the completion
 	// of the request, the MasterUserPassword element exists in the PendingModifiedValues
 	// element of the operation response.
+	//
+	// You can't use MasterUserPassword if ManageMasterPassword is true.
 	//
 	// Operations never return the password, so this operation provides a way to
 	// regain access to the admin user account for a cluster if the password is
@@ -28829,7 +30932,15 @@ type ModifyClusterInput struct {
 	//
 	//    * Can be any printable ASCII character (ASCII code 33-126) except ' (single
 	//    quote), " (double quote), \, /, or @.
-	MasterUserPassword *string `type:"string"`
+	//
+	// MasterUserPassword is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ModifyClusterInput's
+	// String and GoString methods.
+	MasterUserPassword *string `type:"string" sensitive:"true"`
+
+	// If true and the cluster is currently only deployed in a single Availability
+	// Zone, the cluster will be modified to be deployed in two Availability Zones.
+	MultiAZ *bool `type:"boolean"`
 
 	// The new identifier for the cluster.
 	//
@@ -29014,6 +31125,12 @@ func (s *ModifyClusterInput) SetHsmConfigurationIdentifier(v string) *ModifyClus
 	return s
 }
 
+// SetIpAddressType sets the IpAddressType field's value.
+func (s *ModifyClusterInput) SetIpAddressType(v string) *ModifyClusterInput {
+	s.IpAddressType = &v
+	return s
+}
+
 // SetKmsKeyId sets the KmsKeyId field's value.
 func (s *ModifyClusterInput) SetKmsKeyId(v string) *ModifyClusterInput {
 	s.KmsKeyId = &v
@@ -29026,15 +31143,33 @@ func (s *ModifyClusterInput) SetMaintenanceTrackName(v string) *ModifyClusterInp
 	return s
 }
 
+// SetManageMasterPassword sets the ManageMasterPassword field's value.
+func (s *ModifyClusterInput) SetManageMasterPassword(v bool) *ModifyClusterInput {
+	s.ManageMasterPassword = &v
+	return s
+}
+
 // SetManualSnapshotRetentionPeriod sets the ManualSnapshotRetentionPeriod field's value.
 func (s *ModifyClusterInput) SetManualSnapshotRetentionPeriod(v int64) *ModifyClusterInput {
 	s.ManualSnapshotRetentionPeriod = &v
 	return s
 }
 
+// SetMasterPasswordSecretKmsKeyId sets the MasterPasswordSecretKmsKeyId field's value.
+func (s *ModifyClusterInput) SetMasterPasswordSecretKmsKeyId(v string) *ModifyClusterInput {
+	s.MasterPasswordSecretKmsKeyId = &v
+	return s
+}
+
 // SetMasterUserPassword sets the MasterUserPassword field's value.
 func (s *ModifyClusterInput) SetMasterUserPassword(v string) *ModifyClusterInput {
 	s.MasterUserPassword = &v
+	return s
+}
+
+// SetMultiAZ sets the MultiAZ field's value.
+func (s *ModifyClusterInput) SetMultiAZ(v bool) *ModifyClusterInput {
+	s.MultiAZ = &v
 	return s
 }
 
@@ -29605,10 +31740,14 @@ type ModifyCustomDomainAssociationInput struct {
 
 	// The certificate Amazon Resource Name (ARN) for the changed custom domain
 	// association.
-	CustomDomainCertificateArn *string `min:"20" type:"string"`
+	//
+	// CustomDomainCertificateArn is a required field
+	CustomDomainCertificateArn *string `min:"20" type:"string" required:"true"`
 
 	// The custom domain name for a changed custom domain association.
-	CustomDomainName *string `min:"1" type:"string"`
+	//
+	// CustomDomainName is a required field
+	CustomDomainName *string `min:"1" type:"string" required:"true"`
 }
 
 // String returns the string representation.
@@ -29635,8 +31774,14 @@ func (s *ModifyCustomDomainAssociationInput) Validate() error {
 	if s.ClusterIdentifier == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClusterIdentifier"))
 	}
+	if s.CustomDomainCertificateArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("CustomDomainCertificateArn"))
+	}
 	if s.CustomDomainCertificateArn != nil && len(*s.CustomDomainCertificateArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("CustomDomainCertificateArn", 20))
+	}
+	if s.CustomDomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("CustomDomainName"))
 	}
 	if s.CustomDomainName != nil && len(*s.CustomDomainName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("CustomDomainName", 1))
@@ -30049,6 +32194,149 @@ func (s ModifyEventSubscriptionOutput) GoString() string {
 // SetEventSubscription sets the EventSubscription field's value.
 func (s *ModifyEventSubscriptionOutput) SetEventSubscription(v *EventSubscription) *ModifyEventSubscriptionOutput {
 	s.EventSubscription = v
+	return s
+}
+
+type ModifyRedshiftIdcApplicationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The authorized token issuer list for the Amazon Redshift IAM Identity Center
+	// application to change.
+	AuthorizedTokenIssuerList []*AuthorizedTokenIssuer `type:"list"`
+
+	// The IAM role ARN associated with the Amazon Redshift IAM Identity Center
+	// application to change. It has the required permissions to be assumed and
+	// invoke the IDC Identity Center API.
+	IamRoleArn *string `type:"string"`
+
+	// The display name for the Amazon Redshift IAM Identity Center application
+	// to change. It appears on the console.
+	IdcDisplayName *string `min:"1" type:"string"`
+
+	// The namespace for the Amazon Redshift IAM Identity Center application to
+	// change. It determines which managed application verifies the connection token.
+	IdentityNamespace *string `min:"1" type:"string"`
+
+	// The ARN for the Redshift application that integrates with IAM Identity Center.
+	//
+	// RedshiftIdcApplicationArn is a required field
+	RedshiftIdcApplicationArn *string `type:"string" required:"true"`
+
+	// A collection of service integrations associated with the application.
+	ServiceIntegrations []*ServiceIntegrationsUnion `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyRedshiftIdcApplicationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyRedshiftIdcApplicationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ModifyRedshiftIdcApplicationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ModifyRedshiftIdcApplicationInput"}
+	if s.IdcDisplayName != nil && len(*s.IdcDisplayName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("IdcDisplayName", 1))
+	}
+	if s.IdentityNamespace != nil && len(*s.IdentityNamespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("IdentityNamespace", 1))
+	}
+	if s.RedshiftIdcApplicationArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RedshiftIdcApplicationArn"))
+	}
+	if s.ServiceIntegrations != nil {
+		for i, v := range s.ServiceIntegrations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ServiceIntegrations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthorizedTokenIssuerList sets the AuthorizedTokenIssuerList field's value.
+func (s *ModifyRedshiftIdcApplicationInput) SetAuthorizedTokenIssuerList(v []*AuthorizedTokenIssuer) *ModifyRedshiftIdcApplicationInput {
+	s.AuthorizedTokenIssuerList = v
+	return s
+}
+
+// SetIamRoleArn sets the IamRoleArn field's value.
+func (s *ModifyRedshiftIdcApplicationInput) SetIamRoleArn(v string) *ModifyRedshiftIdcApplicationInput {
+	s.IamRoleArn = &v
+	return s
+}
+
+// SetIdcDisplayName sets the IdcDisplayName field's value.
+func (s *ModifyRedshiftIdcApplicationInput) SetIdcDisplayName(v string) *ModifyRedshiftIdcApplicationInput {
+	s.IdcDisplayName = &v
+	return s
+}
+
+// SetIdentityNamespace sets the IdentityNamespace field's value.
+func (s *ModifyRedshiftIdcApplicationInput) SetIdentityNamespace(v string) *ModifyRedshiftIdcApplicationInput {
+	s.IdentityNamespace = &v
+	return s
+}
+
+// SetRedshiftIdcApplicationArn sets the RedshiftIdcApplicationArn field's value.
+func (s *ModifyRedshiftIdcApplicationInput) SetRedshiftIdcApplicationArn(v string) *ModifyRedshiftIdcApplicationInput {
+	s.RedshiftIdcApplicationArn = &v
+	return s
+}
+
+// SetServiceIntegrations sets the ServiceIntegrations field's value.
+func (s *ModifyRedshiftIdcApplicationInput) SetServiceIntegrations(v []*ServiceIntegrationsUnion) *ModifyRedshiftIdcApplicationInput {
+	s.ServiceIntegrations = v
+	return s
+}
+
+type ModifyRedshiftIdcApplicationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Contains properties for the Redshift IDC application.
+	RedshiftIdcApplication *RedshiftIdcApplication `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyRedshiftIdcApplicationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyRedshiftIdcApplicationOutput) GoString() string {
+	return s.String()
+}
+
+// SetRedshiftIdcApplication sets the RedshiftIdcApplication field's value.
+func (s *ModifyRedshiftIdcApplicationOutput) SetRedshiftIdcApplication(v *RedshiftIdcApplication) *ModifyRedshiftIdcApplicationOutput {
+	s.RedshiftIdcApplication = v
 	return s
 }
 
@@ -30747,6 +33035,9 @@ type NetworkInterface struct {
 	// The Availability Zone.
 	AvailabilityZone *string `type:"string"`
 
+	// The IPv6 address of the network interface within the subnet.
+	Ipv6Address *string `type:"string"`
+
 	// The network interface identifier.
 	NetworkInterfaceId *string `type:"string"`
 
@@ -30778,6 +33069,12 @@ func (s NetworkInterface) GoString() string {
 // SetAvailabilityZone sets the AvailabilityZone field's value.
 func (s *NetworkInterface) SetAvailabilityZone(v string) *NetworkInterface {
 	s.AvailabilityZone = &v
+	return s
+}
+
+// SetIpv6Address sets the Ipv6Address field's value.
+func (s *NetworkInterface) SetIpv6Address(v string) *NetworkInterface {
+	s.Ipv6Address = &v
 	return s
 }
 
@@ -31325,7 +33622,11 @@ type PendingModifiedValues struct {
 	MaintenanceTrackName *string `type:"string"`
 
 	// The pending or in-progress change of the admin user password for the cluster.
-	MasterUserPassword *string `type:"string"`
+	//
+	// MasterUserPassword is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PendingModifiedValues's
+	// String and GoString methods.
+	MasterUserPassword *string `type:"string" sensitive:"true"`
 
 	// The pending or in-progress change of the cluster's node type.
 	NodeType *string `type:"string"`
@@ -31511,6 +33812,98 @@ func (s *PurchaseReservedNodeOfferingOutput) SetReservedNode(v *ReservedNode) *P
 	return s
 }
 
+type PutResourcePolicyInput struct {
+	_ struct{} `type:"structure"`
+
+	// The content of the resource policy being updated.
+	//
+	// Policy is a required field
+	Policy *string `type:"string" required:"true"`
+
+	// The Amazon Resource Name (ARN) of the resource of which its resource policy
+	// is updated.
+	//
+	// ResourceArn is a required field
+	ResourceArn *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutResourcePolicyInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutResourcePolicyInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PutResourcePolicyInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PutResourcePolicyInput"}
+	if s.Policy == nil {
+		invalidParams.Add(request.NewErrParamRequired("Policy"))
+	}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPolicy sets the Policy field's value.
+func (s *PutResourcePolicyInput) SetPolicy(v string) *PutResourcePolicyInput {
+	s.Policy = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *PutResourcePolicyInput) SetResourceArn(v string) *PutResourcePolicyInput {
+	s.ResourceArn = &v
+	return s
+}
+
+type PutResourcePolicyOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The content of the updated resource policy.
+	ResourcePolicy *ResourcePolicy `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutResourcePolicyOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutResourcePolicyOutput) GoString() string {
+	return s.String()
+}
+
+// SetResourcePolicy sets the ResourcePolicy field's value.
+func (s *PutResourcePolicyOutput) SetResourcePolicy(v *ResourcePolicy) *PutResourcePolicyOutput {
+	s.ResourcePolicy = v
+	return s
+}
+
 type RebootClusterInput struct {
 	_ struct{} `type:"structure"`
 
@@ -31627,6 +34020,123 @@ func (s *RecurringCharge) SetRecurringChargeAmount(v float64) *RecurringCharge {
 // SetRecurringChargeFrequency sets the RecurringChargeFrequency field's value.
 func (s *RecurringCharge) SetRecurringChargeFrequency(v string) *RecurringCharge {
 	s.RecurringChargeFrequency = &v
+	return s
+}
+
+// Contains properties for the Redshift IDC application.
+type RedshiftIdcApplication struct {
+	_ struct{} `type:"structure"`
+
+	// The authorized token issuer list for the Amazon Redshift IAM Identity Center
+	// application.
+	AuthorizedTokenIssuerList []*AuthorizedTokenIssuer `type:"list"`
+
+	// The ARN for the Amazon Redshift IAM Identity Center application. It has the
+	// required permissions to be assumed and invoke the IDC Identity Center API.
+	IamRoleArn *string `type:"string"`
+
+	// The display name for the Amazon Redshift IAM Identity Center application.
+	// It appears on the console.
+	IdcDisplayName *string `min:"1" type:"string"`
+
+	// The ARN for the IAM Identity Center instance that Redshift integrates with.
+	IdcInstanceArn *string `type:"string"`
+
+	// The ARN for the Amazon Redshift IAM Identity Center application.
+	IdcManagedApplicationArn *string `type:"string"`
+
+	// The onboarding status for the Amazon Redshift IAM Identity Center application.
+	IdcOnboardStatus *string `type:"string"`
+
+	// The identity namespace for the Amazon Redshift IAM Identity Center application.
+	// It determines which managed application verifies the connection token.
+	IdentityNamespace *string `min:"1" type:"string"`
+
+	// The ARN for the Redshift application that integrates with IAM Identity Center.
+	RedshiftIdcApplicationArn *string `type:"string"`
+
+	// The name of the Redshift application in IAM Identity Center.
+	RedshiftIdcApplicationName *string `min:"1" type:"string"`
+
+	// A list of service integrations for the Redshift IAM Identity Center application.
+	ServiceIntegrations []*ServiceIntegrationsUnion `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RedshiftIdcApplication) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RedshiftIdcApplication) GoString() string {
+	return s.String()
+}
+
+// SetAuthorizedTokenIssuerList sets the AuthorizedTokenIssuerList field's value.
+func (s *RedshiftIdcApplication) SetAuthorizedTokenIssuerList(v []*AuthorizedTokenIssuer) *RedshiftIdcApplication {
+	s.AuthorizedTokenIssuerList = v
+	return s
+}
+
+// SetIamRoleArn sets the IamRoleArn field's value.
+func (s *RedshiftIdcApplication) SetIamRoleArn(v string) *RedshiftIdcApplication {
+	s.IamRoleArn = &v
+	return s
+}
+
+// SetIdcDisplayName sets the IdcDisplayName field's value.
+func (s *RedshiftIdcApplication) SetIdcDisplayName(v string) *RedshiftIdcApplication {
+	s.IdcDisplayName = &v
+	return s
+}
+
+// SetIdcInstanceArn sets the IdcInstanceArn field's value.
+func (s *RedshiftIdcApplication) SetIdcInstanceArn(v string) *RedshiftIdcApplication {
+	s.IdcInstanceArn = &v
+	return s
+}
+
+// SetIdcManagedApplicationArn sets the IdcManagedApplicationArn field's value.
+func (s *RedshiftIdcApplication) SetIdcManagedApplicationArn(v string) *RedshiftIdcApplication {
+	s.IdcManagedApplicationArn = &v
+	return s
+}
+
+// SetIdcOnboardStatus sets the IdcOnboardStatus field's value.
+func (s *RedshiftIdcApplication) SetIdcOnboardStatus(v string) *RedshiftIdcApplication {
+	s.IdcOnboardStatus = &v
+	return s
+}
+
+// SetIdentityNamespace sets the IdentityNamespace field's value.
+func (s *RedshiftIdcApplication) SetIdentityNamespace(v string) *RedshiftIdcApplication {
+	s.IdentityNamespace = &v
+	return s
+}
+
+// SetRedshiftIdcApplicationArn sets the RedshiftIdcApplicationArn field's value.
+func (s *RedshiftIdcApplication) SetRedshiftIdcApplicationArn(v string) *RedshiftIdcApplication {
+	s.RedshiftIdcApplicationArn = &v
+	return s
+}
+
+// SetRedshiftIdcApplicationName sets the RedshiftIdcApplicationName field's value.
+func (s *RedshiftIdcApplication) SetRedshiftIdcApplicationName(v string) *RedshiftIdcApplication {
+	s.RedshiftIdcApplicationName = &v
+	return s
+}
+
+// SetServiceIntegrations sets the ServiceIntegrations field's value.
+func (s *RedshiftIdcApplication) SetServiceIntegrations(v []*ServiceIntegrationsUnion) *RedshiftIdcApplication {
+	s.ServiceIntegrations = v
 	return s
 }
 
@@ -32526,6 +35036,47 @@ func (s *ResizeInfo) SetResizeType(v string) *ResizeInfo {
 	return s
 }
 
+// The policy that is attached to a resource.
+type ResourcePolicy struct {
+	_ struct{} `type:"structure"`
+
+	// The content of a resource policy.
+	Policy *string `type:"string"`
+
+	// The resources that a policy is attached to.
+	ResourceArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResourcePolicy) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResourcePolicy) GoString() string {
+	return s.String()
+}
+
+// SetPolicy sets the Policy field's value.
+func (s *ResourcePolicy) SetPolicy(v string) *ResourcePolicy {
+	s.Policy = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *ResourcePolicy) SetResourceArn(v string) *ResourcePolicy {
+	s.ResourceArn = &v
+	return s
+}
+
 type RestoreFromClusterSnapshotInput struct {
 	_ struct{} `type:"structure"`
 
@@ -32653,6 +35204,9 @@ type RestoreFromClusterSnapshotInput struct {
 	// in the Amazon Redshift Cluster Management Guide.
 	IamRoles []*string `locationNameList:"IamRoleArn" type:"list"`
 
+	// The IP address type for the cluster. Possible values are ipv4 and dualstack.
+	IpAddressType *string `type:"string"`
+
 	// The Key Management Service (KMS) key ID of the encryption key that encrypts
 	// data in the cluster restored from a shared snapshot. You can also provide
 	// the key ID when you restore from an unencrypted snapshot to an encrypted
@@ -32671,12 +35225,26 @@ type RestoreFromClusterSnapshotInput struct {
 	// are on different tracks.
 	MaintenanceTrackName *string `type:"string"`
 
+	// If true, Amazon Redshift uses Secrets Manager to manage the restored cluster's
+	// admin credentials. If ManageMasterPassword is false or not set, Amazon Redshift
+	// uses the admin credentials the cluster had at the time the snapshot was taken.
+	ManageMasterPassword *bool `type:"boolean"`
+
 	// The default number of days to retain a manual snapshot. If the value is -1,
 	// the snapshot is retained indefinitely. This setting doesn't change the retention
 	// period of existing snapshots.
 	//
 	// The value must be either -1 or an integer between 1 and 3,653.
 	ManualSnapshotRetentionPeriod *int64 `type:"integer"`
+
+	// The ID of the Key Management Service (KMS) key used to encrypt and store
+	// the cluster's admin credentials secret. You can only use this parameter if
+	// ManageMasterPassword is true.
+	MasterPasswordSecretKmsKeyId *string `type:"string"`
+
+	// If true, the snapshot will be restored to a cluster deployed in two Availability
+	// Zones.
+	MultiAZ *bool `type:"boolean"`
 
 	// The node type that the restored cluster will be provisioned with.
 	//
@@ -32893,6 +35461,12 @@ func (s *RestoreFromClusterSnapshotInput) SetIamRoles(v []*string) *RestoreFromC
 	return s
 }
 
+// SetIpAddressType sets the IpAddressType field's value.
+func (s *RestoreFromClusterSnapshotInput) SetIpAddressType(v string) *RestoreFromClusterSnapshotInput {
+	s.IpAddressType = &v
+	return s
+}
+
 // SetKmsKeyId sets the KmsKeyId field's value.
 func (s *RestoreFromClusterSnapshotInput) SetKmsKeyId(v string) *RestoreFromClusterSnapshotInput {
 	s.KmsKeyId = &v
@@ -32905,9 +35479,27 @@ func (s *RestoreFromClusterSnapshotInput) SetMaintenanceTrackName(v string) *Res
 	return s
 }
 
+// SetManageMasterPassword sets the ManageMasterPassword field's value.
+func (s *RestoreFromClusterSnapshotInput) SetManageMasterPassword(v bool) *RestoreFromClusterSnapshotInput {
+	s.ManageMasterPassword = &v
+	return s
+}
+
 // SetManualSnapshotRetentionPeriod sets the ManualSnapshotRetentionPeriod field's value.
 func (s *RestoreFromClusterSnapshotInput) SetManualSnapshotRetentionPeriod(v int64) *RestoreFromClusterSnapshotInput {
 	s.ManualSnapshotRetentionPeriod = &v
+	return s
+}
+
+// SetMasterPasswordSecretKmsKeyId sets the MasterPasswordSecretKmsKeyId field's value.
+func (s *RestoreFromClusterSnapshotInput) SetMasterPasswordSecretKmsKeyId(v string) *RestoreFromClusterSnapshotInput {
+	s.MasterPasswordSecretKmsKeyId = &v
+	return s
+}
+
+// SetMultiAZ sets the MultiAZ field's value.
+func (s *RestoreFromClusterSnapshotInput) SetMultiAZ(v bool) *RestoreFromClusterSnapshotInput {
+	s.MultiAZ = &v
 	return s
 }
 
@@ -34188,6 +36780,101 @@ func (s *ScheduledActionType) SetResumeCluster(v *ResumeClusterMessage) *Schedul
 	return s
 }
 
+// The AvailabilityZone and ClusterNodes information of the secondary compute
+// unit.
+type SecondaryClusterInfo struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the Availability Zone in which the secondary compute unit of
+	// the cluster is located.
+	AvailabilityZone *string `type:"string"`
+
+	// The nodes in the secondary compute unit.
+	ClusterNodes []*ClusterNode `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecondaryClusterInfo) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecondaryClusterInfo) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *SecondaryClusterInfo) SetAvailabilityZone(v string) *SecondaryClusterInfo {
+	s.AvailabilityZone = &v
+	return s
+}
+
+// SetClusterNodes sets the ClusterNodes field's value.
+func (s *SecondaryClusterInfo) SetClusterNodes(v []*ClusterNode) *SecondaryClusterInfo {
+	s.ClusterNodes = v
+	return s
+}
+
+// A list of service integrations.
+type ServiceIntegrationsUnion struct {
+	_ struct{} `type:"structure"`
+
+	// A list of scopes set up for Lake Formation integration.
+	LakeFormation []*LakeFormationScopeUnion `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceIntegrationsUnion) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceIntegrationsUnion) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ServiceIntegrationsUnion) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ServiceIntegrationsUnion"}
+	if s.LakeFormation != nil {
+		for i, v := range s.LakeFormation {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "LakeFormation", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLakeFormation sets the LakeFormation field's value.
+func (s *ServiceIntegrationsUnion) SetLakeFormation(v []*LakeFormationScopeUnion) *ServiceIntegrationsUnion {
+	s.LakeFormation = v
+	return s
+}
+
 // Describes a snapshot.
 type Snapshot struct {
 	_ struct{} `type:"structure"`
@@ -34268,6 +36955,13 @@ type Snapshot struct {
 	//
 	// The value must be either -1 or an integer between 1 and 3,653.
 	ManualSnapshotRetentionPeriod *int64 `type:"integer"`
+
+	// The Amazon Resource Name (ARN) for the cluster's admin user credentials secret.
+	MasterPasswordSecretArn *string `type:"string"`
+
+	// The ID of the Key Management Service (KMS) key used to encrypt and store
+	// the cluster's admin credentials secret.
+	MasterPasswordSecretKmsKeyId *string `type:"string"`
 
 	// The admin user name for the cluster.
 	MasterUsername *string `type:"string"`
@@ -34458,6 +37152,18 @@ func (s *Snapshot) SetManualSnapshotRemainingDays(v int64) *Snapshot {
 // SetManualSnapshotRetentionPeriod sets the ManualSnapshotRetentionPeriod field's value.
 func (s *Snapshot) SetManualSnapshotRetentionPeriod(v int64) *Snapshot {
 	s.ManualSnapshotRetentionPeriod = &v
+	return s
+}
+
+// SetMasterPasswordSecretArn sets the MasterPasswordSecretArn field's value.
+func (s *Snapshot) SetMasterPasswordSecretArn(v string) *Snapshot {
+	s.MasterPasswordSecretArn = &v
+	return s
+}
+
+// SetMasterPasswordSecretKmsKeyId sets the MasterPasswordSecretKmsKeyId field's value.
+func (s *Snapshot) SetMasterPasswordSecretKmsKeyId(v string) *Snapshot {
+	s.MasterPasswordSecretKmsKeyId = &v
 	return s
 }
 
@@ -36017,6 +38723,22 @@ func ScheduledActionTypeValues_Values() []string {
 }
 
 const (
+	// ServiceAuthorizationEnabled is a ServiceAuthorization enum value
+	ServiceAuthorizationEnabled = "Enabled"
+
+	// ServiceAuthorizationDisabled is a ServiceAuthorization enum value
+	ServiceAuthorizationDisabled = "Disabled"
+)
+
+// ServiceAuthorization_Values returns all elements of the ServiceAuthorization enum
+func ServiceAuthorization_Values() []string {
+	return []string{
+		ServiceAuthorizationEnabled,
+		ServiceAuthorizationDisabled,
+	}
+}
+
+const (
 	// SnapshotAttributeToSortBySourceType is a SnapshotAttributeToSortBy enum value
 	SnapshotAttributeToSortBySourceType = "SOURCE_TYPE"
 
@@ -36181,5 +38903,41 @@ func UsageLimitPeriod_Values() []string {
 		UsageLimitPeriodDaily,
 		UsageLimitPeriodWeekly,
 		UsageLimitPeriodMonthly,
+	}
+}
+
+const (
+	// ZeroETLIntegrationStatusCreating is a ZeroETLIntegrationStatus enum value
+	ZeroETLIntegrationStatusCreating = "creating"
+
+	// ZeroETLIntegrationStatusActive is a ZeroETLIntegrationStatus enum value
+	ZeroETLIntegrationStatusActive = "active"
+
+	// ZeroETLIntegrationStatusModifying is a ZeroETLIntegrationStatus enum value
+	ZeroETLIntegrationStatusModifying = "modifying"
+
+	// ZeroETLIntegrationStatusFailed is a ZeroETLIntegrationStatus enum value
+	ZeroETLIntegrationStatusFailed = "failed"
+
+	// ZeroETLIntegrationStatusDeleting is a ZeroETLIntegrationStatus enum value
+	ZeroETLIntegrationStatusDeleting = "deleting"
+
+	// ZeroETLIntegrationStatusSyncing is a ZeroETLIntegrationStatus enum value
+	ZeroETLIntegrationStatusSyncing = "syncing"
+
+	// ZeroETLIntegrationStatusNeedsAttention is a ZeroETLIntegrationStatus enum value
+	ZeroETLIntegrationStatusNeedsAttention = "needs_attention"
+)
+
+// ZeroETLIntegrationStatus_Values returns all elements of the ZeroETLIntegrationStatus enum
+func ZeroETLIntegrationStatus_Values() []string {
+	return []string{
+		ZeroETLIntegrationStatusCreating,
+		ZeroETLIntegrationStatusActive,
+		ZeroETLIntegrationStatusModifying,
+		ZeroETLIntegrationStatusFailed,
+		ZeroETLIntegrationStatusDeleting,
+		ZeroETLIntegrationStatusSyncing,
+		ZeroETLIntegrationStatusNeedsAttention,
 	}
 }

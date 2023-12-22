@@ -5654,7 +5654,14 @@ type DescribeAlarmsInput struct {
 
 	// Use this parameter to specify whether you want the operation to return metric
 	// alarms or composite alarms. If you omit this parameter, only metric alarms
-	// are returned.
+	// are returned, even if composite alarms exist in the account.
+	//
+	// For example, if you omit this parameter or specify MetricAlarms, the operation
+	// returns only a list of metric alarms. It does not return any composite alarms,
+	// even if composite alarms exist in the account.
+	//
+	// If you specify CompositeAlarms, the operation returns only a list of composite
+	// alarms, and does not return any metric alarms.
 	AlarmTypes []*string `type:"list" enum:"AlarmType"`
 
 	// If you use this parameter and specify the name of a composite alarm, the
@@ -6677,7 +6684,7 @@ type GetInsightRuleReportInput struct {
 	Metrics []*string `type:"list"`
 
 	// Determines what statistic to use to rank the contributors. Valid values are
-	// SUM and MAXIMUM.
+	// Sum and Maximum.
 	OrderBy *string `min:"1" type:"string"`
 
 	// The period, in seconds, to use for the statistics in the InsightRuleMetricDatapoint
@@ -7446,9 +7453,9 @@ type GetMetricStreamOutput struct {
 	// The name of the metric stream.
 	Name *string `min:"1" type:"string"`
 
-	// The output format for the stream. Valid values are json and opentelemetry0.7.
-	// For more information about metric stream output formats, see Metric streams
-	// output formats (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-formats.html).
+	// The output format for the stream. Valid values are json, opentelemetry1.0,
+	// and opentelemetry0.7. For more information about metric stream output formats,
+	// see Metric streams output formats (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-formats.html).
 	OutputFormat *string `min:"1" type:"string" enum:"MetricStreamOutputFormat"`
 
 	// The ARN of the IAM role that is used by this metric stream.
@@ -8526,7 +8533,7 @@ type ListTagsForResourceInput struct {
 	//
 	// The ARN format of an alarm is arn:aws:cloudwatch:Region:account-id:alarm:alarm-name
 	//
-	// The ARN format of a Contributor Insights rule is arn:aws:cloudwatch:Region:account-id:insight-rule:insight-rule-name
+	// The ARN format of a Contributor Insights rule is arn:aws:cloudwatch:Region:account-id:insight-rule/insight-rule-name
 	//
 	// For more information about ARN format, see Resource Types Defined by Amazon
 	// CloudWatch (https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazoncloudwatch.html#amazoncloudwatch-resources-for-iam-policies)
@@ -9887,7 +9894,8 @@ type MetricStreamEntry struct {
 	// The name of the metric stream.
 	Name *string `min:"1" type:"string"`
 
-	// The output format of this metric stream. Valid values are json and opentelemetry0.7.
+	// The output format of this metric stream. Valid values are json, opentelemetry1.0,
+	// and opentelemetry0.7.
 	OutputFormat *string `min:"1" type:"string" enum:"MetricStreamOutputFormat"`
 
 	// The current state of this stream. Valid values are running and stopped.
@@ -10037,8 +10045,9 @@ type MetricStreamStatisticsConfiguration struct {
 	// listed in the IncludeMetrics array in this structure. This list can include
 	// as many as 20 statistics.
 	//
-	// If the OutputFormat for the stream is opentelemetry0.7, the only valid values
-	// are p?? percentile statistics such as p90, p99 and so on.
+	// If the OutputFormat for the stream is opentelemetry1.0 or opentelemetry0.7,
+	// the only valid values are p?? percentile statistics such as p90, p99 and
+	// so on.
 	//
 	// If the OutputFormat for the stream is json, the valid values include the
 	// abbreviations for all of the statistics listed in CloudWatch statistics definitions
@@ -11115,10 +11124,36 @@ type PutMetricAlarmInput struct {
 	// EvaluationPeriods is a required field
 	EvaluationPeriods *int64 `min:"1" type:"integer" required:"true"`
 
-	// The percentile statistic for the metric specified in MetricName. Specify
-	// a value between p0.0 and p100. When you call PutMetricAlarm and specify a
-	// MetricName, you must specify either Statistic or ExtendedStatistic, but not
-	// both.
+	// The extended statistic for the metric specified in MetricName. When you call
+	// PutMetricAlarm and specify a MetricName, you must specify either Statistic
+	// or ExtendedStatistic but not both.
+	//
+	// If you specify ExtendedStatistic, the following are valid values:
+	//
+	//    * p90
+	//
+	//    * tm90
+	//
+	//    * tc90
+	//
+	//    * ts90
+	//
+	//    * wm90
+	//
+	//    * IQM
+	//
+	//    * PR(n:m) where n and m are values of the metric
+	//
+	//    * TC(X%:X%) where X is between 10 and 90 inclusive.
+	//
+	//    * TM(X%:X%) where X is between 10 and 90 inclusive.
+	//
+	//    * TS(X%:X%) where X is between 10 and 90 inclusive.
+	//
+	//    * WM(X%:X%) where X is between 10 and 90 inclusive.
+	//
+	// For more information about these extended statistics, see CloudWatch statistics
+	// definitions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html).
 	ExtendedStatistic *string `type:"string"`
 
 	// The actions to execute when this alarm transitions to the INSUFFICIENT_DATA
@@ -11162,9 +11197,9 @@ type PutMetricAlarmInput struct {
 	// operation, you must specify either MetricName or a Metrics array.
 	//
 	// If you are creating an alarm based on a math expression, you cannot specify
-	// this parameter, or any of the Dimensions, Period, Namespace, Statistic, or
-	// ExtendedStatistic parameters. Instead, you specify all this information in
-	// the Metrics array.
+	// this parameter, or any of the Namespace, Dimensions, Period, Unit, Statistic,
+	// or ExtendedStatistic parameters. Instead, you specify all this information
+	// in the Metrics array.
 	MetricName *string `min:"1" type:"string"`
 
 	// An array of MetricDataQuery structures that enable you to create an alarm
@@ -11178,8 +11213,8 @@ type PutMetricAlarmInput struct {
 	// designate this expression by setting ReturnData to true for this object in
 	// the array. For more information, see MetricDataQuery (https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDataQuery.html).
 	//
-	// If you use the Metrics parameter, you cannot include the MetricName, Dimensions,
-	// Period, Namespace, Statistic, or ExtendedStatistic parameters of PutMetricAlarm
+	// If you use the Metrics parameter, you cannot include the Namespace, MetricName,
+	// Dimensions, Period, Unit, Statistic, or ExtendedStatistic parameters of PutMetricAlarm
 	// in the same operation. Instead, you retrieve the metrics you are using in
 	// your math expression as part of the Metrics array.
 	Metrics []*MetricDataQuery `type:"list"`
@@ -11252,7 +11287,8 @@ type PutMetricAlarmInput struct {
 	Statistic *string `type:"string" enum:"Statistic"`
 
 	// A list of key-value pairs to associate with the alarm. You can associate
-	// as many as 50 tags with an alarm.
+	// as many as 50 tags with an alarm. To be able to associate tags with the alarm
+	// when you create the alarm, you must have the cloudwatch:TagResource permission.
 	//
 	// Tags can help you organize and categorize your resources. You can also use
 	// them to scope user permissions by granting a user permission to access or
@@ -11296,7 +11332,9 @@ type PutMetricAlarmInput struct {
 	// that an instance receives on all network interfaces. You can also specify
 	// a unit when you create a custom metric. Units help provide conceptual meaning
 	// to your data. Metric data points that specify a unit of measure, such as
-	// Percent, are aggregated separately.
+	// Percent, are aggregated separately. If you are creating an alarm based on
+	// a metric math expression, you can specify the unit for each metric (if needed)
+	// within the objects in the Metrics array.
 	//
 	// If you don't specify Unit, CloudWatch retrieves all unit types that have
 	// been published for the metric and attempts to evaluate the alarm. Usually,
@@ -11697,9 +11735,9 @@ type PutMetricStreamInput struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The output format for the stream. Valid values are json and opentelemetry0.7.
-	// For more information about metric stream output formats, see Metric streams
-	// output formats (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-formats.html).
+	// The output format for the stream. Valid values are json, opentelemetry1.0,
+	// and opentelemetry0.7. For more information about metric stream output formats,
+	// see Metric streams output formats (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/CloudWatch-metric-streams-formats.html).
 	//
 	// OutputFormat is a required field
 	OutputFormat *string `min:"1" type:"string" required:"true" enum:"MetricStreamOutputFormat"`
@@ -11726,8 +11764,8 @@ type PutMetricStreamInput struct {
 	// that you can stream depend on the stream's OutputFormat. If the OutputFormat
 	// is json, you can stream any additional statistic that is supported by CloudWatch,
 	// listed in CloudWatch statistics definitions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/Statistics-definitions.html.html).
-	// If the OutputFormat is opentelemetry0.7, you can stream percentile statistics
-	// such as p95, p99.9, and so on.
+	// If the OutputFormat is opentelemetry1.0 or opentelemetry0.7, you can stream
+	// percentile statistics such as p95, p99.9, and so on.
 	StatisticsConfigurations []*MetricStreamStatisticsConfiguration `type:"list"`
 
 	// A list of key-value pairs to associate with the metric stream. You can associate
@@ -12489,7 +12527,7 @@ type TagResourceInput struct {
 	//
 	// The ARN format of an alarm is arn:aws:cloudwatch:Region:account-id:alarm:alarm-name
 	//
-	// The ARN format of a Contributor Insights rule is arn:aws:cloudwatch:Region:account-id:insight-rule:insight-rule-name
+	// The ARN format of a Contributor Insights rule is arn:aws:cloudwatch:Region:account-id:insight-rule/insight-rule-name
 	//
 	// For more information about ARN format, see Resource Types Defined by Amazon
 	// CloudWatch (https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazoncloudwatch.html#amazoncloudwatch-resources-for-iam-policies)
@@ -12592,7 +12630,7 @@ type UntagResourceInput struct {
 	//
 	// The ARN format of an alarm is arn:aws:cloudwatch:Region:account-id:alarm:alarm-name
 	//
-	// The ARN format of a Contributor Insights rule is arn:aws:cloudwatch:Region:account-id:insight-rule:insight-rule-name
+	// The ARN format of a Contributor Insights rule is arn:aws:cloudwatch:Region:account-id:insight-rule/insight-rule-name
 	//
 	// For more information about ARN format, see Resource Types Defined by Amazon
 	// CloudWatch (https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazoncloudwatch.html#amazoncloudwatch-resources-for-iam-policies)
@@ -12824,6 +12862,9 @@ const (
 
 	// MetricStreamOutputFormatOpentelemetry07 is a MetricStreamOutputFormat enum value
 	MetricStreamOutputFormatOpentelemetry07 = "opentelemetry0.7"
+
+	// MetricStreamOutputFormatOpentelemetry10 is a MetricStreamOutputFormat enum value
+	MetricStreamOutputFormatOpentelemetry10 = "opentelemetry1.0"
 )
 
 // MetricStreamOutputFormat_Values returns all elements of the MetricStreamOutputFormat enum
@@ -12831,6 +12872,7 @@ func MetricStreamOutputFormat_Values() []string {
 	return []string{
 		MetricStreamOutputFormatJson,
 		MetricStreamOutputFormatOpentelemetry07,
+		MetricStreamOutputFormatOpentelemetry10,
 	}
 }
 

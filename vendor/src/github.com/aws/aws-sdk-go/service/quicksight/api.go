@@ -282,8 +282,7 @@ func (c *QuickSight) CreateAccountSubscriptionRequest(input *CreateAccountSubscr
 // Q.
 //
 // The Amazon Web Services Region for the account is derived from what is configured
-// in the CLI or SDK. This operation isn't supported in the US East (Ohio) Region,
-// South America (Sao Paulo) Region, or Asia Pacific (Singapore) Region.
+// in the CLI or SDK.
 //
 // Before you use this operation, make sure that you can connect to an existing
 // Amazon Web Services account. If you don't have an Amazon Web Services account,
@@ -1063,7 +1062,7 @@ func (c *QuickSight) CreateGroupRequest(input *CreateGroupInput) (req *request.R
 //
 // Use the CreateGroup operation to create a group in Amazon QuickSight. You
 // can create up to 10,000 groups in a namespace. If you want to create more
-// than 10,000 groups in a namespace, contact AWS Support.
+// than 10,000 groups in a namespace, contact Amazon Web Services Support.
 //
 // The permissions resource is arn:aws:quicksight:<your-region>:<relevant-aws-account-id>:group/default/<group-name> .
 //
@@ -1669,6 +1668,108 @@ func (c *QuickSight) CreateRefreshSchedule(input *CreateRefreshScheduleInput) (*
 // for more information on using Contexts.
 func (c *QuickSight) CreateRefreshScheduleWithContext(ctx aws.Context, input *CreateRefreshScheduleInput, opts ...request.Option) (*CreateRefreshScheduleOutput, error) {
 	req, out := c.CreateRefreshScheduleRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opCreateRoleMembership = "CreateRoleMembership"
+
+// CreateRoleMembershipRequest generates a "aws/request.Request" representing the
+// client's request for the CreateRoleMembership operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateRoleMembership for more information on using the CreateRoleMembership
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateRoleMembershipRequest method.
+//	req, resp := client.CreateRoleMembershipRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateRoleMembership
+func (c *QuickSight) CreateRoleMembershipRequest(input *CreateRoleMembershipInput) (req *request.Request, output *CreateRoleMembershipOutput) {
+	op := &request.Operation{
+		Name:       opCreateRoleMembership,
+		HTTPMethod: "POST",
+		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/members/{MemberName}",
+	}
+
+	if input == nil {
+		input = &CreateRoleMembershipInput{}
+	}
+
+	output = &CreateRoleMembershipOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateRoleMembership API operation for Amazon QuickSight.
+//
+// Use CreateRoleMembership to add an existing Amazon QuickSight group to an
+// existing role.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation CreateRoleMembership for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+//   - ResourceUnavailableException
+//     This resource is currently unavailable.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/CreateRoleMembership
+func (c *QuickSight) CreateRoleMembership(input *CreateRoleMembershipInput) (*CreateRoleMembershipOutput, error) {
+	req, out := c.CreateRoleMembershipRequest(input)
+	return out, req.Send()
+}
+
+// CreateRoleMembershipWithContext is the same as CreateRoleMembership with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateRoleMembership for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) CreateRoleMembershipWithContext(ctx aws.Context, input *CreateRoleMembershipInput, opts ...request.Option) (*CreateRoleMembershipOutput, error) {
+	req, out := c.CreateRoleMembershipRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -2500,6 +2601,12 @@ func (c *QuickSight) DeleteAccountCustomizationRequest(input *DeleteAccountCusto
 //
 //   - ThrottlingException
 //     Access is throttled.
+//
+//   - LimitExceededException
+//     A limit is exceeded.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
 //
 //   - InternalFailureException
 //     An internal failure occurred.
@@ -3648,6 +3755,105 @@ func (c *QuickSight) DeleteIAMPolicyAssignmentWithContext(ctx aws.Context, input
 	return out, req.Send()
 }
 
+const opDeleteIdentityPropagationConfig = "DeleteIdentityPropagationConfig"
+
+// DeleteIdentityPropagationConfigRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteIdentityPropagationConfig operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteIdentityPropagationConfig for more information on using the DeleteIdentityPropagationConfig
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteIdentityPropagationConfigRequest method.
+//	req, resp := client.DeleteIdentityPropagationConfigRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteIdentityPropagationConfig
+func (c *QuickSight) DeleteIdentityPropagationConfigRequest(input *DeleteIdentityPropagationConfigInput) (req *request.Request, output *DeleteIdentityPropagationConfigOutput) {
+	op := &request.Operation{
+		Name:       opDeleteIdentityPropagationConfig,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/accounts/{AwsAccountId}/identity-propagation-config/{Service}",
+	}
+
+	if input == nil {
+		input = &DeleteIdentityPropagationConfigInput{}
+	}
+
+	output = &DeleteIdentityPropagationConfigOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteIdentityPropagationConfig API operation for Amazon QuickSight.
+//
+// Deletes all access scopes and authorized targets that are associated with
+// a service from the Amazon QuickSight IAM Identity Center application.
+//
+// This operation is only supported for Amazon QuickSight accounts that use
+// IAM Identity Center.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation DeleteIdentityPropagationConfig for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteIdentityPropagationConfig
+func (c *QuickSight) DeleteIdentityPropagationConfig(input *DeleteIdentityPropagationConfigInput) (*DeleteIdentityPropagationConfigOutput, error) {
+	req, out := c.DeleteIdentityPropagationConfigRequest(input)
+	return out, req.Send()
+}
+
+// DeleteIdentityPropagationConfigWithContext is the same as DeleteIdentityPropagationConfig with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteIdentityPropagationConfig for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DeleteIdentityPropagationConfigWithContext(ctx aws.Context, input *DeleteIdentityPropagationConfigInput, opts ...request.Option) (*DeleteIdentityPropagationConfigOutput, error) {
+	req, out := c.DeleteIdentityPropagationConfigRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteNamespace = "DeleteNamespace"
 
 // DeleteNamespaceRequest generates a "aws/request.Request" representing the
@@ -3845,6 +4051,208 @@ func (c *QuickSight) DeleteRefreshSchedule(input *DeleteRefreshScheduleInput) (*
 // for more information on using Contexts.
 func (c *QuickSight) DeleteRefreshScheduleWithContext(ctx aws.Context, input *DeleteRefreshScheduleInput, opts ...request.Option) (*DeleteRefreshScheduleOutput, error) {
 	req, out := c.DeleteRefreshScheduleRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteRoleCustomPermission = "DeleteRoleCustomPermission"
+
+// DeleteRoleCustomPermissionRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteRoleCustomPermission operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteRoleCustomPermission for more information on using the DeleteRoleCustomPermission
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteRoleCustomPermissionRequest method.
+//	req, resp := client.DeleteRoleCustomPermissionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteRoleCustomPermission
+func (c *QuickSight) DeleteRoleCustomPermissionRequest(input *DeleteRoleCustomPermissionInput) (req *request.Request, output *DeleteRoleCustomPermissionOutput) {
+	op := &request.Operation{
+		Name:       opDeleteRoleCustomPermission,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/custom-permission",
+	}
+
+	if input == nil {
+		input = &DeleteRoleCustomPermissionInput{}
+	}
+
+	output = &DeleteRoleCustomPermissionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteRoleCustomPermission API operation for Amazon QuickSight.
+//
+// Removes custom permissions from the role.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation DeleteRoleCustomPermission for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+//   - ResourceUnavailableException
+//     This resource is currently unavailable.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteRoleCustomPermission
+func (c *QuickSight) DeleteRoleCustomPermission(input *DeleteRoleCustomPermissionInput) (*DeleteRoleCustomPermissionOutput, error) {
+	req, out := c.DeleteRoleCustomPermissionRequest(input)
+	return out, req.Send()
+}
+
+// DeleteRoleCustomPermissionWithContext is the same as DeleteRoleCustomPermission with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteRoleCustomPermission for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DeleteRoleCustomPermissionWithContext(ctx aws.Context, input *DeleteRoleCustomPermissionInput, opts ...request.Option) (*DeleteRoleCustomPermissionOutput, error) {
+	req, out := c.DeleteRoleCustomPermissionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteRoleMembership = "DeleteRoleMembership"
+
+// DeleteRoleMembershipRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteRoleMembership operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteRoleMembership for more information on using the DeleteRoleMembership
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteRoleMembershipRequest method.
+//	req, resp := client.DeleteRoleMembershipRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteRoleMembership
+func (c *QuickSight) DeleteRoleMembershipRequest(input *DeleteRoleMembershipInput) (req *request.Request, output *DeleteRoleMembershipOutput) {
+	op := &request.Operation{
+		Name:       opDeleteRoleMembership,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/members/{MemberName}",
+	}
+
+	if input == nil {
+		input = &DeleteRoleMembershipInput{}
+	}
+
+	output = &DeleteRoleMembershipOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteRoleMembership API operation for Amazon QuickSight.
+//
+// Removes a group from a role.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation DeleteRoleMembership for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+//   - ResourceUnavailableException
+//     This resource is currently unavailable.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DeleteRoleMembership
+func (c *QuickSight) DeleteRoleMembership(input *DeleteRoleMembershipInput) (*DeleteRoleMembershipOutput, error) {
+	req, out := c.DeleteRoleMembershipRequest(input)
+	return out, req.Send()
+}
+
+// DeleteRoleMembershipWithContext is the same as DeleteRoleMembership with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteRoleMembership for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DeleteRoleMembershipWithContext(ctx aws.Context, input *DeleteRoleMembershipInput, opts ...request.Option) (*DeleteRoleMembershipOutput, error) {
+	req, out := c.DeleteRoleMembershipRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -5900,6 +6308,218 @@ func (c *QuickSight) DescribeDashboardPermissionsWithContext(ctx aws.Context, in
 	return out, req.Send()
 }
 
+const opDescribeDashboardSnapshotJob = "DescribeDashboardSnapshotJob"
+
+// DescribeDashboardSnapshotJobRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeDashboardSnapshotJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeDashboardSnapshotJob for more information on using the DescribeDashboardSnapshotJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeDashboardSnapshotJobRequest method.
+//	req, resp := client.DescribeDashboardSnapshotJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDashboardSnapshotJob
+func (c *QuickSight) DescribeDashboardSnapshotJobRequest(input *DescribeDashboardSnapshotJobInput) (req *request.Request, output *DescribeDashboardSnapshotJobOutput) {
+	op := &request.Operation{
+		Name:       opDescribeDashboardSnapshotJob,
+		HTTPMethod: "GET",
+		HTTPPath:   "/accounts/{AwsAccountId}/dashboards/{DashboardId}/snapshot-jobs/{SnapshotJobId}",
+	}
+
+	if input == nil {
+		input = &DescribeDashboardSnapshotJobInput{}
+	}
+
+	output = &DescribeDashboardSnapshotJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeDashboardSnapshotJob API operation for Amazon QuickSight.
+//
+// Describes an existing snapshot job.
+//
+// Poll job descriptions after a job starts to know the status of the job. For
+// information on available status codes, see JobStatus.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation DescribeDashboardSnapshotJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - UnsupportedUserEditionException
+//     This error indicates that you are calling an operation on an Amazon QuickSight
+//     subscription where the edition doesn't include support for that operation.
+//     Amazon Amazon QuickSight currently has Standard Edition and Enterprise Edition.
+//     Not every operation and capability is available in every edition.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDashboardSnapshotJob
+func (c *QuickSight) DescribeDashboardSnapshotJob(input *DescribeDashboardSnapshotJobInput) (*DescribeDashboardSnapshotJobOutput, error) {
+	req, out := c.DescribeDashboardSnapshotJobRequest(input)
+	return out, req.Send()
+}
+
+// DescribeDashboardSnapshotJobWithContext is the same as DescribeDashboardSnapshotJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeDashboardSnapshotJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DescribeDashboardSnapshotJobWithContext(ctx aws.Context, input *DescribeDashboardSnapshotJobInput, opts ...request.Option) (*DescribeDashboardSnapshotJobOutput, error) {
+	req, out := c.DescribeDashboardSnapshotJobRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDescribeDashboardSnapshotJobResult = "DescribeDashboardSnapshotJobResult"
+
+// DescribeDashboardSnapshotJobResultRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeDashboardSnapshotJobResult operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeDashboardSnapshotJobResult for more information on using the DescribeDashboardSnapshotJobResult
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeDashboardSnapshotJobResultRequest method.
+//	req, resp := client.DescribeDashboardSnapshotJobResultRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDashboardSnapshotJobResult
+func (c *QuickSight) DescribeDashboardSnapshotJobResultRequest(input *DescribeDashboardSnapshotJobResultInput) (req *request.Request, output *DescribeDashboardSnapshotJobResultOutput) {
+	op := &request.Operation{
+		Name:       opDescribeDashboardSnapshotJobResult,
+		HTTPMethod: "GET",
+		HTTPPath:   "/accounts/{AwsAccountId}/dashboards/{DashboardId}/snapshot-jobs/{SnapshotJobId}/result",
+	}
+
+	if input == nil {
+		input = &DescribeDashboardSnapshotJobResultInput{}
+	}
+
+	output = &DescribeDashboardSnapshotJobResultOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeDashboardSnapshotJobResult API operation for Amazon QuickSight.
+//
+// Describes the result of an existing snapshot job that has finished running.
+//
+// A finished snapshot job will return a COMPLETED or FAILED status when you
+// poll the job with a DescribeDashboardSnapshotJob API call.
+//
+// If the job has not finished running, this operation returns a message that
+// says Dashboard Snapshot Job with id <SnapshotjobId> has not reached a terminal
+// state..
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation DescribeDashboardSnapshotJobResult for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - UnsupportedUserEditionException
+//     This error indicates that you are calling an operation on an Amazon QuickSight
+//     subscription where the edition doesn't include support for that operation.
+//     Amazon Amazon QuickSight currently has Standard Edition and Enterprise Edition.
+//     Not every operation and capability is available in every edition.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeDashboardSnapshotJobResult
+func (c *QuickSight) DescribeDashboardSnapshotJobResult(input *DescribeDashboardSnapshotJobResultInput) (*DescribeDashboardSnapshotJobResultOutput, error) {
+	req, out := c.DescribeDashboardSnapshotJobResultRequest(input)
+	return out, req.Send()
+}
+
+// DescribeDashboardSnapshotJobResultWithContext is the same as DescribeDashboardSnapshotJobResult with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeDashboardSnapshotJobResult for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DescribeDashboardSnapshotJobResultWithContext(ctx aws.Context, input *DescribeDashboardSnapshotJobResultInput, opts ...request.Option) (*DescribeDashboardSnapshotJobResultOutput, error) {
+	req, out := c.DescribeDashboardSnapshotJobResultRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDescribeDataSet = "DescribeDataSet"
 
 // DescribeDataSetRequest generates a "aws/request.Request" representing the
@@ -6515,6 +7135,12 @@ func (c *QuickSight) DescribeFolderPermissionsRequest(input *DescribeFolderPermi
 		Name:       opDescribeFolderPermissions,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/folders/{FolderId}/permissions",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -6555,6 +7181,9 @@ func (c *QuickSight) DescribeFolderPermissionsRequest(input *DescribeFolderPermi
 //   - ThrottlingException
 //     Access is throttled.
 //
+//   - InvalidNextTokenException
+//     The NextToken value isn't valid.
+//
 //   - UnsupportedUserEditionException
 //     This error indicates that you are calling an operation on an Amazon QuickSight
 //     subscription where the edition doesn't include support for that operation.
@@ -6584,6 +7213,57 @@ func (c *QuickSight) DescribeFolderPermissionsWithContext(ctx aws.Context, input
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeFolderPermissionsPages iterates over the pages of a DescribeFolderPermissions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeFolderPermissions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeFolderPermissions operation.
+//	pageNum := 0
+//	err := client.DescribeFolderPermissionsPages(params,
+//	    func(page *quicksight.DescribeFolderPermissionsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) DescribeFolderPermissionsPages(input *DescribeFolderPermissionsInput, fn func(*DescribeFolderPermissionsOutput, bool) bool) error {
+	return c.DescribeFolderPermissionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeFolderPermissionsPagesWithContext same as DescribeFolderPermissionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DescribeFolderPermissionsPagesWithContext(ctx aws.Context, input *DescribeFolderPermissionsInput, fn func(*DescribeFolderPermissionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeFolderPermissionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeFolderPermissionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeFolderPermissionsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opDescribeFolderResolvedPermissions = "DescribeFolderResolvedPermissions"
@@ -6616,6 +7296,12 @@ func (c *QuickSight) DescribeFolderResolvedPermissionsRequest(input *DescribeFol
 		Name:       opDescribeFolderResolvedPermissions,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/folders/{FolderId}/resolved-permissions",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -6657,6 +7343,9 @@ func (c *QuickSight) DescribeFolderResolvedPermissionsRequest(input *DescribeFol
 //   - ThrottlingException
 //     Access is throttled.
 //
+//   - InvalidNextTokenException
+//     The NextToken value isn't valid.
+//
 //   - UnsupportedUserEditionException
 //     This error indicates that you are calling an operation on an Amazon QuickSight
 //     subscription where the edition doesn't include support for that operation.
@@ -6686,6 +7375,57 @@ func (c *QuickSight) DescribeFolderResolvedPermissionsWithContext(ctx aws.Contex
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// DescribeFolderResolvedPermissionsPages iterates over the pages of a DescribeFolderResolvedPermissions operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See DescribeFolderResolvedPermissions method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a DescribeFolderResolvedPermissions operation.
+//	pageNum := 0
+//	err := client.DescribeFolderResolvedPermissionsPages(params,
+//	    func(page *quicksight.DescribeFolderResolvedPermissionsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) DescribeFolderResolvedPermissionsPages(input *DescribeFolderResolvedPermissionsInput, fn func(*DescribeFolderResolvedPermissionsOutput, bool) bool) error {
+	return c.DescribeFolderResolvedPermissionsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// DescribeFolderResolvedPermissionsPagesWithContext same as DescribeFolderResolvedPermissionsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DescribeFolderResolvedPermissionsPagesWithContext(ctx aws.Context, input *DescribeFolderResolvedPermissionsInput, fn func(*DescribeFolderResolvedPermissionsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *DescribeFolderResolvedPermissionsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.DescribeFolderResolvedPermissionsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*DescribeFolderResolvedPermissionsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opDescribeGroup = "DescribeGroup"
@@ -7376,6 +8116,107 @@ func (c *QuickSight) DescribeRefreshSchedule(input *DescribeRefreshScheduleInput
 // for more information on using Contexts.
 func (c *QuickSight) DescribeRefreshScheduleWithContext(ctx aws.Context, input *DescribeRefreshScheduleInput, opts ...request.Option) (*DescribeRefreshScheduleOutput, error) {
 	req, out := c.DescribeRefreshScheduleRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDescribeRoleCustomPermission = "DescribeRoleCustomPermission"
+
+// DescribeRoleCustomPermissionRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeRoleCustomPermission operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeRoleCustomPermission for more information on using the DescribeRoleCustomPermission
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeRoleCustomPermissionRequest method.
+//	req, resp := client.DescribeRoleCustomPermissionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeRoleCustomPermission
+func (c *QuickSight) DescribeRoleCustomPermissionRequest(input *DescribeRoleCustomPermissionInput) (req *request.Request, output *DescribeRoleCustomPermissionOutput) {
+	op := &request.Operation{
+		Name:       opDescribeRoleCustomPermission,
+		HTTPMethod: "GET",
+		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/custom-permission",
+	}
+
+	if input == nil {
+		input = &DescribeRoleCustomPermissionInput{}
+	}
+
+	output = &DescribeRoleCustomPermissionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeRoleCustomPermission API operation for Amazon QuickSight.
+//
+// Describes all custom permissions that are mapped to a role.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation DescribeRoleCustomPermission for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+//   - ResourceUnavailableException
+//     This resource is currently unavailable.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/DescribeRoleCustomPermission
+func (c *QuickSight) DescribeRoleCustomPermission(input *DescribeRoleCustomPermissionInput) (*DescribeRoleCustomPermissionOutput, error) {
+	req, out := c.DescribeRoleCustomPermissionRequest(input)
+	return out, req.Send()
+}
+
+// DescribeRoleCustomPermissionWithContext is the same as DescribeRoleCustomPermission with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeRoleCustomPermission for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) DescribeRoleCustomPermissionWithContext(ctx aws.Context, input *DescribeRoleCustomPermissionInput, opts ...request.Option) (*DescribeRoleCustomPermissionOutput, error) {
+	req, out := c.DescribeRoleCustomPermissionRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -10354,6 +11195,12 @@ func (c *QuickSight) ListFolderMembersRequest(input *ListFolderMembersInput) (re
 		Name:       opListFolderMembers,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/folders/{FolderId}/members",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10428,6 +11275,57 @@ func (c *QuickSight) ListFolderMembersWithContext(ctx aws.Context, input *ListFo
 	return out, req.Send()
 }
 
+// ListFolderMembersPages iterates over the pages of a ListFolderMembers operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListFolderMembers method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListFolderMembers operation.
+//	pageNum := 0
+//	err := client.ListFolderMembersPages(params,
+//	    func(page *quicksight.ListFolderMembersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListFolderMembersPages(input *ListFolderMembersInput, fn func(*ListFolderMembersOutput, bool) bool) error {
+	return c.ListFolderMembersPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListFolderMembersPagesWithContext same as ListFolderMembersPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListFolderMembersPagesWithContext(ctx aws.Context, input *ListFolderMembersInput, fn func(*ListFolderMembersOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListFolderMembersInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListFolderMembersRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListFolderMembersOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListFolders = "ListFolders"
 
 // ListFoldersRequest generates a "aws/request.Request" representing the
@@ -10458,6 +11356,12 @@ func (c *QuickSight) ListFoldersRequest(input *ListFoldersInput) (req *request.R
 		Name:       opListFolders,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/folders",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10532,6 +11436,57 @@ func (c *QuickSight) ListFoldersWithContext(ctx aws.Context, input *ListFoldersI
 	return out, req.Send()
 }
 
+// ListFoldersPages iterates over the pages of a ListFolders operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListFolders method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListFolders operation.
+//	pageNum := 0
+//	err := client.ListFoldersPages(params,
+//	    func(page *quicksight.ListFoldersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListFoldersPages(input *ListFoldersInput, fn func(*ListFoldersOutput, bool) bool) error {
+	return c.ListFoldersPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListFoldersPagesWithContext same as ListFoldersPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListFoldersPagesWithContext(ctx aws.Context, input *ListFoldersInput, fn func(*ListFoldersOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListFoldersInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListFoldersRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListFoldersOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListGroupMemberships = "ListGroupMemberships"
 
 // ListGroupMembershipsRequest generates a "aws/request.Request" representing the
@@ -10562,6 +11517,12 @@ func (c *QuickSight) ListGroupMembershipsRequest(input *ListGroupMembershipsInpu
 		Name:       opListGroupMemberships,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups/{GroupName}/members",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10636,6 +11597,57 @@ func (c *QuickSight) ListGroupMembershipsWithContext(ctx aws.Context, input *Lis
 	return out, req.Send()
 }
 
+// ListGroupMembershipsPages iterates over the pages of a ListGroupMemberships operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListGroupMemberships method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListGroupMemberships operation.
+//	pageNum := 0
+//	err := client.ListGroupMembershipsPages(params,
+//	    func(page *quicksight.ListGroupMembershipsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListGroupMembershipsPages(input *ListGroupMembershipsInput, fn func(*ListGroupMembershipsOutput, bool) bool) error {
+	return c.ListGroupMembershipsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListGroupMembershipsPagesWithContext same as ListGroupMembershipsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListGroupMembershipsPagesWithContext(ctx aws.Context, input *ListGroupMembershipsInput, fn func(*ListGroupMembershipsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListGroupMembershipsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListGroupMembershipsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListGroupMembershipsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListGroups = "ListGroups"
 
 // ListGroupsRequest generates a "aws/request.Request" representing the
@@ -10666,6 +11678,12 @@ func (c *QuickSight) ListGroupsRequest(input *ListGroupsInput) (req *request.Req
 		Name:       opListGroups,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10740,6 +11758,57 @@ func (c *QuickSight) ListGroupsWithContext(ctx aws.Context, input *ListGroupsInp
 	return out, req.Send()
 }
 
+// ListGroupsPages iterates over the pages of a ListGroups operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListGroups method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListGroups operation.
+//	pageNum := 0
+//	err := client.ListGroupsPages(params,
+//	    func(page *quicksight.ListGroupsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListGroupsPages(input *ListGroupsInput, fn func(*ListGroupsOutput, bool) bool) error {
+	return c.ListGroupsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListGroupsPagesWithContext same as ListGroupsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListGroupsPagesWithContext(ctx aws.Context, input *ListGroupsInput, fn func(*ListGroupsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListGroupsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListGroupsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListGroupsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListIAMPolicyAssignments = "ListIAMPolicyAssignments"
 
 // ListIAMPolicyAssignmentsRequest generates a "aws/request.Request" representing the
@@ -10770,6 +11839,12 @@ func (c *QuickSight) ListIAMPolicyAssignmentsRequest(input *ListIAMPolicyAssignm
 		Name:       opListIAMPolicyAssignments,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/v2/iam-policy-assignments",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10838,6 +11913,57 @@ func (c *QuickSight) ListIAMPolicyAssignmentsWithContext(ctx aws.Context, input 
 	return out, req.Send()
 }
 
+// ListIAMPolicyAssignmentsPages iterates over the pages of a ListIAMPolicyAssignments operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListIAMPolicyAssignments method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListIAMPolicyAssignments operation.
+//	pageNum := 0
+//	err := client.ListIAMPolicyAssignmentsPages(params,
+//	    func(page *quicksight.ListIAMPolicyAssignmentsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListIAMPolicyAssignmentsPages(input *ListIAMPolicyAssignmentsInput, fn func(*ListIAMPolicyAssignmentsOutput, bool) bool) error {
+	return c.ListIAMPolicyAssignmentsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListIAMPolicyAssignmentsPagesWithContext same as ListIAMPolicyAssignmentsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListIAMPolicyAssignmentsPagesWithContext(ctx aws.Context, input *ListIAMPolicyAssignmentsInput, fn func(*ListIAMPolicyAssignmentsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListIAMPolicyAssignmentsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListIAMPolicyAssignmentsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListIAMPolicyAssignmentsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListIAMPolicyAssignmentsForUser = "ListIAMPolicyAssignmentsForUser"
 
 // ListIAMPolicyAssignmentsForUserRequest generates a "aws/request.Request" representing the
@@ -10868,6 +11994,12 @@ func (c *QuickSight) ListIAMPolicyAssignmentsForUserRequest(input *ListIAMPolicy
 		Name:       opListIAMPolicyAssignmentsForUser,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/iam-policy-assignments",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -10937,6 +12069,156 @@ func (c *QuickSight) ListIAMPolicyAssignmentsForUser(input *ListIAMPolicyAssignm
 // for more information on using Contexts.
 func (c *QuickSight) ListIAMPolicyAssignmentsForUserWithContext(ctx aws.Context, input *ListIAMPolicyAssignmentsForUserInput, opts ...request.Option) (*ListIAMPolicyAssignmentsForUserOutput, error) {
 	req, out := c.ListIAMPolicyAssignmentsForUserRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListIAMPolicyAssignmentsForUserPages iterates over the pages of a ListIAMPolicyAssignmentsForUser operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListIAMPolicyAssignmentsForUser method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListIAMPolicyAssignmentsForUser operation.
+//	pageNum := 0
+//	err := client.ListIAMPolicyAssignmentsForUserPages(params,
+//	    func(page *quicksight.ListIAMPolicyAssignmentsForUserOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListIAMPolicyAssignmentsForUserPages(input *ListIAMPolicyAssignmentsForUserInput, fn func(*ListIAMPolicyAssignmentsForUserOutput, bool) bool) error {
+	return c.ListIAMPolicyAssignmentsForUserPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListIAMPolicyAssignmentsForUserPagesWithContext same as ListIAMPolicyAssignmentsForUserPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListIAMPolicyAssignmentsForUserPagesWithContext(ctx aws.Context, input *ListIAMPolicyAssignmentsForUserInput, fn func(*ListIAMPolicyAssignmentsForUserOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListIAMPolicyAssignmentsForUserInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListIAMPolicyAssignmentsForUserRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListIAMPolicyAssignmentsForUserOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListIdentityPropagationConfigs = "ListIdentityPropagationConfigs"
+
+// ListIdentityPropagationConfigsRequest generates a "aws/request.Request" representing the
+// client's request for the ListIdentityPropagationConfigs operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListIdentityPropagationConfigs for more information on using the ListIdentityPropagationConfigs
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListIdentityPropagationConfigsRequest method.
+//	req, resp := client.ListIdentityPropagationConfigsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListIdentityPropagationConfigs
+func (c *QuickSight) ListIdentityPropagationConfigsRequest(input *ListIdentityPropagationConfigsInput) (req *request.Request, output *ListIdentityPropagationConfigsOutput) {
+	op := &request.Operation{
+		Name:       opListIdentityPropagationConfigs,
+		HTTPMethod: "GET",
+		HTTPPath:   "/accounts/{AwsAccountId}/identity-propagation-config",
+	}
+
+	if input == nil {
+		input = &ListIdentityPropagationConfigsInput{}
+	}
+
+	output = &ListIdentityPropagationConfigsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListIdentityPropagationConfigs API operation for Amazon QuickSight.
+//
+// Lists all services and authorized targets that the Amazon QuickSight IAM
+// Identity Center application can access.
+//
+// This operation is only supported for Amazon QuickSight accounts that use
+// IAM Identity Center.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation ListIdentityPropagationConfigs for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListIdentityPropagationConfigs
+func (c *QuickSight) ListIdentityPropagationConfigs(input *ListIdentityPropagationConfigsInput) (*ListIdentityPropagationConfigsOutput, error) {
+	req, out := c.ListIdentityPropagationConfigsRequest(input)
+	return out, req.Send()
+}
+
+// ListIdentityPropagationConfigsWithContext is the same as ListIdentityPropagationConfigs with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListIdentityPropagationConfigs for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListIdentityPropagationConfigsWithContext(ctx aws.Context, input *ListIdentityPropagationConfigsInput, opts ...request.Option) (*ListIdentityPropagationConfigsOutput, error) {
+	req, out := c.ListIdentityPropagationConfigsRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -11358,6 +12640,170 @@ func (c *QuickSight) ListRefreshSchedulesWithContext(ctx aws.Context, input *Lis
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+const opListRoleMemberships = "ListRoleMemberships"
+
+// ListRoleMembershipsRequest generates a "aws/request.Request" representing the
+// client's request for the ListRoleMemberships operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListRoleMemberships for more information on using the ListRoleMemberships
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListRoleMembershipsRequest method.
+//	req, resp := client.ListRoleMembershipsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListRoleMemberships
+func (c *QuickSight) ListRoleMembershipsRequest(input *ListRoleMembershipsInput) (req *request.Request, output *ListRoleMembershipsOutput) {
+	op := &request.Operation{
+		Name:       opListRoleMemberships,
+		HTTPMethod: "GET",
+		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/members",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListRoleMembershipsInput{}
+	}
+
+	output = &ListRoleMembershipsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListRoleMemberships API operation for Amazon QuickSight.
+//
+// Lists all groups that are associated with a role.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation ListRoleMemberships for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - InvalidNextTokenException
+//     The NextToken value isn't valid.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
+//
+//   - LimitExceededException
+//     A limit is exceeded.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+//   - ResourceUnavailableException
+//     This resource is currently unavailable.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/ListRoleMemberships
+func (c *QuickSight) ListRoleMemberships(input *ListRoleMembershipsInput) (*ListRoleMembershipsOutput, error) {
+	req, out := c.ListRoleMembershipsRequest(input)
+	return out, req.Send()
+}
+
+// ListRoleMembershipsWithContext is the same as ListRoleMemberships with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListRoleMemberships for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListRoleMembershipsWithContext(ctx aws.Context, input *ListRoleMembershipsInput, opts ...request.Option) (*ListRoleMembershipsOutput, error) {
+	req, out := c.ListRoleMembershipsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListRoleMembershipsPages iterates over the pages of a ListRoleMemberships operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListRoleMemberships method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListRoleMemberships operation.
+//	pageNum := 0
+//	err := client.ListRoleMembershipsPages(params,
+//	    func(page *quicksight.ListRoleMembershipsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListRoleMembershipsPages(input *ListRoleMembershipsInput, fn func(*ListRoleMembershipsOutput, bool) bool) error {
+	return c.ListRoleMembershipsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListRoleMembershipsPagesWithContext same as ListRoleMembershipsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListRoleMembershipsPagesWithContext(ctx aws.Context, input *ListRoleMembershipsInput, fn func(*ListRoleMembershipsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListRoleMembershipsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListRoleMembershipsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListRoleMembershipsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opListTagsForResource = "ListTagsForResource"
@@ -12623,6 +14069,12 @@ func (c *QuickSight) ListUserGroupsRequest(input *ListUserGroupsInput) (req *req
 		Name:       opListUserGroups,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/users/{UserName}/groups",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12695,6 +14147,57 @@ func (c *QuickSight) ListUserGroupsWithContext(ctx aws.Context, input *ListUserG
 	return out, req.Send()
 }
 
+// ListUserGroupsPages iterates over the pages of a ListUserGroups operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListUserGroups method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListUserGroups operation.
+//	pageNum := 0
+//	err := client.ListUserGroupsPages(params,
+//	    func(page *quicksight.ListUserGroupsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListUserGroupsPages(input *ListUserGroupsInput, fn func(*ListUserGroupsOutput, bool) bool) error {
+	return c.ListUserGroupsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListUserGroupsPagesWithContext same as ListUserGroupsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListUserGroupsPagesWithContext(ctx aws.Context, input *ListUserGroupsInput, fn func(*ListUserGroupsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListUserGroupsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListUserGroupsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListUserGroupsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListUsers = "ListUsers"
 
 // ListUsersRequest generates a "aws/request.Request" representing the
@@ -12725,6 +14228,12 @@ func (c *QuickSight) ListUsersRequest(input *ListUsersInput) (req *request.Reque
 		Name:       opListUsers,
 		HTTPMethod: "GET",
 		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/users",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -12797,6 +14306,57 @@ func (c *QuickSight) ListUsersWithContext(ctx aws.Context, input *ListUsersInput
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// ListUsersPages iterates over the pages of a ListUsers operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListUsers method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListUsers operation.
+//	pageNum := 0
+//	err := client.ListUsersPages(params,
+//	    func(page *quicksight.ListUsersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) ListUsersPages(input *ListUsersInput, fn func(*ListUsersOutput, bool) bool) error {
+	return c.ListUsersPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListUsersPagesWithContext same as ListUsersPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) ListUsersPagesWithContext(ctx aws.Context, input *ListUsersInput, fn func(*ListUsersOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListUsersInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListUsersRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListUsersOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opListVPCConnections = "ListVPCConnections"
@@ -13931,6 +15491,12 @@ func (c *QuickSight) SearchFoldersRequest(input *SearchFoldersInput) (req *reque
 		Name:       opSearchFolders,
 		HTTPMethod: "POST",
 		HTTPPath:   "/accounts/{AwsAccountId}/search/folders",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -14009,6 +15575,57 @@ func (c *QuickSight) SearchFoldersWithContext(ctx aws.Context, input *SearchFold
 	return out, req.Send()
 }
 
+// SearchFoldersPages iterates over the pages of a SearchFolders operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See SearchFolders method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a SearchFolders operation.
+//	pageNum := 0
+//	err := client.SearchFoldersPages(params,
+//	    func(page *quicksight.SearchFoldersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) SearchFoldersPages(input *SearchFoldersInput, fn func(*SearchFoldersOutput, bool) bool) error {
+	return c.SearchFoldersPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// SearchFoldersPagesWithContext same as SearchFoldersPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) SearchFoldersPagesWithContext(ctx aws.Context, input *SearchFoldersInput, fn func(*SearchFoldersOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *SearchFoldersInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.SearchFoldersRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*SearchFoldersOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opSearchGroups = "SearchGroups"
 
 // SearchGroupsRequest generates a "aws/request.Request" representing the
@@ -14039,6 +15656,12 @@ func (c *QuickSight) SearchGroupsRequest(input *SearchGroupsInput) (req *request
 		Name:       opSearchGroups,
 		HTTPMethod: "POST",
 		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/groups-search",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
@@ -14112,6 +15735,57 @@ func (c *QuickSight) SearchGroupsWithContext(ctx aws.Context, input *SearchGroup
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// SearchGroupsPages iterates over the pages of a SearchGroups operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See SearchGroups method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a SearchGroups operation.
+//	pageNum := 0
+//	err := client.SearchGroupsPages(params,
+//	    func(page *quicksight.SearchGroupsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QuickSight) SearchGroupsPages(input *SearchGroupsInput, fn func(*SearchGroupsOutput, bool) bool) error {
+	return c.SearchGroupsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// SearchGroupsPagesWithContext same as SearchGroupsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) SearchGroupsPagesWithContext(ctx aws.Context, input *SearchGroupsInput, fn func(*SearchGroupsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *SearchGroupsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.SearchGroupsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*SearchGroupsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opStartAssetBundleExportJob = "StartAssetBundleExportJob"
@@ -14344,6 +16018,134 @@ func (c *QuickSight) StartAssetBundleImportJobWithContext(ctx aws.Context, input
 	return out, req.Send()
 }
 
+const opStartDashboardSnapshotJob = "StartDashboardSnapshotJob"
+
+// StartDashboardSnapshotJobRequest generates a "aws/request.Request" representing the
+// client's request for the StartDashboardSnapshotJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartDashboardSnapshotJob for more information on using the StartDashboardSnapshotJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartDashboardSnapshotJobRequest method.
+//	req, resp := client.StartDashboardSnapshotJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/StartDashboardSnapshotJob
+func (c *QuickSight) StartDashboardSnapshotJobRequest(input *StartDashboardSnapshotJobInput) (req *request.Request, output *StartDashboardSnapshotJobOutput) {
+	op := &request.Operation{
+		Name:       opStartDashboardSnapshotJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/accounts/{AwsAccountId}/dashboards/{DashboardId}/snapshot-jobs",
+	}
+
+	if input == nil {
+		input = &StartDashboardSnapshotJobInput{}
+	}
+
+	output = &StartDashboardSnapshotJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartDashboardSnapshotJob API operation for Amazon QuickSight.
+//
+// Starts an asynchronous job that generates a dashboard snapshot. You can request
+// one of the following format configurations per API call.
+//
+//   - 1 paginated PDF
+//
+//   - 1 Excel workbook
+//
+//   - 5 CSVs
+//
+// Poll job descriptions with a DescribeDashboardSnapshotJob API call. Once
+// the job succeeds, use the DescribeDashboardSnapshotJobResult API to obtain
+// the download URIs that the job generates.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation StartDashboardSnapshotJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - LimitExceededException
+//     A limit is exceeded.
+//
+//   - ResourceExistsException
+//     The resource specified already exists.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - UnsupportedUserEditionException
+//     This error indicates that you are calling an operation on an Amazon QuickSight
+//     subscription where the edition doesn't include support for that operation.
+//     Amazon Amazon QuickSight currently has Standard Edition and Enterprise Edition.
+//     Not every operation and capability is available in every edition.
+//
+//   - UnsupportedPricingPlanException
+//     This error indicates that you are calling an embedding operation in Amazon
+//     QuickSight without the required pricing plan on your Amazon Web Services
+//     account. Before you can use embedding for anonymous users, a QuickSight administrator
+//     needs to add capacity pricing to Amazon QuickSight. You can do this on the
+//     Manage Amazon QuickSight page.
+//
+//     After capacity pricing is added, you can use the GetDashboardEmbedUrl (https://docs.aws.amazon.com/quicksight/latest/APIReference/API_GetDashboardEmbedUrl.html)
+//     API operation with the --identity-type ANONYMOUS option.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/StartDashboardSnapshotJob
+func (c *QuickSight) StartDashboardSnapshotJob(input *StartDashboardSnapshotJobInput) (*StartDashboardSnapshotJobOutput, error) {
+	req, out := c.StartDashboardSnapshotJobRequest(input)
+	return out, req.Send()
+}
+
+// StartDashboardSnapshotJobWithContext is the same as StartDashboardSnapshotJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartDashboardSnapshotJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) StartDashboardSnapshotJobWithContext(ctx aws.Context, input *StartDashboardSnapshotJobInput, opts ...request.Option) (*StartDashboardSnapshotJobOutput, error) {
+	req, out := c.StartDashboardSnapshotJobRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opTagResource = "TagResource"
 
 // TagResourceRequest generates a "aws/request.Request" representing the
@@ -14400,15 +16202,15 @@ func (c *QuickSight) TagResourceRequest(input *TagResourceInput) (req *request.R
 // for that tag.
 //
 // You can associate as many as 50 tags with a resource. Amazon QuickSight supports
-// tagging on data set, data source, dashboard, template, and topic.
+// tagging on data set, data source, dashboard, template, topic, and user.
 //
 // Tagging for Amazon QuickSight works in a similar way to tagging for other
 // Amazon Web Services services, except for the following:
 //
-//   - You can't use tags to track costs for Amazon QuickSight. This isn't
-//     possible because you can't tag the resources that Amazon QuickSight costs
-//     are based on, for example Amazon QuickSight storage capacity (SPICE),
-//     number of users, type of users, and usage metrics.
+//   - Tags are used to track costs for users in Amazon QuickSight. You can't
+//     tag other resources that Amazon QuickSight costs are based on, such as
+//     storage capacoty (SPICE), session usage, alert consumption, or reporting
+//     units.
 //
 //   - Amazon QuickSight doesn't currently support the tag editor for Resource
 //     Groups.
@@ -15067,6 +16869,104 @@ func (c *QuickSight) UpdateDashboard(input *UpdateDashboardInput) (*UpdateDashbo
 // for more information on using Contexts.
 func (c *QuickSight) UpdateDashboardWithContext(ctx aws.Context, input *UpdateDashboardInput, opts ...request.Option) (*UpdateDashboardOutput, error) {
 	req, out := c.UpdateDashboardRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateDashboardLinks = "UpdateDashboardLinks"
+
+// UpdateDashboardLinksRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateDashboardLinks operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateDashboardLinks for more information on using the UpdateDashboardLinks
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateDashboardLinksRequest method.
+//	req, resp := client.UpdateDashboardLinksRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDashboardLinks
+func (c *QuickSight) UpdateDashboardLinksRequest(input *UpdateDashboardLinksInput) (req *request.Request, output *UpdateDashboardLinksOutput) {
+	op := &request.Operation{
+		Name:       opUpdateDashboardLinks,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/accounts/{AwsAccountId}/dashboards/{DashboardId}/linked-entities",
+	}
+
+	if input == nil {
+		input = &UpdateDashboardLinksInput{}
+	}
+
+	output = &UpdateDashboardLinksOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateDashboardLinks API operation for Amazon QuickSight.
+//
+// Updates the linked analyses on a dashboard.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation UpdateDashboardLinks for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ConflictException
+//     Updating or deleting a resource can cause an inconsistent state.
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateDashboardLinks
+func (c *QuickSight) UpdateDashboardLinks(input *UpdateDashboardLinksInput) (*UpdateDashboardLinksOutput, error) {
+	req, out := c.UpdateDashboardLinksRequest(input)
+	return out, req.Send()
+}
+
+// UpdateDashboardLinksWithContext is the same as UpdateDashboardLinks with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateDashboardLinks for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) UpdateDashboardLinksWithContext(ctx aws.Context, input *UpdateDashboardLinksInput, opts ...request.Option) (*UpdateDashboardLinksOutput, error) {
+	req, out := c.UpdateDashboardLinksRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -16089,6 +17989,105 @@ func (c *QuickSight) UpdateIAMPolicyAssignmentWithContext(ctx aws.Context, input
 	return out, req.Send()
 }
 
+const opUpdateIdentityPropagationConfig = "UpdateIdentityPropagationConfig"
+
+// UpdateIdentityPropagationConfigRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateIdentityPropagationConfig operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateIdentityPropagationConfig for more information on using the UpdateIdentityPropagationConfig
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateIdentityPropagationConfigRequest method.
+//	req, resp := client.UpdateIdentityPropagationConfigRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateIdentityPropagationConfig
+func (c *QuickSight) UpdateIdentityPropagationConfigRequest(input *UpdateIdentityPropagationConfigInput) (req *request.Request, output *UpdateIdentityPropagationConfigOutput) {
+	op := &request.Operation{
+		Name:       opUpdateIdentityPropagationConfig,
+		HTTPMethod: "POST",
+		HTTPPath:   "/accounts/{AwsAccountId}/identity-propagation-config/{Service}",
+	}
+
+	if input == nil {
+		input = &UpdateIdentityPropagationConfigInput{}
+	}
+
+	output = &UpdateIdentityPropagationConfigOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateIdentityPropagationConfig API operation for Amazon QuickSight.
+//
+// Adds or updates services and authorized targets to configure what the Amazon
+// QuickSight IAM Identity Center application can access.
+//
+// This operation is only supported for Amazon QuickSight accounts using IAM
+// Identity Center
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation UpdateIdentityPropagationConfig for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateIdentityPropagationConfig
+func (c *QuickSight) UpdateIdentityPropagationConfig(input *UpdateIdentityPropagationConfigInput) (*UpdateIdentityPropagationConfigOutput, error) {
+	req, out := c.UpdateIdentityPropagationConfigRequest(input)
+	return out, req.Send()
+}
+
+// UpdateIdentityPropagationConfigWithContext is the same as UpdateIdentityPropagationConfig with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateIdentityPropagationConfig for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) UpdateIdentityPropagationConfigWithContext(ctx aws.Context, input *UpdateIdentityPropagationConfigInput, opts ...request.Option) (*UpdateIdentityPropagationConfigOutput, error) {
+	req, out := c.UpdateIdentityPropagationConfigRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateIpRestriction = "UpdateIpRestriction"
 
 // UpdateIpRestrictionRequest generates a "aws/request.Request" representing the
@@ -16400,6 +18399,107 @@ func (c *QuickSight) UpdateRefreshSchedule(input *UpdateRefreshScheduleInput) (*
 // for more information on using Contexts.
 func (c *QuickSight) UpdateRefreshScheduleWithContext(ctx aws.Context, input *UpdateRefreshScheduleInput, opts ...request.Option) (*UpdateRefreshScheduleOutput, error) {
 	req, out := c.UpdateRefreshScheduleRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateRoleCustomPermission = "UpdateRoleCustomPermission"
+
+// UpdateRoleCustomPermissionRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateRoleCustomPermission operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateRoleCustomPermission for more information on using the UpdateRoleCustomPermission
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateRoleCustomPermissionRequest method.
+//	req, resp := client.UpdateRoleCustomPermissionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateRoleCustomPermission
+func (c *QuickSight) UpdateRoleCustomPermissionRequest(input *UpdateRoleCustomPermissionInput) (req *request.Request, output *UpdateRoleCustomPermissionOutput) {
+	op := &request.Operation{
+		Name:       opUpdateRoleCustomPermission,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/accounts/{AwsAccountId}/namespaces/{Namespace}/roles/{Role}/custom-permission",
+	}
+
+	if input == nil {
+		input = &UpdateRoleCustomPermissionInput{}
+	}
+
+	output = &UpdateRoleCustomPermissionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateRoleCustomPermission API operation for Amazon QuickSight.
+//
+// Updates the custom permissions that are associated with a role.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon QuickSight's
+// API operation UpdateRoleCustomPermission for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to this item. The provided credentials couldn't be
+//     validated. You might not be authorized to carry out the request. Make sure
+//     that your account is authorized to use the Amazon QuickSight service, that
+//     your policies have the correct permissions, and that you are using the correct
+//     credentials.
+//
+//   - InvalidParameterValueException
+//     One or more parameters has a value that isn't valid.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ThrottlingException
+//     Access is throttled.
+//
+//   - PreconditionNotMetException
+//     One or more preconditions aren't met.
+//
+//   - InternalFailureException
+//     An internal failure occurred.
+//
+//   - ResourceUnavailableException
+//     This resource is currently unavailable.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/quicksight-2018-04-01/UpdateRoleCustomPermission
+func (c *QuickSight) UpdateRoleCustomPermission(input *UpdateRoleCustomPermissionInput) (*UpdateRoleCustomPermissionOutput, error) {
+	req, out := c.UpdateRoleCustomPermissionRequest(input)
+	return out, req.Send()
+}
+
+// UpdateRoleCustomPermissionWithContext is the same as UpdateRoleCustomPermission with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateRoleCustomPermission for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QuickSight) UpdateRoleCustomPermissionWithContext(ctx aws.Context, input *UpdateRoleCustomPermissionInput, opts ...request.Option) (*UpdateRoleCustomPermissionOutput, error) {
+	req, out := c.UpdateRoleCustomPermissionRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -17697,6 +19797,9 @@ type AccountInfo struct {
 	// The edition of your Amazon QuickSight account.
 	Edition *string `type:"string" enum:"Edition"`
 
+	// The Amazon Resource Name (ARN) for the IAM Identity Center instance.
+	IAMIdentityCenterInstanceArn *string `type:"string"`
+
 	// The email address that will be used for Amazon QuickSight to send notifications
 	// regarding your Amazon Web Services account or Amazon QuickSight subscription.
 	NotificationEmail *string `type:"string"`
@@ -17741,6 +19844,12 @@ func (s *AccountInfo) SetAuthenticationType(v string) *AccountInfo {
 // SetEdition sets the Edition field's value.
 func (s *AccountInfo) SetEdition(v string) *AccountInfo {
 	s.Edition = &v
+	return s
+}
+
+// SetIAMIdentityCenterInstanceArn sets the IAMIdentityCenterInstanceArn field's value.
+func (s *AccountInfo) SetIAMIdentityCenterInstanceArn(v string) *AccountInfo {
+	s.IAMIdentityCenterInstanceArn = &v
 	return s
 }
 
@@ -17916,6 +20025,9 @@ func (s *AdHocFilteringOption) SetAvailabilityStatus(v string) *AdHocFilteringOp
 type AggregationFunction struct {
 	_ struct{} `type:"structure"`
 
+	// Aggregation for attributes.
+	AttributeAggregationFunction *AttributeAggregationFunction `type:"structure"`
+
 	// Aggregation for categorical values.
 	//
 	//    * COUNT: Aggregate by the total number of values, including duplicates.
@@ -17954,6 +20066,12 @@ func (s AggregationFunction) String() string {
 // value will be replaced with "sensitive".
 func (s AggregationFunction) GoString() string {
 	return s.String()
+}
+
+// SetAttributeAggregationFunction sets the AttributeAggregationFunction field's value.
+func (s *AggregationFunction) SetAttributeAggregationFunction(v *AttributeAggregationFunction) *AggregationFunction {
+	s.AttributeAggregationFunction = v
+	return s
 }
 
 // SetCategoricalAggregationFunction sets the CategoricalAggregationFunction field's value.
@@ -18051,6 +20169,33 @@ func (s *AggregationSortConfiguration) SetColumn(v *ColumnIdentifier) *Aggregati
 func (s *AggregationSortConfiguration) SetSortDirection(v string) *AggregationSortConfiguration {
 	s.SortDirection = &v
 	return s
+}
+
+// The configuration for applying a filter to all sheets. You can apply this
+// filter to all visuals on every sheet.
+//
+// This is a union type structure. For this structure to be valid, only one
+// of the attributes can be defined.
+type AllSheetsFilterScopeConfiguration struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AllSheetsFilterScopeConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AllSheetsFilterScopeConfiguration) GoString() string {
+	return s.String()
 }
 
 // The parameters for OpenSearch.
@@ -18345,6 +20490,9 @@ type AnalysisDefinition struct {
 	// in the Amazon QuickSight User Guide.
 	FilterGroups []*FilterGroup `type:"list"`
 
+	// An array of option definitions for an analysis.
+	Options *AssetOptions `type:"structure"`
+
 	// An array of parameter declarations for an analysis.
 	//
 	// Parameters are named variables that can transfer a value for use by an action
@@ -18485,6 +20633,12 @@ func (s *AnalysisDefinition) SetDataSetIdentifierDeclarations(v []*DataSetIdenti
 // SetFilterGroups sets the FilterGroups field's value.
 func (s *AnalysisDefinition) SetFilterGroups(v []*FilterGroup) *AnalysisDefinition {
 	s.FilterGroups = v
+	return s
+}
+
+// SetOptions sets the Options field's value.
+func (s *AnalysisDefinition) SetOptions(v *AssetOptions) *AnalysisDefinition {
+	s.Options = v
 	return s
 }
 
@@ -19139,6 +21293,43 @@ func (s *AnonymousUserQSearchBarEmbeddingConfiguration) SetInitialTopicId(v stri
 	return s
 }
 
+// A structure that contains the file groups that are requested for the artifact
+// generation in a StartDashboardSnapshotJob API call.
+type AnonymousUserSnapshotJobResult struct {
+	_ struct{} `type:"structure"`
+
+	// A list of SnapshotJobResultFileGroup objects that contain information on
+	// the files that are requested during a StartDashboardSnapshotJob API call.
+	// If the job succeeds, these objects contain the location where the snapshot
+	// artifacts are stored. If the job fails, the objects contain information about
+	// the error that caused the job to fail.
+	FileGroups []*SnapshotJobResultFileGroup `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnonymousUserSnapshotJobResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnonymousUserSnapshotJobResult) GoString() string {
+	return s.String()
+}
+
+// SetFileGroups sets the FileGroups field's value.
+func (s *AnonymousUserSnapshotJobResult) SetFileGroups(v []*SnapshotJobResultFileGroup) *AnonymousUserSnapshotJobResult {
+	s.FileGroups = v
+	return s
+}
+
 // The arc axis configuration of a GaugeChartVisual.
 type ArcAxisConfiguration struct {
 	_ struct{} `type:"structure"`
@@ -19506,7 +21697,9 @@ type AssetBundleExportJobAnalysisOverrideProperties struct {
 
 	// The ARN of the specific Analysis resource whose override properties are configured
 	// in this structure.
-	Arn *string `type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
 
 	// A list of Analysis resource properties to generate variables for in the returned
 	// CloudFormation template.
@@ -19536,6 +21729,9 @@ func (s AssetBundleExportJobAnalysisOverrideProperties) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AssetBundleExportJobAnalysisOverrideProperties) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AssetBundleExportJobAnalysisOverrideProperties"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
 	if s.Properties == nil {
 		invalidParams.Add(request.NewErrParamRequired("Properties"))
 	}
@@ -19568,7 +21764,9 @@ type AssetBundleExportJobDashboardOverrideProperties struct {
 
 	// The ARN of the specific Dashboard resource whose override properties are
 	// configured in this structure.
-	Arn *string `type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
 
 	// A list of Dashboard resource properties to generate variables for in the
 	// returned CloudFormation template.
@@ -19598,6 +21796,9 @@ func (s AssetBundleExportJobDashboardOverrideProperties) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AssetBundleExportJobDashboardOverrideProperties) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AssetBundleExportJobDashboardOverrideProperties"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
 	if s.Properties == nil {
 		invalidParams.Add(request.NewErrParamRequired("Properties"))
 	}
@@ -19630,7 +21831,9 @@ type AssetBundleExportJobDataSetOverrideProperties struct {
 
 	// The ARN of the specific DataSet resource whose override properties are configured
 	// in this structure.
-	Arn *string `type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
 
 	// A list of DataSet resource properties to generate variables for in the returned
 	// CloudFormation template.
@@ -19660,6 +21863,9 @@ func (s AssetBundleExportJobDataSetOverrideProperties) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AssetBundleExportJobDataSetOverrideProperties) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AssetBundleExportJobDataSetOverrideProperties"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
 	if s.Properties == nil {
 		invalidParams.Add(request.NewErrParamRequired("Properties"))
 	}
@@ -19692,7 +21898,9 @@ type AssetBundleExportJobDataSourceOverrideProperties struct {
 
 	// The ARN of the specific DataSource resource whose override properties are
 	// configured in this structure.
-	Arn *string `type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
 
 	// A list of DataSource resource properties to generate variables for in the
 	// returned CloudFormation template.
@@ -19722,6 +21930,9 @@ func (s AssetBundleExportJobDataSourceOverrideProperties) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AssetBundleExportJobDataSourceOverrideProperties) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AssetBundleExportJobDataSourceOverrideProperties"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
 	if s.Properties == nil {
 		invalidParams.Add(request.NewErrParamRequired("Properties"))
 	}
@@ -19804,7 +22015,9 @@ type AssetBundleExportJobRefreshScheduleOverrideProperties struct {
 
 	// The ARN of the specific RefreshSchedule resource whose override properties
 	// are configured in this structure.
-	Arn *string `type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
 
 	// A list of RefreshSchedule resource properties to generate variables for in
 	// the returned CloudFormation template.
@@ -19834,6 +22047,9 @@ func (s AssetBundleExportJobRefreshScheduleOverrideProperties) GoString() string
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AssetBundleExportJobRefreshScheduleOverrideProperties) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AssetBundleExportJobRefreshScheduleOverrideProperties"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
 	if s.Properties == nil {
 		invalidParams.Add(request.NewErrParamRequired("Properties"))
 	}
@@ -19915,6 +22131,14 @@ type AssetBundleExportJobSummary struct {
 	// asset bundle.
 	IncludeAllDependencies *bool `type:"boolean"`
 
+	// The flag that determines the inclusion of permissions associated with each
+	// resource ARN.
+	IncludePermissions *bool `type:"boolean"`
+
+	// The flag that determines the inclusion of tags associated with each resource
+	// ARN.
+	IncludeTags *bool `type:"boolean"`
+
 	// The current status of the export job.
 	JobStatus *string `type:"string" enum:"AssetBundleExportJobStatus"`
 }
@@ -19967,6 +22191,18 @@ func (s *AssetBundleExportJobSummary) SetIncludeAllDependencies(v bool) *AssetBu
 	return s
 }
 
+// SetIncludePermissions sets the IncludePermissions field's value.
+func (s *AssetBundleExportJobSummary) SetIncludePermissions(v bool) *AssetBundleExportJobSummary {
+	s.IncludePermissions = &v
+	return s
+}
+
+// SetIncludeTags sets the IncludeTags field's value.
+func (s *AssetBundleExportJobSummary) SetIncludeTags(v bool) *AssetBundleExportJobSummary {
+	s.IncludeTags = &v
+	return s
+}
+
 // SetJobStatus sets the JobStatus field's value.
 func (s *AssetBundleExportJobSummary) SetJobStatus(v string) *AssetBundleExportJobSummary {
 	s.JobStatus = &v
@@ -19980,7 +22216,9 @@ type AssetBundleExportJobThemeOverrideProperties struct {
 
 	// The ARN of the specific Theme resource whose override properties are configured
 	// in this structure.
-	Arn *string `type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
 
 	// A list of Theme resource properties to generate variables for in the returned
 	// CloudFormation template.
@@ -20010,6 +22248,9 @@ func (s AssetBundleExportJobThemeOverrideProperties) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AssetBundleExportJobThemeOverrideProperties) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AssetBundleExportJobThemeOverrideProperties"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
 	if s.Properties == nil {
 		invalidParams.Add(request.NewErrParamRequired("Properties"))
 	}
@@ -20042,7 +22283,9 @@ type AssetBundleExportJobVPCConnectionOverrideProperties struct {
 
 	// The ARN of the specific VPCConnection resource whose override properties
 	// are configured in this structure.
-	Arn *string `type:"string"`
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
 
 	// A list of VPCConnection resource properties to generate variables for in
 	// the returned CloudFormation template.
@@ -20072,6 +22315,9 @@ func (s AssetBundleExportJobVPCConnectionOverrideProperties) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AssetBundleExportJobVPCConnectionOverrideProperties) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AssetBundleExportJobVPCConnectionOverrideProperties"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
 	if s.Properties == nil {
 		invalidParams.Add(request.NewErrParamRequired("Properties"))
 	}
@@ -20094,6 +22340,82 @@ func (s *AssetBundleExportJobVPCConnectionOverrideProperties) SetArn(v string) *
 // SetProperties sets the Properties field's value.
 func (s *AssetBundleExportJobVPCConnectionOverrideProperties) SetProperties(v []*string) *AssetBundleExportJobVPCConnectionOverrideProperties {
 	s.Properties = v
+	return s
+}
+
+// The option to relax the validation that is required to export each asset.
+// When StrictModeForAllResource is set to true, validation is skipped for specific
+// UI errors.
+type AssetBundleExportJobValidationStrategy struct {
+	_ struct{} `type:"structure"`
+
+	// A Boolean value that indicates whether to export resources under strict or
+	// lenient mode.
+	StrictModeForAllResources *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleExportJobValidationStrategy) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleExportJobValidationStrategy) GoString() string {
+	return s.String()
+}
+
+// SetStrictModeForAllResources sets the StrictModeForAllResources field's value.
+func (s *AssetBundleExportJobValidationStrategy) SetStrictModeForAllResources(v bool) *AssetBundleExportJobValidationStrategy {
+	s.StrictModeForAllResources = &v
+	return s
+}
+
+// Describes a warning that occurred during an Asset Bundle export job.
+type AssetBundleExportJobWarning struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the resource whose processing caused a warning.
+	Arn *string `type:"string"`
+
+	// A description of the warning.
+	Message *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleExportJobWarning) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleExportJobWarning) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *AssetBundleExportJobWarning) SetArn(v string) *AssetBundleExportJobWarning {
+	s.Arn = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *AssetBundleExportJobWarning) SetMessage(v string) *AssetBundleExportJobWarning {
+	s.Message = &v
 	return s
 }
 
@@ -20156,6 +22478,156 @@ func (s *AssetBundleImportJobAnalysisOverrideParameters) SetName(v string) *Asse
 	return s
 }
 
+// An object that contains a list of permissions to be applied to a list of
+// analysis IDs.
+type AssetBundleImportJobAnalysisOverridePermissions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of analysis IDs that you want to apply overrides to. You can use *
+	// to override all analyses in this asset bundle.
+	//
+	// AnalysisIds is a required field
+	AnalysisIds []*string `min:"1" type:"list" required:"true"`
+
+	// A list of permissions for the analyses that you want to apply overrides to.
+	//
+	// Permissions is a required field
+	Permissions *AssetBundleResourcePermissions `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobAnalysisOverridePermissions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobAnalysisOverridePermissions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobAnalysisOverridePermissions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobAnalysisOverridePermissions"}
+	if s.AnalysisIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("AnalysisIds"))
+	}
+	if s.AnalysisIds != nil && len(s.AnalysisIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AnalysisIds", 1))
+	}
+	if s.Permissions == nil {
+		invalidParams.Add(request.NewErrParamRequired("Permissions"))
+	}
+	if s.Permissions != nil {
+		if err := s.Permissions.Validate(); err != nil {
+			invalidParams.AddNested("Permissions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAnalysisIds sets the AnalysisIds field's value.
+func (s *AssetBundleImportJobAnalysisOverridePermissions) SetAnalysisIds(v []*string) *AssetBundleImportJobAnalysisOverridePermissions {
+	s.AnalysisIds = v
+	return s
+}
+
+// SetPermissions sets the Permissions field's value.
+func (s *AssetBundleImportJobAnalysisOverridePermissions) SetPermissions(v *AssetBundleResourcePermissions) *AssetBundleImportJobAnalysisOverridePermissions {
+	s.Permissions = v
+	return s
+}
+
+// An object that contains a list of tags to be assigned to a list of analysis
+// IDs.
+type AssetBundleImportJobAnalysisOverrideTags struct {
+	_ struct{} `type:"structure"`
+
+	// A list of analysis IDs that you want to apply overrides to. You can use *
+	// to override all analyses in this asset bundle.
+	//
+	// AnalysisIds is a required field
+	AnalysisIds []*string `min:"1" type:"list" required:"true"`
+
+	// A list of tags for the analyses that you want to apply overrides to.
+	//
+	// Tags is a required field
+	Tags []*Tag `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobAnalysisOverrideTags) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobAnalysisOverrideTags) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobAnalysisOverrideTags) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobAnalysisOverrideTags"}
+	if s.AnalysisIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("AnalysisIds"))
+	}
+	if s.AnalysisIds != nil && len(s.AnalysisIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AnalysisIds", 1))
+	}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAnalysisIds sets the AnalysisIds field's value.
+func (s *AssetBundleImportJobAnalysisOverrideTags) SetAnalysisIds(v []*string) *AssetBundleImportJobAnalysisOverrideTags {
+	s.AnalysisIds = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *AssetBundleImportJobAnalysisOverrideTags) SetTags(v []*Tag) *AssetBundleImportJobAnalysisOverrideTags {
+	s.Tags = v
+	return s
+}
+
 // The override parameters for a single dashboard that is being imported.
 type AssetBundleImportJobDashboardOverrideParameters struct {
 	_ struct{} `type:"structure"`
@@ -20215,6 +22687,167 @@ func (s *AssetBundleImportJobDashboardOverrideParameters) SetName(v string) *Ass
 	return s
 }
 
+// An object that contains a list of permissions to be applied to a list of
+// dashboard IDs.
+type AssetBundleImportJobDashboardOverridePermissions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of dashboard IDs that you want to apply overrides to. You can use
+	// * to override all dashboards in this asset bundle.
+	//
+	// DashboardIds is a required field
+	DashboardIds []*string `min:"1" type:"list" required:"true"`
+
+	// A structure that contains the link sharing configurations that you want to
+	// apply overrides to.
+	LinkSharingConfiguration *AssetBundleResourceLinkSharingConfiguration `type:"structure"`
+
+	// A list of permissions for the dashboards that you want to apply overrides
+	// to.
+	Permissions *AssetBundleResourcePermissions `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDashboardOverridePermissions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDashboardOverridePermissions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobDashboardOverridePermissions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobDashboardOverridePermissions"}
+	if s.DashboardIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("DashboardIds"))
+	}
+	if s.DashboardIds != nil && len(s.DashboardIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashboardIds", 1))
+	}
+	if s.LinkSharingConfiguration != nil {
+		if err := s.LinkSharingConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("LinkSharingConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Permissions != nil {
+		if err := s.Permissions.Validate(); err != nil {
+			invalidParams.AddNested("Permissions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDashboardIds sets the DashboardIds field's value.
+func (s *AssetBundleImportJobDashboardOverridePermissions) SetDashboardIds(v []*string) *AssetBundleImportJobDashboardOverridePermissions {
+	s.DashboardIds = v
+	return s
+}
+
+// SetLinkSharingConfiguration sets the LinkSharingConfiguration field's value.
+func (s *AssetBundleImportJobDashboardOverridePermissions) SetLinkSharingConfiguration(v *AssetBundleResourceLinkSharingConfiguration) *AssetBundleImportJobDashboardOverridePermissions {
+	s.LinkSharingConfiguration = v
+	return s
+}
+
+// SetPermissions sets the Permissions field's value.
+func (s *AssetBundleImportJobDashboardOverridePermissions) SetPermissions(v *AssetBundleResourcePermissions) *AssetBundleImportJobDashboardOverridePermissions {
+	s.Permissions = v
+	return s
+}
+
+// An object that contains a list of tags to be assigned to a list of dashboard
+// IDs.
+type AssetBundleImportJobDashboardOverrideTags struct {
+	_ struct{} `type:"structure"`
+
+	// A list of dashboard IDs that you want to apply overrides to. You can use
+	// * to override all dashboards in this asset bundle.
+	//
+	// DashboardIds is a required field
+	DashboardIds []*string `min:"1" type:"list" required:"true"`
+
+	// A list of tags for the dashboards that you want to apply overrides to.
+	//
+	// Tags is a required field
+	Tags []*Tag `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDashboardOverrideTags) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDashboardOverrideTags) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobDashboardOverrideTags) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobDashboardOverrideTags"}
+	if s.DashboardIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("DashboardIds"))
+	}
+	if s.DashboardIds != nil && len(s.DashboardIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashboardIds", 1))
+	}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDashboardIds sets the DashboardIds field's value.
+func (s *AssetBundleImportJobDashboardOverrideTags) SetDashboardIds(v []*string) *AssetBundleImportJobDashboardOverrideTags {
+	s.DashboardIds = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *AssetBundleImportJobDashboardOverrideTags) SetTags(v []*Tag) *AssetBundleImportJobDashboardOverrideTags {
+	s.Tags = v
+	return s
+}
+
 // The override parameters for a single dataset that is being imported.
 type AssetBundleImportJobDataSetOverrideParameters struct {
 	_ struct{} `type:"structure"`
@@ -20271,6 +22904,156 @@ func (s *AssetBundleImportJobDataSetOverrideParameters) SetDataSetId(v string) *
 // SetName sets the Name field's value.
 func (s *AssetBundleImportJobDataSetOverrideParameters) SetName(v string) *AssetBundleImportJobDataSetOverrideParameters {
 	s.Name = &v
+	return s
+}
+
+// An object that contains a list of permissions to be applied to a list of
+// dataset IDs.
+type AssetBundleImportJobDataSetOverridePermissions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of dataset IDs that you want to apply overrides to. You can use *
+	// to override all datasets in this asset bundle.
+	//
+	// DataSetIds is a required field
+	DataSetIds []*string `min:"1" type:"list" required:"true"`
+
+	// A list of permissions for the datasets that you want to apply overrides to.
+	//
+	// Permissions is a required field
+	Permissions *AssetBundleResourcePermissions `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSetOverridePermissions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSetOverridePermissions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobDataSetOverridePermissions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobDataSetOverridePermissions"}
+	if s.DataSetIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSetIds"))
+	}
+	if s.DataSetIds != nil && len(s.DataSetIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSetIds", 1))
+	}
+	if s.Permissions == nil {
+		invalidParams.Add(request.NewErrParamRequired("Permissions"))
+	}
+	if s.Permissions != nil {
+		if err := s.Permissions.Validate(); err != nil {
+			invalidParams.AddNested("Permissions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSetIds sets the DataSetIds field's value.
+func (s *AssetBundleImportJobDataSetOverridePermissions) SetDataSetIds(v []*string) *AssetBundleImportJobDataSetOverridePermissions {
+	s.DataSetIds = v
+	return s
+}
+
+// SetPermissions sets the Permissions field's value.
+func (s *AssetBundleImportJobDataSetOverridePermissions) SetPermissions(v *AssetBundleResourcePermissions) *AssetBundleImportJobDataSetOverridePermissions {
+	s.Permissions = v
+	return s
+}
+
+// An object that contains a list of tags to be assigned to a list of dataset
+// IDs.
+type AssetBundleImportJobDataSetOverrideTags struct {
+	_ struct{} `type:"structure"`
+
+	// A list of dataset IDs that you want to apply overrides to. You can use *
+	// to override all datasets in this asset bundle.
+	//
+	// DataSetIds is a required field
+	DataSetIds []*string `min:"1" type:"list" required:"true"`
+
+	// A list of tags for the datasets that you want to apply overrides to.
+	//
+	// Tags is a required field
+	Tags []*Tag `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSetOverrideTags) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSetOverrideTags) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobDataSetOverrideTags) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobDataSetOverrideTags"}
+	if s.DataSetIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSetIds"))
+	}
+	if s.DataSetIds != nil && len(s.DataSetIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSetIds", 1))
+	}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSetIds sets the DataSetIds field's value.
+func (s *AssetBundleImportJobDataSetOverrideTags) SetDataSetIds(v []*string) *AssetBundleImportJobDataSetOverrideTags {
+	s.DataSetIds = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *AssetBundleImportJobDataSetOverrideTags) SetTags(v []*Tag) *AssetBundleImportJobDataSetOverrideTags {
+	s.Tags = v
 	return s
 }
 
@@ -20519,6 +23302,157 @@ func (s *AssetBundleImportJobDataSourceOverrideParameters) SetSslProperties(v *S
 // SetVpcConnectionProperties sets the VpcConnectionProperties field's value.
 func (s *AssetBundleImportJobDataSourceOverrideParameters) SetVpcConnectionProperties(v *VpcConnectionProperties) *AssetBundleImportJobDataSourceOverrideParameters {
 	s.VpcConnectionProperties = v
+	return s
+}
+
+// An object that contains a list of permissions to be applied to a list of
+// data source IDs.
+type AssetBundleImportJobDataSourceOverridePermissions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of data source IDs that you want to apply overrides to. You can use
+	// * to override all data sources in this asset bundle.
+	//
+	// DataSourceIds is a required field
+	DataSourceIds []*string `min:"1" type:"list" required:"true"`
+
+	// A list of permissions for the data source that you want to apply overrides
+	// to.
+	//
+	// Permissions is a required field
+	Permissions *AssetBundleResourcePermissions `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSourceOverridePermissions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSourceOverridePermissions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobDataSourceOverridePermissions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobDataSourceOverridePermissions"}
+	if s.DataSourceIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSourceIds"))
+	}
+	if s.DataSourceIds != nil && len(s.DataSourceIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSourceIds", 1))
+	}
+	if s.Permissions == nil {
+		invalidParams.Add(request.NewErrParamRequired("Permissions"))
+	}
+	if s.Permissions != nil {
+		if err := s.Permissions.Validate(); err != nil {
+			invalidParams.AddNested("Permissions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSourceIds sets the DataSourceIds field's value.
+func (s *AssetBundleImportJobDataSourceOverridePermissions) SetDataSourceIds(v []*string) *AssetBundleImportJobDataSourceOverridePermissions {
+	s.DataSourceIds = v
+	return s
+}
+
+// SetPermissions sets the Permissions field's value.
+func (s *AssetBundleImportJobDataSourceOverridePermissions) SetPermissions(v *AssetBundleResourcePermissions) *AssetBundleImportJobDataSourceOverridePermissions {
+	s.Permissions = v
+	return s
+}
+
+// An object that contains a list of tags to be assigned to a list of data source
+// IDs.
+type AssetBundleImportJobDataSourceOverrideTags struct {
+	_ struct{} `type:"structure"`
+
+	// A list of data source IDs that you want to apply overrides to. You can use
+	// * to override all data sources in this asset bundle.
+	//
+	// DataSourceIds is a required field
+	DataSourceIds []*string `min:"1" type:"list" required:"true"`
+
+	// A list of tags for the data source that you want to apply overrides to.
+	//
+	// Tags is a required field
+	Tags []*Tag `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSourceOverrideTags) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobDataSourceOverrideTags) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobDataSourceOverrideTags) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobDataSourceOverrideTags"}
+	if s.DataSourceIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSourceIds"))
+	}
+	if s.DataSourceIds != nil && len(s.DataSourceIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSourceIds", 1))
+	}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSourceIds sets the DataSourceIds field's value.
+func (s *AssetBundleImportJobDataSourceOverrideTags) SetDataSourceIds(v []*string) *AssetBundleImportJobDataSourceOverrideTags {
+	s.DataSourceIds = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *AssetBundleImportJobDataSourceOverrideTags) SetTags(v []*Tag) *AssetBundleImportJobDataSourceOverrideTags {
+	s.Tags = v
 	return s
 }
 
@@ -20777,6 +23711,361 @@ func (s *AssetBundleImportJobOverrideParameters) SetVPCConnections(v []*AssetBun
 	return s
 }
 
+// A structure that contains the override permission configurations that modify
+// the permissions for specified resources before the resource is imported.
+type AssetBundleImportJobOverridePermissions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of permissions overrides for any Analysis resources that are present
+	// in the asset bundle that is imported.
+	Analyses []*AssetBundleImportJobAnalysisOverridePermissions `min:"1" type:"list"`
+
+	// A list of permissions overrides for any Dashboard resources that are present
+	// in the asset bundle that is imported.
+	Dashboards []*AssetBundleImportJobDashboardOverridePermissions `min:"1" type:"list"`
+
+	// A list of permissions overrides for any DataSet resources that are present
+	// in the asset bundle that is imported.
+	DataSets []*AssetBundleImportJobDataSetOverridePermissions `min:"1" type:"list"`
+
+	// A list of permissions overrides for any DataSource resources that are present
+	// in the asset bundle that is imported.
+	DataSources []*AssetBundleImportJobDataSourceOverridePermissions `min:"1" type:"list"`
+
+	// A list of permissions overrides for any Theme resources that are present
+	// in the asset bundle that is imported.
+	Themes []*AssetBundleImportJobThemeOverridePermissions `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobOverridePermissions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobOverridePermissions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobOverridePermissions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobOverridePermissions"}
+	if s.Analyses != nil && len(s.Analyses) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Analyses", 1))
+	}
+	if s.Dashboards != nil && len(s.Dashboards) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Dashboards", 1))
+	}
+	if s.DataSets != nil && len(s.DataSets) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSets", 1))
+	}
+	if s.DataSources != nil && len(s.DataSources) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSources", 1))
+	}
+	if s.Themes != nil && len(s.Themes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Themes", 1))
+	}
+	if s.Analyses != nil {
+		for i, v := range s.Analyses {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Analyses", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.Dashboards != nil {
+		for i, v := range s.Dashboards {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Dashboards", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.DataSets != nil {
+		for i, v := range s.DataSets {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "DataSets", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.DataSources != nil {
+		for i, v := range s.DataSources {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "DataSources", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.Themes != nil {
+		for i, v := range s.Themes {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Themes", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAnalyses sets the Analyses field's value.
+func (s *AssetBundleImportJobOverridePermissions) SetAnalyses(v []*AssetBundleImportJobAnalysisOverridePermissions) *AssetBundleImportJobOverridePermissions {
+	s.Analyses = v
+	return s
+}
+
+// SetDashboards sets the Dashboards field's value.
+func (s *AssetBundleImportJobOverridePermissions) SetDashboards(v []*AssetBundleImportJobDashboardOverridePermissions) *AssetBundleImportJobOverridePermissions {
+	s.Dashboards = v
+	return s
+}
+
+// SetDataSets sets the DataSets field's value.
+func (s *AssetBundleImportJobOverridePermissions) SetDataSets(v []*AssetBundleImportJobDataSetOverridePermissions) *AssetBundleImportJobOverridePermissions {
+	s.DataSets = v
+	return s
+}
+
+// SetDataSources sets the DataSources field's value.
+func (s *AssetBundleImportJobOverridePermissions) SetDataSources(v []*AssetBundleImportJobDataSourceOverridePermissions) *AssetBundleImportJobOverridePermissions {
+	s.DataSources = v
+	return s
+}
+
+// SetThemes sets the Themes field's value.
+func (s *AssetBundleImportJobOverridePermissions) SetThemes(v []*AssetBundleImportJobThemeOverridePermissions) *AssetBundleImportJobOverridePermissions {
+	s.Themes = v
+	return s
+}
+
+// A structure that contains the override tag configuration that modify the
+// tags that are assigned to specified resources before the resource is imported.
+type AssetBundleImportJobOverrideTags struct {
+	_ struct{} `type:"structure"`
+
+	// A list of tag overrides for any Analysis resources that are present in the
+	// asset bundle that is imported.
+	Analyses []*AssetBundleImportJobAnalysisOverrideTags `min:"1" type:"list"`
+
+	// A list of tag overrides for any Dashboard resources that are present in the
+	// asset bundle that is imported.
+	Dashboards []*AssetBundleImportJobDashboardOverrideTags `min:"1" type:"list"`
+
+	// A list of tag overrides for any DataSet resources that are present in the
+	// asset bundle that is imported.
+	DataSets []*AssetBundleImportJobDataSetOverrideTags `min:"1" type:"list"`
+
+	// A list of tag overrides for any DataSource resources that are present in
+	// the asset bundle that is imported.
+	DataSources []*AssetBundleImportJobDataSourceOverrideTags `min:"1" type:"list"`
+
+	// A list of tag overrides for any Theme resources that are present in the asset
+	// bundle that is imported.
+	Themes []*AssetBundleImportJobThemeOverrideTags `min:"1" type:"list"`
+
+	// A list of tag overrides for any VPCConnection resources that are present
+	// in the asset bundle that is imported.
+	VPCConnections []*AssetBundleImportJobVPCConnectionOverrideTags `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobOverrideTags) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobOverrideTags) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobOverrideTags) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobOverrideTags"}
+	if s.Analyses != nil && len(s.Analyses) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Analyses", 1))
+	}
+	if s.Dashboards != nil && len(s.Dashboards) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Dashboards", 1))
+	}
+	if s.DataSets != nil && len(s.DataSets) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSets", 1))
+	}
+	if s.DataSources != nil && len(s.DataSources) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSources", 1))
+	}
+	if s.Themes != nil && len(s.Themes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Themes", 1))
+	}
+	if s.VPCConnections != nil && len(s.VPCConnections) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VPCConnections", 1))
+	}
+	if s.Analyses != nil {
+		for i, v := range s.Analyses {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Analyses", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.Dashboards != nil {
+		for i, v := range s.Dashboards {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Dashboards", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.DataSets != nil {
+		for i, v := range s.DataSets {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "DataSets", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.DataSources != nil {
+		for i, v := range s.DataSources {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "DataSources", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.Themes != nil {
+		for i, v := range s.Themes {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Themes", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.VPCConnections != nil {
+		for i, v := range s.VPCConnections {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "VPCConnections", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAnalyses sets the Analyses field's value.
+func (s *AssetBundleImportJobOverrideTags) SetAnalyses(v []*AssetBundleImportJobAnalysisOverrideTags) *AssetBundleImportJobOverrideTags {
+	s.Analyses = v
+	return s
+}
+
+// SetDashboards sets the Dashboards field's value.
+func (s *AssetBundleImportJobOverrideTags) SetDashboards(v []*AssetBundleImportJobDashboardOverrideTags) *AssetBundleImportJobOverrideTags {
+	s.Dashboards = v
+	return s
+}
+
+// SetDataSets sets the DataSets field's value.
+func (s *AssetBundleImportJobOverrideTags) SetDataSets(v []*AssetBundleImportJobDataSetOverrideTags) *AssetBundleImportJobOverrideTags {
+	s.DataSets = v
+	return s
+}
+
+// SetDataSources sets the DataSources field's value.
+func (s *AssetBundleImportJobOverrideTags) SetDataSources(v []*AssetBundleImportJobDataSourceOverrideTags) *AssetBundleImportJobOverrideTags {
+	s.DataSources = v
+	return s
+}
+
+// SetThemes sets the Themes field's value.
+func (s *AssetBundleImportJobOverrideTags) SetThemes(v []*AssetBundleImportJobThemeOverrideTags) *AssetBundleImportJobOverrideTags {
+	s.Themes = v
+	return s
+}
+
+// SetVPCConnections sets the VPCConnections field's value.
+func (s *AssetBundleImportJobOverrideTags) SetVPCConnections(v []*AssetBundleImportJobVPCConnectionOverrideTags) *AssetBundleImportJobOverrideTags {
+	s.VPCConnections = v
+	return s
+}
+
+// An optional parameter that overrides the validation strategy for all analyses
+// and dashboards before the resource is imported.
+type AssetBundleImportJobOverrideValidationStrategy struct {
+	_ struct{} `type:"structure"`
+
+	// A Boolean value that indicates whether to import all analyses and dashboards
+	// under strict or lenient mode.
+	StrictModeForAllResources *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobOverrideValidationStrategy) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobOverrideValidationStrategy) GoString() string {
+	return s.String()
+}
+
+// SetStrictModeForAllResources sets the StrictModeForAllResources field's value.
+func (s *AssetBundleImportJobOverrideValidationStrategy) SetStrictModeForAllResources(v bool) *AssetBundleImportJobOverrideValidationStrategy {
+	s.StrictModeForAllResources = &v
+	return s
+}
+
 // A list of overrides for a specific RefreshsSchedule resource that is present
 // in the asset bundle that is imported.
 type AssetBundleImportJobRefreshScheduleOverrideParameters struct {
@@ -21015,6 +24304,156 @@ func (s *AssetBundleImportJobThemeOverrideParameters) SetThemeId(v string) *Asse
 	return s
 }
 
+// An object that contains a list of permissions to be applied to a list of
+// theme IDs.
+type AssetBundleImportJobThemeOverridePermissions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of permissions for the themes that you want to apply overrides to.
+	//
+	// Permissions is a required field
+	Permissions *AssetBundleResourcePermissions `type:"structure" required:"true"`
+
+	// A list of theme IDs that you want to apply overrides to. You can use * to
+	// override all themes in this asset bundle.
+	//
+	// ThemeIds is a required field
+	ThemeIds []*string `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobThemeOverridePermissions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobThemeOverridePermissions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobThemeOverridePermissions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobThemeOverridePermissions"}
+	if s.Permissions == nil {
+		invalidParams.Add(request.NewErrParamRequired("Permissions"))
+	}
+	if s.ThemeIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("ThemeIds"))
+	}
+	if s.ThemeIds != nil && len(s.ThemeIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ThemeIds", 1))
+	}
+	if s.Permissions != nil {
+		if err := s.Permissions.Validate(); err != nil {
+			invalidParams.AddNested("Permissions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPermissions sets the Permissions field's value.
+func (s *AssetBundleImportJobThemeOverridePermissions) SetPermissions(v *AssetBundleResourcePermissions) *AssetBundleImportJobThemeOverridePermissions {
+	s.Permissions = v
+	return s
+}
+
+// SetThemeIds sets the ThemeIds field's value.
+func (s *AssetBundleImportJobThemeOverridePermissions) SetThemeIds(v []*string) *AssetBundleImportJobThemeOverridePermissions {
+	s.ThemeIds = v
+	return s
+}
+
+// An object that contains a list of tags to be assigned to a list of theme
+// IDs.
+type AssetBundleImportJobThemeOverrideTags struct {
+	_ struct{} `type:"structure"`
+
+	// A list of tags for the themes that you want to apply overrides to.
+	//
+	// Tags is a required field
+	Tags []*Tag `min:"1" type:"list" required:"true"`
+
+	// A list of theme IDs that you want to apply overrides to. You can use * to
+	// override all themes in this asset bundle.
+	//
+	// ThemeIds is a required field
+	ThemeIds []*string `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobThemeOverrideTags) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobThemeOverrideTags) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobThemeOverrideTags) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobThemeOverrideTags"}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.ThemeIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("ThemeIds"))
+	}
+	if s.ThemeIds != nil && len(s.ThemeIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ThemeIds", 1))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTags sets the Tags field's value.
+func (s *AssetBundleImportJobThemeOverrideTags) SetTags(v []*Tag) *AssetBundleImportJobThemeOverrideTags {
+	s.Tags = v
+	return s
+}
+
+// SetThemeIds sets the ThemeIds field's value.
+func (s *AssetBundleImportJobThemeOverrideTags) SetThemeIds(v []*string) *AssetBundleImportJobThemeOverrideTags {
+	s.ThemeIds = v
+	return s
+}
+
 // The override parameters for a single VPC connection that is imported.
 type AssetBundleImportJobVPCConnectionOverrideParameters struct {
 	_ struct{} `type:"structure"`
@@ -21126,6 +24565,85 @@ func (s *AssetBundleImportJobVPCConnectionOverrideParameters) SetVPCConnectionId
 	return s
 }
 
+// An object that contains a list of tags to be assigned to a list of VPC connection
+// IDs.
+type AssetBundleImportJobVPCConnectionOverrideTags struct {
+	_ struct{} `type:"structure"`
+
+	// A list of tags for the VPC connections that you want to apply overrides to.
+	//
+	// Tags is a required field
+	Tags []*Tag `min:"1" type:"list" required:"true"`
+
+	// A list of VPC connection IDs that you want to apply overrides to. You can
+	// use * to override all VPC connections in this asset bundle.
+	//
+	// VPCConnectionIds is a required field
+	VPCConnectionIds []*string `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobVPCConnectionOverrideTags) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleImportJobVPCConnectionOverrideTags) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleImportJobVPCConnectionOverrideTags) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleImportJobVPCConnectionOverrideTags"}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.VPCConnectionIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("VPCConnectionIds"))
+	}
+	if s.VPCConnectionIds != nil && len(s.VPCConnectionIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VPCConnectionIds", 1))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTags sets the Tags field's value.
+func (s *AssetBundleImportJobVPCConnectionOverrideTags) SetTags(v []*Tag) *AssetBundleImportJobVPCConnectionOverrideTags {
+	s.Tags = v
+	return s
+}
+
+// SetVPCConnectionIds sets the VPCConnectionIds field's value.
+func (s *AssetBundleImportJobVPCConnectionOverrideTags) SetVPCConnectionIds(v []*string) *AssetBundleImportJobVPCConnectionOverrideTags {
+	s.VPCConnectionIds = v
+	return s
+}
+
 // The source of the asset bundle zip file that contains the data that you want
 // to import. The file must be in QUICKSIGHT_JSON format.
 type AssetBundleImportSource struct {
@@ -21193,7 +24711,11 @@ type AssetBundleImportSourceDescription struct {
 	// at the start of the import job. This URL is valid for five minutes after
 	// issuance. Call DescribeAssetBundleExportJob again for a fresh URL if needed.
 	// The downloaded asset bundle is a .qs zip file.
-	Body *string `type:"string"`
+	//
+	// Body is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssetBundleImportSourceDescription's
+	// String and GoString methods.
+	Body *string `type:"string" sensitive:"true"`
 
 	// The Amazon S3 URI that you provided at the start of the import job.
 	S3Uri *string `type:"string"`
@@ -21226,6 +24748,164 @@ func (s *AssetBundleImportSourceDescription) SetBody(v string) *AssetBundleImpor
 // SetS3Uri sets the S3Uri field's value.
 func (s *AssetBundleImportSourceDescription) SetS3Uri(v string) *AssetBundleImportSourceDescription {
 	s.S3Uri = &v
+	return s
+}
+
+// A structure that contains the configuration of a shared link to an Amazon
+// QuickSight dashboard.
+type AssetBundleResourceLinkSharingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A list of link sharing permissions for the dashboards that you want to apply
+	// overrides to.
+	Permissions *AssetBundleResourcePermissions `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleResourceLinkSharingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleResourceLinkSharingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleResourceLinkSharingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleResourceLinkSharingConfiguration"}
+	if s.Permissions != nil {
+		if err := s.Permissions.Validate(); err != nil {
+			invalidParams.AddNested("Permissions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPermissions sets the Permissions field's value.
+func (s *AssetBundleResourceLinkSharingConfiguration) SetPermissions(v *AssetBundleResourcePermissions) *AssetBundleResourceLinkSharingConfiguration {
+	s.Permissions = v
+	return s
+}
+
+// A structure that contains the permissions for the resource that you want
+// to override in an asset bundle import job.
+type AssetBundleResourcePermissions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of IAM actions to grant permissions on.
+	//
+	// Actions is a required field
+	Actions []*string `min:"1" type:"list" required:"true"`
+
+	// A list of principals to grant permissions on.
+	//
+	// Principals is a required field
+	Principals []*string `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleResourcePermissions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetBundleResourcePermissions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssetBundleResourcePermissions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssetBundleResourcePermissions"}
+	if s.Actions == nil {
+		invalidParams.Add(request.NewErrParamRequired("Actions"))
+	}
+	if s.Actions != nil && len(s.Actions) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Actions", 1))
+	}
+	if s.Principals == nil {
+		invalidParams.Add(request.NewErrParamRequired("Principals"))
+	}
+	if s.Principals != nil && len(s.Principals) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Principals", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetActions sets the Actions field's value.
+func (s *AssetBundleResourcePermissions) SetActions(v []*string) *AssetBundleResourcePermissions {
+	s.Actions = v
+	return s
+}
+
+// SetPrincipals sets the Principals field's value.
+func (s *AssetBundleResourcePermissions) SetPrincipals(v []*string) *AssetBundleResourcePermissions {
+	s.Principals = v
+	return s
+}
+
+// An array of analysis level configurations.
+type AssetOptions struct {
+	_ struct{} `type:"structure"`
+
+	// Determines the timezone for the analysis.
+	Timezone *string `type:"string"`
+
+	// Determines the week start day for an analysis.
+	WeekStart *string `type:"string" enum:"DayOfTheWeek"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssetOptions) GoString() string {
+	return s.String()
+}
+
+// SetTimezone sets the Timezone field's value.
+func (s *AssetOptions) SetTimezone(v string) *AssetOptions {
+	s.Timezone = &v
+	return s
+}
+
+// SetWeekStart sets the WeekStart field's value.
+func (s *AssetOptions) SetWeekStart(v string) *AssetOptions {
+	s.WeekStart = &v
 	return s
 }
 
@@ -21288,6 +24968,52 @@ func (s *AthenaParameters) SetRoleArn(v string) *AthenaParameters {
 // SetWorkGroup sets the WorkGroup field's value.
 func (s *AthenaParameters) SetWorkGroup(v string) *AthenaParameters {
 	s.WorkGroup = &v
+	return s
+}
+
+// Aggregation for attributes.
+type AttributeAggregationFunction struct {
+	_ struct{} `type:"structure"`
+
+	// The built-in aggregation functions for attributes.
+	//
+	//    * UNIQUE_VALUE: Returns the unique value for a field, aggregated by the
+	//    dimension fields.
+	SimpleAttributeAggregation *string `type:"string" enum:"SimpleAttributeAggregationFunction"`
+
+	// Used by the UNIQUE_VALUE aggregation function. If there are multiple values
+	// for the field used by the aggregation, the value for this property will be
+	// returned instead. Defaults to '*'.
+	ValueForMultipleValues *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AttributeAggregationFunction) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AttributeAggregationFunction) GoString() string {
+	return s.String()
+}
+
+// SetSimpleAttributeAggregation sets the SimpleAttributeAggregation field's value.
+func (s *AttributeAggregationFunction) SetSimpleAttributeAggregation(v string) *AttributeAggregationFunction {
+	s.SimpleAttributeAggregation = &v
+	return s
+}
+
+// SetValueForMultipleValues sets the ValueForMultipleValues field's value.
+func (s *AttributeAggregationFunction) SetValueForMultipleValues(v string) *AttributeAggregationFunction {
+	s.ValueForMultipleValues = &v
 	return s
 }
 
@@ -21456,6 +25182,48 @@ func (s *AuroraPostgreSqlParameters) SetHost(v string) *AuroraPostgreSqlParamete
 // SetPort sets the Port field's value.
 func (s *AuroraPostgreSqlParameters) SetPort(v int64) *AuroraPostgreSqlParameters {
 	s.Port = &v
+	return s
+}
+
+// The authorized targets that are associated with a service.
+type AuthorizedTargetsByService struct {
+	_ struct{} `type:"structure"`
+
+	// Aist of authorized targets that are represented by IAM Identity Center application
+	// ARNs.
+	AuthorizedTargets []*string `type:"list"`
+
+	// The name of the Amazon Web Services service.
+	Service *string `type:"string" enum:"ServiceType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthorizedTargetsByService) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthorizedTargetsByService) GoString() string {
+	return s.String()
+}
+
+// SetAuthorizedTargets sets the AuthorizedTargets field's value.
+func (s *AuthorizedTargetsByService) SetAuthorizedTargets(v []*string) *AuthorizedTargetsByService {
+	s.AuthorizedTargets = v
+	return s
+}
+
+// SetService sets the Service field's value.
+func (s *AuthorizedTargetsByService) SetService(v string) *AuthorizedTargetsByService {
+	s.Service = &v
 	return s
 }
 
@@ -22718,6 +26486,68 @@ func (s *BarChartVisual) SetTitle(v *VisualTitleLabelOptions) *BarChartVisual {
 // SetVisualId sets the VisualId field's value.
 func (s *BarChartVisual) SetVisualId(v string) *BarChartVisual {
 	s.VisualId = &v
+	return s
+}
+
+// The parameters that are required to connect to a Google BigQuery data source.
+type BigQueryParameters struct {
+	_ struct{} `type:"structure"`
+
+	// The storage location where you create a Google BigQuery data source.
+	DataSetRegion *string `min:"1" type:"string"`
+
+	// The Google Cloud Platform project ID where your datasource was created.
+	//
+	// ProjectId is a required field
+	ProjectId *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BigQueryParameters) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BigQueryParameters) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BigQueryParameters) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BigQueryParameters"}
+	if s.DataSetRegion != nil && len(*s.DataSetRegion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataSetRegion", 1))
+	}
+	if s.ProjectId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ProjectId"))
+	}
+	if s.ProjectId != nil && len(*s.ProjectId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ProjectId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSetRegion sets the DataSetRegion field's value.
+func (s *BigQueryParameters) SetDataSetRegion(v string) *BigQueryParameters {
+	s.DataSetRegion = &v
+	return s
+}
+
+// SetProjectId sets the ProjectId field's value.
+func (s *BigQueryParameters) SetProjectId(v string) *BigQueryParameters {
+	s.ProjectId = &v
 	return s
 }
 
@@ -24107,6 +27937,10 @@ type CastColumnTypeOperation struct {
 	//
 	// NewColumnType is a required field
 	NewColumnType *string `type:"string" required:"true" enum:"ColumnDataType"`
+
+	// The sub data type of the new column. Sub types are only available for decimal
+	// columns that are part of a SPICE dataset.
+	SubType *string `type:"string" enum:"ColumnDataSubType"`
 }
 
 // String returns the string representation.
@@ -24161,6 +27995,12 @@ func (s *CastColumnTypeOperation) SetFormat(v string) *CastColumnTypeOperation {
 // SetNewColumnType sets the NewColumnType field's value.
 func (s *CastColumnTypeOperation) SetNewColumnType(v string) *CastColumnTypeOperation {
 	s.NewColumnType = &v
+	return s
+}
+
+// SetSubType sets the SubType field's value.
+func (s *CastColumnTypeOperation) SetSubType(v string) *CastColumnTypeOperation {
+	s.SubType = &v
 	return s
 }
 
@@ -25793,6 +29633,9 @@ type ComboChartConfiguration struct {
 	// of a combo chart's secondary y-axis(line) field well.
 	SecondaryYAxisLabelOptions *ChartAxisLabelOptions `type:"structure"`
 
+	// The settings of a chart's single axis configuration.
+	SingleAxisOptions *SingleAxisOptions `type:"structure"`
+
 	// The sort configuration of a ComboChartVisual.
 	SortConfiguration *ComboChartSortConfiguration `type:"structure"`
 
@@ -25867,6 +29710,11 @@ func (s *ComboChartConfiguration) Validate() error {
 	if s.SecondaryYAxisLabelOptions != nil {
 		if err := s.SecondaryYAxisLabelOptions.Validate(); err != nil {
 			invalidParams.AddNested("SecondaryYAxisLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.SingleAxisOptions != nil {
+		if err := s.SingleAxisOptions.Validate(); err != nil {
+			invalidParams.AddNested("SingleAxisOptions", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.SortConfiguration != nil {
@@ -25966,6 +29814,12 @@ func (s *ComboChartConfiguration) SetSecondaryYAxisDisplayOptions(v *AxisDisplay
 // SetSecondaryYAxisLabelOptions sets the SecondaryYAxisLabelOptions field's value.
 func (s *ComboChartConfiguration) SetSecondaryYAxisLabelOptions(v *ChartAxisLabelOptions) *ComboChartConfiguration {
 	s.SecondaryYAxisLabelOptions = v
+	return s
+}
+
+// SetSingleAxisOptions sets the SingleAxisOptions field's value.
+func (s *ComboChartConfiguration) SetSingleAxisOptions(v *SingleAxisOptions) *ComboChartConfiguration {
+	s.SingleAxisOptions = v
 	return s
 }
 
@@ -27503,33 +31357,43 @@ type CreateAccountSubscriptionInput struct {
 	// change AccountName value after the Amazon QuickSight account is created.
 	//
 	// AccountName is a required field
-	AccountName *string `type:"string" required:"true"`
+	AccountName *string `min:"1" type:"string" required:"true"`
 
 	// The name of your Active Directory. This field is required if ACTIVE_DIRECTORY
 	// is the selected authentication method of the new Amazon QuickSight account.
 	ActiveDirectoryName *string `type:"string"`
 
-	// The admin group associated with your Active Directory. This field is required
-	// if ACTIVE_DIRECTORY is the selected authentication method of the new Amazon
-	// QuickSight account. For more information about using Active Directory in
-	// Amazon QuickSight, see Using Active Directory with Amazon QuickSight Enterprise
-	// Edition (https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html)
+	// The admin group associated with your Active Directory or IAM Identity Center
+	// account. This field is required if ACTIVE_DIRECTORY or IAM_IDENTITY_CENTER
+	// is the selected authentication method of the new Amazon QuickSight account.
+	//
+	// For more information about using IAM Identity Center in Amazon QuickSight,
+	// see Using IAM Identity Center with Amazon QuickSight Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html)
+	// in the Amazon QuickSight User Guide. For more information about using Active
+	// Directory in Amazon QuickSight, see Using Active Directory with Amazon QuickSight
+	// Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html)
 	// in the Amazon QuickSight User Guide.
 	AdminGroup []*string `type:"list"`
 
 	// The method that you want to use to authenticate your Amazon QuickSight account.
-	// Currently, the valid values for this parameter are IAM_AND_QUICKSIGHT, IAM_ONLY,
-	// and ACTIVE_DIRECTORY.
 	//
 	// If you choose ACTIVE_DIRECTORY, provide an ActiveDirectoryName and an AdminGroup
 	// associated with your Active Directory.
 	//
+	// If you choose IAM_IDENTITY_CENTER, provide an AdminGroup associated with
+	// your IAM Identity Center account.
+	//
 	// AuthenticationMethod is a required field
 	AuthenticationMethod *string `type:"string" required:"true" enum:"AuthenticationMethodOption"`
 
-	// The author group associated with your Active Directory. For more information
-	// about using Active Directory in Amazon QuickSight, see Using Active Directory
-	// with Amazon QuickSight Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html)
+	// The author group associated with your Active Directory or IAM Identity Center
+	// account.
+	//
+	// For more information about using IAM Identity Center in Amazon QuickSight,
+	// see Using IAM Identity Center with Amazon QuickSight Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html)
+	// in the Amazon QuickSight User Guide. For more information about using Active
+	// Directory in Amazon QuickSight, see Using Active Directory with Amazon QuickSight
+	// Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html)
 	// in the Amazon QuickSight User Guide.
 	AuthorGroup []*string `type:"list"`
 
@@ -27585,9 +31449,14 @@ type CreateAccountSubscriptionInput struct {
 	// NotificationEmail is a required field
 	NotificationEmail *string `type:"string" required:"true"`
 
-	// The reader group associated with your Active Direcrtory. For more information
-	// about using Active Directory in Amazon QuickSight, see Using Active Directory
-	// with Amazon QuickSight Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html)
+	// The reader group associated with your Active Directory or IAM Identity Center
+	// account.
+	//
+	// For more information about using IAM Identity Center in Amazon QuickSight,
+	// see Using IAM Identity Center with Amazon QuickSight Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/sec-identity-management-identity-center.html)
+	// in the Amazon QuickSight User Guide. For more information about using Active
+	// Directory in Amazon QuickSight, see Using Active Directory with Amazon QuickSight
+	// Enterprise Edition (https://docs.aws.amazon.com/quicksight/latest/user/aws-directory-service.html)
 	// in the Amazon QuickSight User Guide.
 	ReaderGroup []*string `type:"list"`
 
@@ -27620,6 +31489,9 @@ func (s *CreateAccountSubscriptionInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateAccountSubscriptionInput"}
 	if s.AccountName == nil {
 		invalidParams.Add(request.NewErrParamRequired("AccountName"))
+	}
+	if s.AccountName != nil && len(*s.AccountName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AccountName", 1))
 	}
 	if s.AuthenticationMethod == nil {
 		invalidParams.Add(request.NewErrParamRequired("AuthenticationMethod"))
@@ -27806,6 +31678,10 @@ type CreateAnalysisInput struct {
 	// to be valid.
 	Definition *AnalysisDefinition `type:"structure"`
 
+	// When you create the analysis, Amazon QuickSight adds the analysis to these
+	// folders.
+	FolderArns []*string `type:"list"`
+
 	// A descriptive name for the analysis that you're creating. This name displays
 	// for the analysis in the Amazon QuickSight console.
 	//
@@ -27840,6 +31716,10 @@ type CreateAnalysisInput struct {
 	// the theme in the Amazon QuickSight console, make sure that you have access
 	// to it.
 	ThemeArn *string `type:"string"`
+
+	// The option to relax the validation needed to create an analysis with definition
+	// objects. This skips the validation step for specific errors.
+	ValidationStrategy *ValidationStrategy `type:"structure"`
 }
 
 // String returns the string representation.
@@ -27922,6 +31802,11 @@ func (s *CreateAnalysisInput) Validate() error {
 			}
 		}
 	}
+	if s.ValidationStrategy != nil {
+		if err := s.ValidationStrategy.Validate(); err != nil {
+			invalidParams.AddNested("ValidationStrategy", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -27944,6 +31829,12 @@ func (s *CreateAnalysisInput) SetAwsAccountId(v string) *CreateAnalysisInput {
 // SetDefinition sets the Definition field's value.
 func (s *CreateAnalysisInput) SetDefinition(v *AnalysisDefinition) *CreateAnalysisInput {
 	s.Definition = v
+	return s
+}
+
+// SetFolderArns sets the FolderArns field's value.
+func (s *CreateAnalysisInput) SetFolderArns(v []*string) *CreateAnalysisInput {
+	s.FolderArns = v
 	return s
 }
 
@@ -27980,6 +31871,12 @@ func (s *CreateAnalysisInput) SetTags(v []*Tag) *CreateAnalysisInput {
 // SetThemeArn sets the ThemeArn field's value.
 func (s *CreateAnalysisInput) SetThemeArn(v string) *CreateAnalysisInput {
 	s.ThemeArn = &v
+	return s
+}
+
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *CreateAnalysisInput) SetValidationStrategy(v *ValidationStrategy) *CreateAnalysisInput {
+	s.ValidationStrategy = v
 	return s
 }
 
@@ -28148,6 +32045,16 @@ type CreateDashboardInput struct {
 	// to be valid.
 	Definition *DashboardVersionDefinition `type:"structure"`
 
+	// When you create the dashboard, Amazon QuickSight adds the dashboard to these
+	// folders.
+	FolderArns []*string `type:"list"`
+
+	// A list of analysis Amazon Resource Names (ARNs) to be linked to the dashboard.
+	LinkEntities []*string `type:"list"`
+
+	// A structure that contains the permissions of a shareable link to the dashboard.
+	LinkSharingConfiguration *LinkSharingConfiguration `type:"structure"`
+
 	// The display name of the dashboard.
 	//
 	// Name is a required field
@@ -28192,6 +32099,10 @@ type CreateDashboardInput struct {
 	// the source entity. The theme ARN must exist in the same Amazon Web Services
 	// account where you create the dashboard.
 	ThemeArn *string `type:"string"`
+
+	// The option to relax the validation needed to create a dashboard with definition
+	// objects. This option skips the validation step for specific errors.
+	ValidationStrategy *ValidationStrategy `type:"structure"`
 
 	// A description for the first version of the dashboard being created.
 	VersionDescription *string `min:"1" type:"string"`
@@ -28250,6 +32161,11 @@ func (s *CreateDashboardInput) Validate() error {
 			invalidParams.AddNested("Definition", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.LinkSharingConfiguration != nil {
+		if err := s.LinkSharingConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("LinkSharingConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.Parameters != nil {
 		if err := s.Parameters.Validate(); err != nil {
 			invalidParams.AddNested("Parameters", err.(request.ErrInvalidParams))
@@ -28280,6 +32196,11 @@ func (s *CreateDashboardInput) Validate() error {
 			}
 		}
 	}
+	if s.ValidationStrategy != nil {
+		if err := s.ValidationStrategy.Validate(); err != nil {
+			invalidParams.AddNested("ValidationStrategy", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -28308,6 +32229,24 @@ func (s *CreateDashboardInput) SetDashboardPublishOptions(v *DashboardPublishOpt
 // SetDefinition sets the Definition field's value.
 func (s *CreateDashboardInput) SetDefinition(v *DashboardVersionDefinition) *CreateDashboardInput {
 	s.Definition = v
+	return s
+}
+
+// SetFolderArns sets the FolderArns field's value.
+func (s *CreateDashboardInput) SetFolderArns(v []*string) *CreateDashboardInput {
+	s.FolderArns = v
+	return s
+}
+
+// SetLinkEntities sets the LinkEntities field's value.
+func (s *CreateDashboardInput) SetLinkEntities(v []*string) *CreateDashboardInput {
+	s.LinkEntities = v
+	return s
+}
+
+// SetLinkSharingConfiguration sets the LinkSharingConfiguration field's value.
+func (s *CreateDashboardInput) SetLinkSharingConfiguration(v *LinkSharingConfiguration) *CreateDashboardInput {
+	s.LinkSharingConfiguration = v
 	return s
 }
 
@@ -28344,6 +32283,12 @@ func (s *CreateDashboardInput) SetTags(v []*Tag) *CreateDashboardInput {
 // SetThemeArn sets the ThemeArn field's value.
 func (s *CreateDashboardInput) SetThemeArn(v string) *CreateDashboardInput {
 	s.ThemeArn = &v
+	return s
+}
+
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *CreateDashboardInput) SetValidationStrategy(v *ValidationStrategy) *CreateDashboardInput {
+	s.ValidationStrategy = v
 	return s
 }
 
@@ -28460,6 +32405,10 @@ type CreateDataSetInput struct {
 
 	// The folder that contains fields and nested subfolders for your dataset.
 	FieldFolders map[string]*FieldFolder `type:"map"`
+
+	// When you create the dataset, Amazon QuickSight adds the dataset to these
+	// folders.
+	FolderArns []*string `type:"list"`
 
 	// Indicates whether you want to import the data into SPICE.
 	//
@@ -28684,6 +32633,12 @@ func (s *CreateDataSetInput) SetFieldFolders(v map[string]*FieldFolder) *CreateD
 	return s
 }
 
+// SetFolderArns sets the FolderArns field's value.
+func (s *CreateDataSetInput) SetFolderArns(v []*string) *CreateDataSetInput {
+	s.FolderArns = v
+	return s
+}
+
 // SetImportMode sets the ImportMode field's value.
 func (s *CreateDataSetInput) SetImportMode(v string) *CreateDataSetInput {
 	s.ImportMode = &v
@@ -28837,6 +32792,10 @@ type CreateDataSourceInput struct {
 	// source.
 	DataSourceParameters *DataSourceParameters `type:"structure"`
 
+	// When you create the data source, Amazon QuickSight adds the data source to
+	// these folders.
+	FolderArns []*string `type:"list"`
+
 	// A display name for the data source.
 	//
 	// Name is a required field
@@ -28976,6 +32935,12 @@ func (s *CreateDataSourceInput) SetDataSourceParameters(v *DataSourceParameters)
 	return s
 }
 
+// SetFolderArns sets the FolderArns field's value.
+func (s *CreateDataSourceInput) SetFolderArns(v []*string) *CreateDataSourceInput {
+	s.FolderArns = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *CreateDataSourceInput) SetName(v string) *CreateDataSourceInput {
 	s.Name = &v
@@ -29111,6 +33076,10 @@ type CreateFolderInput struct {
 	// To specify no permissions, omit Permissions.
 	Permissions []*ResourcePermission `min:"1" type:"list"`
 
+	// An optional parameter that determines the sharing scope of the folder. The
+	// default value for this parameter is ACCOUNT.
+	SharingModel *string `type:"string" enum:"SharingModel"`
+
 	// Tags for the folder.
 	Tags []*Tag `min:"1" type:"list"`
 }
@@ -29220,6 +33189,12 @@ func (s *CreateFolderInput) SetPermissions(v []*ResourcePermission) *CreateFolde
 	return s
 }
 
+// SetSharingModel sets the SharingModel field's value.
+func (s *CreateFolderInput) SetSharingModel(v string) *CreateFolderInput {
+	s.SharingModel = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *CreateFolderInput) SetTags(v []*Tag) *CreateFolderInput {
 	s.Tags = v
@@ -29239,12 +33214,12 @@ type CreateFolderMembershipInput struct {
 	// FolderId is a required field
 	FolderId *string `location:"uri" locationName:"FolderId" min:"1" type:"string" required:"true"`
 
-	// The ID of the asset (the dashboard, analysis, or dataset).
+	// The ID of the asset that you want to add to the folder.
 	//
 	// MemberId is a required field
 	MemberId *string `location:"uri" locationName:"MemberId" min:"1" type:"string" required:"true"`
 
-	// The type of the member, including DASHBOARD, ANALYSIS, and DATASET.
+	// The member type of the asset that you want to add to a folder.
 	//
 	// MemberType is a required field
 	MemberType *string `location:"uri" locationName:"MemberType" type:"string" required:"true" enum:"MemberType"`
@@ -30449,6 +34424,148 @@ func (s *CreateRefreshScheduleOutput) SetStatus(v int64) *CreateRefreshScheduleO
 	return s
 }
 
+type CreateRoleMembershipInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID for the Amazon Web Services account that you want to create a group
+	// in. The Amazon Web Services account ID that you provide must be the same
+	// Amazon Web Services account that contains your Amazon QuickSight account.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The name of the group that you want to add to the role.
+	//
+	// MemberName is a required field
+	MemberName *string `location:"uri" locationName:"MemberName" min:"1" type:"string" required:"true"`
+
+	// The namespace that the role belongs to.
+	//
+	// Namespace is a required field
+	Namespace *string `location:"uri" locationName:"Namespace" type:"string" required:"true"`
+
+	// The role that you want to add a group to.
+	//
+	// Role is a required field
+	Role *string `location:"uri" locationName:"Role" type:"string" required:"true" enum:"Role"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRoleMembershipInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRoleMembershipInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateRoleMembershipInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateRoleMembershipInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.MemberName == nil {
+		invalidParams.Add(request.NewErrParamRequired("MemberName"))
+	}
+	if s.MemberName != nil && len(*s.MemberName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MemberName", 1))
+	}
+	if s.Namespace == nil {
+		invalidParams.Add(request.NewErrParamRequired("Namespace"))
+	}
+	if s.Namespace != nil && len(*s.Namespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Namespace", 1))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Role != nil && len(*s.Role) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Role", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *CreateRoleMembershipInput) SetAwsAccountId(v string) *CreateRoleMembershipInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetMemberName sets the MemberName field's value.
+func (s *CreateRoleMembershipInput) SetMemberName(v string) *CreateRoleMembershipInput {
+	s.MemberName = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *CreateRoleMembershipInput) SetNamespace(v string) *CreateRoleMembershipInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *CreateRoleMembershipInput) SetRole(v string) *CreateRoleMembershipInput {
+	s.Role = &v
+	return s
+}
+
+type CreateRoleMembershipOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRoleMembershipOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateRoleMembershipOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *CreateRoleMembershipOutput) SetRequestId(v string) *CreateRoleMembershipOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *CreateRoleMembershipOutput) SetStatus(v int64) *CreateRoleMembershipOutput {
+	s.Status = &v
+	return s
+}
+
 type CreateTemplateAliasInput struct {
 	_ struct{} `type:"structure"`
 
@@ -30652,6 +34769,10 @@ type CreateTemplateInput struct {
 	// TemplateId is a required field
 	TemplateId *string `location:"uri" locationName:"TemplateId" min:"1" type:"string" required:"true"`
 
+	// TThe option to relax the validation needed to create a template with definition
+	// objects. This skips the validation step for specific errors.
+	ValidationStrategy *ValidationStrategy `type:"structure"`
+
 	// A description of the current template version being created. This API operation
 	// creates the first version of the template. Every time UpdateTemplate is called,
 	// a new version is created. Each version of the template maintains a description
@@ -30734,6 +34855,11 @@ func (s *CreateTemplateInput) Validate() error {
 			}
 		}
 	}
+	if s.ValidationStrategy != nil {
+		if err := s.ValidationStrategy.Validate(); err != nil {
+			invalidParams.AddNested("ValidationStrategy", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -30780,6 +34906,12 @@ func (s *CreateTemplateInput) SetTags(v []*Tag) *CreateTemplateInput {
 // SetTemplateId sets the TemplateId field's value.
 func (s *CreateTemplateInput) SetTemplateId(v string) *CreateTemplateInput {
 	s.TemplateId = &v
+	return s
+}
+
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *CreateTemplateInput) SetValidationStrategy(v *ValidationStrategy) *CreateTemplateInput {
+	s.ValidationStrategy = v
 	return s
 }
 
@@ -33105,6 +37237,9 @@ type Dashboard struct {
 	// The last time that this dashboard was updated.
 	LastUpdatedTime *time.Time `type:"timestamp"`
 
+	// A list of analysis Amazon Resource Names (ARNs) to be linked to the dashboard.
+	LinkEntities []*string `type:"list"`
+
 	// A display name for the dashboard.
 	Name *string `min:"1" type:"string"`
 
@@ -33157,6 +37292,12 @@ func (s *Dashboard) SetLastPublishedTime(v time.Time) *Dashboard {
 // SetLastUpdatedTime sets the LastUpdatedTime field's value.
 func (s *Dashboard) SetLastUpdatedTime(v time.Time) *Dashboard {
 	s.LastUpdatedTime = &v
+	return s
+}
+
+// SetLinkEntities sets the LinkEntities field's value.
+func (s *Dashboard) SetLinkEntities(v []*string) *Dashboard {
+	s.LinkEntities = v
 	return s
 }
 
@@ -33800,6 +37941,9 @@ type DashboardVersionDefinition struct {
 	// in the Amazon QuickSight User Guide.
 	FilterGroups []*FilterGroup `type:"list"`
 
+	// An array of option definitions for a dashboard.
+	Options *AssetOptions `type:"structure"`
+
 	// The parameter declarations for a dashboard. Parameters are named variables
 	// that can transfer a value for use by an action or an object.
 	//
@@ -33937,6 +38081,12 @@ func (s *DashboardVersionDefinition) SetDataSetIdentifierDeclarations(v []*DataS
 // SetFilterGroups sets the FilterGroups field's value.
 func (s *DashboardVersionDefinition) SetFilterGroups(v []*FilterGroup) *DashboardVersionDefinition {
 	s.FilterGroups = v
+	return s
+}
+
+// SetOptions sets the Options field's value.
+func (s *DashboardVersionDefinition) SetOptions(v *AssetOptions) *DashboardVersionDefinition {
+	s.Options = v
 	return s
 }
 
@@ -34891,23 +39041,68 @@ func (s *DataPathSort) SetSortPaths(v []*DataPathValue) *DataPathSort {
 	return s
 }
 
+// The type of the data path value.
+type DataPathType struct {
+	_ struct{} `type:"structure"`
+
+	// The type of data path value utilized in a pivot table. Choose one of the
+	// following options:
+	//
+	//    * HIERARCHY_ROWS_LAYOUT_COLUMN - The type of data path for the rows layout
+	//    column, when RowsLayout is set to HIERARCHY.
+	//
+	//    * MULTIPLE_ROW_METRICS_COLUMN - The type of data path for the metric column
+	//    when the row is set to Metric Placement.
+	//
+	//    * EMPTY_COLUMN_HEADER - The type of data path for the column with empty
+	//    column header, when there is no field in ColumnsFieldWell and the row
+	//    is set to Metric Placement.
+	//
+	//    * COUNT_METRIC_COLUMN - The type of data path for the column with COUNT
+	//    as the metric, when there is no field in the ValuesFieldWell.
+	PivotTableDataPathType *string `type:"string" enum:"PivotTableDataPathType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataPathType) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataPathType) GoString() string {
+	return s.String()
+}
+
+// SetPivotTableDataPathType sets the PivotTableDataPathType field's value.
+func (s *DataPathType) SetPivotTableDataPathType(v string) *DataPathType {
+	s.PivotTableDataPathType = &v
+	return s
+}
+
 // The data path that needs to be sorted.
 type DataPathValue struct {
 	_ struct{} `type:"structure"`
 
+	// The type configuration of the field.
+	DataPathType *DataPathType `type:"structure"`
+
 	// The field ID of the field that needs to be sorted.
-	//
-	// FieldId is a required field
-	FieldId *string `min:"1" type:"string" required:"true"`
+	FieldId *string `min:"1" type:"string"`
 
 	// The actual value of the field that needs to be sorted.
 	//
 	// FieldValue is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by DataPathValue's
 	// String and GoString methods.
-	//
-	// FieldValue is a required field
-	FieldValue *string `type:"string" required:"true" sensitive:"true"`
+	FieldValue *string `type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -34931,20 +39126,20 @@ func (s DataPathValue) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *DataPathValue) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "DataPathValue"}
-	if s.FieldId == nil {
-		invalidParams.Add(request.NewErrParamRequired("FieldId"))
-	}
 	if s.FieldId != nil && len(*s.FieldId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FieldId", 1))
-	}
-	if s.FieldValue == nil {
-		invalidParams.Add(request.NewErrParamRequired("FieldValue"))
 	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetDataPathType sets the DataPathType field's value.
+func (s *DataPathValue) SetDataPathType(v *DataPathType) *DataPathValue {
+	s.DataPathType = v
+	return s
 }
 
 // SetFieldId sets the FieldId field's value.
@@ -36051,7 +40246,10 @@ type DataSourceParameters struct {
 	// The parameters for IoT Analytics.
 	AwsIotAnalyticsParameters *AwsIotAnalyticsParameters `type:"structure"`
 
-	// The required parameters that are needed to connect to a Databricks data source.
+	// The parameters that are required to connect to a Google BigQuery data source.
+	BigQueryParameters *BigQueryParameters `type:"structure"`
+
+	// The parameters that are required to connect to a Databricks data source.
 	DatabricksParameters *DatabricksParameters `type:"structure"`
 
 	// The parameters for Exasol.
@@ -36096,8 +40294,14 @@ type DataSourceParameters struct {
 	// The parameters for SQL Server.
 	SqlServerParameters *SqlServerParameters `type:"structure"`
 
+	// The parameters that are required to connect to a Starburst data source.
+	StarburstParameters *StarburstParameters `type:"structure"`
+
 	// The parameters for Teradata.
 	TeradataParameters *TeradataParameters `type:"structure"`
+
+	// The parameters that are required to connect to a Trino data source.
+	TrinoParameters *TrinoParameters `type:"structure"`
 
 	// The parameters for Twitter.
 	TwitterParameters *TwitterParameters `type:"structure"`
@@ -36152,6 +40356,11 @@ func (s *DataSourceParameters) Validate() error {
 	if s.AwsIotAnalyticsParameters != nil {
 		if err := s.AwsIotAnalyticsParameters.Validate(); err != nil {
 			invalidParams.AddNested("AwsIotAnalyticsParameters", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.BigQueryParameters != nil {
+		if err := s.BigQueryParameters.Validate(); err != nil {
+			invalidParams.AddNested("BigQueryParameters", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.DatabricksParameters != nil {
@@ -36229,9 +40438,19 @@ func (s *DataSourceParameters) Validate() error {
 			invalidParams.AddNested("SqlServerParameters", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.StarburstParameters != nil {
+		if err := s.StarburstParameters.Validate(); err != nil {
+			invalidParams.AddNested("StarburstParameters", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.TeradataParameters != nil {
 		if err := s.TeradataParameters.Validate(); err != nil {
 			invalidParams.AddNested("TeradataParameters", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.TrinoParameters != nil {
+		if err := s.TrinoParameters.Validate(); err != nil {
+			invalidParams.AddNested("TrinoParameters", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.TwitterParameters != nil {
@@ -36279,6 +40498,12 @@ func (s *DataSourceParameters) SetAuroraPostgreSqlParameters(v *AuroraPostgreSql
 // SetAwsIotAnalyticsParameters sets the AwsIotAnalyticsParameters field's value.
 func (s *DataSourceParameters) SetAwsIotAnalyticsParameters(v *AwsIotAnalyticsParameters) *DataSourceParameters {
 	s.AwsIotAnalyticsParameters = v
+	return s
+}
+
+// SetBigQueryParameters sets the BigQueryParameters field's value.
+func (s *DataSourceParameters) SetBigQueryParameters(v *BigQueryParameters) *DataSourceParameters {
+	s.BigQueryParameters = v
 	return s
 }
 
@@ -36372,9 +40597,21 @@ func (s *DataSourceParameters) SetSqlServerParameters(v *SqlServerParameters) *D
 	return s
 }
 
+// SetStarburstParameters sets the StarburstParameters field's value.
+func (s *DataSourceParameters) SetStarburstParameters(v *StarburstParameters) *DataSourceParameters {
+	s.StarburstParameters = v
+	return s
+}
+
 // SetTeradataParameters sets the TeradataParameters field's value.
 func (s *DataSourceParameters) SetTeradataParameters(v *TeradataParameters) *DataSourceParameters {
 	s.TeradataParameters = v
+	return s
+}
+
+// SetTrinoParameters sets the TrinoParameters field's value.
+func (s *DataSourceParameters) SetTrinoParameters(v *TrinoParameters) *DataSourceParameters {
+	s.TrinoParameters = v
 	return s
 }
 
@@ -36569,7 +40806,7 @@ func (s *DataSourceSummary) SetType(v string) *DataSourceSummary {
 	return s
 }
 
-// The required parameters that are needed to connect to a Databricks data source.
+// The parameters that are required to connect to a Databricks data source.
 type DatabricksParameters struct {
 	_ struct{} `type:"structure"`
 
@@ -37675,6 +41912,9 @@ type DateTimePickerControlDisplayOptions struct {
 	// Customize how dates are formatted in controls.
 	DateTimeFormat *string `min:"1" type:"string"`
 
+	// The configuration of info icon label options.
+	InfoIconLabelOptions *SheetControlInfoIconLabelOptions `type:"structure"`
+
 	// The options to configure the title visibility, name, and font size.
 	TitleOptions *LabelOptions `type:"structure"`
 }
@@ -37703,6 +41943,11 @@ func (s *DateTimePickerControlDisplayOptions) Validate() error {
 	if s.DateTimeFormat != nil && len(*s.DateTimeFormat) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DateTimeFormat", 1))
 	}
+	if s.InfoIconLabelOptions != nil {
+		if err := s.InfoIconLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("InfoIconLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -37713,6 +41958,12 @@ func (s *DateTimePickerControlDisplayOptions) Validate() error {
 // SetDateTimeFormat sets the DateTimeFormat field's value.
 func (s *DateTimePickerControlDisplayOptions) SetDateTimeFormat(v string) *DateTimePickerControlDisplayOptions {
 	s.DateTimeFormat = &v
+	return s
+}
+
+// SetInfoIconLabelOptions sets the InfoIconLabelOptions field's value.
+func (s *DateTimePickerControlDisplayOptions) SetInfoIconLabelOptions(v *SheetControlInfoIconLabelOptions) *DateTimePickerControlDisplayOptions {
+	s.InfoIconLabelOptions = v
 	return s
 }
 
@@ -39532,13 +43783,12 @@ type DeleteFolderMembershipInput struct {
 	// FolderId is a required field
 	FolderId *string `location:"uri" locationName:"FolderId" min:"1" type:"string" required:"true"`
 
-	// The ID of the asset (the dashboard, analysis, or dataset) that you want to
-	// delete.
+	// The ID of the asset that you want to delete.
 	//
 	// MemberId is a required field
 	MemberId *string `location:"uri" locationName:"MemberId" min:"1" type:"string" required:"true"`
 
-	// The type of the member, including DASHBOARD, ANALYSIS, and DATASET
+	// The member type of the asset that you want to delete from a folder.
 	//
 	// MemberType is a required field
 	MemberType *string `location:"uri" locationName:"MemberType" type:"string" required:"true" enum:"MemberType"`
@@ -40118,6 +44368,114 @@ func (s *DeleteIAMPolicyAssignmentOutput) SetStatus(v int64) *DeleteIAMPolicyAss
 	return s
 }
 
+type DeleteIdentityPropagationConfigInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the Amazon Web Services account that you want to delete an identity
+	// propagation configuration from.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The name of the Amazon Web Services service that you want to delete the associated
+	// access scopes and authorized targets from.
+	//
+	// Service is a required field
+	Service *string `location:"uri" locationName:"Service" type:"string" required:"true" enum:"ServiceType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteIdentityPropagationConfigInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteIdentityPropagationConfigInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteIdentityPropagationConfigInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteIdentityPropagationConfigInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.Service == nil {
+		invalidParams.Add(request.NewErrParamRequired("Service"))
+	}
+	if s.Service != nil && len(*s.Service) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Service", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *DeleteIdentityPropagationConfigInput) SetAwsAccountId(v string) *DeleteIdentityPropagationConfigInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetService sets the Service field's value.
+func (s *DeleteIdentityPropagationConfigInput) SetService(v string) *DeleteIdentityPropagationConfigInput {
+	s.Service = &v
+	return s
+}
+
+type DeleteIdentityPropagationConfigOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteIdentityPropagationConfigOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteIdentityPropagationConfigOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *DeleteIdentityPropagationConfigOutput) SetRequestId(v string) *DeleteIdentityPropagationConfigOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DeleteIdentityPropagationConfigOutput) SetStatus(v int64) *DeleteIdentityPropagationConfigOutput {
+	s.Status = &v
+	return s
+}
+
 type DeleteNamespaceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -40362,6 +44720,273 @@ func (s *DeleteRefreshScheduleOutput) SetScheduleId(v string) *DeleteRefreshSche
 
 // SetStatus sets the Status field's value.
 func (s *DeleteRefreshScheduleOutput) SetStatus(v int64) *DeleteRefreshScheduleOutput {
+	s.Status = &v
+	return s
+}
+
+type DeleteRoleCustomPermissionInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID for the Amazon Web Services account that the group is in. Currently,
+	// you use the ID for the Amazon Web Services account that contains your Amazon
+	// QuickSight account.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The namespace that includes the role.
+	//
+	// Namespace is a required field
+	Namespace *string `location:"uri" locationName:"Namespace" type:"string" required:"true"`
+
+	// The role that you want to remove permissions from.
+	//
+	// Role is a required field
+	Role *string `location:"uri" locationName:"Role" type:"string" required:"true" enum:"Role"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleCustomPermissionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleCustomPermissionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteRoleCustomPermissionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteRoleCustomPermissionInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.Namespace == nil {
+		invalidParams.Add(request.NewErrParamRequired("Namespace"))
+	}
+	if s.Namespace != nil && len(*s.Namespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Namespace", 1))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Role != nil && len(*s.Role) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Role", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *DeleteRoleCustomPermissionInput) SetAwsAccountId(v string) *DeleteRoleCustomPermissionInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *DeleteRoleCustomPermissionInput) SetNamespace(v string) *DeleteRoleCustomPermissionInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *DeleteRoleCustomPermissionInput) SetRole(v string) *DeleteRoleCustomPermissionInput {
+	s.Role = &v
+	return s
+}
+
+type DeleteRoleCustomPermissionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleCustomPermissionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleCustomPermissionOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *DeleteRoleCustomPermissionOutput) SetRequestId(v string) *DeleteRoleCustomPermissionOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DeleteRoleCustomPermissionOutput) SetStatus(v int64) *DeleteRoleCustomPermissionOutput {
+	s.Status = &v
+	return s
+}
+
+type DeleteRoleMembershipInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID for the Amazon Web Services account that you want to create a group
+	// in. The Amazon Web Services account ID that you provide must be the same
+	// Amazon Web Services account that contains your Amazon QuickSight account.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The name of the group.
+	//
+	// MemberName is a required field
+	MemberName *string `location:"uri" locationName:"MemberName" min:"1" type:"string" required:"true"`
+
+	// The namespace that contains the role.
+	//
+	// Namespace is a required field
+	Namespace *string `location:"uri" locationName:"Namespace" type:"string" required:"true"`
+
+	// The role that you want to remove permissions from.
+	//
+	// Role is a required field
+	Role *string `location:"uri" locationName:"Role" type:"string" required:"true" enum:"Role"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleMembershipInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleMembershipInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteRoleMembershipInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteRoleMembershipInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.MemberName == nil {
+		invalidParams.Add(request.NewErrParamRequired("MemberName"))
+	}
+	if s.MemberName != nil && len(*s.MemberName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MemberName", 1))
+	}
+	if s.Namespace == nil {
+		invalidParams.Add(request.NewErrParamRequired("Namespace"))
+	}
+	if s.Namespace != nil && len(*s.Namespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Namespace", 1))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Role != nil && len(*s.Role) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Role", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *DeleteRoleMembershipInput) SetAwsAccountId(v string) *DeleteRoleMembershipInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetMemberName sets the MemberName field's value.
+func (s *DeleteRoleMembershipInput) SetMemberName(v string) *DeleteRoleMembershipInput {
+	s.MemberName = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *DeleteRoleMembershipInput) SetNamespace(v string) *DeleteRoleMembershipInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *DeleteRoleMembershipInput) SetRole(v string) *DeleteRoleMembershipInput {
+	s.Role = &v
+	return s
+}
+
+type DeleteRoleMembershipOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleMembershipOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteRoleMembershipOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *DeleteRoleMembershipOutput) SetRequestId(v string) *DeleteRoleMembershipOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DeleteRoleMembershipOutput) SetStatus(v int64) *DeleteRoleMembershipOutput {
 	s.Status = &v
 	return s
 }
@@ -42524,7 +47149,11 @@ type DescribeAssetBundleExportJobOutput struct {
 	//
 	// This URL can't be used in a StartAssetBundleImportJob API call and should
 	// only be used for download purposes.
-	DownloadUrl *string `type:"string"`
+	//
+	// DownloadUrl is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DescribeAssetBundleExportJobOutput's
+	// String and GoString methods.
+	DownloadUrl *string `type:"string" sensitive:"true"`
 
 	// An array of error records that describes any failures that occurred during
 	// the export job processing.
@@ -42542,6 +47171,12 @@ type DescribeAssetBundleExportJobOutput struct {
 	// The include dependencies flag.
 	IncludeAllDependencies *bool `type:"boolean"`
 
+	// The include permissions flag.
+	IncludePermissions *bool `type:"boolean"`
+
+	// The include tags flag.
+	IncludeTags *bool `type:"boolean"`
+
 	// Indicates the status of a job through its queuing and execution.
 	//
 	// Poll this DescribeAssetBundleExportApi until JobStatus is either SUCCESSFUL
@@ -42556,6 +47191,17 @@ type DescribeAssetBundleExportJobOutput struct {
 
 	// The HTTP status of the response.
 	Status *int64 `location:"statusCode" type:"integer"`
+
+	// The validation strategy that is used to export the analysis or dashboard.
+	ValidationStrategy *AssetBundleExportJobValidationStrategy `type:"structure"`
+
+	// An array of warning records that describe the analysis or dashboard that
+	// is exported. This array includes UI errors that can be skipped during the
+	// validation process.
+	//
+	// This property only appears if StrictModeForAllResources in ValidationStrategy
+	// is set to FALSE.
+	Warnings []*AssetBundleExportJobWarning `type:"list"`
 }
 
 // String returns the string representation.
@@ -42630,6 +47276,18 @@ func (s *DescribeAssetBundleExportJobOutput) SetIncludeAllDependencies(v bool) *
 	return s
 }
 
+// SetIncludePermissions sets the IncludePermissions field's value.
+func (s *DescribeAssetBundleExportJobOutput) SetIncludePermissions(v bool) *DescribeAssetBundleExportJobOutput {
+	s.IncludePermissions = &v
+	return s
+}
+
+// SetIncludeTags sets the IncludeTags field's value.
+func (s *DescribeAssetBundleExportJobOutput) SetIncludeTags(v bool) *DescribeAssetBundleExportJobOutput {
+	s.IncludeTags = &v
+	return s
+}
+
 // SetJobStatus sets the JobStatus field's value.
 func (s *DescribeAssetBundleExportJobOutput) SetJobStatus(v string) *DescribeAssetBundleExportJobOutput {
 	s.JobStatus = &v
@@ -42651,6 +47309,18 @@ func (s *DescribeAssetBundleExportJobOutput) SetResourceArns(v []*string) *Descr
 // SetStatus sets the Status field's value.
 func (s *DescribeAssetBundleExportJobOutput) SetStatus(v int64) *DescribeAssetBundleExportJobOutput {
 	s.Status = &v
+	return s
+}
+
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *DescribeAssetBundleExportJobOutput) SetValidationStrategy(v *AssetBundleExportJobValidationStrategy) *DescribeAssetBundleExportJobOutput {
+	s.ValidationStrategy = v
+	return s
+}
+
+// SetWarnings sets the Warnings field's value.
+func (s *DescribeAssetBundleExportJobOutput) SetWarnings(v []*AssetBundleExportJobWarning) *DescribeAssetBundleExportJobOutput {
+	s.Warnings = v
 	return s
 }
 
@@ -42765,8 +47435,21 @@ type DescribeAssetBundleImportJobOutput struct {
 	//    * FAILED_ROLLBACK_ERROR
 	JobStatus *string `type:"string" enum:"AssetBundleImportJobStatus"`
 
-	// Optional overrides to be applied to the resource configuration before import.
+	// Optional overrides that are applied to the resource configuration before
+	// import.
 	OverrideParameters *AssetBundleImportJobOverrideParameters `type:"structure"`
+
+	// Optional permission overrides that are applied to the resource configuration
+	// before import.
+	OverridePermissions *AssetBundleImportJobOverridePermissions `type:"structure"`
+
+	// Optional tag overrides that are applied to the resource configuration before
+	// import.
+	OverrideTags *AssetBundleImportJobOverrideTags `type:"structure"`
+
+	// An optional validation strategy override for all analyses and dashboards
+	// to be applied to the resource configuration before import.
+	OverrideValidationStrategy *AssetBundleImportJobOverrideValidationStrategy `type:"structure"`
 
 	// The Amazon Web Services request ID for this operation.
 	RequestId *string `type:"string"`
@@ -42851,6 +47534,24 @@ func (s *DescribeAssetBundleImportJobOutput) SetJobStatus(v string) *DescribeAss
 // SetOverrideParameters sets the OverrideParameters field's value.
 func (s *DescribeAssetBundleImportJobOutput) SetOverrideParameters(v *AssetBundleImportJobOverrideParameters) *DescribeAssetBundleImportJobOutput {
 	s.OverrideParameters = v
+	return s
+}
+
+// SetOverridePermissions sets the OverridePermissions field's value.
+func (s *DescribeAssetBundleImportJobOutput) SetOverridePermissions(v *AssetBundleImportJobOverridePermissions) *DescribeAssetBundleImportJobOutput {
+	s.OverridePermissions = v
+	return s
+}
+
+// SetOverrideTags sets the OverrideTags field's value.
+func (s *DescribeAssetBundleImportJobOutput) SetOverrideTags(v *AssetBundleImportJobOverrideTags) *DescribeAssetBundleImportJobOutput {
+	s.OverrideTags = v
+	return s
+}
+
+// SetOverrideValidationStrategy sets the OverrideValidationStrategy field's value.
+func (s *DescribeAssetBundleImportJobOutput) SetOverrideValidationStrategy(v *AssetBundleImportJobOverrideValidationStrategy) *DescribeAssetBundleImportJobOutput {
+	s.OverrideValidationStrategy = v
 	return s
 }
 
@@ -43379,6 +48080,409 @@ func (s *DescribeDashboardPermissionsOutput) SetRequestId(v string) *DescribeDas
 
 // SetStatus sets the Status field's value.
 func (s *DescribeDashboardPermissionsOutput) SetStatus(v int64) *DescribeDashboardPermissionsOutput {
+	s.Status = &v
+	return s
+}
+
+type DescribeDashboardSnapshotJobInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the Amazon Web Services account that the dashboard snapshot job
+	// is executed in.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The ID of the dashboard that you have started a snapshot job for.
+	//
+	// DashboardId is a required field
+	DashboardId *string `location:"uri" locationName:"DashboardId" min:"1" type:"string" required:"true"`
+
+	// The ID of the job to be described. The job ID is set when you start a new
+	// job with a StartDashboardSnapshotJob API call.
+	//
+	// SnapshotJobId is a required field
+	SnapshotJobId *string `location:"uri" locationName:"SnapshotJobId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeDashboardSnapshotJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeDashboardSnapshotJobInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.DashboardId == nil {
+		invalidParams.Add(request.NewErrParamRequired("DashboardId"))
+	}
+	if s.DashboardId != nil && len(*s.DashboardId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashboardId", 1))
+	}
+	if s.SnapshotJobId == nil {
+		invalidParams.Add(request.NewErrParamRequired("SnapshotJobId"))
+	}
+	if s.SnapshotJobId != nil && len(*s.SnapshotJobId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SnapshotJobId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *DescribeDashboardSnapshotJobInput) SetAwsAccountId(v string) *DescribeDashboardSnapshotJobInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetDashboardId sets the DashboardId field's value.
+func (s *DescribeDashboardSnapshotJobInput) SetDashboardId(v string) *DescribeDashboardSnapshotJobInput {
+	s.DashboardId = &v
+	return s
+}
+
+// SetSnapshotJobId sets the SnapshotJobId field's value.
+func (s *DescribeDashboardSnapshotJobInput) SetSnapshotJobId(v string) *DescribeDashboardSnapshotJobInput {
+	s.SnapshotJobId = &v
+	return s
+}
+
+type DescribeDashboardSnapshotJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) for the snapshot job. The job ARN is generated
+	// when you start a new job with a StartDashboardSnapshotJob API call.
+	Arn *string `type:"string"`
+
+	// The ID of the Amazon Web Services account that the dashboard snapshot job
+	// is executed in.
+	AwsAccountId *string `min:"12" type:"string"`
+
+	// The time that the snapshot job was created.
+	CreatedTime *time.Time `type:"timestamp"`
+
+	// The ID of the dashboard that you have started a snapshot job for.
+	DashboardId *string `min:"1" type:"string"`
+
+	// Indicates the status of a job. The status updates as the job executes. This
+	// shows one of the following values.
+	//
+	//    * COMPLETED - The job was completed successfully.
+	//
+	//    * FAILED - The job failed to execute.
+	//
+	//    * QUEUED - The job is queued and hasn't started yet.
+	//
+	//    * RUNNING - The job is still running.
+	JobStatus *string `type:"string" enum:"SnapshotJobStatus"`
+
+	// The time that the snapshot job status was last updated.
+	LastUpdatedTime *time.Time `type:"timestamp"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The snapshot configuration of the job. This information is provided when
+	// you make a StartDashboardSnapshotJob API call.
+	SnapshotConfiguration *SnapshotConfiguration `type:"structure"`
+
+	// The ID of the job to be described. The job ID is set when you start a new
+	// job with a StartDashboardSnapshotJob API call.
+	SnapshotJobId *string `min:"1" type:"string"`
+
+	// The HTTP status of the request
+	Status *int64 `type:"integer"`
+
+	// The user configuration for the snapshot job. This information is provided
+	// when you make a StartDashboardSnapshotJob API call.
+	UserConfiguration *SnapshotUserConfigurationRedacted `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetArn(v string) *DescribeDashboardSnapshotJobOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetAwsAccountId(v string) *DescribeDashboardSnapshotJobOutput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetCreatedTime sets the CreatedTime field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetCreatedTime(v time.Time) *DescribeDashboardSnapshotJobOutput {
+	s.CreatedTime = &v
+	return s
+}
+
+// SetDashboardId sets the DashboardId field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetDashboardId(v string) *DescribeDashboardSnapshotJobOutput {
+	s.DashboardId = &v
+	return s
+}
+
+// SetJobStatus sets the JobStatus field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetJobStatus(v string) *DescribeDashboardSnapshotJobOutput {
+	s.JobStatus = &v
+	return s
+}
+
+// SetLastUpdatedTime sets the LastUpdatedTime field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetLastUpdatedTime(v time.Time) *DescribeDashboardSnapshotJobOutput {
+	s.LastUpdatedTime = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetRequestId(v string) *DescribeDashboardSnapshotJobOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetSnapshotConfiguration sets the SnapshotConfiguration field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetSnapshotConfiguration(v *SnapshotConfiguration) *DescribeDashboardSnapshotJobOutput {
+	s.SnapshotConfiguration = v
+	return s
+}
+
+// SetSnapshotJobId sets the SnapshotJobId field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetSnapshotJobId(v string) *DescribeDashboardSnapshotJobOutput {
+	s.SnapshotJobId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetStatus(v int64) *DescribeDashboardSnapshotJobOutput {
+	s.Status = &v
+	return s
+}
+
+// SetUserConfiguration sets the UserConfiguration field's value.
+func (s *DescribeDashboardSnapshotJobOutput) SetUserConfiguration(v *SnapshotUserConfigurationRedacted) *DescribeDashboardSnapshotJobOutput {
+	s.UserConfiguration = v
+	return s
+}
+
+type DescribeDashboardSnapshotJobResultInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the Amazon Web Services account that the dashboard snapshot job
+	// is executed in.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The ID of the dashboard that you have started a snapshot job for.
+	//
+	// DashboardId is a required field
+	DashboardId *string `location:"uri" locationName:"DashboardId" min:"1" type:"string" required:"true"`
+
+	// The ID of the job to be described. The job ID is set when you start a new
+	// job with a StartDashboardSnapshotJob API call.
+	//
+	// SnapshotJobId is a required field
+	SnapshotJobId *string `location:"uri" locationName:"SnapshotJobId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobResultInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobResultInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeDashboardSnapshotJobResultInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeDashboardSnapshotJobResultInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.DashboardId == nil {
+		invalidParams.Add(request.NewErrParamRequired("DashboardId"))
+	}
+	if s.DashboardId != nil && len(*s.DashboardId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashboardId", 1))
+	}
+	if s.SnapshotJobId == nil {
+		invalidParams.Add(request.NewErrParamRequired("SnapshotJobId"))
+	}
+	if s.SnapshotJobId != nil && len(*s.SnapshotJobId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SnapshotJobId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *DescribeDashboardSnapshotJobResultInput) SetAwsAccountId(v string) *DescribeDashboardSnapshotJobResultInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetDashboardId sets the DashboardId field's value.
+func (s *DescribeDashboardSnapshotJobResultInput) SetDashboardId(v string) *DescribeDashboardSnapshotJobResultInput {
+	s.DashboardId = &v
+	return s
+}
+
+// SetSnapshotJobId sets the SnapshotJobId field's value.
+func (s *DescribeDashboardSnapshotJobResultInput) SetSnapshotJobId(v string) *DescribeDashboardSnapshotJobResultInput {
+	s.SnapshotJobId = &v
+	return s
+}
+
+type DescribeDashboardSnapshotJobResultOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) for the snapshot job. The job ARN is generated
+	// when you start a new job with a StartDashboardSnapshotJob API call.
+	Arn *string `type:"string"`
+
+	// The time that a snapshot job was created.
+	CreatedTime *time.Time `type:"timestamp"`
+
+	// Displays information for the error that caused a job to fail.
+	ErrorInfo *SnapshotJobErrorInfo `type:"structure"`
+
+	// Indicates the status of a job after it has reached a terminal state. A finished
+	// snapshot job will retuen a COMPLETED or FAILED status.
+	JobStatus *string `type:"string" enum:"SnapshotJobStatus"`
+
+	// The time that a snapshot job status was last updated.
+	LastUpdatedTime *time.Time `type:"timestamp"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The result of the snapshot job. Jobs that have successfully completed will
+	// return the S3Uri where they are located. Jobs that have failedwill return
+	// information on the error that caused the job to fail.
+	Result *SnapshotJobResult `type:"structure"`
+
+	// The HTTP status of the request
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobResultOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDashboardSnapshotJobResultOutput) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetArn(v string) *DescribeDashboardSnapshotJobResultOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetCreatedTime sets the CreatedTime field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetCreatedTime(v time.Time) *DescribeDashboardSnapshotJobResultOutput {
+	s.CreatedTime = &v
+	return s
+}
+
+// SetErrorInfo sets the ErrorInfo field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetErrorInfo(v *SnapshotJobErrorInfo) *DescribeDashboardSnapshotJobResultOutput {
+	s.ErrorInfo = v
+	return s
+}
+
+// SetJobStatus sets the JobStatus field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetJobStatus(v string) *DescribeDashboardSnapshotJobResultOutput {
+	s.JobStatus = &v
+	return s
+}
+
+// SetLastUpdatedTime sets the LastUpdatedTime field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetLastUpdatedTime(v time.Time) *DescribeDashboardSnapshotJobResultOutput {
+	s.LastUpdatedTime = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetRequestId(v string) *DescribeDashboardSnapshotJobResultOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetResult sets the Result field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetResult(v *SnapshotJobResult) *DescribeDashboardSnapshotJobResultOutput {
+	s.Result = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DescribeDashboardSnapshotJobResultOutput) SetStatus(v int64) *DescribeDashboardSnapshotJobResultOutput {
 	s.Status = &v
 	return s
 }
@@ -44127,6 +49231,15 @@ type DescribeFolderPermissionsInput struct {
 	//
 	// FolderId is a required field
 	FolderId *string `location:"uri" locationName:"FolderId" min:"1" type:"string" required:"true"`
+
+	// The maximum number of results to be returned per request.
+	MaxResults *int64 `location:"querystring" locationName:"max-results" min:"1" type:"integer"`
+
+	// The namespace of the folder whose permissions you want described.
+	Namespace *string `location:"querystring" locationName:"namespace" type:"string"`
+
+	// A pagination token for the next set of results.
+	NextToken *string `location:"querystring" locationName:"next-token" type:"string"`
 }
 
 // String returns the string representation.
@@ -44162,6 +49275,9 @@ func (s *DescribeFolderPermissionsInput) Validate() error {
 	if s.FolderId != nil && len(*s.FolderId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FolderId", 1))
 	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -44181,6 +49297,24 @@ func (s *DescribeFolderPermissionsInput) SetFolderId(v string) *DescribeFolderPe
 	return s
 }
 
+// SetMaxResults sets the MaxResults field's value.
+func (s *DescribeFolderPermissionsInput) SetMaxResults(v int64) *DescribeFolderPermissionsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *DescribeFolderPermissionsInput) SetNamespace(v string) *DescribeFolderPermissionsInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *DescribeFolderPermissionsInput) SetNextToken(v string) *DescribeFolderPermissionsInput {
+	s.NextToken = &v
+	return s
+}
+
 type DescribeFolderPermissionsOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -44189,6 +49323,10 @@ type DescribeFolderPermissionsOutput struct {
 
 	// The ID of the folder.
 	FolderId *string `min:"1" type:"string"`
+
+	// The pagination token for the next set of results, or null if there are no
+	// more results.
+	NextToken *string `type:"string"`
 
 	// Information about the permissions on the folder.
 	Permissions []*ResourcePermission `min:"1" type:"list"`
@@ -44230,6 +49368,12 @@ func (s *DescribeFolderPermissionsOutput) SetFolderId(v string) *DescribeFolderP
 	return s
 }
 
+// SetNextToken sets the NextToken field's value.
+func (s *DescribeFolderPermissionsOutput) SetNextToken(v string) *DescribeFolderPermissionsOutput {
+	s.NextToken = &v
+	return s
+}
+
 // SetPermissions sets the Permissions field's value.
 func (s *DescribeFolderPermissionsOutput) SetPermissions(v []*ResourcePermission) *DescribeFolderPermissionsOutput {
 	s.Permissions = v
@@ -44260,6 +49404,15 @@ type DescribeFolderResolvedPermissionsInput struct {
 	//
 	// FolderId is a required field
 	FolderId *string `location:"uri" locationName:"FolderId" min:"1" type:"string" required:"true"`
+
+	// The maximum number of results to be returned per request.
+	MaxResults *int64 `location:"querystring" locationName:"max-results" min:"1" type:"integer"`
+
+	// The namespace of the folder whose permissions you want described.
+	Namespace *string `location:"querystring" locationName:"namespace" type:"string"`
+
+	// A pagination token for the next set of results.
+	NextToken *string `location:"querystring" locationName:"next-token" type:"string"`
 }
 
 // String returns the string representation.
@@ -44295,6 +49448,9 @@ func (s *DescribeFolderResolvedPermissionsInput) Validate() error {
 	if s.FolderId != nil && len(*s.FolderId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FolderId", 1))
 	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -44314,6 +49470,24 @@ func (s *DescribeFolderResolvedPermissionsInput) SetFolderId(v string) *Describe
 	return s
 }
 
+// SetMaxResults sets the MaxResults field's value.
+func (s *DescribeFolderResolvedPermissionsInput) SetMaxResults(v int64) *DescribeFolderResolvedPermissionsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *DescribeFolderResolvedPermissionsInput) SetNamespace(v string) *DescribeFolderResolvedPermissionsInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *DescribeFolderResolvedPermissionsInput) SetNextToken(v string) *DescribeFolderResolvedPermissionsInput {
+	s.NextToken = &v
+	return s
+}
+
 type DescribeFolderResolvedPermissionsOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -44322,6 +49496,10 @@ type DescribeFolderResolvedPermissionsOutput struct {
 
 	// The ID of the folder.
 	FolderId *string `min:"1" type:"string"`
+
+	// A pagination token for the next set of results, or null if there are no more
+	// results.
+	NextToken *string `type:"string"`
 
 	// Information about the permissions for the folder.
 	Permissions []*ResourcePermission `min:"1" type:"list"`
@@ -44360,6 +49538,12 @@ func (s *DescribeFolderResolvedPermissionsOutput) SetArn(v string) *DescribeFold
 // SetFolderId sets the FolderId field's value.
 func (s *DescribeFolderResolvedPermissionsOutput) SetFolderId(v string) *DescribeFolderResolvedPermissionsOutput {
 	s.FolderId = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *DescribeFolderResolvedPermissionsOutput) SetNextToken(v string) *DescribeFolderResolvedPermissionsOutput {
+	s.NextToken = &v
 	return s
 }
 
@@ -45306,6 +50490,140 @@ func (s *DescribeRefreshScheduleOutput) SetRequestId(v string) *DescribeRefreshS
 
 // SetStatus sets the Status field's value.
 func (s *DescribeRefreshScheduleOutput) SetStatus(v int64) *DescribeRefreshScheduleOutput {
+	s.Status = &v
+	return s
+}
+
+type DescribeRoleCustomPermissionInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID for the Amazon Web Services account that you want to create a group
+	// in. The Amazon Web Services account ID that you provide must be the same
+	// Amazon Web Services account that contains your Amazon QuickSight account.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The namespace that contains the role.
+	//
+	// Namespace is a required field
+	Namespace *string `location:"uri" locationName:"Namespace" type:"string" required:"true"`
+
+	// The name of the role whose permissions you want described.
+	//
+	// Role is a required field
+	Role *string `location:"uri" locationName:"Role" type:"string" required:"true" enum:"Role"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRoleCustomPermissionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRoleCustomPermissionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeRoleCustomPermissionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeRoleCustomPermissionInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.Namespace == nil {
+		invalidParams.Add(request.NewErrParamRequired("Namespace"))
+	}
+	if s.Namespace != nil && len(*s.Namespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Namespace", 1))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Role != nil && len(*s.Role) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Role", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *DescribeRoleCustomPermissionInput) SetAwsAccountId(v string) *DescribeRoleCustomPermissionInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *DescribeRoleCustomPermissionInput) SetNamespace(v string) *DescribeRoleCustomPermissionInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *DescribeRoleCustomPermissionInput) SetRole(v string) *DescribeRoleCustomPermissionInput {
+	s.Role = &v
+	return s
+}
+
+type DescribeRoleCustomPermissionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the custom permission that is described.
+	CustomPermissionsName *string `min:"1" type:"string"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRoleCustomPermissionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeRoleCustomPermissionOutput) GoString() string {
+	return s.String()
+}
+
+// SetCustomPermissionsName sets the CustomPermissionsName field's value.
+func (s *DescribeRoleCustomPermissionOutput) SetCustomPermissionsName(v string) *DescribeRoleCustomPermissionOutput {
+	s.CustomPermissionsName = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *DescribeRoleCustomPermissionOutput) SetRequestId(v string) *DescribeRoleCustomPermissionOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DescribeRoleCustomPermissionOutput) SetStatus(v int64) *DescribeRoleCustomPermissionOutput {
 	s.Status = &v
 	return s
 }
@@ -47696,6 +53014,9 @@ func (s *DrillDownFilter) SetTimeRangeFilter(v *TimeRangeDrillDownFilter) *Drill
 type DropDownControlDisplayOptions struct {
 	_ struct{} `type:"structure"`
 
+	// The configuration of info icon label options.
+	InfoIconLabelOptions *SheetControlInfoIconLabelOptions `type:"structure"`
+
 	// The configuration of the Select all options in a dropdown control.
 	SelectAllOptions *ListControlSelectAllOptions `type:"structure"`
 
@@ -47719,6 +53040,27 @@ func (s DropDownControlDisplayOptions) String() string {
 // value will be replaced with "sensitive".
 func (s DropDownControlDisplayOptions) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DropDownControlDisplayOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DropDownControlDisplayOptions"}
+	if s.InfoIconLabelOptions != nil {
+		if err := s.InfoIconLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("InfoIconLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInfoIconLabelOptions sets the InfoIconLabelOptions field's value.
+func (s *DropDownControlDisplayOptions) SetInfoIconLabelOptions(v *SheetControlInfoIconLabelOptions) *DropDownControlDisplayOptions {
+	s.InfoIconLabelOptions = v
+	return s
 }
 
 // SetSelectAllOptions sets the SelectAllOptions field's value.
@@ -49832,6 +55174,11 @@ func (s *FilterDropDownControl) Validate() error {
 			invalidParams.AddNested("CascadingControlConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -50023,6 +55370,15 @@ type FilterListConfiguration struct {
 	// MatchOperator is a required field
 	MatchOperator *string `type:"string" required:"true" enum:"CategoryFilterMatchOperator"`
 
+	// This option determines how null values should be treated when filtering data.
+	//
+	//    * ALL_VALUES: Include null values in filtered results.
+	//
+	//    * NULLS_ONLY: Only include null values in filtered results.
+	//
+	//    * NON_NULLS_ONLY: Exclude null values from filtered results.
+	NullOption *string `type:"string" enum:"FilterNullOption"`
+
 	// Select all of the values. Null is not the assigned value of select all.
 	//
 	//    * FILTER_ALL_VALUES
@@ -50069,6 +55425,12 @@ func (s *FilterListConfiguration) SetCategoryValues(v []*string) *FilterListConf
 // SetMatchOperator sets the MatchOperator field's value.
 func (s *FilterListConfiguration) SetMatchOperator(v string) *FilterListConfiguration {
 	s.MatchOperator = &v
+	return s
+}
+
+// SetNullOption sets the NullOption field's value.
+func (s *FilterListConfiguration) SetNullOption(v string) *FilterListConfiguration {
+	s.NullOption = &v
 	return s
 }
 
@@ -50158,6 +55520,11 @@ func (s *FilterListControl) Validate() error {
 	if s.CascadingControlConfiguration != nil {
 		if err := s.CascadingControlConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("CascadingControlConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -50500,6 +55867,9 @@ func (s *FilterRelativeDateTimeControl) SetTitle(v string) *FilterRelativeDateTi
 type FilterScopeConfiguration struct {
 	_ struct{} `type:"structure"`
 
+	// The configuration for applying a filter to all sheets.
+	AllSheets *AllSheetsFilterScopeConfiguration `type:"structure"`
+
 	// The configuration for applying a filter to specific sheets.
 	SelectedSheets *SelectedSheetsFilterScopeConfiguration `type:"structure"`
 }
@@ -50535,6 +55905,12 @@ func (s *FilterScopeConfiguration) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAllSheets sets the AllSheets field's value.
+func (s *FilterScopeConfiguration) SetAllSheets(v *AllSheetsFilterScopeConfiguration) *FilterScopeConfiguration {
+	s.AllSheets = v
+	return s
 }
 
 // SetSelectedSheets sets the SelectedSheets field's value.
@@ -50669,6 +56045,11 @@ func (s *FilterSliderControl) Validate() error {
 	if s.Title != nil && len(*s.Title) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Title", 1))
 	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -50792,6 +56173,11 @@ func (s *FilterTextAreaControl) Validate() error {
 	if s.Title != nil && len(*s.Title) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Title", 1))
 	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -50891,6 +56277,11 @@ func (s *FilterTextFieldControl) Validate() error {
 	if s.Title != nil && len(*s.Title) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Title", 1))
 	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -50946,6 +56337,9 @@ type Folder struct {
 
 	// A display name for the folder.
 	Name *string `min:"1" type:"string"`
+
+	// The sharing scope of the folder.
+	SharingModel *string `type:"string" enum:"SharingModel"`
 }
 
 // String returns the string representation.
@@ -51005,6 +56399,12 @@ func (s *Folder) SetLastUpdatedTime(v time.Time) *Folder {
 // SetName sets the Name field's value.
 func (s *Folder) SetName(v string) *Folder {
 	s.Name = &v
+	return s
+}
+
+// SetSharingModel sets the SharingModel field's value.
+func (s *Folder) SetSharingModel(v string) *Folder {
+	s.SharingModel = &v
 	return s
 }
 
@@ -51165,6 +56565,9 @@ type FolderSummary struct {
 
 	// The display name of the folder.
 	Name *string `min:"1" type:"string"`
+
+	// The sharing scope of the folder.
+	SharingModel *string `type:"string" enum:"SharingModel"`
 }
 
 // String returns the string representation.
@@ -51218,6 +56621,12 @@ func (s *FolderSummary) SetLastUpdatedTime(v time.Time) *FolderSummary {
 // SetName sets the Name field's value.
 func (s *FolderSummary) SetName(v string) *FolderSummary {
 	s.Name = &v
+	return s
+}
+
+// SetSharingModel sets the SharingModel field's value.
+func (s *FolderSummary) SetSharingModel(v string) *FolderSummary {
+	s.SharingModel = &v
 	return s
 }
 
@@ -51421,9 +56830,7 @@ type ForecastComputation struct {
 	Seasonality *string `type:"string" enum:"ForecastComputationSeasonality"`
 
 	// The time field that is used in a computation.
-	//
-	// Time is a required field
-	Time *DimensionField `type:"structure" required:"true"`
+	Time *DimensionField `type:"structure"`
 
 	// The upper boundary setup of a forecast computation.
 	UpperBoundary *float64 `type:"double"`
@@ -51467,9 +56874,6 @@ func (s *ForecastComputation) Validate() error {
 	}
 	if s.PredictionInterval != nil && *s.PredictionInterval < 50 {
 		invalidParams.Add(request.NewErrParamMinValue("PredictionInterval", 50))
-	}
-	if s.Time == nil {
-		invalidParams.Add(request.NewErrParamRequired("Time"))
 	}
 	if s.Time != nil {
 		if err := s.Time.Validate(); err != nil {
@@ -55742,9 +61146,7 @@ type GrowthRateComputation struct {
 	PeriodSize *int64 `min:"2" type:"integer"`
 
 	// The time field that is used in a computation.
-	//
-	// Time is a required field
-	Time *DimensionField `type:"structure" required:"true"`
+	Time *DimensionField `type:"structure"`
 
 	// The value field that is used in a computation.
 	Value *MeasureField `type:"structure"`
@@ -55779,9 +61181,6 @@ func (s *GrowthRateComputation) Validate() error {
 	}
 	if s.PeriodSize != nil && *s.PeriodSize < 2 {
 		invalidParams.Add(request.NewErrParamMinValue("PeriodSize", 2))
-	}
-	if s.Time == nil {
-		invalidParams.Add(request.NewErrParamRequired("Time"))
 	}
 	if s.Time != nil {
 		if err := s.Time.Validate(); err != nil {
@@ -56968,6 +62367,39 @@ func (s *IAMPolicyAssignmentSummary) SetAssignmentStatus(v string) *IAMPolicyAss
 	return s
 }
 
+// The parameters for an IAM Identity Center configuration.
+type IdentityCenterConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A Boolean option that controls whether Trusted Identity Propagation should
+	// be used.
+	EnableIdentityPropagation *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IdentityCenterConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IdentityCenterConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetEnableIdentityPropagation sets the EnableIdentityPropagation field's value.
+func (s *IdentityCenterConfiguration) SetEnableIdentityPropagation(v bool) *IdentityCenterConfiguration {
+	s.EnableIdentityPropagation = &v
+	return s
+}
+
 // The identity type specified isn't supported. Supported identity types include
 // IAM and QUICKSIGHT.
 type IdentityTypeNotSupportedException struct {
@@ -57225,6 +62657,10 @@ type InputColumn struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
+	// The sub data type of the column. Sub types are only available for decimal
+	// columns that are part of a SPICE dataset.
+	SubType *string `type:"string" enum:"ColumnDataSubType"`
+
 	// The data type of the column.
 	//
 	// Type is a required field
@@ -57271,6 +62707,12 @@ func (s *InputColumn) Validate() error {
 // SetName sets the Name field's value.
 func (s *InputColumn) SetName(v string) *InputColumn {
 	s.Name = &v
+	return s
+}
+
+// SetSubType sets the SubType field's value.
+func (s *InputColumn) SetSubType(v string) *InputColumn {
+	s.SubType = &v
 	return s
 }
 
@@ -58414,6 +63856,128 @@ func (s *JoinKeyProperties) SetUniqueKey(v bool) *JoinKeyProperties {
 	return s
 }
 
+// The conditional formatting for the actual value of a KPI visual.
+type KPIActualValueConditionalFormatting struct {
+	_ struct{} `type:"structure"`
+
+	// The conditional formatting of the actual value's icon.
+	Icon *ConditionalFormattingIcon `type:"structure"`
+
+	// The conditional formatting of the actual value's text color.
+	TextColor *ConditionalFormattingColor `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIActualValueConditionalFormatting) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIActualValueConditionalFormatting) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KPIActualValueConditionalFormatting) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KPIActualValueConditionalFormatting"}
+	if s.Icon != nil {
+		if err := s.Icon.Validate(); err != nil {
+			invalidParams.AddNested("Icon", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.TextColor != nil {
+		if err := s.TextColor.Validate(); err != nil {
+			invalidParams.AddNested("TextColor", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetIcon sets the Icon field's value.
+func (s *KPIActualValueConditionalFormatting) SetIcon(v *ConditionalFormattingIcon) *KPIActualValueConditionalFormatting {
+	s.Icon = v
+	return s
+}
+
+// SetTextColor sets the TextColor field's value.
+func (s *KPIActualValueConditionalFormatting) SetTextColor(v *ConditionalFormattingColor) *KPIActualValueConditionalFormatting {
+	s.TextColor = v
+	return s
+}
+
+// The conditional formatting for the comparison value of a KPI visual.
+type KPIComparisonValueConditionalFormatting struct {
+	_ struct{} `type:"structure"`
+
+	// The conditional formatting of the comparison value's icon.
+	Icon *ConditionalFormattingIcon `type:"structure"`
+
+	// The conditional formatting of the comparison value's text color.
+	TextColor *ConditionalFormattingColor `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIComparisonValueConditionalFormatting) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIComparisonValueConditionalFormatting) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KPIComparisonValueConditionalFormatting) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KPIComparisonValueConditionalFormatting"}
+	if s.Icon != nil {
+		if err := s.Icon.Validate(); err != nil {
+			invalidParams.AddNested("Icon", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.TextColor != nil {
+		if err := s.TextColor.Validate(); err != nil {
+			invalidParams.AddNested("TextColor", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetIcon sets the Icon field's value.
+func (s *KPIComparisonValueConditionalFormatting) SetIcon(v *ConditionalFormattingIcon) *KPIComparisonValueConditionalFormatting {
+	s.Icon = v
+	return s
+}
+
+// SetTextColor sets the TextColor field's value.
+func (s *KPIComparisonValueConditionalFormatting) SetTextColor(v *ConditionalFormattingColor) *KPIComparisonValueConditionalFormatting {
+	s.TextColor = v
+	return s
+}
+
 // The conditional formatting of a KPI visual.
 type KPIConditionalFormatting struct {
 	_ struct{} `type:"structure"`
@@ -58470,6 +64034,12 @@ func (s *KPIConditionalFormatting) SetConditionalFormattingOptions(v []*KPICondi
 type KPIConditionalFormattingOption struct {
 	_ struct{} `type:"structure"`
 
+	// The conditional formatting for the actual value of a KPI visual.
+	ActualValue *KPIActualValueConditionalFormatting `type:"structure"`
+
+	// The conditional formatting for the comparison value of a KPI visual.
+	ComparisonValue *KPIComparisonValueConditionalFormatting `type:"structure"`
+
 	// The conditional formatting for the primary value of a KPI visual.
 	PrimaryValue *KPIPrimaryValueConditionalFormatting `type:"structure"`
 
@@ -58498,6 +64068,16 @@ func (s KPIConditionalFormattingOption) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *KPIConditionalFormattingOption) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "KPIConditionalFormattingOption"}
+	if s.ActualValue != nil {
+		if err := s.ActualValue.Validate(); err != nil {
+			invalidParams.AddNested("ActualValue", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.ComparisonValue != nil {
+		if err := s.ComparisonValue.Validate(); err != nil {
+			invalidParams.AddNested("ComparisonValue", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.PrimaryValue != nil {
 		if err := s.PrimaryValue.Validate(); err != nil {
 			invalidParams.AddNested("PrimaryValue", err.(request.ErrInvalidParams))
@@ -58513,6 +64093,18 @@ func (s *KPIConditionalFormattingOption) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetActualValue sets the ActualValue field's value.
+func (s *KPIConditionalFormattingOption) SetActualValue(v *KPIActualValueConditionalFormatting) *KPIConditionalFormattingOption {
+	s.ActualValue = v
+	return s
+}
+
+// SetComparisonValue sets the ComparisonValue field's value.
+func (s *KPIConditionalFormattingOption) SetComparisonValue(v *KPIComparisonValueConditionalFormatting) *KPIConditionalFormattingOption {
+	s.ComparisonValue = v
+	return s
 }
 
 // SetPrimaryValue sets the PrimaryValue field's value.
@@ -58716,8 +64308,15 @@ type KPIOptions struct {
 	// The options that determine the secondary value font configuration.
 	SecondaryValueFontConfiguration *FontConfiguration `type:"structure"`
 
+	// The options that determine the visibility, color, type, and tooltip visibility
+	// of the sparkline of a KPI visual.
+	Sparkline *KPISparklineOptions `type:"structure"`
+
 	// The options that determine the presentation of trend arrows in a KPI visual.
 	TrendArrows *TrendArrowOptions `type:"structure"`
+
+	// The options that determine the layout a KPI visual.
+	VisualLayoutOptions *KPIVisualLayoutOptions `type:"structure"`
 }
 
 // String returns the string representation.
@@ -58744,6 +64343,16 @@ func (s *KPIOptions) Validate() error {
 	if s.Comparison != nil {
 		if err := s.Comparison.Validate(); err != nil {
 			invalidParams.AddNested("Comparison", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Sparkline != nil {
+		if err := s.Sparkline.Validate(); err != nil {
+			invalidParams.AddNested("Sparkline", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.VisualLayoutOptions != nil {
+		if err := s.VisualLayoutOptions.Validate(); err != nil {
+			invalidParams.AddNested("VisualLayoutOptions", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -58789,9 +64398,21 @@ func (s *KPIOptions) SetSecondaryValueFontConfiguration(v *FontConfiguration) *K
 	return s
 }
 
+// SetSparkline sets the Sparkline field's value.
+func (s *KPIOptions) SetSparkline(v *KPISparklineOptions) *KPIOptions {
+	s.Sparkline = v
+	return s
+}
+
 // SetTrendArrows sets the TrendArrows field's value.
 func (s *KPIOptions) SetTrendArrows(v *TrendArrowOptions) *KPIOptions {
 	s.TrendArrows = v
+	return s
+}
+
+// SetVisualLayoutOptions sets the VisualLayoutOptions field's value.
+func (s *KPIOptions) SetVisualLayoutOptions(v *KPIVisualLayoutOptions) *KPIOptions {
+	s.VisualLayoutOptions = v
 	return s
 }
 
@@ -58955,6 +64576,81 @@ func (s *KPISortConfiguration) SetTrendGroupSort(v []*FieldSortOptions) *KPISort
 	return s
 }
 
+// The options that determine the visibility, color, type, and tooltip visibility
+// of the sparkline of a KPI visual.
+type KPISparklineOptions struct {
+	_ struct{} `type:"structure"`
+
+	// The color of the sparkline.
+	Color *string `type:"string"`
+
+	// The tooltip visibility of the sparkline.
+	TooltipVisibility *string `type:"string" enum:"Visibility"`
+
+	// The type of the sparkline.
+	//
+	// Type is a required field
+	Type *string `type:"string" required:"true" enum:"KPISparklineType"`
+
+	// The visibility of the sparkline.
+	Visibility *string `type:"string" enum:"Visibility"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPISparklineOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPISparklineOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KPISparklineOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KPISparklineOptions"}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetColor sets the Color field's value.
+func (s *KPISparklineOptions) SetColor(v string) *KPISparklineOptions {
+	s.Color = &v
+	return s
+}
+
+// SetTooltipVisibility sets the TooltipVisibility field's value.
+func (s *KPISparklineOptions) SetTooltipVisibility(v string) *KPISparklineOptions {
+	s.TooltipVisibility = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *KPISparklineOptions) SetType(v string) *KPISparklineOptions {
+	s.Type = &v
+	return s
+}
+
+// SetVisibility sets the Visibility field's value.
+func (s *KPISparklineOptions) SetVisibility(v string) *KPISparklineOptions {
+	s.Visibility = &v
+	return s
+}
+
 // A key performance indicator (KPI).
 //
 // For more information, see Using KPIs (https://docs.aws.amazon.com/quicksight/latest/user/kpi.html)
@@ -59101,6 +64797,100 @@ func (s *KPIVisual) SetTitle(v *VisualTitleLabelOptions) *KPIVisual {
 // SetVisualId sets the VisualId field's value.
 func (s *KPIVisual) SetVisualId(v string) *KPIVisual {
 	s.VisualId = &v
+	return s
+}
+
+// The options that determine the layout a KPI visual.
+type KPIVisualLayoutOptions struct {
+	_ struct{} `type:"structure"`
+
+	// The standard layout of the KPI visual.
+	StandardLayout *KPIVisualStandardLayout `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIVisualLayoutOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIVisualLayoutOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KPIVisualLayoutOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KPIVisualLayoutOptions"}
+	if s.StandardLayout != nil {
+		if err := s.StandardLayout.Validate(); err != nil {
+			invalidParams.AddNested("StandardLayout", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetStandardLayout sets the StandardLayout field's value.
+func (s *KPIVisualLayoutOptions) SetStandardLayout(v *KPIVisualStandardLayout) *KPIVisualLayoutOptions {
+	s.StandardLayout = v
+	return s
+}
+
+// The standard layout of the KPI visual.
+type KPIVisualStandardLayout struct {
+	_ struct{} `type:"structure"`
+
+	// The standard layout type.
+	//
+	// Type is a required field
+	Type *string `type:"string" required:"true" enum:"KPIVisualStandardLayoutType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIVisualStandardLayout) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KPIVisualStandardLayout) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KPIVisualStandardLayout) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KPIVisualStandardLayout"}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetType sets the Type field's value.
+func (s *KPIVisualStandardLayout) SetType(v string) *KPIVisualStandardLayout {
+	s.Type = &v
 	return s
 }
 
@@ -59596,6 +65386,9 @@ type LineChartConfiguration struct {
 	// The series item configuration of a line chart.
 	Series []*SeriesItem `type:"list"`
 
+	// The settings of a chart's single axis configuration.
+	SingleAxisOptions *SingleAxisOptions `type:"structure"`
+
 	// The small multiples setup for the visual.
 	SmallMultiplesOptions *SmallMultiplesOptions `type:"structure"`
 
@@ -59702,6 +65495,11 @@ func (s *LineChartConfiguration) Validate() error {
 			}
 		}
 	}
+	if s.SingleAxisOptions != nil {
+		if err := s.SingleAxisOptions.Validate(); err != nil {
+			invalidParams.AddNested("SingleAxisOptions", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.SmallMultiplesOptions != nil {
 		if err := s.SmallMultiplesOptions.Validate(); err != nil {
 			invalidParams.AddNested("SmallMultiplesOptions", err.(request.ErrInvalidParams))
@@ -59803,6 +65601,12 @@ func (s *LineChartConfiguration) SetSecondaryYAxisLabelOptions(v *ChartAxisLabel
 // SetSeries sets the Series field's value.
 func (s *LineChartConfiguration) SetSeries(v []*SeriesItem) *LineChartConfiguration {
 	s.Series = v
+	return s
+}
+
+// SetSingleAxisOptions sets the SingleAxisOptions field's value.
+func (s *LineChartConfiguration) SetSingleAxisOptions(v *SingleAxisOptions) *LineChartConfiguration {
+	s.SingleAxisOptions = v
 	return s
 }
 
@@ -60428,6 +66232,29 @@ func (s LinkSharingConfiguration) GoString() string {
 	return s.String()
 }
 
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LinkSharingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LinkSharingConfiguration"}
+	if s.Permissions != nil && len(s.Permissions) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Permissions", 1))
+	}
+	if s.Permissions != nil {
+		for i, v := range s.Permissions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Permissions", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
 // SetPermissions sets the Permissions field's value.
 func (s *LinkSharingConfiguration) SetPermissions(v []*ResourcePermission) *LinkSharingConfiguration {
 	s.Permissions = v
@@ -60824,6 +66651,9 @@ func (s *ListAssetBundleImportJobsOutput) SetStatus(v int64) *ListAssetBundleImp
 type ListControlDisplayOptions struct {
 	_ struct{} `type:"structure"`
 
+	// The configuration of info icon label options.
+	InfoIconLabelOptions *SheetControlInfoIconLabelOptions `type:"structure"`
+
 	// The configuration of the search options in a list control.
 	SearchOptions *ListControlSearchOptions `type:"structure"`
 
@@ -60850,6 +66680,27 @@ func (s ListControlDisplayOptions) String() string {
 // value will be replaced with "sensitive".
 func (s ListControlDisplayOptions) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListControlDisplayOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListControlDisplayOptions"}
+	if s.InfoIconLabelOptions != nil {
+		if err := s.InfoIconLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("InfoIconLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInfoIconLabelOptions sets the InfoIconLabelOptions field's value.
+func (s *ListControlDisplayOptions) SetInfoIconLabelOptions(v *SheetControlInfoIconLabelOptions) *ListControlDisplayOptions {
+	s.InfoIconLabelOptions = v
+	return s
 }
 
 // SetSearchOptions sets the SearchOptions field's value.
@@ -62369,6 +68220,136 @@ func (s *ListIAMPolicyAssignmentsOutput) SetStatus(v int64) *ListIAMPolicyAssign
 	return s
 }
 
+type ListIdentityPropagationConfigsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the Amazon Web Services account that contain the identity propagation
+	// configurations of.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The maximum number of results to be returned.
+	MaxResults *int64 `location:"querystring" locationName:"max-results" min:"1" type:"integer"`
+
+	// The token for the next set of results, or null if there are no more results.
+	NextToken *string `location:"querystring" locationName:"next-token" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListIdentityPropagationConfigsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListIdentityPropagationConfigsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListIdentityPropagationConfigsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListIdentityPropagationConfigsInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *ListIdentityPropagationConfigsInput) SetAwsAccountId(v string) *ListIdentityPropagationConfigsInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListIdentityPropagationConfigsInput) SetMaxResults(v int64) *ListIdentityPropagationConfigsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListIdentityPropagationConfigsInput) SetNextToken(v string) *ListIdentityPropagationConfigsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListIdentityPropagationConfigsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The token for the next set of results, or null if there are no more results.
+	NextToken *string `type:"string"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// A list of services and their authorized targets that the Amazon QuickSight
+	// IAM Identity Center application can access.
+	Services []*AuthorizedTargetsByService `type:"list"`
+
+	// The HTTP status of the request.
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListIdentityPropagationConfigsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListIdentityPropagationConfigsOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListIdentityPropagationConfigsOutput) SetNextToken(v string) *ListIdentityPropagationConfigsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *ListIdentityPropagationConfigsOutput) SetRequestId(v string) *ListIdentityPropagationConfigsOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetServices sets the Services field's value.
+func (s *ListIdentityPropagationConfigsOutput) SetServices(v []*AuthorizedTargetsByService) *ListIdentityPropagationConfigsOutput {
+	s.Services = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ListIdentityPropagationConfigsOutput) SetStatus(v int64) *ListIdentityPropagationConfigsOutput {
+	s.Status = &v
+	return s
+}
+
 type ListIngestionsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -62767,6 +68748,170 @@ func (s *ListRefreshSchedulesOutput) SetRequestId(v string) *ListRefreshSchedule
 
 // SetStatus sets the Status field's value.
 func (s *ListRefreshSchedulesOutput) SetStatus(v int64) *ListRefreshSchedulesOutput {
+	s.Status = &v
+	return s
+}
+
+type ListRoleMembershipsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID for the Amazon Web Services account that you want to create a group
+	// in. The Amazon Web Services account ID that you provide must be the same
+	// Amazon Web Services account that contains your Amazon QuickSight account.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The maximum number of results to return.
+	MaxResults *int64 `location:"querystring" locationName:"max-results" min:"1" type:"integer"`
+
+	// The namespace that includes the role.
+	//
+	// Namespace is a required field
+	Namespace *string `location:"uri" locationName:"Namespace" type:"string" required:"true"`
+
+	// A pagination token that can be used in a subsequent request.
+	NextToken *string `location:"querystring" locationName:"next-token" type:"string"`
+
+	// The name of the role.
+	//
+	// Role is a required field
+	Role *string `location:"uri" locationName:"Role" type:"string" required:"true" enum:"Role"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoleMembershipsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoleMembershipsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListRoleMembershipsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListRoleMembershipsInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.Namespace == nil {
+		invalidParams.Add(request.NewErrParamRequired("Namespace"))
+	}
+	if s.Namespace != nil && len(*s.Namespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Namespace", 1))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Role != nil && len(*s.Role) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Role", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *ListRoleMembershipsInput) SetAwsAccountId(v string) *ListRoleMembershipsInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListRoleMembershipsInput) SetMaxResults(v int64) *ListRoleMembershipsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *ListRoleMembershipsInput) SetNamespace(v string) *ListRoleMembershipsInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListRoleMembershipsInput) SetNextToken(v string) *ListRoleMembershipsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *ListRoleMembershipsInput) SetRole(v string) *ListRoleMembershipsInput {
+	s.Role = &v
+	return s
+}
+
+type ListRoleMembershipsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of groups associated with a role
+	MembersList []*string `type:"list"`
+
+	// A pagination token that can be used in a subsequent request.
+	NextToken *string `type:"string"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoleMembershipsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoleMembershipsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMembersList sets the MembersList field's value.
+func (s *ListRoleMembershipsOutput) SetMembersList(v []*string) *ListRoleMembershipsOutput {
+	s.MembersList = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListRoleMembershipsOutput) SetNextToken(v string) *ListRoleMembershipsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *ListRoleMembershipsOutput) SetRequestId(v string) *ListRoleMembershipsOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ListRoleMembershipsOutput) SetStatus(v int64) *ListRoleMembershipsOutput {
 	s.Status = &v
 	return s
 }
@@ -65114,9 +71259,7 @@ type MaximumMinimumComputation struct {
 	Name *string `type:"string"`
 
 	// The time field that is used in a computation.
-	//
-	// Time is a required field
-	Time *DimensionField `type:"structure" required:"true"`
+	Time *DimensionField `type:"structure"`
 
 	// The type of computation. Choose one of the following options:
 	//
@@ -65157,9 +71300,6 @@ func (s *MaximumMinimumComputation) Validate() error {
 	}
 	if s.ComputationId != nil && len(*s.ComputationId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ComputationId", 1))
-	}
-	if s.Time == nil {
-		invalidParams.Add(request.NewErrParamRequired("Time"))
 	}
 	if s.Type == nil {
 		invalidParams.Add(request.NewErrParamRequired("Type"))
@@ -65352,22 +71492,16 @@ type MetricComparisonComputation struct {
 	ComputationId *string `min:"1" type:"string" required:"true"`
 
 	// The field that is used in a metric comparison from value setup.
-	//
-	// FromValue is a required field
-	FromValue *MeasureField `type:"structure" required:"true"`
+	FromValue *MeasureField `type:"structure"`
 
 	// The name of a computation.
 	Name *string `type:"string"`
 
 	// The field that is used in a metric comparison to value setup.
-	//
-	// TargetValue is a required field
-	TargetValue *MeasureField `type:"structure" required:"true"`
+	TargetValue *MeasureField `type:"structure"`
 
 	// The time field that is used in a computation.
-	//
-	// Time is a required field
-	Time *DimensionField `type:"structure" required:"true"`
+	Time *DimensionField `type:"structure"`
 }
 
 // String returns the string representation.
@@ -65396,15 +71530,6 @@ func (s *MetricComparisonComputation) Validate() error {
 	}
 	if s.ComputationId != nil && len(*s.ComputationId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ComputationId", 1))
-	}
-	if s.FromValue == nil {
-		invalidParams.Add(request.NewErrParamRequired("FromValue"))
-	}
-	if s.TargetValue == nil {
-		invalidParams.Add(request.NewErrParamRequired("TargetValue"))
-	}
-	if s.Time == nil {
-		invalidParams.Add(request.NewErrParamRequired("Time"))
 	}
 	if s.FromValue != nil {
 		if err := s.FromValue.Validate(); err != nil {
@@ -67233,10 +73358,13 @@ type OutputColumn struct {
 	// A description for a column.
 	Description *string `type:"string"`
 
-	// A display name for the dataset.
+	// The display name of the column..
 	Name *string `min:"1" type:"string"`
 
-	// The type.
+	// The sub data type of the column.
+	SubType *string `type:"string" enum:"ColumnDataSubType"`
+
+	// The data type of the column.
 	Type *string `type:"string" enum:"ColumnDataType"`
 }
 
@@ -67267,6 +73395,12 @@ func (s *OutputColumn) SetDescription(v string) *OutputColumn {
 // SetName sets the Name field's value.
 func (s *OutputColumn) SetName(v string) *OutputColumn {
 	s.Name = &v
+	return s
+}
+
+// SetSubType sets the SubType field's value.
+func (s *OutputColumn) SetSubType(v string) *OutputColumn {
+	s.SubType = &v
 	return s
 }
 
@@ -67965,6 +74099,11 @@ func (s *ParameterDropDownControl) Validate() error {
 			invalidParams.AddNested("CascadingControlConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.SelectableValues != nil {
 		if err := s.SelectableValues.Validate(); err != nil {
 			invalidParams.AddNested("SelectableValues", err.(request.ErrInvalidParams))
@@ -68095,6 +74234,11 @@ func (s *ParameterListControl) Validate() error {
 	if s.CascadingControlConfiguration != nil {
 		if err := s.CascadingControlConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("CascadingControlConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.SelectableValues != nil {
@@ -68294,6 +74438,11 @@ func (s *ParameterSliderControl) Validate() error {
 	if s.Title != nil && len(*s.Title) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Title", 1))
 	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -68411,6 +74560,11 @@ func (s *ParameterTextAreaControl) Validate() error {
 	if s.Title != nil && len(*s.Title) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Title", 1))
 	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -68509,6 +74663,11 @@ func (s *ParameterTextFieldControl) Validate() error {
 	}
 	if s.Title != nil && len(*s.Title) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Title", 1))
+	}
+	if s.DisplayOptions != nil {
+		if err := s.DisplayOptions.Validate(); err != nil {
+			invalidParams.AddNested("DisplayOptions", err.(request.ErrInvalidParams))
+		}
 	}
 
 	if invalidParams.Len() > 0 {
@@ -68853,9 +75012,7 @@ type PeriodOverPeriodComputation struct {
 	Name *string `type:"string"`
 
 	// The time field that is used in a computation.
-	//
-	// Time is a required field
-	Time *DimensionField `type:"structure" required:"true"`
+	Time *DimensionField `type:"structure"`
 
 	// The value field that is used in a computation.
 	Value *MeasureField `type:"structure"`
@@ -68887,9 +75044,6 @@ func (s *PeriodOverPeriodComputation) Validate() error {
 	}
 	if s.ComputationId != nil && len(*s.ComputationId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ComputationId", 1))
-	}
-	if s.Time == nil {
-		invalidParams.Add(request.NewErrParamRequired("Time"))
 	}
 	if s.Time != nil {
 		if err := s.Time.Validate(); err != nil {
@@ -68953,9 +75107,7 @@ type PeriodToDateComputation struct {
 	PeriodTimeGranularity *string `type:"string" enum:"TimeGranularity"`
 
 	// The time field that is used in a computation.
-	//
-	// Time is a required field
-	Time *DimensionField `type:"structure" required:"true"`
+	Time *DimensionField `type:"structure"`
 
 	// The value field that is used in a computation.
 	Value *MeasureField `type:"structure"`
@@ -68987,9 +75139,6 @@ func (s *PeriodToDateComputation) Validate() error {
 	}
 	if s.ComputationId != nil && len(*s.ComputationId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ComputationId", 1))
-	}
-	if s.Time == nil {
-		invalidParams.Add(request.NewErrParamRequired("Time"))
 	}
 	if s.Time != nil {
 		if err := s.Time.Validate(); err != nil {
@@ -70629,6 +76778,9 @@ type PivotTableOptions struct {
 	// The visibility of the column names.
 	ColumnNamesVisibility *string `type:"string" enum:"Visibility"`
 
+	// The default cell width of the pivot table.
+	DefaultCellWidth *string `type:"string"`
+
 	// The metric placement (row, column) options.
 	MetricPlacement *string `type:"string" enum:"PivotTableMetricPlacement"`
 
@@ -70640,6 +76792,19 @@ type PivotTableOptions struct {
 
 	// The table cell style of the row headers.
 	RowHeaderStyle *TableCellStyle `type:"structure"`
+
+	// The options for the label that is located above the row headers. This option
+	// is only applicable when RowsLayout is set to HIERARCHY.
+	RowsLabelOptions *PivotTableRowsLabelOptions `type:"structure"`
+
+	// The layout for the row dimension headers of a pivot table. Choose one of
+	// the following options.
+	//
+	//    * TABULAR: (Default) Each row field is displayed in a separate column.
+	//
+	//    * HIERARCHY: All row fields are displayed in a single column. Indentation
+	//    is used to differentiate row headers of different fields.
+	RowsLayout *string `type:"string" enum:"PivotTableRowsLayout"`
 
 	// The visibility of the single metric options.
 	SingleMetricVisibility *string `type:"string" enum:"Visibility"`
@@ -70689,6 +76854,11 @@ func (s *PivotTableOptions) Validate() error {
 			invalidParams.AddNested("RowHeaderStyle", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.RowsLabelOptions != nil {
+		if err := s.RowsLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("RowsLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -70720,6 +76890,12 @@ func (s *PivotTableOptions) SetColumnNamesVisibility(v string) *PivotTableOption
 	return s
 }
 
+// SetDefaultCellWidth sets the DefaultCellWidth field's value.
+func (s *PivotTableOptions) SetDefaultCellWidth(v string) *PivotTableOptions {
+	s.DefaultCellWidth = &v
+	return s
+}
+
 // SetMetricPlacement sets the MetricPlacement field's value.
 func (s *PivotTableOptions) SetMetricPlacement(v string) *PivotTableOptions {
 	s.MetricPlacement = &v
@@ -70741,6 +76917,18 @@ func (s *PivotTableOptions) SetRowFieldNamesStyle(v *TableCellStyle) *PivotTable
 // SetRowHeaderStyle sets the RowHeaderStyle field's value.
 func (s *PivotTableOptions) SetRowHeaderStyle(v *TableCellStyle) *PivotTableOptions {
 	s.RowHeaderStyle = v
+	return s
+}
+
+// SetRowsLabelOptions sets the RowsLabelOptions field's value.
+func (s *PivotTableOptions) SetRowsLabelOptions(v *PivotTableRowsLabelOptions) *PivotTableOptions {
+	s.RowsLabelOptions = v
+	return s
+}
+
+// SetRowsLayout sets the RowsLayout field's value.
+func (s *PivotTableOptions) SetRowsLayout(v string) *PivotTableOptions {
+	s.RowsLayout = &v
 	return s
 }
 
@@ -70794,6 +76982,61 @@ func (s *PivotTablePaginatedReportOptions) SetOverflowColumnHeaderVisibility(v s
 // SetVerticalOverflowVisibility sets the VerticalOverflowVisibility field's value.
 func (s *PivotTablePaginatedReportOptions) SetVerticalOverflowVisibility(v string) *PivotTablePaginatedReportOptions {
 	s.VerticalOverflowVisibility = &v
+	return s
+}
+
+// The options for the label thta is located above the row headers. This option
+// is only applicable when RowsLayout is set to HIERARCHY.
+type PivotTableRowsLabelOptions struct {
+	_ struct{} `type:"structure"`
+
+	// The custom label string for the rows label.
+	CustomLabel *string `min:"1" type:"string"`
+
+	// The visibility of the rows label.
+	Visibility *string `type:"string" enum:"Visibility"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PivotTableRowsLabelOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PivotTableRowsLabelOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PivotTableRowsLabelOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PivotTableRowsLabelOptions"}
+	if s.CustomLabel != nil && len(*s.CustomLabel) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CustomLabel", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCustomLabel sets the CustomLabel field's value.
+func (s *PivotTableRowsLabelOptions) SetCustomLabel(v string) *PivotTableRowsLabelOptions {
+	s.CustomLabel = &v
+	return s
+}
+
+// SetVisibility sets the Visibility field's value.
+func (s *PivotTableRowsLabelOptions) SetVisibility(v string) *PivotTableRowsLabelOptions {
+	s.Visibility = &v
 	return s
 }
 
@@ -71160,6 +77403,9 @@ type PivotTotalOptions struct {
 	// The scroll status (pinned, scrolled) for the total cells.
 	ScrollStatus *string `type:"string" enum:"TableTotalsScrollStatus"`
 
+	// The total aggregation options for each value field.
+	TotalAggregationOptions []*TotalAggregationOption `type:"list"`
+
 	// The cell styling options for the total cells.
 	TotalCellStyle *TableCellStyle `type:"structure"`
 
@@ -71194,6 +77440,16 @@ func (s *PivotTotalOptions) Validate() error {
 	if s.MetricHeaderCellStyle != nil {
 		if err := s.MetricHeaderCellStyle.Validate(); err != nil {
 			invalidParams.AddNested("MetricHeaderCellStyle", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.TotalAggregationOptions != nil {
+		for i, v := range s.TotalAggregationOptions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "TotalAggregationOptions", i), err.(request.ErrInvalidParams))
+			}
 		}
 	}
 	if s.TotalCellStyle != nil {
@@ -71234,6 +77490,12 @@ func (s *PivotTotalOptions) SetPlacement(v string) *PivotTotalOptions {
 // SetScrollStatus sets the ScrollStatus field's value.
 func (s *PivotTotalOptions) SetScrollStatus(v string) *PivotTotalOptions {
 	s.ScrollStatus = &v
+	return s
+}
+
+// SetTotalAggregationOptions sets the TotalAggregationOptions field's value.
+func (s *PivotTotalOptions) SetTotalAggregationOptions(v []*TotalAggregationOption) *PivotTotalOptions {
+	s.TotalAggregationOptions = v
 	return s
 }
 
@@ -72598,6 +78860,110 @@ func (s *RdsParameters) SetInstanceId(v string) *RdsParameters {
 	return s
 }
 
+// A structure that grants Amazon QuickSight access to your cluster and make
+// a call to the redshift:GetClusterCredentials API. For more information on
+// the redshift:GetClusterCredentials API, see GetClusterCredentials (https://docs.aws.amazon.com/redshift/latest/APIReference/API_GetClusterCredentials.html).
+type RedshiftIAMParameters struct {
+	_ struct{} `type:"structure"`
+
+	// Automatically creates a database user. If your database doesn't have a DatabaseUser,
+	// set this parameter to True. If there is no DatabaseUser, Amazon QuickSight
+	// can't connect to your cluster. The RoleArn that you use for this operation
+	// must grant access to redshift:CreateClusterUser to successfully create the
+	// user.
+	AutoCreateDatabaseUser *bool `type:"boolean"`
+
+	// A list of groups whose permissions will be granted to Amazon QuickSight to
+	// access the cluster. These permissions are combined with the permissions granted
+	// to Amazon QuickSight by the DatabaseUser. If you choose to include this parameter,
+	// the RoleArn must grant access to redshift:JoinGroup.
+	DatabaseGroups []*string `min:"1" type:"list"`
+
+	// The user whose permissions and group memberships will be used by Amazon QuickSight
+	// to access the cluster. If this user already exists in your database, Amazon
+	// QuickSight is granted the same permissions that the user has. If the user
+	// doesn't exist, set the value of AutoCreateDatabaseUser to True to create
+	// a new user with PUBLIC permissions.
+	//
+	// DatabaseUser is a required field
+	DatabaseUser *string `min:"1" type:"string" required:"true"`
+
+	// Use the RoleArn structure to allow Amazon QuickSight to call redshift:GetClusterCredentials
+	// on your cluster. The calling principal must have iam:PassRole access to pass
+	// the role to Amazon QuickSight. The role's trust policy must allow the Amazon
+	// QuickSight service principal to assume the role.
+	//
+	// RoleArn is a required field
+	RoleArn *string `min:"20" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RedshiftIAMParameters) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RedshiftIAMParameters) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RedshiftIAMParameters) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RedshiftIAMParameters"}
+	if s.DatabaseGroups != nil && len(s.DatabaseGroups) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseGroups", 1))
+	}
+	if s.DatabaseUser == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseUser"))
+	}
+	if s.DatabaseUser != nil && len(*s.DatabaseUser) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseUser", 1))
+	}
+	if s.RoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
+	}
+	if s.RoleArn != nil && len(*s.RoleArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("RoleArn", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAutoCreateDatabaseUser sets the AutoCreateDatabaseUser field's value.
+func (s *RedshiftIAMParameters) SetAutoCreateDatabaseUser(v bool) *RedshiftIAMParameters {
+	s.AutoCreateDatabaseUser = &v
+	return s
+}
+
+// SetDatabaseGroups sets the DatabaseGroups field's value.
+func (s *RedshiftIAMParameters) SetDatabaseGroups(v []*string) *RedshiftIAMParameters {
+	s.DatabaseGroups = v
+	return s
+}
+
+// SetDatabaseUser sets the DatabaseUser field's value.
+func (s *RedshiftIAMParameters) SetDatabaseUser(v string) *RedshiftIAMParameters {
+	s.DatabaseUser = &v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *RedshiftIAMParameters) SetRoleArn(v string) *RedshiftIAMParameters {
+	s.RoleArn = &v
+	return s
+}
+
 // The parameters for Amazon Redshift. The ClusterId field can be blank if Host
 // and Port are both set. The Host and Port fields can be blank if the ClusterId
 // field is set.
@@ -72614,6 +78980,18 @@ type RedshiftParameters struct {
 
 	// Host. This field can be blank if ClusterId is provided.
 	Host *string `min:"1" type:"string"`
+
+	// An optional parameter that uses IAM authentication to grant Amazon QuickSight
+	// access to your cluster. This parameter can be used instead of DataSourceCredentials
+	// (https://docs.aws.amazon.com/quicksight/latest/APIReference/API_DataSourceCredentials.html).
+	IAMParameters *RedshiftIAMParameters `type:"structure"`
+
+	// An optional parameter that configures IAM Identity Center authentication
+	// to grant Amazon QuickSight access to your cluster.
+	//
+	// This parameter can only be specified if your Amazon QuickSight account is
+	// configured with IAM Identity Center.
+	IdentityCenterConfiguration *IdentityCenterConfiguration `type:"structure"`
 
 	// Port. This field can be blank if the ClusterId is provided.
 	Port *int64 `type:"integer"`
@@ -72652,6 +79030,11 @@ func (s *RedshiftParameters) Validate() error {
 	if s.Host != nil && len(*s.Host) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Host", 1))
 	}
+	if s.IAMParameters != nil {
+		if err := s.IAMParameters.Validate(); err != nil {
+			invalidParams.AddNested("IAMParameters", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -72674,6 +79057,18 @@ func (s *RedshiftParameters) SetDatabase(v string) *RedshiftParameters {
 // SetHost sets the Host field's value.
 func (s *RedshiftParameters) SetHost(v string) *RedshiftParameters {
 	s.Host = &v
+	return s
+}
+
+// SetIAMParameters sets the IAMParameters field's value.
+func (s *RedshiftParameters) SetIAMParameters(v *RedshiftIAMParameters) *RedshiftParameters {
+	s.IAMParameters = v
+	return s
+}
+
+// SetIdentityCenterConfiguration sets the IdentityCenterConfiguration field's value.
+func (s *RedshiftParameters) SetIdentityCenterConfiguration(v *IdentityCenterConfiguration) *RedshiftParameters {
+	s.IdentityCenterConfiguration = v
 	return s
 }
 
@@ -72833,6 +79228,14 @@ type ReferenceLineDataConfiguration struct {
 	// The dynamic configuration of the reference line data configuration.
 	DynamicConfiguration *ReferenceLineDynamicDataConfiguration `type:"structure"`
 
+	// The series type of the reference line data configuration. Choose one of the
+	// following options:
+	//
+	//    * BAR
+	//
+	//    * LINE
+	SeriesType *string `type:"string" enum:"ReferenceLineSeriesType"`
+
 	// The static data configuration of the reference line data configuration.
 	StaticConfiguration *ReferenceLineStaticDataConfiguration `type:"structure"`
 }
@@ -72884,6 +79287,12 @@ func (s *ReferenceLineDataConfiguration) SetAxisBinding(v string) *ReferenceLine
 // SetDynamicConfiguration sets the DynamicConfiguration field's value.
 func (s *ReferenceLineDataConfiguration) SetDynamicConfiguration(v *ReferenceLineDynamicDataConfiguration) *ReferenceLineDataConfiguration {
 	s.DynamicConfiguration = v
+	return s
+}
+
+// SetSeriesType sets the SeriesType field's value.
+func (s *ReferenceLineDataConfiguration) SetSeriesType(v string) *ReferenceLineDataConfiguration {
+	s.SeriesType = &v
 	return s
 }
 
@@ -73588,6 +79997,9 @@ type RegisterUserInput struct {
 	// in the CLI Reference.
 	SessionName *string `min:"2" type:"string"`
 
+	// The tags to associate with the user.
+	Tags []*Tag `min:"1" type:"list"`
+
 	// The Amazon QuickSight user name that you want to create for the user you
 	// are registering.
 	UserName *string `min:"1" type:"string"`
@@ -73656,11 +80068,24 @@ func (s *RegisterUserInput) Validate() error {
 	if s.SessionName != nil && len(*s.SessionName) < 2 {
 		invalidParams.Add(request.NewErrParamMinLen("SessionName", 2))
 	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
 	if s.UserName != nil && len(*s.UserName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("UserName", 1))
 	}
 	if s.UserRole == nil {
 		invalidParams.Add(request.NewErrParamRequired("UserRole"))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
 	}
 
 	if invalidParams.Len() > 0 {
@@ -73726,6 +80151,12 @@ func (s *RegisterUserInput) SetNamespace(v string) *RegisterUserInput {
 // SetSessionName sets the SessionName field's value.
 func (s *RegisterUserInput) SetSessionName(v string) *RegisterUserInput {
 	s.SessionName = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *RegisterUserInput) SetTags(v []*Tag) *RegisterUserInput {
+	s.Tags = v
 	return s
 }
 
@@ -74402,6 +80833,9 @@ type RelativeDateTimeControlDisplayOptions struct {
 	// Customize how dates are formatted in controls.
 	DateTimeFormat *string `min:"1" type:"string"`
 
+	// The configuration of info icon label options.
+	InfoIconLabelOptions *SheetControlInfoIconLabelOptions `type:"structure"`
+
 	// The options to configure the title visibility, name, and font size.
 	TitleOptions *LabelOptions `type:"structure"`
 }
@@ -74430,6 +80864,11 @@ func (s *RelativeDateTimeControlDisplayOptions) Validate() error {
 	if s.DateTimeFormat != nil && len(*s.DateTimeFormat) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DateTimeFormat", 1))
 	}
+	if s.InfoIconLabelOptions != nil {
+		if err := s.InfoIconLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("InfoIconLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -74440,6 +80879,12 @@ func (s *RelativeDateTimeControlDisplayOptions) Validate() error {
 // SetDateTimeFormat sets the DateTimeFormat field's value.
 func (s *RelativeDateTimeControlDisplayOptions) SetDateTimeFormat(v string) *RelativeDateTimeControlDisplayOptions {
 	s.DateTimeFormat = &v
+	return s
+}
+
+// SetInfoIconLabelOptions sets the InfoIconLabelOptions field's value.
+func (s *RelativeDateTimeControlDisplayOptions) SetInfoIconLabelOptions(v *SheetControlInfoIconLabelOptions) *RelativeDateTimeControlDisplayOptions {
+	s.InfoIconLabelOptions = v
 	return s
 }
 
@@ -75193,6 +81638,9 @@ type RowAlternateColorOptions struct {
 
 	// Determines the widget status.
 	Status *string `type:"string" enum:"WidgetStatus"`
+
+	// The primary background color options for alternate rows.
+	UsePrimaryBackgroundColor *string `type:"string" enum:"WidgetStatus"`
 }
 
 // String returns the string representation.
@@ -75222,6 +81670,12 @@ func (s *RowAlternateColorOptions) SetRowAlternateColors(v []*string) *RowAltern
 // SetStatus sets the Status field's value.
 func (s *RowAlternateColorOptions) SetStatus(v string) *RowAlternateColorOptions {
 	s.Status = &v
+	return s
+}
+
+// SetUsePrimaryBackgroundColor sets the UsePrimaryBackgroundColor field's value.
+func (s *RowAlternateColorOptions) SetUsePrimaryBackgroundColor(v string) *RowAlternateColorOptions {
+	s.UsePrimaryBackgroundColor = &v
 	return s
 }
 
@@ -75552,6 +82006,86 @@ func (s *RowLevelPermissionTagRule) SetTagKey(v string) *RowLevelPermissionTagRu
 // SetTagMultiValueDelimiter sets the TagMultiValueDelimiter field's value.
 func (s *RowLevelPermissionTagRule) SetTagMultiValueDelimiter(v string) *RowLevelPermissionTagRule {
 	s.TagMultiValueDelimiter = &v
+	return s
+}
+
+// An optional structure that contains the Amazon S3 bucket configuration that
+// the generated snapshots are stored in. If you don't provide this information,
+// generated snapshots are stored in the default Amazon QuickSight bucket.
+type S3BucketConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The name of an existing Amazon S3 bucket where the generated snapshot artifacts
+	// are sent.
+	//
+	// BucketName is a required field
+	BucketName *string `type:"string" required:"true"`
+
+	// The prefix of the Amazon S3 bucket that the generated snapshots are stored
+	// in.
+	//
+	// BucketPrefix is a required field
+	BucketPrefix *string `type:"string" required:"true"`
+
+	// The region that the Amazon S3 bucket is located in. The bucket must be located
+	// in the same region that the StartDashboardSnapshotJob API call is made.
+	//
+	// BucketRegion is a required field
+	BucketRegion *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3BucketConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3BucketConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *S3BucketConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "S3BucketConfiguration"}
+	if s.BucketName == nil {
+		invalidParams.Add(request.NewErrParamRequired("BucketName"))
+	}
+	if s.BucketPrefix == nil {
+		invalidParams.Add(request.NewErrParamRequired("BucketPrefix"))
+	}
+	if s.BucketRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("BucketRegion"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBucketName sets the BucketName field's value.
+func (s *S3BucketConfiguration) SetBucketName(v string) *S3BucketConfiguration {
+	s.BucketName = &v
+	return s
+}
+
+// SetBucketPrefix sets the BucketPrefix field's value.
+func (s *S3BucketConfiguration) SetBucketPrefix(v string) *S3BucketConfiguration {
+	s.BucketPrefix = &v
+	return s
+}
+
+// SetBucketRegion sets the BucketRegion field's value.
+func (s *S3BucketConfiguration) SetBucketRegion(v string) *S3BucketConfiguration {
+	s.BucketRegion = &v
 	return s
 }
 
@@ -76323,6 +82857,9 @@ type ScatterPlotConfiguration struct {
 	// The legend display setup of the visual.
 	Legend *LegendOptions `type:"structure"`
 
+	// The sort configuration of a scatter plot.
+	SortConfiguration *ScatterPlotSortConfiguration `type:"structure"`
+
 	// The legend display setup of the visual.
 	Tooltip *TooltipOptions `type:"structure"`
 
@@ -76419,6 +82956,12 @@ func (s *ScatterPlotConfiguration) SetFieldWells(v *ScatterPlotFieldWells) *Scat
 // SetLegend sets the Legend field's value.
 func (s *ScatterPlotConfiguration) SetLegend(v *LegendOptions) *ScatterPlotConfiguration {
 	s.Legend = v
+	return s
+}
+
+// SetSortConfiguration sets the SortConfiguration field's value.
+func (s *ScatterPlotConfiguration) SetSortConfiguration(v *ScatterPlotSortConfiguration) *ScatterPlotConfiguration {
+	s.SortConfiguration = v
 	return s
 }
 
@@ -76521,6 +83064,38 @@ func (s *ScatterPlotFieldWells) SetScatterPlotCategoricallyAggregatedFieldWells(
 // SetScatterPlotUnaggregatedFieldWells sets the ScatterPlotUnaggregatedFieldWells field's value.
 func (s *ScatterPlotFieldWells) SetScatterPlotUnaggregatedFieldWells(v *ScatterPlotUnaggregatedFieldWells) *ScatterPlotFieldWells {
 	s.ScatterPlotUnaggregatedFieldWells = v
+	return s
+}
+
+// The sort configuration of a scatter plot.
+type ScatterPlotSortConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The limit configuration of the visual display for an axis.
+	ScatterPlotLimitConfiguration *ItemsLimitConfiguration `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScatterPlotSortConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScatterPlotSortConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetScatterPlotLimitConfiguration sets the ScatterPlotLimitConfiguration field's value.
+func (s *ScatterPlotSortConfiguration) SetScatterPlotLimitConfiguration(v *ItemsLimitConfiguration) *ScatterPlotSortConfiguration {
+	s.ScatterPlotLimitConfiguration = v
 	return s
 }
 
@@ -78854,6 +85429,60 @@ func (s *Sheet) SetSheetId(v string) *Sheet {
 	return s
 }
 
+// A control to display info icons for filters and parameters.
+type SheetControlInfoIconLabelOptions struct {
+	_ struct{} `type:"structure"`
+
+	// The text content of info icon.
+	InfoIconText *string `min:"1" type:"string"`
+
+	// The visibility configuration of info icon label options.
+	Visibility *string `type:"string" enum:"Visibility"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SheetControlInfoIconLabelOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SheetControlInfoIconLabelOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SheetControlInfoIconLabelOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SheetControlInfoIconLabelOptions"}
+	if s.InfoIconText != nil && len(*s.InfoIconText) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("InfoIconText", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInfoIconText sets the InfoIconText field's value.
+func (s *SheetControlInfoIconLabelOptions) SetInfoIconText(v string) *SheetControlInfoIconLabelOptions {
+	s.InfoIconText = &v
+	return s
+}
+
+// SetVisibility sets the Visibility field's value.
+func (s *SheetControlInfoIconLabelOptions) SetVisibility(v string) *SheetControlInfoIconLabelOptions {
+	s.Visibility = &v
+	return s
+}
+
 // A grid layout to define the placement of sheet control.
 type SheetControlLayout struct {
 	_ struct{} `type:"structure"`
@@ -79687,9 +86316,59 @@ func (s *SimpleClusterMarker) SetColor(v string) *SimpleClusterMarker {
 	return s
 }
 
+// The settings of a chart's single axis configuration.
+type SingleAxisOptions struct {
+	_ struct{} `type:"structure"`
+
+	// The Y axis options of a single axis configuration.
+	YAxisOptions *YAxisOptions `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SingleAxisOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SingleAxisOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SingleAxisOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SingleAxisOptions"}
+	if s.YAxisOptions != nil {
+		if err := s.YAxisOptions.Validate(); err != nil {
+			invalidParams.AddNested("YAxisOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetYAxisOptions sets the YAxisOptions field's value.
+func (s *SingleAxisOptions) SetYAxisOptions(v *YAxisOptions) *SingleAxisOptions {
+	s.YAxisOptions = v
+	return s
+}
+
 // The display options of a control.
 type SliderControlDisplayOptions struct {
 	_ struct{} `type:"structure"`
+
+	// The configuration of info icon label options.
+	InfoIconLabelOptions *SheetControlInfoIconLabelOptions `type:"structure"`
 
 	// The options to configure the title visibility, name, and font size.
 	TitleOptions *LabelOptions `type:"structure"`
@@ -79711,6 +86390,27 @@ func (s SliderControlDisplayOptions) String() string {
 // value will be replaced with "sensitive".
 func (s SliderControlDisplayOptions) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SliderControlDisplayOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SliderControlDisplayOptions"}
+	if s.InfoIconLabelOptions != nil {
+		if err := s.InfoIconLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("InfoIconLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInfoIconLabelOptions sets the InfoIconLabelOptions field's value.
+func (s *SliderControlDisplayOptions) SetInfoIconLabelOptions(v *SheetControlInfoIconLabelOptions) *SliderControlDisplayOptions {
+	s.InfoIconLabelOptions = v
+	return s
 }
 
 // SetTitleOptions sets the TitleOptions field's value.
@@ -79853,6 +86553,842 @@ func (s *SmallMultiplesOptions) SetXAxis(v *SmallMultiplesAxisProperties) *Small
 // SetYAxis sets the YAxis field's value.
 func (s *SmallMultiplesOptions) SetYAxis(v *SmallMultiplesAxisProperties) *SmallMultiplesOptions {
 	s.YAxis = v
+	return s
+}
+
+// A structure that contains information on the anonymous user configuration.
+type SnapshotAnonymousUser struct {
+	_ struct{} `type:"structure"`
+
+	// The tags to be used for row-level security (RLS). Make sure that the relevant
+	// datasets have RLS tags configured before you start a snapshot export job.
+	// You can configure the RLS tags of a dataset with a DataSet$RowLevelPermissionTagConfiguration
+	// API call.
+	//
+	// These are not the tags that are used for Amazon Web Services resource tagging.
+	// For more information on row level security in Amazon QuickSight, see Using
+	// Row-Level Security (RLS) with Tags (https://docs.aws.amazon.com/quicksight/latest/user/quicksight-dev-rls-tags.html)in
+	// the Amazon QuickSight User Guide.
+	RowLevelPermissionTags []*SessionTag `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotAnonymousUser) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotAnonymousUser) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotAnonymousUser) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotAnonymousUser"}
+	if s.RowLevelPermissionTags != nil && len(s.RowLevelPermissionTags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RowLevelPermissionTags", 1))
+	}
+	if s.RowLevelPermissionTags != nil {
+		for i, v := range s.RowLevelPermissionTags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "RowLevelPermissionTags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRowLevelPermissionTags sets the RowLevelPermissionTags field's value.
+func (s *SnapshotAnonymousUser) SetRowLevelPermissionTags(v []*SessionTag) *SnapshotAnonymousUser {
+	s.RowLevelPermissionTags = v
+	return s
+}
+
+// Use this structure to redact sensitive information that you provide about
+// an anonymous user from the snapshot.
+type SnapshotAnonymousUserRedacted struct {
+	_ struct{} `type:"structure"`
+
+	// The tag keys for the RowLevelPermissionTags.
+	RowLevelPermissionTagKeys []*string `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotAnonymousUserRedacted) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotAnonymousUserRedacted) GoString() string {
+	return s.String()
+}
+
+// SetRowLevelPermissionTagKeys sets the RowLevelPermissionTagKeys field's value.
+func (s *SnapshotAnonymousUserRedacted) SetRowLevelPermissionTagKeys(v []*string) *SnapshotAnonymousUserRedacted {
+	s.RowLevelPermissionTagKeys = v
+	return s
+}
+
+// Describes the configuration of the dashboard snapshot.
+type SnapshotConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A structure that contains information on the Amazon S3 bucket that the generated
+	// snapshot is stored in.
+	DestinationConfiguration *SnapshotDestinationConfiguration `type:"structure"`
+
+	// A list of SnapshotJobResultFileGroup objects that contain information about
+	// the snapshot that is generated. This list can hold a maximum of 6 FileGroup
+	// configurations.
+	//
+	// FileGroups is a required field
+	FileGroups []*SnapshotFileGroup `min:"1" type:"list" required:"true"`
+
+	// A list of Amazon QuickSight parameters and the list's override values.
+	Parameters *Parameters `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotConfiguration"}
+	if s.FileGroups == nil {
+		invalidParams.Add(request.NewErrParamRequired("FileGroups"))
+	}
+	if s.FileGroups != nil && len(s.FileGroups) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("FileGroups", 1))
+	}
+	if s.DestinationConfiguration != nil {
+		if err := s.DestinationConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("DestinationConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.FileGroups != nil {
+		for i, v := range s.FileGroups {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "FileGroups", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.Parameters != nil {
+		if err := s.Parameters.Validate(); err != nil {
+			invalidParams.AddNested("Parameters", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDestinationConfiguration sets the DestinationConfiguration field's value.
+func (s *SnapshotConfiguration) SetDestinationConfiguration(v *SnapshotDestinationConfiguration) *SnapshotConfiguration {
+	s.DestinationConfiguration = v
+	return s
+}
+
+// SetFileGroups sets the FileGroups field's value.
+func (s *SnapshotConfiguration) SetFileGroups(v []*SnapshotFileGroup) *SnapshotConfiguration {
+	s.FileGroups = v
+	return s
+}
+
+// SetParameters sets the Parameters field's value.
+func (s *SnapshotConfiguration) SetParameters(v *Parameters) *SnapshotConfiguration {
+	s.Parameters = v
+	return s
+}
+
+// A structure that contains information on the Amazon S3 destinations of the
+// generated snapshot.
+type SnapshotDestinationConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A list of SnapshotS3DestinationConfiguration objects that contain Amazon
+	// S3 destination configurations. This structure can hold a maximum of 1 S3DestinationConfiguration.
+	S3Destinations []*SnapshotS3DestinationConfiguration `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotDestinationConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotDestinationConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotDestinationConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotDestinationConfiguration"}
+	if s.S3Destinations != nil && len(s.S3Destinations) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("S3Destinations", 1))
+	}
+	if s.S3Destinations != nil {
+		for i, v := range s.S3Destinations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "S3Destinations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetS3Destinations sets the S3Destinations field's value.
+func (s *SnapshotDestinationConfiguration) SetS3Destinations(v []*SnapshotS3DestinationConfiguration) *SnapshotDestinationConfiguration {
+	s.S3Destinations = v
+	return s
+}
+
+// A structure that contains the information for the snapshot that you want
+// to generate. This information is provided by you when you start a new snapshot
+// job.
+type SnapshotFile struct {
+	_ struct{} `type:"structure"`
+
+	// The format of the snapshot file to be generated. You can choose between CSV,
+	// Excel, or PDF.
+	//
+	// FormatType is a required field
+	FormatType *string `type:"string" required:"true" enum:"SnapshotFileFormatType"`
+
+	// A list of SnapshotFileSheetSelection objects that contain information on
+	// the dashboard sheet that is exported. These objects provide information about
+	// the snapshot artifacts that are generated during the job. This structure
+	// can hold a maximum of 5 CSV configurations, 5 Excel configurations, or 1
+	// configuration for PDF.
+	//
+	// SheetSelections is a required field
+	SheetSelections []*SnapshotFileSheetSelection `min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotFile) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotFile) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotFile) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotFile"}
+	if s.FormatType == nil {
+		invalidParams.Add(request.NewErrParamRequired("FormatType"))
+	}
+	if s.SheetSelections == nil {
+		invalidParams.Add(request.NewErrParamRequired("SheetSelections"))
+	}
+	if s.SheetSelections != nil && len(s.SheetSelections) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SheetSelections", 1))
+	}
+	if s.SheetSelections != nil {
+		for i, v := range s.SheetSelections {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "SheetSelections", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFormatType sets the FormatType field's value.
+func (s *SnapshotFile) SetFormatType(v string) *SnapshotFile {
+	s.FormatType = &v
+	return s
+}
+
+// SetSheetSelections sets the SheetSelections field's value.
+func (s *SnapshotFile) SetSheetSelections(v []*SnapshotFileSheetSelection) *SnapshotFile {
+	s.SheetSelections = v
+	return s
+}
+
+// A structure that contains the information on the snapshot files.
+type SnapshotFileGroup struct {
+	_ struct{} `type:"structure"`
+
+	// A list of SnapshotFile objects that contain the information on the snapshot
+	// files that need to be generated. This structure can hold 1 configuration
+	// at a time.
+	Files []*SnapshotFile `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotFileGroup) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotFileGroup) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotFileGroup) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotFileGroup"}
+	if s.Files != nil && len(s.Files) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Files", 1))
+	}
+	if s.Files != nil {
+		for i, v := range s.Files {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Files", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFiles sets the Files field's value.
+func (s *SnapshotFileGroup) SetFiles(v []*SnapshotFile) *SnapshotFileGroup {
+	s.Files = v
+	return s
+}
+
+// A structure that contains information that identifies the snapshot that needs
+// to be generated.
+type SnapshotFileSheetSelection struct {
+	_ struct{} `type:"structure"`
+
+	// The selection scope of the visuals on a sheet of a dashboard that you are
+	// generating a snapthot of. You can choose one of the following options.
+	//
+	//    * ALL_VISUALS - Selects all visuals that are on the sheet. This value
+	//    is required if the snapshot is a PDF.
+	//
+	//    * SELECTED_VISUALS - Select the visual that you want to add to the snapshot.
+	//    This value is required if the snapshot is a CSV or Excel workbook.
+	//
+	// SelectionScope is a required field
+	SelectionScope *string `type:"string" required:"true" enum:"SnapshotFileSheetSelectionScope"`
+
+	// The sheet ID of the dashboard to generate the snapshot artifact from. This
+	// value is required for CSV, Excel, and PDF format types.
+	//
+	// SheetId is a required field
+	SheetId *string `min:"1" type:"string" required:"true"`
+
+	// A structure that lists the IDs of the visuals in the selected sheet. Supported
+	// visual types are table, pivot table visuals. This value is required if you
+	// are generating a CSV or Excel workbook. This value supports a maximum of
+	// 1 visual ID for CSV and 5 visual IDs across up to 5 sheet selections for
+	// Excel. If you are generating an Excel workbook, the order of the visual IDs
+	// provided in this structure determines the order of the worksheets in the
+	// Excel file.
+	VisualIds []*string `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotFileSheetSelection) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotFileSheetSelection) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotFileSheetSelection) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotFileSheetSelection"}
+	if s.SelectionScope == nil {
+		invalidParams.Add(request.NewErrParamRequired("SelectionScope"))
+	}
+	if s.SheetId == nil {
+		invalidParams.Add(request.NewErrParamRequired("SheetId"))
+	}
+	if s.SheetId != nil && len(*s.SheetId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SheetId", 1))
+	}
+	if s.VisualIds != nil && len(s.VisualIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VisualIds", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetSelectionScope sets the SelectionScope field's value.
+func (s *SnapshotFileSheetSelection) SetSelectionScope(v string) *SnapshotFileSheetSelection {
+	s.SelectionScope = &v
+	return s
+}
+
+// SetSheetId sets the SheetId field's value.
+func (s *SnapshotFileSheetSelection) SetSheetId(v string) *SnapshotFileSheetSelection {
+	s.SheetId = &v
+	return s
+}
+
+// SetVisualIds sets the VisualIds field's value.
+func (s *SnapshotFileSheetSelection) SetVisualIds(v []*string) *SnapshotFileSheetSelection {
+	s.VisualIds = v
+	return s
+}
+
+// An object that contains information on the error that caused the snapshot
+// job to fail.
+type SnapshotJobErrorInfo struct {
+	_ struct{} `type:"structure"`
+
+	// The error message.
+	ErrorMessage *string `type:"string"`
+
+	// The error type.
+	ErrorType *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobErrorInfo) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobErrorInfo) GoString() string {
+	return s.String()
+}
+
+// SetErrorMessage sets the ErrorMessage field's value.
+func (s *SnapshotJobErrorInfo) SetErrorMessage(v string) *SnapshotJobErrorInfo {
+	s.ErrorMessage = &v
+	return s
+}
+
+// SetErrorType sets the ErrorType field's value.
+func (s *SnapshotJobErrorInfo) SetErrorType(v string) *SnapshotJobErrorInfo {
+	s.ErrorType = &v
+	return s
+}
+
+// An object that provides information on the result of a snapshot job. This
+// object provides information about the job, the job status, and the location
+// of the generated file.
+type SnapshotJobResult struct {
+	_ struct{} `type:"structure"`
+
+	// A list of AnonymousUserSnapshotJobResult objects that contain information
+	// on anonymous users and their user configurations. This data provided by you
+	// when you make a StartDashboardSnapshotJob API call.
+	AnonymousUsers []*AnonymousUserSnapshotJobResult `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobResult) GoString() string {
+	return s.String()
+}
+
+// SetAnonymousUsers sets the AnonymousUsers field's value.
+func (s *SnapshotJobResult) SetAnonymousUsers(v []*AnonymousUserSnapshotJobResult) *SnapshotJobResult {
+	s.AnonymousUsers = v
+	return s
+}
+
+// Information on the error that caused the snapshot job to fail.
+type SnapshotJobResultErrorInfo struct {
+	_ struct{} `type:"structure"`
+
+	// The error message.
+	ErrorMessage *string `type:"string"`
+
+	// The error type.
+	ErrorType *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobResultErrorInfo) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobResultErrorInfo) GoString() string {
+	return s.String()
+}
+
+// SetErrorMessage sets the ErrorMessage field's value.
+func (s *SnapshotJobResultErrorInfo) SetErrorMessage(v string) *SnapshotJobResultErrorInfo {
+	s.ErrorMessage = &v
+	return s
+}
+
+// SetErrorType sets the ErrorType field's value.
+func (s *SnapshotJobResultErrorInfo) SetErrorType(v string) *SnapshotJobResultErrorInfo {
+	s.ErrorType = &v
+	return s
+}
+
+// A structure that contains information on the generated snapshot file groups.
+type SnapshotJobResultFileGroup struct {
+	_ struct{} `type:"structure"`
+
+	// A list of SnapshotFile objects.
+	Files []*SnapshotFile `min:"1" type:"list"`
+
+	// A list of SnapshotJobS3Result objects.
+	S3Results []*SnapshotJobS3Result `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobResultFileGroup) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobResultFileGroup) GoString() string {
+	return s.String()
+}
+
+// SetFiles sets the Files field's value.
+func (s *SnapshotJobResultFileGroup) SetFiles(v []*SnapshotFile) *SnapshotJobResultFileGroup {
+	s.Files = v
+	return s
+}
+
+// SetS3Results sets the S3Results field's value.
+func (s *SnapshotJobResultFileGroup) SetS3Results(v []*SnapshotJobS3Result) *SnapshotJobResultFileGroup {
+	s.S3Results = v
+	return s
+}
+
+// The Amazon S3 result from the snapshot job. The result includes the DestinationConfiguration
+// and the Amazon S3 Uri. If an error occured during the job, the result returns
+// information on the error.
+type SnapshotJobS3Result struct {
+	_ struct{} `type:"structure"`
+
+	// An array of error records that describe any failures that occur while the
+	// dashboard snapshot job runs.
+	ErrorInfo []*SnapshotJobResultErrorInfo `type:"list"`
+
+	// A list of Amazon S3 bucket configurations that are provided when you make
+	// a StartDashboardSnapshotJob API call.
+	S3DestinationConfiguration *SnapshotS3DestinationConfiguration `type:"structure"`
+
+	// The Amazon S3 Uri.
+	//
+	// S3Uri is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SnapshotJobS3Result's
+	// String and GoString methods.
+	S3Uri *string `type:"string" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobS3Result) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotJobS3Result) GoString() string {
+	return s.String()
+}
+
+// SetErrorInfo sets the ErrorInfo field's value.
+func (s *SnapshotJobS3Result) SetErrorInfo(v []*SnapshotJobResultErrorInfo) *SnapshotJobS3Result {
+	s.ErrorInfo = v
+	return s
+}
+
+// SetS3DestinationConfiguration sets the S3DestinationConfiguration field's value.
+func (s *SnapshotJobS3Result) SetS3DestinationConfiguration(v *SnapshotS3DestinationConfiguration) *SnapshotJobS3Result {
+	s.S3DestinationConfiguration = v
+	return s
+}
+
+// SetS3Uri sets the S3Uri field's value.
+func (s *SnapshotJobS3Result) SetS3Uri(v string) *SnapshotJobS3Result {
+	s.S3Uri = &v
+	return s
+}
+
+// A structure that describes the Amazon S3 settings to use to save the generated
+// dashboard snapshot.
+type SnapshotS3DestinationConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A structure that contains details about the Amazon S3 bucket that the generated
+	// dashboard snapshot is saved in.
+	//
+	// BucketConfiguration is a required field
+	BucketConfiguration *S3BucketConfiguration `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotS3DestinationConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotS3DestinationConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotS3DestinationConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotS3DestinationConfiguration"}
+	if s.BucketConfiguration == nil {
+		invalidParams.Add(request.NewErrParamRequired("BucketConfiguration"))
+	}
+	if s.BucketConfiguration != nil {
+		if err := s.BucketConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("BucketConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBucketConfiguration sets the BucketConfiguration field's value.
+func (s *SnapshotS3DestinationConfiguration) SetBucketConfiguration(v *S3BucketConfiguration) *SnapshotS3DestinationConfiguration {
+	s.BucketConfiguration = v
+	return s
+}
+
+// A structure that contains information about the users that the dashboard
+// snapshot is generated for.
+type SnapshotUserConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// An array of records that describe the anonymous users that the dashboard
+	// snapshot is generated for.
+	AnonymousUsers []*SnapshotAnonymousUser `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotUserConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotUserConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SnapshotUserConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SnapshotUserConfiguration"}
+	if s.AnonymousUsers != nil && len(s.AnonymousUsers) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AnonymousUsers", 1))
+	}
+	if s.AnonymousUsers != nil {
+		for i, v := range s.AnonymousUsers {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AnonymousUsers", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAnonymousUsers sets the AnonymousUsers field's value.
+func (s *SnapshotUserConfiguration) SetAnonymousUsers(v []*SnapshotAnonymousUser) *SnapshotUserConfiguration {
+	s.AnonymousUsers = v
+	return s
+}
+
+// A structure that contains information about the users that the dashboard
+// snapshot is generated for. Sensitive user information is excluded.
+type SnapshotUserConfigurationRedacted struct {
+	_ struct{} `type:"structure"`
+
+	// An array of records that describe anonymous users that the dashboard snapshot
+	// is generated for. Sensitive user information is excluded.
+	AnonymousUsers []*SnapshotAnonymousUserRedacted `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotUserConfigurationRedacted) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnapshotUserConfigurationRedacted) GoString() string {
+	return s.String()
+}
+
+// SetAnonymousUsers sets the AnonymousUsers field's value.
+func (s *SnapshotUserConfigurationRedacted) SetAnonymousUsers(v []*SnapshotAnonymousUserRedacted) *SnapshotUserConfigurationRedacted {
+	s.AnonymousUsers = v
 	return s
 }
 
@@ -80180,6 +87716,96 @@ func (s *SslProperties) SetDisableSsl(v bool) *SslProperties {
 	return s
 }
 
+// The parameters that are required to connect to a Starburst data source.
+type StarburstParameters struct {
+	_ struct{} `type:"structure"`
+
+	// The catalog name for the Starburst data source.
+	//
+	// Catalog is a required field
+	Catalog *string `type:"string" required:"true"`
+
+	// The host name of the Starburst data source.
+	//
+	// Host is a required field
+	Host *string `min:"1" type:"string" required:"true"`
+
+	// The port for the Starburst data source.
+	//
+	// Port is a required field
+	Port *int64 `min:"1" type:"integer" required:"true"`
+
+	// The product type for the Starburst data source.
+	ProductType *string `type:"string" enum:"StarburstProductType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StarburstParameters) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StarburstParameters) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StarburstParameters) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StarburstParameters"}
+	if s.Catalog == nil {
+		invalidParams.Add(request.NewErrParamRequired("Catalog"))
+	}
+	if s.Host == nil {
+		invalidParams.Add(request.NewErrParamRequired("Host"))
+	}
+	if s.Host != nil && len(*s.Host) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Host", 1))
+	}
+	if s.Port == nil {
+		invalidParams.Add(request.NewErrParamRequired("Port"))
+	}
+	if s.Port != nil && *s.Port < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("Port", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalog sets the Catalog field's value.
+func (s *StarburstParameters) SetCatalog(v string) *StarburstParameters {
+	s.Catalog = &v
+	return s
+}
+
+// SetHost sets the Host field's value.
+func (s *StarburstParameters) SetHost(v string) *StarburstParameters {
+	s.Host = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *StarburstParameters) SetPort(v int64) *StarburstParameters {
+	s.Port = &v
+	return s
+}
+
+// SetProductType sets the ProductType field's value.
+func (s *StarburstParameters) SetProductType(v string) *StarburstParameters {
+	s.ProductType = &v
+	return s
+}
+
 type StartAssetBundleExportJobInput struct {
 	_ struct{} `type:"structure"`
 
@@ -80214,6 +87840,16 @@ type StartAssetBundleExportJobInput struct {
 	// dashboard is also exported.
 	IncludeAllDependencies *bool `type:"boolean"`
 
+	// A Boolean that determines whether all permissions for each resource ARN are
+	// exported with the job. If you set IncludePermissions to TRUE, any permissions
+	// associated with each resource are exported.
+	IncludePermissions *bool `type:"boolean"`
+
+	// A Boolean that determines whether all tags for each resource ARN are exported
+	// with the job. If you set IncludeTags to TRUE, any tags associated with each
+	// resource are exported.
+	IncludeTags *bool `type:"boolean"`
+
 	// An array of resource ARNs to export. The following resources are supported.
 	//
 	//    * Analysis
@@ -80235,6 +87871,13 @@ type StartAssetBundleExportJobInput struct {
 	//
 	// ResourceArns is a required field
 	ResourceArns []*string `min:"1" type:"list" required:"true"`
+
+	// An optional parameter that determines which validation strategy to use for
+	// the export job. If StrictModeForAllResources is set to TRUE, strict validation
+	// for every error is enforced. If it is set to FALSE, validation is skipped
+	// for specific UI errors that are shown as warnings. The default value for
+	// StrictModeForAllResources is FALSE.
+	ValidationStrategy *AssetBundleExportJobValidationStrategy `type:"structure"`
 }
 
 // String returns the string representation.
@@ -80321,9 +87964,27 @@ func (s *StartAssetBundleExportJobInput) SetIncludeAllDependencies(v bool) *Star
 	return s
 }
 
+// SetIncludePermissions sets the IncludePermissions field's value.
+func (s *StartAssetBundleExportJobInput) SetIncludePermissions(v bool) *StartAssetBundleExportJobInput {
+	s.IncludePermissions = &v
+	return s
+}
+
+// SetIncludeTags sets the IncludeTags field's value.
+func (s *StartAssetBundleExportJobInput) SetIncludeTags(v bool) *StartAssetBundleExportJobInput {
+	s.IncludeTags = &v
+	return s
+}
+
 // SetResourceArns sets the ResourceArns field's value.
 func (s *StartAssetBundleExportJobInput) SetResourceArns(v []*string) *StartAssetBundleExportJobInput {
 	s.ResourceArns = v
+	return s
+}
+
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *StartAssetBundleExportJobInput) SetValidationStrategy(v *AssetBundleExportJobValidationStrategy) *StartAssetBundleExportJobInput {
+	s.ValidationStrategy = v
 	return s
 }
 
@@ -80416,8 +88077,21 @@ type StartAssetBundleImportJobInput struct {
 	// account in an inconsistent state.
 	FailureAction *string `type:"string" enum:"AssetBundleImportFailureAction"`
 
-	// Optional overrides to be applied to the resource configuration before import.
+	// Optional overrides that are applied to the resource configuration before
+	// import.
 	OverrideParameters *AssetBundleImportJobOverrideParameters `type:"structure"`
+
+	// Optional permission overrides that are applied to the resource configuration
+	// before import.
+	OverridePermissions *AssetBundleImportJobOverridePermissions `type:"structure"`
+
+	// Optional tag overrides that are applied to the resource configuration before
+	// import.
+	OverrideTags *AssetBundleImportJobOverrideTags `type:"structure"`
+
+	// An optional validation strategy override for all analyses and dashboards
+	// that is applied to the resource configuration before import.
+	OverrideValidationStrategy *AssetBundleImportJobOverrideValidationStrategy `type:"structure"`
 }
 
 // String returns the string representation.
@@ -80461,6 +88135,16 @@ func (s *StartAssetBundleImportJobInput) Validate() error {
 			invalidParams.AddNested("OverrideParameters", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.OverridePermissions != nil {
+		if err := s.OverridePermissions.Validate(); err != nil {
+			invalidParams.AddNested("OverridePermissions", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OverrideTags != nil {
+		if err := s.OverrideTags.Validate(); err != nil {
+			invalidParams.AddNested("OverrideTags", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -80495,6 +88179,24 @@ func (s *StartAssetBundleImportJobInput) SetFailureAction(v string) *StartAssetB
 // SetOverrideParameters sets the OverrideParameters field's value.
 func (s *StartAssetBundleImportJobInput) SetOverrideParameters(v *AssetBundleImportJobOverrideParameters) *StartAssetBundleImportJobInput {
 	s.OverrideParameters = v
+	return s
+}
+
+// SetOverridePermissions sets the OverridePermissions field's value.
+func (s *StartAssetBundleImportJobInput) SetOverridePermissions(v *AssetBundleImportJobOverridePermissions) *StartAssetBundleImportJobInput {
+	s.OverridePermissions = v
+	return s
+}
+
+// SetOverrideTags sets the OverrideTags field's value.
+func (s *StartAssetBundleImportJobInput) SetOverrideTags(v *AssetBundleImportJobOverrideTags) *StartAssetBundleImportJobInput {
+	s.OverrideTags = v
+	return s
+}
+
+// SetOverrideValidationStrategy sets the OverrideValidationStrategy field's value.
+func (s *StartAssetBundleImportJobInput) SetOverrideValidationStrategy(v *AssetBundleImportJobOverrideValidationStrategy) *StartAssetBundleImportJobInput {
+	s.OverrideValidationStrategy = v
 	return s
 }
 
@@ -80553,6 +88255,192 @@ func (s *StartAssetBundleImportJobOutput) SetRequestId(v string) *StartAssetBund
 
 // SetStatus sets the Status field's value.
 func (s *StartAssetBundleImportJobOutput) SetStatus(v int64) *StartAssetBundleImportJobOutput {
+	s.Status = &v
+	return s
+}
+
+type StartDashboardSnapshotJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the Amazon Web Services account that the dashboard snapshot job
+	// is executed in.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The ID of the dashboard that you want to start a snapshot job for.
+	//
+	// DashboardId is a required field
+	DashboardId *string `location:"uri" locationName:"DashboardId" min:"1" type:"string" required:"true"`
+
+	// A structure that describes the configuration of the dashboard snapshot.
+	//
+	// SnapshotConfiguration is a required field
+	SnapshotConfiguration *SnapshotConfiguration `type:"structure" required:"true"`
+
+	// An ID for the dashboard snapshot job. This ID is unique to the dashboard
+	// while the job is running. This ID can be used to poll the status of a job
+	// with a DescribeDashboardSnapshotJob while the job runs. You can reuse this
+	// ID for another job 24 hours after the current job is completed.
+	//
+	// SnapshotJobId is a required field
+	SnapshotJobId *string `min:"1" type:"string" required:"true"`
+
+	// A structure that contains information about the anonymous users that the
+	// generated snapshot is for. This API will not return information about registered
+	// Amazon QuickSight.
+	//
+	// UserConfiguration is a required field
+	UserConfiguration *SnapshotUserConfiguration `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDashboardSnapshotJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDashboardSnapshotJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartDashboardSnapshotJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartDashboardSnapshotJobInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.DashboardId == nil {
+		invalidParams.Add(request.NewErrParamRequired("DashboardId"))
+	}
+	if s.DashboardId != nil && len(*s.DashboardId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashboardId", 1))
+	}
+	if s.SnapshotConfiguration == nil {
+		invalidParams.Add(request.NewErrParamRequired("SnapshotConfiguration"))
+	}
+	if s.SnapshotJobId == nil {
+		invalidParams.Add(request.NewErrParamRequired("SnapshotJobId"))
+	}
+	if s.SnapshotJobId != nil && len(*s.SnapshotJobId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SnapshotJobId", 1))
+	}
+	if s.UserConfiguration == nil {
+		invalidParams.Add(request.NewErrParamRequired("UserConfiguration"))
+	}
+	if s.SnapshotConfiguration != nil {
+		if err := s.SnapshotConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("SnapshotConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.UserConfiguration != nil {
+		if err := s.UserConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("UserConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *StartDashboardSnapshotJobInput) SetAwsAccountId(v string) *StartDashboardSnapshotJobInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetDashboardId sets the DashboardId field's value.
+func (s *StartDashboardSnapshotJobInput) SetDashboardId(v string) *StartDashboardSnapshotJobInput {
+	s.DashboardId = &v
+	return s
+}
+
+// SetSnapshotConfiguration sets the SnapshotConfiguration field's value.
+func (s *StartDashboardSnapshotJobInput) SetSnapshotConfiguration(v *SnapshotConfiguration) *StartDashboardSnapshotJobInput {
+	s.SnapshotConfiguration = v
+	return s
+}
+
+// SetSnapshotJobId sets the SnapshotJobId field's value.
+func (s *StartDashboardSnapshotJobInput) SetSnapshotJobId(v string) *StartDashboardSnapshotJobInput {
+	s.SnapshotJobId = &v
+	return s
+}
+
+// SetUserConfiguration sets the UserConfiguration field's value.
+func (s *StartDashboardSnapshotJobInput) SetUserConfiguration(v *SnapshotUserConfiguration) *StartDashboardSnapshotJobInput {
+	s.UserConfiguration = v
+	return s
+}
+
+type StartDashboardSnapshotJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) for the dashboard snapshot job.
+	Arn *string `type:"string"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The ID of the job. The job ID is set when you start a new job with a StartDashboardSnapshotJob
+	// API call.
+	SnapshotJobId *string `min:"1" type:"string"`
+
+	// The HTTP status of the request
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDashboardSnapshotJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDashboardSnapshotJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *StartDashboardSnapshotJobOutput) SetArn(v string) *StartDashboardSnapshotJobOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *StartDashboardSnapshotJobOutput) SetRequestId(v string) *StartDashboardSnapshotJobOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetSnapshotJobId sets the SnapshotJobId field's value.
+func (s *StartDashboardSnapshotJobOutput) SetSnapshotJobId(v string) *StartDashboardSnapshotJobOutput {
+	s.SnapshotJobId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *StartDashboardSnapshotJobOutput) SetStatus(v int64) *StartDashboardSnapshotJobOutput {
 	s.Status = &v
 	return s
 }
@@ -81101,6 +88989,9 @@ type SubtotalOptions struct {
 	// The cell styling options for the subtotals of header cells.
 	MetricHeaderCellStyle *TableCellStyle `type:"structure"`
 
+	// The style targets options for subtotals.
+	StyleTargets []*TableStyleTarget `type:"list"`
+
 	// The cell styling options for the subtotal cells.
 	TotalCellStyle *TableCellStyle `type:"structure"`
 
@@ -81147,6 +89038,16 @@ func (s *SubtotalOptions) Validate() error {
 			invalidParams.AddNested("MetricHeaderCellStyle", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.StyleTargets != nil {
+		for i, v := range s.StyleTargets {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "StyleTargets", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.TotalCellStyle != nil {
 		if err := s.TotalCellStyle.Validate(); err != nil {
 			invalidParams.AddNested("TotalCellStyle", err.(request.ErrInvalidParams))
@@ -81185,6 +89086,12 @@ func (s *SubtotalOptions) SetFieldLevelOptions(v []*PivotTableFieldSubtotalOptio
 // SetMetricHeaderCellStyle sets the MetricHeaderCellStyle field's value.
 func (s *SubtotalOptions) SetMetricHeaderCellStyle(v *TableCellStyle) *SubtotalOptions {
 	s.MetricHeaderCellStyle = v
+	return s
+}
+
+// SetStyleTargets sets the StyleTargets field's value.
+func (s *SubtotalOptions) SetStyleTargets(v []*TableStyleTarget) *SubtotalOptions {
+	s.StyleTargets = v
 	return s
 }
 
@@ -82135,14 +90042,18 @@ func (s *TableFieldOption) SetWidth(v string) *TableFieldOption {
 	return s
 }
 
-// The field options for a table visual.
+// The field options of a table visual.
 type TableFieldOptions struct {
 	_ struct{} `type:"structure"`
 
-	// The order of field IDs of the field options for a table visual.
+	// The order of the field IDs that are configured as field options for a table
+	// visual.
 	Order []*string `type:"list"`
 
-	// The selected field options for the table field options.
+	// The settings for the pinned columns of a table visual.
+	PinnedFieldOptions *TablePinnedFieldOptions `type:"structure"`
+
+	// The field options to be configured to a table.
 	SelectedFieldOptions []*TableFieldOption `type:"list"`
 }
 
@@ -82187,6 +90098,12 @@ func (s *TableFieldOptions) Validate() error {
 // SetOrder sets the Order field's value.
 func (s *TableFieldOptions) SetOrder(v []*string) *TableFieldOptions {
 	s.Order = v
+	return s
+}
+
+// SetPinnedFieldOptions sets the PinnedFieldOptions field's value.
+func (s *TableFieldOptions) SetPinnedFieldOptions(v *TablePinnedFieldOptions) *TableFieldOptions {
+	s.PinnedFieldOptions = v
 	return s
 }
 
@@ -82484,6 +90401,38 @@ func (s *TablePaginatedReportOptions) SetVerticalOverflowVisibility(v string) *T
 	return s
 }
 
+// The settings for the pinned columns of a table visual.
+type TablePinnedFieldOptions struct {
+	_ struct{} `type:"structure"`
+
+	// A list of columns to be pinned to the left of a table visual.
+	PinnedLeftFields []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TablePinnedFieldOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TablePinnedFieldOptions) GoString() string {
+	return s.String()
+}
+
+// SetPinnedLeftFields sets the PinnedLeftFields field's value.
+func (s *TablePinnedFieldOptions) SetPinnedLeftFields(v []*string) *TablePinnedFieldOptions {
+	s.PinnedLeftFields = v
+	return s
+}
+
 // The conditional formatting of a table row.
 type TableRowConditionalFormatting struct {
 	_ struct{} `type:"structure"`
@@ -82727,6 +90676,53 @@ func (s *TableSortConfiguration) SetPaginationConfiguration(v *PaginationConfigu
 // SetRowSort sets the RowSort field's value.
 func (s *TableSortConfiguration) SetRowSort(v []*FieldSortOptions) *TableSortConfiguration {
 	s.RowSort = v
+	return s
+}
+
+// The table style target.
+type TableStyleTarget struct {
+	_ struct{} `type:"structure"`
+
+	// The cell type of the table style target.
+	//
+	// CellType is a required field
+	CellType *string `type:"string" required:"true" enum:"StyledCellType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableStyleTarget) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TableStyleTarget) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TableStyleTarget) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TableStyleTarget"}
+	if s.CellType == nil {
+		invalidParams.Add(request.NewErrParamRequired("CellType"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCellType sets the CellType field's value.
+func (s *TableStyleTarget) SetCellType(v string) *TableStyleTarget {
+	s.CellType = &v
 	return s
 }
 
@@ -83763,6 +91759,9 @@ type TemplateVersionDefinition struct {
 	// in the Amazon QuickSight User Guide.
 	FilterGroups []*FilterGroup `type:"list"`
 
+	// An array of option definitions for a template.
+	Options *AssetOptions `type:"structure"`
+
 	// An array of parameter declarations for a template.
 	//
 	// Parameters are named variables that can transfer a value for use by an action
@@ -83889,6 +91888,12 @@ func (s *TemplateVersionDefinition) SetDataSetConfigurations(v []*DataSetConfigu
 // SetFilterGroups sets the FilterGroups field's value.
 func (s *TemplateVersionDefinition) SetFilterGroups(v []*FilterGroup) *TemplateVersionDefinition {
 	s.FilterGroups = v
+	return s
+}
+
+// SetOptions sets the Options field's value.
+func (s *TemplateVersionDefinition) SetOptions(v *AssetOptions) *TemplateVersionDefinition {
+	s.Options = v
 	return s
 }
 
@@ -84060,6 +92065,9 @@ func (s *TeradataParameters) SetPort(v int64) *TeradataParameters {
 type TextAreaControlDisplayOptions struct {
 	_ struct{} `type:"structure"`
 
+	// The configuration of info icon label options.
+	InfoIconLabelOptions *SheetControlInfoIconLabelOptions `type:"structure"`
+
 	// The configuration of the placeholder options in a text area control.
 	PlaceholderOptions *TextControlPlaceholderOptions `type:"structure"`
 
@@ -84083,6 +92091,27 @@ func (s TextAreaControlDisplayOptions) String() string {
 // value will be replaced with "sensitive".
 func (s TextAreaControlDisplayOptions) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TextAreaControlDisplayOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TextAreaControlDisplayOptions"}
+	if s.InfoIconLabelOptions != nil {
+		if err := s.InfoIconLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("InfoIconLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInfoIconLabelOptions sets the InfoIconLabelOptions field's value.
+func (s *TextAreaControlDisplayOptions) SetInfoIconLabelOptions(v *SheetControlInfoIconLabelOptions) *TextAreaControlDisplayOptions {
+	s.InfoIconLabelOptions = v
+	return s
 }
 
 // SetPlaceholderOptions sets the PlaceholderOptions field's value.
@@ -84208,6 +92237,9 @@ func (s *TextControlPlaceholderOptions) SetVisibility(v string) *TextControlPlac
 type TextFieldControlDisplayOptions struct {
 	_ struct{} `type:"structure"`
 
+	// The configuration of info icon label options.
+	InfoIconLabelOptions *SheetControlInfoIconLabelOptions `type:"structure"`
+
 	// The configuration of the placeholder options in a text field control.
 	PlaceholderOptions *TextControlPlaceholderOptions `type:"structure"`
 
@@ -84231,6 +92263,27 @@ func (s TextFieldControlDisplayOptions) String() string {
 // value will be replaced with "sensitive".
 func (s TextFieldControlDisplayOptions) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TextFieldControlDisplayOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TextFieldControlDisplayOptions"}
+	if s.InfoIconLabelOptions != nil {
+		if err := s.InfoIconLabelOptions.Validate(); err != nil {
+			invalidParams.AddNested("InfoIconLabelOptions", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInfoIconLabelOptions sets the InfoIconLabelOptions field's value.
+func (s *TextFieldControlDisplayOptions) SetInfoIconLabelOptions(v *SheetControlInfoIconLabelOptions) *TextFieldControlDisplayOptions {
+	s.InfoIconLabelOptions = v
+	return s
 }
 
 // SetPlaceholderOptions sets the PlaceholderOptions field's value.
@@ -85025,15 +93078,20 @@ type TimeEqualityFilter struct {
 
 	// The parameter whose value should be used for the filter value.
 	//
-	// This field is mutually exclusive to Value.
+	// This field is mutually exclusive to Value and RollingDate.
 	ParameterName *string `min:"1" type:"string"`
+
+	// The rolling date input for the TimeEquality filter.
+	//
+	// This field is mutually exclusive to Value and ParameterName.
+	RollingDate *RollingDateConfiguration `type:"structure"`
 
 	// The level of time precision that is used to aggregate DateTime values.
 	TimeGranularity *string `type:"string" enum:"TimeGranularity"`
 
 	// The value of a TimeEquality filter.
 	//
-	// This field is mutually exclusive to ParameterName.
+	// This field is mutually exclusive to RollingDate and ParameterName.
 	Value *time.Time `type:"timestamp"`
 }
 
@@ -85075,6 +93133,11 @@ func (s *TimeEqualityFilter) Validate() error {
 			invalidParams.AddNested("Column", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.RollingDate != nil {
+		if err := s.RollingDate.Validate(); err != nil {
+			invalidParams.AddNested("RollingDate", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -85097,6 +93160,12 @@ func (s *TimeEqualityFilter) SetFilterId(v string) *TimeEqualityFilter {
 // SetParameterName sets the ParameterName field's value.
 func (s *TimeEqualityFilter) SetParameterName(v string) *TimeEqualityFilter {
 	s.ParameterName = &v
+	return s
+}
+
+// SetRollingDate sets the RollingDate field's value.
+func (s *TimeEqualityFilter) SetRollingDate(v *RollingDateConfiguration) *TimeEqualityFilter {
+	s.RollingDate = v
 	return s
 }
 
@@ -85701,9 +93770,7 @@ type TopBottomMoversComputation struct {
 	_ struct{} `type:"structure"`
 
 	// The category field that is used in a computation.
-	//
-	// Category is a required field
-	Category *DimensionField `type:"structure" required:"true"`
+	Category *DimensionField `type:"structure"`
 
 	// The ID for a computation.
 	//
@@ -85720,9 +93787,7 @@ type TopBottomMoversComputation struct {
 	SortOrder *string `type:"string" enum:"TopBottomSortOrder"`
 
 	// The time field that is used in a computation.
-	//
-	// Time is a required field
-	Time *DimensionField `type:"structure" required:"true"`
+	Time *DimensionField `type:"structure"`
 
 	// The computation type. Choose from the following options:
 	//
@@ -85758,9 +93823,6 @@ func (s TopBottomMoversComputation) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *TopBottomMoversComputation) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "TopBottomMoversComputation"}
-	if s.Category == nil {
-		invalidParams.Add(request.NewErrParamRequired("Category"))
-	}
 	if s.ComputationId == nil {
 		invalidParams.Add(request.NewErrParamRequired("ComputationId"))
 	}
@@ -85769,9 +93831,6 @@ func (s *TopBottomMoversComputation) Validate() error {
 	}
 	if s.MoverSize != nil && *s.MoverSize < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MoverSize", 1))
-	}
-	if s.Time == nil {
-		invalidParams.Add(request.NewErrParamRequired("Time"))
 	}
 	if s.Type == nil {
 		invalidParams.Add(request.NewErrParamRequired("Type"))
@@ -85851,9 +93910,7 @@ type TopBottomRankedComputation struct {
 	_ struct{} `type:"structure"`
 
 	// The category field that is used in a computation.
-	//
-	// Category is a required field
-	Category *DimensionField `type:"structure" required:"true"`
+	Category *DimensionField `type:"structure"`
 
 	// The ID for a computation.
 	//
@@ -85900,9 +93957,6 @@ func (s TopBottomRankedComputation) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *TopBottomRankedComputation) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "TopBottomRankedComputation"}
-	if s.Category == nil {
-		invalidParams.Add(request.NewErrParamRequired("Category"))
-	}
 	if s.ComputationId == nil {
 		invalidParams.Add(request.NewErrParamRequired("ComputationId"))
 	}
@@ -86024,6 +94078,9 @@ type TopicCalculatedField struct {
 	// A Boolean value that indicates whether to never aggregate calculated field
 	// in filters.
 	NeverAggregateInFilter *bool `type:"boolean"`
+
+	// The non additive for the table style target.
+	NonAdditive *bool `type:"boolean"`
 
 	// The list of aggregation types that are not allowed for the calculated field.
 	// Valid values for this structure are COUNT, DISTINCT_COUNT, MIN, MAX, MEDIAN,
@@ -86149,6 +94206,12 @@ func (s *TopicCalculatedField) SetIsIncludedInTopic(v bool) *TopicCalculatedFiel
 // SetNeverAggregateInFilter sets the NeverAggregateInFilter field's value.
 func (s *TopicCalculatedField) SetNeverAggregateInFilter(v bool) *TopicCalculatedField {
 	s.NeverAggregateInFilter = &v
+	return s
+}
+
+// SetNonAdditive sets the NonAdditive field's value.
+func (s *TopicCalculatedField) SetNonAdditive(v bool) *TopicCalculatedField {
+	s.NonAdditive = &v
 	return s
 }
 
@@ -86293,8 +94356,6 @@ type TopicColumn struct {
 	_ struct{} `type:"structure"`
 
 	// The type of aggregation that is performed on the column data when it's queried.
-	// Valid values for this structure are SUM, MAX, MIN, COUNT, DISTINCT_COUNT,
-	// and AVERAGE.
 	Aggregation *string `type:"string" enum:"DefaultAggregation"`
 
 	// The list of aggregation types that are allowed for the column. Valid values
@@ -86340,6 +94401,9 @@ type TopicColumn struct {
 	// A Boolean value that indicates whether to aggregate the column data when
 	// it's used in a filter context.
 	NeverAggregateInFilter *bool `type:"boolean"`
+
+	// The non additive value for the column.
+	NonAdditive *bool `type:"boolean"`
 
 	// The list of aggregation types that are not allowed for the column. Valid
 	// values for this structure are COUNT, DISTINCT_COUNT, MIN, MAX, MEDIAN, SUM,
@@ -86459,6 +94523,12 @@ func (s *TopicColumn) SetIsIncludedInTopic(v bool) *TopicColumn {
 // SetNeverAggregateInFilter sets the NeverAggregateInFilter field's value.
 func (s *TopicColumn) SetNeverAggregateInFilter(v bool) *TopicColumn {
 	s.NeverAggregateInFilter = &v
+	return s
+}
+
+// SetNonAdditive sets the NonAdditive field's value.
+func (s *TopicColumn) SetNonAdditive(v bool) *TopicColumn {
+	s.NonAdditive = &v
 	return s
 }
 
@@ -87357,9 +95427,7 @@ type TotalAggregationComputation struct {
 	Name *string `type:"string"`
 
 	// The value field that is used in a computation.
-	//
-	// Value is a required field
-	Value *MeasureField `type:"structure" required:"true"`
+	Value *MeasureField `type:"structure"`
 }
 
 // String returns the string representation.
@@ -87388,9 +95456,6 @@ func (s *TotalAggregationComputation) Validate() error {
 	}
 	if s.ComputationId != nil && len(*s.ComputationId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ComputationId", 1))
-	}
-	if s.Value == nil {
-		invalidParams.Add(request.NewErrParamRequired("Value"))
 	}
 	if s.Value != nil {
 		if err := s.Value.Validate(); err != nil {
@@ -87422,6 +95487,103 @@ func (s *TotalAggregationComputation) SetValue(v *MeasureField) *TotalAggregatio
 	return s
 }
 
+// An aggregation function that aggregates the total values of a measure.
+type TotalAggregationFunction struct {
+	_ struct{} `type:"structure"`
+
+	// A built in aggregation function for total values.
+	SimpleTotalAggregationFunction *string `type:"string" enum:"SimpleTotalAggregationFunction"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TotalAggregationFunction) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TotalAggregationFunction) GoString() string {
+	return s.String()
+}
+
+// SetSimpleTotalAggregationFunction sets the SimpleTotalAggregationFunction field's value.
+func (s *TotalAggregationFunction) SetSimpleTotalAggregationFunction(v string) *TotalAggregationFunction {
+	s.SimpleTotalAggregationFunction = &v
+	return s
+}
+
+// The total aggregation settings map of a field id.
+type TotalAggregationOption struct {
+	_ struct{} `type:"structure"`
+
+	// The field id that's associated with the total aggregation option.
+	//
+	// FieldId is a required field
+	FieldId *string `min:"1" type:"string" required:"true"`
+
+	// The total aggregation function that you want to set for a specified field
+	// id.
+	//
+	// TotalAggregationFunction is a required field
+	TotalAggregationFunction *TotalAggregationFunction `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TotalAggregationOption) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TotalAggregationOption) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TotalAggregationOption) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TotalAggregationOption"}
+	if s.FieldId == nil {
+		invalidParams.Add(request.NewErrParamRequired("FieldId"))
+	}
+	if s.FieldId != nil && len(*s.FieldId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("FieldId", 1))
+	}
+	if s.TotalAggregationFunction == nil {
+		invalidParams.Add(request.NewErrParamRequired("TotalAggregationFunction"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFieldId sets the FieldId field's value.
+func (s *TotalAggregationOption) SetFieldId(v string) *TotalAggregationOption {
+	s.FieldId = &v
+	return s
+}
+
+// SetTotalAggregationFunction sets the TotalAggregationFunction field's value.
+func (s *TotalAggregationOption) SetTotalAggregationFunction(v *TotalAggregationFunction) *TotalAggregationOption {
+	s.TotalAggregationFunction = v
+	return s
+}
+
 // The total options for a table visual.
 type TotalOptions struct {
 	_ struct{} `type:"structure"`
@@ -87434,6 +95596,9 @@ type TotalOptions struct {
 
 	// The scroll status (pinned, scrolled) for the total cells.
 	ScrollStatus *string `type:"string" enum:"TableTotalsScrollStatus"`
+
+	// The total aggregation settings for each value field.
+	TotalAggregationOptions []*TotalAggregationOption `type:"list"`
 
 	// Cell styling options for the total cells.
 	TotalCellStyle *TableCellStyle `type:"structure"`
@@ -87463,6 +95628,16 @@ func (s TotalOptions) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *TotalOptions) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "TotalOptions"}
+	if s.TotalAggregationOptions != nil {
+		for i, v := range s.TotalAggregationOptions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "TotalAggregationOptions", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.TotalCellStyle != nil {
 		if err := s.TotalCellStyle.Validate(); err != nil {
 			invalidParams.AddNested("TotalCellStyle", err.(request.ErrInvalidParams))
@@ -87490,6 +95665,12 @@ func (s *TotalOptions) SetPlacement(v string) *TotalOptions {
 // SetScrollStatus sets the ScrollStatus field's value.
 func (s *TotalOptions) SetScrollStatus(v string) *TotalOptions {
 	s.ScrollStatus = &v
+	return s
+}
+
+// SetTotalAggregationOptions sets the TotalAggregationOptions field's value.
+func (s *TotalOptions) SetTotalAggregationOptions(v []*TotalAggregationOption) *TotalOptions {
+	s.TotalAggregationOptions = v
 	return s
 }
 
@@ -88182,6 +96363,87 @@ func (s *TrendArrowOptions) SetVisibility(v string) *TrendArrowOptions {
 	return s
 }
 
+// The parameters that are required to connect to a Trino data source.
+type TrinoParameters struct {
+	_ struct{} `type:"structure"`
+
+	// The catalog name for the Trino data source.
+	//
+	// Catalog is a required field
+	Catalog *string `type:"string" required:"true"`
+
+	// The host name of the Trino data source.
+	//
+	// Host is a required field
+	Host *string `min:"1" type:"string" required:"true"`
+
+	// The port for the Trino data source.
+	//
+	// Port is a required field
+	Port *int64 `min:"1" type:"integer" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TrinoParameters) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TrinoParameters) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TrinoParameters) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TrinoParameters"}
+	if s.Catalog == nil {
+		invalidParams.Add(request.NewErrParamRequired("Catalog"))
+	}
+	if s.Host == nil {
+		invalidParams.Add(request.NewErrParamRequired("Host"))
+	}
+	if s.Host != nil && len(*s.Host) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Host", 1))
+	}
+	if s.Port == nil {
+		invalidParams.Add(request.NewErrParamRequired("Port"))
+	}
+	if s.Port != nil && *s.Port < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("Port", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCatalog sets the Catalog field's value.
+func (s *TrinoParameters) SetCatalog(v string) *TrinoParameters {
+	s.Catalog = &v
+	return s
+}
+
+// SetHost sets the Host field's value.
+func (s *TrinoParameters) SetHost(v string) *TrinoParameters {
+	s.Host = &v
+	return s
+}
+
+// SetPort sets the Port field's value.
+func (s *TrinoParameters) SetPort(v int64) *TrinoParameters {
+	s.Port = &v
+	return s
+}
+
 // The parameters for Twitter.
 type TwitterParameters struct {
 	_ struct{} `type:"structure"`
@@ -88550,9 +96812,7 @@ type UniqueValuesComputation struct {
 	_ struct{} `type:"structure"`
 
 	// The category field that is used in a computation.
-	//
-	// Category is a required field
-	Category *DimensionField `type:"structure" required:"true"`
+	Category *DimensionField `type:"structure"`
 
 	// The ID for a computation.
 	//
@@ -88584,9 +96844,6 @@ func (s UniqueValuesComputation) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *UniqueValuesComputation) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UniqueValuesComputation"}
-	if s.Category == nil {
-		invalidParams.Add(request.NewErrParamRequired("Category"))
-	}
 	if s.ComputationId == nil {
 		invalidParams.Add(request.NewErrParamRequired("ComputationId"))
 	}
@@ -89260,6 +97517,10 @@ type UpdateAnalysisInput struct {
 	// you're creating. To see the theme in the Amazon QuickSight console, make
 	// sure that you have access to it.
 	ThemeArn *string `type:"string"`
+
+	// The option to relax the validation needed to update an analysis with definition
+	// objects. This skips the validation step for specific errors.
+	ValidationStrategy *ValidationStrategy `type:"structure"`
 }
 
 // String returns the string representation.
@@ -89316,6 +97577,11 @@ func (s *UpdateAnalysisInput) Validate() error {
 			invalidParams.AddNested("SourceEntity", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ValidationStrategy != nil {
+		if err := s.ValidationStrategy.Validate(); err != nil {
+			invalidParams.AddNested("ValidationStrategy", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -89362,6 +97628,12 @@ func (s *UpdateAnalysisInput) SetSourceEntity(v *AnalysisSourceEntity) *UpdateAn
 // SetThemeArn sets the ThemeArn field's value.
 func (s *UpdateAnalysisInput) SetThemeArn(v string) *UpdateAnalysisInput {
 	s.ThemeArn = &v
+	return s
+}
+
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *UpdateAnalysisInput) SetValidationStrategy(v *ValidationStrategy) *UpdateAnalysisInput {
+	s.ValidationStrategy = v
 	return s
 }
 
@@ -89675,6 +97947,10 @@ type UpdateDashboardInput struct {
 	// Services account where you create the dashboard.
 	ThemeArn *string `type:"string"`
 
+	// The option to relax the validation needed to update a dashboard with definition
+	// objects. This skips the validation step for specific errors.
+	ValidationStrategy *ValidationStrategy `type:"structure"`
+
 	// A description for the first version of the dashboard being created.
 	VersionDescription *string `min:"1" type:"string"`
 }
@@ -89736,6 +98012,11 @@ func (s *UpdateDashboardInput) Validate() error {
 			invalidParams.AddNested("SourceEntity", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ValidationStrategy != nil {
+		if err := s.ValidationStrategy.Validate(); err != nil {
+			invalidParams.AddNested("ValidationStrategy", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -89791,9 +98072,154 @@ func (s *UpdateDashboardInput) SetThemeArn(v string) *UpdateDashboardInput {
 	return s
 }
 
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *UpdateDashboardInput) SetValidationStrategy(v *ValidationStrategy) *UpdateDashboardInput {
+	s.ValidationStrategy = v
+	return s
+}
+
 // SetVersionDescription sets the VersionDescription field's value.
 func (s *UpdateDashboardInput) SetVersionDescription(v string) *UpdateDashboardInput {
 	s.VersionDescription = &v
+	return s
+}
+
+type UpdateDashboardLinksInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the Amazon Web Services account that contains the dashboard whose
+	// links you want to update.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The ID for the dashboard.
+	//
+	// DashboardId is a required field
+	DashboardId *string `location:"uri" locationName:"DashboardId" min:"1" type:"string" required:"true"`
+
+	// list of analysis Amazon Resource Names (ARNs) to be linked to the dashboard.
+	//
+	// LinkEntities is a required field
+	LinkEntities []*string `type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDashboardLinksInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDashboardLinksInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateDashboardLinksInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateDashboardLinksInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.DashboardId == nil {
+		invalidParams.Add(request.NewErrParamRequired("DashboardId"))
+	}
+	if s.DashboardId != nil && len(*s.DashboardId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashboardId", 1))
+	}
+	if s.LinkEntities == nil {
+		invalidParams.Add(request.NewErrParamRequired("LinkEntities"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *UpdateDashboardLinksInput) SetAwsAccountId(v string) *UpdateDashboardLinksInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetDashboardId sets the DashboardId field's value.
+func (s *UpdateDashboardLinksInput) SetDashboardId(v string) *UpdateDashboardLinksInput {
+	s.DashboardId = &v
+	return s
+}
+
+// SetLinkEntities sets the LinkEntities field's value.
+func (s *UpdateDashboardLinksInput) SetLinkEntities(v []*string) *UpdateDashboardLinksInput {
+	s.LinkEntities = v
+	return s
+}
+
+type UpdateDashboardLinksOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the dashboard.
+	DashboardArn *string `type:"string"`
+
+	// A list of analysis Amazon Resource Names (ARNs) to be linked to the dashboard.
+	LinkEntities []*string `type:"list"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDashboardLinksOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDashboardLinksOutput) GoString() string {
+	return s.String()
+}
+
+// SetDashboardArn sets the DashboardArn field's value.
+func (s *UpdateDashboardLinksOutput) SetDashboardArn(v string) *UpdateDashboardLinksOutput {
+	s.DashboardArn = &v
+	return s
+}
+
+// SetLinkEntities sets the LinkEntities field's value.
+func (s *UpdateDashboardLinksOutput) SetLinkEntities(v []*string) *UpdateDashboardLinksOutput {
+	s.LinkEntities = v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *UpdateDashboardLinksOutput) SetRequestId(v string) *UpdateDashboardLinksOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *UpdateDashboardLinksOutput) SetStatus(v int64) *UpdateDashboardLinksOutput {
+	s.Status = &v
 	return s
 }
 
@@ -91804,6 +100230,124 @@ func (s *UpdateIAMPolicyAssignmentOutput) SetStatus(v int64) *UpdateIAMPolicyAss
 	return s
 }
 
+type UpdateIdentityPropagationConfigInput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies a list of application ARNs that represent the authorized targets
+	// for a service.
+	AuthorizedTargets []*string `type:"list"`
+
+	// The ID of the Amazon Web Services account that contains the identity propagation
+	// configuration that you want to update.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The name of the Amazon Web Services service that contains the authorized
+	// targets that you want to add or update.
+	//
+	// Service is a required field
+	Service *string `location:"uri" locationName:"Service" type:"string" required:"true" enum:"ServiceType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateIdentityPropagationConfigInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateIdentityPropagationConfigInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateIdentityPropagationConfigInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateIdentityPropagationConfigInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.Service == nil {
+		invalidParams.Add(request.NewErrParamRequired("Service"))
+	}
+	if s.Service != nil && len(*s.Service) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Service", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthorizedTargets sets the AuthorizedTargets field's value.
+func (s *UpdateIdentityPropagationConfigInput) SetAuthorizedTargets(v []*string) *UpdateIdentityPropagationConfigInput {
+	s.AuthorizedTargets = v
+	return s
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *UpdateIdentityPropagationConfigInput) SetAwsAccountId(v string) *UpdateIdentityPropagationConfigInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetService sets the Service field's value.
+func (s *UpdateIdentityPropagationConfigInput) SetService(v string) *UpdateIdentityPropagationConfigInput {
+	s.Service = &v
+	return s
+}
+
+type UpdateIdentityPropagationConfigOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `location:"statusCode" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateIdentityPropagationConfigOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateIdentityPropagationConfigOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *UpdateIdentityPropagationConfigOutput) SetRequestId(v string) *UpdateIdentityPropagationConfigOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *UpdateIdentityPropagationConfigOutput) SetStatus(v int64) *UpdateIdentityPropagationConfigOutput {
+	s.Status = &v
+	return s
+}
+
 type UpdateIpRestrictionInput struct {
 	_ struct{} `type:"structure"`
 
@@ -92163,6 +100707,148 @@ func (s *UpdateRefreshScheduleOutput) SetStatus(v int64) *UpdateRefreshScheduleO
 	return s
 }
 
+type UpdateRoleCustomPermissionInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID for the Amazon Web Services account that you want to create a group
+	// in. The Amazon Web Services account ID that you provide must be the same
+	// Amazon Web Services account that contains your Amazon QuickSight account.
+	//
+	// AwsAccountId is a required field
+	AwsAccountId *string `location:"uri" locationName:"AwsAccountId" min:"12" type:"string" required:"true"`
+
+	// The name of the custom permission that you want to update the role with.
+	//
+	// CustomPermissionsName is a required field
+	CustomPermissionsName *string `min:"1" type:"string" required:"true"`
+
+	// The namespace that contains the role that you want to update.
+	//
+	// Namespace is a required field
+	Namespace *string `location:"uri" locationName:"Namespace" type:"string" required:"true"`
+
+	// The name of role tht you want to update.
+	//
+	// Role is a required field
+	Role *string `location:"uri" locationName:"Role" type:"string" required:"true" enum:"Role"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRoleCustomPermissionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRoleCustomPermissionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateRoleCustomPermissionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateRoleCustomPermissionInput"}
+	if s.AwsAccountId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsAccountId"))
+	}
+	if s.AwsAccountId != nil && len(*s.AwsAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccountId", 12))
+	}
+	if s.CustomPermissionsName == nil {
+		invalidParams.Add(request.NewErrParamRequired("CustomPermissionsName"))
+	}
+	if s.CustomPermissionsName != nil && len(*s.CustomPermissionsName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CustomPermissionsName", 1))
+	}
+	if s.Namespace == nil {
+		invalidParams.Add(request.NewErrParamRequired("Namespace"))
+	}
+	if s.Namespace != nil && len(*s.Namespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Namespace", 1))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Role != nil && len(*s.Role) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Role", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsAccountId sets the AwsAccountId field's value.
+func (s *UpdateRoleCustomPermissionInput) SetAwsAccountId(v string) *UpdateRoleCustomPermissionInput {
+	s.AwsAccountId = &v
+	return s
+}
+
+// SetCustomPermissionsName sets the CustomPermissionsName field's value.
+func (s *UpdateRoleCustomPermissionInput) SetCustomPermissionsName(v string) *UpdateRoleCustomPermissionInput {
+	s.CustomPermissionsName = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *UpdateRoleCustomPermissionInput) SetNamespace(v string) *UpdateRoleCustomPermissionInput {
+	s.Namespace = &v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *UpdateRoleCustomPermissionInput) SetRole(v string) *UpdateRoleCustomPermissionInput {
+	s.Role = &v
+	return s
+}
+
+type UpdateRoleCustomPermissionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Web Services request ID for this operation.
+	RequestId *string `type:"string"`
+
+	// The HTTP status of the request.
+	Status *int64 `type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRoleCustomPermissionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateRoleCustomPermissionOutput) GoString() string {
+	return s.String()
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *UpdateRoleCustomPermissionOutput) SetRequestId(v string) *UpdateRoleCustomPermissionOutput {
+	s.RequestId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *UpdateRoleCustomPermissionOutput) SetStatus(v int64) *UpdateRoleCustomPermissionOutput {
+	s.Status = &v
+	return s
+}
+
 type UpdateTemplateAliasInput struct {
 	_ struct{} `type:"structure"`
 
@@ -92352,6 +101038,10 @@ type UpdateTemplateInput struct {
 	// TemplateId is a required field
 	TemplateId *string `location:"uri" locationName:"TemplateId" min:"1" type:"string" required:"true"`
 
+	// The option to relax the validation needed to update a template with definition
+	// objects. This skips the validation step for specific errors.
+	ValidationStrategy *ValidationStrategy `type:"structure"`
+
 	// A description of the current template version that is being updated. Every
 	// time you call UpdateTemplate, you create a new version of the template. Each
 	// version of the template maintains a description of the version in the VersionDescription
@@ -92408,6 +101098,11 @@ func (s *UpdateTemplateInput) Validate() error {
 			invalidParams.AddNested("SourceEntity", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ValidationStrategy != nil {
+		if err := s.ValidationStrategy.Validate(); err != nil {
+			invalidParams.AddNested("ValidationStrategy", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -92442,6 +101137,12 @@ func (s *UpdateTemplateInput) SetSourceEntity(v *TemplateSourceEntity) *UpdateTe
 // SetTemplateId sets the TemplateId field's value.
 func (s *UpdateTemplateInput) SetTemplateId(v string) *UpdateTemplateInput {
 	s.TemplateId = &v
+	return s
+}
+
+// SetValidationStrategy sets the ValidationStrategy field's value.
+func (s *UpdateTemplateInput) SetValidationStrategy(v *ValidationStrategy) *UpdateTemplateInput {
+	s.ValidationStrategy = v
 	return s
 }
 
@@ -94767,6 +103468,57 @@ func (s *VPCConnectionSummary) SetVPCId(v string) *VPCConnectionSummary {
 	return s
 }
 
+// The option to relax the validation that is required to create and update
+// analyses, dashboards, and templates with definition objects. When you set
+// this value to LENIENT, validation is skipped for specific errors.
+type ValidationStrategy struct {
+	_ struct{} `type:"structure"`
+
+	// The mode of validation for the asset to be created or updated. When you set
+	// this value to STRICT, strict validation for every error is enforced. When
+	// you set this value to LENIENT, validation is skipped for specific UI errors.
+	//
+	// Mode is a required field
+	Mode *string `type:"string" required:"true" enum:"ValidationStrategyMode"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ValidationStrategy) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ValidationStrategy) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ValidationStrategy) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ValidationStrategy"}
+	if s.Mode == nil {
+		invalidParams.Add(request.NewErrParamRequired("Mode"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMode sets the Mode field's value.
+func (s *ValidationStrategy) SetMode(v string) *ValidationStrategy {
+	s.Mode = &v
+	return s
+}
+
 // The range options for the data zoom scroll bar.
 type VisibleRangeOptions struct {
 	_ struct{} `type:"structure"`
@@ -96884,6 +105636,56 @@ func (s *WordCloudVisual) SetVisualId(v string) *WordCloudVisual {
 	return s
 }
 
+// The options that are available for a single Y axis in a chart.
+type YAxisOptions struct {
+	_ struct{} `type:"structure"`
+
+	// The Y axis type to be used in the chart.
+	//
+	// If you choose PRIMARY_Y_AXIS, the primary Y Axis is located on the leftmost
+	// vertical axis of the chart.
+	//
+	// YAxis is a required field
+	YAxis *string `type:"string" required:"true" enum:"SingleYAxisOption"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s YAxisOptions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s YAxisOptions) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *YAxisOptions) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "YAxisOptions"}
+	if s.YAxis == nil {
+		invalidParams.Add(request.NewErrParamRequired("YAxis"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetYAxis sets the YAxis field's value.
+func (s *YAxisOptions) SetYAxis(v string) *YAxisOptions {
+	s.YAxis = &v
+	return s
+}
+
 const (
 	// AnalysisErrorTypeAccessDenied is a AnalysisErrorType enum value
 	AnalysisErrorTypeAccessDenied = "ACCESS_DENIED"
@@ -97301,6 +106103,9 @@ const (
 
 	// AuthenticationMethodOptionActiveDirectory is a AuthenticationMethodOption enum value
 	AuthenticationMethodOptionActiveDirectory = "ACTIVE_DIRECTORY"
+
+	// AuthenticationMethodOptionIamIdentityCenter is a AuthenticationMethodOption enum value
+	AuthenticationMethodOptionIamIdentityCenter = "IAM_IDENTITY_CENTER"
 )
 
 // AuthenticationMethodOption_Values returns all elements of the AuthenticationMethodOption enum
@@ -97309,6 +106114,7 @@ func AuthenticationMethodOption_Values() []string {
 		AuthenticationMethodOptionIamAndQuicksight,
 		AuthenticationMethodOptionIamOnly,
 		AuthenticationMethodOptionActiveDirectory,
+		AuthenticationMethodOptionIamIdentityCenter,
 	}
 }
 
@@ -97585,6 +106391,22 @@ func ColumnDataRole_Values() []string {
 	return []string{
 		ColumnDataRoleDimension,
 		ColumnDataRoleMeasure,
+	}
+}
+
+const (
+	// ColumnDataSubTypeFloat is a ColumnDataSubType enum value
+	ColumnDataSubTypeFloat = "FLOAT"
+
+	// ColumnDataSubTypeFixed is a ColumnDataSubType enum value
+	ColumnDataSubTypeFixed = "FIXED"
+)
+
+// ColumnDataSubType_Values returns all elements of the ColumnDataSubType enum
+func ColumnDataSubType_Values() []string {
+	return []string{
+		ColumnDataSubTypeFloat,
+		ColumnDataSubTypeFixed,
 	}
 }
 
@@ -98198,6 +107020,15 @@ const (
 
 	// DataSourceTypeDatabricks is a DataSourceType enum value
 	DataSourceTypeDatabricks = "DATABRICKS"
+
+	// DataSourceTypeStarburst is a DataSourceType enum value
+	DataSourceTypeStarburst = "STARBURST"
+
+	// DataSourceTypeTrino is a DataSourceType enum value
+	DataSourceTypeTrino = "TRINO"
+
+	// DataSourceTypeBigquery is a DataSourceType enum value
+	DataSourceTypeBigquery = "BIGQUERY"
 )
 
 // DataSourceType_Values returns all elements of the DataSourceType enum
@@ -98229,6 +107060,9 @@ func DataSourceType_Values() []string {
 		DataSourceTypeAmazonOpensearch,
 		DataSourceTypeExasol,
 		DataSourceTypeDatabricks,
+		DataSourceTypeStarburst,
+		DataSourceTypeTrino,
+		DataSourceTypeBigquery,
 	}
 }
 
@@ -98269,6 +107103,42 @@ func DateAggregationFunction_Values() []string {
 		DateAggregationFunctionDistinctCount,
 		DateAggregationFunctionMin,
 		DateAggregationFunctionMax,
+	}
+}
+
+const (
+	// DayOfTheWeekSunday is a DayOfTheWeek enum value
+	DayOfTheWeekSunday = "SUNDAY"
+
+	// DayOfTheWeekMonday is a DayOfTheWeek enum value
+	DayOfTheWeekMonday = "MONDAY"
+
+	// DayOfTheWeekTuesday is a DayOfTheWeek enum value
+	DayOfTheWeekTuesday = "TUESDAY"
+
+	// DayOfTheWeekWednesday is a DayOfTheWeek enum value
+	DayOfTheWeekWednesday = "WEDNESDAY"
+
+	// DayOfTheWeekThursday is a DayOfTheWeek enum value
+	DayOfTheWeekThursday = "THURSDAY"
+
+	// DayOfTheWeekFriday is a DayOfTheWeek enum value
+	DayOfTheWeekFriday = "FRIDAY"
+
+	// DayOfTheWeekSaturday is a DayOfTheWeek enum value
+	DayOfTheWeekSaturday = "SATURDAY"
+)
+
+// DayOfTheWeek_Values returns all elements of the DayOfTheWeek enum
+func DayOfTheWeek_Values() []string {
+	return []string{
+		DayOfTheWeekSunday,
+		DayOfTheWeekMonday,
+		DayOfTheWeekTuesday,
+		DayOfTheWeekWednesday,
+		DayOfTheWeekThursday,
+		DayOfTheWeekFriday,
+		DayOfTheWeekSaturday,
 	}
 }
 
@@ -98326,6 +107196,21 @@ const (
 
 	// DefaultAggregationAverage is a DefaultAggregation enum value
 	DefaultAggregationAverage = "AVERAGE"
+
+	// DefaultAggregationMedian is a DefaultAggregation enum value
+	DefaultAggregationMedian = "MEDIAN"
+
+	// DefaultAggregationStdev is a DefaultAggregation enum value
+	DefaultAggregationStdev = "STDEV"
+
+	// DefaultAggregationStdevp is a DefaultAggregation enum value
+	DefaultAggregationStdevp = "STDEVP"
+
+	// DefaultAggregationVar is a DefaultAggregation enum value
+	DefaultAggregationVar = "VAR"
+
+	// DefaultAggregationVarp is a DefaultAggregation enum value
+	DefaultAggregationVarp = "VARP"
 )
 
 // DefaultAggregation_Values returns all elements of the DefaultAggregation enum
@@ -98337,6 +107222,11 @@ func DefaultAggregation_Values() []string {
 		DefaultAggregationCount,
 		DefaultAggregationDistinctCount,
 		DefaultAggregationAverage,
+		DefaultAggregationMedian,
+		DefaultAggregationStdev,
+		DefaultAggregationStdevp,
+		DefaultAggregationVar,
+		DefaultAggregationVarp,
 	}
 }
 
@@ -98599,12 +107489,16 @@ func FolderFilterAttribute_Values() []string {
 const (
 	// FolderTypeShared is a FolderType enum value
 	FolderTypeShared = "SHARED"
+
+	// FolderTypeRestricted is a FolderType enum value
+	FolderTypeRestricted = "RESTRICTED"
 )
 
 // FolderType_Values returns all elements of the FolderType enum
 func FolderType_Values() []string {
 	return []string{
 		FolderTypeShared,
+		FolderTypeRestricted,
 	}
 }
 
@@ -98962,6 +107856,9 @@ const (
 
 	// IdentityTypeQuicksight is a IdentityType enum value
 	IdentityTypeQuicksight = "QUICKSIGHT"
+
+	// IdentityTypeIamIdentityCenter is a IdentityType enum value
+	IdentityTypeIamIdentityCenter = "IAM_IDENTITY_CENTER"
 )
 
 // IdentityType_Values returns all elements of the IdentityType enum
@@ -98969,6 +107866,7 @@ func IdentityType_Values() []string {
 	return []string{
 		IdentityTypeIam,
 		IdentityTypeQuicksight,
+		IdentityTypeIamIdentityCenter,
 	}
 }
 
@@ -99313,6 +108211,38 @@ func JoinType_Values() []string {
 }
 
 const (
+	// KPISparklineTypeLine is a KPISparklineType enum value
+	KPISparklineTypeLine = "LINE"
+
+	// KPISparklineTypeArea is a KPISparklineType enum value
+	KPISparklineTypeArea = "AREA"
+)
+
+// KPISparklineType_Values returns all elements of the KPISparklineType enum
+func KPISparklineType_Values() []string {
+	return []string{
+		KPISparklineTypeLine,
+		KPISparklineTypeArea,
+	}
+}
+
+const (
+	// KPIVisualStandardLayoutTypeClassic is a KPIVisualStandardLayoutType enum value
+	KPIVisualStandardLayoutTypeClassic = "CLASSIC"
+
+	// KPIVisualStandardLayoutTypeVertical is a KPIVisualStandardLayoutType enum value
+	KPIVisualStandardLayoutTypeVertical = "VERTICAL"
+)
+
+// KPIVisualStandardLayoutType_Values returns all elements of the KPIVisualStandardLayoutType enum
+func KPIVisualStandardLayoutType_Values() []string {
+	return []string{
+		KPIVisualStandardLayoutTypeClassic,
+		KPIVisualStandardLayoutTypeVertical,
+	}
+}
+
+const (
 	// LayoutElementTypeVisual is a LayoutElementType enum value
 	LayoutElementTypeVisual = "VISUAL"
 
@@ -99509,6 +108439,12 @@ const (
 
 	// MemberTypeDataset is a MemberType enum value
 	MemberTypeDataset = "DATASET"
+
+	// MemberTypeDatasource is a MemberType enum value
+	MemberTypeDatasource = "DATASOURCE"
+
+	// MemberTypeTopic is a MemberType enum value
+	MemberTypeTopic = "TOPIC"
 )
 
 // MemberType_Values returns all elements of the MemberType enum
@@ -99517,6 +108453,8 @@ func MemberType_Values() []string {
 		MemberTypeDashboard,
 		MemberTypeAnalysis,
 		MemberTypeDataset,
+		MemberTypeDatasource,
+		MemberTypeTopic,
 	}
 }
 
@@ -100013,6 +108951,30 @@ func PivotTableConditionalFormattingScopeRole_Values() []string {
 }
 
 const (
+	// PivotTableDataPathTypeHierarchyRowsLayoutColumn is a PivotTableDataPathType enum value
+	PivotTableDataPathTypeHierarchyRowsLayoutColumn = "HIERARCHY_ROWS_LAYOUT_COLUMN"
+
+	// PivotTableDataPathTypeMultipleRowMetricsColumn is a PivotTableDataPathType enum value
+	PivotTableDataPathTypeMultipleRowMetricsColumn = "MULTIPLE_ROW_METRICS_COLUMN"
+
+	// PivotTableDataPathTypeEmptyColumnHeader is a PivotTableDataPathType enum value
+	PivotTableDataPathTypeEmptyColumnHeader = "EMPTY_COLUMN_HEADER"
+
+	// PivotTableDataPathTypeCountMetricColumn is a PivotTableDataPathType enum value
+	PivotTableDataPathTypeCountMetricColumn = "COUNT_METRIC_COLUMN"
+)
+
+// PivotTableDataPathType_Values returns all elements of the PivotTableDataPathType enum
+func PivotTableDataPathType_Values() []string {
+	return []string{
+		PivotTableDataPathTypeHierarchyRowsLayoutColumn,
+		PivotTableDataPathTypeMultipleRowMetricsColumn,
+		PivotTableDataPathTypeEmptyColumnHeader,
+		PivotTableDataPathTypeCountMetricColumn,
+	}
+}
+
+const (
 	// PivotTableFieldCollapseStateCollapsed is a PivotTableFieldCollapseState enum value
 	PivotTableFieldCollapseStateCollapsed = "COLLAPSED"
 
@@ -100041,6 +109003,22 @@ func PivotTableMetricPlacement_Values() []string {
 	return []string{
 		PivotTableMetricPlacementRow,
 		PivotTableMetricPlacementColumn,
+	}
+}
+
+const (
+	// PivotTableRowsLayoutTabular is a PivotTableRowsLayout enum value
+	PivotTableRowsLayoutTabular = "TABULAR"
+
+	// PivotTableRowsLayoutHierarchy is a PivotTableRowsLayout enum value
+	PivotTableRowsLayoutHierarchy = "HIERARCHY"
+)
+
+// PivotTableRowsLayout_Values returns all elements of the PivotTableRowsLayout enum
+func PivotTableRowsLayout_Values() []string {
+	return []string{
+		PivotTableRowsLayoutTabular,
+		PivotTableRowsLayoutHierarchy,
 	}
 }
 
@@ -100213,6 +109191,22 @@ func ReferenceLinePatternType_Values() []string {
 }
 
 const (
+	// ReferenceLineSeriesTypeBar is a ReferenceLineSeriesType enum value
+	ReferenceLineSeriesTypeBar = "BAR"
+
+	// ReferenceLineSeriesTypeLine is a ReferenceLineSeriesType enum value
+	ReferenceLineSeriesTypeLine = "LINE"
+)
+
+// ReferenceLineSeriesType_Values returns all elements of the ReferenceLineSeriesType enum
+func ReferenceLineSeriesType_Values() []string {
+	return []string{
+		ReferenceLineSeriesTypeBar,
+		ReferenceLineSeriesTypeLine,
+	}
+}
+
+const (
 	// ReferenceLineValueLabelRelativePositionBeforeCustomLabel is a ReferenceLineValueLabelRelativePosition enum value
 	ReferenceLineValueLabelRelativePositionBeforeCustomLabel = "BEFORE_CUSTOM_LABEL"
 
@@ -100369,6 +109363,26 @@ func ResourceStatus_Values() []string {
 }
 
 const (
+	// RoleAdmin is a Role enum value
+	RoleAdmin = "ADMIN"
+
+	// RoleAuthor is a Role enum value
+	RoleAuthor = "AUTHOR"
+
+	// RoleReader is a Role enum value
+	RoleReader = "READER"
+)
+
+// Role_Values returns all elements of the Role enum
+func Role_Values() []string {
+	return []string{
+		RoleAdmin,
+		RoleAuthor,
+		RoleReader,
+	}
+}
+
+const (
 	// RowLevelPermissionFormatVersionVersion1 is a RowLevelPermissionFormatVersion enum value
 	RowLevelPermissionFormatVersionVersion1 = "VERSION_1"
 
@@ -100457,6 +109471,34 @@ func SelectedTooltipType_Values() []string {
 }
 
 const (
+	// ServiceTypeRedshift is a ServiceType enum value
+	ServiceTypeRedshift = "REDSHIFT"
+)
+
+// ServiceType_Values returns all elements of the ServiceType enum
+func ServiceType_Values() []string {
+	return []string{
+		ServiceTypeRedshift,
+	}
+}
+
+const (
+	// SharingModelAccount is a SharingModel enum value
+	SharingModelAccount = "ACCOUNT"
+
+	// SharingModelNamespace is a SharingModel enum value
+	SharingModelNamespace = "NAMESPACE"
+)
+
+// SharingModel_Values returns all elements of the SharingModel enum
+func SharingModel_Values() []string {
+	return []string{
+		SharingModelAccount,
+		SharingModelNamespace,
+	}
+}
+
+const (
 	// SheetContentTypePaginated is a SheetContentType enum value
 	SheetContentTypePaginated = "PAGINATED"
 
@@ -100521,6 +109563,18 @@ func SheetControlSliderType_Values() []string {
 }
 
 const (
+	// SimpleAttributeAggregationFunctionUniqueValue is a SimpleAttributeAggregationFunction enum value
+	SimpleAttributeAggregationFunctionUniqueValue = "UNIQUE_VALUE"
+)
+
+// SimpleAttributeAggregationFunction_Values returns all elements of the SimpleAttributeAggregationFunction enum
+func SimpleAttributeAggregationFunction_Values() []string {
+	return []string{
+		SimpleAttributeAggregationFunctionUniqueValue,
+	}
+}
+
+const (
 	// SimpleNumericalAggregationFunctionSum is a SimpleNumericalAggregationFunction enum value
 	SimpleNumericalAggregationFunctionSum = "SUM"
 
@@ -100573,6 +109627,50 @@ func SimpleNumericalAggregationFunction_Values() []string {
 }
 
 const (
+	// SimpleTotalAggregationFunctionDefault is a SimpleTotalAggregationFunction enum value
+	SimpleTotalAggregationFunctionDefault = "DEFAULT"
+
+	// SimpleTotalAggregationFunctionSum is a SimpleTotalAggregationFunction enum value
+	SimpleTotalAggregationFunctionSum = "SUM"
+
+	// SimpleTotalAggregationFunctionAverage is a SimpleTotalAggregationFunction enum value
+	SimpleTotalAggregationFunctionAverage = "AVERAGE"
+
+	// SimpleTotalAggregationFunctionMin is a SimpleTotalAggregationFunction enum value
+	SimpleTotalAggregationFunctionMin = "MIN"
+
+	// SimpleTotalAggregationFunctionMax is a SimpleTotalAggregationFunction enum value
+	SimpleTotalAggregationFunctionMax = "MAX"
+
+	// SimpleTotalAggregationFunctionNone is a SimpleTotalAggregationFunction enum value
+	SimpleTotalAggregationFunctionNone = "NONE"
+)
+
+// SimpleTotalAggregationFunction_Values returns all elements of the SimpleTotalAggregationFunction enum
+func SimpleTotalAggregationFunction_Values() []string {
+	return []string{
+		SimpleTotalAggregationFunctionDefault,
+		SimpleTotalAggregationFunctionSum,
+		SimpleTotalAggregationFunctionAverage,
+		SimpleTotalAggregationFunctionMin,
+		SimpleTotalAggregationFunctionMax,
+		SimpleTotalAggregationFunctionNone,
+	}
+}
+
+const (
+	// SingleYAxisOptionPrimaryYAxis is a SingleYAxisOption enum value
+	SingleYAxisOptionPrimaryYAxis = "PRIMARY_Y_AXIS"
+)
+
+// SingleYAxisOption_Values returns all elements of the SingleYAxisOption enum
+func SingleYAxisOption_Values() []string {
+	return []string{
+		SingleYAxisOptionPrimaryYAxis,
+	}
+}
+
+const (
 	// SmallMultiplesAxisPlacementOutside is a SmallMultiplesAxisPlacement enum value
 	SmallMultiplesAxisPlacementOutside = "OUTSIDE"
 
@@ -100601,6 +109699,66 @@ func SmallMultiplesAxisScale_Values() []string {
 	return []string{
 		SmallMultiplesAxisScaleShared,
 		SmallMultiplesAxisScaleIndependent,
+	}
+}
+
+const (
+	// SnapshotFileFormatTypeCsv is a SnapshotFileFormatType enum value
+	SnapshotFileFormatTypeCsv = "CSV"
+
+	// SnapshotFileFormatTypePdf is a SnapshotFileFormatType enum value
+	SnapshotFileFormatTypePdf = "PDF"
+
+	// SnapshotFileFormatTypeExcel is a SnapshotFileFormatType enum value
+	SnapshotFileFormatTypeExcel = "EXCEL"
+)
+
+// SnapshotFileFormatType_Values returns all elements of the SnapshotFileFormatType enum
+func SnapshotFileFormatType_Values() []string {
+	return []string{
+		SnapshotFileFormatTypeCsv,
+		SnapshotFileFormatTypePdf,
+		SnapshotFileFormatTypeExcel,
+	}
+}
+
+const (
+	// SnapshotFileSheetSelectionScopeAllVisuals is a SnapshotFileSheetSelectionScope enum value
+	SnapshotFileSheetSelectionScopeAllVisuals = "ALL_VISUALS"
+
+	// SnapshotFileSheetSelectionScopeSelectedVisuals is a SnapshotFileSheetSelectionScope enum value
+	SnapshotFileSheetSelectionScopeSelectedVisuals = "SELECTED_VISUALS"
+)
+
+// SnapshotFileSheetSelectionScope_Values returns all elements of the SnapshotFileSheetSelectionScope enum
+func SnapshotFileSheetSelectionScope_Values() []string {
+	return []string{
+		SnapshotFileSheetSelectionScopeAllVisuals,
+		SnapshotFileSheetSelectionScopeSelectedVisuals,
+	}
+}
+
+const (
+	// SnapshotJobStatusQueued is a SnapshotJobStatus enum value
+	SnapshotJobStatusQueued = "QUEUED"
+
+	// SnapshotJobStatusRunning is a SnapshotJobStatus enum value
+	SnapshotJobStatusRunning = "RUNNING"
+
+	// SnapshotJobStatusCompleted is a SnapshotJobStatus enum value
+	SnapshotJobStatusCompleted = "COMPLETED"
+
+	// SnapshotJobStatusFailed is a SnapshotJobStatus enum value
+	SnapshotJobStatusFailed = "FAILED"
+)
+
+// SnapshotJobStatus_Values returns all elements of the SnapshotJobStatus enum
+func SnapshotJobStatus_Values() []string {
+	return []string{
+		SnapshotJobStatusQueued,
+		SnapshotJobStatusRunning,
+		SnapshotJobStatusCompleted,
+		SnapshotJobStatusFailed,
 	}
 }
 
@@ -100641,6 +109799,22 @@ func SpecialValue_Values() []string {
 }
 
 const (
+	// StarburstProductTypeGalaxy is a StarburstProductType enum value
+	StarburstProductTypeGalaxy = "GALAXY"
+
+	// StarburstProductTypeEnterprise is a StarburstProductType enum value
+	StarburstProductTypeEnterprise = "ENTERPRISE"
+)
+
+// StarburstProductType_Values returns all elements of the StarburstProductType enum
+func StarburstProductType_Values() []string {
+	return []string{
+		StarburstProductTypeGalaxy,
+		StarburstProductTypeEnterprise,
+	}
+}
+
+const (
 	// StatusEnabled is a Status enum value
 	StatusEnabled = "ENABLED"
 
@@ -100653,6 +109827,26 @@ func Status_Values() []string {
 	return []string{
 		StatusEnabled,
 		StatusDisabled,
+	}
+}
+
+const (
+	// StyledCellTypeTotal is a StyledCellType enum value
+	StyledCellTypeTotal = "TOTAL"
+
+	// StyledCellTypeMetricHeader is a StyledCellType enum value
+	StyledCellTypeMetricHeader = "METRIC_HEADER"
+
+	// StyledCellTypeValue is a StyledCellType enum value
+	StyledCellTypeValue = "VALUE"
+)
+
+// StyledCellType_Values returns all elements of the StyledCellType enum
+func StyledCellType_Values() []string {
+	return []string{
+		StyledCellTypeTotal,
+		StyledCellTypeMetricHeader,
+		StyledCellTypeValue,
 	}
 }
 
@@ -100726,6 +109920,9 @@ const (
 
 	// TableTotalsPlacementEnd is a TableTotalsPlacement enum value
 	TableTotalsPlacementEnd = "END"
+
+	// TableTotalsPlacementAuto is a TableTotalsPlacement enum value
+	TableTotalsPlacementAuto = "AUTO"
 )
 
 // TableTotalsPlacement_Values returns all elements of the TableTotalsPlacement enum
@@ -100733,6 +109930,7 @@ func TableTotalsPlacement_Values() []string {
 	return []string{
 		TableTotalsPlacementStart,
 		TableTotalsPlacementEnd,
+		TableTotalsPlacementAuto,
 	}
 }
 
@@ -101209,6 +110407,22 @@ func VPCConnectionResourceStatus_Values() []string {
 }
 
 const (
+	// ValidationStrategyModeStrict is a ValidationStrategyMode enum value
+	ValidationStrategyModeStrict = "STRICT"
+
+	// ValidationStrategyModeLenient is a ValidationStrategyMode enum value
+	ValidationStrategyModeLenient = "LENIENT"
+)
+
+// ValidationStrategyMode_Values returns all elements of the ValidationStrategyMode enum
+func ValidationStrategyMode_Values() []string {
+	return []string{
+		ValidationStrategyModeStrict,
+		ValidationStrategyModeLenient,
+	}
+}
+
+const (
 	// ValueWhenUnsetOptionRecommendedValue is a ValueWhenUnsetOption enum value
 	ValueWhenUnsetOptionRecommendedValue = "RECOMMENDED_VALUE"
 
@@ -101233,6 +110447,9 @@ const (
 
 	// VerticalTextAlignmentBottom is a VerticalTextAlignment enum value
 	VerticalTextAlignmentBottom = "BOTTOM"
+
+	// VerticalTextAlignmentAuto is a VerticalTextAlignment enum value
+	VerticalTextAlignmentAuto = "AUTO"
 )
 
 // VerticalTextAlignment_Values returns all elements of the VerticalTextAlignment enum
@@ -101241,6 +110458,7 @@ func VerticalTextAlignment_Values() []string {
 		VerticalTextAlignmentTop,
 		VerticalTextAlignmentMiddle,
 		VerticalTextAlignmentBottom,
+		VerticalTextAlignmentAuto,
 	}
 }
 

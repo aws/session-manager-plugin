@@ -167,6 +167,10 @@ type SFNAPI interface {
 	PublishStateMachineVersionWithContext(aws.Context, *sfn.PublishStateMachineVersionInput, ...request.Option) (*sfn.PublishStateMachineVersionOutput, error)
 	PublishStateMachineVersionRequest(*sfn.PublishStateMachineVersionInput) (*request.Request, *sfn.PublishStateMachineVersionOutput)
 
+	RedriveExecution(*sfn.RedriveExecutionInput) (*sfn.RedriveExecutionOutput, error)
+	RedriveExecutionWithContext(aws.Context, *sfn.RedriveExecutionInput, ...request.Option) (*sfn.RedriveExecutionOutput, error)
+	RedriveExecutionRequest(*sfn.RedriveExecutionInput) (*request.Request, *sfn.RedriveExecutionOutput)
+
 	SendTaskFailure(*sfn.SendTaskFailureInput) (*sfn.SendTaskFailureOutput, error)
 	SendTaskFailureWithContext(aws.Context, *sfn.SendTaskFailureInput, ...request.Option) (*sfn.SendTaskFailureOutput, error)
 	SendTaskFailureRequest(*sfn.SendTaskFailureInput) (*request.Request, *sfn.SendTaskFailureOutput)
@@ -194,6 +198,10 @@ type SFNAPI interface {
 	TagResource(*sfn.TagResourceInput) (*sfn.TagResourceOutput, error)
 	TagResourceWithContext(aws.Context, *sfn.TagResourceInput, ...request.Option) (*sfn.TagResourceOutput, error)
 	TagResourceRequest(*sfn.TagResourceInput) (*request.Request, *sfn.TagResourceOutput)
+
+	TestState(*sfn.TestStateInput) (*sfn.TestStateOutput, error)
+	TestStateWithContext(aws.Context, *sfn.TestStateInput, ...request.Option) (*sfn.TestStateOutput, error)
+	TestStateRequest(*sfn.TestStateInput) (*request.Request, *sfn.TestStateOutput)
 
 	UntagResource(*sfn.UntagResourceInput) (*sfn.UntagResourceOutput, error)
 	UntagResourceWithContext(aws.Context, *sfn.UntagResourceInput, ...request.Option) (*sfn.UntagResourceOutput, error)

@@ -8,17 +8,21 @@ import (
 	"bytes"
 	"crypto/dsa"
 	"crypto/ecdsa"
+	"crypto/ed25519"
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/base64"
+	"encoding/hex"
+	"encoding/pem"
+	"errors"
 	"fmt"
+	"io"
 	"reflect"
 	"strings"
 	"testing"
 
-	"golang.org/x/crypto/ed25519"
 	"golang.org/x/crypto/ssh/testdata"
 )
 
@@ -107,6 +111,49 @@ func TestKeySignVerify(t *testing.T) {
 	}
 }
 
+func TestKeySignWithAlgorithmVerify(t *testing.T) {
+	for k, priv := range testSigners {
+		if algorithmSigner, ok := priv.(MultiAlgorithmSigner); !ok {
+			t.Errorf("Signers %q constructed by ssh package should always implement the MultiAlgorithmSigner interface: %T", k, priv)
+		} else {
+			pub := priv.PublicKey()
+			data := []byte("sign me")
+
+			signWithAlgTestCase := func(algorithm string, expectedAlg string) {
+				sig, err := algorithmSigner.SignWithAlgorithm(rand.Reader, data, algorithm)
+				if err != nil {
+					t.Fatalf("Sign(%T): %v", priv, err)
+				}
+				if sig.Format != expectedAlg {
+					t.Errorf("signature format did not match requested signature algorithm: %s != %s", sig.Format, expectedAlg)
+				}
+
+				if err := pub.Verify(data, sig); err != nil {
+					t.Errorf("publicKey.Verify(%T): %v", priv, err)
+				}
+				sig.Blob[5]++
+				if err := pub.Verify(data, sig); err == nil {
+					t.Errorf("publicKey.Verify on broken sig did not fail")
+				}
+			}
+
+			// Using the empty string as the algorithm name should result in the same signature format as the algorithm-free Sign method.
+			defaultSig, err := priv.Sign(rand.Reader, data)
+			if err != nil {
+				t.Fatalf("Sign(%T): %v", priv, err)
+			}
+			signWithAlgTestCase("", defaultSig.Format)
+
+			// RSA keys are the only ones which currently support more than one signing algorithm
+			if pub.Type() == KeyAlgoRSA {
+				for _, algorithm := range []string{KeyAlgoRSA, KeyAlgoRSASHA256, KeyAlgoRSASHA512} {
+					signWithAlgTestCase(algorithm, algorithm)
+				}
+			}
+		}
+	}
+}
+
 func TestParseRSAPrivateKey(t *testing.T) {
 	key := testPrivateKeys["rsa"]
 
@@ -133,44 +180,55 @@ func TestParseECPrivateKey(t *testing.T) {
 	}
 }
 
-// See Issue https://github.com/golang/go/issues/6650.
-func TestParseEncryptedPrivateKeysFails(t *testing.T) {
-	const wantSubstring = "encrypted"
-	for i, tt := range testdata.PEMEncryptedKeys {
-		_, err := ParsePrivateKey(tt.PEMBytes)
-		if err == nil {
-			t.Errorf("#%d key %s: ParsePrivateKey successfully parsed, expected an error", i, tt.Name)
-			continue
-		}
-
-		if !strings.Contains(err.Error(), wantSubstring) {
-			t.Errorf("#%d key %s: got error %q, want substring %q", i, tt.Name, err, wantSubstring)
-		}
-	}
-}
-
-// Parse encrypted private keys with passphrase
 func TestParseEncryptedPrivateKeysWithPassphrase(t *testing.T) {
 	data := []byte("sign me")
 	for _, tt := range testdata.PEMEncryptedKeys {
-		s, err := ParsePrivateKeyWithPassphrase(tt.PEMBytes, []byte(tt.EncryptionKey))
-		if err != nil {
-			t.Fatalf("ParsePrivateKeyWithPassphrase returned error: %s", err)
-			continue
-		}
-		sig, err := s.Sign(rand.Reader, data)
-		if err != nil {
-			t.Fatalf("dsa.Sign: %v", err)
-		}
-		if err := s.PublicKey().Verify(data, sig); err != nil {
-			t.Errorf("Verify failed: %v", err)
-		}
-	}
+		t.Run(tt.Name, func(t *testing.T) {
+			_, err := ParsePrivateKeyWithPassphrase(tt.PEMBytes, []byte("incorrect"))
+			if err != x509.IncorrectPasswordError {
+				t.Errorf("got %v want IncorrectPasswordError", err)
+			}
 
-	tt := testdata.PEMEncryptedKeys[0]
-	_, err := ParsePrivateKeyWithPassphrase(tt.PEMBytes, []byte("incorrect"))
-	if err != x509.IncorrectPasswordError {
-		t.Fatalf("got %v want IncorrectPasswordError", err)
+			s, err := ParsePrivateKeyWithPassphrase(tt.PEMBytes, []byte(tt.EncryptionKey))
+			if err != nil {
+				t.Fatalf("ParsePrivateKeyWithPassphrase returned error: %s", err)
+			}
+
+			sig, err := s.Sign(rand.Reader, data)
+			if err != nil {
+				t.Fatalf("Signer.Sign: %v", err)
+			}
+			if err := s.PublicKey().Verify(data, sig); err != nil {
+				t.Errorf("Verify failed: %v", err)
+			}
+
+			_, err = ParsePrivateKey(tt.PEMBytes)
+			if err == nil {
+				t.Fatalf("ParsePrivateKey succeeded, expected an error")
+			}
+
+			if err, ok := err.(*PassphraseMissingError); !ok {
+				t.Errorf("got error %q, want PassphraseMissingError", err)
+			} else if tt.IncludesPublicKey {
+				if err.PublicKey == nil {
+					t.Fatalf("expected PassphraseMissingError.PublicKey not to be nil")
+				}
+				got, want := err.PublicKey.Marshal(), s.PublicKey().Marshal()
+				if !bytes.Equal(got, want) {
+					t.Errorf("error field %q doesn't match signer public key %q", got, want)
+				}
+			}
+		})
+	}
+}
+
+func TestParseEncryptedPrivateKeysWithIncorrectPassphrase(t *testing.T) {
+	pem := testdata.PEMEncryptedKeys[0].PEMBytes
+	for i := 0; i < 4096; i++ {
+		_, err := ParseRawPrivateKeyWithPassphrase(pem, []byte(fmt.Sprintf("%d", i)))
+		if !errors.Is(err, x509.IncorrectPasswordError) {
+			t.Fatalf("expected error: %v, got: %v", x509.IncorrectPasswordError, err)
+		}
 	}
 }
 
@@ -231,6 +289,74 @@ func TestMarshalParsePublicKey(t *testing.T) {
 	}
 	if !reflect.DeepEqual(actPub, pub) {
 		t.Errorf("got %v, expected %v", actPub, pub)
+	}
+}
+
+func TestMarshalPrivateKey(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{"rsa-openssh-format"},
+		{"ed25519"},
+		{"p256-openssh-format"},
+		{"p384-openssh-format"},
+		{"p521-openssh-format"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			expected, ok := testPrivateKeys[tt.name]
+			if !ok {
+				t.Fatalf("cannot find key %s", tt.name)
+			}
+
+			block, err := MarshalPrivateKey(expected, "test@golang.org")
+			if err != nil {
+				t.Fatalf("cannot marshal %s: %v", tt.name, err)
+			}
+
+			key, err := ParseRawPrivateKey(pem.EncodeToMemory(block))
+			if err != nil {
+				t.Fatalf("cannot parse %s: %v", tt.name, err)
+			}
+
+			if !reflect.DeepEqual(expected, key) {
+				t.Errorf("unexpected marshaled key %s", tt.name)
+			}
+		})
+	}
+}
+
+func TestMarshalPrivateKeyWithPassphrase(t *testing.T) {
+	tests := []struct {
+		name string
+	}{
+		{"rsa-openssh-format"},
+		{"ed25519"},
+		{"p256-openssh-format"},
+		{"p384-openssh-format"},
+		{"p521-openssh-format"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			expected, ok := testPrivateKeys[tt.name]
+			if !ok {
+				t.Fatalf("cannot find key %s", tt.name)
+			}
+
+			block, err := MarshalPrivateKeyWithPassphrase(expected, "test@golang.org", []byte("test-passphrase"))
+			if err != nil {
+				t.Fatalf("cannot marshal %s: %v", tt.name, err)
+			}
+
+			key, err := ParseRawPrivateKeyWithPassphrase(pem.EncodeToMemory(block), []byte("test-passphrase"))
+			if err != nil {
+				t.Fatalf("cannot parse %s: %v", tt.name, err)
+			}
+
+			if !reflect.DeepEqual(expected, key) {
+				t.Errorf("unexpected marshaled key %s", tt.name)
+			}
+		})
 	}
 }
 
@@ -496,5 +622,107 @@ func TestFingerprintSHA256(t *testing.T) {
 	want := "SHA256:Anr3LjZK8YVpjrxu79myrW9Hrb/wpcMNpVvTq/RcBm8" // ssh-keygen -lf rsa
 	if fingerprint != want {
 		t.Errorf("got fingerprint %q want %q", fingerprint, want)
+	}
+}
+
+func TestInvalidKeys(t *testing.T) {
+	keyTypes := []string{
+		"RSA PRIVATE KEY",
+		"PRIVATE KEY",
+		"EC PRIVATE KEY",
+		"DSA PRIVATE KEY",
+		"OPENSSH PRIVATE KEY",
+	}
+
+	for _, keyType := range keyTypes {
+		for _, dataLen := range []int{0, 1, 2, 5, 10, 20} {
+			data := make([]byte, dataLen)
+			if _, err := io.ReadFull(rand.Reader, data); err != nil {
+				t.Fatal(err)
+			}
+
+			var buf bytes.Buffer
+			pem.Encode(&buf, &pem.Block{
+				Type:  keyType,
+				Bytes: data,
+			})
+
+			// This test is just to ensure that the function
+			// doesn't panic so the return value is ignored.
+			ParseRawPrivateKey(buf.Bytes())
+		}
+	}
+}
+
+func TestSKKeys(t *testing.T) {
+	for _, d := range testdata.SKData {
+		pk, _, _, _, err := ParseAuthorizedKey(d.PubKey)
+		if err != nil {
+			t.Fatalf("parseAuthorizedKey returned error: %v", err)
+		}
+
+		sigBuf := make([]byte, hex.DecodedLen(len(d.HexSignature)))
+		if _, err := hex.Decode(sigBuf, d.HexSignature); err != nil {
+			t.Fatalf("hex.Decode() failed: %v", err)
+		}
+
+		dataBuf := make([]byte, hex.DecodedLen(len(d.HexData)))
+		if _, err := hex.Decode(dataBuf, d.HexData); err != nil {
+			t.Fatalf("hex.Decode() failed: %v", err)
+		}
+
+		sig, _, ok := parseSignature(sigBuf)
+		if !ok {
+			t.Fatalf("parseSignature(%v) failed", sigBuf)
+		}
+
+		// Test that good data and signature pass verification
+		if err := pk.Verify(dataBuf, sig); err != nil {
+			t.Errorf("%s: PublicKey.Verify(%v, %v) failed: %v", d.Name, dataBuf, sig, err)
+		}
+
+		// Invalid data being passed in
+		invalidData := []byte("INVALID DATA")
+		if err := pk.Verify(invalidData, sig); err == nil {
+			t.Errorf("%s with invalid data: PublicKey.Verify(%v, %v) passed unexpectedly", d.Name, invalidData, sig)
+		}
+
+		// Change byte in blob to corrup signature
+		sig.Blob[5] = byte('A')
+		// Corrupted data being passed in
+		if err := pk.Verify(dataBuf, sig); err == nil {
+			t.Errorf("%s with corrupted signature: PublicKey.Verify(%v, %v) passed unexpectedly", d.Name, dataBuf, sig)
+		}
+	}
+}
+
+func TestNewSignerWithAlgos(t *testing.T) {
+	algorithSigner, ok := testSigners["rsa"].(AlgorithmSigner)
+	if !ok {
+		t.Fatal("rsa test signer does not implement the AlgorithmSigner interface")
+	}
+	_, err := NewSignerWithAlgorithms(algorithSigner, nil)
+	if err == nil {
+		t.Error("signer with algos created with no algorithms")
+	}
+
+	_, err = NewSignerWithAlgorithms(algorithSigner, []string{KeyAlgoED25519})
+	if err == nil {
+		t.Error("signer with algos created with invalid algorithms")
+	}
+
+	_, err = NewSignerWithAlgorithms(algorithSigner, []string{CertAlgoRSASHA256v01})
+	if err == nil {
+		t.Error("signer with algos created with certificate algorithms")
+	}
+
+	mas, err := NewSignerWithAlgorithms(algorithSigner, []string{KeyAlgoRSASHA256, KeyAlgoRSASHA512})
+	if err != nil {
+		t.Errorf("unable to create signer with valid algorithms: %v", err)
+	}
+
+	_, err = NewSignerWithAlgorithms(mas, []string{KeyAlgoRSA})
+	if err == nil {
+		t.Error("signer with algos created with restricted algorithms")
 	}
 }

@@ -256,9 +256,9 @@ func (c *ConnectCases) CreateCaseRequest(input *CreateCaseInput) (req *request.R
 // The following fields are required when creating a case:
 //
 //	<ul> <li> <p> <code>customer_id</code> - You must provide the full customer
-//	profile ARN in this format: <code>arn:aws:profile:your AWS Region:your
-//	AWS account ID:domains/profiles domain name/profiles/profile ID</code>
-//	</p> </li> <li> <p> <code>title</code> </p> </li> </ul> </note>
+//	profile ARN in this format: <code>arn:aws:profile:your_AWS_Region:your_AWS_account
+//	ID:domains/your_profiles_domain_name/profiles/profile_ID</code> </p> </li>
+//	<li> <p> <code>title</code> </p> </li> </ul>
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -365,6 +365,8 @@ func (c *ConnectCases) CreateDomainRequest(input *CreateDomainInput) (req *reque
 // the Amazon Connect CreateIntegrationAssociation (https://docs.aws.amazon.com/connect/latest/APIReference/API_CreateIntegrationAssociation.html)
 // API. You need specific IAM permissions to successfully associate the Cases
 // domain. For more information, see Onboard to Cases (https://docs.aws.amazon.com/connect/latest/adminguide/required-permissions-iam-cases.html#onboard-cases-iam).
+//
+//	</important>
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -683,10 +685,17 @@ func (c *ConnectCases) CreateRelatedItemRequest(input *CreateRelatedItemInput) (
 // Creates a related item (comments, tasks, and contacts) and associates it
 // with a case.
 //
-// A Related Item is a resource that is associated with a case. It may or may
-// not have an external identifier linking it to an external resource (for example,
-// a contactArn). All Related Items have their own internal identifier, the
-// relatedItemArn. Examples of related items include comments and contacts.
+//   - A Related Item is a resource that is associated with a case. It may
+//     or may not have an external identifier linking it to an external resource
+//     (for example, a contactArn). All Related Items have their own internal
+//     identifier, the relatedItemArn. Examples of related items include comments
+//     and contacts.
+//
+//   - If you provide a value for performedBy.userArn you must also have DescribeUser
+//     (https://docs.aws.amazon.com/connect/latest/APIReference/API_DescribeUser.html)
+//     permission on the ARN of the user that you provide.
+//
+//     </note>
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -896,7 +905,13 @@ func (c *ConnectCases) DeleteDomainRequest(input *DeleteDomainInput) (req *reque
 
 // DeleteDomain API operation for Amazon Connect Cases.
 //
-// Deletes a domain.
+// Deletes a Cases domain.
+//
+//	<note> <p>After deleting your domain you must disassociate the deleted
+//	domain from your Amazon Connect instance with another API call before
+//	being able to use Cases again with this Amazon Connect instance. See <a
+//	href="https://docs.aws.amazon.com/connect/latest/APIReference/API_DeleteIntegrationAssociation.html">DeleteIntegrationAssociation</a>.</p>
+//	</note>
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2521,7 +2536,9 @@ func (c *ConnectCases) PutCaseEventConfigurationRequest(input *PutCaseEventConfi
 
 // PutCaseEventConfiguration API operation for Amazon Connect Cases.
 //
-// # API for adding case event publishing configuration
+// Adds case event publishing configuration. For a complete list of fields you
+// can add to the event message, see Create case fields (https://docs.aws.amazon.com/connect/latest/adminguide/case-fields.html)
+// in the Amazon Connect Administrator Guide
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3924,6 +3941,9 @@ type CaseFilter struct {
 
 	// A filter for cases. Only one value can be provided.
 	Not *CaseFilter `locationName:"not" type:"structure"`
+
+	// Provides "or all" filtering.
+	OrAll []*CaseFilter `locationName:"orAll" type:"list"`
 }
 
 // String returns the string representation.
@@ -3957,6 +3977,16 @@ func (s *CaseFilter) Validate() error {
 			invalidParams.AddNested("Not", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.OrAll != nil {
+		for i, v := range s.OrAll {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "OrAll", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -3979,6 +4009,12 @@ func (s *CaseFilter) SetField(v *FieldFilter) *CaseFilter {
 // SetNot sets the Not field's value.
 func (s *CaseFilter) SetNot(v *CaseFilter) *CaseFilter {
 	s.Not = v
+	return s
+}
+
+// SetOrAll sets the OrAll field's value.
+func (s *CaseFilter) SetOrAll(v []*CaseFilter) *CaseFilter {
+	s.OrAll = v
 	return s
 }
 
@@ -4875,6 +4911,9 @@ type CreateRelatedItemInput struct {
 	// DomainId is a required field
 	DomainId *string `location:"uri" locationName:"domainId" min:"1" type:"string" required:"true"`
 
+	// Represents the creator of the related item.
+	PerformedBy *UserUnion `locationName:"performedBy" type:"structure"`
+
 	// The type of a related item.
 	//
 	// Type is a required field
@@ -4925,6 +4964,11 @@ func (s *CreateRelatedItemInput) Validate() error {
 			invalidParams.AddNested("Content", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.PerformedBy != nil {
+		if err := s.PerformedBy.Validate(); err != nil {
+			invalidParams.AddNested("PerformedBy", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -4947,6 +4991,12 @@ func (s *CreateRelatedItemInput) SetContent(v *RelatedItemInputContent) *CreateR
 // SetDomainId sets the DomainId field's value.
 func (s *CreateRelatedItemInput) SetDomainId(v string) *CreateRelatedItemInput {
 	s.DomainId = &v
+	return s
+}
+
+// SetPerformedBy sets the PerformedBy field's value.
+func (s *CreateRelatedItemInput) SetPerformedBy(v *UserUnion) *CreateRelatedItemInput {
+	s.PerformedBy = v
 	return s
 }
 
@@ -5287,6 +5337,33 @@ func (s *DomainSummary) SetDomainId(v string) *DomainSummary {
 func (s *DomainSummary) SetName(v string) *DomainSummary {
 	s.Name = &v
 	return s
+}
+
+// An empty value. You cannot set EmptyFieldValue on a field that is required
+// on a case template.
+//
+// This structure will never have any data members. It signifies an empty value
+// on a case field.
+type EmptyFieldValue struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EmptyFieldValue) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EmptyFieldValue) GoString() string {
+	return s.String()
 }
 
 // Configuration to enable EventBridge case event delivery and determine what
@@ -6042,6 +6119,9 @@ type FieldValueUnion struct {
 	// be provided.
 	DoubleValue *float64 `locationName:"doubleValue" type:"double"`
 
+	// An empty value.
+	EmptyValue *EmptyFieldValue `locationName:"emptyValue" type:"structure"`
+
 	// String value type.
 	StringValue *string `locationName:"stringValue" type:"string"`
 }
@@ -6073,6 +6153,12 @@ func (s *FieldValueUnion) SetBooleanValue(v bool) *FieldValueUnion {
 // SetDoubleValue sets the DoubleValue field's value.
 func (s *FieldValueUnion) SetDoubleValue(v float64) *FieldValueUnion {
 	s.DoubleValue = &v
+	return s
+}
+
+// SetEmptyValue sets the EmptyValue field's value.
+func (s *FieldValueUnion) SetEmptyValue(v *EmptyFieldValue) *FieldValueUnion {
+	s.EmptyValue = v
 	return s
 }
 
@@ -8781,6 +8867,9 @@ type SearchRelatedItemsResponseItem struct {
 	// Content is a required field
 	Content *RelatedItemContent `locationName:"content" type:"structure" required:"true"`
 
+	// Represents the creator of the related item.
+	PerformedBy *UserUnion `locationName:"performedBy" type:"structure"`
+
 	// Unique identifier of a related item.
 	//
 	// RelatedItemId is a required field
@@ -8823,6 +8912,12 @@ func (s *SearchRelatedItemsResponseItem) SetAssociationTime(v time.Time) *Search
 // SetContent sets the Content field's value.
 func (s *SearchRelatedItemsResponseItem) SetContent(v *RelatedItemContent) *SearchRelatedItemsResponseItem {
 	s.Content = v
+	return s
+}
+
+// SetPerformedBy sets the PerformedBy field's value.
+func (s *SearchRelatedItemsResponseItem) SetPerformedBy(v *UserUnion) *SearchRelatedItemsResponseItem {
+	s.PerformedBy = v
 	return s
 }
 
@@ -9549,7 +9644,7 @@ type UpdateLayoutInput struct {
 	_ struct{} `type:"structure"`
 
 	// Information about which fields will be present in the layout, the order of
-	// the fields, and a read-only attribute of the field.
+	// the fields.
 	Content *LayoutContent `locationName:"content" type:"structure"`
 
 	// The unique identifier of the Cases domain.
@@ -9810,6 +9905,51 @@ func (s UpdateTemplateOutput) String() string {
 // value will be replaced with "sensitive".
 func (s UpdateTemplateOutput) GoString() string {
 	return s.String()
+}
+
+// Represents the identity of the person who performed the action.
+type UserUnion struct {
+	_ struct{} `type:"structure"`
+
+	// Represents the Amazon Connect ARN of the user.
+	UserArn *string `locationName:"userArn" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UserUnion) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UserUnion) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UserUnion) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UserUnion"}
+	if s.UserArn != nil && len(*s.UserArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("UserArn", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetUserArn sets the UserArn field's value.
+func (s *UserUnion) SetUserArn(v string) *UserUnion {
+	s.UserArn = &v
+	return s
 }
 
 // The request isn't valid. Check the syntax and try again.

@@ -2063,7 +2063,7 @@ func (c *MediaLive) DescribeAccountConfigurationRequest(input *DescribeAccountCo
 
 // DescribeAccountConfiguration API operation for AWS Elemental MediaLive.
 //
-// # Get account configuration
+// # Describe account configuration
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4926,6 +4926,101 @@ func (c *MediaLive) StartChannelWithContext(ctx aws.Context, input *StartChannel
 	return out, req.Send()
 }
 
+const opStartInputDevice = "StartInputDevice"
+
+// StartInputDeviceRequest generates a "aws/request.Request" representing the
+// client's request for the StartInputDevice operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartInputDevice for more information on using the StartInputDevice
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartInputDeviceRequest method.
+//	req, resp := client.StartInputDeviceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartInputDevice
+func (c *MediaLive) StartInputDeviceRequest(input *StartInputDeviceInput) (req *request.Request, output *StartInputDeviceOutput) {
+	op := &request.Operation{
+		Name:       opStartInputDevice,
+		HTTPMethod: "POST",
+		HTTPPath:   "/prod/inputDevices/{inputDeviceId}/start",
+	}
+
+	if input == nil {
+		input = &StartInputDeviceInput{}
+	}
+
+	output = &StartInputDeviceOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// StartInputDevice API operation for AWS Elemental MediaLive.
+//
+// Start an input device that is attached to a MediaConnect flow. (There is
+// no need to start a device that is attached to a MediaLive input; MediaLive
+// starts the device when the channel starts.)
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Elemental MediaLive's
+// API operation StartInputDevice for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//
+//   - UnprocessableEntityException
+//
+//   - InternalServerErrorException
+//
+//   - ForbiddenException
+//
+//   - BadGatewayException
+//
+//   - NotFoundException
+//
+//   - GatewayTimeoutException
+//
+//   - TooManyRequestsException
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StartInputDevice
+func (c *MediaLive) StartInputDevice(input *StartInputDeviceInput) (*StartInputDeviceOutput, error) {
+	req, out := c.StartInputDeviceRequest(input)
+	return out, req.Send()
+}
+
+// StartInputDeviceWithContext is the same as StartInputDevice with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartInputDevice for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *MediaLive) StartInputDeviceWithContext(ctx aws.Context, input *StartInputDeviceInput, opts ...request.Option) (*StartInputDeviceOutput, error) {
+	req, out := c.StartInputDeviceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartInputDeviceMaintenanceWindow = "StartInputDeviceMaintenanceWindow"
 
 // StartInputDeviceMaintenanceWindowRequest generates a "aws/request.Request" representing the
@@ -5206,6 +5301,101 @@ func (c *MediaLive) StopChannel(input *StopChannelInput) (*StopChannelOutput, er
 // for more information on using Contexts.
 func (c *MediaLive) StopChannelWithContext(ctx aws.Context, input *StopChannelInput, opts ...request.Option) (*StopChannelOutput, error) {
 	req, out := c.StopChannelRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStopInputDevice = "StopInputDevice"
+
+// StopInputDeviceRequest generates a "aws/request.Request" representing the
+// client's request for the StopInputDevice operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StopInputDevice for more information on using the StopInputDevice
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StopInputDeviceRequest method.
+//	req, resp := client.StopInputDeviceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StopInputDevice
+func (c *MediaLive) StopInputDeviceRequest(input *StopInputDeviceInput) (req *request.Request, output *StopInputDeviceOutput) {
+	op := &request.Operation{
+		Name:       opStopInputDevice,
+		HTTPMethod: "POST",
+		HTTPPath:   "/prod/inputDevices/{inputDeviceId}/stop",
+	}
+
+	if input == nil {
+		input = &StopInputDeviceInput{}
+	}
+
+	output = &StopInputDeviceOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// StopInputDevice API operation for AWS Elemental MediaLive.
+//
+// Stop an input device that is attached to a MediaConnect flow. (There is no
+// need to stop a device that is attached to a MediaLive input; MediaLive automatically
+// stops the device when the channel stops.)
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Elemental MediaLive's
+// API operation StopInputDevice for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//
+//   - UnprocessableEntityException
+//
+//   - InternalServerErrorException
+//
+//   - ForbiddenException
+//
+//   - BadGatewayException
+//
+//   - NotFoundException
+//
+//   - GatewayTimeoutException
+//
+//   - TooManyRequestsException
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/medialive-2017-10-14/StopInputDevice
+func (c *MediaLive) StopInputDevice(input *StopInputDeviceInput) (*StopInputDeviceOutput, error) {
+	req, out := c.StopInputDeviceRequest(input)
+	return out, req.Send()
+}
+
+// StopInputDeviceWithContext is the same as StopInputDevice with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StopInputDevice for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *MediaLive) StopInputDeviceWithContext(ctx aws.Context, input *StopInputDeviceInput, opts ...request.Option) (*StopInputDeviceOutput, error) {
+	req, out := c.StopInputDeviceRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -6342,6 +6532,10 @@ func (s *AacSettings) SetVbrQuality(v string) *AacSettings {
 type Ac3Settings struct {
 	_ struct{} `type:"structure"`
 
+	// Applies a 3 dB attenuation to the surround channels. Applies only when the
+	// coding mode parameter is CODING_MODE_3_2_LFE.
+	AttenuationControl *string `locationName:"attenuationControl" type:"string" enum:"Ac3AttenuationControl"`
+
 	// Average bitrate in bits/second. Valid bitrates depend on the coding mode.
 	Bitrate *float64 `locationName:"bitrate" type:"double"`
 
@@ -6399,6 +6593,12 @@ func (s *Ac3Settings) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAttenuationControl sets the AttenuationControl field's value.
+func (s *Ac3Settings) SetAttenuationControl(v string) *Ac3Settings {
+	s.AttenuationControl = &v
+	return s
 }
 
 // SetBitrate sets the Bitrate field's value.
@@ -6515,6 +6715,9 @@ func (s AcceptInputDeviceTransferOutput) GoString() string {
 type AccountConfiguration struct {
 	_ struct{} `type:"structure"`
 
+	// Specifies the KMS key to use for all features that use key encryption. Specify
+	// the ARN of a KMS key that you have created. Or leave blank to use the key
+	// that MediaLive creates and manages for you.
 	KmsKeyId *string `locationName:"kmsKeyId" type:"string"`
 }
 
@@ -10604,6 +10807,147 @@ func (s ClaimDeviceOutput) GoString() string {
 	return s.String()
 }
 
+// Property of ColorCorrectionSettings. Used for custom color space conversion.
+// The object identifies one 3D LUT file and specifies the input/output color
+// space combination that the file will be used for.
+type ColorCorrection struct {
+	_ struct{} `type:"structure"`
+
+	// The color space of the input.
+	//
+	// InputColorSpace is a required field
+	InputColorSpace *string `locationName:"inputColorSpace" type:"string" required:"true" enum:"ColorSpace"`
+
+	// The color space of the output.
+	//
+	// OutputColorSpace is a required field
+	OutputColorSpace *string `locationName:"outputColorSpace" type:"string" required:"true" enum:"ColorSpace"`
+
+	// The URI of the 3D LUT file. The protocol must be 's3:' or 's3ssl:':.
+	//
+	// Uri is a required field
+	Uri *string `locationName:"uri" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColorCorrection) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColorCorrection) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ColorCorrection) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ColorCorrection"}
+	if s.InputColorSpace == nil {
+		invalidParams.Add(request.NewErrParamRequired("InputColorSpace"))
+	}
+	if s.OutputColorSpace == nil {
+		invalidParams.Add(request.NewErrParamRequired("OutputColorSpace"))
+	}
+	if s.Uri == nil {
+		invalidParams.Add(request.NewErrParamRequired("Uri"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInputColorSpace sets the InputColorSpace field's value.
+func (s *ColorCorrection) SetInputColorSpace(v string) *ColorCorrection {
+	s.InputColorSpace = &v
+	return s
+}
+
+// SetOutputColorSpace sets the OutputColorSpace field's value.
+func (s *ColorCorrection) SetOutputColorSpace(v string) *ColorCorrection {
+	s.OutputColorSpace = &v
+	return s
+}
+
+// SetUri sets the Uri field's value.
+func (s *ColorCorrection) SetUri(v string) *ColorCorrection {
+	s.Uri = &v
+	return s
+}
+
+// Property of encoderSettings. Controls color conversion when you are using
+// 3D LUT files to perform color conversion on video.
+type ColorCorrectionSettings struct {
+	_ struct{} `type:"structure"`
+
+	// An array of colorCorrections that applies when you are using 3D LUT files
+	// to perform color conversion on video. Each colorCorrection contains one 3D
+	// LUT file (that defines the color mapping for converting an input color space
+	// to an output color space), and the input/output combination that this 3D
+	// LUT file applies to. MediaLive reads the color space in the input metadata,
+	// determines the color space that you have specified for the output, and finds
+	// and uses the LUT file that applies to this combination.
+	//
+	// GlobalColorCorrections is a required field
+	GlobalColorCorrections []*ColorCorrection `locationName:"globalColorCorrections" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColorCorrectionSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColorCorrectionSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ColorCorrectionSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ColorCorrectionSettings"}
+	if s.GlobalColorCorrections == nil {
+		invalidParams.Add(request.NewErrParamRequired("GlobalColorCorrections"))
+	}
+	if s.GlobalColorCorrections != nil {
+		for i, v := range s.GlobalColorCorrections {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "GlobalColorCorrections", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetGlobalColorCorrections sets the GlobalColorCorrections field's value.
+func (s *ColorCorrectionSettings) SetGlobalColorCorrections(v []*ColorCorrection) *ColorCorrectionSettings {
+	s.GlobalColorCorrections = v
+	return s
+}
+
 // Passthrough applies no color space conversion to the output
 type ColorSpacePassthroughSettings struct {
 	_ struct{} `type:"structure"`
@@ -12869,6 +13213,8 @@ type DescribeInputDeviceOutput struct {
 
 	Arn *string `locationName:"arn" type:"string"`
 
+	AvailabilityZone *string `locationName:"availabilityZone" type:"string"`
+
 	// The state of the connection between the input device and AWS.
 	ConnectionState *string `locationName:"connectionState" type:"string" enum:"InputDeviceConnectionState"`
 
@@ -12890,10 +13236,15 @@ type DescribeInputDeviceOutput struct {
 
 	MacAddress *string `locationName:"macAddress" type:"string"`
 
+	MedialiveInputArns []*string `locationName:"medialiveInputArns" type:"list"`
+
 	Name *string `locationName:"name" type:"string"`
 
 	// The network settings for the input device.
 	NetworkSettings *InputDeviceNetworkSettings `locationName:"networkSettings" type:"structure"`
+
+	// The output attachment type of the input device.
+	OutputType *string `locationName:"outputType" type:"string" enum:"InputDeviceOutputType"`
 
 	SerialNumber *string `locationName:"serialNumber" type:"string"`
 
@@ -12929,6 +13280,12 @@ func (s DescribeInputDeviceOutput) GoString() string {
 // SetArn sets the Arn field's value.
 func (s *DescribeInputDeviceOutput) SetArn(v string) *DescribeInputDeviceOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *DescribeInputDeviceOutput) SetAvailabilityZone(v string) *DescribeInputDeviceOutput {
+	s.AvailabilityZone = &v
 	return s
 }
 
@@ -12968,6 +13325,12 @@ func (s *DescribeInputDeviceOutput) SetMacAddress(v string) *DescribeInputDevice
 	return s
 }
 
+// SetMedialiveInputArns sets the MedialiveInputArns field's value.
+func (s *DescribeInputDeviceOutput) SetMedialiveInputArns(v []*string) *DescribeInputDeviceOutput {
+	s.MedialiveInputArns = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *DescribeInputDeviceOutput) SetName(v string) *DescribeInputDeviceOutput {
 	s.Name = &v
@@ -12977,6 +13340,12 @@ func (s *DescribeInputDeviceOutput) SetName(v string) *DescribeInputDeviceOutput
 // SetNetworkSettings sets the NetworkSettings field's value.
 func (s *DescribeInputDeviceOutput) SetNetworkSettings(v *InputDeviceNetworkSettings) *DescribeInputDeviceOutput {
 	s.NetworkSettings = v
+	return s
+}
+
+// SetOutputType sets the OutputType field's value.
+func (s *DescribeInputDeviceOutput) SetOutputType(v string) *DescribeInputDeviceOutput {
+	s.OutputType = &v
 	return s
 }
 
@@ -15402,6 +15771,9 @@ type EncoderSettings struct {
 	// Settings for caption decriptions
 	CaptionDescriptions []*CaptionDescription `locationName:"captionDescriptions" type:"list"`
 
+	// Color Correction Settings
+	ColorCorrectionSettings *ColorCorrectionSettings `locationName:"colorCorrectionSettings" type:"structure"`
+
 	// Feature Activations
 	FeatureActivations *FeatureActivations `locationName:"featureActivations" type:"structure"`
 
@@ -15497,6 +15869,11 @@ func (s *EncoderSettings) Validate() error {
 			}
 		}
 	}
+	if s.ColorCorrectionSettings != nil {
+		if err := s.ColorCorrectionSettings.Validate(); err != nil {
+			invalidParams.AddNested("ColorCorrectionSettings", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.GlobalConfiguration != nil {
 		if err := s.GlobalConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("GlobalConfiguration", err.(request.ErrInvalidParams))
@@ -15574,6 +15951,12 @@ func (s *EncoderSettings) SetCaptionDescriptions(v []*CaptionDescription) *Encod
 	return s
 }
 
+// SetColorCorrectionSettings sets the ColorCorrectionSettings field's value.
+func (s *EncoderSettings) SetColorCorrectionSettings(v *ColorCorrectionSettings) *EncoderSettings {
+	s.ColorCorrectionSettings = v
+	return s
+}
+
 // SetFeatureActivations sets the FeatureActivations field's value.
 func (s *EncoderSettings) SetFeatureActivations(v *FeatureActivations) *EncoderSettings {
 	s.FeatureActivations = v
@@ -15619,6 +16002,54 @@ func (s *EncoderSettings) SetTimecodeConfig(v *TimecodeConfig) *EncoderSettings 
 // SetVideoDescriptions sets the VideoDescriptions field's value.
 func (s *EncoderSettings) SetVideoDescriptions(v []*VideoDescription) *EncoderSettings {
 	s.VideoDescriptions = v
+	return s
+}
+
+// Epoch Locking Settings
+type EpochLockingSettings struct {
+	_ struct{} `type:"structure"`
+
+	// Optional. Enter a value here to use a custom epoch, instead of the standard
+	// epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time
+	// of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00
+	// or later. Always set the MM:SS portion to 00:00.
+	CustomEpoch *string `locationName:"customEpoch" type:"string"`
+
+	// Optional. Enter a time for the jam sync. The default is midnight UTC. When
+	// epoch locking is enabled, MediaLive performs a daily jam sync on every output
+	// encode to ensure timecodes don’t diverge from the wall clock. The jam sync
+	// applies only to encodes with frame rate of 29.97 or 59.94 FPS. To override,
+	// enter a time in HH:MM:SS in UTC. Always set the MM:SS portion to 00:00.
+	JamSyncTime *string `locationName:"jamSyncTime" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EpochLockingSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EpochLockingSettings) GoString() string {
+	return s.String()
+}
+
+// SetCustomEpoch sets the CustomEpoch field's value.
+func (s *EpochLockingSettings) SetCustomEpoch(v string) *EpochLockingSettings {
+	s.CustomEpoch = &v
+	return s
+}
+
+// SetJamSyncTime sets the JamSyncTime field's value.
+func (s *EpochLockingSettings) SetJamSyncTime(v string) *EpochLockingSettings {
+	s.JamSyncTime = &v
 	return s
 }
 
@@ -15868,6 +16299,11 @@ type FeatureActivations struct {
 	// an existing schedule, make sure that you first delete all input prepare actions
 	// from the schedule.
 	InputPrepareScheduleActions *string `locationName:"inputPrepareScheduleActions" type:"string" enum:"FeatureActivationsInputPrepareScheduleActions"`
+
+	// Enables the output static image overlay feature. Enabling this feature allows
+	// you to send channel schedule updatesto display/clear/modify image overlays
+	// on an output-by-output bases.
+	OutputStaticImageOverlayScheduleActions *string `locationName:"outputStaticImageOverlayScheduleActions" type:"string" enum:"FeatureActivationsOutputStaticImageOverlayScheduleActions"`
 }
 
 // String returns the string representation.
@@ -15891,6 +16327,12 @@ func (s FeatureActivations) GoString() string {
 // SetInputPrepareScheduleActions sets the InputPrepareScheduleActions field's value.
 func (s *FeatureActivations) SetInputPrepareScheduleActions(v string) *FeatureActivations {
 	s.InputPrepareScheduleActions = &v
+	return s
+}
+
+// SetOutputStaticImageOverlayScheduleActions sets the OutputStaticImageOverlayScheduleActions field's value.
+func (s *FeatureActivations) SetOutputStaticImageOverlayScheduleActions(v string) *FeatureActivations {
+	s.OutputStaticImageOverlayScheduleActions = &v
 	return s
 }
 
@@ -16534,6 +16976,9 @@ type GlobalConfiguration struct {
 	// Unix epoch.
 	OutputLockingMode *string `locationName:"outputLockingMode" type:"string" enum:"GlobalConfigurationOutputLockingMode"`
 
+	// Advanced output locking settings
+	OutputLockingSettings *OutputLockingSettings `locationName:"outputLockingSettings" type:"structure"`
+
 	// Indicates whether the rate of frames emitted by the Live encoder should be
 	// paced by its system clock (which optionally may be locked to another source
 	// via NTP) or should be locked to the clock of the source that is providing
@@ -16603,6 +17048,12 @@ func (s *GlobalConfiguration) SetInputLossBehavior(v *InputLossBehavior) *Global
 // SetOutputLockingMode sets the OutputLockingMode field's value.
 func (s *GlobalConfiguration) SetOutputLockingMode(v string) *GlobalConfiguration {
 	s.OutputLockingMode = &v
+	return s
+}
+
+// SetOutputLockingSettings sets the OutputLockingSettings field's value.
+func (s *GlobalConfiguration) SetOutputLockingSettings(v *OutputLockingSettings) *GlobalConfiguration {
+	s.OutputLockingSettings = v
 	return s
 }
 
@@ -19631,9 +20082,67 @@ func (s *InputDestinationVpc) SetNetworkInterfaceId(v string) *InputDestinationV
 	return s
 }
 
+// One audio configuration that specifies the format for one audio pair that
+// the device produces as output.
+type InputDeviceConfigurableAudioChannelPairConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The ID for one audio pair configuration, a value from 1 to 8.
+	Id *int64 `locationName:"id" type:"integer"`
+
+	// The profile to set for one audio pair configuration. Choose an enumeration
+	// value. Each value describes one audio configuration using the format (rate
+	// control algorithm)-(codec)_(quality)-(bitrate in bytes). For example, CBR-AAC_HQ-192000.
+	// Or choose DISABLED, in which case the device won't produce audio for this
+	// pair.
+	Profile *string `locationName:"profile" type:"string" enum:"InputDeviceConfigurableAudioChannelPairProfile"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceConfigurableAudioChannelPairConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceConfigurableAudioChannelPairConfig) GoString() string {
+	return s.String()
+}
+
+// SetId sets the Id field's value.
+func (s *InputDeviceConfigurableAudioChannelPairConfig) SetId(v int64) *InputDeviceConfigurableAudioChannelPairConfig {
+	s.Id = &v
+	return s
+}
+
+// SetProfile sets the Profile field's value.
+func (s *InputDeviceConfigurableAudioChannelPairConfig) SetProfile(v string) *InputDeviceConfigurableAudioChannelPairConfig {
+	s.Profile = &v
+	return s
+}
+
 // Configurable settings for the input device.
 type InputDeviceConfigurableSettings struct {
 	_ struct{} `type:"structure"`
+
+	// An array of eight audio configurations, one for each audio pair in the source.
+	// Set up each audio configuration either to exclude the pair, or to format
+	// it and include it in the output from the device. This parameter applies only
+	// to UHD devices, and only when the device is configured as the source for
+	// a MediaConnect flow. For an HD device, you configure the audio by setting
+	// up audio selectors in the channel configuration.
+	AudioChannelPairs []*InputDeviceConfigurableAudioChannelPairConfig `locationName:"audioChannelPairs" type:"list"`
+
+	// Choose the codec for the video that the device produces. Only UHD devices
+	// can specify this parameter.
+	Codec *string `locationName:"codec" type:"string" enum:"InputDeviceCodec"`
 
 	// The input source that you want to use. If the device has a source connected
 	// to only one of its input ports, or if you don't care which source the device
@@ -19647,6 +20156,11 @@ type InputDeviceConfigurableSettings struct {
 	// The maximum bitrate in bits per second. Set a value here to throttle the
 	// bitrate of the source video.
 	MaxBitrate *int64 `locationName:"maxBitrate" type:"integer"`
+
+	// To attach this device to a MediaConnect flow, specify these parameters. To
+	// detach an existing flow, enter {} for the value of mediaconnectSettings.
+	// Only UHD devices can specify this parameter.
+	MediaconnectSettings *InputDeviceMediaConnectConfigurableSettings `locationName:"mediaconnectSettings" type:"structure"`
 }
 
 // String returns the string representation.
@@ -19667,6 +20181,18 @@ func (s InputDeviceConfigurableSettings) GoString() string {
 	return s.String()
 }
 
+// SetAudioChannelPairs sets the AudioChannelPairs field's value.
+func (s *InputDeviceConfigurableSettings) SetAudioChannelPairs(v []*InputDeviceConfigurableAudioChannelPairConfig) *InputDeviceConfigurableSettings {
+	s.AudioChannelPairs = v
+	return s
+}
+
+// SetCodec sets the Codec field's value.
+func (s *InputDeviceConfigurableSettings) SetCodec(v string) *InputDeviceConfigurableSettings {
+	s.Codec = &v
+	return s
+}
+
 // SetConfiguredInput sets the ConfiguredInput field's value.
 func (s *InputDeviceConfigurableSettings) SetConfiguredInput(v string) *InputDeviceConfigurableSettings {
 	s.ConfiguredInput = &v
@@ -19682,6 +20208,12 @@ func (s *InputDeviceConfigurableSettings) SetLatencyMs(v int64) *InputDeviceConf
 // SetMaxBitrate sets the MaxBitrate field's value.
 func (s *InputDeviceConfigurableSettings) SetMaxBitrate(v int64) *InputDeviceConfigurableSettings {
 	s.MaxBitrate = &v
+	return s
+}
+
+// SetMediaconnectSettings sets the MediaconnectSettings field's value.
+func (s *InputDeviceConfigurableSettings) SetMediaconnectSettings(v *InputDeviceMediaConnectConfigurableSettings) *InputDeviceConfigurableSettings {
+	s.MediaconnectSettings = v
 	return s
 }
 
@@ -19791,6 +20323,128 @@ func (s *InputDeviceHdSettings) SetScanType(v string) *InputDeviceHdSettings {
 // SetWidth sets the Width field's value.
 func (s *InputDeviceHdSettings) SetWidth(v int64) *InputDeviceHdSettings {
 	s.Width = &v
+	return s
+}
+
+// Parameters required to attach a MediaConnect flow to the device.
+type InputDeviceMediaConnectConfigurableSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the MediaConnect flow to attach this device to.
+	FlowArn *string `locationName:"flowArn" type:"string"`
+
+	// The ARN for the role that MediaLive assumes to access the attached flow and
+	// secret. For more information about how to create this role, see the MediaLive
+	// user guide.
+	RoleArn *string `locationName:"roleArn" type:"string"`
+
+	// The ARN for the secret that holds the encryption key to encrypt the content
+	// output by the device.
+	SecretArn *string `locationName:"secretArn" type:"string"`
+
+	// The name of the MediaConnect Flow source to stream to.
+	SourceName *string `locationName:"sourceName" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceMediaConnectConfigurableSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceMediaConnectConfigurableSettings) GoString() string {
+	return s.String()
+}
+
+// SetFlowArn sets the FlowArn field's value.
+func (s *InputDeviceMediaConnectConfigurableSettings) SetFlowArn(v string) *InputDeviceMediaConnectConfigurableSettings {
+	s.FlowArn = &v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *InputDeviceMediaConnectConfigurableSettings) SetRoleArn(v string) *InputDeviceMediaConnectConfigurableSettings {
+	s.RoleArn = &v
+	return s
+}
+
+// SetSecretArn sets the SecretArn field's value.
+func (s *InputDeviceMediaConnectConfigurableSettings) SetSecretArn(v string) *InputDeviceMediaConnectConfigurableSettings {
+	s.SecretArn = &v
+	return s
+}
+
+// SetSourceName sets the SourceName field's value.
+func (s *InputDeviceMediaConnectConfigurableSettings) SetSourceName(v string) *InputDeviceMediaConnectConfigurableSettings {
+	s.SourceName = &v
+	return s
+}
+
+// Information about the MediaConnect flow attached to the device.
+type InputDeviceMediaConnectSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the MediaConnect flow.
+	FlowArn *string `locationName:"flowArn" type:"string"`
+
+	// The ARN for the role that MediaLive assumes to access the attached flow and
+	// secret.
+	RoleArn *string `locationName:"roleArn" type:"string"`
+
+	// The ARN of the secret used to encrypt the stream.
+	SecretArn *string `locationName:"secretArn" type:"string"`
+
+	// The name of the MediaConnect flow source.
+	SourceName *string `locationName:"sourceName" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceMediaConnectSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceMediaConnectSettings) GoString() string {
+	return s.String()
+}
+
+// SetFlowArn sets the FlowArn field's value.
+func (s *InputDeviceMediaConnectSettings) SetFlowArn(v string) *InputDeviceMediaConnectSettings {
+	s.FlowArn = &v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *InputDeviceMediaConnectSettings) SetRoleArn(v string) *InputDeviceMediaConnectSettings {
+	s.RoleArn = &v
+	return s
+}
+
+// SetSecretArn sets the SecretArn field's value.
+func (s *InputDeviceMediaConnectSettings) SetSecretArn(v string) *InputDeviceMediaConnectSettings {
+	s.SecretArn = &v
+	return s
+}
+
+// SetSourceName sets the SourceName field's value.
+func (s *InputDeviceMediaConnectSettings) SetSourceName(v string) *InputDeviceMediaConnectSettings {
+	s.SourceName = &v
 	return s
 }
 
@@ -19934,6 +20588,9 @@ type InputDeviceSummary struct {
 	// The unique ARN of the input device.
 	Arn *string `locationName:"arn" type:"string"`
 
+	// The Availability Zone associated with this input device.
+	AvailabilityZone *string `locationName:"availabilityZone" type:"string"`
+
 	// The state of the connection between the input device and AWS.
 	ConnectionState *string `locationName:"connectionState" type:"string" enum:"InputDeviceConnectionState"`
 
@@ -19956,11 +20613,20 @@ type InputDeviceSummary struct {
 	// The network MAC address of the input device.
 	MacAddress *string `locationName:"macAddress" type:"string"`
 
+	// An array of the ARNs for the MediaLive inputs attached to the device. Returned
+	// only if the outputType is MEDIALIVE_INPUT.
+	MedialiveInputArns []*string `locationName:"medialiveInputArns" type:"list"`
+
 	// A name that you specify for the input device.
 	Name *string `locationName:"name" type:"string"`
 
 	// Network settings for the input device.
 	NetworkSettings *InputDeviceNetworkSettings `locationName:"networkSettings" type:"structure"`
+
+	// The output attachment type of the input device. Specifies MEDIACONNECT_FLOW
+	// if this device is the source for a MediaConnect flow. Specifies MEDIALIVE_INPUT
+	// if this device is the source for a MediaLive input.
+	OutputType *string `locationName:"outputType" type:"string" enum:"InputDeviceOutputType"`
 
 	// The unique serial number of the input device.
 	SerialNumber *string `locationName:"serialNumber" type:"string"`
@@ -19996,6 +20662,12 @@ func (s InputDeviceSummary) GoString() string {
 // SetArn sets the Arn field's value.
 func (s *InputDeviceSummary) SetArn(v string) *InputDeviceSummary {
 	s.Arn = &v
+	return s
+}
+
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *InputDeviceSummary) SetAvailabilityZone(v string) *InputDeviceSummary {
+	s.AvailabilityZone = &v
 	return s
 }
 
@@ -20035,6 +20707,12 @@ func (s *InputDeviceSummary) SetMacAddress(v string) *InputDeviceSummary {
 	return s
 }
 
+// SetMedialiveInputArns sets the MedialiveInputArns field's value.
+func (s *InputDeviceSummary) SetMedialiveInputArns(v []*string) *InputDeviceSummary {
+	s.MedialiveInputArns = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *InputDeviceSummary) SetName(v string) *InputDeviceSummary {
 	s.Name = &v
@@ -20044,6 +20722,12 @@ func (s *InputDeviceSummary) SetName(v string) *InputDeviceSummary {
 // SetNetworkSettings sets the NetworkSettings field's value.
 func (s *InputDeviceSummary) SetNetworkSettings(v *InputDeviceNetworkSettings) *InputDeviceSummary {
 	s.NetworkSettings = v
+	return s
+}
+
+// SetOutputType sets the OutputType field's value.
+func (s *InputDeviceSummary) SetOutputType(v string) *InputDeviceSummary {
+	s.OutputType = &v
 	return s
 }
 
@@ -20071,6 +20755,51 @@ func (s *InputDeviceSummary) SetUhdDeviceSettings(v *InputDeviceUhdSettings) *In
 	return s
 }
 
+// One audio configuration that specifies the format for one audio pair that
+// the device produces as output.
+type InputDeviceUhdAudioChannelPairConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The ID for one audio pair configuration, a value from 1 to 8.
+	Id *int64 `locationName:"id" type:"integer"`
+
+	// The profile for one audio pair configuration. This property describes one
+	// audio configuration in the format (rate control algorithm)-(codec)_(quality)-(bitrate
+	// in bytes). For example, CBR-AAC_HQ-192000. Or DISABLED, in which case the
+	// device won't produce audio for this pair.
+	Profile *string `locationName:"profile" type:"string" enum:"InputDeviceUhdAudioChannelPairProfile"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceUhdAudioChannelPairConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InputDeviceUhdAudioChannelPairConfig) GoString() string {
+	return s.String()
+}
+
+// SetId sets the Id field's value.
+func (s *InputDeviceUhdAudioChannelPairConfig) SetId(v int64) *InputDeviceUhdAudioChannelPairConfig {
+	s.Id = &v
+	return s
+}
+
+// SetProfile sets the Profile field's value.
+func (s *InputDeviceUhdAudioChannelPairConfig) SetProfile(v string) *InputDeviceUhdAudioChannelPairConfig {
+	s.Profile = &v
+	return s
+}
+
 // Settings that describe the active source from the input device, and the video
 // characteristics of that source.
 type InputDeviceUhdSettings struct {
@@ -20079,6 +20808,15 @@ type InputDeviceUhdSettings struct {
 	// If you specified Auto as the configured input, specifies which of the sources
 	// is currently active (SDI or HDMI).
 	ActiveInput *string `locationName:"activeInput" type:"string" enum:"InputDeviceActiveInput"`
+
+	// An array of eight audio configurations, one for each audio pair in the source.
+	// Each audio configuration specifies either to exclude the pair, or to format
+	// it and include it in the output from the UHD device. Applies only when the
+	// device is configured as the source for a MediaConnect flow.
+	AudioChannelPairs []*InputDeviceUhdAudioChannelPairConfig `locationName:"audioChannelPairs" type:"list"`
+
+	// The codec for the video that the device produces.
+	Codec *string `locationName:"codec" type:"string" enum:"InputDeviceCodec"`
 
 	// The source at the input device that is currently active. You can specify
 	// this source.
@@ -20100,6 +20838,10 @@ type InputDeviceUhdSettings struct {
 	// The current maximum bitrate for ingesting this source, in bits per second.
 	// You can specify this maximum.
 	MaxBitrate *int64 `locationName:"maxBitrate" type:"integer"`
+
+	// Information about the MediaConnect flow attached to the device. Returned
+	// only if the outputType is MEDIACONNECT_FLOW.
+	MediaconnectSettings *InputDeviceMediaConnectSettings `locationName:"mediaconnectSettings" type:"structure"`
 
 	// The scan type of the video source.
 	ScanType *string `locationName:"scanType" type:"string" enum:"InputDeviceScanType"`
@@ -20129,6 +20871,18 @@ func (s InputDeviceUhdSettings) GoString() string {
 // SetActiveInput sets the ActiveInput field's value.
 func (s *InputDeviceUhdSettings) SetActiveInput(v string) *InputDeviceUhdSettings {
 	s.ActiveInput = &v
+	return s
+}
+
+// SetAudioChannelPairs sets the AudioChannelPairs field's value.
+func (s *InputDeviceUhdSettings) SetAudioChannelPairs(v []*InputDeviceUhdAudioChannelPairConfig) *InputDeviceUhdSettings {
+	s.AudioChannelPairs = v
+	return s
+}
+
+// SetCodec sets the Codec field's value.
+func (s *InputDeviceUhdSettings) SetCodec(v string) *InputDeviceUhdSettings {
+	s.Codec = &v
 	return s
 }
 
@@ -20165,6 +20919,12 @@ func (s *InputDeviceUhdSettings) SetLatencyMs(v int64) *InputDeviceUhdSettings {
 // SetMaxBitrate sets the MaxBitrate field's value.
 func (s *InputDeviceUhdSettings) SetMaxBitrate(v int64) *InputDeviceUhdSettings {
 	s.MaxBitrate = &v
+	return s
+}
+
+// SetMediaconnectSettings sets the MediaconnectSettings field's value.
+func (s *InputDeviceUhdSettings) SetMediaconnectSettings(v *InputDeviceMediaConnectSettings) *InputDeviceUhdSettings {
+	s.MediaconnectSettings = v
 	return s
 }
 
@@ -22804,6 +23564,16 @@ type M3u8Settings struct {
 	// This parameter is unused and deprecated.
 	EcmPid *string `locationName:"ecmPid" type:"string"`
 
+	// If set to passthrough, passes any KLV data from the input source to this
+	// output.
+	KlvBehavior *string `locationName:"klvBehavior" type:"string" enum:"M3u8KlvBehavior"`
+
+	// Packet Identifier (PID) for input source KLV data to this output. Multiple
+	// values are accepted, and can be entered in ranges and/or by comma separation.
+	// Can be entered as decimal or hexadecimal values. Each PID specified must
+	// be in the range of 32 (or 0x20)..8182 (or 0x1ff6).
+	KlvDataPids *string `locationName:"klvDataPids" type:"string"`
+
 	// If set to passthrough, Nielsen inaudible tones for media tracking will be
 	// detected in the input audio and an equivalent ID3 tag will be inserted in
 	// the output.
@@ -22895,6 +23665,18 @@ func (s *M3u8Settings) SetAudioPids(v string) *M3u8Settings {
 // SetEcmPid sets the EcmPid field's value.
 func (s *M3u8Settings) SetEcmPid(v string) *M3u8Settings {
 	s.EcmPid = &v
+	return s
+}
+
+// SetKlvBehavior sets the KlvBehavior field's value.
+func (s *M3u8Settings) SetKlvBehavior(v string) *M3u8Settings {
+	s.KlvBehavior = &v
+	return s
+}
+
+// SetKlvDataPids sets the KlvDataPids field's value.
+func (s *M3u8Settings) SetKlvDataPids(v string) *M3u8Settings {
+	s.KlvDataPids = &v
 	return s
 }
 
@@ -26180,6 +26962,47 @@ func (s *OutputLocationRef) SetDestinationRefId(v string) *OutputLocationRef {
 	return s
 }
 
+// Output Locking Settings
+type OutputLockingSettings struct {
+	_ struct{} `type:"structure"`
+
+	// Epoch Locking Settings
+	EpochLockingSettings *EpochLockingSettings `locationName:"epochLockingSettings" type:"structure"`
+
+	// Pipeline Locking Settings
+	PipelineLockingSettings *PipelineLockingSettings `locationName:"pipelineLockingSettings" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OutputLockingSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OutputLockingSettings) GoString() string {
+	return s.String()
+}
+
+// SetEpochLockingSettings sets the EpochLockingSettings field's value.
+func (s *OutputLockingSettings) SetEpochLockingSettings(v *EpochLockingSettings) *OutputLockingSettings {
+	s.EpochLockingSettings = v
+	return s
+}
+
+// SetPipelineLockingSettings sets the PipelineLockingSettings field's value.
+func (s *OutputLockingSettings) SetPipelineLockingSettings(v *PipelineLockingSettings) *OutputLockingSettings {
+	s.PipelineLockingSettings = v
+	return s
+}
+
 // Output Settings
 type OutputSettings struct {
 	_ struct{} `type:"structure"`
@@ -26454,6 +27277,29 @@ func (s *PipelineDetail) SetActiveMotionGraphicsUri(v string) *PipelineDetail {
 func (s *PipelineDetail) SetPipelineId(v string) *PipelineDetail {
 	s.PipelineId = &v
 	return s
+}
+
+// Pipeline Locking Settings
+type PipelineLockingSettings struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineLockingSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineLockingSettings) GoString() string {
+	return s.String()
 }
 
 // Settings for pausing a pipeline.
@@ -27337,6 +28183,13 @@ type RtmpGroupSettings struct {
 	// 1 video will be passed.
 	CaptionData *string `locationName:"captionData" type:"string" enum:"RtmpCaptionData"`
 
+	// Applies only when the rate control mode (in the codec settings) is CBR (constant
+	// bit rate). Controls whether the RTMP output stream is padded (with FILL NAL
+	// units) in order to achieve a constant bit rate that is truly constant. When
+	// there is no padding, the bandwidth varies (up to the bitrate value in the
+	// codec settings). We recommend that you choose Auto.
+	IncludeFillerNalUnits *string `locationName:"includeFillerNalUnits" type:"string" enum:"IncludeFillerNalUnits"`
+
 	// Controls the behavior of this RTMP group if input becomes unavailable.- emitOutput:
 	// Emit a slate until input returns.- pauseOutput: Stop transmitting data until
 	// input returns. This does not close the underlying RTMP connection.
@@ -27405,6 +28258,12 @@ func (s *RtmpGroupSettings) SetCacheLength(v int64) *RtmpGroupSettings {
 // SetCaptionData sets the CaptionData field's value.
 func (s *RtmpGroupSettings) SetCaptionData(v string) *RtmpGroupSettings {
 	s.CaptionData = &v
+	return s
+}
+
+// SetIncludeFillerNalUnits sets the IncludeFillerNalUnits field's value.
+func (s *RtmpGroupSettings) SetIncludeFillerNalUnits(v string) *RtmpGroupSettings {
+	s.IncludeFillerNalUnits = &v
 	return s
 }
 
@@ -27633,6 +28492,12 @@ type ScheduleActionSettings struct {
 
 	// Action to deactivate a static image overlay
 	StaticImageDeactivateSettings *StaticImageDeactivateScheduleActionSettings `locationName:"staticImageDeactivateSettings" type:"structure"`
+
+	// Action to activate a static image overlay in one or more specified outputs
+	StaticImageOutputActivateSettings *StaticImageOutputActivateScheduleActionSettings `locationName:"staticImageOutputActivateSettings" type:"structure"`
+
+	// Action to deactivate a static image overlay in one or more specified outputs
+	StaticImageOutputDeactivateSettings *StaticImageOutputDeactivateScheduleActionSettings `locationName:"staticImageOutputDeactivateSettings" type:"structure"`
 }
 
 // String returns the string representation.
@@ -27699,6 +28564,16 @@ func (s *ScheduleActionSettings) Validate() error {
 	if s.StaticImageActivateSettings != nil {
 		if err := s.StaticImageActivateSettings.Validate(); err != nil {
 			invalidParams.AddNested("StaticImageActivateSettings", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.StaticImageOutputActivateSettings != nil {
+		if err := s.StaticImageOutputActivateSettings.Validate(); err != nil {
+			invalidParams.AddNested("StaticImageOutputActivateSettings", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.StaticImageOutputDeactivateSettings != nil {
+		if err := s.StaticImageOutputDeactivateSettings.Validate(); err != nil {
+			invalidParams.AddNested("StaticImageOutputDeactivateSettings", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -27783,6 +28658,18 @@ func (s *ScheduleActionSettings) SetStaticImageActivateSettings(v *StaticImageAc
 // SetStaticImageDeactivateSettings sets the StaticImageDeactivateSettings field's value.
 func (s *ScheduleActionSettings) SetStaticImageDeactivateSettings(v *StaticImageDeactivateScheduleActionSettings) *ScheduleActionSettings {
 	s.StaticImageDeactivateSettings = v
+	return s
+}
+
+// SetStaticImageOutputActivateSettings sets the StaticImageOutputActivateSettings field's value.
+func (s *ScheduleActionSettings) SetStaticImageOutputActivateSettings(v *StaticImageOutputActivateScheduleActionSettings) *ScheduleActionSettings {
+	s.StaticImageOutputActivateSettings = v
+	return s
+}
+
+// SetStaticImageOutputDeactivateSettings sets the StaticImageOutputDeactivateSettings field's value.
+func (s *ScheduleActionSettings) SetStaticImageOutputDeactivateSettings(v *StaticImageOutputDeactivateScheduleActionSettings) *ScheduleActionSettings {
+	s.StaticImageOutputDeactivateSettings = v
 	return s
 }
 
@@ -29039,6 +29926,53 @@ func (s *StartChannelOutput) SetVpc(v *VpcOutputSettingsDescription) *StartChann
 	return s
 }
 
+type StartInputDeviceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// InputDeviceId is a required field
+	InputDeviceId *string `location:"uri" locationName:"inputDeviceId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartInputDeviceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartInputDeviceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartInputDeviceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartInputDeviceInput"}
+	if s.InputDeviceId == nil {
+		invalidParams.Add(request.NewErrParamRequired("InputDeviceId"))
+	}
+	if s.InputDeviceId != nil && len(*s.InputDeviceId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("InputDeviceId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInputDeviceId sets the InputDeviceId field's value.
+func (s *StartInputDeviceInput) SetInputDeviceId(v string) *StartInputDeviceInput {
+	s.InputDeviceId = &v
+	return s
+}
+
 type StartInputDeviceMaintenanceWindowInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -29105,6 +30039,28 @@ func (s StartInputDeviceMaintenanceWindowOutput) String() string {
 // be included in the string output. The member name will be present, but the
 // value will be replaced with "sensitive".
 func (s StartInputDeviceMaintenanceWindowOutput) GoString() string {
+	return s.String()
+}
+
+type StartInputDeviceOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartInputDeviceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartInputDeviceOutput) GoString() string {
 	return s.String()
 }
 
@@ -29494,6 +30450,245 @@ func (s *StaticImageDeactivateScheduleActionSettings) SetLayer(v int64) *StaticI
 	return s
 }
 
+// Settings for the action to activate a static image.
+type StaticImageOutputActivateScheduleActionSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The duration in milliseconds for the image to remain on the video. If omitted
+	// or set to 0 the duration is unlimited and the image will remain until it
+	// is explicitly deactivated.
+	Duration *int64 `locationName:"duration" type:"integer"`
+
+	// The time in milliseconds for the image to fade in. The fade-in starts at
+	// the start time of the overlay. Default is 0 (no fade-in).
+	FadeIn *int64 `locationName:"fadeIn" type:"integer"`
+
+	// Applies only if a duration is specified. The time in milliseconds for the
+	// image to fade out. The fade-out starts when the duration time is hit, so
+	// it effectively extends the duration. Default is 0 (no fade-out).
+	FadeOut *int64 `locationName:"fadeOut" type:"integer"`
+
+	// The height of the image when inserted into the video, in pixels. The overlay
+	// will be scaled up or down to the specified height. Leave blank to use the
+	// native height of the overlay.
+	Height *int64 `locationName:"height" min:"1" type:"integer"`
+
+	// The location and filename of the image file to overlay on the video. The
+	// file must be a 32-bit BMP, PNG, or TGA file, and must not be larger (in pixels)
+	// than the input video.
+	//
+	// Image is a required field
+	Image *InputLocation `locationName:"image" type:"structure" required:"true"`
+
+	// Placement of the left edge of the overlay relative to the left edge of the
+	// video frame, in pixels. 0 (the default) is the left edge of the frame. If
+	// the placement causes the overlay to extend beyond the right edge of the underlying
+	// video, then the overlay is cropped on the right.
+	ImageX *int64 `locationName:"imageX" type:"integer"`
+
+	// Placement of the top edge of the overlay relative to the top edge of the
+	// video frame, in pixels. 0 (the default) is the top edge of the frame. If
+	// the placement causes the overlay to extend beyond the bottom edge of the
+	// underlying video, then the overlay is cropped on the bottom.
+	ImageY *int64 `locationName:"imageY" type:"integer"`
+
+	// The number of the layer, 0 to 7. There are 8 layers that can be overlaid
+	// on the video, each layer with a different image. The layers are in Z order,
+	// which means that overlays with higher values of layer are inserted on top
+	// of overlays with lower values of layer. Default is 0.
+	Layer *int64 `locationName:"layer" type:"integer"`
+
+	// Opacity of image where 0 is transparent and 100 is fully opaque. Default
+	// is 100.
+	Opacity *int64 `locationName:"opacity" type:"integer"`
+
+	// The name(s) of the output(s) the activation should apply to.
+	//
+	// OutputNames is a required field
+	OutputNames []*string `locationName:"outputNames" type:"list" required:"true"`
+
+	// The width of the image when inserted into the video, in pixels. The overlay
+	// will be scaled up or down to the specified width. Leave blank to use the
+	// native width of the overlay.
+	Width *int64 `locationName:"width" min:"1" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StaticImageOutputActivateScheduleActionSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StaticImageOutputActivateScheduleActionSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StaticImageOutputActivateScheduleActionSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StaticImageOutputActivateScheduleActionSettings"}
+	if s.Height != nil && *s.Height < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("Height", 1))
+	}
+	if s.Image == nil {
+		invalidParams.Add(request.NewErrParamRequired("Image"))
+	}
+	if s.OutputNames == nil {
+		invalidParams.Add(request.NewErrParamRequired("OutputNames"))
+	}
+	if s.Width != nil && *s.Width < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("Width", 1))
+	}
+	if s.Image != nil {
+		if err := s.Image.Validate(); err != nil {
+			invalidParams.AddNested("Image", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDuration sets the Duration field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetDuration(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.Duration = &v
+	return s
+}
+
+// SetFadeIn sets the FadeIn field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetFadeIn(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.FadeIn = &v
+	return s
+}
+
+// SetFadeOut sets the FadeOut field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetFadeOut(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.FadeOut = &v
+	return s
+}
+
+// SetHeight sets the Height field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetHeight(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.Height = &v
+	return s
+}
+
+// SetImage sets the Image field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetImage(v *InputLocation) *StaticImageOutputActivateScheduleActionSettings {
+	s.Image = v
+	return s
+}
+
+// SetImageX sets the ImageX field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetImageX(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.ImageX = &v
+	return s
+}
+
+// SetImageY sets the ImageY field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetImageY(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.ImageY = &v
+	return s
+}
+
+// SetLayer sets the Layer field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetLayer(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.Layer = &v
+	return s
+}
+
+// SetOpacity sets the Opacity field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetOpacity(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.Opacity = &v
+	return s
+}
+
+// SetOutputNames sets the OutputNames field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetOutputNames(v []*string) *StaticImageOutputActivateScheduleActionSettings {
+	s.OutputNames = v
+	return s
+}
+
+// SetWidth sets the Width field's value.
+func (s *StaticImageOutputActivateScheduleActionSettings) SetWidth(v int64) *StaticImageOutputActivateScheduleActionSettings {
+	s.Width = &v
+	return s
+}
+
+// Settings for the action to deactivate the image in a specific layer.
+type StaticImageOutputDeactivateScheduleActionSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The time in milliseconds for the image to fade out. Default is 0 (no fade-out).
+	FadeOut *int64 `locationName:"fadeOut" type:"integer"`
+
+	// The image overlay layer to deactivate, 0 to 7. Default is 0.
+	Layer *int64 `locationName:"layer" type:"integer"`
+
+	// The name(s) of the output(s) the deactivation should apply to.
+	//
+	// OutputNames is a required field
+	OutputNames []*string `locationName:"outputNames" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StaticImageOutputDeactivateScheduleActionSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StaticImageOutputDeactivateScheduleActionSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StaticImageOutputDeactivateScheduleActionSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StaticImageOutputDeactivateScheduleActionSettings"}
+	if s.OutputNames == nil {
+		invalidParams.Add(request.NewErrParamRequired("OutputNames"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFadeOut sets the FadeOut field's value.
+func (s *StaticImageOutputDeactivateScheduleActionSettings) SetFadeOut(v int64) *StaticImageOutputDeactivateScheduleActionSettings {
+	s.FadeOut = &v
+	return s
+}
+
+// SetLayer sets the Layer field's value.
+func (s *StaticImageOutputDeactivateScheduleActionSettings) SetLayer(v int64) *StaticImageOutputDeactivateScheduleActionSettings {
+	s.Layer = &v
+	return s
+}
+
+// SetOutputNames sets the OutputNames field's value.
+func (s *StaticImageOutputDeactivateScheduleActionSettings) SetOutputNames(v []*string) *StaticImageOutputDeactivateScheduleActionSettings {
+	s.OutputNames = v
+	return s
+}
+
 // Static Key Settings
 type StaticKeySettings struct {
 	_ struct{} `type:"structure"`
@@ -29774,6 +30969,75 @@ func (s *StopChannelOutput) SetTags(v map[string]*string) *StopChannelOutput {
 func (s *StopChannelOutput) SetVpc(v *VpcOutputSettingsDescription) *StopChannelOutput {
 	s.Vpc = v
 	return s
+}
+
+type StopInputDeviceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// InputDeviceId is a required field
+	InputDeviceId *string `location:"uri" locationName:"inputDeviceId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopInputDeviceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopInputDeviceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StopInputDeviceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StopInputDeviceInput"}
+	if s.InputDeviceId == nil {
+		invalidParams.Add(request.NewErrParamRequired("InputDeviceId"))
+	}
+	if s.InputDeviceId != nil && len(*s.InputDeviceId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("InputDeviceId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInputDeviceId sets the InputDeviceId field's value.
+func (s *StopInputDeviceInput) SetInputDeviceId(v string) *StopInputDeviceInput {
+	s.InputDeviceId = &v
+	return s
+}
+
+type StopInputDeviceOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopInputDeviceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StopInputDeviceOutput) GoString() string {
+	return s.String()
 }
 
 type StopMultiplexInput struct {
@@ -30160,7 +31424,9 @@ func (s *Thumbnail) SetTimeStamp(v time.Time) *Thumbnail {
 type ThumbnailConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Whether Thumbnail is enabled.
+	// Enables the thumbnail feature. The feature generates thumbnails of the incoming
+	// video in each pipeline in the channel. AUTO turns the feature on, DISABLE
+	// turns the feature off.
 	//
 	// State is a required field
 	State *string `locationName:"state" type:"string" required:"true" enum:"ThumbnailState"`
@@ -31241,6 +32507,8 @@ func (s *UpdateChannelOutput) SetChannel(v *Channel) *UpdateChannelOutput {
 type UpdateInputDeviceInput struct {
 	_ struct{} `type:"structure"`
 
+	AvailabilityZone *string `locationName:"availabilityZone" type:"string"`
+
 	// Configurable settings for the input device.
 	HdDeviceSettings *InputDeviceConfigurableSettings `locationName:"hdDeviceSettings" type:"structure"`
 
@@ -31287,6 +32555,12 @@ func (s *UpdateInputDeviceInput) Validate() error {
 	return nil
 }
 
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *UpdateInputDeviceInput) SetAvailabilityZone(v string) *UpdateInputDeviceInput {
+	s.AvailabilityZone = &v
+	return s
+}
+
 // SetHdDeviceSettings sets the HdDeviceSettings field's value.
 func (s *UpdateInputDeviceInput) SetHdDeviceSettings(v *InputDeviceConfigurableSettings) *UpdateInputDeviceInput {
 	s.HdDeviceSettings = v
@@ -31316,6 +32590,8 @@ type UpdateInputDeviceOutput struct {
 
 	Arn *string `locationName:"arn" type:"string"`
 
+	AvailabilityZone *string `locationName:"availabilityZone" type:"string"`
+
 	// The state of the connection between the input device and AWS.
 	ConnectionState *string `locationName:"connectionState" type:"string" enum:"InputDeviceConnectionState"`
 
@@ -31337,10 +32613,15 @@ type UpdateInputDeviceOutput struct {
 
 	MacAddress *string `locationName:"macAddress" type:"string"`
 
+	MedialiveInputArns []*string `locationName:"medialiveInputArns" type:"list"`
+
 	Name *string `locationName:"name" type:"string"`
 
 	// The network settings for the input device.
 	NetworkSettings *InputDeviceNetworkSettings `locationName:"networkSettings" type:"structure"`
+
+	// The output attachment type of the input device.
+	OutputType *string `locationName:"outputType" type:"string" enum:"InputDeviceOutputType"`
 
 	SerialNumber *string `locationName:"serialNumber" type:"string"`
 
@@ -31376,6 +32657,12 @@ func (s UpdateInputDeviceOutput) GoString() string {
 // SetArn sets the Arn field's value.
 func (s *UpdateInputDeviceOutput) SetArn(v string) *UpdateInputDeviceOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAvailabilityZone sets the AvailabilityZone field's value.
+func (s *UpdateInputDeviceOutput) SetAvailabilityZone(v string) *UpdateInputDeviceOutput {
+	s.AvailabilityZone = &v
 	return s
 }
 
@@ -31415,6 +32702,12 @@ func (s *UpdateInputDeviceOutput) SetMacAddress(v string) *UpdateInputDeviceOutp
 	return s
 }
 
+// SetMedialiveInputArns sets the MedialiveInputArns field's value.
+func (s *UpdateInputDeviceOutput) SetMedialiveInputArns(v []*string) *UpdateInputDeviceOutput {
+	s.MedialiveInputArns = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *UpdateInputDeviceOutput) SetName(v string) *UpdateInputDeviceOutput {
 	s.Name = &v
@@ -31424,6 +32717,12 @@ func (s *UpdateInputDeviceOutput) SetName(v string) *UpdateInputDeviceOutput {
 // SetNetworkSettings sets the NetworkSettings field's value.
 func (s *UpdateInputDeviceOutput) SetNetworkSettings(v *InputDeviceNetworkSettings) *UpdateInputDeviceOutput {
 	s.NetworkSettings = v
+	return s
+}
+
+// SetOutputType sets the OutputType field's value.
+func (s *UpdateInputDeviceOutput) SetOutputType(v string) *UpdateInputDeviceOutput {
+	s.OutputType = &v
 	return s
 }
 
@@ -32836,6 +34135,23 @@ func AacVbrQuality_Values() []string {
 	}
 }
 
+// Ac3 Attenuation Control
+const (
+	// Ac3AttenuationControlAttenuate3Db is a Ac3AttenuationControl enum value
+	Ac3AttenuationControlAttenuate3Db = "ATTENUATE_3_DB"
+
+	// Ac3AttenuationControlNone is a Ac3AttenuationControl enum value
+	Ac3AttenuationControlNone = "NONE"
+)
+
+// Ac3AttenuationControl_Values returns all elements of the Ac3AttenuationControl enum
+func Ac3AttenuationControl_Values() []string {
+	return []string{
+		Ac3AttenuationControlAttenuate3Db,
+		Ac3AttenuationControlNone,
+	}
+}
+
 // Ac3 Bitstream Mode
 const (
 	// Ac3BitstreamModeCommentary is a Ac3BitstreamMode enum value
@@ -33459,6 +34775,32 @@ func ChannelState_Values() []string {
 		ChannelStateDeleted,
 		ChannelStateUpdating,
 		ChannelStateUpdateFailed,
+	}
+}
+
+// Property of colorCorrections. When you are using 3D LUT files to perform
+// color conversion on video, these are the supported color spaces.
+const (
+	// ColorSpaceHdr10 is a ColorSpace enum value
+	ColorSpaceHdr10 = "HDR10"
+
+	// ColorSpaceHlg2020 is a ColorSpace enum value
+	ColorSpaceHlg2020 = "HLG_2020"
+
+	// ColorSpaceRec601 is a ColorSpace enum value
+	ColorSpaceRec601 = "REC_601"
+
+	// ColorSpaceRec709 is a ColorSpace enum value
+	ColorSpaceRec709 = "REC_709"
+)
+
+// ColorSpace_Values returns all elements of the ColorSpace enum
+func ColorSpace_Values() []string {
+	return []string{
+		ColorSpaceHdr10,
+		ColorSpaceHlg2020,
+		ColorSpaceRec601,
+		ColorSpaceRec709,
 	}
 }
 
@@ -34236,6 +35578,23 @@ func FeatureActivationsInputPrepareScheduleActions_Values() []string {
 	return []string{
 		FeatureActivationsInputPrepareScheduleActionsDisabled,
 		FeatureActivationsInputPrepareScheduleActionsEnabled,
+	}
+}
+
+// Feature Activations Output Static Image Overlay Schedule Actions
+const (
+	// FeatureActivationsOutputStaticImageOverlayScheduleActionsDisabled is a FeatureActivationsOutputStaticImageOverlayScheduleActions enum value
+	FeatureActivationsOutputStaticImageOverlayScheduleActionsDisabled = "DISABLED"
+
+	// FeatureActivationsOutputStaticImageOverlayScheduleActionsEnabled is a FeatureActivationsOutputStaticImageOverlayScheduleActions enum value
+	FeatureActivationsOutputStaticImageOverlayScheduleActionsEnabled = "ENABLED"
+)
+
+// FeatureActivationsOutputStaticImageOverlayScheduleActions_Values returns all elements of the FeatureActivationsOutputStaticImageOverlayScheduleActions enum
+func FeatureActivationsOutputStaticImageOverlayScheduleActions_Values() []string {
+	return []string{
+		FeatureActivationsOutputStaticImageOverlayScheduleActionsDisabled,
+		FeatureActivationsOutputStaticImageOverlayScheduleActionsEnabled,
 	}
 }
 
@@ -35697,6 +37056,27 @@ func IFrameOnlyPlaylistType_Values() []string {
 	}
 }
 
+// Include Filler Nal Units
+const (
+	// IncludeFillerNalUnitsAuto is a IncludeFillerNalUnits enum value
+	IncludeFillerNalUnitsAuto = "AUTO"
+
+	// IncludeFillerNalUnitsDrop is a IncludeFillerNalUnits enum value
+	IncludeFillerNalUnitsDrop = "DROP"
+
+	// IncludeFillerNalUnitsInclude is a IncludeFillerNalUnits enum value
+	IncludeFillerNalUnitsInclude = "INCLUDE"
+)
+
+// IncludeFillerNalUnits_Values returns all elements of the IncludeFillerNalUnits enum
+func IncludeFillerNalUnits_Values() []string {
+	return []string{
+		IncludeFillerNalUnitsAuto,
+		IncludeFillerNalUnitsDrop,
+		IncludeFillerNalUnitsInclude,
+	}
+}
+
 // A standard input has two sources and a single pipeline input only has one.
 const (
 	// InputClassStandard is a InputClass enum value
@@ -35786,6 +37166,65 @@ func InputDeviceActiveInput_Values() []string {
 	}
 }
 
+// The codec to use on the video that the device produces.
+const (
+	// InputDeviceCodecHevc is a InputDeviceCodec enum value
+	InputDeviceCodecHevc = "HEVC"
+
+	// InputDeviceCodecAvc is a InputDeviceCodec enum value
+	InputDeviceCodecAvc = "AVC"
+)
+
+// InputDeviceCodec_Values returns all elements of the InputDeviceCodec enum
+func InputDeviceCodec_Values() []string {
+	return []string{
+		InputDeviceCodecHevc,
+		InputDeviceCodecAvc,
+	}
+}
+
+// Property of InputDeviceConfigurableAudioChannelPairConfig, which configures
+// one audio channel that the device produces.
+const (
+	// InputDeviceConfigurableAudioChannelPairProfileDisabled is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileDisabled = "DISABLED"
+
+	// InputDeviceConfigurableAudioChannelPairProfileVbrAacHhe16000 is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileVbrAacHhe16000 = "VBR-AAC_HHE-16000"
+
+	// InputDeviceConfigurableAudioChannelPairProfileVbrAacHe64000 is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileVbrAacHe64000 = "VBR-AAC_HE-64000"
+
+	// InputDeviceConfigurableAudioChannelPairProfileVbrAacLc128000 is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileVbrAacLc128000 = "VBR-AAC_LC-128000"
+
+	// InputDeviceConfigurableAudioChannelPairProfileCbrAacHq192000 is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileCbrAacHq192000 = "CBR-AAC_HQ-192000"
+
+	// InputDeviceConfigurableAudioChannelPairProfileCbrAacHq256000 is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileCbrAacHq256000 = "CBR-AAC_HQ-256000"
+
+	// InputDeviceConfigurableAudioChannelPairProfileCbrAacHq384000 is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileCbrAacHq384000 = "CBR-AAC_HQ-384000"
+
+	// InputDeviceConfigurableAudioChannelPairProfileCbrAacHq512000 is a InputDeviceConfigurableAudioChannelPairProfile enum value
+	InputDeviceConfigurableAudioChannelPairProfileCbrAacHq512000 = "CBR-AAC_HQ-512000"
+)
+
+// InputDeviceConfigurableAudioChannelPairProfile_Values returns all elements of the InputDeviceConfigurableAudioChannelPairProfile enum
+func InputDeviceConfigurableAudioChannelPairProfile_Values() []string {
+	return []string{
+		InputDeviceConfigurableAudioChannelPairProfileDisabled,
+		InputDeviceConfigurableAudioChannelPairProfileVbrAacHhe16000,
+		InputDeviceConfigurableAudioChannelPairProfileVbrAacHe64000,
+		InputDeviceConfigurableAudioChannelPairProfileVbrAacLc128000,
+		InputDeviceConfigurableAudioChannelPairProfileCbrAacHq192000,
+		InputDeviceConfigurableAudioChannelPairProfileCbrAacHq256000,
+		InputDeviceConfigurableAudioChannelPairProfileCbrAacHq384000,
+		InputDeviceConfigurableAudioChannelPairProfileCbrAacHq512000,
+	}
+}
+
 // The source to activate (use) from the input device.
 const (
 	// InputDeviceConfiguredInputAuto is a InputDeviceConfiguredInput enum value
@@ -35839,6 +37278,27 @@ func InputDeviceIpScheme_Values() []string {
 	return []string{
 		InputDeviceIpSchemeStatic,
 		InputDeviceIpSchemeDhcp,
+	}
+}
+
+// The output attachment type of the input device.
+const (
+	// InputDeviceOutputTypeNone is a InputDeviceOutputType enum value
+	InputDeviceOutputTypeNone = "NONE"
+
+	// InputDeviceOutputTypeMedialiveInput is a InputDeviceOutputType enum value
+	InputDeviceOutputTypeMedialiveInput = "MEDIALIVE_INPUT"
+
+	// InputDeviceOutputTypeMediaconnectFlow is a InputDeviceOutputType enum value
+	InputDeviceOutputTypeMediaconnectFlow = "MEDIACONNECT_FLOW"
+)
+
+// InputDeviceOutputType_Values returns all elements of the InputDeviceOutputType enum
+func InputDeviceOutputType_Values() []string {
+	return []string{
+		InputDeviceOutputTypeNone,
+		InputDeviceOutputTypeMedialiveInput,
+		InputDeviceOutputTypeMediaconnectFlow,
 	}
 }
 
@@ -35910,6 +37370,48 @@ func InputDeviceType_Values() []string {
 	return []string{
 		InputDeviceTypeHd,
 		InputDeviceTypeUhd,
+	}
+}
+
+// Property of InputDeviceUhdAudioChannelPairConfig, which describes one audio
+// channel that the device is configured to produce.
+const (
+	// InputDeviceUhdAudioChannelPairProfileDisabled is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileDisabled = "DISABLED"
+
+	// InputDeviceUhdAudioChannelPairProfileVbrAacHhe16000 is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileVbrAacHhe16000 = "VBR-AAC_HHE-16000"
+
+	// InputDeviceUhdAudioChannelPairProfileVbrAacHe64000 is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileVbrAacHe64000 = "VBR-AAC_HE-64000"
+
+	// InputDeviceUhdAudioChannelPairProfileVbrAacLc128000 is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileVbrAacLc128000 = "VBR-AAC_LC-128000"
+
+	// InputDeviceUhdAudioChannelPairProfileCbrAacHq192000 is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileCbrAacHq192000 = "CBR-AAC_HQ-192000"
+
+	// InputDeviceUhdAudioChannelPairProfileCbrAacHq256000 is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileCbrAacHq256000 = "CBR-AAC_HQ-256000"
+
+	// InputDeviceUhdAudioChannelPairProfileCbrAacHq384000 is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileCbrAacHq384000 = "CBR-AAC_HQ-384000"
+
+	// InputDeviceUhdAudioChannelPairProfileCbrAacHq512000 is a InputDeviceUhdAudioChannelPairProfile enum value
+	InputDeviceUhdAudioChannelPairProfileCbrAacHq512000 = "CBR-AAC_HQ-512000"
+)
+
+// InputDeviceUhdAudioChannelPairProfile_Values returns all elements of the InputDeviceUhdAudioChannelPairProfile enum
+func InputDeviceUhdAudioChannelPairProfile_Values() []string {
+	return []string{
+		InputDeviceUhdAudioChannelPairProfileDisabled,
+		InputDeviceUhdAudioChannelPairProfileVbrAacHhe16000,
+		InputDeviceUhdAudioChannelPairProfileVbrAacHe64000,
+		InputDeviceUhdAudioChannelPairProfileVbrAacLc128000,
+		InputDeviceUhdAudioChannelPairProfileCbrAacHq192000,
+		InputDeviceUhdAudioChannelPairProfileCbrAacHq256000,
+		InputDeviceUhdAudioChannelPairProfileCbrAacHq384000,
+		InputDeviceUhdAudioChannelPairProfileCbrAacHq512000,
 	}
 }
 
@@ -36632,6 +38134,23 @@ func M2tsTimedMetadataBehavior_Values() []string {
 	return []string{
 		M2tsTimedMetadataBehaviorNoPassthrough,
 		M2tsTimedMetadataBehaviorPassthrough,
+	}
+}
+
+// M3u8 Klv Behavior
+const (
+	// M3u8KlvBehaviorNoPassthrough is a M3u8KlvBehavior enum value
+	M3u8KlvBehaviorNoPassthrough = "NO_PASSTHROUGH"
+
+	// M3u8KlvBehaviorPassthrough is a M3u8KlvBehavior enum value
+	M3u8KlvBehaviorPassthrough = "PASSTHROUGH"
+)
+
+// M3u8KlvBehavior_Values returns all elements of the M3u8KlvBehavior enum
+func M3u8KlvBehavior_Values() []string {
+	return []string{
+		M3u8KlvBehaviorNoPassthrough,
+		M3u8KlvBehaviorPassthrough,
 	}
 }
 

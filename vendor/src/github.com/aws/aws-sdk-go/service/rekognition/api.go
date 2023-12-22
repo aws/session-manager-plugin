@@ -347,6 +347,8 @@ func (c *Rekognition) CopyProjectVersionRequest(input *CopyProjectVersionInput) 
 
 // CopyProjectVersion API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Copies a version of an Amazon Rekognition Custom Labels model from a source
 // project to a destination project. The source and destination projects can
 // be in different AWS accounts but must be in the same AWS Region. You can't
@@ -364,6 +366,8 @@ func (c *Rekognition) CopyProjectVersionRequest(input *CopyProjectVersionInput) 
 //
 // If you are copying a model version to a project in the same AWS account,
 // you don't need to create a project policy.
+//
+// Copying project versions is supported only for Custom Labels models.
 //
 // To copy a model, the destination project, source project, and source model
 // version must already exist.
@@ -396,10 +400,10 @@ func (c *Rekognition) CopyProjectVersionRequest(input *CopyProjectVersionInput) 
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ResourceNotFoundException
 //     The resource specified in the request cannot be found.
@@ -594,12 +598,14 @@ func (c *Rekognition) CreateDatasetRequest(input *CreateDatasetInput) (req *requ
 
 // CreateDataset API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Creates a new Amazon Rekognition Custom Labels dataset. You can create a
 // dataset by using an Amazon Sagemaker format manifest file or by copying an
 // existing Amazon Rekognition Custom Labels dataset.
 //
-// To create a training dataset for a project, specify train for the value of
-// DatasetType. To create the test dataset for a project, specify test for the
+// To create a training dataset for a project, specify TRAIN for the value of
+// DatasetType. To create the test dataset for a project, specify TEST for the
 // value of DatasetType.
 //
 // The response from CreateDataset is the Amazon Resource Name (ARN) for the
@@ -649,10 +655,10 @@ func (c *Rekognition) CreateDatasetRequest(input *CreateDatasetInput) (req *requ
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - InvalidS3ObjectException
 //     Amazon Rekognition is unable to access the S3 object specified in the request.
@@ -726,12 +732,16 @@ func (c *Rekognition) CreateFaceLivenessSessionRequest(input *CreateFaceLiveness
 //
 // This API operation initiates a Face Liveness session. It returns a SessionId,
 // which you can use to start streaming Face Liveness video and get the results
-// for a Face Liveness session. You can use the OutputConfig option in the Settings
-// parameter to provide an Amazon S3 bucket location. The Amazon S3 bucket stores
-// reference images and audit images. You can use AuditImagesLimit to limit
-// the number of audit images returned. This number is between 0 and 4. By default,
-// it is set to 0. The limit is best effort and based on the duration of the
-// selfie-video.
+// for a Face Liveness session.
+//
+// You can use the OutputConfig option in the Settings parameter to provide
+// an Amazon S3 bucket location. The Amazon S3 bucket stores reference images
+// and audit images. If no Amazon S3 bucket is defined, raw bytes are sent instead.
+//
+// You can use AuditImagesLimit to limit the number of audit images returned
+// when GetFaceLivenessSessionResults is called. This number is between 0 and
+// 4. By default, it is set to 0. The limit is best effort and based on the
+// duration of the selfie-video.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -821,12 +831,13 @@ func (c *Rekognition) CreateProjectRequest(input *CreateProjectInput) (req *requ
 
 // CreateProject API operation for Amazon Rekognition.
 //
-// Creates a new Amazon Rekognition Custom Labels project. A project is a group
-// of resources (datasets, model versions) that you use to create and manage
-// Amazon Rekognition Custom Labels models.
-//
-// This operation requires permissions to perform the rekognition:CreateProject
-// action.
+// Creates a new Amazon Rekognition project. A project is a group of resources
+// (datasets, model versions) that you use to create and manage a Amazon Rekognition
+// Custom Labels Model or custom adapter. You can specify a feature to create
+// the project with, if no feature is specified then Custom Labels is used by
+// default. For adapters, you can also choose whether or not to have the project
+// auto update by using the AutoUpdate argument. This operation requires permissions
+// to perform the rekognition:CreateProject action.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -842,10 +853,10 @@ func (c *Rekognition) CreateProjectRequest(input *CreateProjectInput) (req *requ
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - InvalidParameterException
 //     Input parameter violated a constraint. Validate your parameter before calling
@@ -926,14 +937,24 @@ func (c *Rekognition) CreateProjectVersionRequest(input *CreateProjectVersionInp
 
 // CreateProjectVersion API operation for Amazon Rekognition.
 //
-// Creates a new version of a model and begins training. Models are managed
-// as part of an Amazon Rekognition Custom Labels project. The response from
-// CreateProjectVersion is an Amazon Resource Name (ARN) for the version of
-// the model.
+// Creates a new version of Amazon Rekognition project (like a Custom Labels
+// model or a custom adapter) and begins training. Models and adapters are managed
+// as part of a Rekognition project. The response from CreateProjectVersion
+// is an Amazon Resource Name (ARN) for the project version.
 //
-// Training uses the training and test datasets associated with the project.
-// For more information, see Creating training and test dataset in the Amazon
-// Rekognition Custom Labels Developer Guide.
+// The FeatureConfig operation argument allows you to configure specific model
+// or adapter settings. You can provide a description to the project version
+// by using the VersionDescription argment. Training can take a while to complete.
+// You can get the current status by calling DescribeProjectVersions. Training
+// completed successfully if the value of the Status field is TRAINING_COMPLETED.
+// Once training has successfully completed, call DescribeProjectVersions to
+// get the training results and evaluate the model.
+//
+// This operation requires permissions to perform the rekognition:CreateProjectVersion
+// action.
+//
+// The following applies only to projects with Amazon Rekognition Custom Labels
+// as the chosen feature:
 //
 // You can train a model in a project that doesn't have associated datasets
 // by specifying manifest files in the TrainingData and TestingData fields.
@@ -946,23 +967,6 @@ func (c *Rekognition) CreateProjectVersionRequest(input *CreateProjectVersionInp
 // Instead of training with a project without associated datasets, we recommend
 // that you use the manifest files to create training and test datasets for
 // the project.
-//
-// Training takes a while to complete. You can get the current status by calling
-// DescribeProjectVersions. Training completed successfully if the value of
-// the Status field is TRAINING_COMPLETED.
-//
-// If training fails, see Debugging a failed model training in the Amazon Rekognition
-// Custom Labels developer guide.
-//
-// Once training has successfully completed, call DescribeProjectVersions to
-// get the training results and evaluate the model. For more information, see
-// Improving a trained Amazon Rekognition Custom Labels model in the Amazon
-// Rekognition Custom Labels developers guide.
-//
-// After evaluating the model, you start the model by calling StartProjectVersion.
-//
-// This operation requires permissions to perform the rekognition:CreateProjectVersion
-// action.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -981,10 +985,10 @@ func (c *Rekognition) CreateProjectVersionRequest(input *CreateProjectVersionInp
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - InvalidParameterException
 //     Input parameter violated a constraint. Validate your parameter before calling
@@ -1128,10 +1132,10 @@ func (c *Rekognition) CreateStreamProcessorRequest(input *CreateStreamProcessorI
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ResourceInUseException
 //     The specified resource is already being used.
@@ -1420,6 +1424,8 @@ func (c *Rekognition) DeleteDatasetRequest(input *DeleteDatasetInput) (req *requ
 
 // DeleteDataset API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Deletes an existing Amazon Rekognition Custom Labels dataset. Deleting a
 // dataset might take while. Use DescribeDataset to check the current status.
 // The dataset is still deleting if the value of Status is DELETE_IN_PROGRESS.
@@ -1461,10 +1467,10 @@ func (c *Rekognition) DeleteDatasetRequest(input *DeleteDatasetInput) (req *requ
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ResourceInUseException
 //     The specified resource is already being used.
@@ -1630,9 +1636,9 @@ func (c *Rekognition) DeleteProjectRequest(input *DeleteProjectInput) (req *requ
 
 // DeleteProject API operation for Amazon Rekognition.
 //
-// Deletes an Amazon Rekognition Custom Labels project. To delete a project
-// you must first delete all models associated with the project. To delete a
-// model, see DeleteProjectVersion.
+// Deletes a Amazon Rekognition project. To delete a project you must first
+// delete all models or adapters associated with the project. To delete a model
+// or adapter, see DeleteProjectVersion.
 //
 // DeleteProject is an asynchronous operation. To check if the project is deleted,
 // call DescribeProjects. The project is deleted when the project no longer
@@ -1737,6 +1743,8 @@ func (c *Rekognition) DeleteProjectPolicyRequest(input *DeleteProjectPolicyInput
 
 // DeleteProjectPolicy API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Deletes an existing project policy.
 //
 // To get a list of project policies attached to a project, call ListProjectPolicies.
@@ -1839,12 +1847,13 @@ func (c *Rekognition) DeleteProjectVersionRequest(input *DeleteProjectVersionInp
 
 // DeleteProjectVersion API operation for Amazon Rekognition.
 //
-// Deletes an Amazon Rekognition Custom Labels model.
+// Deletes a Rekognition project model or project version, like a Amazon Rekognition
+// Custom Labels model or a custom adapter.
 //
-// You can't delete a model if it is running or if it is training. To check
-// the status of a model, use the Status field returned from DescribeProjectVersions.
-// To stop a running model call StopProjectVersion. If the model is training,
-// wait until it finishes.
+// You can't delete a project version if it is running or if it is training.
+// To check the status of a project version, use the Status field returned from
+// DescribeProjectVersions. To stop a project version call StopProjectVersion.
+// If the project version is training, wait until it finishes.
 //
 // This operation requires permissions to perform the rekognition:DeleteProjectVersion
 // action.
@@ -2248,6 +2257,8 @@ func (c *Rekognition) DescribeDatasetRequest(input *DescribeDatasetInput) (req *
 
 // DescribeDataset API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Describes an Amazon Rekognition Custom Labels dataset. You can get information
 // such as the current status of a dataset and statistics about the images and
 // labels in a dataset.
@@ -2352,9 +2363,9 @@ func (c *Rekognition) DescribeProjectVersionsRequest(input *DescribeProjectVersi
 
 // DescribeProjectVersions API operation for Amazon Rekognition.
 //
-// Lists and describes the versions of a model in an Amazon Rekognition Custom
-// Labels project. You can specify up to 10 model versions in ProjectVersionArns.
-// If you don't specify a value, descriptions for all model versions in the
+// Lists and describes the versions of an Amazon Rekognition project. You can
+// specify up to 10 model or adapter versions in ProjectVersionArns. If you
+// don't specify a value, descriptions for all model/adapter versions in the
 // project are returned.
 //
 // This operation requires permissions to perform the rekognition:DescribeProjectVersions
@@ -2511,7 +2522,7 @@ func (c *Rekognition) DescribeProjectsRequest(input *DescribeProjectsInput) (req
 
 // DescribeProjects API operation for Amazon Rekognition.
 //
-// Gets information about your Amazon Rekognition Custom Labels projects.
+// Gets information about your Rekognition projects.
 //
 // This operation requires permissions to perform the rekognition:DescribeProjects
 // action.
@@ -2754,6 +2765,8 @@ func (c *Rekognition) DetectCustomLabelsRequest(input *DetectCustomLabelsInput) 
 
 // DetectCustomLabels API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Detects custom labels in a supplied image by using an Amazon Rekognition
 // Custom Labels model.
 //
@@ -2826,10 +2839,10 @@ func (c *Rekognition) DetectCustomLabelsRequest(input *DetectCustomLabelsInput) 
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - AccessDeniedException
 //     You are not authorized to perform the action.
@@ -3059,10 +3072,11 @@ func (c *Rekognition) DetectLabelsRequest(input *DetectLabelsInput) (req *reques
 // filters, or a combination of inclusive and exclusive filters. For more information
 // on filtering see Detecting Labels in an Image (https://docs.aws.amazon.com/rekognition/latest/dg/labels-detect-labels-image.html).
 //
-// You can specify MinConfidence to control the confidence threshold for the
-// labels returned. The default is 55%. You can also add the MaxLabels parameter
-// to limit the number of labels returned. The default and upper limit is 1000
-// labels.
+// When getting labels, you can specify MinConfidence to control the confidence
+// threshold for the labels returned. The default is 55%. You can also add the
+// MaxLabels parameter to limit the number of labels returned. The default and
+// upper limit is 1000 labels. These arguments are only valid when supplying
+// GENERAL_LABELS as a feature type.
 //
 // # Response Elements
 //
@@ -3256,6 +3270,9 @@ func (c *Rekognition) DetectModerationLabelsRequest(input *DetectModerationLabel
 // Rekognition operations, passing image bytes is not supported. The image must
 // be either a PNG or JPEG formatted file.
 //
+// You can specify an adapter to use when retrieving label predictions by providing
+// a ProjectVersionArn to the ProjectVersion argument.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -3298,6 +3315,13 @@ func (c *Rekognition) DetectModerationLabelsRequest(input *DetectModerationLabel
 //   - HumanLoopQuotaExceededException
 //     The number of in-progress human reviews you have has exceeded the number
 //     allowed.
+//
+//   - ResourceNotFoundException
+//     The resource specified in the request cannot be found.
+//
+//   - ResourceNotReadyException
+//     The requested resource isn't ready. For example, this exception occurs when
+//     you call DetectCustomLabels with a model version that isn't deployed.
 func (c *Rekognition) DetectModerationLabels(input *DetectModerationLabelsInput) (*DetectModerationLabelsOutput, error) {
 	req, out := c.DetectModerationLabelsRequest(input)
 	return out, req.Send()
@@ -3740,6 +3764,8 @@ func (c *Rekognition) DistributeDatasetEntriesRequest(input *DistributeDatasetEn
 }
 
 // DistributeDatasetEntries API operation for Amazon Rekognition.
+//
+// This operation applies only to Amazon Rekognition Custom Labels.
 //
 // Distributes the entries (images) in a training dataset across the training
 // dataset and the test dataset for a project. DistributeDatasetEntries moves
@@ -4370,6 +4396,9 @@ func (c *Rekognition) GetFaceDetectionRequest(input *GetFaceDetectionInput) (req
 // the NextToken request parameter with the token value returned from the previous
 // call to GetFaceDetection.
 //
+// Note that for the GetFaceDetection operation, the returned values for FaceOccluded
+// and EyeDirection will always be "null".
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -4519,8 +4548,11 @@ func (c *Rekognition) GetFaceLivenessSessionResultsRequest(input *GetFaceLivenes
 // sessionId as input, which was created using CreateFaceLivenessSession. Returns
 // the corresponding Face Liveness confidence score, a reference image that
 // includes a face bounding box, and audit images that also contain face bounding
-// boxes. The Face Liveness confidence score ranges from 0 to 100. The reference
-// image can optionally be returned.
+// boxes. The Face Liveness confidence score ranges from 0 to 100.
+//
+// The number of audit images returned by GetFaceLivenessSessionResults is defined
+// by the AuditImagesLimit paramater when calling CreateFaceLivenessSession.
+// Reference images are always returned when possible.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4976,6 +5008,100 @@ func (c *Rekognition) GetLabelDetectionPagesWithContext(ctx aws.Context, input *
 	return p.Err()
 }
 
+const opGetMediaAnalysisJob = "GetMediaAnalysisJob"
+
+// GetMediaAnalysisJobRequest generates a "aws/request.Request" representing the
+// client's request for the GetMediaAnalysisJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetMediaAnalysisJob for more information on using the GetMediaAnalysisJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetMediaAnalysisJobRequest method.
+//	req, resp := client.GetMediaAnalysisJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+func (c *Rekognition) GetMediaAnalysisJobRequest(input *GetMediaAnalysisJobInput) (req *request.Request, output *GetMediaAnalysisJobOutput) {
+	op := &request.Operation{
+		Name:       opGetMediaAnalysisJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &GetMediaAnalysisJobInput{}
+	}
+
+	output = &GetMediaAnalysisJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetMediaAnalysisJob API operation for Amazon Rekognition.
+//
+// Retrieves the results for a given media analysis job. Takes a JobId returned
+// by StartMediaAnalysisJob.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Rekognition's
+// API operation GetMediaAnalysisJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You are not authorized to perform the action.
+//
+//   - ResourceNotFoundException
+//     The resource specified in the request cannot be found.
+//
+//   - InternalServerError
+//     Amazon Rekognition experienced a service issue. Try your call again.
+//
+//   - InvalidParameterException
+//     Input parameter violated a constraint. Validate your parameter before calling
+//     the API operation again.
+//
+//   - ProvisionedThroughputExceededException
+//     The number of requests exceeded your throughput limit. If you want to increase
+//     this limit, contact Amazon Rekognition.
+//
+//   - ThrottlingException
+//     Amazon Rekognition is temporarily unable to process the request. Try your
+//     call again.
+func (c *Rekognition) GetMediaAnalysisJob(input *GetMediaAnalysisJobInput) (*GetMediaAnalysisJobOutput, error) {
+	req, out := c.GetMediaAnalysisJobRequest(input)
+	return out, req.Send()
+}
+
+// GetMediaAnalysisJobWithContext is the same as GetMediaAnalysisJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetMediaAnalysisJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Rekognition) GetMediaAnalysisJobWithContext(ctx aws.Context, input *GetMediaAnalysisJobInput, opts ...request.Option) (*GetMediaAnalysisJobOutput, error) {
+	req, out := c.GetMediaAnalysisJobRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetPersonTracking = "GetPersonTracking"
 
 // GetPersonTrackingRequest generates a "aws/request.Request" representing the
@@ -5405,7 +5531,7 @@ func (c *Rekognition) GetTextDetectionRequest(input *GetTextDetectionInput) (req
 // the job identifier (JobId) from the initial call of StartLabelDetection.
 //
 // GetTextDetection returns an array of detected text (TextDetections) sorted
-// by the time the text was detected, up to 50 words per frame of video.
+// by the time the text was detected, up to 100 words per frame of video.
 //
 // Each element of the array includes the detected text, the precentage confidence
 // in the acuracy of the detected text, the time the text was detected, bounding
@@ -5937,6 +6063,8 @@ func (c *Rekognition) ListDatasetEntriesRequest(input *ListDatasetEntriesInput) 
 
 // ListDatasetEntries API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Lists the entries (images) within a dataset. An entry is a JSON Line that
 // contains the information for a single image, including the image location,
 // assigned labels, and object location bounding boxes. For more information,
@@ -6111,6 +6239,8 @@ func (c *Rekognition) ListDatasetLabelsRequest(input *ListDatasetLabelsInput) (r
 }
 
 // ListDatasetLabels API operation for Amazon Rekognition.
+//
+// This operation applies only to Amazon Rekognition Custom Labels.
 //
 // Lists the labels in a dataset. Amazon Rekognition Custom Labels uses labels
 // to describe images. For more information, see Labeling images (https://docs.aws.amazon.com/rekognition/latest/customlabels-dg/md-labeling-images.html).
@@ -6389,6 +6519,157 @@ func (c *Rekognition) ListFacesPagesWithContext(ctx aws.Context, input *ListFace
 	return p.Err()
 }
 
+const opListMediaAnalysisJobs = "ListMediaAnalysisJobs"
+
+// ListMediaAnalysisJobsRequest generates a "aws/request.Request" representing the
+// client's request for the ListMediaAnalysisJobs operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListMediaAnalysisJobs for more information on using the ListMediaAnalysisJobs
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListMediaAnalysisJobsRequest method.
+//	req, resp := client.ListMediaAnalysisJobsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+func (c *Rekognition) ListMediaAnalysisJobsRequest(input *ListMediaAnalysisJobsInput) (req *request.Request, output *ListMediaAnalysisJobsOutput) {
+	op := &request.Operation{
+		Name:       opListMediaAnalysisJobs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListMediaAnalysisJobsInput{}
+	}
+
+	output = &ListMediaAnalysisJobsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListMediaAnalysisJobs API operation for Amazon Rekognition.
+//
+// Returns a list of media analysis jobs. Results are sorted by CreationTimestamp
+// in descending order.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Rekognition's
+// API operation ListMediaAnalysisJobs for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You are not authorized to perform the action.
+//
+//   - InternalServerError
+//     Amazon Rekognition experienced a service issue. Try your call again.
+//
+//   - InvalidParameterException
+//     Input parameter violated a constraint. Validate your parameter before calling
+//     the API operation again.
+//
+//   - InvalidPaginationTokenException
+//     Pagination token in the request is not valid.
+//
+//   - ProvisionedThroughputExceededException
+//     The number of requests exceeded your throughput limit. If you want to increase
+//     this limit, contact Amazon Rekognition.
+//
+//   - ThrottlingException
+//     Amazon Rekognition is temporarily unable to process the request. Try your
+//     call again.
+func (c *Rekognition) ListMediaAnalysisJobs(input *ListMediaAnalysisJobsInput) (*ListMediaAnalysisJobsOutput, error) {
+	req, out := c.ListMediaAnalysisJobsRequest(input)
+	return out, req.Send()
+}
+
+// ListMediaAnalysisJobsWithContext is the same as ListMediaAnalysisJobs with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListMediaAnalysisJobs for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Rekognition) ListMediaAnalysisJobsWithContext(ctx aws.Context, input *ListMediaAnalysisJobsInput, opts ...request.Option) (*ListMediaAnalysisJobsOutput, error) {
+	req, out := c.ListMediaAnalysisJobsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListMediaAnalysisJobsPages iterates over the pages of a ListMediaAnalysisJobs operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListMediaAnalysisJobs method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListMediaAnalysisJobs operation.
+//	pageNum := 0
+//	err := client.ListMediaAnalysisJobsPages(params,
+//	    func(page *rekognition.ListMediaAnalysisJobsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Rekognition) ListMediaAnalysisJobsPages(input *ListMediaAnalysisJobsInput, fn func(*ListMediaAnalysisJobsOutput, bool) bool) error {
+	return c.ListMediaAnalysisJobsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListMediaAnalysisJobsPagesWithContext same as ListMediaAnalysisJobsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Rekognition) ListMediaAnalysisJobsPagesWithContext(ctx aws.Context, input *ListMediaAnalysisJobsInput, fn func(*ListMediaAnalysisJobsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListMediaAnalysisJobsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListMediaAnalysisJobsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListMediaAnalysisJobsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListProjectPolicies = "ListProjectPolicies"
 
 // ListProjectPoliciesRequest generates a "aws/request.Request" representing the
@@ -6435,6 +6716,8 @@ func (c *Rekognition) ListProjectPoliciesRequest(input *ListProjectPoliciesInput
 }
 
 // ListProjectPolicies API operation for Amazon Rekognition.
+//
+// This operation applies only to Amazon Rekognition Custom Labels.
 //
 // Gets a list of the project policies attached to a project.
 //
@@ -6993,11 +7276,13 @@ func (c *Rekognition) PutProjectPolicyRequest(input *PutProjectPolicyInput) (req
 
 // PutProjectPolicy API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Attaches a project policy to a Amazon Rekognition Custom Labels project in
 // a trusting AWS account. A project policy specifies that a trusted AWS account
 // can copy a model version from a trusting AWS account to a project in the
 // trusted AWS account. To copy a model version you use the CopyProjectVersion
-// operation.
+// operation. Only applies to Custom Labels projects.
 //
 // For more information about the format of a project policy document, see Attaching
 // a project policy (SDK) in the Amazon Rekognition Custom Labels Developer
@@ -7063,10 +7348,10 @@ func (c *Rekognition) PutProjectPolicyRequest(input *PutProjectPolicyInput) (req
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 func (c *Rekognition) PutProjectPolicy(input *PutProjectPolicyInput) (*PutProjectPolicyOutput, error) {
 	req, out := c.PutProjectPolicyRequest(input)
 	return out, req.Send()
@@ -7787,10 +8072,10 @@ func (c *Rekognition) StartCelebrityRecognitionRequest(input *StartCelebrityReco
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ThrottlingException
 //     Amazon Rekognition is temporarily unable to process the request. Try your
@@ -7912,10 +8197,10 @@ func (c *Rekognition) StartContentModerationRequest(input *StartContentModeratio
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ThrottlingException
 //     Amazon Rekognition is temporarily unable to process the request. Try your
@@ -8034,10 +8319,10 @@ func (c *Rekognition) StartFaceDetectionRequest(input *StartFaceDetectionInput) 
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ThrottlingException
 //     Amazon Rekognition is temporarily unable to process the request. Try your
@@ -8155,10 +8440,10 @@ func (c *Rekognition) StartFaceSearchRequest(input *StartFaceSearchInput) (req *
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ResourceNotFoundException
 //     The resource specified in the request cannot be found.
@@ -8297,10 +8582,10 @@ func (c *Rekognition) StartLabelDetectionRequest(input *StartLabelDetectionInput
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ThrottlingException
 //     Amazon Rekognition is temporarily unable to process the request. Try your
@@ -8321,6 +8606,124 @@ func (c *Rekognition) StartLabelDetection(input *StartLabelDetectionInput) (*Sta
 // for more information on using Contexts.
 func (c *Rekognition) StartLabelDetectionWithContext(ctx aws.Context, input *StartLabelDetectionInput, opts ...request.Option) (*StartLabelDetectionOutput, error) {
 	req, out := c.StartLabelDetectionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartMediaAnalysisJob = "StartMediaAnalysisJob"
+
+// StartMediaAnalysisJobRequest generates a "aws/request.Request" representing the
+// client's request for the StartMediaAnalysisJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartMediaAnalysisJob for more information on using the StartMediaAnalysisJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartMediaAnalysisJobRequest method.
+//	req, resp := client.StartMediaAnalysisJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+func (c *Rekognition) StartMediaAnalysisJobRequest(input *StartMediaAnalysisJobInput) (req *request.Request, output *StartMediaAnalysisJobOutput) {
+	op := &request.Operation{
+		Name:       opStartMediaAnalysisJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartMediaAnalysisJobInput{}
+	}
+
+	output = &StartMediaAnalysisJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartMediaAnalysisJob API operation for Amazon Rekognition.
+//
+// Initiates a new media analysis job. Accepts a manifest file in an Amazon
+// S3 bucket. The output is a manifest file and a summary of the manifest stored
+// in the Amazon S3 bucket.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Rekognition's
+// API operation StartMediaAnalysisJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerError
+//     Amazon Rekognition experienced a service issue. Try your call again.
+//
+//   - AccessDeniedException
+//     You are not authorized to perform the action.
+//
+//   - InvalidParameterException
+//     Input parameter violated a constraint. Validate your parameter before calling
+//     the API operation again.
+//
+//   - InvalidManifestException
+//     Indicates that a provided manifest file is empty or larger than the allowed
+//     limit.
+//
+//   - InvalidS3ObjectException
+//     Amazon Rekognition is unable to access the S3 object specified in the request.
+//
+//   - ResourceNotFoundException
+//     The resource specified in the request cannot be found.
+//
+//   - ResourceNotReadyException
+//     The requested resource isn't ready. For example, this exception occurs when
+//     you call DetectCustomLabels with a model version that isn't deployed.
+//
+//   - ProvisionedThroughputExceededException
+//     The number of requests exceeded your throughput limit. If you want to increase
+//     this limit, contact Amazon Rekognition.
+//
+//   - LimitExceededException
+//     An Amazon Rekognition service limit was exceeded. For example, if you start
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
+//
+//   - ThrottlingException
+//     Amazon Rekognition is temporarily unable to process the request. Try your
+//     call again.
+//
+//   - IdempotentParameterMismatchException
+//     A ClientRequestToken input parameter was reused with an operation, but at
+//     least one of the other input parameters is different from the previous call
+//     to the operation.
+func (c *Rekognition) StartMediaAnalysisJob(input *StartMediaAnalysisJobInput) (*StartMediaAnalysisJobOutput, error) {
+	req, out := c.StartMediaAnalysisJobRequest(input)
+	return out, req.Send()
+}
+
+// StartMediaAnalysisJobWithContext is the same as StartMediaAnalysisJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartMediaAnalysisJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Rekognition) StartMediaAnalysisJobWithContext(ctx aws.Context, input *StartMediaAnalysisJobInput, opts ...request.Option) (*StartMediaAnalysisJobOutput, error) {
+	req, out := c.StartMediaAnalysisJobRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -8418,10 +8821,10 @@ func (c *Rekognition) StartPersonTrackingRequest(input *StartPersonTrackingInput
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ThrottlingException
 //     Amazon Rekognition is temporarily unable to process the request. Try your
@@ -8488,6 +8891,8 @@ func (c *Rekognition) StartProjectVersionRequest(input *StartProjectVersionInput
 
 // StartProjectVersion API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Starts the running of the version of a model. Starting a model takes a while
 // to complete. To check the current state of the model, use DescribeProjectVersions.
 //
@@ -8496,9 +8901,6 @@ func (c *Rekognition) StartProjectVersionRequest(input *StartProjectVersionInput
 //
 // You are charged for the amount of time that the model is running. To stop
 // a running model, call StopProjectVersion.
-//
-// For more information, see Running a trained Amazon Rekognition Custom Labels
-// model in the Amazon Rekognition Custom Labels Guide.
 //
 // This operation requires permissions to perform the rekognition:StartProjectVersion
 // action.
@@ -8520,10 +8922,10 @@ func (c *Rekognition) StartProjectVersionRequest(input *StartProjectVersionInput
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - InvalidParameterException
 //     Input parameter violated a constraint. Validate your parameter before calling
@@ -8664,10 +9066,10 @@ func (c *Rekognition) StartSegmentDetectionRequest(input *StartSegmentDetectionI
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ThrottlingException
 //     Amazon Rekognition is temporarily unable to process the request. Try your
@@ -8887,10 +9289,10 @@ func (c *Rekognition) StartTextDetectionRequest(input *StartTextDetectionInput) 
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ThrottlingException
 //     Amazon Rekognition is temporarily unable to process the request. Try your
@@ -8957,8 +9359,11 @@ func (c *Rekognition) StopProjectVersionRequest(input *StopProjectVersionInput) 
 
 // StopProjectVersion API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Stops a running model. The operation might take a while to complete. To check
-// the current status, call DescribeProjectVersions.
+// the current status, call DescribeProjectVersions. Only applies to Custom
+// Labels projects.
 //
 // This operation requires permissions to perform the rekognition:StopProjectVersion
 // action.
@@ -9357,6 +9762,8 @@ func (c *Rekognition) UpdateDatasetEntriesRequest(input *UpdateDatasetEntriesInp
 
 // UpdateDatasetEntries API operation for Amazon Rekognition.
 //
+// This operation applies only to Amazon Rekognition Custom Labels.
+//
 // Adds or updates one or more entries (images) in a dataset. An entry is a
 // JSON Line which contains the information for a single image, including the
 // image location, assigned labels, and object location bounding boxes. For
@@ -9414,10 +9821,10 @@ func (c *Rekognition) UpdateDatasetEntriesRequest(input *UpdateDatasetEntriesInp
 //
 //   - LimitExceededException
 //     An Amazon Rekognition service limit was exceeded. For example, if you start
-//     too many Amazon Rekognition Video jobs concurrently, calls to start operations
-//     (StartLabelDetection, for example) will raise a LimitExceededException exception
-//     (HTTP status code: 400) until the number of concurrently running jobs is
-//     below the Amazon Rekognition service limit.
+//     too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+//     will raise a LimitExceededException exception (HTTP status code: 400) until
+//     the number of concurrently running jobs is below the Amazon Rekognition service
+//     limit.
 //
 //   - ResourceInUseException
 //     The specified resource is already being used.
@@ -11441,8 +11848,8 @@ type CreateDatasetInput struct {
 	// To add labeled images to the dataset, You can use the console or call UpdateDatasetEntries.
 	DatasetSource *DatasetSource `type:"structure"`
 
-	// The type of the dataset. Specify train to create a training dataset. Specify
-	// test to create a test dataset.
+	// The type of the dataset. Specify TRAIN to create a training dataset. Specify
+	// TEST to create a test dataset.
 	//
 	// DatasetType is a required field
 	DatasetType *string `type:"string" required:"true" enum:"DatasetType"`
@@ -11721,6 +12128,15 @@ func (s *CreateFaceLivenessSessionRequestSettings) SetOutputConfig(v *LivenessOu
 type CreateProjectInput struct {
 	_ struct{} `type:"structure"`
 
+	// Specifies whether automatic retraining should be attempted for the versions
+	// of the project. Automatic retraining is done as a best effort. Required argument
+	// for Content Moderation. Applicable only to adapters.
+	AutoUpdate *string `type:"string" enum:"ProjectAutoUpdate"`
+
+	// Specifies feature that is being customized. If no value is provided CUSTOM_LABELS
+	// is used as a default.
+	Feature *string `type:"string" enum:"CustomizationFeature"`
+
 	// The name of the project to create.
 	//
 	// ProjectName is a required field
@@ -11759,6 +12175,18 @@ func (s *CreateProjectInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAutoUpdate sets the AutoUpdate field's value.
+func (s *CreateProjectInput) SetAutoUpdate(v string) *CreateProjectInput {
+	s.AutoUpdate = &v
+	return s
+}
+
+// SetFeature sets the Feature field's value.
+func (s *CreateProjectInput) SetFeature(v string) *CreateProjectInput {
+	s.Feature = &v
+	return s
 }
 
 // SetProjectName sets the ProjectName field's value.
@@ -11802,12 +12230,18 @@ func (s *CreateProjectOutput) SetProjectArn(v string) *CreateProjectOutput {
 type CreateProjectVersionInput struct {
 	_ struct{} `type:"structure"`
 
+	// Feature-specific configuration of the training job. If the job configuration
+	// does not match the feature type associated with the project, an InvalidParameterException
+	// is returned.
+	FeatureConfig *CustomizationFeatureConfig `type:"structure"`
+
 	// The identifier for your AWS Key Management Service key (AWS KMS key). You
 	// can supply the Amazon Resource Name (ARN) of your KMS key, the ID of your
 	// KMS key, an alias for your KMS key, or an alias ARN. The key is used to encrypt
-	// training and test images copied into the service for model training. Your
-	// source images are unaffected. The key is also used to encrypt training results
-	// and manifest files written to the output Amazon S3 bucket (OutputConfig).
+	// training images, test images, and manifest files copied into the service
+	// for the project version. Your source images are unaffected. The key is also
+	// used to encrypt training results and manifest files written to the output
+	// Amazon S3 bucket (OutputConfig).
 	//
 	// If you choose to use your own KMS key, you need the following permissions
 	// on the KMS key.
@@ -11824,33 +12258,36 @@ type CreateProjectVersionInput struct {
 	// are encrypted using a key that AWS owns and manages.
 	KmsKeyId *string `min:"1" type:"string"`
 
-	// The Amazon S3 bucket location to store the results of training. The S3 bucket
-	// can be in any AWS account as long as the caller has s3:PutObject permissions
-	// on the S3 bucket.
+	// The Amazon S3 bucket location to store the results of training. The bucket
+	// can be any S3 bucket in your AWS account. You need s3:PutObject permission
+	// on the bucket.
 	//
 	// OutputConfig is a required field
 	OutputConfig *OutputConfig `type:"structure" required:"true"`
 
-	// The ARN of the Amazon Rekognition Custom Labels project that manages the
-	// model that you want to train.
+	// The ARN of the Amazon Rekognition project that will manage the project version
+	// you want to train.
 	//
 	// ProjectArn is a required field
 	ProjectArn *string `min:"20" type:"string" required:"true"`
 
-	// A set of tags (key-value pairs) that you want to attach to the model.
+	// A set of tags (key-value pairs) that you want to attach to the project version.
 	Tags map[string]*string `type:"map"`
 
-	// Specifies an external manifest that the service uses to test the model. If
-	// you specify TestingData you must also specify TrainingData. The project must
-	// not have any associated datasets.
+	// Specifies an external manifest that the service uses to test the project
+	// version. If you specify TestingData you must also specify TrainingData. The
+	// project must not have any associated datasets.
 	TestingData *TestingData `type:"structure"`
 
-	// Specifies an external manifest that the services uses to train the model.
-	// If you specify TrainingData you must also specify TestingData. The project
-	// must not have any associated datasets.
+	// Specifies an external manifest that the services uses to train the project
+	// version. If you specify TrainingData you must also specify TestingData. The
+	// project must not have any associated datasets.
 	TrainingData *TrainingData `type:"structure"`
 
-	// A name for the version of the model. This value must be unique.
+	// A description applied to the project version being created.
+	VersionDescription *string `min:"1" type:"string"`
+
+	// A name for the version of the project version. This value must be unique.
 	//
 	// VersionName is a required field
 	VersionName *string `min:"1" type:"string" required:"true"`
@@ -11889,6 +12326,9 @@ func (s *CreateProjectVersionInput) Validate() error {
 	if s.ProjectArn != nil && len(*s.ProjectArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("ProjectArn", 20))
 	}
+	if s.VersionDescription != nil && len(*s.VersionDescription) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VersionDescription", 1))
+	}
 	if s.VersionName == nil {
 		invalidParams.Add(request.NewErrParamRequired("VersionName"))
 	}
@@ -11915,6 +12355,12 @@ func (s *CreateProjectVersionInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetFeatureConfig sets the FeatureConfig field's value.
+func (s *CreateProjectVersionInput) SetFeatureConfig(v *CustomizationFeatureConfig) *CreateProjectVersionInput {
+	s.FeatureConfig = v
+	return s
 }
 
 // SetKmsKeyId sets the KmsKeyId field's value.
@@ -11953,6 +12399,12 @@ func (s *CreateProjectVersionInput) SetTrainingData(v *TrainingData) *CreateProj
 	return s
 }
 
+// SetVersionDescription sets the VersionDescription field's value.
+func (s *CreateProjectVersionInput) SetVersionDescription(v string) *CreateProjectVersionInput {
+	s.VersionDescription = &v
+	return s
+}
+
 // SetVersionName sets the VersionName field's value.
 func (s *CreateProjectVersionInput) SetVersionName(v string) *CreateProjectVersionInput {
 	s.VersionName = &v
@@ -11962,7 +12414,7 @@ func (s *CreateProjectVersionInput) SetVersionName(v string) *CreateProjectVersi
 type CreateProjectVersionOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The ARN of the model version that was created. Use DescribeProjectVersion
+	// The ARN of the model or the project version that was created. Use DescribeProjectVersion
 	// to get the current status of the training operation.
 	ProjectVersionArn *string `min:"20" type:"string"`
 }
@@ -12388,6 +12840,74 @@ func (s *CustomLabel) SetGeometry(v *Geometry) *CustomLabel {
 // SetName sets the Name field's value.
 func (s *CustomLabel) SetName(v string) *CustomLabel {
 	s.Name = &v
+	return s
+}
+
+// Feature specific configuration for the training job. Configuration provided
+// for the job must match the feature type parameter associated with project.
+// If configuration and feature type do not match an InvalidParameterException
+// is returned.
+type CustomizationFeatureConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Configuration options for Custom Moderation training.
+	ContentModeration *CustomizationFeatureContentModerationConfig `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CustomizationFeatureConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CustomizationFeatureConfig) GoString() string {
+	return s.String()
+}
+
+// SetContentModeration sets the ContentModeration field's value.
+func (s *CustomizationFeatureConfig) SetContentModeration(v *CustomizationFeatureContentModerationConfig) *CustomizationFeatureConfig {
+	s.ContentModeration = v
+	return s
+}
+
+// Configuration options for Content Moderation training.
+type CustomizationFeatureContentModerationConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The confidence level you plan to use to identify if unsafe content is present
+	// during inference.
+	ConfidenceThreshold *float64 `type:"float"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CustomizationFeatureContentModerationConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CustomizationFeatureContentModerationConfig) GoString() string {
+	return s.String()
+}
+
+// SetConfidenceThreshold sets the ConfidenceThreshold field's value.
+func (s *CustomizationFeatureContentModerationConfig) SetConfidenceThreshold(v float64) *CustomizationFeatureContentModerationConfig {
+	s.ConfidenceThreshold = &v
 	return s
 }
 
@@ -13266,7 +13786,7 @@ func (s DeleteProjectPolicyOutput) GoString() string {
 type DeleteProjectVersionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the model version that you want to delete.
+	// The Amazon Resource Name (ARN) of the project version that you want to delete.
 	//
 	// ProjectVersionArn is a required field
 	ProjectVersionArn *string `min:"20" type:"string" required:"true"`
@@ -13728,22 +14248,21 @@ type DescribeProjectVersionsInput struct {
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// If the previous response was incomplete (because there is more results to
-	// retrieve), Amazon Rekognition Custom Labels returns a pagination token in
-	// the response. You can use this pagination token to retrieve the next set
-	// of results.
+	// retrieve), Amazon Rekognition returns a pagination token in the response.
+	// You can use this pagination token to retrieve the next set of results.
 	NextToken *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the project that contains the models you
-	// want to describe.
+	// The Amazon Resource Name (ARN) of the project that contains the model/adapter
+	// you want to describe.
 	//
 	// ProjectArn is a required field
 	ProjectArn *string `min:"20" type:"string" required:"true"`
 
-	// A list of model version names that you want to describe. You can add up to
-	// 10 model version names to the list. If you don't specify a value, all model
-	// descriptions are returned. A version name is part of a model (ProjectVersion)
-	// ARN. For example, my-model.2020-01-21T09.10.15 is the version name in the
-	// following ARN. arn:aws:rekognition:us-east-1:123456789012:project/getting-started/version/my-model.2020-01-21T09.10.15/1234567890123.
+	// A list of model or project version names that you want to describe. You can
+	// add up to 10 model or project version names to the list. If you don't specify
+	// a value, all project version descriptions are returned. A version name is
+	// part of a project version ARN. For example, my-model.2020-01-21T09.10.15
+	// is the version name in the following ARN. arn:aws:rekognition:us-east-1:123456789012:project/getting-started/version/my-model.2020-01-21T09.10.15/1234567890123.
 	VersionNames []*string `min:"1" type:"list"`
 }
 
@@ -13815,13 +14334,12 @@ type DescribeProjectVersionsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// If the previous response was incomplete (because there is more results to
-	// retrieve), Amazon Rekognition Custom Labels returns a pagination token in
-	// the response. You can use this pagination token to retrieve the next set
-	// of results.
+	// retrieve), Amazon Rekognition returns a pagination token in the response.
+	// You can use this pagination token to retrieve the next set of results.
 	NextToken *string `type:"string"`
 
-	// A list of model descriptions. The list is sorted by the creation date and
-	// time of the model versions, latest to earliest.
+	// A list of project version descriptions. The list is sorted by the creation
+	// date and time of the project versions, latest to earliest.
 	ProjectVersionDescriptions []*ProjectVersionDescription `type:"list"`
 }
 
@@ -13858,20 +14376,23 @@ func (s *DescribeProjectVersionsOutput) SetProjectVersionDescriptions(v []*Proje
 type DescribeProjectsInput struct {
 	_ struct{} `type:"structure"`
 
+	// Specifies the type of customization to filter projects by. If no value is
+	// specified, CUSTOM_LABELS is used as a default.
+	Features []*string `min:"1" type:"list" enum:"CustomizationFeature"`
+
 	// The maximum number of results to return per paginated call. The largest value
 	// you can specify is 100. If you specify a value greater than 100, a ValidationException
 	// error occurs. The default value is 100.
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// If the previous response was incomplete (because there is more results to
-	// retrieve), Amazon Rekognition Custom Labels returns a pagination token in
-	// the response. You can use this pagination token to retrieve the next set
-	// of results.
+	// retrieve), Rekognition returns a pagination token in the response. You can
+	// use this pagination token to retrieve the next set of results.
 	NextToken *string `type:"string"`
 
-	// A list of the projects that you want Amazon Rekognition Custom Labels to
-	// describe. If you don't specify a value, the response includes descriptions
-	// for all the projects in your AWS account.
+	// A list of the projects that you want Rekognition to describe. If you don't
+	// specify a value, the response includes descriptions for all the projects
+	// in your AWS account.
 	ProjectNames []*string `min:"1" type:"list"`
 }
 
@@ -13896,6 +14417,9 @@ func (s DescribeProjectsInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *DescribeProjectsInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "DescribeProjectsInput"}
+	if s.Features != nil && len(s.Features) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Features", 1))
+	}
 	if s.MaxResults != nil && *s.MaxResults < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
 	}
@@ -13907,6 +14431,12 @@ func (s *DescribeProjectsInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetFeatures sets the Features field's value.
+func (s *DescribeProjectsInput) SetFeatures(v []*string) *DescribeProjectsInput {
+	s.Features = v
+	return s
 }
 
 // SetMaxResults sets the MaxResults field's value.
@@ -13931,9 +14461,8 @@ type DescribeProjectsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// If the previous response was incomplete (because there is more results to
-	// retrieve), Amazon Rekognition Custom Labels returns a pagination token in
-	// the response. You can use this pagination token to retrieve the next set
-	// of results.
+	// retrieve), Amazon Rekognition returns a pagination token in the response.
+	// You can use this pagination token to retrieve the next set of results.
 	NextToken *string `type:"string"`
 
 	// A list of project descriptions. The list is sorted by the date and time the
@@ -14234,7 +14763,10 @@ type DetectCustomLabelsInput struct {
 	// based on the assumed threshold of each label.
 	MinConfidence *float64 `type:"float"`
 
-	// The ARN of the model version that you want to use.
+	// The ARN of the model version that you want to use. Only models associated
+	// with Custom Labels projects accepted by the operation. If a provided ARN
+	// refers to a model version associated with a project for a different feature
+	// type, then an InvalidParameterException is returned.
 	//
 	// ProjectVersionArn is a required field
 	ProjectVersionArn *string `min:"20" type:"string" required:"true"`
@@ -14349,6 +14881,10 @@ type DetectFacesInput struct {
 	//
 	// If you provide both, ["ALL", "DEFAULT"], the service uses a logical "AND"
 	// operator to determine which attributes to return (in this case, all attributes).
+	//
+	// Note that while the FaceOccluded and EyeDirection attributes are supported
+	// when using DetectFaces, they aren't supported when analyzing videos with
+	// StartFaceDetection and GetFaceDetection.
 	Attributes []*string `type:"list" enum:"Attribute"`
 
 	// The input image as base64-encoded bytes or an S3 object. If you use the AWS
@@ -14722,14 +15258,17 @@ type DetectLabelsInput struct {
 	Image *Image `type:"structure" required:"true"`
 
 	// Maximum number of labels you want the service to return in the response.
-	// The service returns the specified number of highest confidence labels.
+	// The service returns the specified number of highest confidence labels. Only
+	// valid when GENERAL_LABELS is specified as a feature type in the Feature input
+	// parameter.
 	MaxLabels *int64 `type:"integer"`
 
 	// Specifies the minimum confidence level for the labels to return. Amazon Rekognition
 	// doesn't return any labels with confidence lower than this specified value.
 	//
 	// If MinConfidence is not specified, the operation returns labels with a confidence
-	// values greater than or equal to 55 percent.
+	// values greater than or equal to 55 percent. Only valid when GENERAL_LABELS
+	// is specified as a feature type in the Feature input parameter.
 	MinConfidence *float64 `type:"float"`
 
 	// A list of the filters to be applied to returned detected labels and image
@@ -14946,6 +15485,10 @@ type DetectModerationLabelsInput struct {
 	// If you don't specify MinConfidence, the operation returns labels with confidence
 	// values greater than or equal to 50 percent.
 	MinConfidence *float64 `type:"float"`
+
+	// Identifier for the custom adapter. Expects the ProjectVersionArn as a value.
+	// Use the CreateProject or CreateProjectVersion APIs to create a custom adapter.
+	ProjectVersion *string `min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -14971,6 +15514,9 @@ func (s *DetectModerationLabelsInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "DetectModerationLabelsInput"}
 	if s.Image == nil {
 		invalidParams.Add(request.NewErrParamRequired("Image"))
+	}
+	if s.ProjectVersion != nil && len(*s.ProjectVersion) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("ProjectVersion", 20))
 	}
 	if s.HumanLoopConfig != nil {
 		if err := s.HumanLoopConfig.Validate(); err != nil {
@@ -15007,6 +15553,12 @@ func (s *DetectModerationLabelsInput) SetMinConfidence(v float64) *DetectModerat
 	return s
 }
 
+// SetProjectVersion sets the ProjectVersion field's value.
+func (s *DetectModerationLabelsInput) SetProjectVersion(v string) *DetectModerationLabelsInput {
+	s.ProjectVersion = &v
+	return s
+}
+
 type DetectModerationLabelsOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -15017,9 +15569,14 @@ type DetectModerationLabelsOutput struct {
 	// start of the video, they were detected.
 	ModerationLabels []*ModerationLabel `type:"list"`
 
-	// Version number of the moderation detection model that was used to detect
+	// Version number of the base moderation detection model that was used to detect
 	// unsafe content.
 	ModerationModelVersion *string `type:"string"`
+
+	// Identifier of the custom adapter that was used during inference. If during
+	// inference the adapter was EXPIRED, then the parameter will not be returned,
+	// indicating that a base moderation detection project version was used.
+	ProjectVersion *string `min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -15055,6 +15612,12 @@ func (s *DetectModerationLabelsOutput) SetModerationLabels(v []*ModerationLabel)
 // SetModerationModelVersion sets the ModerationModelVersion field's value.
 func (s *DetectModerationLabelsOutput) SetModerationModelVersion(v string) *DetectModerationLabelsOutput {
 	s.ModerationModelVersion = &v
+	return s
+}
+
+// SetProjectVersion sets the ProjectVersion field's value.
+func (s *DetectModerationLabelsOutput) SetProjectVersion(v string) *DetectModerationLabelsOutput {
+	s.ProjectVersion = &v
 	return s
 }
 
@@ -17569,7 +18132,7 @@ type GetFaceLivenessSessionResultsOutput struct {
 	// It includes a bounding box of the face and the Base64-encoded bytes that
 	// return an image. If the CreateFaceLivenessSession request included an OutputConfig
 	// argument, the image will be uploaded to an S3Object specified in the output
-	// configuration.
+	// configuration. If no Amazon S3 bucket is defined, raw bytes are sent instead.
 	AuditImages []*AuditImage `type:"list"`
 
 	// Probabalistic confidence score for if the person in the given video was live,
@@ -18097,6 +18660,199 @@ func (s *GetLabelDetectionRequestMetadata) SetAggregateBy(v string) *GetLabelDet
 // SetSortBy sets the SortBy field's value.
 func (s *GetLabelDetectionRequestMetadata) SetSortBy(v string) *GetLabelDetectionRequestMetadata {
 	s.SortBy = &v
+	return s
+}
+
+type GetMediaAnalysisJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// Unique identifier for the media analysis job for which you want to retrieve
+	// results.
+	//
+	// JobId is a required field
+	JobId *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMediaAnalysisJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMediaAnalysisJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetMediaAnalysisJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetMediaAnalysisJobInput"}
+	if s.JobId == nil {
+		invalidParams.Add(request.NewErrParamRequired("JobId"))
+	}
+	if s.JobId != nil && len(*s.JobId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("JobId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetJobId sets the JobId field's value.
+func (s *GetMediaAnalysisJobInput) SetJobId(v string) *GetMediaAnalysisJobInput {
+	s.JobId = &v
+	return s
+}
+
+type GetMediaAnalysisJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Unix date and time when the job finished.
+	CompletionTimestamp *time.Time `type:"timestamp"`
+
+	// The Unix date and time when the job was started.
+	//
+	// CreationTimestamp is a required field
+	CreationTimestamp *time.Time `type:"timestamp" required:"true"`
+
+	// Details about the error that resulted in failure of the job.
+	FailureDetails *MediaAnalysisJobFailureDetails `type:"structure"`
+
+	// Reference to the input manifest that was provided in the job creation request.
+	//
+	// Input is a required field
+	Input *MediaAnalysisInput_ `type:"structure" required:"true"`
+
+	// The identifier for the media analysis job.
+	//
+	// JobId is a required field
+	JobId *string `min:"1" type:"string" required:"true"`
+
+	// The name of the media analysis job.
+	JobName *string `min:"1" type:"string"`
+
+	// KMS Key that was provided in the creation request.
+	KmsKeyId *string `min:"1" type:"string"`
+
+	// The summary manifest provides statistics on input manifest and errors identified
+	// in the input manifest.
+	ManifestSummary *MediaAnalysisManifestSummary `type:"structure"`
+
+	// Operation configurations that were provided during job creation.
+	//
+	// OperationsConfig is a required field
+	OperationsConfig *MediaAnalysisOperationsConfig `type:"structure" required:"true"`
+
+	// Output configuration that was provided in the creation request.
+	//
+	// OutputConfig is a required field
+	OutputConfig *MediaAnalysisOutputConfig `type:"structure" required:"true"`
+
+	// Output manifest that contains prediction results.
+	Results *MediaAnalysisResults `type:"structure"`
+
+	// The current status of the media analysis job.
+	//
+	// Status is a required field
+	Status *string `type:"string" required:"true" enum:"MediaAnalysisJobStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMediaAnalysisJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMediaAnalysisJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetCompletionTimestamp sets the CompletionTimestamp field's value.
+func (s *GetMediaAnalysisJobOutput) SetCompletionTimestamp(v time.Time) *GetMediaAnalysisJobOutput {
+	s.CompletionTimestamp = &v
+	return s
+}
+
+// SetCreationTimestamp sets the CreationTimestamp field's value.
+func (s *GetMediaAnalysisJobOutput) SetCreationTimestamp(v time.Time) *GetMediaAnalysisJobOutput {
+	s.CreationTimestamp = &v
+	return s
+}
+
+// SetFailureDetails sets the FailureDetails field's value.
+func (s *GetMediaAnalysisJobOutput) SetFailureDetails(v *MediaAnalysisJobFailureDetails) *GetMediaAnalysisJobOutput {
+	s.FailureDetails = v
+	return s
+}
+
+// SetInput sets the Input field's value.
+func (s *GetMediaAnalysisJobOutput) SetInput(v *MediaAnalysisInput_) *GetMediaAnalysisJobOutput {
+	s.Input = v
+	return s
+}
+
+// SetJobId sets the JobId field's value.
+func (s *GetMediaAnalysisJobOutput) SetJobId(v string) *GetMediaAnalysisJobOutput {
+	s.JobId = &v
+	return s
+}
+
+// SetJobName sets the JobName field's value.
+func (s *GetMediaAnalysisJobOutput) SetJobName(v string) *GetMediaAnalysisJobOutput {
+	s.JobName = &v
+	return s
+}
+
+// SetKmsKeyId sets the KmsKeyId field's value.
+func (s *GetMediaAnalysisJobOutput) SetKmsKeyId(v string) *GetMediaAnalysisJobOutput {
+	s.KmsKeyId = &v
+	return s
+}
+
+// SetManifestSummary sets the ManifestSummary field's value.
+func (s *GetMediaAnalysisJobOutput) SetManifestSummary(v *MediaAnalysisManifestSummary) *GetMediaAnalysisJobOutput {
+	s.ManifestSummary = v
+	return s
+}
+
+// SetOperationsConfig sets the OperationsConfig field's value.
+func (s *GetMediaAnalysisJobOutput) SetOperationsConfig(v *MediaAnalysisOperationsConfig) *GetMediaAnalysisJobOutput {
+	s.OperationsConfig = v
+	return s
+}
+
+// SetOutputConfig sets the OutputConfig field's value.
+func (s *GetMediaAnalysisJobOutput) SetOutputConfig(v *MediaAnalysisOutputConfig) *GetMediaAnalysisJobOutput {
+	s.OutputConfig = v
+	return s
+}
+
+// SetResults sets the Results field's value.
+func (s *GetMediaAnalysisJobOutput) SetResults(v *MediaAnalysisResults) *GetMediaAnalysisJobOutput {
+	s.Results = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetMediaAnalysisJobOutput) SetStatus(v string) *GetMediaAnalysisJobOutput {
+	s.Status = &v
 	return s
 }
 
@@ -19649,6 +20405,71 @@ func (s *InvalidImageFormatException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// Indicates that a provided manifest file is empty or larger than the allowed
+// limit.
+type InvalidManifestException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InvalidManifestException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InvalidManifestException) GoString() string {
+	return s.String()
+}
+
+func newErrorInvalidManifestException(v protocol.ResponseMetadata) error {
+	return &InvalidManifestException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *InvalidManifestException) Code() string {
+	return "InvalidManifestException"
+}
+
+// Message returns the exception's message.
+func (s *InvalidManifestException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *InvalidManifestException) OrigErr() error {
+	return nil
+}
+
+func (s *InvalidManifestException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *InvalidManifestException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *InvalidManifestException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // Pagination token in the request is not valid.
 type InvalidPaginationTokenException struct {
 	_            struct{}                  `type:"structure"`
@@ -20378,10 +21199,10 @@ func (s *Landmark) SetY(v float64) *Landmark {
 }
 
 // An Amazon Rekognition service limit was exceeded. For example, if you start
-// too many Amazon Rekognition Video jobs concurrently, calls to start operations
-// (StartLabelDetection, for example) will raise a LimitExceededException exception
-// (HTTP status code: 400) until the number of concurrently running jobs is
-// below the Amazon Rekognition service limit.
+// too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+// will raise a LimitExceededException exception (HTTP status code: 400) until
+// the number of concurrently running jobs is below the Amazon Rekognition service
+// limit.
 type LimitExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -20833,7 +21654,7 @@ type ListFacesInput struct {
 	// CollectionId is a required field
 	CollectionId *string `min:"1" type:"string" required:"true"`
 
-	// An array of face IDs to match when listing faces in a collection.
+	// An array of face IDs to filter results with when listing faces in a collection.
 	FaceIds []*string `min:"1" type:"list"`
 
 	// Maximum number of faces to return.
@@ -20844,7 +21665,7 @@ type ListFacesInput struct {
 	// this pagination token to retrieve the next set of faces.
 	NextToken *string `type:"string"`
 
-	// An array of user IDs to match when listing faces in a collection.
+	// An array of user IDs to filter results with when listing faces in a collection.
 	UserId *string `min:"1" type:"string"`
 }
 
@@ -20965,6 +21786,103 @@ func (s *ListFacesOutput) SetFaces(v []*Face) *ListFacesOutput {
 
 // SetNextToken sets the NextToken field's value.
 func (s *ListFacesOutput) SetNextToken(v string) *ListFacesOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListMediaAnalysisJobsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The maximum number of results to return per paginated call. The largest value
+	// user can specify is 100. If user specifies a value greater than 100, an InvalidParameterException
+	// error occurs. The default value is 100.
+	MaxResults *int64 `min:"1" type:"integer"`
+
+	// Pagination token, if the previous response was incomplete.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMediaAnalysisJobsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMediaAnalysisJobsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListMediaAnalysisJobsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListMediaAnalysisJobsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListMediaAnalysisJobsInput) SetMaxResults(v int64) *ListMediaAnalysisJobsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListMediaAnalysisJobsInput) SetNextToken(v string) *ListMediaAnalysisJobsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListMediaAnalysisJobsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Contains a list of all media analysis jobs.
+	//
+	// MediaAnalysisJobs is a required field
+	MediaAnalysisJobs []*MediaAnalysisJobDescription `type:"list" required:"true"`
+
+	// Pagination token, if the previous response was incomplete.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMediaAnalysisJobsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMediaAnalysisJobsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMediaAnalysisJobs sets the MediaAnalysisJobs field's value.
+func (s *ListMediaAnalysisJobsOutput) SetMediaAnalysisJobs(v []*MediaAnalysisJobDescription) *ListMediaAnalysisJobsOutput {
+	s.MediaAnalysisJobs = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListMediaAnalysisJobsOutput) SetNextToken(v string) *ListMediaAnalysisJobsOutput {
 	s.NextToken = &v
 	return s
 }
@@ -21546,6 +22464,494 @@ func (s *MatchedUser) SetUserStatus(v string) *MatchedUser {
 	return s
 }
 
+// Configuration for Moderation Labels Detection.
+type MediaAnalysisDetectModerationLabelsConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the minimum confidence level for the moderation labels to return.
+	// Amazon Rekognition doesn't return any labels with a confidence level lower
+	// than this specified value.
+	MinConfidence *float64 `type:"float"`
+
+	// Specifies the custom moderation model to be used during the label detection
+	// job. If not provided the pre-trained model is used.
+	ProjectVersion *string `min:"20" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisDetectModerationLabelsConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisDetectModerationLabelsConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MediaAnalysisDetectModerationLabelsConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MediaAnalysisDetectModerationLabelsConfig"}
+	if s.ProjectVersion != nil && len(*s.ProjectVersion) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("ProjectVersion", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMinConfidence sets the MinConfidence field's value.
+func (s *MediaAnalysisDetectModerationLabelsConfig) SetMinConfidence(v float64) *MediaAnalysisDetectModerationLabelsConfig {
+	s.MinConfidence = &v
+	return s
+}
+
+// SetProjectVersion sets the ProjectVersion field's value.
+func (s *MediaAnalysisDetectModerationLabelsConfig) SetProjectVersion(v string) *MediaAnalysisDetectModerationLabelsConfig {
+	s.ProjectVersion = &v
+	return s
+}
+
+// Contains input information for a media analysis job.
+type MediaAnalysisInput_ struct {
+	_ struct{} `type:"structure"`
+
+	// Provides the S3 bucket name and object name.
+	//
+	// The region for the S3 bucket containing the S3 object must match the region
+	// you use for Amazon Rekognition operations.
+	//
+	// For Amazon Rekognition to process an S3 object, the user must have permission
+	// to access the S3 object. For more information, see How Amazon Rekognition
+	// works with IAM in the Amazon Rekognition Developer Guide.
+	//
+	// S3Object is a required field
+	S3Object *S3Object `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisInput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisInput_) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MediaAnalysisInput_) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MediaAnalysisInput_"}
+	if s.S3Object == nil {
+		invalidParams.Add(request.NewErrParamRequired("S3Object"))
+	}
+	if s.S3Object != nil {
+		if err := s.S3Object.Validate(); err != nil {
+			invalidParams.AddNested("S3Object", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetS3Object sets the S3Object field's value.
+func (s *MediaAnalysisInput_) SetS3Object(v *S3Object) *MediaAnalysisInput_ {
+	s.S3Object = v
+	return s
+}
+
+// Description for a media analysis job.
+type MediaAnalysisJobDescription struct {
+	_ struct{} `type:"structure"`
+
+	// The Unix date and time when the job finished.
+	CompletionTimestamp *time.Time `type:"timestamp"`
+
+	// The Unix date and time when the job was started.
+	//
+	// CreationTimestamp is a required field
+	CreationTimestamp *time.Time `type:"timestamp" required:"true"`
+
+	// Details about the error that resulted in failure of the job.
+	FailureDetails *MediaAnalysisJobFailureDetails `type:"structure"`
+
+	// Reference to the input manifest that was provided in the job creation request.
+	//
+	// Input is a required field
+	Input *MediaAnalysisInput_ `type:"structure" required:"true"`
+
+	// The identifier for a media analysis job.
+	//
+	// JobId is a required field
+	JobId *string `min:"1" type:"string" required:"true"`
+
+	// The name of a media analysis job.
+	JobName *string `min:"1" type:"string"`
+
+	// KMS Key that was provided in the creation request.
+	KmsKeyId *string `min:"1" type:"string"`
+
+	// Provides statistics on input manifest and errors identified in the input
+	// manifest.
+	ManifestSummary *MediaAnalysisManifestSummary `type:"structure"`
+
+	// Operation configurations that were provided during job creation.
+	//
+	// OperationsConfig is a required field
+	OperationsConfig *MediaAnalysisOperationsConfig `type:"structure" required:"true"`
+
+	// Output configuration that was provided in the creation request.
+	//
+	// OutputConfig is a required field
+	OutputConfig *MediaAnalysisOutputConfig `type:"structure" required:"true"`
+
+	// Output manifest that contains prediction results.
+	Results *MediaAnalysisResults `type:"structure"`
+
+	// The status of the media analysis job being retrieved.
+	//
+	// Status is a required field
+	Status *string `type:"string" required:"true" enum:"MediaAnalysisJobStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisJobDescription) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisJobDescription) GoString() string {
+	return s.String()
+}
+
+// SetCompletionTimestamp sets the CompletionTimestamp field's value.
+func (s *MediaAnalysisJobDescription) SetCompletionTimestamp(v time.Time) *MediaAnalysisJobDescription {
+	s.CompletionTimestamp = &v
+	return s
+}
+
+// SetCreationTimestamp sets the CreationTimestamp field's value.
+func (s *MediaAnalysisJobDescription) SetCreationTimestamp(v time.Time) *MediaAnalysisJobDescription {
+	s.CreationTimestamp = &v
+	return s
+}
+
+// SetFailureDetails sets the FailureDetails field's value.
+func (s *MediaAnalysisJobDescription) SetFailureDetails(v *MediaAnalysisJobFailureDetails) *MediaAnalysisJobDescription {
+	s.FailureDetails = v
+	return s
+}
+
+// SetInput sets the Input field's value.
+func (s *MediaAnalysisJobDescription) SetInput(v *MediaAnalysisInput_) *MediaAnalysisJobDescription {
+	s.Input = v
+	return s
+}
+
+// SetJobId sets the JobId field's value.
+func (s *MediaAnalysisJobDescription) SetJobId(v string) *MediaAnalysisJobDescription {
+	s.JobId = &v
+	return s
+}
+
+// SetJobName sets the JobName field's value.
+func (s *MediaAnalysisJobDescription) SetJobName(v string) *MediaAnalysisJobDescription {
+	s.JobName = &v
+	return s
+}
+
+// SetKmsKeyId sets the KmsKeyId field's value.
+func (s *MediaAnalysisJobDescription) SetKmsKeyId(v string) *MediaAnalysisJobDescription {
+	s.KmsKeyId = &v
+	return s
+}
+
+// SetManifestSummary sets the ManifestSummary field's value.
+func (s *MediaAnalysisJobDescription) SetManifestSummary(v *MediaAnalysisManifestSummary) *MediaAnalysisJobDescription {
+	s.ManifestSummary = v
+	return s
+}
+
+// SetOperationsConfig sets the OperationsConfig field's value.
+func (s *MediaAnalysisJobDescription) SetOperationsConfig(v *MediaAnalysisOperationsConfig) *MediaAnalysisJobDescription {
+	s.OperationsConfig = v
+	return s
+}
+
+// SetOutputConfig sets the OutputConfig field's value.
+func (s *MediaAnalysisJobDescription) SetOutputConfig(v *MediaAnalysisOutputConfig) *MediaAnalysisJobDescription {
+	s.OutputConfig = v
+	return s
+}
+
+// SetResults sets the Results field's value.
+func (s *MediaAnalysisJobDescription) SetResults(v *MediaAnalysisResults) *MediaAnalysisJobDescription {
+	s.Results = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *MediaAnalysisJobDescription) SetStatus(v string) *MediaAnalysisJobDescription {
+	s.Status = &v
+	return s
+}
+
+// Details about the error that resulted in failure of the job.
+type MediaAnalysisJobFailureDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Error code for the failed job.
+	Code *string `type:"string" enum:"MediaAnalysisJobFailureCode"`
+
+	// Human readable error message.
+	Message *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisJobFailureDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisJobFailureDetails) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *MediaAnalysisJobFailureDetails) SetCode(v string) *MediaAnalysisJobFailureDetails {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *MediaAnalysisJobFailureDetails) SetMessage(v string) *MediaAnalysisJobFailureDetails {
+	s.Message = &v
+	return s
+}
+
+// Summary that provides statistics on input manifest and errors identified
+// in the input manifest.
+type MediaAnalysisManifestSummary struct {
+	_ struct{} `type:"structure"`
+
+	// Provides the S3 bucket name and object name.
+	//
+	// The region for the S3 bucket containing the S3 object must match the region
+	// you use for Amazon Rekognition operations.
+	//
+	// For Amazon Rekognition to process an S3 object, the user must have permission
+	// to access the S3 object. For more information, see How Amazon Rekognition
+	// works with IAM in the Amazon Rekognition Developer Guide.
+	S3Object *S3Object `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisManifestSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisManifestSummary) GoString() string {
+	return s.String()
+}
+
+// SetS3Object sets the S3Object field's value.
+func (s *MediaAnalysisManifestSummary) SetS3Object(v *S3Object) *MediaAnalysisManifestSummary {
+	s.S3Object = v
+	return s
+}
+
+// Configuration options for a media analysis job. Configuration is operation-specific.
+type MediaAnalysisOperationsConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Contains configuration options for a DetectModerationLabels job.
+	DetectModerationLabels *MediaAnalysisDetectModerationLabelsConfig `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisOperationsConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisOperationsConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MediaAnalysisOperationsConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MediaAnalysisOperationsConfig"}
+	if s.DetectModerationLabels != nil {
+		if err := s.DetectModerationLabels.Validate(); err != nil {
+			invalidParams.AddNested("DetectModerationLabels", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDetectModerationLabels sets the DetectModerationLabels field's value.
+func (s *MediaAnalysisOperationsConfig) SetDetectModerationLabels(v *MediaAnalysisDetectModerationLabelsConfig) *MediaAnalysisOperationsConfig {
+	s.DetectModerationLabels = v
+	return s
+}
+
+// Output configuration provided in the job creation request.
+type MediaAnalysisOutputConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the Amazon S3 bucket to contain the output of the media analysis
+	// job.
+	//
+	// S3Bucket is a required field
+	S3Bucket *string `min:"3" type:"string" required:"true"`
+
+	// Specifies the Amazon S3 key prefix that comes after the name of the bucket
+	// you have designated for storage.
+	S3KeyPrefix *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisOutputConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisOutputConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MediaAnalysisOutputConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MediaAnalysisOutputConfig"}
+	if s.S3Bucket == nil {
+		invalidParams.Add(request.NewErrParamRequired("S3Bucket"))
+	}
+	if s.S3Bucket != nil && len(*s.S3Bucket) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("S3Bucket", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetS3Bucket sets the S3Bucket field's value.
+func (s *MediaAnalysisOutputConfig) SetS3Bucket(v string) *MediaAnalysisOutputConfig {
+	s.S3Bucket = &v
+	return s
+}
+
+// SetS3KeyPrefix sets the S3KeyPrefix field's value.
+func (s *MediaAnalysisOutputConfig) SetS3KeyPrefix(v string) *MediaAnalysisOutputConfig {
+	s.S3KeyPrefix = &v
+	return s
+}
+
+// Contains the results for a media analysis job created with StartMediaAnalysisJob.
+type MediaAnalysisResults struct {
+	_ struct{} `type:"structure"`
+
+	// Provides the S3 bucket name and object name.
+	//
+	// The region for the S3 bucket containing the S3 object must match the region
+	// you use for Amazon Rekognition operations.
+	//
+	// For Amazon Rekognition to process an S3 object, the user must have permission
+	// to access the S3 object. For more information, see How Amazon Rekognition
+	// works with IAM in the Amazon Rekognition Developer Guide.
+	S3Object *S3Object `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisResults) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MediaAnalysisResults) GoString() string {
+	return s.String()
+}
+
+// SetS3Object sets the S3Object field's value.
+func (s *MediaAnalysisResults) SetS3Object(v *S3Object) *MediaAnalysisResults {
+	s.S3Object = v
+	return s
+}
+
 // Provides information about a single type of inappropriate, unwanted, or offensive
 // content found in an image or video. Each type of moderated content has a
 // label within a hierarchical taxonomy. For more information, see Content moderation
@@ -22104,11 +23510,18 @@ func (s *Pose) SetYaw(v float64) *Pose {
 type ProjectDescription struct {
 	_ struct{} `type:"structure"`
 
+	// Indicates whether automatic retraining will be attempted for the versions
+	// of the project. Applies only to adapters.
+	AutoUpdate *string `type:"string" enum:"ProjectAutoUpdate"`
+
 	// The Unix timestamp for the date and time that the project was created.
 	CreationTimestamp *time.Time `type:"timestamp"`
 
 	// Information about the training and test datasets in the project.
 	Datasets []*DatasetMetadata `type:"list"`
+
+	// Specifies the project that is being customized.
+	Feature *string `type:"string" enum:"CustomizationFeature"`
 
 	// The Amazon Resource Name (ARN) of the project.
 	ProjectArn *string `min:"20" type:"string"`
@@ -22135,6 +23548,12 @@ func (s ProjectDescription) GoString() string {
 	return s.String()
 }
 
+// SetAutoUpdate sets the AutoUpdate field's value.
+func (s *ProjectDescription) SetAutoUpdate(v string) *ProjectDescription {
+	s.AutoUpdate = &v
+	return s
+}
+
 // SetCreationTimestamp sets the CreationTimestamp field's value.
 func (s *ProjectDescription) SetCreationTimestamp(v time.Time) *ProjectDescription {
 	s.CreationTimestamp = &v
@@ -22144,6 +23563,12 @@ func (s *ProjectDescription) SetCreationTimestamp(v time.Time) *ProjectDescripti
 // SetDatasets sets the Datasets field's value.
 func (s *ProjectDescription) SetDatasets(v []*DatasetMetadata) *ProjectDescription {
 	s.Datasets = v
+	return s
+}
+
+// SetFeature sets the Feature field's value.
+func (s *ProjectDescription) SetFeature(v string) *ProjectDescription {
+	s.Feature = &v
 	return s
 }
 
@@ -22237,9 +23662,12 @@ func (s *ProjectPolicy) SetProjectArn(v string) *ProjectPolicy {
 	return s
 }
 
-// A description of a version of an Amazon Rekognition Custom Labels model.
+// A description of a version of a Amazon Rekognition project version.
 type ProjectVersionDescription struct {
 	_ struct{} `type:"structure"`
+
+	// The base detection model version used to create the project version.
+	BaseModelVersion *string `type:"string"`
 
 	// The duration, in seconds, that you were billed for a successful training
 	// of the model version. This value is only returned if the model version has
@@ -22252,6 +23680,12 @@ type ProjectVersionDescription struct {
 	// The training results. EvaluationResult is only returned if training is successful.
 	EvaluationResult *EvaluationResult `type:"structure"`
 
+	// The feature that was customized.
+	Feature *string `type:"string" enum:"CustomizationFeature"`
+
+	// Feature specific configuration that was applied during training.
+	FeatureConfig *CustomizationFeatureConfig `type:"structure"`
+
 	// The identifer for the AWS Key Management Service key (AWS KMS key) that was
 	// used to encrypt the model during training.
 	KmsKeyId *string `min:"1" type:"string"`
@@ -22260,18 +23694,19 @@ type ProjectVersionDescription struct {
 	// data validation results for the training and test datasets.
 	ManifestSummary *GroundTruthManifest `type:"structure"`
 
-	// The maximum number of inference units Amazon Rekognition Custom Labels uses
-	// to auto-scale the model. For more information, see StartProjectVersion.
+	// The maximum number of inference units Amazon Rekognition uses to auto-scale
+	// the model. Applies only to Custom Labels projects. For more information,
+	// see StartProjectVersion.
 	MaxInferenceUnits *int64 `min:"1" type:"integer"`
 
-	// The minimum number of inference units used by the model. For more information,
-	// see StartProjectVersion.
+	// The minimum number of inference units used by the model. Applies only to
+	// Custom Labels projects. For more information, see StartProjectVersion.
 	MinInferenceUnits *int64 `min:"1" type:"integer"`
 
 	// The location where training results are saved.
 	OutputConfig *OutputConfig `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the model version.
+	// The Amazon Resource Name (ARN) of the project version.
 	ProjectVersionArn *string `min:"20" type:"string"`
 
 	// If the model version was copied from a different project, SourceProjectVersionArn
@@ -22292,6 +23727,9 @@ type ProjectVersionDescription struct {
 
 	// The Unix date and time that training of the model ended.
 	TrainingEndTimestamp *time.Time `type:"timestamp"`
+
+	// A user-provided description of the project version.
+	VersionDescription *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -22312,6 +23750,12 @@ func (s ProjectVersionDescription) GoString() string {
 	return s.String()
 }
 
+// SetBaseModelVersion sets the BaseModelVersion field's value.
+func (s *ProjectVersionDescription) SetBaseModelVersion(v string) *ProjectVersionDescription {
+	s.BaseModelVersion = &v
+	return s
+}
+
 // SetBillableTrainingTimeInSeconds sets the BillableTrainingTimeInSeconds field's value.
 func (s *ProjectVersionDescription) SetBillableTrainingTimeInSeconds(v int64) *ProjectVersionDescription {
 	s.BillableTrainingTimeInSeconds = &v
@@ -22327,6 +23771,18 @@ func (s *ProjectVersionDescription) SetCreationTimestamp(v time.Time) *ProjectVe
 // SetEvaluationResult sets the EvaluationResult field's value.
 func (s *ProjectVersionDescription) SetEvaluationResult(v *EvaluationResult) *ProjectVersionDescription {
 	s.EvaluationResult = v
+	return s
+}
+
+// SetFeature sets the Feature field's value.
+func (s *ProjectVersionDescription) SetFeature(v string) *ProjectVersionDescription {
+	s.Feature = &v
+	return s
+}
+
+// SetFeatureConfig sets the FeatureConfig field's value.
+func (s *ProjectVersionDescription) SetFeatureConfig(v *CustomizationFeatureConfig) *ProjectVersionDescription {
+	s.FeatureConfig = v
 	return s
 }
 
@@ -22399,6 +23855,12 @@ func (s *ProjectVersionDescription) SetTrainingDataResult(v *TrainingDataResult)
 // SetTrainingEndTimestamp sets the TrainingEndTimestamp field's value.
 func (s *ProjectVersionDescription) SetTrainingEndTimestamp(v time.Time) *ProjectVersionDescription {
 	s.TrainingEndTimestamp = &v
+	return s
+}
+
+// SetVersionDescription sets the VersionDescription field's value.
+func (s *ProjectVersionDescription) SetVersionDescription(v string) *ProjectVersionDescription {
+	s.VersionDescription = &v
 	return s
 }
 
@@ -25355,6 +26817,169 @@ func (s *StartLabelDetectionOutput) SetJobId(v string) *StartLabelDetectionOutpu
 	return s
 }
 
+type StartMediaAnalysisJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// Idempotency token used to prevent the accidental creation of duplicate versions.
+	// If you use the same token with multiple StartMediaAnalysisJobRequest requests,
+	// the same response is returned. Use ClientRequestToken to prevent the same
+	// request from being processed more than once.
+	ClientRequestToken *string `min:"1" type:"string" idempotencyToken:"true"`
+
+	// Input data to be analyzed by the job.
+	//
+	// Input is a required field
+	Input *MediaAnalysisInput_ `type:"structure" required:"true"`
+
+	// The name of the job. Does not have to be unique.
+	JobName *string `min:"1" type:"string"`
+
+	// The identifier of customer managed AWS KMS key (name or ARN). The key is
+	// used to encrypt images copied into the service. The key is also used to encrypt
+	// results and manifest files written to the output Amazon S3 bucket.
+	KmsKeyId *string `min:"1" type:"string"`
+
+	// Configuration options for the media analysis job to be created.
+	//
+	// OperationsConfig is a required field
+	OperationsConfig *MediaAnalysisOperationsConfig `type:"structure" required:"true"`
+
+	// The Amazon S3 bucket location to store the results.
+	//
+	// OutputConfig is a required field
+	OutputConfig *MediaAnalysisOutputConfig `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMediaAnalysisJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMediaAnalysisJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartMediaAnalysisJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartMediaAnalysisJobInput"}
+	if s.ClientRequestToken != nil && len(*s.ClientRequestToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientRequestToken", 1))
+	}
+	if s.Input == nil {
+		invalidParams.Add(request.NewErrParamRequired("Input"))
+	}
+	if s.JobName != nil && len(*s.JobName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("JobName", 1))
+	}
+	if s.KmsKeyId != nil && len(*s.KmsKeyId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("KmsKeyId", 1))
+	}
+	if s.OperationsConfig == nil {
+		invalidParams.Add(request.NewErrParamRequired("OperationsConfig"))
+	}
+	if s.OutputConfig == nil {
+		invalidParams.Add(request.NewErrParamRequired("OutputConfig"))
+	}
+	if s.Input != nil {
+		if err := s.Input.Validate(); err != nil {
+			invalidParams.AddNested("Input", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OperationsConfig != nil {
+		if err := s.OperationsConfig.Validate(); err != nil {
+			invalidParams.AddNested("OperationsConfig", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OutputConfig != nil {
+		if err := s.OutputConfig.Validate(); err != nil {
+			invalidParams.AddNested("OutputConfig", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientRequestToken sets the ClientRequestToken field's value.
+func (s *StartMediaAnalysisJobInput) SetClientRequestToken(v string) *StartMediaAnalysisJobInput {
+	s.ClientRequestToken = &v
+	return s
+}
+
+// SetInput sets the Input field's value.
+func (s *StartMediaAnalysisJobInput) SetInput(v *MediaAnalysisInput_) *StartMediaAnalysisJobInput {
+	s.Input = v
+	return s
+}
+
+// SetJobName sets the JobName field's value.
+func (s *StartMediaAnalysisJobInput) SetJobName(v string) *StartMediaAnalysisJobInput {
+	s.JobName = &v
+	return s
+}
+
+// SetKmsKeyId sets the KmsKeyId field's value.
+func (s *StartMediaAnalysisJobInput) SetKmsKeyId(v string) *StartMediaAnalysisJobInput {
+	s.KmsKeyId = &v
+	return s
+}
+
+// SetOperationsConfig sets the OperationsConfig field's value.
+func (s *StartMediaAnalysisJobInput) SetOperationsConfig(v *MediaAnalysisOperationsConfig) *StartMediaAnalysisJobInput {
+	s.OperationsConfig = v
+	return s
+}
+
+// SetOutputConfig sets the OutputConfig field's value.
+func (s *StartMediaAnalysisJobInput) SetOutputConfig(v *MediaAnalysisOutputConfig) *StartMediaAnalysisJobInput {
+	s.OutputConfig = v
+	return s
+}
+
+type StartMediaAnalysisJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Identifier for the created job.
+	//
+	// JobId is a required field
+	JobId *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMediaAnalysisJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMediaAnalysisJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetJobId sets the JobId field's value.
+func (s *StartMediaAnalysisJobOutput) SetJobId(v string) *StartMediaAnalysisJobOutput {
+	s.JobId = &v
+	return s
+}
+
 type StartPersonTrackingInput struct {
 	_ struct{} `type:"structure"`
 
@@ -25496,10 +27121,6 @@ type StartProjectVersionInput struct {
 
 	// The minimum number of inference units to use. A single inference unit represents
 	// 1 hour of processing.
-	//
-	// For information about the number of transactions per second (TPS) that an
-	// inference unit can support, see Running a trained Amazon Rekognition Custom
-	// Labels model in the Amazon Rekognition Custom Labels Guide.
 	//
 	// Use a higher number to increase the TPS throughput of your model. You are
 	// charged for the number of inference units that you use.
@@ -26260,7 +27881,7 @@ func (s *StartTextDetectionOutput) SetJobId(v string) *StartTextDetectionOutput 
 type StopProjectVersionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the model version that you want to delete.
+	// The Amazon Resource Name (ARN) of the model version that you want to stop.
 	//
 	// This operation requires permissions to perform the rekognition:StopProjectVersion
 	// action.
@@ -27089,18 +28710,16 @@ func (s *TechnicalCueSegment) SetType(v string) *TechnicalCueSegment {
 }
 
 // The dataset used for testing. Optionally, if AutoCreate is set, Amazon Rekognition
-// Custom Labels uses the training dataset to create a test dataset with a temporary
-// split of the training dataset.
+// uses the training dataset to create a test dataset with a temporary split
+// of the training dataset.
 type TestingData struct {
 	_ struct{} `type:"structure"`
 
 	// The assets used for testing.
 	Assets []*Asset `type:"list"`
 
-	// If specified, Amazon Rekognition Custom Labels temporarily splits the training
-	// dataset (80%) to create a test dataset (20%) for the training job. After
-	// training completes, the test dataset is not stored and the training dataset
-	// reverts to its previous size.
+	// If specified, Rekognition splits training dataset to create a test dataset
+	// for the training job.
 	AutoCreate *bool `type:"boolean"`
 }
 
@@ -27414,7 +29033,8 @@ func (s *ThrottlingException) RequestID() string {
 type TrainingData struct {
 	_ struct{} `type:"structure"`
 
-	// A Sagemaker GroundTruth manifest file that contains the training images (assets).
+	// A manifest file that contains references to the training images and ground-truth
+	// annotations.
 	Assets []*Asset `type:"list"`
 }
 
@@ -27462,20 +29082,20 @@ func (s *TrainingData) SetAssets(v []*Asset) *TrainingData {
 	return s
 }
 
-// Sagemaker Groundtruth format manifest files for the input, output and validation
-// datasets that are used and created during testing.
+// The data validation manifest created for the training dataset during model
+// training.
 type TrainingDataResult struct {
 	_ struct{} `type:"structure"`
 
-	// The training assets that you supplied for training.
+	// The training data that you supplied.
 	Input *TrainingData `type:"structure"`
 
-	// The images (assets) that were actually trained by Amazon Rekognition Custom
-	// Labels.
+	// Reference to images (assets) that were actually used during training with
+	// trained model predictions.
 	Output *TrainingData `type:"structure"`
 
-	// The location of the data validation manifest. The data validation manifest
-	// is created for the training dataset during model training.
+	// A manifest that you supplied for training, with validation results for each
+	// line.
 	Validation *ValidationData `type:"structure"`
 }
 
@@ -28581,6 +30201,22 @@ func ContentModerationSortBy_Values() []string {
 }
 
 const (
+	// CustomizationFeatureContentModeration is a CustomizationFeature enum value
+	CustomizationFeatureContentModeration = "CONTENT_MODERATION"
+
+	// CustomizationFeatureCustomLabels is a CustomizationFeature enum value
+	CustomizationFeatureCustomLabels = "CUSTOM_LABELS"
+)
+
+// CustomizationFeature_Values returns all elements of the CustomizationFeature enum
+func CustomizationFeature_Values() []string {
+	return []string{
+		CustomizationFeatureContentModeration,
+		CustomizationFeatureCustomLabels,
+	}
+}
+
+const (
 	// DatasetStatusCreateInProgress is a DatasetStatus enum value
 	DatasetStatusCreateInProgress = "CREATE_IN_PROGRESS"
 
@@ -28986,6 +30622,78 @@ func LivenessSessionStatus_Values() []string {
 }
 
 const (
+	// MediaAnalysisJobFailureCodeInternalError is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeInternalError = "INTERNAL_ERROR"
+
+	// MediaAnalysisJobFailureCodeInvalidS3Object is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeInvalidS3Object = "INVALID_S3_OBJECT"
+
+	// MediaAnalysisJobFailureCodeInvalidManifest is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeInvalidManifest = "INVALID_MANIFEST"
+
+	// MediaAnalysisJobFailureCodeInvalidOutputConfig is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeInvalidOutputConfig = "INVALID_OUTPUT_CONFIG"
+
+	// MediaAnalysisJobFailureCodeInvalidKmsKey is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeInvalidKmsKey = "INVALID_KMS_KEY"
+
+	// MediaAnalysisJobFailureCodeAccessDenied is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeAccessDenied = "ACCESS_DENIED"
+
+	// MediaAnalysisJobFailureCodeResourceNotFound is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeResourceNotFound = "RESOURCE_NOT_FOUND"
+
+	// MediaAnalysisJobFailureCodeResourceNotReady is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeResourceNotReady = "RESOURCE_NOT_READY"
+
+	// MediaAnalysisJobFailureCodeThrottled is a MediaAnalysisJobFailureCode enum value
+	MediaAnalysisJobFailureCodeThrottled = "THROTTLED"
+)
+
+// MediaAnalysisJobFailureCode_Values returns all elements of the MediaAnalysisJobFailureCode enum
+func MediaAnalysisJobFailureCode_Values() []string {
+	return []string{
+		MediaAnalysisJobFailureCodeInternalError,
+		MediaAnalysisJobFailureCodeInvalidS3Object,
+		MediaAnalysisJobFailureCodeInvalidManifest,
+		MediaAnalysisJobFailureCodeInvalidOutputConfig,
+		MediaAnalysisJobFailureCodeInvalidKmsKey,
+		MediaAnalysisJobFailureCodeAccessDenied,
+		MediaAnalysisJobFailureCodeResourceNotFound,
+		MediaAnalysisJobFailureCodeResourceNotReady,
+		MediaAnalysisJobFailureCodeThrottled,
+	}
+}
+
+const (
+	// MediaAnalysisJobStatusCreated is a MediaAnalysisJobStatus enum value
+	MediaAnalysisJobStatusCreated = "CREATED"
+
+	// MediaAnalysisJobStatusQueued is a MediaAnalysisJobStatus enum value
+	MediaAnalysisJobStatusQueued = "QUEUED"
+
+	// MediaAnalysisJobStatusInProgress is a MediaAnalysisJobStatus enum value
+	MediaAnalysisJobStatusInProgress = "IN_PROGRESS"
+
+	// MediaAnalysisJobStatusSucceeded is a MediaAnalysisJobStatus enum value
+	MediaAnalysisJobStatusSucceeded = "SUCCEEDED"
+
+	// MediaAnalysisJobStatusFailed is a MediaAnalysisJobStatus enum value
+	MediaAnalysisJobStatusFailed = "FAILED"
+)
+
+// MediaAnalysisJobStatus_Values returns all elements of the MediaAnalysisJobStatus enum
+func MediaAnalysisJobStatus_Values() []string {
+	return []string{
+		MediaAnalysisJobStatusCreated,
+		MediaAnalysisJobStatusQueued,
+		MediaAnalysisJobStatusInProgress,
+		MediaAnalysisJobStatusSucceeded,
+		MediaAnalysisJobStatusFailed,
+	}
+}
+
+const (
 	// OrientationCorrectionRotate0 is a OrientationCorrection enum value
 	OrientationCorrectionRotate0 = "ROTATE_0"
 
@@ -29022,6 +30730,22 @@ func PersonTrackingSortBy_Values() []string {
 	return []string{
 		PersonTrackingSortByIndex,
 		PersonTrackingSortByTimestamp,
+	}
+}
+
+const (
+	// ProjectAutoUpdateEnabled is a ProjectAutoUpdate enum value
+	ProjectAutoUpdateEnabled = "ENABLED"
+
+	// ProjectAutoUpdateDisabled is a ProjectAutoUpdate enum value
+	ProjectAutoUpdateDisabled = "DISABLED"
+)
+
+// ProjectAutoUpdate_Values returns all elements of the ProjectAutoUpdate enum
+func ProjectAutoUpdate_Values() []string {
+	return []string{
+		ProjectAutoUpdateEnabled,
+		ProjectAutoUpdateDisabled,
 	}
 }
 
@@ -29081,6 +30805,12 @@ const (
 
 	// ProjectVersionStatusCopyingFailed is a ProjectVersionStatus enum value
 	ProjectVersionStatusCopyingFailed = "COPYING_FAILED"
+
+	// ProjectVersionStatusDeprecated is a ProjectVersionStatus enum value
+	ProjectVersionStatusDeprecated = "DEPRECATED"
+
+	// ProjectVersionStatusExpired is a ProjectVersionStatus enum value
+	ProjectVersionStatusExpired = "EXPIRED"
 )
 
 // ProjectVersionStatus_Values returns all elements of the ProjectVersionStatus enum
@@ -29098,6 +30828,8 @@ func ProjectVersionStatus_Values() []string {
 		ProjectVersionStatusCopyingInProgress,
 		ProjectVersionStatusCopyingCompleted,
 		ProjectVersionStatusCopyingFailed,
+		ProjectVersionStatusDeprecated,
+		ProjectVersionStatusExpired,
 	}
 }
 

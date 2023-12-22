@@ -588,6 +588,12 @@ func (c *GuardDuty) CreateMembersRequest(input *CreateMembersInput) (req *reques
 // administrator account. A delegated administrator must enable GuardDuty prior
 // to being added as a member.
 //
+// When you use CreateMembers as an Organizations delegated administrator, GuardDuty
+// applies your organization's auto-enable settings to the member accounts in
+// this request, irrespective of the accounts being new or existing members.
+// For more information about the existing auto-enable settings for your organization,
+// see DescribeOrganizationConfiguration (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DescribeOrganizationConfiguration.html).
+//
 // If you are adding accounts by invitation, before using InviteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html),
 // use CreateMembers after GuardDuty has been enabled in potential member accounts.
 //
@@ -1974,8 +1980,8 @@ func (c *GuardDuty) DisableOrganizationAdminAccountRequest(input *DisableOrganiz
 
 // DisableOrganizationAdminAccount API operation for Amazon GuardDuty.
 //
-// Disables an Amazon Web Services account within the Organization as the GuardDuty
-// delegated administrator.
+// Removes the existing GuardDuty delegated administrator of the organization.
+// Only the organization's management account can run this API operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2270,7 +2276,7 @@ func (c *GuardDuty) DisassociateMembersRequest(input *DisassociateMembersInput) 
 //
 // With autoEnableOrganizationMembers configuration for your organization set
 // to ALL, you'll receive an error if you attempt to disassociate a member account
-// before removing them from your Amazon Web Services organization.
+// before removing them from your organization.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2353,8 +2359,9 @@ func (c *GuardDuty) EnableOrganizationAdminAccountRequest(input *EnableOrganizat
 
 // EnableOrganizationAdminAccount API operation for Amazon GuardDuty.
 //
-// Enables an Amazon Web Services account within the organization as the GuardDuty
-// delegated administrator.
+// Designates an Amazon Web Services account within the organization as your
+// GuardDuty delegated administrator. Only the organization's management account
+// can run this API operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2436,8 +2443,11 @@ func (c *GuardDuty) GetAdministratorAccountRequest(input *GetAdministratorAccoun
 
 // GetAdministratorAccount API operation for Amazon GuardDuty.
 //
-// Provides the details for the GuardDuty administrator account associated with
+// Provides the details of the GuardDuty administrator account associated with
 // the current GuardDuty member account.
+//
+// If the organization's management account or a delegated administrator runs
+// this API, it will return success (HTTP 200) but no content.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2521,8 +2531,8 @@ func (c *GuardDuty) GetCoverageStatisticsRequest(input *GetCoverageStatisticsInp
 //
 // Retrieves aggregated statistics for your account. If you are a GuardDuty
 // administrator, you can retrieve the statistics for all the resources associated
-// with the active member accounts in your organization who have enabled EKS
-// Runtime Monitoring and have the GuardDuty agent running on their EKS nodes.
+// with the active member accounts in your organization who have enabled Runtime
+// Monitoring and have the GuardDuty security agent running on their resources.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3405,6 +3415,93 @@ func (c *GuardDuty) GetMembersWithContext(ctx aws.Context, input *GetMembersInpu
 	return out, req.Send()
 }
 
+const opGetOrganizationStatistics = "GetOrganizationStatistics"
+
+// GetOrganizationStatisticsRequest generates a "aws/request.Request" representing the
+// client's request for the GetOrganizationStatistics operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetOrganizationStatistics for more information on using the GetOrganizationStatistics
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetOrganizationStatisticsRequest method.
+//	req, resp := client.GetOrganizationStatisticsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/GetOrganizationStatistics
+func (c *GuardDuty) GetOrganizationStatisticsRequest(input *GetOrganizationStatisticsInput) (req *request.Request, output *GetOrganizationStatisticsOutput) {
+	op := &request.Operation{
+		Name:       opGetOrganizationStatistics,
+		HTTPMethod: "GET",
+		HTTPPath:   "/organization/statistics",
+	}
+
+	if input == nil {
+		input = &GetOrganizationStatisticsInput{}
+	}
+
+	output = &GetOrganizationStatisticsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetOrganizationStatistics API operation for Amazon GuardDuty.
+//
+// Retrieves how many active member accounts in your Amazon Web Services organization
+// have each feature enabled within GuardDuty. Only a delegated GuardDuty administrator
+// of an organization can run this API.
+//
+// When you create a new Amazon Web Services organization, it might take up
+// to 24 hours to generate the statistics for the entire organization.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon GuardDuty's
+// API operation GetOrganizationStatistics for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     A bad request exception object.
+//
+//   - InternalServerErrorException
+//     An internal server error exception object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/GetOrganizationStatistics
+func (c *GuardDuty) GetOrganizationStatistics(input *GetOrganizationStatisticsInput) (*GetOrganizationStatisticsOutput, error) {
+	req, out := c.GetOrganizationStatisticsRequest(input)
+	return out, req.Send()
+}
+
+// GetOrganizationStatisticsWithContext is the same as GetOrganizationStatistics with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetOrganizationStatistics for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GuardDuty) GetOrganizationStatisticsWithContext(ctx aws.Context, input *GetOrganizationStatisticsInput, opts ...request.Option) (*GetOrganizationStatisticsOutput, error) {
+	req, out := c.GetOrganizationStatisticsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetRemainingFreeTrialDays = "GetRemainingFreeTrialDays"
 
 // GetRemainingFreeTrialDaysRequest generates a "aws/request.Request" representing the
@@ -3759,9 +3856,9 @@ func (c *GuardDuty) InviteMembersRequest(input *InviteMembersInput) (req *reques
 //
 // Invites Amazon Web Services accounts to become members of an organization
 // administered by the Amazon Web Services account that invokes this API. If
-// you are using Amazon Web Services Organizations to manager your GuardDuty
+// you are using Amazon Web Services Organizations to manage your GuardDuty
 // environment, this step is not needed. For more information, see Managing
-// accounts with Amazon Web Services Organizations (https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_organizations.html).
+// accounts with organizations (https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_organizations.html).
 //
 // To invite Amazon Web Services accounts, the first step is to ensure that
 // GuardDuty has been enabled in the potential member accounts. You can now
@@ -3871,8 +3968,8 @@ func (c *GuardDuty) ListCoverageRequest(input *ListCoverageInput) (req *request.
 // administrator, you can retrieve all resources associated with the active
 // member accounts in your organization.
 //
-// Make sure the accounts have EKS Runtime Monitoring enabled and GuardDuty
-// agent running on their EKS nodes.
+// Make sure the accounts have Runtime Monitoring enabled and GuardDuty agent
+// running on their resources.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4849,7 +4946,8 @@ func (c *GuardDuty) ListOrganizationAdminAccountsRequest(input *ListOrganization
 
 // ListOrganizationAdminAccounts API operation for Amazon GuardDuty.
 //
-// Lists the accounts configured as GuardDuty delegated administrators.
+// Lists the accounts designated as GuardDuty delegated administrators. Only
+// the organization's management account can run this API operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5122,9 +5220,9 @@ func (c *GuardDuty) ListTagsForResourceRequest(input *ListTagsForResourceInput) 
 // ListTagsForResource API operation for Amazon GuardDuty.
 //
 // Lists tags for a resource. Tagging is currently supported for detectors,
-// finding filters, IP sets, threat intel sets, publishing destination, with
-// a limit of 50 tags per resource. When invoked, this operation returns all
-// assigned tags for a given resource.
+// finding filters, IP sets, threat intel sets, and publishing destination,
+// with a limit of 50 tags per resource. When invoked, this operation returns
+// all assigned tags for a given resource.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6374,7 +6472,8 @@ func (c *GuardDuty) UpdateOrganizationConfigurationRequest(input *UpdateOrganiza
 // UpdateOrganizationConfiguration API operation for Amazon GuardDuty.
 //
 // Configures the delegated administrator account with the provided values.
-// You must provide the value for either autoEnableOrganizationMembers or autoEnable.
+// You must provide a value for either autoEnableOrganizationMembers or autoEnable,
+// but not both.
 //
 // There might be regional differences because some data sources might not be
 // available in all the Amazon Web Services Regions where GuardDuty is presently
@@ -7124,6 +7223,17 @@ type Action struct {
 	// Information about the Kubernetes API call action described in this finding.
 	KubernetesApiCallAction *KubernetesApiCallAction `locationName:"kubernetesApiCallAction" type:"structure"`
 
+	// Information whether the user has the permission to use a specific Kubernetes
+	// API.
+	KubernetesPermissionCheckedDetails *KubernetesPermissionCheckedDetails `locationName:"kubernetesPermissionCheckedDetails" type:"structure"`
+
+	// Information about the role binding that grants the permission defined in
+	// a Kubernetes role.
+	KubernetesRoleBindingDetails *KubernetesRoleBindingDetails `locationName:"kubernetesRoleBindingDetails" type:"structure"`
+
+	// Information about the Kubernetes role name and role type.
+	KubernetesRoleDetails *KubernetesRoleDetails `locationName:"kubernetesRoleDetails" type:"structure"`
+
 	// Information about the NETWORK_CONNECTION action described in this finding.
 	NetworkConnectionAction *NetworkConnectionAction `locationName:"networkConnectionAction" type:"structure"`
 
@@ -7173,6 +7283,24 @@ func (s *Action) SetDnsRequestAction(v *DnsRequestAction) *Action {
 // SetKubernetesApiCallAction sets the KubernetesApiCallAction field's value.
 func (s *Action) SetKubernetesApiCallAction(v *KubernetesApiCallAction) *Action {
 	s.KubernetesApiCallAction = v
+	return s
+}
+
+// SetKubernetesPermissionCheckedDetails sets the KubernetesPermissionCheckedDetails field's value.
+func (s *Action) SetKubernetesPermissionCheckedDetails(v *KubernetesPermissionCheckedDetails) *Action {
+	s.KubernetesPermissionCheckedDetails = v
+	return s
+}
+
+// SetKubernetesRoleBindingDetails sets the KubernetesRoleBindingDetails field's value.
+func (s *Action) SetKubernetesRoleBindingDetails(v *KubernetesRoleBindingDetails) *Action {
+	s.KubernetesRoleBindingDetails = v
+	return s
+}
+
+// SetKubernetesRoleDetails sets the KubernetesRoleDetails field's value.
+func (s *Action) SetKubernetesRoleDetails(v *KubernetesRoleDetails) *Action {
+	s.KubernetesRoleDetails = v
 	return s
 }
 
@@ -7334,6 +7462,162 @@ func (s *Administrator) SetInvitedAt(v string) *Administrator {
 // SetRelationshipStatus sets the RelationshipStatus field's value.
 func (s *Administrator) SetRelationshipStatus(v string) *Administrator {
 	s.RelationshipStatus = &v
+	return s
+}
+
+// Information about the installed GuardDuty security agent.
+type AgentDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Version of the installed GuardDuty security agent.
+	Version *string `locationName:"version" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AgentDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AgentDetails) GoString() string {
+	return s.String()
+}
+
+// SetVersion sets the Version field's value.
+func (s *AgentDetails) SetVersion(v string) *AgentDetails {
+	s.Version = &v
+	return s
+}
+
+// Contains information about the anomalies.
+type Anomaly struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the types of profiles.
+	Profiles map[string]map[string][]*AnomalyObject `locationName:"profiles" type:"map"`
+
+	// Information about the behavior of the anomalies.
+	Unusual *AnomalyUnusual `locationName:"unusual" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Anomaly) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Anomaly) GoString() string {
+	return s.String()
+}
+
+// SetProfiles sets the Profiles field's value.
+func (s *Anomaly) SetProfiles(v map[string]map[string][]*AnomalyObject) *Anomaly {
+	s.Profiles = v
+	return s
+}
+
+// SetUnusual sets the Unusual field's value.
+func (s *Anomaly) SetUnusual(v *AnomalyUnusual) *Anomaly {
+	s.Unusual = v
+	return s
+}
+
+// Contains information about the unusual anomalies.
+type AnomalyObject struct {
+	_ struct{} `type:"structure"`
+
+	// The recorded value.
+	Observations *Observations `locationName:"observations" type:"structure"`
+
+	// The frequency of the anomaly.
+	ProfileSubtype *string `locationName:"profileSubtype" type:"string" enum:"ProfileSubtype"`
+
+	// The type of behavior of the profile.
+	ProfileType *string `locationName:"profileType" type:"string" enum:"ProfileType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnomalyObject) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnomalyObject) GoString() string {
+	return s.String()
+}
+
+// SetObservations sets the Observations field's value.
+func (s *AnomalyObject) SetObservations(v *Observations) *AnomalyObject {
+	s.Observations = v
+	return s
+}
+
+// SetProfileSubtype sets the ProfileSubtype field's value.
+func (s *AnomalyObject) SetProfileSubtype(v string) *AnomalyObject {
+	s.ProfileSubtype = &v
+	return s
+}
+
+// SetProfileType sets the ProfileType field's value.
+func (s *AnomalyObject) SetProfileType(v string) *AnomalyObject {
+	s.ProfileType = &v
+	return s
+}
+
+// Contains information about the behavior of the anomaly that is new to GuardDuty.
+type AnomalyUnusual struct {
+	_ struct{} `type:"structure"`
+
+	// The behavior of the anomalous activity that caused GuardDuty to generate
+	// the finding.
+	Behavior map[string]map[string]*AnomalyObject `locationName:"behavior" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnomalyUnusual) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnomalyUnusual) GoString() string {
+	return s.String()
+}
+
+// SetBehavior sets the Behavior field's value.
+func (s *AnomalyUnusual) SetBehavior(v map[string]map[string]*AnomalyObject) *AnomalyUnusual {
+	s.Behavior = v
 	return s
 }
 
@@ -8131,6 +8415,49 @@ func (s *Container) SetVolumeMounts(v []*VolumeMount) *Container {
 	return s
 }
 
+// Contains information about the Amazon EC2 instance that is running the Amazon
+// ECS container.
+type ContainerInstanceDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Represents total number of nodes in the Amazon ECS cluster.
+	CompatibleContainerInstances *int64 `locationName:"compatibleContainerInstances" type:"long"`
+
+	// Represents the nodes in the Amazon ECS cluster that has a HEALTHY coverage
+	// status.
+	CoveredContainerInstances *int64 `locationName:"coveredContainerInstances" type:"long"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContainerInstanceDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContainerInstanceDetails) GoString() string {
+	return s.String()
+}
+
+// SetCompatibleContainerInstances sets the CompatibleContainerInstances field's value.
+func (s *ContainerInstanceDetails) SetCompatibleContainerInstances(v int64) *ContainerInstanceDetails {
+	s.CompatibleContainerInstances = &v
+	return s
+}
+
+// SetCoveredContainerInstances sets the CoveredContainerInstances field's value.
+func (s *ContainerInstanceDetails) SetCoveredContainerInstances(v int64) *ContainerInstanceDetails {
+	s.CoveredContainerInstances = &v
+	return s
+}
+
 // Contains information about the country where the remote IP address is located.
 type Country struct {
 	_ struct{} `type:"structure"`
@@ -8172,6 +8499,138 @@ func (s *Country) SetCountryName(v string) *Country {
 	return s
 }
 
+// This API is also used when you use GuardDuty Runtime Monitoring for your
+// Amazon EC2 instances (currently in preview release) and is subject to change.
+// The use of this API is subject to Section 2 of the Amazon Web Services Service
+// Terms (http://aws.amazon.com/service-terms/) ("Betas and Previews").
+//
+// Contains information about the Amazon EC2 instance runtime coverage details.
+type CoverageEc2InstanceDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the installed security agent.
+	AgentDetails *AgentDetails `locationName:"agentDetails" type:"structure"`
+
+	// The cluster ARN of the Amazon ECS cluster running on the Amazon EC2 instance.
+	ClusterArn *string `locationName:"clusterArn" type:"string"`
+
+	// The Amazon EC2 instance ID.
+	InstanceId *string `locationName:"instanceId" type:"string"`
+
+	// The instance type of the Amazon EC2 instance.
+	InstanceType *string `locationName:"instanceType" type:"string"`
+
+	// Indicates how the GuardDuty security agent is managed for this resource.
+	//
+	//    * AUTO_MANAGED indicates that GuardDuty deploys and manages updates for
+	//    this resource.
+	//
+	//    * MANUAL indicates that you are responsible to deploy, update, and manage
+	//    the GuardDuty security agent updates for this resource.
+	//
+	// The DISABLED status doesn't apply to Amazon EC2 instances and Amazon EKS
+	// clusters.
+	ManagementType *string `locationName:"managementType" type:"string" enum:"ManagementType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoverageEc2InstanceDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoverageEc2InstanceDetails) GoString() string {
+	return s.String()
+}
+
+// SetAgentDetails sets the AgentDetails field's value.
+func (s *CoverageEc2InstanceDetails) SetAgentDetails(v *AgentDetails) *CoverageEc2InstanceDetails {
+	s.AgentDetails = v
+	return s
+}
+
+// SetClusterArn sets the ClusterArn field's value.
+func (s *CoverageEc2InstanceDetails) SetClusterArn(v string) *CoverageEc2InstanceDetails {
+	s.ClusterArn = &v
+	return s
+}
+
+// SetInstanceId sets the InstanceId field's value.
+func (s *CoverageEc2InstanceDetails) SetInstanceId(v string) *CoverageEc2InstanceDetails {
+	s.InstanceId = &v
+	return s
+}
+
+// SetInstanceType sets the InstanceType field's value.
+func (s *CoverageEc2InstanceDetails) SetInstanceType(v string) *CoverageEc2InstanceDetails {
+	s.InstanceType = &v
+	return s
+}
+
+// SetManagementType sets the ManagementType field's value.
+func (s *CoverageEc2InstanceDetails) SetManagementType(v string) *CoverageEc2InstanceDetails {
+	s.ManagementType = &v
+	return s
+}
+
+// Contains information about Amazon ECS cluster runtime coverage details.
+type CoverageEcsClusterDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the Amazon ECS cluster.
+	ClusterName *string `locationName:"clusterName" type:"string"`
+
+	// Information about the Amazon ECS container running on Amazon EC2 instance.
+	ContainerInstanceDetails *ContainerInstanceDetails `locationName:"containerInstanceDetails" type:"structure"`
+
+	// Information about the Fargate details associated with the Amazon ECS cluster.
+	FargateDetails *FargateDetails `locationName:"fargateDetails" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoverageEcsClusterDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoverageEcsClusterDetails) GoString() string {
+	return s.String()
+}
+
+// SetClusterName sets the ClusterName field's value.
+func (s *CoverageEcsClusterDetails) SetClusterName(v string) *CoverageEcsClusterDetails {
+	s.ClusterName = &v
+	return s
+}
+
+// SetContainerInstanceDetails sets the ContainerInstanceDetails field's value.
+func (s *CoverageEcsClusterDetails) SetContainerInstanceDetails(v *ContainerInstanceDetails) *CoverageEcsClusterDetails {
+	s.ContainerInstanceDetails = v
+	return s
+}
+
+// SetFargateDetails sets the FargateDetails field's value.
+func (s *CoverageEcsClusterDetails) SetFargateDetails(v *FargateDetails) *CoverageEcsClusterDetails {
+	s.FargateDetails = v
+	return s
+}
+
 // Information about the EKS cluster that has a coverage status.
 type CoverageEksClusterDetails struct {
 	_ struct{} `type:"structure"`
@@ -8188,6 +8647,15 @@ type CoverageEksClusterDetails struct {
 	// Represents the nodes within the EKS cluster that have a HEALTHY coverage
 	// status.
 	CoveredNodes *int64 `locationName:"coveredNodes" type:"long"`
+
+	// Indicates how the Amazon EKS add-on GuardDuty agent is managed for this EKS
+	// cluster.
+	//
+	// AUTO_MANAGED indicates GuardDuty deploys and manages updates for this resource.
+	//
+	// MANUAL indicates that you are responsible to deploy, update, and manage the
+	// Amazon EKS add-on GuardDuty agent for this resource.
+	ManagementType *string `locationName:"managementType" type:"string" enum:"ManagementType"`
 }
 
 // String returns the string representation.
@@ -8229,6 +8697,12 @@ func (s *CoverageEksClusterDetails) SetCompatibleNodes(v int64) *CoverageEksClus
 // SetCoveredNodes sets the CoveredNodes field's value.
 func (s *CoverageEksClusterDetails) SetCoveredNodes(v int64) *CoverageEksClusterDetails {
 	s.CoveredNodes = &v
+	return s
+}
+
+// SetManagementType sets the ManagementType field's value.
+func (s *CoverageEksClusterDetails) SetManagementType(v string) *CoverageEksClusterDetails {
+	s.ManagementType = &v
 	return s
 }
 
@@ -8315,6 +8789,9 @@ type CoverageFilterCriterion struct {
 	_ struct{} `type:"structure"`
 
 	// An enum value representing possible filter fields.
+	//
+	// Replace the enum value CLUSTER_NAME with EKS_CLUSTER_NAME. CLUSTER_NAME has
+	// been deprecated.
 	CriterionKey *string `locationName:"criterionKey" type:"string" enum:"CoverageFilterCriterionKey"`
 
 	// Contains information about the condition.
@@ -8442,6 +8919,18 @@ func (s *CoverageResource) SetUpdatedAt(v time.Time) *CoverageResource {
 type CoverageResourceDetails struct {
 	_ struct{} `type:"structure"`
 
+	//
+	// This API is also used when you use GuardDuty Runtime Monitoring for your
+	// Amazon EC2 instances (currently in preview release) and is subject to change.
+	// The use of this API is subject to Section 2 of the Amazon Web Services Service
+	// Terms (http://aws.amazon.com/service-terms/) ("Betas and Previews").
+	//
+	// Information about the Amazon EC2 instance assessed for runtime coverage.
+	Ec2InstanceDetails *CoverageEc2InstanceDetails `locationName:"ec2InstanceDetails" type:"structure"`
+
+	// Information about the Amazon ECS cluster that is assessed for runtime coverage.
+	EcsClusterDetails *CoverageEcsClusterDetails `locationName:"ecsClusterDetails" type:"structure"`
+
 	// EKS cluster details involved in the coverage statistics.
 	EksClusterDetails *CoverageEksClusterDetails `locationName:"eksClusterDetails" type:"structure"`
 
@@ -8467,6 +8956,18 @@ func (s CoverageResourceDetails) GoString() string {
 	return s.String()
 }
 
+// SetEc2InstanceDetails sets the Ec2InstanceDetails field's value.
+func (s *CoverageResourceDetails) SetEc2InstanceDetails(v *CoverageEc2InstanceDetails) *CoverageResourceDetails {
+	s.Ec2InstanceDetails = v
+	return s
+}
+
+// SetEcsClusterDetails sets the EcsClusterDetails field's value.
+func (s *CoverageResourceDetails) SetEcsClusterDetails(v *CoverageEcsClusterDetails) *CoverageResourceDetails {
+	s.EcsClusterDetails = v
+	return s
+}
+
 // SetEksClusterDetails sets the EksClusterDetails field's value.
 func (s *CoverageResourceDetails) SetEksClusterDetails(v *CoverageEksClusterDetails) *CoverageResourceDetails {
 	s.EksClusterDetails = v
@@ -8484,6 +8985,9 @@ type CoverageSortCriteria struct {
 	_ struct{} `type:"structure"`
 
 	// Represents the field name used to sort the coverage details.
+	//
+	// Replace the enum value CLUSTER_NAME with EKS_CLUSTER_NAME. CLUSTER_NAME has
+	// been deprecated.
 	AttributeName *string `locationName:"attributeName" type:"string" enum:"CoverageSortKey"`
 
 	// The order in which the sorted findings are to be displayed.
@@ -8735,9 +9239,20 @@ type CreateFilterInput struct {
 	//
 	//    * accountId
 	//
+	//    * id
+	//
 	//    * region
 	//
-	//    * id
+	//    * severity To filter on the basis of severity, the API and CLI use the
+	//    following input list for the FindingCriteria (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_FindingCriteria.html)
+	//    condition: Low: ["1", "2", "3"] Medium: ["4", "5", "6"] High: ["7", "8",
+	//    "9"] For more information, see Severity levels for GuardDuty findings
+	//    (https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_findings.html#guardduty_findings-severity).
+	//
+	//    * type
+	//
+	//    * updatedAt Type: ISO 8601 string format: YYYY-MM-DDTHH:MM:SS.SSSZ or
+	//    YYYY-MM-DDTHH:MM:SSZ depending on whether the value contains milliseconds.
 	//
 	//    * resource.accessKeyDetails.accessKeyId
 	//
@@ -8753,7 +9268,9 @@ type CreateFilterInput struct {
 	//
 	//    * resource.instanceDetails.instanceId
 	//
-	//    * resource.instanceDetails.outpostArn
+	//    * resource.instanceDetails.tags.key
+	//
+	//    * resource.instanceDetails.tags.value
 	//
 	//    * resource.instanceDetails.networkInterfaces.ipv6Addresses
 	//
@@ -8771,11 +9288,19 @@ type CreateFilterInput struct {
 	//
 	//    * resource.instanceDetails.networkInterfaces.vpcId
 	//
-	//    * resource.instanceDetails.tags.key
-	//
-	//    * resource.instanceDetails.tags.value
+	//    * resource.instanceDetails.outpostArn
 	//
 	//    * resource.resourceType
+	//
+	//    * resource.s3BucketDetails.publicAccess.effectivePermissions
+	//
+	//    * resource.s3BucketDetails.name
+	//
+	//    * resource.s3BucketDetails.tags.key
+	//
+	//    * resource.s3BucketDetails.tags.value
+	//
+	//    * resource.s3BucketDetails.type
 	//
 	//    * service.action.actionType
 	//
@@ -8784,8 +9309,6 @@ type CreateFilterInput struct {
 	//    * service.action.awsApiCallAction.callerType
 	//
 	//    * service.action.awsApiCallAction.errorCode
-	//
-	//    * service.action.awsApiCallAction.userAgent
 	//
 	//    * service.action.awsApiCallAction.remoteIpDetails.city.cityName
 	//
@@ -8801,6 +9324,8 @@ type CreateFilterInput struct {
 	//
 	//    * service.action.dnsRequestAction.domain
 	//
+	//    * service.action.dnsRequestAction.domainWithSuffix
+	//
 	//    * service.action.networkConnectionAction.blocked
 	//
 	//    * service.action.networkConnectionAction.connectionDirection
@@ -8808,8 +9333,6 @@ type CreateFilterInput struct {
 	//    * service.action.networkConnectionAction.localPortDetails.port
 	//
 	//    * service.action.networkConnectionAction.protocol
-	//
-	//    * service.action.networkConnectionAction.localIpDetails.ipAddressV4
 	//
 	//    * service.action.networkConnectionAction.remoteIpDetails.city.cityName
 	//
@@ -8823,26 +9346,83 @@ type CreateFilterInput struct {
 	//
 	//    * service.action.networkConnectionAction.remotePortDetails.port
 	//
+	//    * service.action.awsApiCallAction.remoteAccountDetails.affiliated
+	//
+	//    * service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV4
+	//
+	//    * service.action.kubernetesApiCallAction.namespace
+	//
+	//    * service.action.kubernetesApiCallAction.remoteIpDetails.organization.asn
+	//
+	//    * service.action.kubernetesApiCallAction.requestUri
+	//
+	//    * service.action.kubernetesApiCallAction.statusCode
+	//
+	//    * service.action.networkConnectionAction.localIpDetails.ipAddressV4
+	//
+	//    * service.action.networkConnectionAction.protocol
+	//
+	//    * service.action.awsApiCallAction.serviceName
+	//
+	//    * service.action.awsApiCallAction.remoteAccountDetails.accountId
+	//
 	//    * service.additionalInfo.threatListName
-	//
-	//    * resource.s3BucketDetails.publicAccess.effectivePermissions
-	//
-	//    * resource.s3BucketDetails.name
-	//
-	//    * resource.s3BucketDetails.tags.key
-	//
-	//    * resource.s3BucketDetails.tags.value
-	//
-	//    * resource.s3BucketDetails.type
 	//
 	//    * service.resourceRole
 	//
-	//    * severity
+	//    * resource.eksClusterDetails.name
 	//
-	//    * type
+	//    * resource.kubernetesDetails.kubernetesWorkloadDetails.name
 	//
-	//    * updatedAt Type: ISO 8601 string format: YYYY-MM-DDTHH:MM:SS.SSSZ or
-	//    YYYY-MM-DDTHH:MM:SSZ depending on whether the value contains milliseconds.
+	//    * resource.kubernetesDetails.kubernetesWorkloadDetails.namespace
+	//
+	//    * resource.kubernetesDetails.kubernetesUserDetails.username
+	//
+	//    * resource.kubernetesDetails.kubernetesWorkloadDetails.containers.image
+	//
+	//    * resource.kubernetesDetails.kubernetesWorkloadDetails.containers.imagePrefix
+	//
+	//    * service.ebsVolumeScanDetails.scanId
+	//
+	//    * service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.name
+	//
+	//    * service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.severity
+	//
+	//    * service.ebsVolumeScanDetails.scanDetections.threatDetectedByName.threatNames.filePaths.hash
+	//
+	//    * resource.ecsClusterDetails.name
+	//
+	//    * resource.ecsClusterDetails.taskDetails.containers.image
+	//
+	//    * resource.ecsClusterDetails.taskDetails.definitionArn
+	//
+	//    * resource.containerDetails.image
+	//
+	//    * resource.rdsDbInstanceDetails.dbInstanceIdentifier
+	//
+	//    * resource.rdsDbInstanceDetails.dbClusterIdentifier
+	//
+	//    * resource.rdsDbInstanceDetails.engine
+	//
+	//    * resource.rdsDbUserDetails.user
+	//
+	//    * resource.rdsDbInstanceDetails.tags.key
+	//
+	//    * resource.rdsDbInstanceDetails.tags.value
+	//
+	//    * service.runtimeDetails.process.executableSha256
+	//
+	//    * service.runtimeDetails.process.name
+	//
+	//    * service.runtimeDetails.process.name
+	//
+	//    * resource.lambdaDetails.functionName
+	//
+	//    * resource.lambdaDetails.functionArn
+	//
+	//    * resource.lambdaDetails.tags.key
+	//
+	//    * resource.lambdaDetails.tags.value
 	//
 	// FindingCriteria is a required field
 	FindingCriteria *FindingCriteria `locationName:"findingCriteria" type:"structure" required:"true"`
@@ -10931,14 +11511,14 @@ type DescribeOrganizationConfigurationOutput struct {
 	//    * NEW: Indicates that when a new account joins the organization, they
 	//    will have GuardDuty enabled automatically.
 	//
-	//    * ALL: Indicates that all accounts in the Amazon Web Services Organization
-	//    have GuardDuty enabled automatically. This includes NEW accounts that
-	//    join the organization and accounts that may have been suspended or removed
-	//    from the organization in GuardDuty.
+	//    * ALL: Indicates that all accounts in the organization have GuardDuty
+	//    enabled automatically. This includes NEW accounts that join the organization
+	//    and accounts that may have been suspended or removed from the organization
+	//    in GuardDuty.
 	//
 	//    * NONE: Indicates that GuardDuty will not be automatically enabled for
-	//    any accounts in the organization. GuardDuty must be managed for each account
-	//    individually by the administrator.
+	//    any account in the organization. The administrator must manage GuardDuty
+	//    for each account in the organization individually.
 	AutoEnableOrganizationMembers *string `locationName:"autoEnableOrganizationMembers" type:"string" enum:"AutoEnableMembers"`
 
 	// Describes which data sources are enabled automatically for member accounts.
@@ -11260,6 +11840,39 @@ func (s *DestinationProperties) SetDestinationArn(v string) *DestinationProperti
 // SetKmsKeyArn sets the KmsKeyArn field's value.
 func (s *DestinationProperties) SetKmsKeyArn(v string) *DestinationProperties {
 	s.KmsKeyArn = &v
+	return s
+}
+
+// Contains information about the detected behavior.
+type Detection struct {
+	_ struct{} `type:"structure"`
+
+	// The details about the anomalous activity that caused GuardDuty to generate
+	// the finding.
+	Anomaly *Anomaly `locationName:"anomaly" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Detection) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Detection) GoString() string {
+	return s.String()
+}
+
+// SetAnomaly sets the Anomaly field's value.
+func (s *Detection) SetAnomaly(v *Anomaly) *Detection {
+	s.Anomaly = v
 	return s
 }
 
@@ -11790,6 +12403,10 @@ type DnsRequestAction struct {
 	// The domain information for the DNS query.
 	Domain *string `locationName:"domain" type:"string"`
 
+	// The second and top level domain involved in the activity that prompted GuardDuty
+	// to generate this finding.
+	DomainWithSuffix *string `locationName:"domainWithSuffix" type:"string"`
+
 	// The network connection protocol observed in the activity that prompted GuardDuty
 	// to generate the finding.
 	Protocol *string `locationName:"protocol" type:"string"`
@@ -11822,6 +12439,12 @@ func (s *DnsRequestAction) SetBlocked(v bool) *DnsRequestAction {
 // SetDomain sets the Domain field's value.
 func (s *DnsRequestAction) SetDomain(v string) *DnsRequestAction {
 	s.Domain = &v
+	return s
+}
+
+// SetDomainWithSuffix sets the DomainWithSuffix field's value.
+func (s *DnsRequestAction) SetDomainWithSuffix(v string) *DnsRequestAction {
+	s.DomainWithSuffix = &v
 	return s
 }
 
@@ -12320,7 +12943,7 @@ func (s *EksClusterDetails) SetVpcId(v string) *EksClusterDetails {
 type EnableOrganizationAdminAccountInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Web Services Account ID for the organization account to be enabled
+	// The Amazon Web Services account ID for the organization account to be enabled
 	// as a GuardDuty delegated administrator.
 	//
 	// AdminAccountId is a required field
@@ -12415,6 +13038,58 @@ func (s Evidence) GoString() string {
 // SetThreatIntelligenceDetails sets the ThreatIntelligenceDetails field's value.
 func (s *Evidence) SetThreatIntelligenceDetails(v []*ThreatIntelligenceDetail) *Evidence {
 	s.ThreatIntelligenceDetails = v
+	return s
+}
+
+// Contains information about Amazon Web Services Fargate details associated
+// with an Amazon ECS cluster.
+type FargateDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Runtime coverage issues identified for the resource running on Amazon Web
+	// Services Fargate.
+	Issues []*string `locationName:"issues" type:"list"`
+
+	// Indicates how the GuardDuty security agent is managed for this resource.
+	//
+	//    * AUTO_MANAGED indicates that GuardDuty deploys and manages updates for
+	//    this resource.
+	//
+	//    * DISABLED indicates that the deployment of the GuardDuty security agent
+	//    is disabled for this resource.
+	//
+	// The MANUAL status doesn't apply to the Amazon Web Services Fargate (Amazon
+	// ECS only) woprkloads.
+	ManagementType *string `locationName:"managementType" type:"string" enum:"ManagementType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FargateDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FargateDetails) GoString() string {
+	return s.String()
+}
+
+// SetIssues sets the Issues field's value.
+func (s *FargateDetails) SetIssues(v []*string) *FargateDetails {
+	s.Issues = v
+	return s
+}
+
+// SetManagementType sets the ManagementType field's value.
+func (s *FargateDetails) SetManagementType(v string) *FargateDetails {
+	s.ManagementType = &v
 	return s
 }
 
@@ -12546,6 +13221,9 @@ type FilterCriterion struct {
 
 	// An enum value representing possible scan properties to match with given scan
 	// entries.
+	//
+	// Replace the enum value CLUSTER_NAME with EKS_CLUSTER_NAME. CLUSTER_NAME has
+	// been deprecated.
 	CriterionKey *string `locationName:"criterionKey" type:"string" enum:"CriterionKey"`
 
 	// Contains information about the condition.
@@ -12597,8 +13275,8 @@ func (s *FilterCriterion) SetFilterCondition(v *FilterCondition) *FilterCriterio
 	return s
 }
 
-// Contains information about the finding, which is generated when abnormal
-// or suspicious activity is detected.
+// Contains information about the finding that is generated when abnormal or
+// suspicious activity is detected.
 type Finding struct {
 	_ struct{} `type:"structure"`
 
@@ -14244,6 +14922,59 @@ func (s *GetMembersOutput) SetUnprocessedAccounts(v []*UnprocessedAccount) *GetM
 	return s
 }
 
+type GetOrganizationStatisticsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetOrganizationStatisticsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetOrganizationStatisticsInput) GoString() string {
+	return s.String()
+}
+
+type GetOrganizationStatisticsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the statistics report for your organization.
+	OrganizationDetails *OrganizationDetails `locationName:"organizationDetails" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetOrganizationStatisticsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetOrganizationStatisticsOutput) GoString() string {
+	return s.String()
+}
+
+// SetOrganizationDetails sets the OrganizationDetails field's value.
+func (s *GetOrganizationStatisticsOutput) SetOrganizationDetails(v *OrganizationDetails) *GetOrganizationStatisticsOutput {
+	s.OrganizationDetails = v
+	return s
+}
+
 type GetRemainingFreeTrialDaysInput struct {
 	_ struct{} `type:"structure"`
 
@@ -14773,6 +15504,47 @@ func (s *IamInstanceProfile) SetId(v string) *IamInstanceProfile {
 	return s
 }
 
+// Contains information about the impersonated user.
+type ImpersonatedUser struct {
+	_ struct{} `type:"structure"`
+
+	// The group to which the user name belongs.
+	Groups []*string `locationName:"groups" type:"list"`
+
+	// Information about the username that was being impersonated.
+	Username *string `locationName:"username" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ImpersonatedUser) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ImpersonatedUser) GoString() string {
+	return s.String()
+}
+
+// SetGroups sets the Groups field's value.
+func (s *ImpersonatedUser) SetGroups(v []*string) *ImpersonatedUser {
+	s.Groups = v
+	return s
+}
+
+// SetUsername sets the Username field's value.
+func (s *ImpersonatedUser) SetUsername(v string) *ImpersonatedUser {
+	s.Username = &v
+	return s
+}
+
 // Contains information about the details of an instance.
 type InstanceDetails struct {
 	_ struct{} `type:"structure"`
@@ -15168,6 +15940,9 @@ func (s *InviteMembersOutput) SetUnprocessedAccounts(v []*UnprocessedAccount) *I
 type KubernetesApiCallAction struct {
 	_ struct{} `type:"structure"`
 
+	// The name of the namespace where the Kubernetes API call action takes place.
+	Namespace *string `locationName:"namespace" type:"string"`
+
 	// Parameters related to the Kubernetes API call action.
 	Parameters *string `locationName:"parameters" type:"string"`
 
@@ -15177,12 +15952,21 @@ type KubernetesApiCallAction struct {
 	// The Kubernetes API request URI.
 	RequestUri *string `locationName:"requestUri" type:"string"`
 
+	// The resource component in the Kubernetes API call action.
+	Resource *string `locationName:"resource" type:"string"`
+
+	// The name of the resource in the Kubernetes API call action.
+	ResourceName *string `locationName:"resourceName" type:"string"`
+
 	// The IP of the Kubernetes API caller and the IPs of any proxies or load balancers
 	// between the caller and the API endpoint.
 	SourceIps []*string `locationName:"sourceIps" type:"list"`
 
 	// The resulting HTTP response code of the Kubernetes API call action.
 	StatusCode *int64 `locationName:"statusCode" type:"integer"`
+
+	// The name of the sub-resource in the Kubernetes API call action.
+	Subresource *string `locationName:"subresource" type:"string"`
 
 	// The user agent of the caller of the Kubernetes API.
 	UserAgent *string `locationName:"userAgent" type:"string"`
@@ -15209,6 +15993,12 @@ func (s KubernetesApiCallAction) GoString() string {
 	return s.String()
 }
 
+// SetNamespace sets the Namespace field's value.
+func (s *KubernetesApiCallAction) SetNamespace(v string) *KubernetesApiCallAction {
+	s.Namespace = &v
+	return s
+}
+
 // SetParameters sets the Parameters field's value.
 func (s *KubernetesApiCallAction) SetParameters(v string) *KubernetesApiCallAction {
 	s.Parameters = &v
@@ -15227,6 +16017,18 @@ func (s *KubernetesApiCallAction) SetRequestUri(v string) *KubernetesApiCallActi
 	return s
 }
 
+// SetResource sets the Resource field's value.
+func (s *KubernetesApiCallAction) SetResource(v string) *KubernetesApiCallAction {
+	s.Resource = &v
+	return s
+}
+
+// SetResourceName sets the ResourceName field's value.
+func (s *KubernetesApiCallAction) SetResourceName(v string) *KubernetesApiCallAction {
+	s.ResourceName = &v
+	return s
+}
+
 // SetSourceIps sets the SourceIps field's value.
 func (s *KubernetesApiCallAction) SetSourceIps(v []*string) *KubernetesApiCallAction {
 	s.SourceIps = v
@@ -15236,6 +16038,12 @@ func (s *KubernetesApiCallAction) SetSourceIps(v []*string) *KubernetesApiCallAc
 // SetStatusCode sets the StatusCode field's value.
 func (s *KubernetesApiCallAction) SetStatusCode(v int64) *KubernetesApiCallAction {
 	s.StatusCode = &v
+	return s
+}
+
+// SetSubresource sets the Subresource field's value.
+func (s *KubernetesApiCallAction) SetSubresource(v string) *KubernetesApiCallAction {
+	s.Subresource = &v
 	return s
 }
 
@@ -15494,12 +16302,197 @@ func (s *KubernetesDetails) SetKubernetesWorkloadDetails(v *KubernetesWorkloadDe
 	return s
 }
 
+// Information about the Kubernetes API for which you check if you have permission
+// to call.
+type KubernetesPermissionCheckedDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Information whether the user has the permission to call the Kubernetes API.
+	Allowed *bool `locationName:"allowed" type:"boolean"`
+
+	// The namespace where the Kubernetes API action will take place.
+	Namespace *string `locationName:"namespace" type:"string"`
+
+	// The Kubernetes resource with which your Kubernetes API call will interact.
+	Resource *string `locationName:"resource" type:"string"`
+
+	// The verb component of the Kubernetes API call. For example, when you check
+	// whether or not you have the permission to call the CreatePod API, the verb
+	// component will be Create.
+	Verb *string `locationName:"verb" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KubernetesPermissionCheckedDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KubernetesPermissionCheckedDetails) GoString() string {
+	return s.String()
+}
+
+// SetAllowed sets the Allowed field's value.
+func (s *KubernetesPermissionCheckedDetails) SetAllowed(v bool) *KubernetesPermissionCheckedDetails {
+	s.Allowed = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *KubernetesPermissionCheckedDetails) SetNamespace(v string) *KubernetesPermissionCheckedDetails {
+	s.Namespace = &v
+	return s
+}
+
+// SetResource sets the Resource field's value.
+func (s *KubernetesPermissionCheckedDetails) SetResource(v string) *KubernetesPermissionCheckedDetails {
+	s.Resource = &v
+	return s
+}
+
+// SetVerb sets the Verb field's value.
+func (s *KubernetesPermissionCheckedDetails) SetVerb(v string) *KubernetesPermissionCheckedDetails {
+	s.Verb = &v
+	return s
+}
+
+// Contains information about the role binding that grants the permission defined
+// in a Kubernetes role.
+type KubernetesRoleBindingDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The kind of the role. For role binding, this value will be RoleBinding.
+	Kind *string `locationName:"kind" type:"string"`
+
+	// The name of the RoleBinding.
+	Name *string `locationName:"name" type:"string"`
+
+	// The type of the role being referenced. This could be either Role or ClusterRole.
+	RoleRefKind *string `locationName:"roleRefKind" type:"string"`
+
+	// The name of the role being referenced. This must match the name of the Role
+	// or ClusterRole that you want to bind to.
+	RoleRefName *string `locationName:"roleRefName" type:"string"`
+
+	// The unique identifier of the role binding.
+	Uid *string `locationName:"uid" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KubernetesRoleBindingDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KubernetesRoleBindingDetails) GoString() string {
+	return s.String()
+}
+
+// SetKind sets the Kind field's value.
+func (s *KubernetesRoleBindingDetails) SetKind(v string) *KubernetesRoleBindingDetails {
+	s.Kind = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *KubernetesRoleBindingDetails) SetName(v string) *KubernetesRoleBindingDetails {
+	s.Name = &v
+	return s
+}
+
+// SetRoleRefKind sets the RoleRefKind field's value.
+func (s *KubernetesRoleBindingDetails) SetRoleRefKind(v string) *KubernetesRoleBindingDetails {
+	s.RoleRefKind = &v
+	return s
+}
+
+// SetRoleRefName sets the RoleRefName field's value.
+func (s *KubernetesRoleBindingDetails) SetRoleRefName(v string) *KubernetesRoleBindingDetails {
+	s.RoleRefName = &v
+	return s
+}
+
+// SetUid sets the Uid field's value.
+func (s *KubernetesRoleBindingDetails) SetUid(v string) *KubernetesRoleBindingDetails {
+	s.Uid = &v
+	return s
+}
+
+// Information about the Kubernetes role name and role type.
+type KubernetesRoleDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The kind of role. For this API, the value of kind will be Role.
+	Kind *string `locationName:"kind" type:"string"`
+
+	// The name of the Kubernetes role.
+	Name *string `locationName:"name" type:"string"`
+
+	// The unique identifier of the Kubernetes role name.
+	Uid *string `locationName:"uid" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KubernetesRoleDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KubernetesRoleDetails) GoString() string {
+	return s.String()
+}
+
+// SetKind sets the Kind field's value.
+func (s *KubernetesRoleDetails) SetKind(v string) *KubernetesRoleDetails {
+	s.Kind = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *KubernetesRoleDetails) SetName(v string) *KubernetesRoleDetails {
+	s.Name = &v
+	return s
+}
+
+// SetUid sets the Uid field's value.
+func (s *KubernetesRoleDetails) SetUid(v string) *KubernetesRoleDetails {
+	s.Uid = &v
+	return s
+}
+
 // Details about the Kubernetes user involved in a Kubernetes finding.
 type KubernetesUserDetails struct {
 	_ struct{} `type:"structure"`
 
 	// The groups that include the user who called the Kubernetes API.
 	Groups []*string `locationName:"groups" type:"list"`
+
+	// Information about the impersonated user.
+	ImpersonatedUser *ImpersonatedUser `locationName:"impersonatedUser" type:"structure"`
 
 	// Entity that assumes the IAM role when Kubernetes RBAC permissions are assigned
 	// to that role.
@@ -15536,6 +16529,12 @@ func (s *KubernetesUserDetails) SetGroups(v []*string) *KubernetesUserDetails {
 	return s
 }
 
+// SetImpersonatedUser sets the ImpersonatedUser field's value.
+func (s *KubernetesUserDetails) SetImpersonatedUser(v *ImpersonatedUser) *KubernetesUserDetails {
+	s.ImpersonatedUser = v
+	return s
+}
+
 // SetSessionName sets the SessionName field's value.
 func (s *KubernetesUserDetails) SetSessionName(v []*string) *KubernetesUserDetails {
 	s.SessionName = v
@@ -15561,14 +16560,23 @@ type KubernetesWorkloadDetails struct {
 	// Containers running as part of the Kubernetes workload.
 	Containers []*Container `locationName:"containers" type:"list"`
 
+	// Whether the host IPC flag is enabled for the pods in the workload.
+	HostIPC *bool `locationName:"hostIPC" type:"boolean"`
+
 	// Whether the hostNetwork flag is enabled for the pods included in the workload.
 	HostNetwork *bool `locationName:"hostNetwork" type:"boolean"`
+
+	// Whether the host PID flag is enabled for the pods in the workload.
+	HostPID *bool `locationName:"hostPID" type:"boolean"`
 
 	// Kubernetes workload name.
 	Name *string `locationName:"name" type:"string"`
 
 	// Kubernetes namespace that the workload is part of.
 	Namespace *string `locationName:"namespace" type:"string"`
+
+	// The service account name that is associated with a Kubernetes workload.
+	ServiceAccountName *string `locationName:"serviceAccountName" type:"string"`
 
 	// Kubernetes workload type (e.g. Pod, Deployment, etc.).
 	Type *string `locationName:"type" type:"string"`
@@ -15604,9 +16612,21 @@ func (s *KubernetesWorkloadDetails) SetContainers(v []*Container) *KubernetesWor
 	return s
 }
 
+// SetHostIPC sets the HostIPC field's value.
+func (s *KubernetesWorkloadDetails) SetHostIPC(v bool) *KubernetesWorkloadDetails {
+	s.HostIPC = &v
+	return s
+}
+
 // SetHostNetwork sets the HostNetwork field's value.
 func (s *KubernetesWorkloadDetails) SetHostNetwork(v bool) *KubernetesWorkloadDetails {
 	s.HostNetwork = &v
+	return s
+}
+
+// SetHostPID sets the HostPID field's value.
+func (s *KubernetesWorkloadDetails) SetHostPID(v bool) *KubernetesWorkloadDetails {
+	s.HostPID = &v
 	return s
 }
 
@@ -15619,6 +16639,12 @@ func (s *KubernetesWorkloadDetails) SetName(v string) *KubernetesWorkloadDetails
 // SetNamespace sets the Namespace field's value.
 func (s *KubernetesWorkloadDetails) SetNamespace(v string) *KubernetesWorkloadDetails {
 	s.Namespace = &v
+	return s
+}
+
+// SetServiceAccountName sets the ServiceAccountName field's value.
+func (s *KubernetesWorkloadDetails) SetServiceAccountName(v string) *KubernetesWorkloadDetails {
+	s.ServiceAccountName = &v
 	return s
 }
 
@@ -16280,6 +17306,8 @@ type ListFindingsInput struct {
 	//
 	//    * service.action.dnsRequestAction.domain
 	//
+	//    * service.action.dnsRequestAction.domainWithSuffix
+	//
 	//    * service.action.networkConnectionAction.blocked
 	//
 	//    * service.action.networkConnectionAction.connectionDirection
@@ -16743,6 +17771,9 @@ type ListMembersOutput struct {
 	_ struct{} `type:"structure"`
 
 	// A list of members.
+	//
+	// The values for email and invitedAt are available only if the member accounts
+	// are added by invitation.
 	Members []*Member `locationName:"members" type:"list"`
 
 	// The pagination parameter to be used on the next list operation to retrieve
@@ -18058,6 +19089,38 @@ func (s *NetworkInterface) SetVpcId(v string) *NetworkInterface {
 	return s
 }
 
+// Contains information about the observed behavior.
+type Observations struct {
+	_ struct{} `type:"structure"`
+
+	// The text that was unusual.
+	Text []*string `locationName:"text" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Observations) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Observations) GoString() string {
+	return s.String()
+}
+
+// SetText sets the Text field's value.
+func (s *Observations) SetText(v []*string) *Observations {
+	s.Text = v
+	return s
+}
+
 // Contains information about the ISP organization of the remote IP address.
 type Organization struct {
 	_ struct{} `type:"structure"`
@@ -18123,7 +19186,21 @@ type OrganizationAdditionalConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// The status of the additional configuration that will be configured for the
-	// organization.
+	// organization. Use one of the following values to configure the feature status
+	// for the entire organization:
+	//
+	//    * NEW: Indicates that when a new account joins the organization, they
+	//    will have the additional configuration enabled automatically.
+	//
+	//    * ALL: Indicates that all accounts in the organization have the additional
+	//    configuration enabled automatically. This includes NEW accounts that join
+	//    the organization and accounts that may have been suspended or removed
+	//    from the organization in GuardDuty. It may take up to 24 hours to update
+	//    the configuration for all the member accounts.
+	//
+	//    * NONE: Indicates that the additional configuration will not be automatically
+	//    enabled for any account in the organization. The administrator must manage
+	//    the additional configuration for each account individually.
 	AutoEnable *string `locationName:"autoEnable" type:"string" enum:"OrgFeatureStatus"`
 
 	// The name of the additional configuration that will be configured for the
@@ -18165,14 +19242,22 @@ func (s *OrganizationAdditionalConfiguration) SetName(v string) *OrganizationAdd
 type OrganizationAdditionalConfigurationResult struct {
 	_ struct{} `type:"structure"`
 
-	// Describes how The status of the additional configuration that are configured
-	// for the member accounts within the organization.
+	// Describes the status of the additional configuration that is configured for
+	// the member accounts within the organization. One of the following values
+	// is the status for the entire organization:
 	//
-	// If you set AutoEnable to NEW, a feature will be configured for only the new
-	// accounts when they join the organization.
+	//    * NEW: Indicates that when a new account joins the organization, they
+	//    will have the additional configuration enabled automatically.
 	//
-	// If you set AutoEnable to NONE, no feature will be configured for the accounts
-	// when they join the organization.
+	//    * ALL: Indicates that all accounts in the organization have the additional
+	//    configuration enabled automatically. This includes NEW accounts that join
+	//    the organization and accounts that may have been suspended or removed
+	//    from the organization in GuardDuty. It may take up to 24 hours to update
+	//    the configuration for all the member accounts.
+	//
+	//    * NONE: Indicates that the additional configuration will not be automatically
+	//    enabled for any account in the organization. The administrator must manage
+	//    the additional configuration for each account individually.
 	AutoEnable *string `locationName:"autoEnable" type:"string" enum:"OrgFeatureStatus"`
 
 	// The name of the additional configuration that is configured for the member
@@ -18336,6 +19421,50 @@ func (s *OrganizationDataSourceConfigurationsResult) SetS3Logs(v *OrganizationS3
 	return s
 }
 
+// Information about GuardDuty coverage statistics for members in your Amazon
+// Web Services organization.
+type OrganizationDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the GuardDuty coverage statistics for members in your Amazon
+	// Web Services organization.
+	OrganizationStatistics *OrganizationStatistics `locationName:"organizationStatistics" type:"structure"`
+
+	// The timestamp at which the organization statistics was last updated. This
+	// is in UTC format.
+	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationDetails) GoString() string {
+	return s.String()
+}
+
+// SetOrganizationStatistics sets the OrganizationStatistics field's value.
+func (s *OrganizationDetails) SetOrganizationStatistics(v *OrganizationStatistics) *OrganizationDetails {
+	s.OrganizationStatistics = v
+	return s
+}
+
+// SetUpdatedAt sets the UpdatedAt field's value.
+func (s *OrganizationDetails) SetUpdatedAt(v time.Time) *OrganizationDetails {
+	s.UpdatedAt = &v
+	return s
+}
+
 // Organization-wide EBS volumes scan configuration.
 type OrganizationEbsVolumes struct {
 	_ struct{} `type:"structure"`
@@ -18410,7 +19539,22 @@ type OrganizationFeatureConfiguration struct {
 	// The additional information that will be configured for the organization.
 	AdditionalConfiguration []*OrganizationAdditionalConfiguration `locationName:"additionalConfiguration" type:"list"`
 
-	// The status of the feature that will be configured for the organization.
+	// Describes the status of the feature that is configured for the member accounts
+	// within the organization. One of the following values is the status for the
+	// entire organization:
+	//
+	//    * NEW: Indicates that when a new account joins the organization, they
+	//    will have the feature enabled automatically.
+	//
+	//    * ALL: Indicates that all accounts in the organization have the feature
+	//    enabled automatically. This includes NEW accounts that join the organization
+	//    and accounts that may have been suspended or removed from the organization
+	//    in GuardDuty. It may take up to 24 hours to update the configuration for
+	//    all the member accounts.
+	//
+	//    * NONE: Indicates that the feature will not be automatically enabled for
+	//    any account in the organization. The administrator must manage the feature
+	//    for each account individually.
 	AutoEnable *string `locationName:"autoEnable" type:"string" enum:"OrgFeatureStatus"`
 
 	// The name of the feature that will be configured for the organization.
@@ -18461,14 +19605,20 @@ type OrganizationFeatureConfigurationResult struct {
 	// the organization.
 	AdditionalConfiguration []*OrganizationAdditionalConfigurationResult `locationName:"additionalConfiguration" type:"list"`
 
-	// Describes how The status of the feature that are configured for the member
-	// accounts within the organization.
+	// Describes the status of the feature that is configured for the member accounts
+	// within the organization.
 	//
-	// If you set AutoEnable to NEW, a feature will be configured for only the new
-	// accounts when they join the organization.
+	//    * NEW: Indicates that when a new account joins the organization, they
+	//    will have the feature enabled automatically.
 	//
-	// If you set AutoEnable to NONE, no feature will be configured for the accounts
-	// when they join the organization.
+	//    * ALL: Indicates that all accounts in the organization have the feature
+	//    enabled automatically. This includes NEW accounts that join the organization
+	//    and accounts that may have been suspended or removed from the organization
+	//    in GuardDuty.
+	//
+	//    * NONE: Indicates that the feature will not be automatically enabled for
+	//    any account in the organization. In this case, each account will be managed
+	//    individually by the administrator.
 	AutoEnable *string `locationName:"autoEnable" type:"string" enum:"OrgFeatureStatus"`
 
 	// The name of the feature that is configured for the member accounts within
@@ -18508,6 +19658,98 @@ func (s *OrganizationFeatureConfigurationResult) SetAutoEnable(v string) *Organi
 
 // SetName sets the Name field's value.
 func (s *OrganizationFeatureConfigurationResult) SetName(v string) *OrganizationFeatureConfigurationResult {
+	s.Name = &v
+	return s
+}
+
+// Information about the number of accounts that have enabled a specific feature.
+type OrganizationFeatureStatistics struct {
+	_ struct{} `type:"structure"`
+
+	// Name of the additional configuration.
+	AdditionalConfiguration []*OrganizationFeatureStatisticsAdditionalConfiguration `locationName:"additionalConfiguration" type:"list"`
+
+	// Total number of accounts that have enabled a specific feature.
+	EnabledAccountsCount *int64 `locationName:"enabledAccountsCount" type:"integer"`
+
+	// Name of the feature.
+	Name *string `locationName:"name" type:"string" enum:"OrgFeature"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationFeatureStatistics) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationFeatureStatistics) GoString() string {
+	return s.String()
+}
+
+// SetAdditionalConfiguration sets the AdditionalConfiguration field's value.
+func (s *OrganizationFeatureStatistics) SetAdditionalConfiguration(v []*OrganizationFeatureStatisticsAdditionalConfiguration) *OrganizationFeatureStatistics {
+	s.AdditionalConfiguration = v
+	return s
+}
+
+// SetEnabledAccountsCount sets the EnabledAccountsCount field's value.
+func (s *OrganizationFeatureStatistics) SetEnabledAccountsCount(v int64) *OrganizationFeatureStatistics {
+	s.EnabledAccountsCount = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *OrganizationFeatureStatistics) SetName(v string) *OrganizationFeatureStatistics {
+	s.Name = &v
+	return s
+}
+
+// Information about the coverage statistic for the additional configuration
+// of the feature.
+type OrganizationFeatureStatisticsAdditionalConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Total number of accounts that have enabled the additional configuration.
+	EnabledAccountsCount *int64 `locationName:"enabledAccountsCount" type:"integer"`
+
+	// Name of the additional configuration within a feature.
+	Name *string `locationName:"name" type:"string" enum:"OrgFeatureAdditionalConfiguration"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationFeatureStatisticsAdditionalConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationFeatureStatisticsAdditionalConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetEnabledAccountsCount sets the EnabledAccountsCount field's value.
+func (s *OrganizationFeatureStatisticsAdditionalConfiguration) SetEnabledAccountsCount(v int64) *OrganizationFeatureStatisticsAdditionalConfiguration {
+	s.EnabledAccountsCount = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *OrganizationFeatureStatisticsAdditionalConfiguration) SetName(v string) *OrganizationFeatureStatisticsAdditionalConfiguration {
 	s.Name = &v
 	return s
 }
@@ -18899,6 +20141,80 @@ func (s OrganizationScanEc2InstanceWithFindingsResult) GoString() string {
 // SetEbsVolumes sets the EbsVolumes field's value.
 func (s *OrganizationScanEc2InstanceWithFindingsResult) SetEbsVolumes(v *OrganizationEbsVolumesResult) *OrganizationScanEc2InstanceWithFindingsResult {
 	s.EbsVolumes = v
+	return s
+}
+
+// Information about the coverage statistics of the features for the entire
+// Amazon Web Services organization.
+//
+// When you create a new Amazon Web Services organization, it might take up
+// to 24 hours to generate the statistics summary for this organization.
+type OrganizationStatistics struct {
+	_ struct{} `type:"structure"`
+
+	// Total number of active accounts in your Amazon Web Services organization
+	// that are associated with GuardDuty.
+	ActiveAccountsCount *int64 `locationName:"activeAccountsCount" type:"integer"`
+
+	// Retrieves the coverage statistics for each feature.
+	CountByFeature []*OrganizationFeatureStatistics `locationName:"countByFeature" type:"list"`
+
+	// Total number of accounts that have enabled GuardDuty.
+	EnabledAccountsCount *int64 `locationName:"enabledAccountsCount" type:"integer"`
+
+	// Total number of accounts in your Amazon Web Services organization that are
+	// associated with GuardDuty.
+	MemberAccountsCount *int64 `locationName:"memberAccountsCount" type:"integer"`
+
+	// Total number of accounts in your Amazon Web Services organization.
+	TotalAccountsCount *int64 `locationName:"totalAccountsCount" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationStatistics) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrganizationStatistics) GoString() string {
+	return s.String()
+}
+
+// SetActiveAccountsCount sets the ActiveAccountsCount field's value.
+func (s *OrganizationStatistics) SetActiveAccountsCount(v int64) *OrganizationStatistics {
+	s.ActiveAccountsCount = &v
+	return s
+}
+
+// SetCountByFeature sets the CountByFeature field's value.
+func (s *OrganizationStatistics) SetCountByFeature(v []*OrganizationFeatureStatistics) *OrganizationStatistics {
+	s.CountByFeature = v
+	return s
+}
+
+// SetEnabledAccountsCount sets the EnabledAccountsCount field's value.
+func (s *OrganizationStatistics) SetEnabledAccountsCount(v int64) *OrganizationStatistics {
+	s.EnabledAccountsCount = &v
+	return s
+}
+
+// SetMemberAccountsCount sets the MemberAccountsCount field's value.
+func (s *OrganizationStatistics) SetMemberAccountsCount(v int64) *OrganizationStatistics {
+	s.MemberAccountsCount = &v
+	return s
+}
+
+// SetTotalAccountsCount sets the TotalAccountsCount field's value.
+func (s *OrganizationStatistics) SetTotalAccountsCount(v int64) *OrganizationStatistics {
+	s.TotalAccountsCount = &v
 	return s
 }
 
@@ -20494,17 +21810,17 @@ func (s *ScanCondition) SetMapEquals(v []*ScanConditionPair) *ScanCondition {
 	return s
 }
 
-// Represents key, value pair to be matched against given resource property.
+// Represents the key:value pair to be matched against given resource property.
 type ScanConditionPair struct {
 	_ struct{} `type:"structure"`
 
-	// Represents key in the map condition.
+	// Represents the key in the map condition.
 	//
 	// Key is a required field
 	Key *string `locationName:"key" min:"1" type:"string" required:"true"`
 
-	// Represents optional value in the map condition. If not specified, only key
-	// will be matched.
+	// Represents optional value in the map condition. If not specified, only the
+	// key will be matched.
 	Value *string `locationName:"value" type:"string"`
 }
 
@@ -20959,6 +22275,10 @@ func (s *ScannedItemCount) SetVolumes(v int64) *ScannedItemCount {
 type SecurityContext struct {
 	_ struct{} `type:"structure"`
 
+	// Whether or not a container or a Kubernetes pod is allowed to gain more privileges
+	// than its parent process.
+	AllowPrivilegeEscalation *bool `locationName:"allowPrivilegeEscalation" type:"boolean"`
+
 	// Whether the container is privileged.
 	Privileged *bool `locationName:"privileged" type:"boolean"`
 }
@@ -20979,6 +22299,12 @@ func (s SecurityContext) String() string {
 // value will be replaced with "sensitive".
 func (s SecurityContext) GoString() string {
 	return s.String()
+}
+
+// SetAllowPrivilegeEscalation sets the AllowPrivilegeEscalation field's value.
+func (s *SecurityContext) SetAllowPrivilegeEscalation(v bool) *SecurityContext {
+	s.AllowPrivilegeEscalation = &v
+	return s
 }
 
 // SetPrivileged sets the Privileged field's value.
@@ -21043,6 +22369,9 @@ type Service struct {
 
 	// The total count of the occurrences of this finding type.
 	Count *int64 `locationName:"count" type:"integer"`
+
+	// Contains information about the detected unusual behavior.
+	Detection *Detection `locationName:"detection" type:"structure"`
 
 	// The detector ID for the GuardDuty service.
 	DetectorId *string `locationName:"detectorId" min:"1" type:"string"`
@@ -21118,6 +22447,12 @@ func (s *Service) SetArchived(v bool) *Service {
 // SetCount sets the Count field's value.
 func (s *Service) SetCount(v int64) *Service {
 	s.Count = &v
+	return s
+}
+
+// SetDetection sets the Detection field's value.
+func (s *Service) SetDetection(v *Detection) *Service {
+	s.Detection = v
 	return s
 }
 
@@ -22864,28 +24199,34 @@ func (s *UpdateMemberDetectorsOutput) SetUnprocessedAccounts(v []*UnprocessedAcc
 type UpdateOrganizationConfigurationInput struct {
 	_ struct{} `type:"structure"`
 
-	// Indicates whether to automatically enable member accounts in the organization.
+	// Represents whether or not to automatically enable member accounts in the
+	// organization.
 	//
 	// Even though this is still supported, we recommend using AutoEnableOrganizationMembers
-	// to achieve the similar results.
+	// to achieve the similar results. You must provide a value for either autoEnableOrganizationMembers
+	// or autoEnable.
 	//
 	// Deprecated: This field is deprecated, use AutoEnableOrganizationMembers instead
 	AutoEnable *bool `locationName:"autoEnable" deprecated:"true" type:"boolean"`
 
 	// Indicates the auto-enablement configuration of GuardDuty for the member accounts
-	// in the organization.
+	// in the organization. You must provide a value for either autoEnableOrganizationMembers
+	// or autoEnable.
+	//
+	// Use one of the following configuration values for autoEnableOrganizationMembers:
 	//
 	//    * NEW: Indicates that when a new account joins the organization, they
 	//    will have GuardDuty enabled automatically.
 	//
-	//    * ALL: Indicates that all accounts in the Amazon Web Services Organization
-	//    have GuardDuty enabled automatically. This includes NEW accounts that
-	//    join the organization and accounts that may have been suspended or removed
-	//    from the organization in GuardDuty.
+	//    * ALL: Indicates that all accounts in the organization have GuardDuty
+	//    enabled automatically. This includes NEW accounts that join the organization
+	//    and accounts that may have been suspended or removed from the organization
+	//    in GuardDuty. It may take up to 24 hours to update the configuration for
+	//    all the member accounts.
 	//
 	//    * NONE: Indicates that GuardDuty will not be automatically enabled for
-	//    any accounts in the organization. GuardDuty must be managed for each account
-	//    individually by the administrator.
+	//    any account in the organization. The administrator must manage GuardDuty
+	//    for each account in the organization individually.
 	AutoEnableOrganizationMembers *string `locationName:"autoEnableOrganizationMembers" type:"string" enum:"AutoEnableMembers"`
 
 	// Describes which data sources will be updated.
@@ -23471,6 +24812,12 @@ type UsageStatistics struct {
 	// The usage statistic sum organized by resource.
 	SumByResource []*UsageResourceResult `locationName:"sumByResource" type:"list"`
 
+	// Lists the top 50 accounts by feature that have generated the most GuardDuty
+	// usage, in the order from most to least expensive.
+	//
+	// Currently, this doesn't support RDS_LOGIN_EVENTS.
+	TopAccountsByFeature []*UsageTopAccountsResult `locationName:"topAccountsByFeature" type:"list"`
+
 	// Lists the top 50 resources that have generated the most GuardDuty usage,
 	// in order from most to least expensive.
 	TopResources []*UsageResourceResult `locationName:"topResources" type:"list"`
@@ -23518,9 +24865,100 @@ func (s *UsageStatistics) SetSumByResource(v []*UsageResourceResult) *UsageStati
 	return s
 }
 
+// SetTopAccountsByFeature sets the TopAccountsByFeature field's value.
+func (s *UsageStatistics) SetTopAccountsByFeature(v []*UsageTopAccountsResult) *UsageStatistics {
+	s.TopAccountsByFeature = v
+	return s
+}
+
 // SetTopResources sets the TopResources field's value.
 func (s *UsageStatistics) SetTopResources(v []*UsageResourceResult) *UsageStatistics {
 	s.TopResources = v
+	return s
+}
+
+// Contains information on the total of usage based on the topmost 50 account
+// IDs.
+type UsageTopAccountResult struct {
+	_ struct{} `type:"structure"`
+
+	// The unique account ID.
+	AccountId *string `locationName:"accountId" min:"12" type:"string"`
+
+	// Contains the total usage with the corresponding currency unit for that value.
+	Total *Total `locationName:"total" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UsageTopAccountResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UsageTopAccountResult) GoString() string {
+	return s.String()
+}
+
+// SetAccountId sets the AccountId field's value.
+func (s *UsageTopAccountResult) SetAccountId(v string) *UsageTopAccountResult {
+	s.AccountId = &v
+	return s
+}
+
+// SetTotal sets the Total field's value.
+func (s *UsageTopAccountResult) SetTotal(v *Total) *UsageTopAccountResult {
+	s.Total = v
+	return s
+}
+
+// Information about the usage statistics, calculated by top accounts by feature.
+type UsageTopAccountsResult struct {
+	_ struct{} `type:"structure"`
+
+	// The accounts that contributed to the total usage cost.
+	Accounts []*UsageTopAccountResult `locationName:"accounts" type:"list"`
+
+	// Features by which you can generate the usage statistics.
+	//
+	// RDS_LOGIN_EVENTS is currently not supported with topAccountsByFeature.
+	Feature *string `locationName:"feature" type:"string" enum:"UsageFeature"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UsageTopAccountsResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UsageTopAccountsResult) GoString() string {
+	return s.String()
+}
+
+// SetAccounts sets the Accounts field's value.
+func (s *UsageTopAccountsResult) SetAccounts(v []*UsageTopAccountResult) *UsageTopAccountsResult {
+	s.Accounts = v
+	return s
+}
+
+// SetFeature sets the Feature field's value.
+func (s *UsageTopAccountsResult) SetFeature(v string) *UsageTopAccountsResult {
+	s.Feature = &v
 	return s
 }
 
@@ -23795,6 +25233,24 @@ const (
 
 	// CoverageFilterCriterionKeyAddonVersion is a CoverageFilterCriterionKey enum value
 	CoverageFilterCriterionKeyAddonVersion = "ADDON_VERSION"
+
+	// CoverageFilterCriterionKeyManagementType is a CoverageFilterCriterionKey enum value
+	CoverageFilterCriterionKeyManagementType = "MANAGEMENT_TYPE"
+
+	// CoverageFilterCriterionKeyEksClusterName is a CoverageFilterCriterionKey enum value
+	CoverageFilterCriterionKeyEksClusterName = "EKS_CLUSTER_NAME"
+
+	// CoverageFilterCriterionKeyEcsClusterName is a CoverageFilterCriterionKey enum value
+	CoverageFilterCriterionKeyEcsClusterName = "ECS_CLUSTER_NAME"
+
+	// CoverageFilterCriterionKeyAgentVersion is a CoverageFilterCriterionKey enum value
+	CoverageFilterCriterionKeyAgentVersion = "AGENT_VERSION"
+
+	// CoverageFilterCriterionKeyInstanceId is a CoverageFilterCriterionKey enum value
+	CoverageFilterCriterionKeyInstanceId = "INSTANCE_ID"
+
+	// CoverageFilterCriterionKeyClusterArn is a CoverageFilterCriterionKey enum value
+	CoverageFilterCriterionKeyClusterArn = "CLUSTER_ARN"
 )
 
 // CoverageFilterCriterionKey_Values returns all elements of the CoverageFilterCriterionKey enum
@@ -23805,6 +25261,12 @@ func CoverageFilterCriterionKey_Values() []string {
 		CoverageFilterCriterionKeyResourceType,
 		CoverageFilterCriterionKeyCoverageStatus,
 		CoverageFilterCriterionKeyAddonVersion,
+		CoverageFilterCriterionKeyManagementType,
+		CoverageFilterCriterionKeyEksClusterName,
+		CoverageFilterCriterionKeyEcsClusterName,
+		CoverageFilterCriterionKeyAgentVersion,
+		CoverageFilterCriterionKeyInstanceId,
+		CoverageFilterCriterionKeyClusterArn,
 	}
 }
 
@@ -23826,6 +25288,15 @@ const (
 
 	// CoverageSortKeyUpdatedAt is a CoverageSortKey enum value
 	CoverageSortKeyUpdatedAt = "UPDATED_AT"
+
+	// CoverageSortKeyEksClusterName is a CoverageSortKey enum value
+	CoverageSortKeyEksClusterName = "EKS_CLUSTER_NAME"
+
+	// CoverageSortKeyEcsClusterName is a CoverageSortKey enum value
+	CoverageSortKeyEcsClusterName = "ECS_CLUSTER_NAME"
+
+	// CoverageSortKeyInstanceId is a CoverageSortKey enum value
+	CoverageSortKeyInstanceId = "INSTANCE_ID"
 )
 
 // CoverageSortKey_Values returns all elements of the CoverageSortKey enum
@@ -23837,6 +25308,9 @@ func CoverageSortKey_Values() []string {
 		CoverageSortKeyIssue,
 		CoverageSortKeyAddonVersion,
 		CoverageSortKeyUpdatedAt,
+		CoverageSortKeyEksClusterName,
+		CoverageSortKeyEcsClusterName,
+		CoverageSortKeyInstanceId,
 	}
 }
 
@@ -23986,6 +25460,9 @@ const (
 
 	// DetectorFeatureLambdaNetworkLogs is a DetectorFeature enum value
 	DetectorFeatureLambdaNetworkLogs = "LAMBDA_NETWORK_LOGS"
+
+	// DetectorFeatureRuntimeMonitoring is a DetectorFeature enum value
+	DetectorFeatureRuntimeMonitoring = "RUNTIME_MONITORING"
 )
 
 // DetectorFeature_Values returns all elements of the DetectorFeature enum
@@ -23997,6 +25474,7 @@ func DetectorFeature_Values() []string {
 		DetectorFeatureRdsLoginEvents,
 		DetectorFeatureEksRuntimeMonitoring,
 		DetectorFeatureLambdaNetworkLogs,
+		DetectorFeatureRuntimeMonitoring,
 	}
 }
 
@@ -24027,6 +25505,9 @@ const (
 
 	// DetectorFeatureResultLambdaNetworkLogs is a DetectorFeatureResult enum value
 	DetectorFeatureResultLambdaNetworkLogs = "LAMBDA_NETWORK_LOGS"
+
+	// DetectorFeatureResultRuntimeMonitoring is a DetectorFeatureResult enum value
+	DetectorFeatureResultRuntimeMonitoring = "RUNTIME_MONITORING"
 )
 
 // DetectorFeatureResult_Values returns all elements of the DetectorFeatureResult enum
@@ -24041,6 +25522,7 @@ func DetectorFeatureResult_Values() []string {
 		DetectorFeatureResultRdsLoginEvents,
 		DetectorFeatureResultEksRuntimeMonitoring,
 		DetectorFeatureResultLambdaNetworkLogs,
+		DetectorFeatureResultRuntimeMonitoring,
 	}
 }
 
@@ -24079,12 +25561,16 @@ func EbsSnapshotPreservation_Values() []string {
 const (
 	// FeatureAdditionalConfigurationEksAddonManagement is a FeatureAdditionalConfiguration enum value
 	FeatureAdditionalConfigurationEksAddonManagement = "EKS_ADDON_MANAGEMENT"
+
+	// FeatureAdditionalConfigurationEcsFargateAgentManagement is a FeatureAdditionalConfiguration enum value
+	FeatureAdditionalConfigurationEcsFargateAgentManagement = "ECS_FARGATE_AGENT_MANAGEMENT"
 )
 
 // FeatureAdditionalConfiguration_Values returns all elements of the FeatureAdditionalConfiguration enum
 func FeatureAdditionalConfiguration_Values() []string {
 	return []string{
 		FeatureAdditionalConfigurationEksAddonManagement,
+		FeatureAdditionalConfigurationEcsFargateAgentManagement,
 	}
 }
 
@@ -24195,6 +25681,12 @@ const (
 
 	// FreeTrialFeatureResultLambdaNetworkLogs is a FreeTrialFeatureResult enum value
 	FreeTrialFeatureResultLambdaNetworkLogs = "LAMBDA_NETWORK_LOGS"
+
+	// FreeTrialFeatureResultFargateRuntimeMonitoring is a FreeTrialFeatureResult enum value
+	FreeTrialFeatureResultFargateRuntimeMonitoring = "FARGATE_RUNTIME_MONITORING"
+
+	// FreeTrialFeatureResultEc2RuntimeMonitoring is a FreeTrialFeatureResult enum value
+	FreeTrialFeatureResultEc2RuntimeMonitoring = "EC2_RUNTIME_MONITORING"
 )
 
 // FreeTrialFeatureResult_Values returns all elements of the FreeTrialFeatureResult enum
@@ -24209,6 +25701,8 @@ func FreeTrialFeatureResult_Values() []string {
 		FreeTrialFeatureResultRdsLoginEvents,
 		FreeTrialFeatureResultEksRuntimeMonitoring,
 		FreeTrialFeatureResultLambdaNetworkLogs,
+		FreeTrialFeatureResultFargateRuntimeMonitoring,
+		FreeTrialFeatureResultEc2RuntimeMonitoring,
 	}
 }
 
@@ -24281,6 +25775,26 @@ func IpSetStatus_Values() []string {
 }
 
 const (
+	// ManagementTypeAutoManaged is a ManagementType enum value
+	ManagementTypeAutoManaged = "AUTO_MANAGED"
+
+	// ManagementTypeManual is a ManagementType enum value
+	ManagementTypeManual = "MANUAL"
+
+	// ManagementTypeDisabled is a ManagementType enum value
+	ManagementTypeDisabled = "DISABLED"
+)
+
+// ManagementType_Values returns all elements of the ManagementType enum
+func ManagementType_Values() []string {
+	return []string{
+		ManagementTypeAutoManaged,
+		ManagementTypeManual,
+		ManagementTypeDisabled,
+	}
+}
+
+const (
 	// OrderByAsc is a OrderBy enum value
 	OrderByAsc = "ASC"
 
@@ -24314,6 +25828,9 @@ const (
 
 	// OrgFeatureLambdaNetworkLogs is a OrgFeature enum value
 	OrgFeatureLambdaNetworkLogs = "LAMBDA_NETWORK_LOGS"
+
+	// OrgFeatureRuntimeMonitoring is a OrgFeature enum value
+	OrgFeatureRuntimeMonitoring = "RUNTIME_MONITORING"
 )
 
 // OrgFeature_Values returns all elements of the OrgFeature enum
@@ -24325,18 +25842,23 @@ func OrgFeature_Values() []string {
 		OrgFeatureRdsLoginEvents,
 		OrgFeatureEksRuntimeMonitoring,
 		OrgFeatureLambdaNetworkLogs,
+		OrgFeatureRuntimeMonitoring,
 	}
 }
 
 const (
 	// OrgFeatureAdditionalConfigurationEksAddonManagement is a OrgFeatureAdditionalConfiguration enum value
 	OrgFeatureAdditionalConfigurationEksAddonManagement = "EKS_ADDON_MANAGEMENT"
+
+	// OrgFeatureAdditionalConfigurationEcsFargateAgentManagement is a OrgFeatureAdditionalConfiguration enum value
+	OrgFeatureAdditionalConfigurationEcsFargateAgentManagement = "ECS_FARGATE_AGENT_MANAGEMENT"
 )
 
 // OrgFeatureAdditionalConfiguration_Values returns all elements of the OrgFeatureAdditionalConfiguration enum
 func OrgFeatureAdditionalConfiguration_Values() []string {
 	return []string{
 		OrgFeatureAdditionalConfigurationEksAddonManagement,
+		OrgFeatureAdditionalConfigurationEcsFargateAgentManagement,
 	}
 }
 
@@ -24346,6 +25868,9 @@ const (
 
 	// OrgFeatureStatusNone is a OrgFeatureStatus enum value
 	OrgFeatureStatusNone = "NONE"
+
+	// OrgFeatureStatusAll is a OrgFeatureStatus enum value
+	OrgFeatureStatusAll = "ALL"
 )
 
 // OrgFeatureStatus_Values returns all elements of the OrgFeatureStatus enum
@@ -24353,6 +25878,43 @@ func OrgFeatureStatus_Values() []string {
 	return []string{
 		OrgFeatureStatusNew,
 		OrgFeatureStatusNone,
+		OrgFeatureStatusAll,
+	}
+}
+
+const (
+	// ProfileSubtypeFrequent is a ProfileSubtype enum value
+	ProfileSubtypeFrequent = "FREQUENT"
+
+	// ProfileSubtypeInfrequent is a ProfileSubtype enum value
+	ProfileSubtypeInfrequent = "INFREQUENT"
+
+	// ProfileSubtypeUnseen is a ProfileSubtype enum value
+	ProfileSubtypeUnseen = "UNSEEN"
+
+	// ProfileSubtypeRare is a ProfileSubtype enum value
+	ProfileSubtypeRare = "RARE"
+)
+
+// ProfileSubtype_Values returns all elements of the ProfileSubtype enum
+func ProfileSubtype_Values() []string {
+	return []string{
+		ProfileSubtypeFrequent,
+		ProfileSubtypeInfrequent,
+		ProfileSubtypeUnseen,
+		ProfileSubtypeRare,
+	}
+}
+
+const (
+	// ProfileTypeFrequency is a ProfileType enum value
+	ProfileTypeFrequency = "FREQUENCY"
+)
+
+// ProfileType_Values returns all elements of the ProfileType enum
+func ProfileType_Values() []string {
+	return []string{
+		ProfileTypeFrequency,
 	}
 }
 
@@ -24383,12 +25945,20 @@ func PublishingStatus_Values() []string {
 const (
 	// ResourceTypeEks is a ResourceType enum value
 	ResourceTypeEks = "EKS"
+
+	// ResourceTypeEcs is a ResourceType enum value
+	ResourceTypeEcs = "ECS"
+
+	// ResourceTypeEc2 is a ResourceType enum value
+	ResourceTypeEc2 = "EC2"
 )
 
 // ResourceType_Values returns all elements of the ResourceType enum
 func ResourceType_Values() []string {
 	return []string{
 		ResourceTypeEks,
+		ResourceTypeEcs,
+		ResourceTypeEc2,
 	}
 }
 
@@ -24557,6 +26127,12 @@ const (
 
 	// UsageFeatureEksRuntimeMonitoring is a UsageFeature enum value
 	UsageFeatureEksRuntimeMonitoring = "EKS_RUNTIME_MONITORING"
+
+	// UsageFeatureFargateRuntimeMonitoring is a UsageFeature enum value
+	UsageFeatureFargateRuntimeMonitoring = "FARGATE_RUNTIME_MONITORING"
+
+	// UsageFeatureEc2RuntimeMonitoring is a UsageFeature enum value
+	UsageFeatureEc2RuntimeMonitoring = "EC2_RUNTIME_MONITORING"
 )
 
 // UsageFeature_Values returns all elements of the UsageFeature enum
@@ -24571,6 +26147,8 @@ func UsageFeature_Values() []string {
 		UsageFeatureRdsLoginEvents,
 		UsageFeatureLambdaNetworkLogs,
 		UsageFeatureEksRuntimeMonitoring,
+		UsageFeatureFargateRuntimeMonitoring,
+		UsageFeatureEc2RuntimeMonitoring,
 	}
 }
 
@@ -24589,6 +26167,9 @@ const (
 
 	// UsageStatisticTypeSumByFeatures is a UsageStatisticType enum value
 	UsageStatisticTypeSumByFeatures = "SUM_BY_FEATURES"
+
+	// UsageStatisticTypeTopAccountsByFeature is a UsageStatisticType enum value
+	UsageStatisticTypeTopAccountsByFeature = "TOP_ACCOUNTS_BY_FEATURE"
 )
 
 // UsageStatisticType_Values returns all elements of the UsageStatisticType enum
@@ -24599,5 +26180,6 @@ func UsageStatisticType_Values() []string {
 		UsageStatisticTypeSumByResource,
 		UsageStatisticTypeTopResources,
 		UsageStatisticTypeSumByFeatures,
+		UsageStatisticTypeTopAccountsByFeature,
 	}
 }

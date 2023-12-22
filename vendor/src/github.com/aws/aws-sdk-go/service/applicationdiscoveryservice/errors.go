@@ -17,6 +17,8 @@ const (
 
 	// ErrCodeConflictErrorException for service response error code
 	// "ConflictErrorException".
+	//
+	// Conflict error.
 	ErrCodeConflictErrorException = "ConflictErrorException"
 
 	// ErrCodeHomeRegionNotSetException for service response error code
@@ -37,6 +39,12 @@ const (
 	// The value of one or more parameters are either invalid or out of range. Verify
 	// the parameter values and try again.
 	ErrCodeInvalidParameterValueException = "InvalidParameterValueException"
+
+	// ErrCodeLimitExceededException for service response error code
+	// "LimitExceededException".
+	//
+	// The limit of 200 configuration IDs per request has been exceeded.
+	ErrCodeLimitExceededException = "LimitExceededException"
 
 	// ErrCodeOperationNotPermittedException for service response error code
 	// "OperationNotPermittedException".
@@ -74,6 +82,7 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"HomeRegionNotSetException":      newErrorHomeRegionNotSetException,
 	"InvalidParameterException":      newErrorInvalidParameterException,
 	"InvalidParameterValueException": newErrorInvalidParameterValueException,
+	"LimitExceededException":         newErrorLimitExceededException,
 	"OperationNotPermittedException": newErrorOperationNotPermittedException,
 	"ResourceInUseException":         newErrorResourceInUseException,
 	"ResourceNotFoundException":      newErrorResourceNotFoundException,

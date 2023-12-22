@@ -835,6 +835,99 @@ func (c *TranscribeService) DeleteLanguageModelWithContext(ctx aws.Context, inpu
 	return out, req.Send()
 }
 
+const opDeleteMedicalScribeJob = "DeleteMedicalScribeJob"
+
+// DeleteMedicalScribeJobRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteMedicalScribeJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteMedicalScribeJob for more information on using the DeleteMedicalScribeJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteMedicalScribeJobRequest method.
+//	req, resp := client.DeleteMedicalScribeJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/DeleteMedicalScribeJob
+func (c *TranscribeService) DeleteMedicalScribeJobRequest(input *DeleteMedicalScribeJobInput) (req *request.Request, output *DeleteMedicalScribeJobOutput) {
+	op := &request.Operation{
+		Name:       opDeleteMedicalScribeJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteMedicalScribeJobInput{}
+	}
+
+	output = &DeleteMedicalScribeJobOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteMedicalScribeJob API operation for Amazon Transcribe Service.
+//
+// Deletes a Medical Scribe job. To use this operation, specify the name of
+// the job you want to delete using MedicalScribeJobName. Job names are case
+// sensitive.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Transcribe Service's
+// API operation DeleteMedicalScribeJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - LimitExceededException
+//     You've either sent too many requests or your input file is too long. Wait
+//     before retrying your request, or use a smaller file and try your request
+//     again.
+//
+//   - BadRequestException
+//     Your request didn't pass one or more validation tests. This can occur when
+//     the entity you're trying to delete doesn't exist or if it's in a non-terminal
+//     state (such as IN PROGRESS). See the exception message field for more information.
+//
+//   - InternalFailureException
+//     There was an internal error. Check the error message, correct the issue,
+//     and try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/DeleteMedicalScribeJob
+func (c *TranscribeService) DeleteMedicalScribeJob(input *DeleteMedicalScribeJobInput) (*DeleteMedicalScribeJobOutput, error) {
+	req, out := c.DeleteMedicalScribeJobRequest(input)
+	return out, req.Send()
+}
+
+// DeleteMedicalScribeJobWithContext is the same as DeleteMedicalScribeJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteMedicalScribeJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *TranscribeService) DeleteMedicalScribeJobWithContext(ctx aws.Context, input *DeleteMedicalScribeJobInput, opts ...request.Option) (*DeleteMedicalScribeJobOutput, error) {
+	req, out := c.DeleteMedicalScribeJobRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteMedicalTranscriptionJob = "DeleteMedicalTranscriptionJob"
 
 // DeleteMedicalTranscriptionJobRequest generates a "aws/request.Request" representing the
@@ -1612,6 +1705,108 @@ func (c *TranscribeService) GetCallAnalyticsJob(input *GetCallAnalyticsJobInput)
 // for more information on using Contexts.
 func (c *TranscribeService) GetCallAnalyticsJobWithContext(ctx aws.Context, input *GetCallAnalyticsJobInput, opts ...request.Option) (*GetCallAnalyticsJobOutput, error) {
 	req, out := c.GetCallAnalyticsJobRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetMedicalScribeJob = "GetMedicalScribeJob"
+
+// GetMedicalScribeJobRequest generates a "aws/request.Request" representing the
+// client's request for the GetMedicalScribeJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetMedicalScribeJob for more information on using the GetMedicalScribeJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetMedicalScribeJobRequest method.
+//	req, resp := client.GetMedicalScribeJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/GetMedicalScribeJob
+func (c *TranscribeService) GetMedicalScribeJobRequest(input *GetMedicalScribeJobInput) (req *request.Request, output *GetMedicalScribeJobOutput) {
+	op := &request.Operation{
+		Name:       opGetMedicalScribeJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &GetMedicalScribeJobInput{}
+	}
+
+	output = &GetMedicalScribeJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetMedicalScribeJob API operation for Amazon Transcribe Service.
+//
+// Provides information about the specified Medical Scribe job.
+//
+// To view the status of the specified medical transcription job, check the
+// MedicalScribeJobStatus field. If the status is COMPLETED, the job is finished.
+// You can find the results at the location specified in MedicalScribeOutput.
+// If the status is FAILED, FailureReason provides details on why your Medical
+// Scribe job failed.
+//
+// To get a list of your Medical Scribe jobs, use the operation.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Transcribe Service's
+// API operation GetMedicalScribeJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     Your request didn't pass one or more validation tests. This can occur when
+//     the entity you're trying to delete doesn't exist or if it's in a non-terminal
+//     state (such as IN PROGRESS). See the exception message field for more information.
+//
+//   - LimitExceededException
+//     You've either sent too many requests or your input file is too long. Wait
+//     before retrying your request, or use a smaller file and try your request
+//     again.
+//
+//   - InternalFailureException
+//     There was an internal error. Check the error message, correct the issue,
+//     and try your request again.
+//
+//   - NotFoundException
+//     We can't find the requested resource. Check that the specified name is correct
+//     and try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/GetMedicalScribeJob
+func (c *TranscribeService) GetMedicalScribeJob(input *GetMedicalScribeJobInput) (*GetMedicalScribeJobOutput, error) {
+	req, out := c.GetMedicalScribeJobRequest(input)
+	return out, req.Send()
+}
+
+// GetMedicalScribeJobWithContext is the same as GetMedicalScribeJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetMedicalScribeJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *TranscribeService) GetMedicalScribeJobWithContext(ctx aws.Context, input *GetMedicalScribeJobInput, opts ...request.Option) (*GetMedicalScribeJobOutput, error) {
+	req, out := c.GetMedicalScribeJobRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -2567,6 +2762,157 @@ func (c *TranscribeService) ListLanguageModelsPagesWithContext(ctx aws.Context, 
 
 	for p.Next() {
 		if !fn(p.Page().(*ListLanguageModelsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListMedicalScribeJobs = "ListMedicalScribeJobs"
+
+// ListMedicalScribeJobsRequest generates a "aws/request.Request" representing the
+// client's request for the ListMedicalScribeJobs operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListMedicalScribeJobs for more information on using the ListMedicalScribeJobs
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListMedicalScribeJobsRequest method.
+//	req, resp := client.ListMedicalScribeJobsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/ListMedicalScribeJobs
+func (c *TranscribeService) ListMedicalScribeJobsRequest(input *ListMedicalScribeJobsInput) (req *request.Request, output *ListMedicalScribeJobsOutput) {
+	op := &request.Operation{
+		Name:       opListMedicalScribeJobs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListMedicalScribeJobsInput{}
+	}
+
+	output = &ListMedicalScribeJobsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListMedicalScribeJobs API operation for Amazon Transcribe Service.
+//
+// Provides a list of Medical Scribe jobs that match the specified criteria.
+// If no criteria are specified, all Medical Scribe jobs are returned.
+//
+// To get detailed information about a specific Medical Scribe job, use the
+// operation.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Transcribe Service's
+// API operation ListMedicalScribeJobs for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     Your request didn't pass one or more validation tests. This can occur when
+//     the entity you're trying to delete doesn't exist or if it's in a non-terminal
+//     state (such as IN PROGRESS). See the exception message field for more information.
+//
+//   - LimitExceededException
+//     You've either sent too many requests or your input file is too long. Wait
+//     before retrying your request, or use a smaller file and try your request
+//     again.
+//
+//   - InternalFailureException
+//     There was an internal error. Check the error message, correct the issue,
+//     and try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/ListMedicalScribeJobs
+func (c *TranscribeService) ListMedicalScribeJobs(input *ListMedicalScribeJobsInput) (*ListMedicalScribeJobsOutput, error) {
+	req, out := c.ListMedicalScribeJobsRequest(input)
+	return out, req.Send()
+}
+
+// ListMedicalScribeJobsWithContext is the same as ListMedicalScribeJobs with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListMedicalScribeJobs for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *TranscribeService) ListMedicalScribeJobsWithContext(ctx aws.Context, input *ListMedicalScribeJobsInput, opts ...request.Option) (*ListMedicalScribeJobsOutput, error) {
+	req, out := c.ListMedicalScribeJobsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListMedicalScribeJobsPages iterates over the pages of a ListMedicalScribeJobs operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListMedicalScribeJobs method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListMedicalScribeJobs operation.
+//	pageNum := 0
+//	err := client.ListMedicalScribeJobsPages(params,
+//	    func(page *transcribeservice.ListMedicalScribeJobsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *TranscribeService) ListMedicalScribeJobsPages(input *ListMedicalScribeJobsInput, fn func(*ListMedicalScribeJobsOutput, bool) bool) error {
+	return c.ListMedicalScribeJobsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListMedicalScribeJobsPagesWithContext same as ListMedicalScribeJobsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *TranscribeService) ListMedicalScribeJobsPagesWithContext(ctx aws.Context, input *ListMedicalScribeJobsInput, fn func(*ListMedicalScribeJobsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListMedicalScribeJobsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListMedicalScribeJobsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListMedicalScribeJobsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -3562,6 +3908,135 @@ func (c *TranscribeService) StartCallAnalyticsJobWithContext(ctx aws.Context, in
 	return out, req.Send()
 }
 
+const opStartMedicalScribeJob = "StartMedicalScribeJob"
+
+// StartMedicalScribeJobRequest generates a "aws/request.Request" representing the
+// client's request for the StartMedicalScribeJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartMedicalScribeJob for more information on using the StartMedicalScribeJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartMedicalScribeJobRequest method.
+//	req, resp := client.StartMedicalScribeJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/StartMedicalScribeJob
+func (c *TranscribeService) StartMedicalScribeJobRequest(input *StartMedicalScribeJobInput) (req *request.Request, output *StartMedicalScribeJobOutput) {
+	op := &request.Operation{
+		Name:       opStartMedicalScribeJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartMedicalScribeJobInput{}
+	}
+
+	output = &StartMedicalScribeJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartMedicalScribeJob API operation for Amazon Transcribe Service.
+//
+// Transcribes patient-clinician conversations and generates clinical notes.
+//
+// Amazon Web Services HealthScribe automatically provides rich conversation
+// transcripts, identifies speaker roles, classifies dialogues, extracts medical
+// terms, and generates preliminary clinical notes. To learn more about these
+// features, refer to Amazon Web Services HealthScribe (https://docs.aws.amazon.com/transcribe/latest/dg/health-scribe.html).
+//
+// To make a StartMedicalScribeJob request, you must first upload your media
+// file into an Amazon S3 bucket; you can then specify the Amazon S3 location
+// of the file using the Media parameter.
+//
+// You must include the following parameters in your StartMedicalTranscriptionJob
+// request:
+//
+//   - DataAccessRoleArn: The ARN of an IAM role with the these minimum permissions:
+//     read permission on input file Amazon S3 bucket specified in Media, write
+//     permission on the Amazon S3 bucket specified in OutputBucketName, and
+//     full permissions on the KMS key specified in OutputEncryptionKMSKeyId
+//     (if set). The role should also allow transcribe.amazonaws.com to assume
+//     it.
+//
+//   - Media (MediaFileUri): The Amazon S3 location of your media file.
+//
+//   - MedicalScribeJobName: A custom name you create for your MedicalScribe
+//     job that is unique within your Amazon Web Services account.
+//
+//   - OutputBucketName: The Amazon S3 bucket where you want your output files
+//     stored.
+//
+//   - Settings: A MedicalScribeSettings obect that must set exactly one of
+//     ShowSpeakerLabels or ChannelIdentification to true. If ShowSpeakerLabels
+//     is true, MaxSpeakerLabels must also be set.
+//
+//   - ChannelDefinitions: A MedicalScribeChannelDefinitions array should be
+//     set if and only if the ChannelIdentification value of Settings is set
+//     to true.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Transcribe Service's
+// API operation StartMedicalScribeJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     Your request didn't pass one or more validation tests. This can occur when
+//     the entity you're trying to delete doesn't exist or if it's in a non-terminal
+//     state (such as IN PROGRESS). See the exception message field for more information.
+//
+//   - LimitExceededException
+//     You've either sent too many requests or your input file is too long. Wait
+//     before retrying your request, or use a smaller file and try your request
+//     again.
+//
+//   - InternalFailureException
+//     There was an internal error. Check the error message, correct the issue,
+//     and try your request again.
+//
+//   - ConflictException
+//     A resource already exists with this name. Resource names must be unique within
+//     an Amazon Web Services account.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transcribe-2017-10-26/StartMedicalScribeJob
+func (c *TranscribeService) StartMedicalScribeJob(input *StartMedicalScribeJobInput) (*StartMedicalScribeJobOutput, error) {
+	req, out := c.StartMedicalScribeJobRequest(input)
+	return out, req.Send()
+}
+
+// StartMedicalScribeJobWithContext is the same as StartMedicalScribeJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartMedicalScribeJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *TranscribeService) StartMedicalScribeJobWithContext(ctx aws.Context, input *StartMedicalScribeJobInput, opts ...request.Option) (*StartMedicalScribeJobOutput, error) {
+	req, out := c.StartMedicalScribeJobRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartMedicalTranscriptionJob = "StartMedicalTranscriptionJob"
 
 // StartMedicalTranscriptionJobRequest generates a "aws/request.Request" representing the
@@ -3614,7 +4089,7 @@ func (c *TranscribeService) StartMedicalTranscriptionJobRequest(input *StartMedi
 // these features, refer to How Amazon Transcribe Medical works (https://docs.aws.amazon.com/transcribe/latest/dg/how-it-works-med.html).
 //
 // To make a StartMedicalTranscriptionJob request, you must first upload your
-// media file into an Amazon S3 bucket; you can then specify the S3 location
+// media file into an Amazon S3 bucket; you can then specify the Amazon S3 location
 // of the file using the Media parameter.
 //
 // You must include the following parameters in your StartMedicalTranscriptionJob
@@ -3753,7 +4228,7 @@ func (c *TranscribeService) StartTranscriptionJobRequest(input *StartTranscripti
 //     If you know the language of your media file, specify it using the LanguageCode
 //     parameter; you can find all valid language codes in the Supported languages
 //     (https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html)
-//     table. If you don't know the languages spoken in your media, use either
+//     table. If you do not know the languages spoken in your media, use either
 //     IdentifyLanguage or IdentifyMultipleLanguages and let Amazon Transcribe
 //     identify the languages for you.
 //
@@ -4612,7 +5087,8 @@ type CallAnalyticsJob struct {
 	// The FailureReason field contains one of the following values:
 	//
 	//    * Unsupported media format. The media format specified in MediaFormat
-	//    isn't valid. Refer to MediaFormat for a list of supported formats.
+	//    isn't valid. Refer to refer to the MediaFormat parameter for a list of
+	//    supported formats.
 	//
 	//    * The media format provided does not match the detected media format.
 	//    The media format specified in MediaFormat doesn't match the format of
@@ -4629,11 +5105,11 @@ type CallAnalyticsJob struct {
 	//
 	//    * Invalid file size: file size too large. The size of your media file
 	//    is larger than what Amazon Transcribe can process. For more information,
-	//    refer to Guidelines and quotas (https://docs.aws.amazon.com/transcribe/latest/dg/limits-guidelines.html#limits).
+	//    refer to Service quotas (https://docs.aws.amazon.com/general/latest/gr/transcribe.html#limits-amazon-transcribe).
 	//
 	//    * Invalid number of channels: number of channels too large. Your audio
 	//    contains more channels than Amazon Transcribe is able to process. For
-	//    more information, refer to Guidelines and quotas (https://docs.aws.amazon.com/transcribe/latest/dg/limits-guidelines.html#limits).
+	//    more information, refer to Service quotas (https://docs.aws.amazon.com/general/latest/gr/transcribe.html#limits-amazon-transcribe).
 	FailureReason *string `type:"string"`
 
 	// The confidence score associated with the language identified in your media
@@ -4649,7 +5125,7 @@ type CallAnalyticsJob struct {
 	// (https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html)
 	// table.
 	//
-	// If you don't know the language spoken in your media file, you can omit this
+	// If you do not know the language spoken in your media file, you can omit this
 	// field and let Amazon Transcribe automatically identify the language of your
 	// media. To improve the accuracy of language identification, you can include
 	// several language codes and Amazon Transcribe chooses the closest match for
@@ -4798,7 +5274,8 @@ type CallAnalyticsJobSettings struct {
 
 	// Makes it possible to redact or flag specified personally identifiable information
 	// (PII) in your transcript. If you use ContentRedaction, you must also include
-	// the sub-parameters: PiiEntityTypes, RedactionOutput, and RedactionType.
+	// the sub-parameters: RedactionOutput and RedactionType. You can optionally
+	// include PiiEntityTypes to choose which types of PII you want to redact.
 	ContentRedaction *ContentRedaction `type:"structure"`
 
 	// If using automatic language identification in your request and you want to
@@ -4833,9 +5310,9 @@ type CallAnalyticsJobSettings struct {
 	// Call Analytics job. Note that custom language model names are case sensitive.
 	//
 	// The language of the specified custom language model must match the language
-	// code that you specify in your transcription request. If the languages don't
-	// match, the custom language model isn't applied. There are no errors or warnings
-	// associated with a language mismatch.
+	// code that you specify in your transcription request. If the languages do
+	// not match, the custom language model isn't applied. There are no errors or
+	// warnings associated with a language mismatch.
 	LanguageModelName *string `min:"1" type:"string"`
 
 	// You can specify two or more language codes that represent the languages you
@@ -4851,6 +5328,10 @@ type CallAnalyticsJobSettings struct {
 	// To transcribe speech in Modern Standard Arabic (ar-SA), your media file must
 	// be encoded at a sample rate of 16,000 Hz or higher.
 	LanguageOptions []*string `min:"1" type:"list" enum:"LanguageCode"`
+
+	// Contains GenerateAbstractiveSummary, which is a required parameter if you
+	// want to enable Generative call summarization in your Call Analytics request.
+	Summarization *Summarization `type:"structure"`
 
 	// Specify how you want your custom vocabulary filter applied to your transcript.
 	//
@@ -4925,6 +5406,11 @@ func (s *CallAnalyticsJobSettings) Validate() error {
 			}
 		}
 	}
+	if s.Summarization != nil {
+		if err := s.Summarization.Validate(); err != nil {
+			invalidParams.AddNested("Summarization", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -4953,6 +5439,12 @@ func (s *CallAnalyticsJobSettings) SetLanguageModelName(v string) *CallAnalytics
 // SetLanguageOptions sets the LanguageOptions field's value.
 func (s *CallAnalyticsJobSettings) SetLanguageOptions(v []*string) *CallAnalyticsJobSettings {
 	s.LanguageOptions = v
+	return s
+}
+
+// SetSummarization sets the Summarization field's value.
+func (s *CallAnalyticsJobSettings) SetSummarization(v *Summarization) *CallAnalyticsJobSettings {
+	s.Summarization = v
 	return s
 }
 
@@ -5271,13 +5763,15 @@ func (s *ConflictException) RequestID() string {
 
 // Makes it possible to redact or flag specified personally identifiable information
 // (PII) in your transcript. If you use ContentRedaction, you must also include
-// the sub-parameters: PiiEntityTypes, RedactionOutput, and RedactionType.
+// the sub-parameters: RedactionOutput and RedactionType. You can optionally
+// include PiiEntityTypes to choose which types of PII you want to redact.
 type ContentRedaction struct {
 	_ struct{} `type:"structure"`
 
 	// Specify which types of personally identifiable information (PII) you want
 	// to redact in your transcript. You can include as many types as you'd like,
-	// or you can select ALL.
+	// or you can select ALL. If you do not include PiiEntityTypes in your request,
+	// all PII is redacted.
 	PiiEntityTypes []*string `type:"list" enum:"PiiEntityType"`
 
 	// Specify if you want only a redacted transcript, or if you want a redacted
@@ -5293,7 +5787,8 @@ type ContentRedaction struct {
 
 	// Specify the category of information you want to redact; PII (personally identifiable
 	// information) is the only valid value. You can use PiiEntityTypes to choose
-	// which types of PII you want to redact.
+	// which types of PII you want to redact. If you do not include PiiEntityTypes
+	// in your request, all PII is redacted.
 	//
 	// RedactionType is a required field
 	RedactionType *string `type:"string" required:"true" enum:"RedactionType"`
@@ -6574,6 +7069,78 @@ func (s DeleteLanguageModelOutput) GoString() string {
 	return s.String()
 }
 
+type DeleteMedicalScribeJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the Medical Scribe job you want to delete. Job names are case
+	// sensitive.
+	//
+	// MedicalScribeJobName is a required field
+	MedicalScribeJobName *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMedicalScribeJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMedicalScribeJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteMedicalScribeJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteMedicalScribeJobInput"}
+	if s.MedicalScribeJobName == nil {
+		invalidParams.Add(request.NewErrParamRequired("MedicalScribeJobName"))
+	}
+	if s.MedicalScribeJobName != nil && len(*s.MedicalScribeJobName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MedicalScribeJobName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMedicalScribeJobName sets the MedicalScribeJobName field's value.
+func (s *DeleteMedicalScribeJobInput) SetMedicalScribeJobName(v string) *DeleteMedicalScribeJobInput {
+	s.MedicalScribeJobName = &v
+	return s
+}
+
+type DeleteMedicalScribeJobOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMedicalScribeJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMedicalScribeJobOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteMedicalTranscriptionJobInput struct {
 	_ struct{} `type:"structure"`
 
@@ -7188,6 +7755,88 @@ func (s *GetCallAnalyticsJobOutput) SetCallAnalyticsJob(v *CallAnalyticsJob) *Ge
 	return s
 }
 
+type GetMedicalScribeJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the Medical Scribe job you want information about. Job names
+	// are case sensitive.
+	//
+	// MedicalScribeJobName is a required field
+	MedicalScribeJobName *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMedicalScribeJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMedicalScribeJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetMedicalScribeJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetMedicalScribeJobInput"}
+	if s.MedicalScribeJobName == nil {
+		invalidParams.Add(request.NewErrParamRequired("MedicalScribeJobName"))
+	}
+	if s.MedicalScribeJobName != nil && len(*s.MedicalScribeJobName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MedicalScribeJobName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMedicalScribeJobName sets the MedicalScribeJobName field's value.
+func (s *GetMedicalScribeJobInput) SetMedicalScribeJobName(v string) *GetMedicalScribeJobInput {
+	s.MedicalScribeJobName = &v
+	return s
+}
+
+type GetMedicalScribeJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Provides detailed information about the specified Medical Scribe job, including
+	// job status and, if applicable, failure reason
+	MedicalScribeJob *MedicalScribeJob `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMedicalScribeJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMedicalScribeJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetMedicalScribeJob sets the MedicalScribeJob field's value.
+func (s *GetMedicalScribeJobOutput) SetMedicalScribeJob(v *MedicalScribeJob) *GetMedicalScribeJobOutput {
+	s.MedicalScribeJob = v
+	return s
+}
+
 type GetMedicalTranscriptionJobInput struct {
 	_ struct{} `type:"structure"`
 
@@ -7323,7 +7972,7 @@ func (s *GetMedicalVocabularyInput) SetVocabularyName(v string) *GetMedicalVocab
 type GetMedicalVocabularyOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The S3 location where the specified custom medical vocabulary is stored;
+	// The Amazon S3 location where the specified custom medical vocabulary is stored;
 	// use this URI to view or download the custom vocabulary.
 	DownloadUri *string `min:"1" type:"string"`
 
@@ -7650,8 +8299,8 @@ func (s *GetVocabularyInput) SetVocabularyName(v string) *GetVocabularyInput {
 type GetVocabularyOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The S3 location where the custom vocabulary is stored; use this URI to view
-	// or download the custom vocabulary.
+	// The Amazon S3 location where the custom vocabulary is stored; use this URI
+	// to view or download the custom vocabulary.
 	DownloadUri *string `min:"1" type:"string"`
 
 	// If VocabularyState is FAILED, FailureReason contains information about why
@@ -8133,18 +8782,18 @@ type LanguageIdSettings struct {
 	// transcription job. Note that custom language model names are case sensitive.
 	//
 	// The language of the specified custom language model must match the language
-	// code that you specify in your transcription request. If the languages don't
-	// match, the custom language model isn't applied. There are no errors or warnings
-	// associated with a language mismatch.
+	// code that you specify in your transcription request. If the languages do
+	// not match, the custom language model isn't applied. There are no errors or
+	// warnings associated with a language mismatch.
 	LanguageModelName *string `min:"1" type:"string"`
 
 	// The name of the custom vocabulary filter you want to use when processing
 	// your transcription job. Custom vocabulary filter names are case sensitive.
 	//
 	// The language of the specified custom vocabulary filter must match the language
-	// code that you specify in your transcription request. If the languages don't
-	// match, the custom vocabulary filter isn't applied. There are no errors or
-	// warnings associated with a language mismatch.
+	// code that you specify in your transcription request. If the languages do
+	// not match, the custom vocabulary filter isn't applied. There are no errors
+	// or warnings associated with a language mismatch.
 	//
 	// Note that if you include VocabularyFilterName in your request, you must also
 	// include VocabularyFilterMethod.
@@ -8154,7 +8803,7 @@ type LanguageIdSettings struct {
 	// job. Custom vocabulary names are case sensitive.
 	//
 	// The language of the specified custom vocabulary must match the language code
-	// that you specify in your transcription request. If the languages don't match,
+	// that you specify in your transcription request. If the languages do not match,
 	// the custom vocabulary isn't applied. There are no errors or warnings associated
 	// with a language mismatch.
 	VocabularyName *string `min:"1" type:"string"`
@@ -8261,8 +8910,8 @@ type LanguageModel struct {
 	//
 	// For a list of supported languages and their associated language codes, refer
 	// to the Supported languages (https://docs.aws.amazon.com/transcribe/latest/dg/supported-languages.html)
-	// table. Note that U.S. English (en-US) is the only language supported with
-	// Amazon Transcribe Medical.
+	// table. Note that US English (en-US) is the only language supported with Amazon
+	// Transcribe Medical.
 	LanguageCode *string `type:"string" enum:"CLMLanguageCode"`
 
 	// The date and time the specified custom language model was last modified.
@@ -8438,7 +9087,7 @@ type ListCallAnalyticsCategoriesInput struct {
 
 	// The maximum number of Call Analytics categories to return in each page of
 	// results. If there are fewer results than the value that you specify, only
-	// the actual results are returned. If you don't specify a value, a default
+	// the actual results are returned. If you do not specify a value, a default
 	// of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
@@ -8547,7 +9196,7 @@ type ListCallAnalyticsJobsInput struct {
 
 	// The maximum number of Call Analytics jobs to return in each page of results.
 	// If there are fewer results than the value that you specify, only the actual
-	// results are returned. If you don't specify a value, a default of 5 is used.
+	// results are returned. If you do not specify a value, a default of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// If your ListCallAnalyticsJobs request returns more results than can be displayed,
@@ -8558,7 +9207,7 @@ type ListCallAnalyticsJobsInput struct {
 	NextToken *string `type:"string"`
 
 	// Returns only Call Analytics jobs with the specified status. Jobs are ordered
-	// by creation date, with the newest job first. If you don't include Status,
+	// by creation date, with the newest job first. If you do not include Status,
 	// all Call Analytics jobs are returned.
 	Status *string `type:"string" enum:"CallAnalyticsJobStatus"`
 }
@@ -8680,7 +9329,7 @@ type ListLanguageModelsInput struct {
 
 	// The maximum number of custom language models to return in each page of results.
 	// If there are fewer results than the value that you specify, only the actual
-	// results are returned. If you don't specify a value, a default of 5 is used.
+	// results are returned. If you do not specify a value, a default of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// Returns only the custom language models that contain the specified string.
@@ -8695,8 +9344,8 @@ type ListLanguageModelsInput struct {
 	NextToken *string `type:"string"`
 
 	// Returns only custom language models with the specified status. Language models
-	// are ordered by creation date, with the newest model first. If you don't include
-	// StatusEquals, all custom language models are returned.
+	// are ordered by creation date, with the newest model first. If you do not
+	// include StatusEquals, all custom language models are returned.
 	StatusEquals *string `type:"string" enum:"ModelStatus"`
 }
 
@@ -8803,6 +9452,143 @@ func (s *ListLanguageModelsOutput) SetNextToken(v string) *ListLanguageModelsOut
 	return s
 }
 
+type ListMedicalScribeJobsInput struct {
+	_ struct{} `type:"structure"`
+
+	// Returns only the Medical Scribe jobs that contain the specified string. The
+	// search is not case sensitive.
+	JobNameContains *string `min:"1" type:"string"`
+
+	// The maximum number of Medical Scribe jobs to return in each page of results.
+	// If there are fewer results than the value that you specify, only the actual
+	// results are returned. If you do not specify a value, a default of 5 is used.
+	MaxResults *int64 `min:"1" type:"integer"`
+
+	// If your ListMedicalScribeJobs request returns more results than can be displayed,
+	// NextToken is displayed in the response with an associated string. To get
+	// the next page of results, copy this string and repeat your request, including
+	// NextToken with the value of the copied string. Repeat as needed to view all
+	// your results.
+	NextToken *string `type:"string"`
+
+	// Returns only Medical Scribe jobs with the specified status. Jobs are ordered
+	// by creation date, with the newest job first. If you do not include Status,
+	// all Medical Scribe jobs are returned.
+	Status *string `type:"string" enum:"MedicalScribeJobStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMedicalScribeJobsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMedicalScribeJobsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListMedicalScribeJobsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListMedicalScribeJobsInput"}
+	if s.JobNameContains != nil && len(*s.JobNameContains) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("JobNameContains", 1))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetJobNameContains sets the JobNameContains field's value.
+func (s *ListMedicalScribeJobsInput) SetJobNameContains(v string) *ListMedicalScribeJobsInput {
+	s.JobNameContains = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListMedicalScribeJobsInput) SetMaxResults(v int64) *ListMedicalScribeJobsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListMedicalScribeJobsInput) SetNextToken(v string) *ListMedicalScribeJobsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ListMedicalScribeJobsInput) SetStatus(v string) *ListMedicalScribeJobsInput {
+	s.Status = &v
+	return s
+}
+
+type ListMedicalScribeJobsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Provides a summary of information about each result.
+	MedicalScribeJobSummaries []*MedicalScribeJobSummary `type:"list"`
+
+	// If NextToken is present in your response, it indicates that not all results
+	// are displayed. To view the next set of results, copy the string associated
+	// with the NextToken parameter in your results output, then run your request
+	// again including NextToken with the value of the copied string. Repeat as
+	// needed to view all your results.
+	NextToken *string `type:"string"`
+
+	// Lists all Medical Scribe jobs that have the status specified in your request.
+	// Jobs are ordered by creation date, with the newest job first.
+	Status *string `type:"string" enum:"MedicalScribeJobStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMedicalScribeJobsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMedicalScribeJobsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMedicalScribeJobSummaries sets the MedicalScribeJobSummaries field's value.
+func (s *ListMedicalScribeJobsOutput) SetMedicalScribeJobSummaries(v []*MedicalScribeJobSummary) *ListMedicalScribeJobsOutput {
+	s.MedicalScribeJobSummaries = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListMedicalScribeJobsOutput) SetNextToken(v string) *ListMedicalScribeJobsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ListMedicalScribeJobsOutput) SetStatus(v string) *ListMedicalScribeJobsOutput {
+	s.Status = &v
+	return s
+}
+
 type ListMedicalTranscriptionJobsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -8812,7 +9598,7 @@ type ListMedicalTranscriptionJobsInput struct {
 
 	// The maximum number of medical transcription jobs to return in each page of
 	// results. If there are fewer results than the value that you specify, only
-	// the actual results are returned. If you don't specify a value, a default
+	// the actual results are returned. If you do not specify a value, a default
 	// of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
@@ -8824,7 +9610,7 @@ type ListMedicalTranscriptionJobsInput struct {
 	NextToken *string `type:"string"`
 
 	// Returns only medical transcription jobs with the specified status. Jobs are
-	// ordered by creation date, with the newest job first. If you don't include
+	// ordered by creation date, with the newest job first. If you do not include
 	// Status, all medical transcription jobs are returned.
 	Status *string `type:"string" enum:"TranscriptionJobStatus"`
 }
@@ -8946,7 +9732,7 @@ type ListMedicalVocabulariesInput struct {
 
 	// The maximum number of custom medical vocabularies to return in each page
 	// of results. If there are fewer results than the value that you specify, only
-	// the actual results are returned. If you don't specify a value, a default
+	// the actual results are returned. If you do not specify a value, a default
 	// of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
@@ -8963,7 +9749,7 @@ type ListMedicalVocabulariesInput struct {
 
 	// Returns only custom medical vocabularies with the specified state. Custom
 	// vocabularies are ordered by creation date, with the newest vocabulary first.
-	// If you don't include StateEquals, all custom medical vocabularies are returned.
+	// If you do not include StateEquals, all custom medical vocabularies are returned.
 	StateEquals *string `type:"string" enum:"VocabularyState"`
 }
 
@@ -9186,7 +9972,7 @@ type ListTranscriptionJobsInput struct {
 
 	// The maximum number of transcription jobs to return in each page of results.
 	// If there are fewer results than the value that you specify, only the actual
-	// results are returned. If you don't specify a value, a default of 5 is used.
+	// results are returned. If you do not specify a value, a default of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// If your ListTranscriptionJobs request returns more results than can be displayed,
@@ -9197,7 +9983,7 @@ type ListTranscriptionJobsInput struct {
 	NextToken *string `type:"string"`
 
 	// Returns only transcription jobs with the specified status. Jobs are ordered
-	// by creation date, with the newest job first. If you don't include Status,
+	// by creation date, with the newest job first. If you do not include Status,
 	// all transcription jobs are returned.
 	Status *string `type:"string" enum:"TranscriptionJobStatus"`
 }
@@ -9319,7 +10105,7 @@ type ListVocabulariesInput struct {
 
 	// The maximum number of custom vocabularies to return in each page of results.
 	// If there are fewer results than the value that you specify, only the actual
-	// results are returned. If you don't specify a value, a default of 5 is used.
+	// results are returned. If you do not specify a value, a default of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// Returns only the custom vocabularies that contain the specified string. The
@@ -9334,7 +10120,7 @@ type ListVocabulariesInput struct {
 	NextToken *string `type:"string"`
 
 	// Returns only custom vocabularies with the specified state. Vocabularies are
-	// ordered by creation date, with the newest vocabulary first. If you don't
+	// ordered by creation date, with the newest vocabulary first. If you do not
 	// include StateEquals, all custom medical vocabularies are returned.
 	StateEquals *string `type:"string" enum:"VocabularyState"`
 }
@@ -9457,7 +10243,7 @@ type ListVocabularyFiltersInput struct {
 
 	// The maximum number of custom vocabulary filters to return in each page of
 	// results. If there are fewer results than the value that you specify, only
-	// the actual results are returned. If you don't specify a value, a default
+	// the actual results are returned. If you do not specify a value, a default
 	// of 5 is used.
 	MaxResults *int64 `min:"1" type:"integer"`
 
@@ -9573,8 +10359,8 @@ func (s *ListVocabularyFiltersOutput) SetVocabularyFilters(v []*VocabularyFilter
 // Describes the Amazon S3 location of the media file you want to use in your
 // request.
 //
-// For information on supported media formats, refer to the MediaFormat (https://docs.aws.amazon.com/APIReference/API_StartTranscriptionJob.html#transcribe-StartTranscriptionJob-request-MediaFormat)
-// parameter or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
+// For information on supported media formats, refer to the MediaFormat parameter
+// or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
 // section in the Amazon S3 Developer Guide.
 type Media struct {
 	_ struct{} `type:"structure"`
@@ -9652,6 +10438,549 @@ func (s *Media) SetRedactedMediaFileUri(v string) *Media {
 	return s
 }
 
+// Indicates which speaker is on which channel. The options are CLINICIAN and
+// PATIENT
+type MedicalScribeChannelDefinition struct {
+	_ struct{} `type:"structure"`
+
+	// Specify the audio channel you want to define.
+	//
+	// ChannelId is a required field
+	ChannelId *int64 `type:"integer" required:"true"`
+
+	// Specify the participant that you want to flag. The options are CLINICIAN
+	// and PATIENT
+	//
+	// ParticipantRole is a required field
+	ParticipantRole *string `type:"string" required:"true" enum:"MedicalScribeParticipantRole"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeChannelDefinition) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeChannelDefinition) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MedicalScribeChannelDefinition) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MedicalScribeChannelDefinition"}
+	if s.ChannelId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ChannelId"))
+	}
+	if s.ParticipantRole == nil {
+		invalidParams.Add(request.NewErrParamRequired("ParticipantRole"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetChannelId sets the ChannelId field's value.
+func (s *MedicalScribeChannelDefinition) SetChannelId(v int64) *MedicalScribeChannelDefinition {
+	s.ChannelId = &v
+	return s
+}
+
+// SetParticipantRole sets the ParticipantRole field's value.
+func (s *MedicalScribeChannelDefinition) SetParticipantRole(v string) *MedicalScribeChannelDefinition {
+	s.ParticipantRole = &v
+	return s
+}
+
+// Provides detailed information about a Medical Scribe job.
+//
+// To view the status of the specified Medical Scribe job, check the MedicalScribeJobStatus
+// field. If the status is COMPLETED, the job is finished and you can find the
+// results at the locations specified in MedicalScribeOutput. If the status
+// is FAILED, FailureReason provides details on why your Medical Scribe job
+// failed.
+type MedicalScribeJob struct {
+	_ struct{} `type:"structure"`
+
+	// Makes it possible to specify which speaker is on which channel. For example,
+	// if the clinician is the first participant to speak, you would set ChannelId
+	// of the first ChannelDefinition in the list to 0 (to indicate the first channel)
+	// and ParticipantRole to CLINICIAN (to indicate that it's the clinician speaking).
+	// Then you would set the ChannelId of the second ChannelDefinition in the list
+	// to 1 (to indicate the second channel) and ParticipantRole to PATIENT (to
+	// indicate that it's the patient speaking).
+	ChannelDefinitions []*MedicalScribeChannelDefinition `min:"2" type:"list"`
+
+	// The date and time the specified Medical Scribe job finished processing.
+	//
+	// Timestamps are in the format YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC. For example,
+	// 2022-05-04T12:32:58.761000-07:00 represents a Medical Scribe job that finished
+	// processing at 12:32 PM UTC-7 on May 4, 2022.
+	CompletionTime *time.Time `type:"timestamp"`
+
+	// The date and time the specified Medical Scribe job request was made.
+	//
+	// Timestamps are in the format YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC. For example,
+	// 2022-05-04T12:32:58.761000-07:00 represents a Medical Scribe job that started
+	// processing at 12:32 PM UTC-7 on May 4, 2022.
+	CreationTime *time.Time `type:"timestamp"`
+
+	// The Amazon Resource Name (ARN) of an IAM role that has permissions to access
+	// the Amazon S3 bucket that contains your input files, write to the output
+	// bucket, and use your KMS key if supplied. If the role that you specify doesn’t
+	// have the appropriate permissions your request fails.
+	//
+	// IAM role ARNs have the format arn:partition:iam::account:role/role-name-with-path.
+	// For example: arn:aws:iam::111122223333:role/Admin.
+	//
+	// For more information, see IAM ARNs (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns).
+	DataAccessRoleArn *string `min:"20" type:"string"`
+
+	// If MedicalScribeJobStatus is FAILED, FailureReason contains information about
+	// why the transcription job failed. See also: Common Errors (https://docs.aws.amazon.com/transcribe/latest/APIReference/CommonErrors.html).
+	FailureReason *string `type:"string"`
+
+	// The language code used to create your Medical Scribe job. US English (en-US)
+	// is the only supported language for Medical Scribe jobs.
+	LanguageCode *string `type:"string" enum:"MedicalScribeLanguageCode"`
+
+	// Describes the Amazon S3 location of the media file you want to use in your
+	// request.
+	//
+	// For information on supported media formats, refer to the MediaFormat parameter
+	// or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
+	// section in the Amazon S3 Developer Guide.
+	Media *Media `type:"structure"`
+
+	// The name of the Medical Scribe job. Job names are case sensitive and must
+	// be unique within an Amazon Web Services account.
+	MedicalScribeJobName *string `min:"1" type:"string"`
+
+	// Provides the status of the specified Medical Scribe job.
+	//
+	// If the status is COMPLETED, the job is finished and you can find the results
+	// at the location specified in MedicalScribeOutput If the status is FAILED,
+	// FailureReason provides details on why your Medical Scribe job failed.
+	MedicalScribeJobStatus *string `type:"string" enum:"MedicalScribeJobStatus"`
+
+	// The location of the output of your Medical Scribe job. ClinicalDocumentUri
+	// holds the Amazon S3 URI for the Clinical Document and TranscriptFileUri holds
+	// the Amazon S3 URI for the Transcript.
+	MedicalScribeOutput *MedicalScribeOutput_ `type:"structure"`
+
+	// Makes it possible to control how your Medical Scribe job is processed using
+	// a MedicalScribeSettings object. Specify ChannelIdentification if ChannelDefinitions
+	// are set. Enabled ShowSpeakerLabels if ChannelIdentification and ChannelDefinitions
+	// are not set. One and only one of ChannelIdentification and ShowSpeakerLabels
+	// must be set. If ShowSpeakerLabels is set, MaxSpeakerLabels must also be set.
+	// Use Settings to specify a vocabulary or vocabulary filter or both using VocabularyName,
+	// VocabularyFilterName. VocabularyFilterMethod must be specified if VocabularyFilterName
+	// is set.
+	Settings *MedicalScribeSettings `type:"structure"`
+
+	// The date and time your Medical Scribe job began processing.
+	//
+	// Timestamps are in the format YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC. For example,
+	// 2022-05-04T12:32:58.789000-07:00 represents a Medical Scribe job that started
+	// processing at 12:32 PM UTC-7 on May 4, 2022.
+	StartTime *time.Time `type:"timestamp"`
+
+	// Adds one or more custom tags, each in the form of a key:value pair, to the
+	// Medica Scribe job.
+	//
+	// To learn more about using tags with Amazon Transcribe, refer to Tagging resources
+	// (https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html).
+	Tags []*Tag `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeJob) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeJob) GoString() string {
+	return s.String()
+}
+
+// SetChannelDefinitions sets the ChannelDefinitions field's value.
+func (s *MedicalScribeJob) SetChannelDefinitions(v []*MedicalScribeChannelDefinition) *MedicalScribeJob {
+	s.ChannelDefinitions = v
+	return s
+}
+
+// SetCompletionTime sets the CompletionTime field's value.
+func (s *MedicalScribeJob) SetCompletionTime(v time.Time) *MedicalScribeJob {
+	s.CompletionTime = &v
+	return s
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *MedicalScribeJob) SetCreationTime(v time.Time) *MedicalScribeJob {
+	s.CreationTime = &v
+	return s
+}
+
+// SetDataAccessRoleArn sets the DataAccessRoleArn field's value.
+func (s *MedicalScribeJob) SetDataAccessRoleArn(v string) *MedicalScribeJob {
+	s.DataAccessRoleArn = &v
+	return s
+}
+
+// SetFailureReason sets the FailureReason field's value.
+func (s *MedicalScribeJob) SetFailureReason(v string) *MedicalScribeJob {
+	s.FailureReason = &v
+	return s
+}
+
+// SetLanguageCode sets the LanguageCode field's value.
+func (s *MedicalScribeJob) SetLanguageCode(v string) *MedicalScribeJob {
+	s.LanguageCode = &v
+	return s
+}
+
+// SetMedia sets the Media field's value.
+func (s *MedicalScribeJob) SetMedia(v *Media) *MedicalScribeJob {
+	s.Media = v
+	return s
+}
+
+// SetMedicalScribeJobName sets the MedicalScribeJobName field's value.
+func (s *MedicalScribeJob) SetMedicalScribeJobName(v string) *MedicalScribeJob {
+	s.MedicalScribeJobName = &v
+	return s
+}
+
+// SetMedicalScribeJobStatus sets the MedicalScribeJobStatus field's value.
+func (s *MedicalScribeJob) SetMedicalScribeJobStatus(v string) *MedicalScribeJob {
+	s.MedicalScribeJobStatus = &v
+	return s
+}
+
+// SetMedicalScribeOutput sets the MedicalScribeOutput field's value.
+func (s *MedicalScribeJob) SetMedicalScribeOutput(v *MedicalScribeOutput_) *MedicalScribeJob {
+	s.MedicalScribeOutput = v
+	return s
+}
+
+// SetSettings sets the Settings field's value.
+func (s *MedicalScribeJob) SetSettings(v *MedicalScribeSettings) *MedicalScribeJob {
+	s.Settings = v
+	return s
+}
+
+// SetStartTime sets the StartTime field's value.
+func (s *MedicalScribeJob) SetStartTime(v time.Time) *MedicalScribeJob {
+	s.StartTime = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *MedicalScribeJob) SetTags(v []*Tag) *MedicalScribeJob {
+	s.Tags = v
+	return s
+}
+
+// Provides detailed information about a specific Medical Scribe job.
+type MedicalScribeJobSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The date and time the specified Medical Scribe job finished processing.
+	//
+	// Timestamps are in the format YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC. For example,
+	// 2022-05-04T12:32:58.761000-07:00 represents a Medical Scribe job that finished
+	// processing at 12:32 PM UTC-7 on May 4, 2022.
+	CompletionTime *time.Time `type:"timestamp"`
+
+	// The date and time the specified Medical Scribe job request was made.
+	//
+	// Timestamps are in the format YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC. For example,
+	// 2022-05-04T12:32:58.761000-07:00 represents a Medical Scribe job that started
+	// processing at 12:32 PM UTC-7 on May 4, 2022.
+	CreationTime *time.Time `type:"timestamp"`
+
+	// If MedicalScribeJobStatus is FAILED, FailureReason contains information about
+	// why the transcription job failed. See also: Common Errors (https://docs.aws.amazon.com/transcribe/latest/APIReference/CommonErrors.html).
+	FailureReason *string `type:"string"`
+
+	// The language code used to create your Medical Scribe job. US English (en-US)
+	// is the only supported language for Medical Scribe jobs.
+	LanguageCode *string `type:"string" enum:"MedicalScribeLanguageCode"`
+
+	// The name of the Medical Scribe job. Job names are case sensitive and must
+	// be unique within an Amazon Web Services account.
+	MedicalScribeJobName *string `min:"1" type:"string"`
+
+	// Provides the status of the specified Medical Scribe job.
+	//
+	// If the status is COMPLETED, the job is finished and you can find the results
+	// at the location specified in MedicalScribeOutput If the status is FAILED,
+	// FailureReason provides details on why your Medical Scribe job failed.
+	MedicalScribeJobStatus *string `type:"string" enum:"MedicalScribeJobStatus"`
+
+	// The date and time your Medical Scribe job began processing.
+	//
+	// Timestamps are in the format YYYY-MM-DD'T'HH:MM:SS.SSSSSS-UTC. For example,
+	// 2022-05-04T12:32:58.789000-07:00 represents a Medical Scribe job that started
+	// processing at 12:32 PM UTC-7 on May 4, 2022.
+	StartTime *time.Time `type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeJobSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeJobSummary) GoString() string {
+	return s.String()
+}
+
+// SetCompletionTime sets the CompletionTime field's value.
+func (s *MedicalScribeJobSummary) SetCompletionTime(v time.Time) *MedicalScribeJobSummary {
+	s.CompletionTime = &v
+	return s
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *MedicalScribeJobSummary) SetCreationTime(v time.Time) *MedicalScribeJobSummary {
+	s.CreationTime = &v
+	return s
+}
+
+// SetFailureReason sets the FailureReason field's value.
+func (s *MedicalScribeJobSummary) SetFailureReason(v string) *MedicalScribeJobSummary {
+	s.FailureReason = &v
+	return s
+}
+
+// SetLanguageCode sets the LanguageCode field's value.
+func (s *MedicalScribeJobSummary) SetLanguageCode(v string) *MedicalScribeJobSummary {
+	s.LanguageCode = &v
+	return s
+}
+
+// SetMedicalScribeJobName sets the MedicalScribeJobName field's value.
+func (s *MedicalScribeJobSummary) SetMedicalScribeJobName(v string) *MedicalScribeJobSummary {
+	s.MedicalScribeJobName = &v
+	return s
+}
+
+// SetMedicalScribeJobStatus sets the MedicalScribeJobStatus field's value.
+func (s *MedicalScribeJobSummary) SetMedicalScribeJobStatus(v string) *MedicalScribeJobSummary {
+	s.MedicalScribeJobStatus = &v
+	return s
+}
+
+// SetStartTime sets the StartTime field's value.
+func (s *MedicalScribeJobSummary) SetStartTime(v time.Time) *MedicalScribeJobSummary {
+	s.StartTime = &v
+	return s
+}
+
+// The location of the output of your Medical Scribe job. ClinicalDocumentUri
+// holds the Amazon S3 URI for the Clinical Document and TranscriptFileUri holds
+// the Amazon S3 URI for the Transcript.
+type MedicalScribeOutput_ struct {
+	_ struct{} `type:"structure"`
+
+	// Holds the Amazon S3 URI for the Clinical Document.
+	//
+	// ClinicalDocumentUri is a required field
+	ClinicalDocumentUri *string `min:"1" type:"string" required:"true"`
+
+	// Holds the Amazon S3 URI for the Transcript.
+	//
+	// TranscriptFileUri is a required field
+	TranscriptFileUri *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeOutput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeOutput_) GoString() string {
+	return s.String()
+}
+
+// SetClinicalDocumentUri sets the ClinicalDocumentUri field's value.
+func (s *MedicalScribeOutput_) SetClinicalDocumentUri(v string) *MedicalScribeOutput_ {
+	s.ClinicalDocumentUri = &v
+	return s
+}
+
+// SetTranscriptFileUri sets the TranscriptFileUri field's value.
+func (s *MedicalScribeOutput_) SetTranscriptFileUri(v string) *MedicalScribeOutput_ {
+	s.TranscriptFileUri = &v
+	return s
+}
+
+// Makes it possible to control how your Medical Scribe job is processed using
+// a MedicalScribeSettings object. Specify ChannelIdentification if ChannelDefinitions
+// are set. Enabled ShowSpeakerLabels if ChannelIdentification and ChannelDefinitions
+// are not set. One and only one of ChannelIdentification and ShowSpeakerLabels
+// must be set. If ShowSpeakerLabels is set, MaxSpeakerLabels must also be set.
+// Use Settings to specify a vocabulary or vocabulary filter or both using VocabularyName,
+// VocabularyFilterName. VocabularyFilterMethod must be specified if VocabularyFilterName
+// is set.
+type MedicalScribeSettings struct {
+	_ struct{} `type:"structure"`
+
+	// Enables channel identification in multi-channel audio.
+	//
+	// Channel identification transcribes the audio on each channel independently,
+	// then appends the output for each channel into one transcript.
+	//
+	// For more information, see Transcribing multi-channel audio (https://docs.aws.amazon.com/transcribe/latest/dg/channel-id.html).
+	ChannelIdentification *bool `type:"boolean"`
+
+	// Specify the maximum number of speakers you want to partition in your media.
+	//
+	// Note that if your media contains more speakers than the specified number,
+	// multiple speakers are treated as a single speaker.
+	//
+	// If you specify the MaxSpeakerLabels field, you must set the ShowSpeakerLabels
+	// field to true.
+	MaxSpeakerLabels *int64 `min:"2" type:"integer"`
+
+	// Enables speaker partitioning (diarization) in your Medical Scribe output.
+	// Speaker partitioning labels the speech from individual speakers in your media
+	// file.
+	//
+	// If you enable ShowSpeakerLabels in your request, you must also include MaxSpeakerLabels.
+	//
+	// For more information, see Partitioning speakers (diarization) (https://docs.aws.amazon.com/transcribe/latest/dg/diarization.html).
+	ShowSpeakerLabels *bool `type:"boolean"`
+
+	// Specify how you want your custom vocabulary filter applied to your transcript.
+	//
+	// To replace words with ***, choose mask.
+	//
+	// To delete words, choose remove.
+	//
+	// To flag words without changing them, choose tag.
+	VocabularyFilterMethod *string `type:"string" enum:"VocabularyFilterMethod"`
+
+	// The name of the custom vocabulary filter you want to include in your Medical
+	// Scribe request. Custom vocabulary filter names are case sensitive.
+	//
+	// Note that if you include VocabularyFilterName in your request, you must also
+	// include VocabularyFilterMethod.
+	VocabularyFilterName *string `min:"1" type:"string"`
+
+	// The name of the custom vocabulary you want to include in your Medical Scribe
+	// request. Custom vocabulary names are case sensitive.
+	VocabularyName *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MedicalScribeSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MedicalScribeSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MedicalScribeSettings"}
+	if s.MaxSpeakerLabels != nil && *s.MaxSpeakerLabels < 2 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxSpeakerLabels", 2))
+	}
+	if s.VocabularyFilterName != nil && len(*s.VocabularyFilterName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VocabularyFilterName", 1))
+	}
+	if s.VocabularyName != nil && len(*s.VocabularyName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VocabularyName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetChannelIdentification sets the ChannelIdentification field's value.
+func (s *MedicalScribeSettings) SetChannelIdentification(v bool) *MedicalScribeSettings {
+	s.ChannelIdentification = &v
+	return s
+}
+
+// SetMaxSpeakerLabels sets the MaxSpeakerLabels field's value.
+func (s *MedicalScribeSettings) SetMaxSpeakerLabels(v int64) *MedicalScribeSettings {
+	s.MaxSpeakerLabels = &v
+	return s
+}
+
+// SetShowSpeakerLabels sets the ShowSpeakerLabels field's value.
+func (s *MedicalScribeSettings) SetShowSpeakerLabels(v bool) *MedicalScribeSettings {
+	s.ShowSpeakerLabels = &v
+	return s
+}
+
+// SetVocabularyFilterMethod sets the VocabularyFilterMethod field's value.
+func (s *MedicalScribeSettings) SetVocabularyFilterMethod(v string) *MedicalScribeSettings {
+	s.VocabularyFilterMethod = &v
+	return s
+}
+
+// SetVocabularyFilterName sets the VocabularyFilterName field's value.
+func (s *MedicalScribeSettings) SetVocabularyFilterName(v string) *MedicalScribeSettings {
+	s.VocabularyFilterName = &v
+	return s
+}
+
+// SetVocabularyName sets the VocabularyName field's value.
+func (s *MedicalScribeSettings) SetVocabularyName(v string) *MedicalScribeSettings {
+	s.VocabularyName = &v
+	return s
+}
+
 // Provides you with the Amazon S3 URI you can use to access your transcript.
 type MedicalTranscript struct {
 	_ struct{} `type:"structure"`
@@ -9722,7 +11051,8 @@ type MedicalTranscriptionJob struct {
 	// The FailureReason field contains one of the following values:
 	//
 	//    * Unsupported media format. The media format specified in MediaFormat
-	//    isn't valid. Refer to MediaFormat for a list of supported formats.
+	//    isn't valid. Refer to refer to the MediaFormat parameter for a list of
+	//    supported formats.
 	//
 	//    * The media format provided does not match the detected media format.
 	//    The media format specified in MediaFormat doesn't match the format of
@@ -9739,11 +11069,11 @@ type MedicalTranscriptionJob struct {
 	//
 	//    * Invalid file size: file size too large. The size of your media file
 	//    is larger than what Amazon Transcribe can process. For more information,
-	//    refer to Guidelines and quotas (https://docs.aws.amazon.com/transcribe/latest/dg/limits-guidelines.html#limits).
+	//    refer to Service quotas (https://docs.aws.amazon.com/general/latest/gr/transcribe.html#limits-amazon-transcribe).
 	//
 	//    * Invalid number of channels: number of channels too large. Your audio
 	//    contains more channels than Amazon Transcribe is able to process. For
-	//    more information, refer to Guidelines and quotas (https://docs.aws.amazon.com/transcribe/latest/dg/limits-guidelines.html#limits).
+	//    more information, refer to Service quotas (https://docs.aws.amazon.com/general/latest/gr/transcribe.html#limits-amazon-transcribe).
 	FailureReason *string `type:"string"`
 
 	// The language code used to create your medical transcription job. US English
@@ -9753,8 +11083,8 @@ type MedicalTranscriptionJob struct {
 	// Describes the Amazon S3 location of the media file you want to use in your
 	// request.
 	//
-	// For information on supported media formats, refer to the MediaFormat (https://docs.aws.amazon.com/APIReference/API_StartTranscriptionJob.html#transcribe-StartTranscriptionJob-request-MediaFormat)
-	// parameter or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
+	// For information on supported media formats, refer to the MediaFormat parameter
+	// or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
 	// section in the Amazon S3 Developer Guide.
 	Media *Media `type:"structure"`
 
@@ -10085,9 +11415,6 @@ type MedicalTranscriptionSetting struct {
 	// your audio is transcribed in a continuous manner and your transcript does
 	// not separate the speech by channel.
 	//
-	// You can't include both ShowSpeakerLabels and ChannelIdentification in the
-	// same request. Including both parameters returns a BadRequestException.
-	//
 	// For more information, see Transcribing multi-channel audio (https://docs.aws.amazon.com/transcribe/latest/dg/channel-id.html).
 	ChannelIdentification *bool `type:"boolean"`
 
@@ -10129,9 +11456,6 @@ type MedicalTranscriptionSetting struct {
 	//
 	// If you enable ShowSpeakerLabels in your request, you must also include MaxSpeakerLabels.
 	//
-	// You can't include ShowSpeakerLabels and ChannelIdentification in the same
-	// request. Including both parameters returns a BadRequestException.
-	//
 	// For more information, see Partitioning speakers (diarization) (https://docs.aws.amazon.com/transcribe/latest/dg/diarization.html).
 	ShowSpeakerLabels *bool `type:"boolean"`
 
@@ -10139,7 +11463,7 @@ type MedicalTranscriptionSetting struct {
 	// transcription job. Custom vocabulary names are case sensitive.
 	//
 	// The language of the specified custom vocabulary must match the language code
-	// that you specify in your transcription request. If the languages don't match,
+	// that you specify in your transcription request. If the languages do not match,
 	// the custom vocabulary isn't applied. There are no errors or warnings associated
 	// with a language mismatch. US English (en-US) is the only valid language for
 	// Amazon Transcribe Medical.
@@ -10232,9 +11556,9 @@ type ModelSettings struct {
 	// transcription job. Note that custom language model names are case sensitive.
 	//
 	// The language of the specified custom language model must match the language
-	// code that you specify in your transcription request. If the languages don't
-	// match, the custom language model isn't applied. There are no errors or warnings
-	// associated with a language mismatch.
+	// code that you specify in your transcription request. If the languages do
+	// not match, the custom language model isn't applied. There are no errors or
+	// warnings associated with a language mismatch.
 	LanguageModelName *string `min:"1" type:"string"`
 }
 
@@ -10707,9 +12031,6 @@ type Settings struct {
 	// Channel identification transcribes the audio on each channel independently,
 	// then appends the output for each channel into one transcript.
 	//
-	// You can't include both ShowSpeakerLabels and ChannelIdentification in the
-	// same request. Including both parameters returns a BadRequestException.
-	//
 	// For more information, see Transcribing multi-channel audio (https://docs.aws.amazon.com/transcribe/latest/dg/channel-id.html).
 	ChannelIdentification *bool `type:"boolean"`
 
@@ -10754,9 +12075,6 @@ type Settings struct {
 	// file.
 	//
 	// If you enable ShowSpeakerLabels in your request, you must also include MaxSpeakerLabels.
-	//
-	// You can't include both ShowSpeakerLabels and ChannelIdentification in the
-	// same request. Including both parameters returns a BadRequestException.
 	//
 	// For more information, see Partitioning speakers (diarization) (https://docs.aws.amazon.com/transcribe/latest/dg/diarization.html).
 	ShowSpeakerLabels *bool `type:"boolean"`
@@ -10928,7 +12246,7 @@ type StartCallAnalyticsJobInput struct {
 	//
 	// Use the ARN for the KMS key alias. For example, arn:aws:kms:region:account-ID:alias/ExampleAlias.
 	//
-	// If you don't specify an encryption key, your output is encrypted with the
+	// If you do not specify an encryption key, your output is encrypted with the
 	// default Amazon S3 key (SSE-S3).
 	//
 	// If you specify a KMS key to encrypt your output, you must also specify an
@@ -10952,10 +12270,10 @@ type StartCallAnalyticsJobInput struct {
 	// job using the CallAnalyticsJobName parameter.
 	//
 	// You can specify a KMS key to encrypt your output using the OutputEncryptionKMSKeyId
-	// parameter. If you don't specify a KMS key, Amazon Transcribe uses the default
+	// parameter. If you do not specify a KMS key, Amazon Transcribe uses the default
 	// Amazon S3 key for server-side encryption.
 	//
-	// If you don't specify OutputLocation, your transcript is placed in a service-managed
+	// If you do not specify OutputLocation, your transcript is placed in a service-managed
 	// Amazon S3 bucket and you are provided with a URI to access your transcript.
 	OutputLocation *string `min:"1" type:"string"`
 
@@ -11098,6 +12416,292 @@ func (s *StartCallAnalyticsJobOutput) SetCallAnalyticsJob(v *CallAnalyticsJob) *
 	return s
 }
 
+type StartMedicalScribeJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// Makes it possible to specify which speaker is on which channel. For example,
+	// if the clinician is the first participant to speak, you would set ChannelId
+	// of the first ChannelDefinition in the list to 0 (to indicate the first channel)
+	// and ParticipantRole to CLINICIAN (to indicate that it's the clinician speaking).
+	// Then you would set the ChannelId of the second ChannelDefinition in the list
+	// to 1 (to indicate the second channel) and ParticipantRole to PATIENT (to
+	// indicate that it's the patient speaking).
+	ChannelDefinitions []*MedicalScribeChannelDefinition `min:"2" type:"list"`
+
+	// The Amazon Resource Name (ARN) of an IAM role that has permissions to access
+	// the Amazon S3 bucket that contains your input files, write to the output
+	// bucket, and use your KMS key if supplied. If the role that you specify doesn’t
+	// have the appropriate permissions your request fails.
+	//
+	// IAM role ARNs have the format arn:partition:iam::account:role/role-name-with-path.
+	// For example: arn:aws:iam::111122223333:role/Admin.
+	//
+	// For more information, see IAM ARNs (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html#identifiers-arns).
+	//
+	// DataAccessRoleArn is a required field
+	DataAccessRoleArn *string `min:"20" type:"string" required:"true"`
+
+	// A map of plain text, non-secret key:value pairs, known as encryption context
+	// pairs, that provide an added layer of security for your data. For more information,
+	// see KMS encryption context (https://docs.aws.amazon.com/transcribe/latest/dg/key-management.html#kms-context)
+	// and Asymmetric keys in KMS (https://docs.aws.amazon.com/transcribe/latest/dg/symmetric-asymmetric.html).
+	KMSEncryptionContext map[string]*string `min:"1" type:"map"`
+
+	// Describes the Amazon S3 location of the media file you want to use in your
+	// request.
+	//
+	// For information on supported media formats, refer to the MediaFormat parameter
+	// or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
+	// section in the Amazon S3 Developer Guide.
+	//
+	// Media is a required field
+	Media *Media `type:"structure" required:"true"`
+
+	// A unique name, chosen by you, for your Medical Scribe job.
+	//
+	// This name is case sensitive, cannot contain spaces, and must be unique within
+	// an Amazon Web Services account. If you try to create a new job with the same
+	// name as an existing job, you get a ConflictException error.
+	//
+	// MedicalScribeJobName is a required field
+	MedicalScribeJobName *string `min:"1" type:"string" required:"true"`
+
+	// The name of the Amazon S3 bucket where you want your Medical Scribe output
+	// stored. Do not include the S3:// prefix of the specified bucket.
+	//
+	// Note that the role specified in the DataAccessRoleArn request parameter must
+	// have permission to use the specified location. You can change Amazon S3 permissions
+	// using the Amazon Web Services Management Console (https://console.aws.amazon.com/s3).
+	// See also Permissions Required for IAM User Roles (https://docs.aws.amazon.com/transcribe/latest/dg/security_iam_id-based-policy-examples.html#auth-role-iam-user).
+	//
+	// OutputBucketName is a required field
+	OutputBucketName *string `type:"string" required:"true"`
+
+	// The KMS key you want to use to encrypt your Medical Scribe output.
+	//
+	// If using a key located in the current Amazon Web Services account, you can
+	// specify your KMS key in one of four ways:
+	//
+	// Use the KMS key ID itself. For example, 1234abcd-12ab-34cd-56ef-1234567890ab.
+	//
+	// Use an alias for the KMS key ID. For example, alias/ExampleAlias.
+	//
+	// Use the Amazon Resource Name (ARN) for the KMS key ID. For example, arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab.
+	//
+	// Use the ARN for the KMS key alias. For example, arn:aws:kms:region:account-ID:alias/ExampleAlias.
+	//
+	// If using a key located in a different Amazon Web Services account than the
+	// current Amazon Web Services account, you can specify your KMS key in one
+	// of two ways:
+	//
+	// Use the ARN for the KMS key ID. For example, arn:aws:kms:region:account-ID:key/1234abcd-12ab-34cd-56ef-1234567890ab.
+	//
+	// Use the ARN for the KMS key alias. For example, arn:aws:kms:region:account-ID:alias/ExampleAlias.
+	//
+	// If you do not specify an encryption key, your output is encrypted with the
+	// default Amazon S3 key (SSE-S3).
+	//
+	// Note that the role specified in the DataAccessRoleArn request parameter must
+	// have permission to use the specified KMS key.
+	OutputEncryptionKMSKeyId *string `min:"1" type:"string"`
+
+	// Makes it possible to control how your Medical Scribe job is processed using
+	// a MedicalScribeSettings object. Specify ChannelIdentification if ChannelDefinitions
+	// are set. Enabled ShowSpeakerLabels if ChannelIdentification and ChannelDefinitions
+	// are not set. One and only one of ChannelIdentification and ShowSpeakerLabels
+	// must be set. If ShowSpeakerLabels is set, MaxSpeakerLabels must also be set.
+	// Use Settings to specify a vocabulary or vocabulary filter or both using VocabularyName,
+	// VocabularyFilterName. VocabularyFilterMethod must be specified if VocabularyFilterName
+	// is set.
+	//
+	// Settings is a required field
+	Settings *MedicalScribeSettings `type:"structure" required:"true"`
+
+	// Adds one or more custom tags, each in the form of a key:value pair, to the
+	// Medica Scribe job.
+	//
+	// To learn more about using tags with Amazon Transcribe, refer to Tagging resources
+	// (https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html).
+	Tags []*Tag `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMedicalScribeJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMedicalScribeJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartMedicalScribeJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartMedicalScribeJobInput"}
+	if s.ChannelDefinitions != nil && len(s.ChannelDefinitions) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("ChannelDefinitions", 2))
+	}
+	if s.DataAccessRoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataAccessRoleArn"))
+	}
+	if s.DataAccessRoleArn != nil && len(*s.DataAccessRoleArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("DataAccessRoleArn", 20))
+	}
+	if s.KMSEncryptionContext != nil && len(s.KMSEncryptionContext) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("KMSEncryptionContext", 1))
+	}
+	if s.Media == nil {
+		invalidParams.Add(request.NewErrParamRequired("Media"))
+	}
+	if s.MedicalScribeJobName == nil {
+		invalidParams.Add(request.NewErrParamRequired("MedicalScribeJobName"))
+	}
+	if s.MedicalScribeJobName != nil && len(*s.MedicalScribeJobName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MedicalScribeJobName", 1))
+	}
+	if s.OutputBucketName == nil {
+		invalidParams.Add(request.NewErrParamRequired("OutputBucketName"))
+	}
+	if s.OutputEncryptionKMSKeyId != nil && len(*s.OutputEncryptionKMSKeyId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("OutputEncryptionKMSKeyId", 1))
+	}
+	if s.Settings == nil {
+		invalidParams.Add(request.NewErrParamRequired("Settings"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.ChannelDefinitions != nil {
+		for i, v := range s.ChannelDefinitions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ChannelDefinitions", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.Media != nil {
+		if err := s.Media.Validate(); err != nil {
+			invalidParams.AddNested("Media", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Settings != nil {
+		if err := s.Settings.Validate(); err != nil {
+			invalidParams.AddNested("Settings", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetChannelDefinitions sets the ChannelDefinitions field's value.
+func (s *StartMedicalScribeJobInput) SetChannelDefinitions(v []*MedicalScribeChannelDefinition) *StartMedicalScribeJobInput {
+	s.ChannelDefinitions = v
+	return s
+}
+
+// SetDataAccessRoleArn sets the DataAccessRoleArn field's value.
+func (s *StartMedicalScribeJobInput) SetDataAccessRoleArn(v string) *StartMedicalScribeJobInput {
+	s.DataAccessRoleArn = &v
+	return s
+}
+
+// SetKMSEncryptionContext sets the KMSEncryptionContext field's value.
+func (s *StartMedicalScribeJobInput) SetKMSEncryptionContext(v map[string]*string) *StartMedicalScribeJobInput {
+	s.KMSEncryptionContext = v
+	return s
+}
+
+// SetMedia sets the Media field's value.
+func (s *StartMedicalScribeJobInput) SetMedia(v *Media) *StartMedicalScribeJobInput {
+	s.Media = v
+	return s
+}
+
+// SetMedicalScribeJobName sets the MedicalScribeJobName field's value.
+func (s *StartMedicalScribeJobInput) SetMedicalScribeJobName(v string) *StartMedicalScribeJobInput {
+	s.MedicalScribeJobName = &v
+	return s
+}
+
+// SetOutputBucketName sets the OutputBucketName field's value.
+func (s *StartMedicalScribeJobInput) SetOutputBucketName(v string) *StartMedicalScribeJobInput {
+	s.OutputBucketName = &v
+	return s
+}
+
+// SetOutputEncryptionKMSKeyId sets the OutputEncryptionKMSKeyId field's value.
+func (s *StartMedicalScribeJobInput) SetOutputEncryptionKMSKeyId(v string) *StartMedicalScribeJobInput {
+	s.OutputEncryptionKMSKeyId = &v
+	return s
+}
+
+// SetSettings sets the Settings field's value.
+func (s *StartMedicalScribeJobInput) SetSettings(v *MedicalScribeSettings) *StartMedicalScribeJobInput {
+	s.Settings = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *StartMedicalScribeJobInput) SetTags(v []*Tag) *StartMedicalScribeJobInput {
+	s.Tags = v
+	return s
+}
+
+type StartMedicalScribeJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Provides detailed information about the current Medical Scribe job, including
+	// job status and, if applicable, failure reason.
+	MedicalScribeJob *MedicalScribeJob `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMedicalScribeJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartMedicalScribeJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetMedicalScribeJob sets the MedicalScribeJob field's value.
+func (s *StartMedicalScribeJobOutput) SetMedicalScribeJob(v *MedicalScribeJob) *StartMedicalScribeJobOutput {
+	s.MedicalScribeJob = v
+	return s
+}
+
 type StartMedicalTranscriptionJobInput struct {
 	_ struct{} `type:"structure"`
 
@@ -11123,8 +12727,8 @@ type StartMedicalTranscriptionJobInput struct {
 	// Describes the Amazon S3 location of the media file you want to use in your
 	// request.
 	//
-	// For information on supported media formats, refer to the MediaFormat (https://docs.aws.amazon.com/APIReference/API_StartTranscriptionJob.html#transcribe-StartTranscriptionJob-request-MediaFormat)
-	// parameter or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
+	// For information on supported media formats, refer to the MediaFormat parameter
+	// or the Media formats (https://docs.aws.amazon.com/transcribe/latest/dg/how-input.html#how-input-audio)
 	// section in the Amazon S3 Developer Guide.
 	//
 	// Media is a required field
@@ -11135,7 +12739,7 @@ type StartMedicalTranscriptionJobInput struct {
 
 	// The sample rate, in hertz, of the audio track in your input media file.
 	//
-	// If you don't specify the media sample rate, Amazon Transcribe Medical determines
+	// If you do not specify the media sample rate, Amazon Transcribe Medical determines
 	// it for you. If you specify the sample rate, it must match the rate detected
 	// by Amazon Transcribe Medical; if there's a mismatch between the value that
 	// you specify and the value detected, your job fails. Therefore, in most cases,
@@ -11196,7 +12800,7 @@ type StartMedicalTranscriptionJobInput struct {
 	//
 	// Use the ARN for the KMS key alias. For example, arn:aws:kms:region:account-ID:alias/ExampleAlias.
 	//
-	// If you don't specify an encryption key, your output is encrypted with the
+	// If you do not specify an encryption key, your output is encrypted with the
 	// default Amazon S3 key (SSE-S3).
 	//
 	// If you specify a KMS key to encrypt your output, you must also specify an
@@ -11466,7 +13070,9 @@ type StartTranscriptionJobInput struct {
 
 	// Makes it possible to redact or flag specified personally identifiable information
 	// (PII) in your transcript. If you use ContentRedaction, you must also include
-	// the sub-parameters: PiiEntityTypes, RedactionOutput, and RedactionType.
+	// the sub-parameters: RedactionOutput and RedactionType. You can optionally
+	// include PiiEntityTypes to choose which types of PII you want to redact. If
+	// you do not include PiiEntityTypes in your request, all PII is redacted.
 	ContentRedaction *ContentRedaction `type:"structure"`
 
 	// Enables automatic language identification in your transcription job request.
@@ -11593,7 +13199,7 @@ type StartTranscriptionJobInput struct {
 
 	// The sample rate, in hertz, of the audio track in your input media file.
 	//
-	// If you don't specify the media sample rate, Amazon Transcribe determines
+	// If you do not specify the media sample rate, Amazon Transcribe determines
 	// it for you. If you specify the sample rate, it must match the rate detected
 	// by Amazon Transcribe. If there's a mismatch between the value that you specify
 	// and the value detected, your job fails. In most cases, you can omit MediaSampleRateHertz
@@ -11624,7 +13230,7 @@ type StartTranscriptionJobInput struct {
 	// Console (https://console.aws.amazon.com/s3). See also Permissions Required
 	// for IAM User Roles (https://docs.aws.amazon.com/transcribe/latest/dg/security_iam_id-based-policy-examples.html#auth-role-iam-user).
 	//
-	// If you don't specify OutputBucketName, your transcript is placed in a service-managed
+	// If you do not specify OutputBucketName, your transcript is placed in a service-managed
 	// Amazon S3 bucket and you are provided with a URI to access your transcript.
 	OutputBucketName *string `type:"string"`
 
@@ -11649,7 +13255,7 @@ type StartTranscriptionJobInput struct {
 	//
 	// Use the ARN for the KMS key alias. For example, arn:aws:kms:region:account-ID:alias/ExampleAlias.
 	//
-	// If you don't specify an encryption key, your output is encrypted with the
+	// If you do not specify an encryption key, your output is encrypted with the
 	// default Amazon S3 key (SSE-S3).
 	//
 	// If you specify a KMS key to encrypt your output, you must also specify an
@@ -11709,6 +13315,13 @@ type StartTranscriptionJobInput struct {
 	// (https://docs.aws.amazon.com/transcribe/latest/dg/tagging.html).
 	Tags []*Tag `min:"1" type:"list"`
 
+	// Enables toxic speech detection in your transcript. If you include ToxicityDetection
+	// in your request, you must also include ToxicityCategories.
+	//
+	// For information on the types of toxic speech Amazon Transcribe can detect,
+	// see Detecting toxic speech (https://docs.aws.amazon.com/transcribe/latest/dg/toxic-language.html).
+	ToxicityDetection []*ToxicityDetectionSettings `min:"1" type:"list"`
+
 	// A unique name, chosen by you, for your transcription job. The name that you
 	// specify is also used as the default name of your transcription output file.
 	// If you want to specify a different name for your transcription output, use
@@ -11767,6 +13380,9 @@ func (s *StartTranscriptionJobInput) Validate() error {
 	if s.Tags != nil && len(s.Tags) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
 	}
+	if s.ToxicityDetection != nil && len(s.ToxicityDetection) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ToxicityDetection", 1))
+	}
 	if s.TranscriptionJobName == nil {
 		invalidParams.Add(request.NewErrParamRequired("TranscriptionJobName"))
 	}
@@ -11815,6 +13431,16 @@ func (s *StartTranscriptionJobInput) Validate() error {
 			}
 			if err := v.Validate(); err != nil {
 				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.ToxicityDetection != nil {
+		for i, v := range s.ToxicityDetection {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ToxicityDetection", i), err.(request.ErrInvalidParams))
 			}
 		}
 	}
@@ -11930,6 +13556,12 @@ func (s *StartTranscriptionJobInput) SetSubtitles(v *Subtitles) *StartTranscript
 // SetTags sets the Tags field's value.
 func (s *StartTranscriptionJobInput) SetTags(v []*Tag) *StartTranscriptionJobInput {
 	s.Tags = v
+	return s
+}
+
+// SetToxicityDetection sets the ToxicityDetection field's value.
+func (s *StartTranscriptionJobInput) SetToxicityDetection(v []*ToxicityDetectionSettings) *StartTranscriptionJobInput {
+	s.ToxicityDetection = v
 	return s
 }
 
@@ -12089,6 +13721,59 @@ func (s *SubtitlesOutput_) SetOutputStartIndex(v int64) *SubtitlesOutput_ {
 // SetSubtitleFileUris sets the SubtitleFileUris field's value.
 func (s *SubtitlesOutput_) SetSubtitleFileUris(v []*string) *SubtitlesOutput_ {
 	s.SubtitleFileUris = v
+	return s
+}
+
+// Contains GenerateAbstractiveSummary, which is a required parameter if you
+// want to enable Generative call summarization in your Call Analytics request.
+type Summarization struct {
+	_ struct{} `type:"structure"`
+
+	// Enables Generative call summarization in your Call Analytics request
+	//
+	// Generative call summarization provides a summary of the transcript including
+	// important components discussed in the conversation.
+	//
+	// For more information, see Enabling generative call summarization (https://docs.aws.amazon.com/transcribe/latest/dg/tca-enable-summarization.html).
+	//
+	// GenerateAbstractiveSummary is a required field
+	GenerateAbstractiveSummary *bool `type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Summarization) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Summarization) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *Summarization) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "Summarization"}
+	if s.GenerateAbstractiveSummary == nil {
+		invalidParams.Add(request.NewErrParamRequired("GenerateAbstractiveSummary"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetGenerateAbstractiveSummary sets the GenerateAbstractiveSummary field's value.
+func (s *Summarization) SetGenerateAbstractiveSummary(v bool) *Summarization {
+	s.GenerateAbstractiveSummary = &v
 	return s
 }
 
@@ -12274,6 +13959,59 @@ func (s TagResourceOutput) String() string {
 // value will be replaced with "sensitive".
 func (s TagResourceOutput) GoString() string {
 	return s.String()
+}
+
+// Contains ToxicityCategories, which is a required parameter if you want to
+// enable toxicity detection (ToxicityDetection) in your transcription request.
+type ToxicityDetectionSettings struct {
+	_ struct{} `type:"structure"`
+
+	// If you include ToxicityDetection in your transcription request, you must
+	// also include ToxicityCategories. The only accepted value for this parameter
+	// is ALL.
+	//
+	// ToxicityCategories is a required field
+	ToxicityCategories []*string `min:"1" type:"list" required:"true" enum:"ToxicityCategory"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ToxicityDetectionSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ToxicityDetectionSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ToxicityDetectionSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ToxicityDetectionSettings"}
+	if s.ToxicityCategories == nil {
+		invalidParams.Add(request.NewErrParamRequired("ToxicityCategories"))
+	}
+	if s.ToxicityCategories != nil && len(s.ToxicityCategories) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ToxicityCategories", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetToxicityCategories sets the ToxicityCategories field's value.
+func (s *ToxicityDetectionSettings) SetToxicityCategories(v []*string) *ToxicityDetectionSettings {
+	s.ToxicityCategories = v
+	return s
 }
 
 // Provides you with the Amazon S3 URI you can use to access your transcript.
@@ -12504,7 +14242,8 @@ type TranscriptionJob struct {
 	// The FailureReason field contains one of the following values:
 	//
 	//    * Unsupported media format. The media format specified in MediaFormat
-	//    isn't valid. Refer to MediaFormat for a list of supported formats.
+	//    isn't valid. Refer to refer to the MediaFormat parameter for a list of
+	//    supported formats.
 	//
 	//    * The media format provided does not match the detected media format.
 	//    The media format specified in MediaFormat doesn't match the format of
@@ -12521,11 +14260,11 @@ type TranscriptionJob struct {
 	//
 	//    * Invalid file size: file size too large. The size of your media file
 	//    is larger than what Amazon Transcribe can process. For more information,
-	//    refer to Guidelines and quotas (https://docs.aws.amazon.com/transcribe/latest/dg/limits-guidelines.html#limits).
+	//    refer to Service quotas (https://docs.aws.amazon.com/general/latest/gr/transcribe.html#limits-amazon-transcribe).
 	//
 	//    * Invalid number of channels: number of channels too large. Your audio
 	//    contains more channels than Amazon Transcribe is able to process. For
-	//    more information, refer to Guidelines and quotas (https://docs.aws.amazon.com/transcribe/latest/dg/limits-guidelines.html#limits).
+	//    more information, refer to Service quotas (https://docs.aws.amazon.com/general/latest/gr/transcribe.html#limits-amazon-transcribe).
 	FailureReason *string `type:"string"`
 
 	// The confidence score associated with the language identified in your media
@@ -12597,6 +14336,10 @@ type TranscriptionJob struct {
 	// The tags, each in the form of a key:value pair, assigned to the specified
 	// transcription job.
 	Tags []*Tag `min:"1" type:"list"`
+
+	// Provides information about the toxicity detection settings applied to your
+	// transcription.
+	ToxicityDetection []*ToxicityDetectionSettings `min:"1" type:"list"`
 
 	// Provides you with the Amazon S3 URI you can use to access your transcript.
 	Transcript *Transcript `type:"structure"`
@@ -12752,6 +14495,12 @@ func (s *TranscriptionJob) SetTags(v []*Tag) *TranscriptionJob {
 	return s
 }
 
+// SetToxicityDetection sets the ToxicityDetection field's value.
+func (s *TranscriptionJob) SetToxicityDetection(v []*ToxicityDetectionSettings) *TranscriptionJob {
+	s.ToxicityDetection = v
+	return s
+}
+
 // SetTranscript sets the Transcript field's value.
 func (s *TranscriptionJob) SetTranscript(v *Transcript) *TranscriptionJob {
 	s.Transcript = v
@@ -12845,6 +14594,10 @@ type TranscriptionJobSummary struct {
 	// 2022-05-04T12:32:58.789000-07:00 represents a transcription job that started
 	// processing at 12:32 PM UTC-7 on May 4, 2022.
 	StartTime *time.Time `type:"timestamp"`
+
+	// Indicates whether toxicity detection was enabled for the specified transcription
+	// job.
+	ToxicityDetection []*ToxicityDetectionSettings `min:"1" type:"list"`
 
 	// The name of the transcription job. Job names are case sensitive and must
 	// be unique within an Amazon Web Services account.
@@ -12946,6 +14699,12 @@ func (s *TranscriptionJobSummary) SetOutputLocationType(v string) *Transcription
 // SetStartTime sets the StartTime field's value.
 func (s *TranscriptionJobSummary) SetStartTime(v time.Time) *TranscriptionJobSummary {
 	s.StartTime = &v
+	return s
+}
+
+// SetToxicityDetection sets the ToxicityDetection field's value.
+func (s *TranscriptionJobSummary) SetToxicityDetection(v []*ToxicityDetectionSettings) *TranscriptionJobSummary {
+	s.ToxicityDetection = v
 	return s
 }
 
@@ -14038,6 +15797,198 @@ const (
 
 	// LanguageCodeSvSe is a LanguageCode enum value
 	LanguageCodeSvSe = "sv-SE"
+
+	// LanguageCodeAbGe is a LanguageCode enum value
+	LanguageCodeAbGe = "ab-GE"
+
+	// LanguageCodeAstEs is a LanguageCode enum value
+	LanguageCodeAstEs = "ast-ES"
+
+	// LanguageCodeAzAz is a LanguageCode enum value
+	LanguageCodeAzAz = "az-AZ"
+
+	// LanguageCodeBaRu is a LanguageCode enum value
+	LanguageCodeBaRu = "ba-RU"
+
+	// LanguageCodeBeBy is a LanguageCode enum value
+	LanguageCodeBeBy = "be-BY"
+
+	// LanguageCodeBgBg is a LanguageCode enum value
+	LanguageCodeBgBg = "bg-BG"
+
+	// LanguageCodeBnIn is a LanguageCode enum value
+	LanguageCodeBnIn = "bn-IN"
+
+	// LanguageCodeBsBa is a LanguageCode enum value
+	LanguageCodeBsBa = "bs-BA"
+
+	// LanguageCodeCaEs is a LanguageCode enum value
+	LanguageCodeCaEs = "ca-ES"
+
+	// LanguageCodeCkbIq is a LanguageCode enum value
+	LanguageCodeCkbIq = "ckb-IQ"
+
+	// LanguageCodeCkbIr is a LanguageCode enum value
+	LanguageCodeCkbIr = "ckb-IR"
+
+	// LanguageCodeCsCz is a LanguageCode enum value
+	LanguageCodeCsCz = "cs-CZ"
+
+	// LanguageCodeCyWl is a LanguageCode enum value
+	LanguageCodeCyWl = "cy-WL"
+
+	// LanguageCodeElGr is a LanguageCode enum value
+	LanguageCodeElGr = "el-GR"
+
+	// LanguageCodeEtEt is a LanguageCode enum value
+	LanguageCodeEtEt = "et-ET"
+
+	// LanguageCodeEuEs is a LanguageCode enum value
+	LanguageCodeEuEs = "eu-ES"
+
+	// LanguageCodeFiFi is a LanguageCode enum value
+	LanguageCodeFiFi = "fi-FI"
+
+	// LanguageCodeGlEs is a LanguageCode enum value
+	LanguageCodeGlEs = "gl-ES"
+
+	// LanguageCodeGuIn is a LanguageCode enum value
+	LanguageCodeGuIn = "gu-IN"
+
+	// LanguageCodeHaNg is a LanguageCode enum value
+	LanguageCodeHaNg = "ha-NG"
+
+	// LanguageCodeHrHr is a LanguageCode enum value
+	LanguageCodeHrHr = "hr-HR"
+
+	// LanguageCodeHuHu is a LanguageCode enum value
+	LanguageCodeHuHu = "hu-HU"
+
+	// LanguageCodeHyAm is a LanguageCode enum value
+	LanguageCodeHyAm = "hy-AM"
+
+	// LanguageCodeIsIs is a LanguageCode enum value
+	LanguageCodeIsIs = "is-IS"
+
+	// LanguageCodeKaGe is a LanguageCode enum value
+	LanguageCodeKaGe = "ka-GE"
+
+	// LanguageCodeKabDz is a LanguageCode enum value
+	LanguageCodeKabDz = "kab-DZ"
+
+	// LanguageCodeKkKz is a LanguageCode enum value
+	LanguageCodeKkKz = "kk-KZ"
+
+	// LanguageCodeKnIn is a LanguageCode enum value
+	LanguageCodeKnIn = "kn-IN"
+
+	// LanguageCodeKyKg is a LanguageCode enum value
+	LanguageCodeKyKg = "ky-KG"
+
+	// LanguageCodeLgIn is a LanguageCode enum value
+	LanguageCodeLgIn = "lg-IN"
+
+	// LanguageCodeLtLt is a LanguageCode enum value
+	LanguageCodeLtLt = "lt-LT"
+
+	// LanguageCodeLvLv is a LanguageCode enum value
+	LanguageCodeLvLv = "lv-LV"
+
+	// LanguageCodeMhrRu is a LanguageCode enum value
+	LanguageCodeMhrRu = "mhr-RU"
+
+	// LanguageCodeMiNz is a LanguageCode enum value
+	LanguageCodeMiNz = "mi-NZ"
+
+	// LanguageCodeMkMk is a LanguageCode enum value
+	LanguageCodeMkMk = "mk-MK"
+
+	// LanguageCodeMlIn is a LanguageCode enum value
+	LanguageCodeMlIn = "ml-IN"
+
+	// LanguageCodeMnMn is a LanguageCode enum value
+	LanguageCodeMnMn = "mn-MN"
+
+	// LanguageCodeMrIn is a LanguageCode enum value
+	LanguageCodeMrIn = "mr-IN"
+
+	// LanguageCodeMtMt is a LanguageCode enum value
+	LanguageCodeMtMt = "mt-MT"
+
+	// LanguageCodeNoNo is a LanguageCode enum value
+	LanguageCodeNoNo = "no-NO"
+
+	// LanguageCodeOrIn is a LanguageCode enum value
+	LanguageCodeOrIn = "or-IN"
+
+	// LanguageCodePaIn is a LanguageCode enum value
+	LanguageCodePaIn = "pa-IN"
+
+	// LanguageCodePlPl is a LanguageCode enum value
+	LanguageCodePlPl = "pl-PL"
+
+	// LanguageCodePsAf is a LanguageCode enum value
+	LanguageCodePsAf = "ps-AF"
+
+	// LanguageCodeRoRo is a LanguageCode enum value
+	LanguageCodeRoRo = "ro-RO"
+
+	// LanguageCodeRwRw is a LanguageCode enum value
+	LanguageCodeRwRw = "rw-RW"
+
+	// LanguageCodeSiLk is a LanguageCode enum value
+	LanguageCodeSiLk = "si-LK"
+
+	// LanguageCodeSkSk is a LanguageCode enum value
+	LanguageCodeSkSk = "sk-SK"
+
+	// LanguageCodeSlSi is a LanguageCode enum value
+	LanguageCodeSlSi = "sl-SI"
+
+	// LanguageCodeSoSo is a LanguageCode enum value
+	LanguageCodeSoSo = "so-SO"
+
+	// LanguageCodeSrRs is a LanguageCode enum value
+	LanguageCodeSrRs = "sr-RS"
+
+	// LanguageCodeSuId is a LanguageCode enum value
+	LanguageCodeSuId = "su-ID"
+
+	// LanguageCodeSwBi is a LanguageCode enum value
+	LanguageCodeSwBi = "sw-BI"
+
+	// LanguageCodeSwKe is a LanguageCode enum value
+	LanguageCodeSwKe = "sw-KE"
+
+	// LanguageCodeSwRw is a LanguageCode enum value
+	LanguageCodeSwRw = "sw-RW"
+
+	// LanguageCodeSwTz is a LanguageCode enum value
+	LanguageCodeSwTz = "sw-TZ"
+
+	// LanguageCodeSwUg is a LanguageCode enum value
+	LanguageCodeSwUg = "sw-UG"
+
+	// LanguageCodeTlPh is a LanguageCode enum value
+	LanguageCodeTlPh = "tl-PH"
+
+	// LanguageCodeTtRu is a LanguageCode enum value
+	LanguageCodeTtRu = "tt-RU"
+
+	// LanguageCodeUgCn is a LanguageCode enum value
+	LanguageCodeUgCn = "ug-CN"
+
+	// LanguageCodeUkUa is a LanguageCode enum value
+	LanguageCodeUkUa = "uk-UA"
+
+	// LanguageCodeUzUz is a LanguageCode enum value
+	LanguageCodeUzUz = "uz-UZ"
+
+	// LanguageCodeWoSn is a LanguageCode enum value
+	LanguageCodeWoSn = "wo-SN"
+
+	// LanguageCodeZuZa is a LanguageCode enum value
+	LanguageCodeZuZa = "zu-ZA"
 )
 
 // LanguageCode_Values returns all elements of the LanguageCode enum
@@ -14082,6 +16033,70 @@ func LanguageCode_Values() []string {
 		LanguageCodeEnNz,
 		LanguageCodeViVn,
 		LanguageCodeSvSe,
+		LanguageCodeAbGe,
+		LanguageCodeAstEs,
+		LanguageCodeAzAz,
+		LanguageCodeBaRu,
+		LanguageCodeBeBy,
+		LanguageCodeBgBg,
+		LanguageCodeBnIn,
+		LanguageCodeBsBa,
+		LanguageCodeCaEs,
+		LanguageCodeCkbIq,
+		LanguageCodeCkbIr,
+		LanguageCodeCsCz,
+		LanguageCodeCyWl,
+		LanguageCodeElGr,
+		LanguageCodeEtEt,
+		LanguageCodeEuEs,
+		LanguageCodeFiFi,
+		LanguageCodeGlEs,
+		LanguageCodeGuIn,
+		LanguageCodeHaNg,
+		LanguageCodeHrHr,
+		LanguageCodeHuHu,
+		LanguageCodeHyAm,
+		LanguageCodeIsIs,
+		LanguageCodeKaGe,
+		LanguageCodeKabDz,
+		LanguageCodeKkKz,
+		LanguageCodeKnIn,
+		LanguageCodeKyKg,
+		LanguageCodeLgIn,
+		LanguageCodeLtLt,
+		LanguageCodeLvLv,
+		LanguageCodeMhrRu,
+		LanguageCodeMiNz,
+		LanguageCodeMkMk,
+		LanguageCodeMlIn,
+		LanguageCodeMnMn,
+		LanguageCodeMrIn,
+		LanguageCodeMtMt,
+		LanguageCodeNoNo,
+		LanguageCodeOrIn,
+		LanguageCodePaIn,
+		LanguageCodePlPl,
+		LanguageCodePsAf,
+		LanguageCodeRoRo,
+		LanguageCodeRwRw,
+		LanguageCodeSiLk,
+		LanguageCodeSkSk,
+		LanguageCodeSlSi,
+		LanguageCodeSoSo,
+		LanguageCodeSrRs,
+		LanguageCodeSuId,
+		LanguageCodeSwBi,
+		LanguageCodeSwKe,
+		LanguageCodeSwRw,
+		LanguageCodeSwTz,
+		LanguageCodeSwUg,
+		LanguageCodeTlPh,
+		LanguageCodeTtRu,
+		LanguageCodeUgCn,
+		LanguageCodeUkUa,
+		LanguageCodeUzUz,
+		LanguageCodeWoSn,
+		LanguageCodeZuZa,
 	}
 }
 
@@ -14106,6 +16121,9 @@ const (
 
 	// MediaFormatWebm is a MediaFormat enum value
 	MediaFormatWebm = "webm"
+
+	// MediaFormatM4a is a MediaFormat enum value
+	MediaFormatM4a = "m4a"
 )
 
 // MediaFormat_Values returns all elements of the MediaFormat enum
@@ -14118,6 +16136,7 @@ func MediaFormat_Values() []string {
 		MediaFormatOgg,
 		MediaFormatAmr,
 		MediaFormatWebm,
+		MediaFormatM4a,
 	}
 }
 
@@ -14130,6 +16149,58 @@ const (
 func MedicalContentIdentificationType_Values() []string {
 	return []string{
 		MedicalContentIdentificationTypePhi,
+	}
+}
+
+const (
+	// MedicalScribeJobStatusQueued is a MedicalScribeJobStatus enum value
+	MedicalScribeJobStatusQueued = "QUEUED"
+
+	// MedicalScribeJobStatusInProgress is a MedicalScribeJobStatus enum value
+	MedicalScribeJobStatusInProgress = "IN_PROGRESS"
+
+	// MedicalScribeJobStatusFailed is a MedicalScribeJobStatus enum value
+	MedicalScribeJobStatusFailed = "FAILED"
+
+	// MedicalScribeJobStatusCompleted is a MedicalScribeJobStatus enum value
+	MedicalScribeJobStatusCompleted = "COMPLETED"
+)
+
+// MedicalScribeJobStatus_Values returns all elements of the MedicalScribeJobStatus enum
+func MedicalScribeJobStatus_Values() []string {
+	return []string{
+		MedicalScribeJobStatusQueued,
+		MedicalScribeJobStatusInProgress,
+		MedicalScribeJobStatusFailed,
+		MedicalScribeJobStatusCompleted,
+	}
+}
+
+const (
+	// MedicalScribeLanguageCodeEnUs is a MedicalScribeLanguageCode enum value
+	MedicalScribeLanguageCodeEnUs = "en-US"
+)
+
+// MedicalScribeLanguageCode_Values returns all elements of the MedicalScribeLanguageCode enum
+func MedicalScribeLanguageCode_Values() []string {
+	return []string{
+		MedicalScribeLanguageCodeEnUs,
+	}
+}
+
+const (
+	// MedicalScribeParticipantRolePatient is a MedicalScribeParticipantRole enum value
+	MedicalScribeParticipantRolePatient = "PATIENT"
+
+	// MedicalScribeParticipantRoleClinician is a MedicalScribeParticipantRole enum value
+	MedicalScribeParticipantRoleClinician = "CLINICIAN"
+)
+
+// MedicalScribeParticipantRole_Values returns all elements of the MedicalScribeParticipantRole enum
+func MedicalScribeParticipantRole_Values() []string {
+	return []string{
+		MedicalScribeParticipantRolePatient,
+		MedicalScribeParticipantRoleClinician,
 	}
 }
 
@@ -14318,6 +16389,18 @@ func SubtitleFormat_Values() []string {
 	return []string{
 		SubtitleFormatVtt,
 		SubtitleFormatSrt,
+	}
+}
+
+const (
+	// ToxicityCategoryAll is a ToxicityCategory enum value
+	ToxicityCategoryAll = "ALL"
+)
+
+// ToxicityCategory_Values returns all elements of the ToxicityCategory enum
+func ToxicityCategory_Values() []string {
+	return []string{
+		ToxicityCategoryAll,
 	}
 }
 

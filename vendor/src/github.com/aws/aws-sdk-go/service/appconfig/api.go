@@ -75,6 +75,23 @@ func (c *AppConfig) CreateApplicationRequest(input *CreateApplicationInput) (req
 //     The input fails to satisfy the constraints specified by an Amazon Web Services
 //     service.
 //
+//   - ServiceQuotaExceededException
+//     The number of one more AppConfig resources exceeds the maximum allowed. Verify
+//     that your environment doesn't exceed the following service quotas:
+//
+//     Applications: 100 max
+//
+//     Deployment strategies: 20 max
+//
+//     Configuration profiles: 100 max per application
+//
+//     Environments: 20 max per application
+//
+//     To resolve this issue, you can delete one or more resources and try again.
+//     Or, you can request a quota increase. For more information about quotas and
+//     to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+//     in the Amazon Web Services General Reference.
+//
 //   - InternalServerException
 //     There was an internal failure in the AppConfig service.
 //
@@ -196,6 +213,23 @@ func (c *AppConfig) CreateConfigurationProfileRequest(input *CreateConfiguration
 //   - InternalServerException
 //     There was an internal failure in the AppConfig service.
 //
+//   - ServiceQuotaExceededException
+//     The number of one more AppConfig resources exceeds the maximum allowed. Verify
+//     that your environment doesn't exceed the following service quotas:
+//
+//     Applications: 100 max
+//
+//     Deployment strategies: 20 max
+//
+//     Configuration profiles: 100 max per application
+//
+//     Environments: 20 max per application
+//
+//     To resolve this issue, you can delete one or more resources and try again.
+//     Or, you can request a quota increase. For more information about quotas and
+//     to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+//     in the Amazon Web Services General Reference.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appconfig-2019-10-09/CreateConfigurationProfile
 func (c *AppConfig) CreateConfigurationProfile(input *CreateConfigurationProfileInput) (*CreateConfigurationProfileOutput, error) {
 	req, out := c.CreateConfigurationProfileRequest(input)
@@ -278,6 +312,23 @@ func (c *AppConfig) CreateDeploymentStrategyRequest(input *CreateDeploymentStrat
 //
 //   - InternalServerException
 //     There was an internal failure in the AppConfig service.
+//
+//   - ServiceQuotaExceededException
+//     The number of one more AppConfig resources exceeds the maximum allowed. Verify
+//     that your environment doesn't exceed the following service quotas:
+//
+//     Applications: 100 max
+//
+//     Deployment strategies: 20 max
+//
+//     Configuration profiles: 100 max per application
+//
+//     Environments: 20 max per application
+//
+//     To resolve this issue, you can delete one or more resources and try again.
+//     Or, you can request a quota increase. For more information about quotas and
+//     to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+//     in the Amazon Web Services General Reference.
 //
 //   - BadRequestException
 //     The input fails to satisfy the constraints specified by an Amazon Web Services
@@ -375,6 +426,23 @@ func (c *AppConfig) CreateEnvironmentRequest(input *CreateEnvironmentInput) (req
 //     The input fails to satisfy the constraints specified by an Amazon Web Services
 //     service.
 //
+//   - ServiceQuotaExceededException
+//     The number of one more AppConfig resources exceeds the maximum allowed. Verify
+//     that your environment doesn't exceed the following service quotas:
+//
+//     Applications: 100 max
+//
+//     Deployment strategies: 20 max
+//
+//     Configuration profiles: 100 max per application
+//
+//     Environments: 20 max per application
+//
+//     To resolve this issue, you can delete one or more resources and try again.
+//     Or, you can request a quota increase. For more information about quotas and
+//     to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+//     in the Amazon Web Services General Reference.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appconfig-2019-10-09/CreateEnvironment
 func (c *AppConfig) CreateEnvironment(input *CreateEnvironmentInput) (*CreateEnvironmentOutput, error) {
 	req, out := c.CreateEnvironmentRequest(input)
@@ -445,10 +513,23 @@ func (c *AppConfig) CreateExtensionRequest(input *CreateExtensionInput) (req *re
 // or deploying a configuration.
 //
 // You can create your own extensions or use the Amazon Web Services authored
-// extensions provided by AppConfig. For most use cases, to create your own
-// extension, you must create an Lambda function to perform any computation
-// and processing defined in the extension. For more information about extensions,
-// see Working with AppConfig extensions (https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html)
+// extensions provided by AppConfig. For an AppConfig extension that uses Lambda,
+// you must create a Lambda function to perform any computation and processing
+// defined in the extension. If you plan to create custom versions of the Amazon
+// Web Services authored notification extensions, you only need to specify an
+// Amazon Resource Name (ARN) in the Uri field for the new extension version.
+//
+//   - For a custom EventBridge notification extension, enter the ARN of the
+//     EventBridge default events in the Uri field.
+//
+//   - For a custom Amazon SNS notification extension, enter the ARN of an
+//     Amazon SNS topic in the Uri field.
+//
+//   - For a custom Amazon SQS notification extension, enter the ARN of an
+//     Amazon SQS message queue in the Uri field.
+//
+// For more information about extensions, see Working with AppConfig extensions
+// (https://docs.aws.amazon.com/appconfig/latest/userguide/working-with-appconfig-extensions.html)
 // in the AppConfig User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -469,8 +550,21 @@ func (c *AppConfig) CreateExtensionRequest(input *CreateExtensionInput) (req *re
 //     of the resource.
 //
 //   - ServiceQuotaExceededException
-//     The number of hosted configuration versions exceeds the limit for the AppConfig
-//     hosted configuration store. Delete one or more versions and try again.
+//     The number of one more AppConfig resources exceeds the maximum allowed. Verify
+//     that your environment doesn't exceed the following service quotas:
+//
+//     Applications: 100 max
+//
+//     Deployment strategies: 20 max
+//
+//     Configuration profiles: 100 max per application
+//
+//     Environments: 20 max per application
+//
+//     To resolve this issue, you can delete one or more resources and try again.
+//     Or, you can request a quota increase. For more information about quotas and
+//     to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+//     in the Amazon Web Services General Reference.
 //
 //   - InternalServerException
 //     There was an internal failure in the AppConfig service.
@@ -573,8 +667,21 @@ func (c *AppConfig) CreateExtensionAssociationRequest(input *CreateExtensionAsso
 //     There was an internal failure in the AppConfig service.
 //
 //   - ServiceQuotaExceededException
-//     The number of hosted configuration versions exceeds the limit for the AppConfig
-//     hosted configuration store. Delete one or more versions and try again.
+//     The number of one more AppConfig resources exceeds the maximum allowed. Verify
+//     that your environment doesn't exceed the following service quotas:
+//
+//     Applications: 100 max
+//
+//     Deployment strategies: 20 max
+//
+//     Configuration profiles: 100 max per application
+//
+//     Environments: 20 max per application
+//
+//     To resolve this issue, you can delete one or more resources and try again.
+//     Or, you can request a quota increase. For more information about quotas and
+//     to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+//     in the Amazon Web Services General Reference.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appconfig-2019-10-09/CreateExtensionAssociation
 func (c *AppConfig) CreateExtensionAssociation(input *CreateExtensionAssociationInput) (*CreateExtensionAssociationOutput, error) {
@@ -657,8 +764,21 @@ func (c *AppConfig) CreateHostedConfigurationVersionRequest(input *CreateHostedC
 //     service.
 //
 //   - ServiceQuotaExceededException
-//     The number of hosted configuration versions exceeds the limit for the AppConfig
-//     hosted configuration store. Delete one or more versions and try again.
+//     The number of one more AppConfig resources exceeds the maximum allowed. Verify
+//     that your environment doesn't exceed the following service quotas:
+//
+//     Applications: 100 max
+//
+//     Deployment strategies: 20 max
+//
+//     Configuration profiles: 100 max per application
+//
+//     Environments: 20 max per application
+//
+//     To resolve this issue, you can delete one or more resources and try again.
+//     Or, you can request a quota increase. For more information about quotas and
+//     to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+//     in the Amazon Web Services General Reference.
 //
 //   - ResourceNotFoundException
 //     The requested resource could not be found.
@@ -4978,6 +5098,14 @@ type CreateConfigurationProfileInput struct {
 	// A description of the configuration profile.
 	Description *string `type:"string"`
 
+	// The identifier for an Key Management Service key to encrypt new configuration
+	// data versions in the AppConfig hosted configuration store. This attribute
+	// is only used for hosted configuration types. The identifier can be an KMS
+	// key ID, alias, or the Amazon Resource Name (ARN) of the key ID or alias.
+	// To encrypt data managed in other configuration stores, see the documentation
+	// for how to specify an KMS key for that particular service.
+	KmsKeyIdentifier *string `min:"1" type:"string"`
+
 	// A URI to locate the configuration. You can specify the following:
 	//
 	//    * For the AppConfig hosted configuration store and for feature flags,
@@ -4987,8 +5115,11 @@ type CreateConfigurationProfileInput struct {
 	//    specify either the parameter name in the format ssm-parameter://<parameter
 	//    name> or the ARN.
 	//
+	//    * For an Amazon Web Services CodePipeline pipeline, specify the URI in
+	//    the following format: codepipeline://<pipeline name>.
+	//
 	//    * For an Secrets Manager secret, specify the URI in the following format:
-	//    secrets-manager://<secret name>.
+	//    secretsmanager://<secret name>.
 	//
 	//    * For an Amazon S3 object, specify the URI in the following format: s3://<bucket>/<objectKey>
 	//    . Here is an example: s3://my-bucket/my-app/us-east-1/my-config.json
@@ -5059,6 +5190,9 @@ func (s *CreateConfigurationProfileInput) Validate() error {
 	if s.ApplicationId != nil && len(*s.ApplicationId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ApplicationId", 1))
 	}
+	if s.KmsKeyIdentifier != nil && len(*s.KmsKeyIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("KmsKeyIdentifier", 1))
+	}
 	if s.LocationUri == nil {
 		invalidParams.Add(request.NewErrParamRequired("LocationUri"))
 	}
@@ -5100,6 +5234,12 @@ func (s *CreateConfigurationProfileInput) SetApplicationId(v string) *CreateConf
 // SetDescription sets the Description field's value.
 func (s *CreateConfigurationProfileInput) SetDescription(v string) *CreateConfigurationProfileInput {
 	s.Description = &v
+	return s
+}
+
+// SetKmsKeyIdentifier sets the KmsKeyIdentifier field's value.
+func (s *CreateConfigurationProfileInput) SetKmsKeyIdentifier(v string) *CreateConfigurationProfileInput {
+	s.KmsKeyIdentifier = &v
 	return s
 }
 
@@ -5150,6 +5290,17 @@ type CreateConfigurationProfileOutput struct {
 
 	// The configuration profile ID.
 	Id *string `type:"string"`
+
+	// The Amazon Resource Name of the Key Management Service key to encrypt new
+	// configuration data versions in the AppConfig hosted configuration store.
+	// This attribute is only used for hosted configuration types. To encrypt data
+	// managed in other configuration stores, see the documentation for how to specify
+	// an KMS key for that particular service.
+	KmsKeyArn *string `min:"20" type:"string"`
+
+	// The Key Management Service key identifier (key ID, key alias, or key ARN)
+	// provided when the resource was created or updated.
+	KmsKeyIdentifier *string `min:"1" type:"string"`
 
 	// The URI location of the configuration.
 	LocationUri *string `min:"1" type:"string"`
@@ -5209,6 +5360,18 @@ func (s *CreateConfigurationProfileOutput) SetDescription(v string) *CreateConfi
 // SetId sets the Id field's value.
 func (s *CreateConfigurationProfileOutput) SetId(v string) *CreateConfigurationProfileOutput {
 	s.Id = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *CreateConfigurationProfileOutput) SetKmsKeyArn(v string) *CreateConfigurationProfileOutput {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetKmsKeyIdentifier sets the KmsKeyIdentifier field's value.
+func (s *CreateConfigurationProfileOutput) SetKmsKeyIdentifier(v string) *CreateConfigurationProfileOutput {
+	s.KmsKeyIdentifier = &v
 	return s
 }
 
@@ -5874,7 +6037,7 @@ type CreateExtensionInput struct {
 	// Extension versions use the same name.
 	//
 	// Name is a required field
-	Name *string `min:"1" type:"string" required:"true"`
+	Name *string `type:"string" required:"true"`
 
 	// The parameters accepted by the extension. You specify parameter values when
 	// you associate the extension to an AppConfig resource by using the CreateExtensionAssociation
@@ -5918,9 +6081,6 @@ func (s *CreateExtensionInput) Validate() error {
 	}
 	if s.Name == nil {
 		invalidParams.Add(request.NewErrParamRequired("Name"))
-	}
-	if s.Name != nil && len(*s.Name) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
 	}
 	if s.Parameters != nil && len(s.Parameters) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Parameters", 1))
@@ -6217,6 +6377,11 @@ type CreateHostedConfigurationVersionOutput struct {
 	// A description of the configuration.
 	Description *string `location:"header" locationName:"Description" type:"string"`
 
+	// The Amazon Resource Name of the Key Management Service key that was used
+	// to encrypt this specific version of the configuration data in the AppConfig
+	// hosted configuration store.
+	KmsKeyArn *string `location:"header" locationName:"KmsKeyArn" min:"20" type:"string"`
+
 	// A user-defined label for an AppConfig hosted configuration version.
 	VersionLabel *string `location:"header" locationName:"VersionLabel" min:"1" type:"string"`
 
@@ -6269,6 +6434,12 @@ func (s *CreateHostedConfigurationVersionOutput) SetContentType(v string) *Creat
 // SetDescription sets the Description field's value.
 func (s *CreateHostedConfigurationVersionOutput) SetDescription(v string) *CreateHostedConfigurationVersionOutput {
 	s.Description = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *CreateHostedConfigurationVersionOutput) SetKmsKeyArn(v string) *CreateHostedConfigurationVersionOutput {
+	s.KmsKeyArn = &v
 	return s
 }
 
@@ -6865,9 +7036,15 @@ type DeploymentEvent struct {
 	ActionInvocations []*ActionInvocation `type:"list"`
 
 	// A description of the deployment event. Descriptions include, but are not
-	// limited to, the user account or the Amazon CloudWatch alarm ARN that initiated
-	// a rollback, the percentage of hosts that received the deployment, or in the
-	// case of an internal error, a recommendation to attempt a new deployment.
+	// limited to, the following:
+	//
+	//    * The Amazon Web Services account or the Amazon CloudWatch alarm ARN that
+	//    initiated a rollback.
+	//
+	//    * The percentage of hosts that received the deployment.
+	//
+	//    * A recommendation to attempt a new deployment (in the case of an internal
+	//    error).
 	Description *string `type:"string"`
 
 	// The type of deployment event. Deployment event types include the start, stop,
@@ -7065,6 +7242,9 @@ type DeploymentSummary struct {
 
 	// The state of the deployment.
 	State *string `type:"string" enum:"DeploymentState"`
+
+	// A user-defined label for an AppConfig hosted configuration version.
+	VersionLabel *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -7148,6 +7328,12 @@ func (s *DeploymentSummary) SetStartedAt(v time.Time) *DeploymentSummary {
 // SetState sets the State field's value.
 func (s *DeploymentSummary) SetState(v string) *DeploymentSummary {
 	s.State = &v
+	return s
+}
+
+// SetVersionLabel sets the VersionLabel field's value.
+func (s *DeploymentSummary) SetVersionLabel(v string) *DeploymentSummary {
+	s.VersionLabel = &v
 	return s
 }
 
@@ -7723,6 +7909,17 @@ type GetConfigurationProfileOutput struct {
 	// The configuration profile ID.
 	Id *string `type:"string"`
 
+	// The Amazon Resource Name of the Key Management Service key to encrypt new
+	// configuration data versions in the AppConfig hosted configuration store.
+	// This attribute is only used for hosted configuration types. To encrypt data
+	// managed in other configuration stores, see the documentation for how to specify
+	// an KMS key for that particular service.
+	KmsKeyArn *string `min:"20" type:"string"`
+
+	// The Key Management Service key identifier (key ID, key alias, or key ARN)
+	// provided when the resource was created or updated.
+	KmsKeyIdentifier *string `min:"1" type:"string"`
+
 	// The URI location of the configuration.
 	LocationUri *string `min:"1" type:"string"`
 
@@ -7781,6 +7978,18 @@ func (s *GetConfigurationProfileOutput) SetDescription(v string) *GetConfigurati
 // SetId sets the Id field's value.
 func (s *GetConfigurationProfileOutput) SetId(v string) *GetConfigurationProfileOutput {
 	s.Id = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *GetConfigurationProfileOutput) SetKmsKeyArn(v string) *GetConfigurationProfileOutput {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetKmsKeyIdentifier sets the KmsKeyIdentifier field's value.
+func (s *GetConfigurationProfileOutput) SetKmsKeyIdentifier(v string) *GetConfigurationProfileOutput {
+	s.KmsKeyIdentifier = &v
 	return s
 }
 
@@ -7957,8 +8166,8 @@ type GetDeploymentOutput struct {
 	// Store.
 	KmsKeyArn *string `min:"20" type:"string"`
 
-	// The KMS key identifier (key ID, key alias, or key ARN). AppConfig uses this
-	// ID to encrypt the configuration data using a customer managed key.
+	// The Key Management Service key identifier (key ID, key alias, or key ARN)
+	// provided when the resource was created or updated.
 	KmsKeyIdentifier *string `min:"1" type:"string"`
 
 	// The percentage of targets for which the deployment is available.
@@ -7969,6 +8178,9 @@ type GetDeploymentOutput struct {
 
 	// The state of the deployment.
 	State *string `type:"string" enum:"DeploymentState"`
+
+	// A user-defined label for an AppConfig hosted configuration version.
+	VersionLabel *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -8112,6 +8324,12 @@ func (s *GetDeploymentOutput) SetStartedAt(v time.Time) *GetDeploymentOutput {
 // SetState sets the State field's value.
 func (s *GetDeploymentOutput) SetState(v string) *GetDeploymentOutput {
 	s.State = &v
+	return s
+}
+
+// SetVersionLabel sets the VersionLabel field's value.
+func (s *GetDeploymentOutput) SetVersionLabel(v string) *GetDeploymentOutput {
+	s.VersionLabel = &v
 	return s
 }
 
@@ -8779,6 +8997,11 @@ type GetHostedConfigurationVersionOutput struct {
 	// A description of the configuration.
 	Description *string `location:"header" locationName:"Description" type:"string"`
 
+	// The Amazon Resource Name of the Key Management Service key that was used
+	// to encrypt this specific version of the configuration data in the AppConfig
+	// hosted configuration store.
+	KmsKeyArn *string `location:"header" locationName:"KmsKeyArn" min:"20" type:"string"`
+
 	// A user-defined label for an AppConfig hosted configuration version.
 	VersionLabel *string `location:"header" locationName:"VersionLabel" min:"1" type:"string"`
 
@@ -8834,6 +9057,12 @@ func (s *GetHostedConfigurationVersionOutput) SetDescription(v string) *GetHoste
 	return s
 }
 
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *GetHostedConfigurationVersionOutput) SetKmsKeyArn(v string) *GetHostedConfigurationVersionOutput {
+	s.KmsKeyArn = &v
+	return s
+}
+
 // SetVersionLabel sets the VersionLabel field's value.
 func (s *GetHostedConfigurationVersionOutput) SetVersionLabel(v string) *GetHostedConfigurationVersionOutput {
 	s.VersionLabel = &v
@@ -8862,6 +9091,11 @@ type HostedConfigurationVersionSummary struct {
 
 	// A description of the configuration.
 	Description *string `type:"string"`
+
+	// The Amazon Resource Name of the Key Management Service key that was used
+	// to encrypt this specific version of the configuration data in the AppConfig
+	// hosted configuration store.
+	KmsKeyArn *string `min:"20" type:"string"`
 
 	// A user-defined label for an AppConfig hosted configuration version.
 	VersionLabel *string `min:"1" type:"string"`
@@ -8909,6 +9143,12 @@ func (s *HostedConfigurationVersionSummary) SetContentType(v string) *HostedConf
 // SetDescription sets the Description field's value.
 func (s *HostedConfigurationVersionSummary) SetDescription(v string) *HostedConfigurationVersionSummary {
 	s.Description = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *HostedConfigurationVersionSummary) SetKmsKeyArn(v string) *HostedConfigurationVersionSummary {
+	s.KmsKeyArn = &v
 	return s
 }
 
@@ -10360,8 +10600,21 @@ func (s *ResourceNotFoundException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The number of hosted configuration versions exceeds the limit for the AppConfig
-// hosted configuration store. Delete one or more versions and try again.
+// The number of one more AppConfig resources exceeds the maximum allowed. Verify
+// that your environment doesn't exceed the following service quotas:
+//
+// Applications: 100 max
+//
+// Deployment strategies: 20 max
+//
+// Configuration profiles: 100 max per application
+//
+// Environments: 20 max per application
+//
+// To resolve this issue, you can delete one or more resources and try again.
+// Or, you can request a quota increase. For more information about quotas and
+// to request an increase, see Service quotas for AppConfig (https://docs.aws.amazon.com/general/latest/gr/appconfig.html#limits_appconfig)
+// in the Amazon Web Services General Reference.
 type ServiceQuotaExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -10439,7 +10692,8 @@ type StartDeploymentInput struct {
 	ConfigurationProfileId *string `type:"string" required:"true"`
 
 	// The configuration version to deploy. If deploying an AppConfig hosted configuration
-	// version, you can specify either the version number or version label.
+	// version, you can specify either the version number or version label. For
+	// all other configurations, you must specify the version number.
 	//
 	// ConfigurationVersion is a required field
 	ConfigurationVersion *string `min:"1" type:"string" required:"true"`
@@ -10633,8 +10887,8 @@ type StartDeploymentOutput struct {
 	// Store.
 	KmsKeyArn *string `min:"20" type:"string"`
 
-	// The KMS key identifier (key ID, key alias, or key ARN). AppConfig uses this
-	// ID to encrypt the configuration data using a customer managed key.
+	// The Key Management Service key identifier (key ID, key alias, or key ARN)
+	// provided when the resource was created or updated.
 	KmsKeyIdentifier *string `min:"1" type:"string"`
 
 	// The percentage of targets for which the deployment is available.
@@ -10645,6 +10899,9 @@ type StartDeploymentOutput struct {
 
 	// The state of the deployment.
 	State *string `type:"string" enum:"DeploymentState"`
+
+	// A user-defined label for an AppConfig hosted configuration version.
+	VersionLabel *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -10791,6 +11048,12 @@ func (s *StartDeploymentOutput) SetState(v string) *StartDeploymentOutput {
 	return s
 }
 
+// SetVersionLabel sets the VersionLabel field's value.
+func (s *StartDeploymentOutput) SetVersionLabel(v string) *StartDeploymentOutput {
+	s.VersionLabel = &v
+	return s
+}
+
 type StopDeploymentInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -10934,8 +11197,8 @@ type StopDeploymentOutput struct {
 	// Store.
 	KmsKeyArn *string `min:"20" type:"string"`
 
-	// The KMS key identifier (key ID, key alias, or key ARN). AppConfig uses this
-	// ID to encrypt the configuration data using a customer managed key.
+	// The Key Management Service key identifier (key ID, key alias, or key ARN)
+	// provided when the resource was created or updated.
 	KmsKeyIdentifier *string `min:"1" type:"string"`
 
 	// The percentage of targets for which the deployment is available.
@@ -10946,6 +11209,9 @@ type StopDeploymentOutput struct {
 
 	// The state of the deployment.
 	State *string `type:"string" enum:"DeploymentState"`
+
+	// A user-defined label for an AppConfig hosted configuration version.
+	VersionLabel *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -11089,6 +11355,12 @@ func (s *StopDeploymentOutput) SetStartedAt(v time.Time) *StopDeploymentOutput {
 // SetState sets the State field's value.
 func (s *StopDeploymentOutput) SetState(v string) *StopDeploymentOutput {
 	s.State = &v
+	return s
+}
+
+// SetVersionLabel sets the VersionLabel field's value.
+func (s *StopDeploymentOutput) SetVersionLabel(v string) *StopDeploymentOutput {
+	s.VersionLabel = &v
 	return s
 }
 
@@ -11399,6 +11671,14 @@ type UpdateConfigurationProfileInput struct {
 	// A description of the configuration profile.
 	Description *string `type:"string"`
 
+	// The identifier for a Key Management Service key to encrypt new configuration
+	// data versions in the AppConfig hosted configuration store. This attribute
+	// is only used for hosted configuration types. The identifier can be an KMS
+	// key ID, alias, or the Amazon Resource Name (ARN) of the key ID or alias.
+	// To encrypt data managed in other configuration stores, see the documentation
+	// for how to specify an KMS key for that particular service.
+	KmsKeyIdentifier *string `type:"string"`
+
 	// The name of the configuration profile.
 	Name *string `min:"1" type:"string"`
 
@@ -11484,6 +11764,12 @@ func (s *UpdateConfigurationProfileInput) SetDescription(v string) *UpdateConfig
 	return s
 }
 
+// SetKmsKeyIdentifier sets the KmsKeyIdentifier field's value.
+func (s *UpdateConfigurationProfileInput) SetKmsKeyIdentifier(v string) *UpdateConfigurationProfileInput {
+	s.KmsKeyIdentifier = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *UpdateConfigurationProfileInput) SetName(v string) *UpdateConfigurationProfileInput {
 	s.Name = &v
@@ -11513,6 +11799,17 @@ type UpdateConfigurationProfileOutput struct {
 
 	// The configuration profile ID.
 	Id *string `type:"string"`
+
+	// The Amazon Resource Name of the Key Management Service key to encrypt new
+	// configuration data versions in the AppConfig hosted configuration store.
+	// This attribute is only used for hosted configuration types. To encrypt data
+	// managed in other configuration stores, see the documentation for how to specify
+	// an KMS key for that particular service.
+	KmsKeyArn *string `min:"20" type:"string"`
+
+	// The Key Management Service key identifier (key ID, key alias, or key ARN)
+	// provided when the resource was created or updated.
+	KmsKeyIdentifier *string `min:"1" type:"string"`
 
 	// The URI location of the configuration.
 	LocationUri *string `min:"1" type:"string"`
@@ -11572,6 +11869,18 @@ func (s *UpdateConfigurationProfileOutput) SetDescription(v string) *UpdateConfi
 // SetId sets the Id field's value.
 func (s *UpdateConfigurationProfileOutput) SetId(v string) *UpdateConfigurationProfileOutput {
 	s.Id = &v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *UpdateConfigurationProfileOutput) SetKmsKeyArn(v string) *UpdateConfigurationProfileOutput {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetKmsKeyIdentifier sets the KmsKeyIdentifier field's value.
+func (s *UpdateConfigurationProfileOutput) SetKmsKeyIdentifier(v string) *UpdateConfigurationProfileOutput {
+	s.KmsKeyIdentifier = &v
 	return s
 }
 

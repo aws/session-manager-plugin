@@ -38,7 +38,12 @@ const opCreateEnvironment = "CreateEnvironment"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) CreateEnvironmentRequest(input *CreateEnvironmentInput) (req *request.Request, output *CreateEnvironmentOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, CreateEnvironment, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opCreateEnvironment,
 		HTTPMethod: "POST",
@@ -89,6 +94,8 @@ func (c *Finspace) CreateEnvironmentRequest(input *CreateEnvironmentInput) (req 
 //     A service limit or quota is exceeded.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) CreateEnvironment(input *CreateEnvironmentInput) (*CreateEnvironmentOutput, error) {
 	req, out := c.CreateEnvironmentRequest(input)
 	return out, req.Send()
@@ -103,6 +110,8 @@ func (c *Finspace) CreateEnvironment(input *CreateEnvironmentInput) (*CreateEnvi
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) CreateEnvironmentWithContext(ctx aws.Context, input *CreateEnvironmentInput, opts ...request.Option) (*CreateEnvironmentOutput, error) {
 	req, out := c.CreateEnvironmentRequest(input)
 	req.SetContext(ctx)
@@ -411,6 +420,110 @@ func (c *Finspace) CreateKxDatabaseWithContext(ctx aws.Context, input *CreateKxD
 	return out, req.Send()
 }
 
+const opCreateKxDataview = "CreateKxDataview"
+
+// CreateKxDataviewRequest generates a "aws/request.Request" representing the
+// client's request for the CreateKxDataview operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateKxDataview for more information on using the CreateKxDataview
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateKxDataviewRequest method.
+//	req, resp := client.CreateKxDataviewRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateKxDataview
+func (c *Finspace) CreateKxDataviewRequest(input *CreateKxDataviewInput) (req *request.Request, output *CreateKxDataviewOutput) {
+	op := &request.Operation{
+		Name:       opCreateKxDataview,
+		HTTPMethod: "POST",
+		HTTPPath:   "/kx/environments/{environmentId}/databases/{databaseName}/dataviews",
+	}
+
+	if input == nil {
+		input = &CreateKxDataviewInput{}
+	}
+
+	output = &CreateKxDataviewOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateKxDataview API operation for FinSpace User Environment Management service.
+//
+// Creates a snapshot of kdb database with tiered storage capabilities and a
+// pre-warmed cache, ready for mounting on kdb clusters. Dataviews are only
+// available for clusters running on a scaling group. They are not supported
+// on dedicated clusters.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation CreateKxDataview for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ResourceAlreadyExistsException
+//     The specified resource group already exists.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateKxDataview
+func (c *Finspace) CreateKxDataview(input *CreateKxDataviewInput) (*CreateKxDataviewOutput, error) {
+	req, out := c.CreateKxDataviewRequest(input)
+	return out, req.Send()
+}
+
+// CreateKxDataviewWithContext is the same as CreateKxDataview with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateKxDataview for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) CreateKxDataviewWithContext(ctx aws.Context, input *CreateKxDataviewInput, opts ...request.Option) (*CreateKxDataviewOutput, error) {
+	req, out := c.CreateKxDataviewRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateKxEnvironment = "CreateKxEnvironment"
 
 // CreateKxEnvironmentRequest generates a "aws/request.Request" representing the
@@ -506,6 +619,107 @@ func (c *Finspace) CreateKxEnvironment(input *CreateKxEnvironmentInput) (*Create
 // for more information on using Contexts.
 func (c *Finspace) CreateKxEnvironmentWithContext(ctx aws.Context, input *CreateKxEnvironmentInput, opts ...request.Option) (*CreateKxEnvironmentOutput, error) {
 	req, out := c.CreateKxEnvironmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opCreateKxScalingGroup = "CreateKxScalingGroup"
+
+// CreateKxScalingGroupRequest generates a "aws/request.Request" representing the
+// client's request for the CreateKxScalingGroup operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateKxScalingGroup for more information on using the CreateKxScalingGroup
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateKxScalingGroupRequest method.
+//	req, resp := client.CreateKxScalingGroupRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateKxScalingGroup
+func (c *Finspace) CreateKxScalingGroupRequest(input *CreateKxScalingGroupInput) (req *request.Request, output *CreateKxScalingGroupOutput) {
+	op := &request.Operation{
+		Name:       opCreateKxScalingGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/kx/environments/{environmentId}/scalingGroups",
+	}
+
+	if input == nil {
+		input = &CreateKxScalingGroupInput{}
+	}
+
+	output = &CreateKxScalingGroupOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateKxScalingGroup API operation for FinSpace User Environment Management service.
+//
+// Creates a new scaling group.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation CreateKxScalingGroup for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateKxScalingGroup
+func (c *Finspace) CreateKxScalingGroup(input *CreateKxScalingGroupInput) (*CreateKxScalingGroupOutput, error) {
+	req, out := c.CreateKxScalingGroupRequest(input)
+	return out, req.Send()
+}
+
+// CreateKxScalingGroupWithContext is the same as CreateKxScalingGroup with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateKxScalingGroup for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) CreateKxScalingGroupWithContext(ctx aws.Context, input *CreateKxScalingGroupInput, opts ...request.Option) (*CreateKxScalingGroupOutput, error) {
+	req, out := c.CreateKxScalingGroupRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -612,6 +826,110 @@ func (c *Finspace) CreateKxUserWithContext(ctx aws.Context, input *CreateKxUserI
 	return out, req.Send()
 }
 
+const opCreateKxVolume = "CreateKxVolume"
+
+// CreateKxVolumeRequest generates a "aws/request.Request" representing the
+// client's request for the CreateKxVolume operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateKxVolume for more information on using the CreateKxVolume
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateKxVolumeRequest method.
+//	req, resp := client.CreateKxVolumeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateKxVolume
+func (c *Finspace) CreateKxVolumeRequest(input *CreateKxVolumeInput) (req *request.Request, output *CreateKxVolumeOutput) {
+	op := &request.Operation{
+		Name:       opCreateKxVolume,
+		HTTPMethod: "POST",
+		HTTPPath:   "/kx/environments/{environmentId}/kxvolumes",
+	}
+
+	if input == nil {
+		input = &CreateKxVolumeInput{}
+	}
+
+	output = &CreateKxVolumeOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateKxVolume API operation for FinSpace User Environment Management service.
+//
+// Creates a new volume with a specific amount of throughput and storage capacity.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation CreateKxVolume for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ResourceAlreadyExistsException
+//     The specified resource group already exists.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/CreateKxVolume
+func (c *Finspace) CreateKxVolume(input *CreateKxVolumeInput) (*CreateKxVolumeOutput, error) {
+	req, out := c.CreateKxVolumeRequest(input)
+	return out, req.Send()
+}
+
+// CreateKxVolumeWithContext is the same as CreateKxVolume with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateKxVolume for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) CreateKxVolumeWithContext(ctx aws.Context, input *CreateKxVolumeInput, opts ...request.Option) (*CreateKxVolumeOutput, error) {
+	req, out := c.CreateKxVolumeRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteEnvironment = "DeleteEnvironment"
 
 // DeleteEnvironmentRequest generates a "aws/request.Request" representing the
@@ -637,7 +955,12 @@ const opDeleteEnvironment = "DeleteEnvironment"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) DeleteEnvironmentRequest(input *DeleteEnvironmentInput) (req *request.Request, output *DeleteEnvironmentOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, DeleteEnvironment, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opDeleteEnvironment,
 		HTTPMethod: "DELETE",
@@ -684,6 +1007,8 @@ func (c *Finspace) DeleteEnvironmentRequest(input *DeleteEnvironmentInput) (req 
 //     The input fails to satisfy the constraints specified by an AWS service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) DeleteEnvironment(input *DeleteEnvironmentInput) (*DeleteEnvironmentOutput, error) {
 	req, out := c.DeleteEnvironmentRequest(input)
 	return out, req.Send()
@@ -698,6 +1023,8 @@ func (c *Finspace) DeleteEnvironment(input *DeleteEnvironmentInput) (*DeleteEnvi
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) DeleteEnvironmentWithContext(ctx aws.Context, input *DeleteEnvironmentInput, opts ...request.Option) (*DeleteEnvironmentOutput, error) {
 	req, out := c.DeleteEnvironmentRequest(input)
 	req.SetContext(ctx)
@@ -902,6 +1229,103 @@ func (c *Finspace) DeleteKxDatabaseWithContext(ctx aws.Context, input *DeleteKxD
 	return out, req.Send()
 }
 
+const opDeleteKxDataview = "DeleteKxDataview"
+
+// DeleteKxDataviewRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteKxDataview operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteKxDataview for more information on using the DeleteKxDataview
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteKxDataviewRequest method.
+//	req, resp := client.DeleteKxDataviewRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxDataview
+func (c *Finspace) DeleteKxDataviewRequest(input *DeleteKxDataviewInput) (req *request.Request, output *DeleteKxDataviewOutput) {
+	op := &request.Operation{
+		Name:       opDeleteKxDataview,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/kx/environments/{environmentId}/databases/{databaseName}/dataviews/{dataviewName}",
+	}
+
+	if input == nil {
+		input = &DeleteKxDataviewInput{}
+	}
+
+	output = &DeleteKxDataviewOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteKxDataview API operation for FinSpace User Environment Management service.
+//
+// Deletes the specified dataview. Before deleting a dataview, make sure that
+// it is not in use by any cluster.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation DeleteKxDataview for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxDataview
+func (c *Finspace) DeleteKxDataview(input *DeleteKxDataviewInput) (*DeleteKxDataviewOutput, error) {
+	req, out := c.DeleteKxDataviewRequest(input)
+	return out, req.Send()
+}
+
+// DeleteKxDataviewWithContext is the same as DeleteKxDataview with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteKxDataview for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) DeleteKxDataviewWithContext(ctx aws.Context, input *DeleteKxDataviewInput, opts ...request.Option) (*DeleteKxDataviewOutput, error) {
+	req, out := c.DeleteKxDataviewRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteKxEnvironment = "DeleteKxEnvironment"
 
 // DeleteKxEnvironmentRequest generates a "aws/request.Request" representing the
@@ -975,6 +1399,9 @@ func (c *Finspace) DeleteKxEnvironmentRequest(input *DeleteKxEnvironmentInput) (
 //   - ValidationException
 //     The input fails to satisfy the constraints specified by an AWS service.
 //
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxEnvironment
 func (c *Finspace) DeleteKxEnvironment(input *DeleteKxEnvironmentInput) (*DeleteKxEnvironmentOutput, error) {
 	req, out := c.DeleteKxEnvironmentRequest(input)
@@ -992,6 +1419,106 @@ func (c *Finspace) DeleteKxEnvironment(input *DeleteKxEnvironmentInput) (*Delete
 // for more information on using Contexts.
 func (c *Finspace) DeleteKxEnvironmentWithContext(ctx aws.Context, input *DeleteKxEnvironmentInput, opts ...request.Option) (*DeleteKxEnvironmentOutput, error) {
 	req, out := c.DeleteKxEnvironmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteKxScalingGroup = "DeleteKxScalingGroup"
+
+// DeleteKxScalingGroupRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteKxScalingGroup operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteKxScalingGroup for more information on using the DeleteKxScalingGroup
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteKxScalingGroupRequest method.
+//	req, resp := client.DeleteKxScalingGroupRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxScalingGroup
+func (c *Finspace) DeleteKxScalingGroupRequest(input *DeleteKxScalingGroupInput) (req *request.Request, output *DeleteKxScalingGroupOutput) {
+	op := &request.Operation{
+		Name:       opDeleteKxScalingGroup,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/kx/environments/{environmentId}/scalingGroups/{scalingGroupName}",
+	}
+
+	if input == nil {
+		input = &DeleteKxScalingGroupInput{}
+	}
+
+	output = &DeleteKxScalingGroupOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteKxScalingGroup API operation for FinSpace User Environment Management service.
+//
+// Deletes the specified scaling group. This action is irreversible. You cannot
+// delete a scaling group until all the clusters running on it have been deleted.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation DeleteKxScalingGroup for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxScalingGroup
+func (c *Finspace) DeleteKxScalingGroup(input *DeleteKxScalingGroupInput) (*DeleteKxScalingGroupOutput, error) {
+	req, out := c.DeleteKxScalingGroupRequest(input)
+	return out, req.Send()
+}
+
+// DeleteKxScalingGroupWithContext is the same as DeleteKxScalingGroup with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteKxScalingGroup for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) DeleteKxScalingGroupWithContext(ctx aws.Context, input *DeleteKxScalingGroupInput, opts ...request.Option) (*DeleteKxScalingGroupOutput, error) {
+	req, out := c.DeleteKxScalingGroupRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1068,6 +1595,9 @@ func (c *Finspace) DeleteKxUserRequest(input *DeleteKxUserInput) (req *request.R
 //   - ValidationException
 //     The input fails to satisfy the constraints specified by an AWS service.
 //
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxUser
 func (c *Finspace) DeleteKxUser(input *DeleteKxUserInput) (*DeleteKxUserOutput, error) {
 	req, out := c.DeleteKxUserRequest(input)
@@ -1085,6 +1615,107 @@ func (c *Finspace) DeleteKxUser(input *DeleteKxUserInput) (*DeleteKxUserOutput, 
 // for more information on using Contexts.
 func (c *Finspace) DeleteKxUserWithContext(ctx aws.Context, input *DeleteKxUserInput, opts ...request.Option) (*DeleteKxUserOutput, error) {
 	req, out := c.DeleteKxUserRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteKxVolume = "DeleteKxVolume"
+
+// DeleteKxVolumeRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteKxVolume operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteKxVolume for more information on using the DeleteKxVolume
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteKxVolumeRequest method.
+//	req, resp := client.DeleteKxVolumeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxVolume
+func (c *Finspace) DeleteKxVolumeRequest(input *DeleteKxVolumeInput) (req *request.Request, output *DeleteKxVolumeOutput) {
+	op := &request.Operation{
+		Name:       opDeleteKxVolume,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/kx/environments/{environmentId}/kxvolumes/{volumeName}",
+	}
+
+	if input == nil {
+		input = &DeleteKxVolumeInput{}
+	}
+
+	output = &DeleteKxVolumeOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteKxVolume API operation for FinSpace User Environment Management service.
+//
+// Deletes a volume. You can only delete a volume if it's not attached to a
+// cluster or a dataview. When a volume is deleted, any data on the volume is
+// lost. This action is irreversible.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation DeleteKxVolume for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/DeleteKxVolume
+func (c *Finspace) DeleteKxVolume(input *DeleteKxVolumeInput) (*DeleteKxVolumeOutput, error) {
+	req, out := c.DeleteKxVolumeRequest(input)
+	return out, req.Send()
+}
+
+// DeleteKxVolumeWithContext is the same as DeleteKxVolume with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteKxVolume for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) DeleteKxVolumeWithContext(ctx aws.Context, input *DeleteKxVolumeInput, opts ...request.Option) (*DeleteKxVolumeOutput, error) {
+	req, out := c.DeleteKxVolumeRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1115,7 +1746,12 @@ const opGetEnvironment = "GetEnvironment"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) GetEnvironmentRequest(input *GetEnvironmentInput) (req *request.Request, output *GetEnvironmentOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, GetEnvironment, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opGetEnvironment,
 		HTTPMethod: "GET",
@@ -1158,6 +1794,8 @@ func (c *Finspace) GetEnvironmentRequest(input *GetEnvironmentInput) (req *reque
 //     You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) GetEnvironment(input *GetEnvironmentInput) (*GetEnvironmentOutput, error) {
 	req, out := c.GetEnvironmentRequest(input)
 	return out, req.Send()
@@ -1172,6 +1810,8 @@ func (c *Finspace) GetEnvironment(input *GetEnvironmentInput) (*GetEnvironmentOu
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) GetEnvironmentWithContext(ctx aws.Context, input *GetEnvironmentInput, opts ...request.Option) (*GetEnvironmentOutput, error) {
 	req, out := c.GetEnvironmentRequest(input)
 	req.SetContext(ctx)
@@ -1555,6 +2195,98 @@ func (c *Finspace) GetKxDatabaseWithContext(ctx aws.Context, input *GetKxDatabas
 	return out, req.Send()
 }
 
+const opGetKxDataview = "GetKxDataview"
+
+// GetKxDataviewRequest generates a "aws/request.Request" representing the
+// client's request for the GetKxDataview operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetKxDataview for more information on using the GetKxDataview
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetKxDataviewRequest method.
+//	req, resp := client.GetKxDataviewRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetKxDataview
+func (c *Finspace) GetKxDataviewRequest(input *GetKxDataviewInput) (req *request.Request, output *GetKxDataviewOutput) {
+	op := &request.Operation{
+		Name:       opGetKxDataview,
+		HTTPMethod: "GET",
+		HTTPPath:   "/kx/environments/{environmentId}/databases/{databaseName}/dataviews/{dataviewName}",
+	}
+
+	if input == nil {
+		input = &GetKxDataviewInput{}
+	}
+
+	output = &GetKxDataviewOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetKxDataview API operation for FinSpace User Environment Management service.
+//
+// Retrieves details of the dataview.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation GetKxDataview for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetKxDataview
+func (c *Finspace) GetKxDataview(input *GetKxDataviewInput) (*GetKxDataviewOutput, error) {
+	req, out := c.GetKxDataviewRequest(input)
+	return out, req.Send()
+}
+
+// GetKxDataviewWithContext is the same as GetKxDataview with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetKxDataview for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) GetKxDataviewWithContext(ctx aws.Context, input *GetKxDataviewInput, opts ...request.Option) (*GetKxDataviewOutput, error) {
+	req, out := c.GetKxDataviewRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetKxEnvironment = "GetKxEnvironment"
 
 // GetKxEnvironmentRequest generates a "aws/request.Request" representing the
@@ -1622,6 +2354,9 @@ func (c *Finspace) GetKxEnvironmentRequest(input *GetKxEnvironmentInput) (req *r
 //   - AccessDeniedException
 //     You do not have sufficient access to perform this action.
 //
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetKxEnvironment
 func (c *Finspace) GetKxEnvironment(input *GetKxEnvironmentInput) (*GetKxEnvironmentOutput, error) {
 	req, out := c.GetKxEnvironmentRequest(input)
@@ -1639,6 +2374,104 @@ func (c *Finspace) GetKxEnvironment(input *GetKxEnvironmentInput) (*GetKxEnviron
 // for more information on using Contexts.
 func (c *Finspace) GetKxEnvironmentWithContext(ctx aws.Context, input *GetKxEnvironmentInput, opts ...request.Option) (*GetKxEnvironmentOutput, error) {
 	req, out := c.GetKxEnvironmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetKxScalingGroup = "GetKxScalingGroup"
+
+// GetKxScalingGroupRequest generates a "aws/request.Request" representing the
+// client's request for the GetKxScalingGroup operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetKxScalingGroup for more information on using the GetKxScalingGroup
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetKxScalingGroupRequest method.
+//	req, resp := client.GetKxScalingGroupRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetKxScalingGroup
+func (c *Finspace) GetKxScalingGroupRequest(input *GetKxScalingGroupInput) (req *request.Request, output *GetKxScalingGroupOutput) {
+	op := &request.Operation{
+		Name:       opGetKxScalingGroup,
+		HTTPMethod: "GET",
+		HTTPPath:   "/kx/environments/{environmentId}/scalingGroups/{scalingGroupName}",
+	}
+
+	if input == nil {
+		input = &GetKxScalingGroupInput{}
+	}
+
+	output = &GetKxScalingGroupOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetKxScalingGroup API operation for FinSpace User Environment Management service.
+//
+// Retrieves details of a scaling group.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation GetKxScalingGroup for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetKxScalingGroup
+func (c *Finspace) GetKxScalingGroup(input *GetKxScalingGroupInput) (*GetKxScalingGroupOutput, error) {
+	req, out := c.GetKxScalingGroupRequest(input)
+	return out, req.Send()
+}
+
+// GetKxScalingGroupWithContext is the same as GetKxScalingGroup with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetKxScalingGroup for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) GetKxScalingGroupWithContext(ctx aws.Context, input *GetKxScalingGroupInput, opts ...request.Option) (*GetKxScalingGroupOutput, error) {
+	req, out := c.GetKxScalingGroupRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1736,6 +2569,104 @@ func (c *Finspace) GetKxUserWithContext(ctx aws.Context, input *GetKxUserInput, 
 	return out, req.Send()
 }
 
+const opGetKxVolume = "GetKxVolume"
+
+// GetKxVolumeRequest generates a "aws/request.Request" representing the
+// client's request for the GetKxVolume operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetKxVolume for more information on using the GetKxVolume
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetKxVolumeRequest method.
+//	req, resp := client.GetKxVolumeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetKxVolume
+func (c *Finspace) GetKxVolumeRequest(input *GetKxVolumeInput) (req *request.Request, output *GetKxVolumeOutput) {
+	op := &request.Operation{
+		Name:       opGetKxVolume,
+		HTTPMethod: "GET",
+		HTTPPath:   "/kx/environments/{environmentId}/kxvolumes/{volumeName}",
+	}
+
+	if input == nil {
+		input = &GetKxVolumeInput{}
+	}
+
+	output = &GetKxVolumeOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetKxVolume API operation for FinSpace User Environment Management service.
+//
+// Retrieves the information about the volume.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation GetKxVolume for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/GetKxVolume
+func (c *Finspace) GetKxVolume(input *GetKxVolumeInput) (*GetKxVolumeOutput, error) {
+	req, out := c.GetKxVolumeRequest(input)
+	return out, req.Send()
+}
+
+// GetKxVolumeWithContext is the same as GetKxVolume with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetKxVolume for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) GetKxVolumeWithContext(ctx aws.Context, input *GetKxVolumeInput, opts ...request.Option) (*GetKxVolumeOutput, error) {
+	req, out := c.GetKxVolumeRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opListEnvironments = "ListEnvironments"
 
 // ListEnvironmentsRequest generates a "aws/request.Request" representing the
@@ -1761,7 +2692,12 @@ const opListEnvironments = "ListEnvironments"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListEnvironments
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) ListEnvironmentsRequest(input *ListEnvironmentsInput) (req *request.Request, output *ListEnvironmentsOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, ListEnvironments, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opListEnvironments,
 		HTTPMethod: "GET",
@@ -1797,7 +2733,12 @@ func (c *Finspace) ListEnvironmentsRequest(input *ListEnvironmentsInput) (req *r
 //   - ValidationException
 //     The input fails to satisfy the constraints specified by an AWS service.
 //
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListEnvironments
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) ListEnvironments(input *ListEnvironmentsInput) (*ListEnvironmentsOutput, error) {
 	req, out := c.ListEnvironmentsRequest(input)
 	return out, req.Send()
@@ -1812,6 +2753,8 @@ func (c *Finspace) ListEnvironments(input *ListEnvironmentsInput) (*ListEnvironm
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) ListEnvironmentsWithContext(ctx aws.Context, input *ListEnvironmentsInput, opts ...request.Option) (*ListEnvironmentsOutput, error) {
 	req, out := c.ListEnvironmentsRequest(input)
 	req.SetContext(ctx)
@@ -2367,6 +3310,155 @@ func (c *Finspace) ListKxDatabasesPagesWithContext(ctx aws.Context, input *ListK
 	return p.Err()
 }
 
+const opListKxDataviews = "ListKxDataviews"
+
+// ListKxDataviewsRequest generates a "aws/request.Request" representing the
+// client's request for the ListKxDataviews operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListKxDataviews for more information on using the ListKxDataviews
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListKxDataviewsRequest method.
+//	req, resp := client.ListKxDataviewsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListKxDataviews
+func (c *Finspace) ListKxDataviewsRequest(input *ListKxDataviewsInput) (req *request.Request, output *ListKxDataviewsOutput) {
+	op := &request.Operation{
+		Name:       opListKxDataviews,
+		HTTPMethod: "GET",
+		HTTPPath:   "/kx/environments/{environmentId}/databases/{databaseName}/dataviews",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListKxDataviewsInput{}
+	}
+
+	output = &ListKxDataviewsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListKxDataviews API operation for FinSpace User Environment Management service.
+//
+// Returns a list of all the dataviews in the database.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation ListKxDataviews for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListKxDataviews
+func (c *Finspace) ListKxDataviews(input *ListKxDataviewsInput) (*ListKxDataviewsOutput, error) {
+	req, out := c.ListKxDataviewsRequest(input)
+	return out, req.Send()
+}
+
+// ListKxDataviewsWithContext is the same as ListKxDataviews with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListKxDataviews for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) ListKxDataviewsWithContext(ctx aws.Context, input *ListKxDataviewsInput, opts ...request.Option) (*ListKxDataviewsOutput, error) {
+	req, out := c.ListKxDataviewsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListKxDataviewsPages iterates over the pages of a ListKxDataviews operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListKxDataviews method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListKxDataviews operation.
+//	pageNum := 0
+//	err := client.ListKxDataviewsPages(params,
+//	    func(page *finspace.ListKxDataviewsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Finspace) ListKxDataviewsPages(input *ListKxDataviewsInput, fn func(*ListKxDataviewsOutput, bool) bool) error {
+	return c.ListKxDataviewsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListKxDataviewsPagesWithContext same as ListKxDataviewsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) ListKxDataviewsPagesWithContext(ctx aws.Context, input *ListKxDataviewsInput, fn func(*ListKxDataviewsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListKxDataviewsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListKxDataviewsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListKxDataviewsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListKxEnvironments = "ListKxEnvironments"
 
 // ListKxEnvironmentsRequest generates a "aws/request.Request" representing the
@@ -2430,6 +3522,9 @@ func (c *Finspace) ListKxEnvironmentsRequest(input *ListKxEnvironmentsInput) (re
 //   - InternalServerException
 //     The request processing has failed because of an unknown error, exception
 //     or failure.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
 //     The input fails to satisfy the constraints specified by an AWS service.
@@ -2500,6 +3595,161 @@ func (c *Finspace) ListKxEnvironmentsPagesWithContext(ctx aws.Context, input *Li
 
 	for p.Next() {
 		if !fn(p.Page().(*ListKxEnvironmentsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListKxScalingGroups = "ListKxScalingGroups"
+
+// ListKxScalingGroupsRequest generates a "aws/request.Request" representing the
+// client's request for the ListKxScalingGroups operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListKxScalingGroups for more information on using the ListKxScalingGroups
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListKxScalingGroupsRequest method.
+//	req, resp := client.ListKxScalingGroupsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListKxScalingGroups
+func (c *Finspace) ListKxScalingGroupsRequest(input *ListKxScalingGroupsInput) (req *request.Request, output *ListKxScalingGroupsOutput) {
+	op := &request.Operation{
+		Name:       opListKxScalingGroups,
+		HTTPMethod: "GET",
+		HTTPPath:   "/kx/environments/{environmentId}/scalingGroups",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListKxScalingGroupsInput{}
+	}
+
+	output = &ListKxScalingGroupsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListKxScalingGroups API operation for FinSpace User Environment Management service.
+//
+// Returns a list of scaling groups in a kdb environment.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation ListKxScalingGroups for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListKxScalingGroups
+func (c *Finspace) ListKxScalingGroups(input *ListKxScalingGroupsInput) (*ListKxScalingGroupsOutput, error) {
+	req, out := c.ListKxScalingGroupsRequest(input)
+	return out, req.Send()
+}
+
+// ListKxScalingGroupsWithContext is the same as ListKxScalingGroups with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListKxScalingGroups for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) ListKxScalingGroupsWithContext(ctx aws.Context, input *ListKxScalingGroupsInput, opts ...request.Option) (*ListKxScalingGroupsOutput, error) {
+	req, out := c.ListKxScalingGroupsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListKxScalingGroupsPages iterates over the pages of a ListKxScalingGroups operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListKxScalingGroups method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListKxScalingGroups operation.
+//	pageNum := 0
+//	err := client.ListKxScalingGroupsPages(params,
+//	    func(page *finspace.ListKxScalingGroupsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Finspace) ListKxScalingGroupsPages(input *ListKxScalingGroupsInput, fn func(*ListKxScalingGroupsOutput, bool) bool) error {
+	return c.ListKxScalingGroupsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListKxScalingGroupsPagesWithContext same as ListKxScalingGroupsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) ListKxScalingGroupsPagesWithContext(ctx aws.Context, input *ListKxScalingGroupsInput, fn func(*ListKxScalingGroupsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListKxScalingGroupsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListKxScalingGroupsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListKxScalingGroupsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -2594,6 +3844,104 @@ func (c *Finspace) ListKxUsers(input *ListKxUsersInput) (*ListKxUsersOutput, err
 // for more information on using Contexts.
 func (c *Finspace) ListKxUsersWithContext(ctx aws.Context, input *ListKxUsersInput, opts ...request.Option) (*ListKxUsersOutput, error) {
 	req, out := c.ListKxUsersRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opListKxVolumes = "ListKxVolumes"
+
+// ListKxVolumesRequest generates a "aws/request.Request" representing the
+// client's request for the ListKxVolumes operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListKxVolumes for more information on using the ListKxVolumes
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListKxVolumesRequest method.
+//	req, resp := client.ListKxVolumesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListKxVolumes
+func (c *Finspace) ListKxVolumesRequest(input *ListKxVolumesInput) (req *request.Request, output *ListKxVolumesOutput) {
+	op := &request.Operation{
+		Name:       opListKxVolumes,
+		HTTPMethod: "GET",
+		HTTPPath:   "/kx/environments/{environmentId}/kxvolumes",
+	}
+
+	if input == nil {
+		input = &ListKxVolumesInput{}
+	}
+
+	output = &ListKxVolumesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListKxVolumes API operation for FinSpace User Environment Management service.
+//
+// Lists all the volumes in a kdb environment.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation ListKxVolumes for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/ListKxVolumes
+func (c *Finspace) ListKxVolumes(input *ListKxVolumesInput) (*ListKxVolumesOutput, error) {
+	req, out := c.ListKxVolumesRequest(input)
+	return out, req.Send()
+}
+
+// ListKxVolumesWithContext is the same as ListKxVolumes with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListKxVolumes for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) ListKxVolumesWithContext(ctx aws.Context, input *ListKxVolumesInput, opts ...request.Option) (*ListKxVolumesOutput, error) {
+	req, out := c.ListKxVolumesRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -2884,7 +4232,12 @@ const opUpdateEnvironment = "UpdateEnvironment"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) UpdateEnvironmentRequest(input *UpdateEnvironmentInput) (req *request.Request, output *UpdateEnvironmentOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, UpdateEnvironment, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opUpdateEnvironment,
 		HTTPMethod: "PUT",
@@ -2930,6 +4283,8 @@ func (c *Finspace) UpdateEnvironmentRequest(input *UpdateEnvironmentInput) (req 
 //     The input fails to satisfy the constraints specified by an AWS service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateEnvironment
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) UpdateEnvironment(input *UpdateEnvironmentInput) (*UpdateEnvironmentOutput, error) {
 	req, out := c.UpdateEnvironmentRequest(input)
 	return out, req.Send()
@@ -2944,8 +4299,112 @@ func (c *Finspace) UpdateEnvironment(input *UpdateEnvironmentInput) (*UpdateEnvi
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: This method will be discontinued.
 func (c *Finspace) UpdateEnvironmentWithContext(ctx aws.Context, input *UpdateEnvironmentInput, opts ...request.Option) (*UpdateEnvironmentOutput, error) {
 	req, out := c.UpdateEnvironmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateKxClusterCodeConfiguration = "UpdateKxClusterCodeConfiguration"
+
+// UpdateKxClusterCodeConfigurationRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateKxClusterCodeConfiguration operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateKxClusterCodeConfiguration for more information on using the UpdateKxClusterCodeConfiguration
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateKxClusterCodeConfigurationRequest method.
+//	req, resp := client.UpdateKxClusterCodeConfigurationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateKxClusterCodeConfiguration
+func (c *Finspace) UpdateKxClusterCodeConfigurationRequest(input *UpdateKxClusterCodeConfigurationInput) (req *request.Request, output *UpdateKxClusterCodeConfigurationOutput) {
+	op := &request.Operation{
+		Name:       opUpdateKxClusterCodeConfiguration,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/kx/environments/{environmentId}/clusters/{clusterName}/configuration/code",
+	}
+
+	if input == nil {
+		input = &UpdateKxClusterCodeConfigurationInput{}
+	}
+
+	output = &UpdateKxClusterCodeConfigurationOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// UpdateKxClusterCodeConfiguration API operation for FinSpace User Environment Management service.
+//
+// Allows you to update code configuration on a running cluster. By using this
+// API you can update the code, the initialization script path, and the command
+// line arguments for a specific cluster. The configuration that you want to
+// update will override any existing configurations on the cluster.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation UpdateKxClusterCodeConfiguration for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateKxClusterCodeConfiguration
+func (c *Finspace) UpdateKxClusterCodeConfiguration(input *UpdateKxClusterCodeConfigurationInput) (*UpdateKxClusterCodeConfigurationOutput, error) {
+	req, out := c.UpdateKxClusterCodeConfigurationRequest(input)
+	return out, req.Send()
+}
+
+// UpdateKxClusterCodeConfigurationWithContext is the same as UpdateKxClusterCodeConfiguration with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateKxClusterCodeConfiguration for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) UpdateKxClusterCodeConfigurationWithContext(ctx aws.Context, input *UpdateKxClusterCodeConfigurationInput, opts ...request.Option) (*UpdateKxClusterCodeConfigurationOutput, error) {
+	req, out := c.UpdateKxClusterCodeConfigurationRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -3026,6 +4485,9 @@ func (c *Finspace) UpdateKxClusterDatabasesRequest(input *UpdateKxClusterDatabas
 //
 //   - ValidationException
 //     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
 //
 //   - ResourceNotFoundException
 //     One or more resources can't be found.
@@ -3142,6 +4604,106 @@ func (c *Finspace) UpdateKxDatabase(input *UpdateKxDatabaseInput) (*UpdateKxData
 // for more information on using Contexts.
 func (c *Finspace) UpdateKxDatabaseWithContext(ctx aws.Context, input *UpdateKxDatabaseInput, opts ...request.Option) (*UpdateKxDatabaseOutput, error) {
 	req, out := c.UpdateKxDatabaseRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateKxDataview = "UpdateKxDataview"
+
+// UpdateKxDataviewRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateKxDataview operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateKxDataview for more information on using the UpdateKxDataview
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateKxDataviewRequest method.
+//	req, resp := client.UpdateKxDataviewRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateKxDataview
+func (c *Finspace) UpdateKxDataviewRequest(input *UpdateKxDataviewInput) (req *request.Request, output *UpdateKxDataviewOutput) {
+	op := &request.Operation{
+		Name:       opUpdateKxDataview,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/kx/environments/{environmentId}/databases/{databaseName}/dataviews/{dataviewName}",
+	}
+
+	if input == nil {
+		input = &UpdateKxDataviewInput{}
+	}
+
+	output = &UpdateKxDataviewOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateKxDataview API operation for FinSpace User Environment Management service.
+//
+// Updates the specified dataview. The dataviews get automatically updated when
+// any new changesets are ingested. Each update of the dataview creates a new
+// version, including changeset details and cache configurations
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation UpdateKxDataview for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceAlreadyExistsException
+//     The specified resource group already exists.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateKxDataview
+func (c *Finspace) UpdateKxDataview(input *UpdateKxDataviewInput) (*UpdateKxDataviewOutput, error) {
+	req, out := c.UpdateKxDataviewRequest(input)
+	return out, req.Send()
+}
+
+// UpdateKxDataviewWithContext is the same as UpdateKxDataview with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateKxDataview for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) UpdateKxDataviewWithContext(ctx aws.Context, input *UpdateKxDataviewInput, opts ...request.Option) (*UpdateKxDataviewOutput, error) {
+	req, out := c.UpdateKxDataviewRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -3443,6 +5005,106 @@ func (c *Finspace) UpdateKxUserWithContext(ctx aws.Context, input *UpdateKxUserI
 	return out, req.Send()
 }
 
+const opUpdateKxVolume = "UpdateKxVolume"
+
+// UpdateKxVolumeRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateKxVolume operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateKxVolume for more information on using the UpdateKxVolume
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateKxVolumeRequest method.
+//	req, resp := client.UpdateKxVolumeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateKxVolume
+func (c *Finspace) UpdateKxVolumeRequest(input *UpdateKxVolumeInput) (req *request.Request, output *UpdateKxVolumeOutput) {
+	op := &request.Operation{
+		Name:       opUpdateKxVolume,
+		HTTPMethod: "PATCH",
+		HTTPPath:   "/kx/environments/{environmentId}/kxvolumes/{volumeName}",
+	}
+
+	if input == nil {
+		input = &UpdateKxVolumeInput{}
+	}
+
+	output = &UpdateKxVolumeOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateKxVolume API operation for FinSpace User Environment Management service.
+//
+// Updates the throughput or capacity of a volume. During the update process,
+// the filesystem might be unavailable for a few minutes. You can retry any
+// operations after the update is complete.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for FinSpace User Environment Management service's
+// API operation UpdateKxVolume for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     The request processing has failed because of an unknown error, exception
+//     or failure.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - LimitExceededException
+//     A service limit or quota is exceeded.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by an AWS service.
+//
+//   - ConflictException
+//     There was a conflict with this action, and it could not be completed.
+//
+//   - ResourceNotFoundException
+//     One or more resources can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/finspace-2021-03-12/UpdateKxVolume
+func (c *Finspace) UpdateKxVolume(input *UpdateKxVolumeInput) (*UpdateKxVolumeOutput, error) {
+	req, out := c.UpdateKxVolumeRequest(input)
+	return out, req.Send()
+}
+
+// UpdateKxVolumeWithContext is the same as UpdateKxVolume with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateKxVolume for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Finspace) UpdateKxVolumeWithContext(ctx aws.Context, input *UpdateKxVolumeInput, opts ...request.Option) (*UpdateKxVolumeOutput, error) {
+	req, out := c.UpdateKxVolumeRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 // You do not have sufficient access to perform this action.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
@@ -3614,8 +5276,7 @@ func (s *AutoScalingConfiguration) SetScaleOutCooldownSeconds(v float64) *AutoSc
 }
 
 // A structure for the metadata of a cluster. It includes information like the
-// CPUs needed, memory of instances, number of instances, and the port used
-// while establishing a connection.
+// CPUs needed, memory of instances, and number of instances.
 type CapacityConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -4113,7 +5774,7 @@ type CreateKxChangesetInput struct {
 	_ struct{} `type:"structure"`
 
 	// A list of change request objects that are run in order. A change request
-	// object consists of changeType , s3Path, and a dbPath. A changeType can has
+	// object consists of changeType , s3Path, and dbPath. A changeType can has
 	// the following values:
 	//
 	//    * PUT – Adds or updates files in a database.
@@ -4121,20 +5782,38 @@ type CreateKxChangesetInput struct {
 	//    * DELETE – Deletes files in a database.
 	//
 	// All the change requests require a mandatory dbPath attribute that defines
-	// the path within the database directory. The s3Path attribute defines the
-	// s3 source file path and is required for a PUT change type.
+	// the path within the database directory. All database paths must start with
+	// a leading / and end with a trailing /. The s3Path attribute defines the s3
+	// source file path and is required for a PUT change type. The s3path must end
+	// with a trailing / if it is a directory and must end without a trailing /
+	// if it is a file.
 	//
-	// Here is an example of how you can use the change request object:
+	// Here are few examples of how you can use the change request object:
 	//
-	// [ { "changeType": "PUT", "s3Path":"s3://bucket/db/2020.01.02/", "dbPath":"/2020.01.02/"},
-	// { "changeType": "PUT", "s3Path":"s3://bucket/db/sym", "dbPath":"/"}, { "changeType":
-	// "DELETE", "dbPath": "/2020.01.01/"} ]
+	// This request adds a single sym file at database root location.
 	//
-	// In this example, the first request with PUT change type allows you to add
-	// files in the given s3Path under the 2020.01.02 partition of the database.
-	// The second request with PUT change type allows you to add a single sym file
-	// at database root location. The last request with DELETE change type allows
-	// you to delete the files under the 2020.01.01 partition of the database.
+	// { "changeType": "PUT", "s3Path":"s3://bucket/db/sym", "dbPath":"/"}
+	//
+	// This request adds files in the given s3Path under the 2020.01.02 partition
+	// of the database.
+	//
+	// { "changeType": "PUT", "s3Path":"s3://bucket/db/2020.01.02/", "dbPath":"/2020.01.02/"}
+	//
+	// This request adds files in the given s3Path under the taq table partition
+	// of the database.
+	//
+	// [ { "changeType": "PUT", "s3Path":"s3://bucket/db/2020.01.02/taq/", "dbPath":"/2020.01.02/taq/"}]
+	//
+	// This request deletes the 2020.01.02 partition of the database.
+	//
+	// [{ "changeType": "DELETE", "dbPath": "/2020.01.02/"} ]
+	//
+	// The DELETE request allows you to delete the existing files under the 2020.01.02
+	// partition of the database, and the PUT request adds a new taq table under
+	// it.
+	//
+	// [ {"changeType": "DELETE", "dbPath":"/2020.01.02/"}, {"changeType": "PUT",
+	// "s3Path":"s3://bucket/db/2020.01.02/taq/", "dbPath":"/2020.01.02/taq/"}]
 	//
 	// ChangeRequests is a required field
 	ChangeRequests []*ChangeRequest `locationName:"changeRequests" min:"1" type:"list" required:"true"`
@@ -4367,12 +6046,9 @@ type CreateKxClusterInput struct {
 	// This cache will be stored as an FSx Lustre that reads from the S3 store.
 	CacheStorageConfigurations []*KxCacheStorageConfiguration `locationName:"cacheStorageConfigurations" type:"list"`
 
-	// A structure for the metadata of a cluster. It includes information about
-	// like the CPUs needed, memory of instances, number of instances, and the port
-	// used while establishing a connection.
-	//
-	// CapacityConfiguration is a required field
-	CapacityConfiguration *CapacityConfiguration `locationName:"capacityConfiguration" type:"structure" required:"true"`
+	// A structure for the metadata of a cluster. It includes information like the
+	// CPUs needed, memory of instances, and number of instances.
+	CapacityConfiguration *CapacityConfiguration `locationName:"capacityConfiguration" type:"structure"`
 
 	// A token that ensures idempotency. This token expires in 10 minutes.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
@@ -4403,6 +6079,19 @@ type CreateKxClusterInput struct {
 	//    in kdb systems. It allows you to create your own routing logic using the
 	//    initialization scripts and custom code. This type of cluster does not
 	//    require a writable local storage.
+	//
+	//    * GP – A general purpose cluster allows you to quickly iterate on code
+	//    during development by granting greater access to system commands and enabling
+	//    a fast reload of custom code. This cluster type can optionally mount databases
+	//    including cache and savedown storage. For this cluster type, the node
+	//    count is fixed at 1. It does not support autoscaling and supports only
+	//    SINGLE AZ mode.
+	//
+	//    * Tickerplant – A tickerplant cluster allows you to subscribe to feed
+	//    handlers based on IAM permissions. It can publish to RDBs, other Tickerplants,
+	//    and real-time subscribers (RTS). Tickerplants can persist messages to
+	//    log, which is readable by any RDB environment. It supports only single-node
+	//    that is only one kdb process.
 	//
 	// ClusterType is a required field
 	ClusterType *string `locationName:"clusterType" type:"string" required:"true" enum:"KxClusterType"`
@@ -4444,13 +6133,24 @@ type CreateKxClusterInput struct {
 	// node is restarted.
 	SavedownStorageConfiguration *KxSavedownStorageConfiguration `locationName:"savedownStorageConfiguration" type:"structure"`
 
+	// The structure that stores the configuration details of a scaling group.
+	ScalingGroupConfiguration *KxScalingGroupConfiguration `locationName:"scalingGroupConfiguration" type:"structure"`
+
 	// A list of key-value pairs to label the cluster. You can add up to 50 tags
 	// to a cluster.
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 
+	// A configuration to store Tickerplant logs. It consists of a list of volumes
+	// that will be mounted to your cluster. For the cluster type Tickerplant, the
+	// location of the TP volume on the cluster will be available by using the global
+	// variable .aws.tp_log_path.
+	TickerplantLogConfiguration *TickerplantLogConfiguration `locationName:"tickerplantLogConfiguration" type:"structure"`
+
 	// Configuration details about the network where the Privatelink endpoint of
 	// the cluster resides.
-	VpcConfiguration *VpcConfiguration `locationName:"vpcConfiguration" type:"structure"`
+	//
+	// VpcConfiguration is a required field
+	VpcConfiguration *VpcConfiguration `locationName:"vpcConfiguration" type:"structure" required:"true"`
 }
 
 // String returns the string representation.
@@ -4476,9 +6176,6 @@ func (s *CreateKxClusterInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateKxClusterInput"}
 	if s.AzMode == nil {
 		invalidParams.Add(request.NewErrParamRequired("AzMode"))
-	}
-	if s.CapacityConfiguration == nil {
-		invalidParams.Add(request.NewErrParamRequired("CapacityConfiguration"))
 	}
 	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
@@ -4515,6 +6212,9 @@ func (s *CreateKxClusterInput) Validate() error {
 	}
 	if s.Tags != nil && len(s.Tags) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.VpcConfiguration == nil {
+		invalidParams.Add(request.NewErrParamRequired("VpcConfiguration"))
 	}
 	if s.AutoScalingConfiguration != nil {
 		if err := s.AutoScalingConfiguration.Validate(); err != nil {
@@ -4564,6 +6264,11 @@ func (s *CreateKxClusterInput) Validate() error {
 	if s.SavedownStorageConfiguration != nil {
 		if err := s.SavedownStorageConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("SavedownStorageConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.ScalingGroupConfiguration != nil {
+		if err := s.ScalingGroupConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("ScalingGroupConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.VpcConfiguration != nil {
@@ -4680,9 +6385,21 @@ func (s *CreateKxClusterInput) SetSavedownStorageConfiguration(v *KxSavedownStor
 	return s
 }
 
+// SetScalingGroupConfiguration sets the ScalingGroupConfiguration field's value.
+func (s *CreateKxClusterInput) SetScalingGroupConfiguration(v *KxScalingGroupConfiguration) *CreateKxClusterInput {
+	s.ScalingGroupConfiguration = v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *CreateKxClusterInput) SetTags(v map[string]*string) *CreateKxClusterInput {
 	s.Tags = v
+	return s
+}
+
+// SetTickerplantLogConfiguration sets the TickerplantLogConfiguration field's value.
+func (s *CreateKxClusterInput) SetTickerplantLogConfiguration(v *TickerplantLogConfiguration) *CreateKxClusterInput {
+	s.TickerplantLogConfiguration = v
 	return s
 }
 
@@ -4715,8 +6432,7 @@ type CreateKxClusterOutput struct {
 	CacheStorageConfigurations []*KxCacheStorageConfiguration `locationName:"cacheStorageConfigurations" type:"list"`
 
 	// A structure for the metadata of a cluster. It includes information like the
-	// CPUs needed, memory of instances, number of instances, and the port used
-	// while establishing a connection.
+	// CPUs needed, memory of instances, and number of instances.
 	CapacityConfiguration *CapacityConfiguration `locationName:"capacityConfiguration" type:"structure"`
 
 	// A description of the cluster.
@@ -4743,6 +6459,19 @@ type CreateKxClusterOutput struct {
 	//    in kdb systems. It allows you to create your own routing logic using the
 	//    initialization scripts and custom code. This type of cluster does not
 	//    require a writable local storage.
+	//
+	//    * GP – A general purpose cluster allows you to quickly iterate on code
+	//    during development by granting greater access to system commands and enabling
+	//    a fast reload of custom code. This cluster type can optionally mount databases
+	//    including cache and savedown storage. For this cluster type, the node
+	//    count is fixed at 1. It does not support autoscaling and supports only
+	//    SINGLE AZ mode.
+	//
+	//    * Tickerplant – A tickerplant cluster allows you to subscribe to feed
+	//    handlers based on IAM permissions. It can publish to RDBs, other Tickerplants,
+	//    and real-time subscribers (RTS). Tickerplants can persist messages to
+	//    log, which is readable by any RDB environment. It supports only single-node
+	//    that is only one kdb process.
 	ClusterType *string `locationName:"clusterType" type:"string" enum:"KxClusterType"`
 
 	// The details of the custom code that you want to use inside a cluster when
@@ -4788,6 +6517,9 @@ type CreateKxClusterOutput struct {
 	// node is restarted.
 	SavedownStorageConfiguration *KxSavedownStorageConfiguration `locationName:"savedownStorageConfiguration" type:"structure"`
 
+	// The structure that stores the configuration details of a scaling group.
+	ScalingGroupConfiguration *KxScalingGroupConfiguration `locationName:"scalingGroupConfiguration" type:"structure"`
+
 	// The status of cluster creation.
 	//
 	//    * PENDING – The cluster is pending creation.
@@ -4809,6 +6541,15 @@ type CreateKxClusterOutput struct {
 
 	// The error message when a failed state occurs.
 	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+
+	// A configuration to store the Tickerplant logs. It consists of a list of volumes
+	// that will be mounted to your cluster. For the cluster type Tickerplant, the
+	// location of the TP volume on the cluster will be available by using the global
+	// variable .aws.tp_log_path.
+	TickerplantLogConfiguration *TickerplantLogConfiguration `locationName:"tickerplantLogConfiguration" type:"structure"`
+
+	// A list of volumes mounted on the cluster.
+	Volumes []*Volume `locationName:"volumes" type:"list"`
 
 	// Configuration details about the network where the Privatelink endpoint of
 	// the cluster resides.
@@ -4941,6 +6682,12 @@ func (s *CreateKxClusterOutput) SetSavedownStorageConfiguration(v *KxSavedownSto
 	return s
 }
 
+// SetScalingGroupConfiguration sets the ScalingGroupConfiguration field's value.
+func (s *CreateKxClusterOutput) SetScalingGroupConfiguration(v *KxScalingGroupConfiguration) *CreateKxClusterOutput {
+	s.ScalingGroupConfiguration = v
+	return s
+}
+
 // SetStatus sets the Status field's value.
 func (s *CreateKxClusterOutput) SetStatus(v string) *CreateKxClusterOutput {
 	s.Status = &v
@@ -4950,6 +6697,18 @@ func (s *CreateKxClusterOutput) SetStatus(v string) *CreateKxClusterOutput {
 // SetStatusReason sets the StatusReason field's value.
 func (s *CreateKxClusterOutput) SetStatusReason(v string) *CreateKxClusterOutput {
 	s.StatusReason = &v
+	return s
+}
+
+// SetTickerplantLogConfiguration sets the TickerplantLogConfiguration field's value.
+func (s *CreateKxClusterOutput) SetTickerplantLogConfiguration(v *TickerplantLogConfiguration) *CreateKxClusterOutput {
+	s.TickerplantLogConfiguration = v
+	return s
+}
+
+// SetVolumes sets the Volumes field's value.
+func (s *CreateKxClusterOutput) SetVolumes(v []*Volume) *CreateKxClusterOutput {
+	s.Volumes = v
 	return s
 }
 
@@ -5142,11 +6901,358 @@ func (s *CreateKxDatabaseOutput) SetLastModifiedTimestamp(v time.Time) *CreateKx
 	return s
 }
 
+type CreateKxDataviewInput struct {
+	_ struct{} `type:"structure"`
+
+	// The option to specify whether you want to apply all the future additions
+	// and corrections automatically to the dataview, when you ingest new changesets.
+	// The default value is false.
+	AutoUpdate *bool `locationName:"autoUpdate" type:"boolean"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The number of availability zones you want to assign per cluster. This can
+	// be one of the following
+	//
+	//    * SINGLE – Assigns one availability zone per cluster.
+	//
+	//    * MULTI – Assigns all the availability zones per cluster.
+	//
+	// AzMode is a required field
+	AzMode *string `locationName:"azMode" type:"string" required:"true" enum:"KxAzMode"`
+
+	// A unique identifier of the changeset that you want to use to ingest data.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The name of the database where you want to create a dataview.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `location:"uri" locationName:"databaseName" min:"3" type:"string" required:"true"`
+
+	// A unique identifier for the dataview.
+	//
+	// DataviewName is a required field
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string" required:"true"`
+
+	// A description of the dataview.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, where you want to create the
+	// dataview.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// The configuration that contains the database path of the data that you want
+	// to place on each selected volume. Each segment must have a unique database
+	// path for each volume. If you do not explicitly specify any database path
+	// for a volume, they are accessible from the cluster through the default S3/object
+	// store segment.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+
+	// A list of key-value pairs to label the dataview. You can add up to 50 tags
+	// to a dataview.
+	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxDataviewInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxDataviewInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateKxDataviewInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateKxDataviewInput"}
+	if s.AzMode == nil {
+		invalidParams.Add(request.NewErrParamRequired("AzMode"))
+	}
+	if s.ChangesetId != nil && len(*s.ChangesetId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ChangesetId", 1))
+	}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 3))
+	}
+	if s.DataviewName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataviewName"))
+	}
+	if s.DataviewName != nil && len(*s.DataviewName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewName", 3))
+	}
+	if s.Description != nil && len(*s.Description) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.SegmentConfigurations != nil {
+		for i, v := range s.SegmentConfigurations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "SegmentConfigurations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAutoUpdate sets the AutoUpdate field's value.
+func (s *CreateKxDataviewInput) SetAutoUpdate(v bool) *CreateKxDataviewInput {
+	s.AutoUpdate = &v
+	return s
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *CreateKxDataviewInput) SetAvailabilityZoneId(v string) *CreateKxDataviewInput {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *CreateKxDataviewInput) SetAzMode(v string) *CreateKxDataviewInput {
+	s.AzMode = &v
+	return s
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *CreateKxDataviewInput) SetChangesetId(v string) *CreateKxDataviewInput {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *CreateKxDataviewInput) SetClientToken(v string) *CreateKxDataviewInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *CreateKxDataviewInput) SetDatabaseName(v string) *CreateKxDataviewInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *CreateKxDataviewInput) SetDataviewName(v string) *CreateKxDataviewInput {
+	s.DataviewName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateKxDataviewInput) SetDescription(v string) *CreateKxDataviewInput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *CreateKxDataviewInput) SetEnvironmentId(v string) *CreateKxDataviewInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *CreateKxDataviewInput) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *CreateKxDataviewInput {
+	s.SegmentConfigurations = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateKxDataviewInput) SetTags(v map[string]*string) *CreateKxDataviewInput {
+	s.Tags = v
+	return s
+}
+
+type CreateKxDataviewOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The option to select whether you want to apply all the future additions and
+	// corrections automatically to the dataview when you ingest new changesets.
+	// The default value is false.
+	AutoUpdate *bool `locationName:"autoUpdate" type:"boolean"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The number of availability zones you want to assign per cluster. This can
+	// be one of the following
+	//
+	//    * SINGLE – Assigns one availability zone per cluster.
+	//
+	//    * MULTI – Assigns all the availability zones per cluster.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// A unique identifier for the changeset.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// The timestamp at which the dataview was created in FinSpace. The value is
+	// determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// The name of the database where you want to create a dataview.
+	DatabaseName *string `locationName:"databaseName" min:"3" type:"string"`
+
+	// A unique identifier for the dataview.
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string"`
+
+	// A description of the dataview.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, where you want to create the
+	// dataview.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// The last time that the dataview was updated in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// The configuration that contains the database path of the data that you want
+	// to place on each selected volume. Each segment must have a unique database
+	// path for each volume. If you do not explicitly specify any database path
+	// for a volume, they are accessible from the cluster through the default S3/object
+	// store segment.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+
+	// The status of dataview creation.
+	//
+	//    * CREATING – The dataview creation is in progress.
+	//
+	//    * UPDATING – The dataview is in the process of being updated.
+	//
+	//    * ACTIVE – The dataview is active.
+	Status *string `locationName:"status" type:"string" enum:"KxDataviewStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxDataviewOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxDataviewOutput) GoString() string {
+	return s.String()
+}
+
+// SetAutoUpdate sets the AutoUpdate field's value.
+func (s *CreateKxDataviewOutput) SetAutoUpdate(v bool) *CreateKxDataviewOutput {
+	s.AutoUpdate = &v
+	return s
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *CreateKxDataviewOutput) SetAvailabilityZoneId(v string) *CreateKxDataviewOutput {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *CreateKxDataviewOutput) SetAzMode(v string) *CreateKxDataviewOutput {
+	s.AzMode = &v
+	return s
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *CreateKxDataviewOutput) SetChangesetId(v string) *CreateKxDataviewOutput {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *CreateKxDataviewOutput) SetCreatedTimestamp(v time.Time) *CreateKxDataviewOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *CreateKxDataviewOutput) SetDatabaseName(v string) *CreateKxDataviewOutput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *CreateKxDataviewOutput) SetDataviewName(v string) *CreateKxDataviewOutput {
+	s.DataviewName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateKxDataviewOutput) SetDescription(v string) *CreateKxDataviewOutput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *CreateKxDataviewOutput) SetEnvironmentId(v string) *CreateKxDataviewOutput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *CreateKxDataviewOutput) SetLastModifiedTimestamp(v time.Time) *CreateKxDataviewOutput {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *CreateKxDataviewOutput) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *CreateKxDataviewOutput {
+	s.SegmentConfigurations = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *CreateKxDataviewOutput) SetStatus(v string) *CreateKxDataviewOutput {
+	s.Status = &v
+	return s
+}
+
 type CreateKxEnvironmentInput struct {
 	_ struct{} `type:"structure"`
 
 	// A token that ensures idempotency. This token expires in 10 minutes.
-	ClientToken *string `locationName:"clientToken" min:"1" type:"string"`
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A description for the kdb environment.
 	Description *string `locationName:"description" min:"1" type:"string"`
@@ -5330,11 +7436,242 @@ func (s *CreateKxEnvironmentOutput) SetStatus(v string) *CreateKxEnvironmentOutp
 	return s
 }
 
+type CreateKxScalingGroupInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the availability zones.
+	//
+	// AvailabilityZoneId is a required field
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string" required:"true"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// A unique identifier for the kdb environment, where you want to create the
+	// scaling group.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// The memory and CPU capabilities of the scaling group host on which FinSpace
+	// Managed kdb clusters will be placed.
+	//
+	// HostType is a required field
+	HostType *string `locationName:"hostType" min:"1" type:"string" required:"true"`
+
+	// A unique identifier for the kdb scaling group.
+	//
+	// ScalingGroupName is a required field
+	ScalingGroupName *string `locationName:"scalingGroupName" min:"3" type:"string" required:"true"`
+
+	// A list of key-value pairs to label the scaling group. You can add up to 50
+	// tags to a scaling group.
+	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxScalingGroupInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxScalingGroupInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateKxScalingGroupInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateKxScalingGroupInput"}
+	if s.AvailabilityZoneId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AvailabilityZoneId"))
+	}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.HostType == nil {
+		invalidParams.Add(request.NewErrParamRequired("HostType"))
+	}
+	if s.HostType != nil && len(*s.HostType) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("HostType", 1))
+	}
+	if s.ScalingGroupName == nil {
+		invalidParams.Add(request.NewErrParamRequired("ScalingGroupName"))
+	}
+	if s.ScalingGroupName != nil && len(*s.ScalingGroupName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("ScalingGroupName", 3))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *CreateKxScalingGroupInput) SetAvailabilityZoneId(v string) *CreateKxScalingGroupInput {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *CreateKxScalingGroupInput) SetClientToken(v string) *CreateKxScalingGroupInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *CreateKxScalingGroupInput) SetEnvironmentId(v string) *CreateKxScalingGroupInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetHostType sets the HostType field's value.
+func (s *CreateKxScalingGroupInput) SetHostType(v string) *CreateKxScalingGroupInput {
+	s.HostType = &v
+	return s
+}
+
+// SetScalingGroupName sets the ScalingGroupName field's value.
+func (s *CreateKxScalingGroupInput) SetScalingGroupName(v string) *CreateKxScalingGroupInput {
+	s.ScalingGroupName = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateKxScalingGroupInput) SetTags(v map[string]*string) *CreateKxScalingGroupInput {
+	s.Tags = v
+	return s
+}
+
+type CreateKxScalingGroupOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The timestamp at which the scaling group was created in FinSpace. The value
+	// is determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// A unique identifier for the kdb environment, where you create the scaling
+	// group.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// The memory and CPU capabilities of the scaling group host on which FinSpace
+	// Managed kdb clusters will be placed.
+	HostType *string `locationName:"hostType" min:"1" type:"string"`
+
+	// The last time that the scaling group was updated in FinSpace. The value is
+	// determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// A unique identifier for the kdb scaling group.
+	ScalingGroupName *string `locationName:"scalingGroupName" min:"3" type:"string"`
+
+	// The status of scaling group.
+	//
+	//    * CREATING – The scaling group creation is in progress.
+	//
+	//    * CREATE_FAILED – The scaling group creation has failed.
+	//
+	//    * ACTIVE – The scaling group is active.
+	//
+	//    * UPDATING – The scaling group is in the process of being updated.
+	//
+	//    * UPDATE_FAILED – The update action failed.
+	//
+	//    * DELETING – The scaling group is in the process of being deleted.
+	//
+	//    * DELETE_FAILED – The system failed to delete the scaling group.
+	//
+	//    * DELETED – The scaling group is successfully deleted.
+	Status *string `locationName:"status" type:"string" enum:"KxScalingGroupStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxScalingGroupOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxScalingGroupOutput) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *CreateKxScalingGroupOutput) SetAvailabilityZoneId(v string) *CreateKxScalingGroupOutput {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *CreateKxScalingGroupOutput) SetCreatedTimestamp(v time.Time) *CreateKxScalingGroupOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *CreateKxScalingGroupOutput) SetEnvironmentId(v string) *CreateKxScalingGroupOutput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetHostType sets the HostType field's value.
+func (s *CreateKxScalingGroupOutput) SetHostType(v string) *CreateKxScalingGroupOutput {
+	s.HostType = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *CreateKxScalingGroupOutput) SetLastModifiedTimestamp(v time.Time) *CreateKxScalingGroupOutput {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetScalingGroupName sets the ScalingGroupName field's value.
+func (s *CreateKxScalingGroupOutput) SetScalingGroupName(v string) *CreateKxScalingGroupOutput {
+	s.ScalingGroupName = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *CreateKxScalingGroupOutput) SetStatus(v string) *CreateKxScalingGroupOutput {
+	s.Status = &v
+	return s
+}
+
 type CreateKxUserInput struct {
 	_ struct{} `type:"structure"`
 
 	// A token that ensures idempotency. This token expires in 10 minutes.
-	ClientToken *string `locationName:"clientToken" min:"1" type:"string"`
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A unique identifier for the kdb environment where you want to create a user.
 	//
@@ -5448,7 +7785,7 @@ type CreateKxUserOutput struct {
 	IamRole *string `locationName:"iamRole" min:"20" type:"string"`
 
 	// The Amazon Resource Name (ARN) that identifies the user. For more information
-	// about ARNs and how to use ARNs in policies, see IAM Identifiers (IAM/latest/UserGuide/reference_identifiers.html)
+	// about ARNs and how to use ARNs in policies, see IAM Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
 	// in the IAM User Guide.
 	UserArn *string `locationName:"userArn" min:"20" type:"string"`
 
@@ -5495,6 +7832,314 @@ func (s *CreateKxUserOutput) SetUserArn(v string) *CreateKxUserOutput {
 // SetUserName sets the UserName field's value.
 func (s *CreateKxUserOutput) SetUserName(v string) *CreateKxUserOutput {
 	s.UserName = &v
+	return s
+}
+
+type CreateKxVolumeInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the availability zones.
+	//
+	// AvailabilityZoneIds is a required field
+	AvailabilityZoneIds []*string `locationName:"availabilityZoneIds" type:"list" required:"true"`
+
+	// The number of availability zones you want to assign per cluster. Currently,
+	// FinSpace only support SINGLE for volumes.
+	//
+	// AzMode is a required field
+	AzMode *string `locationName:"azMode" type:"string" required:"true" enum:"KxAzMode"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// A description of the volume.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, whose clusters can attach to
+	// the volume.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// Specifies the configuration for the Network attached storage (NAS_1) file
+	// system volume. This parameter is required when you choose volumeType as NAS_1.
+	Nas1Configuration *KxNAS1Configuration `locationName:"nas1Configuration" type:"structure"`
+
+	// A list of key-value pairs to label the volume. You can add up to 50 tags
+	// to a volume.
+	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
+
+	// A unique identifier for the volume.
+	//
+	// VolumeName is a required field
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string" required:"true"`
+
+	// The type of file system volume. Currently, FinSpace only supports NAS_1 volume
+	// type. When you select NAS_1 volume type, you must also provide nas1Configuration.
+	//
+	// VolumeType is a required field
+	VolumeType *string `locationName:"volumeType" type:"string" required:"true" enum:"KxVolumeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxVolumeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxVolumeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateKxVolumeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateKxVolumeInput"}
+	if s.AvailabilityZoneIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("AvailabilityZoneIds"))
+	}
+	if s.AzMode == nil {
+		invalidParams.Add(request.NewErrParamRequired("AzMode"))
+	}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.Description != nil && len(*s.Description) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+	if s.VolumeName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VolumeName"))
+	}
+	if s.VolumeName != nil && len(*s.VolumeName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VolumeName", 3))
+	}
+	if s.VolumeType == nil {
+		invalidParams.Add(request.NewErrParamRequired("VolumeType"))
+	}
+	if s.Nas1Configuration != nil {
+		if err := s.Nas1Configuration.Validate(); err != nil {
+			invalidParams.AddNested("Nas1Configuration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAvailabilityZoneIds sets the AvailabilityZoneIds field's value.
+func (s *CreateKxVolumeInput) SetAvailabilityZoneIds(v []*string) *CreateKxVolumeInput {
+	s.AvailabilityZoneIds = v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *CreateKxVolumeInput) SetAzMode(v string) *CreateKxVolumeInput {
+	s.AzMode = &v
+	return s
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *CreateKxVolumeInput) SetClientToken(v string) *CreateKxVolumeInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateKxVolumeInput) SetDescription(v string) *CreateKxVolumeInput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *CreateKxVolumeInput) SetEnvironmentId(v string) *CreateKxVolumeInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetNas1Configuration sets the Nas1Configuration field's value.
+func (s *CreateKxVolumeInput) SetNas1Configuration(v *KxNAS1Configuration) *CreateKxVolumeInput {
+	s.Nas1Configuration = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateKxVolumeInput) SetTags(v map[string]*string) *CreateKxVolumeInput {
+	s.Tags = v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *CreateKxVolumeInput) SetVolumeName(v string) *CreateKxVolumeInput {
+	s.VolumeName = &v
+	return s
+}
+
+// SetVolumeType sets the VolumeType field's value.
+func (s *CreateKxVolumeInput) SetVolumeType(v string) *CreateKxVolumeInput {
+	s.VolumeType = &v
+	return s
+}
+
+type CreateKxVolumeOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneIds []*string `locationName:"availabilityZoneIds" type:"list"`
+
+	// The number of availability zones you want to assign per cluster. Currently,
+	// FinSpace only support SINGLE for volumes.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// The timestamp at which the volume was created in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// A description of the volume.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, whose clusters can attach to
+	// the volume.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// Specifies the configuration for the Network attached storage (NAS_1) file
+	// system volume.
+	Nas1Configuration *KxNAS1Configuration `locationName:"nas1Configuration" type:"structure"`
+
+	// The status of volume creation.
+	//
+	//    * CREATING – The volume creation is in progress.
+	//
+	//    * CREATE_FAILED – The volume creation has failed.
+	//
+	//    * ACTIVE – The volume is active.
+	//
+	//    * UPDATING – The volume is in the process of being updated.
+	//
+	//    * UPDATE_FAILED – The update action failed.
+	//
+	//    * UPDATED – The volume is successfully updated.
+	//
+	//    * DELETING – The volume is in the process of being deleted.
+	//
+	//    * DELETE_FAILED – The system failed to delete the volume.
+	//
+	//    * DELETED – The volume is successfully deleted.
+	Status *string `locationName:"status" type:"string" enum:"KxVolumeStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+
+	// The ARN identifier of the volume.
+	VolumeArn *string `locationName:"volumeArn" min:"20" type:"string"`
+
+	// A unique identifier for the volume.
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string"`
+
+	// The type of file system volume. Currently, FinSpace only supports NAS_1 volume
+	// type.
+	VolumeType *string `locationName:"volumeType" type:"string" enum:"KxVolumeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxVolumeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateKxVolumeOutput) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZoneIds sets the AvailabilityZoneIds field's value.
+func (s *CreateKxVolumeOutput) SetAvailabilityZoneIds(v []*string) *CreateKxVolumeOutput {
+	s.AvailabilityZoneIds = v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *CreateKxVolumeOutput) SetAzMode(v string) *CreateKxVolumeOutput {
+	s.AzMode = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *CreateKxVolumeOutput) SetCreatedTimestamp(v time.Time) *CreateKxVolumeOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateKxVolumeOutput) SetDescription(v string) *CreateKxVolumeOutput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *CreateKxVolumeOutput) SetEnvironmentId(v string) *CreateKxVolumeOutput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetNas1Configuration sets the Nas1Configuration field's value.
+func (s *CreateKxVolumeOutput) SetNas1Configuration(v *KxNAS1Configuration) *CreateKxVolumeOutput {
+	s.Nas1Configuration = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *CreateKxVolumeOutput) SetStatus(v string) *CreateKxVolumeOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *CreateKxVolumeOutput) SetStatusReason(v string) *CreateKxVolumeOutput {
+	s.StatusReason = &v
+	return s
+}
+
+// SetVolumeArn sets the VolumeArn field's value.
+func (s *CreateKxVolumeOutput) SetVolumeArn(v string) *CreateKxVolumeOutput {
+	s.VolumeArn = &v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *CreateKxVolumeOutput) SetVolumeName(v string) *CreateKxVolumeOutput {
+	s.VolumeName = &v
+	return s
+}
+
+// SetVolumeType sets the VolumeType field's value.
+func (s *CreateKxVolumeOutput) SetVolumeType(v string) *CreateKxVolumeOutput {
+	s.VolumeType = &v
 	return s
 }
 
@@ -5834,8 +8479,129 @@ func (s DeleteKxDatabaseOutput) GoString() string {
 	return s.String()
 }
 
+type DeleteKxDataviewInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `location:"querystring" locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The name of the database whose dataview you want to delete.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `location:"uri" locationName:"databaseName" min:"3" type:"string" required:"true"`
+
+	// The name of the dataview that you want to delete.
+	//
+	// DataviewName is a required field
+	DataviewName *string `location:"uri" locationName:"dataviewName" min:"3" type:"string" required:"true"`
+
+	// A unique identifier for the kdb environment, from where you want to delete
+	// the dataview.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxDataviewInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxDataviewInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteKxDataviewInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteKxDataviewInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 3))
+	}
+	if s.DataviewName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataviewName"))
+	}
+	if s.DataviewName != nil && len(*s.DataviewName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewName", 3))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *DeleteKxDataviewInput) SetClientToken(v string) *DeleteKxDataviewInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *DeleteKxDataviewInput) SetDatabaseName(v string) *DeleteKxDataviewInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *DeleteKxDataviewInput) SetDataviewName(v string) *DeleteKxDataviewInput {
+	s.DataviewName = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *DeleteKxDataviewInput) SetEnvironmentId(v string) *DeleteKxDataviewInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+type DeleteKxDataviewOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxDataviewOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxDataviewOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteKxEnvironmentInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `location:"querystring" locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A unique identifier for the kdb environment.
 	//
@@ -5864,6 +8630,9 @@ func (s DeleteKxEnvironmentInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *DeleteKxEnvironmentInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "DeleteKxEnvironmentInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
 	if s.EnvironmentId == nil {
 		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
 	}
@@ -5875,6 +8644,12 @@ func (s *DeleteKxEnvironmentInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *DeleteKxEnvironmentInput) SetClientToken(v string) *DeleteKxEnvironmentInput {
+	s.ClientToken = &v
+	return s
 }
 
 // SetEnvironmentId sets the EnvironmentId field's value.
@@ -5905,8 +8680,112 @@ func (s DeleteKxEnvironmentOutput) GoString() string {
 	return s.String()
 }
 
+type DeleteKxScalingGroupInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `location:"querystring" locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// A unique identifier for the kdb environment, from where you want to delete
+	// the dataview.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// A unique identifier for the kdb scaling group.
+	//
+	// ScalingGroupName is a required field
+	ScalingGroupName *string `location:"uri" locationName:"scalingGroupName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxScalingGroupInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxScalingGroupInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteKxScalingGroupInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteKxScalingGroupInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.ScalingGroupName == nil {
+		invalidParams.Add(request.NewErrParamRequired("ScalingGroupName"))
+	}
+	if s.ScalingGroupName != nil && len(*s.ScalingGroupName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("ScalingGroupName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *DeleteKxScalingGroupInput) SetClientToken(v string) *DeleteKxScalingGroupInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *DeleteKxScalingGroupInput) SetEnvironmentId(v string) *DeleteKxScalingGroupInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetScalingGroupName sets the ScalingGroupName field's value.
+func (s *DeleteKxScalingGroupInput) SetScalingGroupName(v string) *DeleteKxScalingGroupInput {
+	s.ScalingGroupName = &v
+	return s
+}
+
+type DeleteKxScalingGroupOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxScalingGroupOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxScalingGroupOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteKxUserInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `location:"querystring" locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A unique identifier for the kdb environment.
 	//
@@ -5940,6 +8819,9 @@ func (s DeleteKxUserInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *DeleteKxUserInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "DeleteKxUserInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
 	if s.EnvironmentId == nil {
 		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
 	}
@@ -5957,6 +8839,12 @@ func (s *DeleteKxUserInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *DeleteKxUserInput) SetClientToken(v string) *DeleteKxUserInput {
+	s.ClientToken = &v
+	return s
 }
 
 // SetEnvironmentId sets the EnvironmentId field's value.
@@ -5990,6 +8878,107 @@ func (s DeleteKxUserOutput) String() string {
 // be included in the string output. The member name will be present, but the
 // value will be replaced with "sensitive".
 func (s DeleteKxUserOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteKxVolumeInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `location:"querystring" locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// A unique identifier for the kdb environment, whose clusters can attach to
+	// the volume.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// The name of the volume that you want to delete.
+	//
+	// VolumeName is a required field
+	VolumeName *string `location:"uri" locationName:"volumeName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxVolumeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxVolumeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteKxVolumeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteKxVolumeInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.VolumeName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VolumeName"))
+	}
+	if s.VolumeName != nil && len(*s.VolumeName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VolumeName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *DeleteKxVolumeInput) SetClientToken(v string) *DeleteKxVolumeInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *DeleteKxVolumeInput) SetEnvironmentId(v string) *DeleteKxVolumeInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *DeleteKxVolumeInput) SetVolumeName(v string) *DeleteKxVolumeInput {
+	s.VolumeName = &v
+	return s
+}
+
+type DeleteKxVolumeOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxVolumeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteKxVolumeOutput) GoString() string {
 	return s.String()
 }
 
@@ -6645,8 +9634,7 @@ type GetKxClusterOutput struct {
 	CacheStorageConfigurations []*KxCacheStorageConfiguration `locationName:"cacheStorageConfigurations" type:"list"`
 
 	// A structure for the metadata of a cluster. It includes information like the
-	// CPUs needed, memory of instances, number of instances, and the port used
-	// while establishing a connection.
+	// CPUs needed, memory of instances, and number of instances.
 	CapacityConfiguration *CapacityConfiguration `locationName:"capacityConfiguration" type:"structure"`
 
 	// A description of the cluster.
@@ -6673,6 +9661,19 @@ type GetKxClusterOutput struct {
 	//    in kdb systems. It allows you to create your own routing logic using the
 	//    initialization scripts and custom code. This type of cluster does not
 	//    require a writable local storage.
+	//
+	//    * GP – A general purpose cluster allows you to quickly iterate on code
+	//    during development by granting greater access to system commands and enabling
+	//    a fast reload of custom code. This cluster type can optionally mount databases
+	//    including cache and savedown storage. For this cluster type, the node
+	//    count is fixed at 1. It does not support autoscaling and supports only
+	//    SINGLE AZ mode.
+	//
+	//    * Tickerplant – A tickerplant cluster allows you to subscribe to feed
+	//    handlers based on IAM permissions. It can publish to RDBs, other Tickerplants,
+	//    and real-time subscribers (RTS). Tickerplants can persist messages to
+	//    log, which is readable by any RDB environment. It supports only single-node
+	//    that is only one kdb process.
 	ClusterType *string `locationName:"clusterType" type:"string" enum:"KxClusterType"`
 
 	// The details of the custom code that you want to use inside a cluster when
@@ -6715,6 +9716,10 @@ type GetKxClusterOutput struct {
 	// node is restarted.
 	SavedownStorageConfiguration *KxSavedownStorageConfiguration `locationName:"savedownStorageConfiguration" type:"structure"`
 
+	// The structure that stores the capacity configuration details of a scaling
+	// group.
+	ScalingGroupConfiguration *KxScalingGroupConfiguration `locationName:"scalingGroupConfiguration" type:"structure"`
+
 	// The status of cluster creation.
 	//
 	//    * PENDING – The cluster is pending creation.
@@ -6736,6 +9741,15 @@ type GetKxClusterOutput struct {
 
 	// The error message when a failed state occurs.
 	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+
+	// A configuration to store the Tickerplant logs. It consists of a list of volumes
+	// that will be mounted to your cluster. For the cluster type Tickerplant, the
+	// location of the TP volume on the cluster will be available by using the global
+	// variable .aws.tp_log_path.
+	TickerplantLogConfiguration *TickerplantLogConfiguration `locationName:"tickerplantLogConfiguration" type:"structure"`
+
+	// A list of volumes attached to the cluster.
+	Volumes []*Volume `locationName:"volumes" type:"list"`
 
 	// Configuration details about the network where the Privatelink endpoint of
 	// the cluster resides.
@@ -6862,6 +9876,12 @@ func (s *GetKxClusterOutput) SetSavedownStorageConfiguration(v *KxSavedownStorag
 	return s
 }
 
+// SetScalingGroupConfiguration sets the ScalingGroupConfiguration field's value.
+func (s *GetKxClusterOutput) SetScalingGroupConfiguration(v *KxScalingGroupConfiguration) *GetKxClusterOutput {
+	s.ScalingGroupConfiguration = v
+	return s
+}
+
 // SetStatus sets the Status field's value.
 func (s *GetKxClusterOutput) SetStatus(v string) *GetKxClusterOutput {
 	s.Status = &v
@@ -6871,6 +9891,18 @@ func (s *GetKxClusterOutput) SetStatus(v string) *GetKxClusterOutput {
 // SetStatusReason sets the StatusReason field's value.
 func (s *GetKxClusterOutput) SetStatusReason(v string) *GetKxClusterOutput {
 	s.StatusReason = &v
+	return s
+}
+
+// SetTickerplantLogConfiguration sets the TickerplantLogConfiguration field's value.
+func (s *GetKxClusterOutput) SetTickerplantLogConfiguration(v *TickerplantLogConfiguration) *GetKxClusterOutput {
+	s.TickerplantLogConfiguration = v
+	return s
+}
+
+// SetVolumes sets the Volumes field's value.
+func (s *GetKxClusterOutput) SetVolumes(v []*Volume) *GetKxClusterOutput {
+	s.Volumes = v
 	return s
 }
 
@@ -6894,7 +9926,7 @@ type GetKxConnectionStringInput struct {
 	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
 
 	// The Amazon Resource Name (ARN) that identifies the user. For more information
-	// about ARNs and how to use ARNs in policies, see IAM Identifiers (IAM/latest/UserGuide/reference_identifiers.html)
+	// about ARNs and how to use ARNs in policies, see IAM Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
 	// in the IAM User Guide.
 	//
 	// UserArn is a required field
@@ -7182,6 +10214,260 @@ func (s *GetKxDatabaseOutput) SetNumFiles(v int64) *GetKxDatabaseOutput {
 	return s
 }
 
+type GetKxDataviewInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the database where you created the dataview.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `location:"uri" locationName:"databaseName" min:"3" type:"string" required:"true"`
+
+	// A unique identifier for the dataview.
+	//
+	// DataviewName is a required field
+	DataviewName *string `location:"uri" locationName:"dataviewName" min:"3" type:"string" required:"true"`
+
+	// A unique identifier for the kdb environment, from where you want to retrieve
+	// the dataview details.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxDataviewInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxDataviewInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetKxDataviewInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetKxDataviewInput"}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 3))
+	}
+	if s.DataviewName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataviewName"))
+	}
+	if s.DataviewName != nil && len(*s.DataviewName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewName", 3))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *GetKxDataviewInput) SetDatabaseName(v string) *GetKxDataviewInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *GetKxDataviewInput) SetDataviewName(v string) *GetKxDataviewInput {
+	s.DataviewName = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *GetKxDataviewInput) SetEnvironmentId(v string) *GetKxDataviewInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+type GetKxDataviewOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The current active changeset versions of the database on the given dataview.
+	ActiveVersions []*KxDataviewActiveVersion `locationName:"activeVersions" type:"list"`
+
+	// The option to specify whether you want to apply all the future additions
+	// and corrections automatically to the dataview when new changesets are ingested.
+	// The default value is false.
+	AutoUpdate *bool `locationName:"autoUpdate" type:"boolean"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The number of availability zones you want to assign per cluster. This can
+	// be one of the following
+	//
+	//    * SINGLE – Assigns one availability zone per cluster.
+	//
+	//    * MULTI – Assigns all the availability zones per cluster.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// A unique identifier of the changeset that you want to use to ingest data.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// The timestamp at which the dataview was created in FinSpace. The value is
+	// determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// The name of the database where you created the dataview.
+	DatabaseName *string `locationName:"databaseName" min:"3" type:"string"`
+
+	// A unique identifier for the dataview.
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string"`
+
+	// A description of the dataview.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, from where you want to retrieve
+	// the dataview details.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// The last time that the dataview was updated in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// The configuration that contains the database path of the data that you want
+	// to place on each selected volume. Each segment must have a unique database
+	// path for each volume. If you do not explicitly specify any database path
+	// for a volume, they are accessible from the cluster through the default S3/object
+	// store segment.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+
+	// The status of dataview creation.
+	//
+	//    * CREATING – The dataview creation is in progress.
+	//
+	//    * UPDATING – The dataview is in the process of being updated.
+	//
+	//    * ACTIVE – The dataview is active.
+	Status *string `locationName:"status" type:"string" enum:"KxDataviewStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxDataviewOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxDataviewOutput) GoString() string {
+	return s.String()
+}
+
+// SetActiveVersions sets the ActiveVersions field's value.
+func (s *GetKxDataviewOutput) SetActiveVersions(v []*KxDataviewActiveVersion) *GetKxDataviewOutput {
+	s.ActiveVersions = v
+	return s
+}
+
+// SetAutoUpdate sets the AutoUpdate field's value.
+func (s *GetKxDataviewOutput) SetAutoUpdate(v bool) *GetKxDataviewOutput {
+	s.AutoUpdate = &v
+	return s
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *GetKxDataviewOutput) SetAvailabilityZoneId(v string) *GetKxDataviewOutput {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *GetKxDataviewOutput) SetAzMode(v string) *GetKxDataviewOutput {
+	s.AzMode = &v
+	return s
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *GetKxDataviewOutput) SetChangesetId(v string) *GetKxDataviewOutput {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *GetKxDataviewOutput) SetCreatedTimestamp(v time.Time) *GetKxDataviewOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *GetKxDataviewOutput) SetDatabaseName(v string) *GetKxDataviewOutput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *GetKxDataviewOutput) SetDataviewName(v string) *GetKxDataviewOutput {
+	s.DataviewName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *GetKxDataviewOutput) SetDescription(v string) *GetKxDataviewOutput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *GetKxDataviewOutput) SetEnvironmentId(v string) *GetKxDataviewOutput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *GetKxDataviewOutput) SetLastModifiedTimestamp(v time.Time) *GetKxDataviewOutput {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *GetKxDataviewOutput) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *GetKxDataviewOutput {
+	s.SegmentConfigurations = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetKxDataviewOutput) SetStatus(v string) *GetKxDataviewOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *GetKxDataviewOutput) SetStatusReason(v string) *GetKxDataviewOutput {
+	s.StatusReason = &v
+	return s
+}
+
 type GetKxEnvironmentInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -7409,6 +10695,197 @@ func (s *GetKxEnvironmentOutput) SetUpdateTimestamp(v time.Time) *GetKxEnvironme
 	return s
 }
 
+type GetKxScalingGroupInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A unique identifier for the kdb environment.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// A unique identifier for the kdb scaling group.
+	//
+	// ScalingGroupName is a required field
+	ScalingGroupName *string `location:"uri" locationName:"scalingGroupName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxScalingGroupInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxScalingGroupInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetKxScalingGroupInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetKxScalingGroupInput"}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.ScalingGroupName == nil {
+		invalidParams.Add(request.NewErrParamRequired("ScalingGroupName"))
+	}
+	if s.ScalingGroupName != nil && len(*s.ScalingGroupName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("ScalingGroupName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *GetKxScalingGroupInput) SetEnvironmentId(v string) *GetKxScalingGroupInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetScalingGroupName sets the ScalingGroupName field's value.
+func (s *GetKxScalingGroupInput) SetScalingGroupName(v string) *GetKxScalingGroupInput {
+	s.ScalingGroupName = &v
+	return s
+}
+
+type GetKxScalingGroupOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The list of Managed kdb clusters that are currently active in the given scaling
+	// group.
+	Clusters []*string `locationName:"clusters" type:"list"`
+
+	// The timestamp at which the scaling group was created in FinSpace. The value
+	// is determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// The memory and CPU capabilities of the scaling group host on which FinSpace
+	// Managed kdb clusters will be placed.
+	HostType *string `locationName:"hostType" min:"1" type:"string"`
+
+	// The last time that the scaling group was updated in FinSpace. The value is
+	// determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// The ARN identifier for the scaling group.
+	ScalingGroupArn *string `locationName:"scalingGroupArn" min:"20" type:"string"`
+
+	// A unique identifier for the kdb scaling group.
+	ScalingGroupName *string `locationName:"scalingGroupName" min:"3" type:"string"`
+
+	// The status of scaling group.
+	//
+	//    * CREATING – The scaling group creation is in progress.
+	//
+	//    * CREATE_FAILED – The scaling group creation has failed.
+	//
+	//    * ACTIVE – The scaling group is active.
+	//
+	//    * UPDATING – The scaling group is in the process of being updated.
+	//
+	//    * UPDATE_FAILED – The update action failed.
+	//
+	//    * DELETING – The scaling group is in the process of being deleted.
+	//
+	//    * DELETE_FAILED – The system failed to delete the scaling group.
+	//
+	//    * DELETED – The scaling group is successfully deleted.
+	Status *string `locationName:"status" type:"string" enum:"KxScalingGroupStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxScalingGroupOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxScalingGroupOutput) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *GetKxScalingGroupOutput) SetAvailabilityZoneId(v string) *GetKxScalingGroupOutput {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetClusters sets the Clusters field's value.
+func (s *GetKxScalingGroupOutput) SetClusters(v []*string) *GetKxScalingGroupOutput {
+	s.Clusters = v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *GetKxScalingGroupOutput) SetCreatedTimestamp(v time.Time) *GetKxScalingGroupOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetHostType sets the HostType field's value.
+func (s *GetKxScalingGroupOutput) SetHostType(v string) *GetKxScalingGroupOutput {
+	s.HostType = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *GetKxScalingGroupOutput) SetLastModifiedTimestamp(v time.Time) *GetKxScalingGroupOutput {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetScalingGroupArn sets the ScalingGroupArn field's value.
+func (s *GetKxScalingGroupOutput) SetScalingGroupArn(v string) *GetKxScalingGroupOutput {
+	s.ScalingGroupArn = &v
+	return s
+}
+
+// SetScalingGroupName sets the ScalingGroupName field's value.
+func (s *GetKxScalingGroupOutput) SetScalingGroupName(v string) *GetKxScalingGroupOutput {
+	s.ScalingGroupName = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetKxScalingGroupOutput) SetStatus(v string) *GetKxScalingGroupOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *GetKxScalingGroupOutput) SetStatusReason(v string) *GetKxScalingGroupOutput {
+	s.StatusReason = &v
+	return s
+}
+
 type GetKxUserInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -7485,7 +10962,7 @@ type GetKxUserOutput struct {
 	IamRole *string `locationName:"iamRole" min:"20" type:"string"`
 
 	// The Amazon Resource Name (ARN) that identifies the user. For more information
-	// about ARNs and how to use ARNs in policies, see IAM Identifiers (IAM/latest/UserGuide/reference_identifiers.html)
+	// about ARNs and how to use ARNs in policies, see IAM Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
 	// in the IAM User Guide.
 	UserArn *string `locationName:"userArn" min:"20" type:"string"`
 
@@ -7532,6 +11009,299 @@ func (s *GetKxUserOutput) SetUserArn(v string) *GetKxUserOutput {
 // SetUserName sets the UserName field's value.
 func (s *GetKxUserOutput) SetUserName(v string) *GetKxUserOutput {
 	s.UserName = &v
+	return s
+}
+
+type GetKxVolumeInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A unique identifier for the kdb environment, whose clusters can attach to
+	// the volume.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// A unique identifier for the volume.
+	//
+	// VolumeName is a required field
+	VolumeName *string `location:"uri" locationName:"volumeName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxVolumeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxVolumeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetKxVolumeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetKxVolumeInput"}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.VolumeName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VolumeName"))
+	}
+	if s.VolumeName != nil && len(*s.VolumeName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VolumeName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *GetKxVolumeInput) SetEnvironmentId(v string) *GetKxVolumeInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *GetKxVolumeInput) SetVolumeName(v string) *GetKxVolumeInput {
+	s.VolumeName = &v
+	return s
+}
+
+type GetKxVolumeOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of cluster identifiers that a volume is attached to.
+	AttachedClusters []*KxAttachedCluster `locationName:"attachedClusters" type:"list"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneIds []*string `locationName:"availabilityZoneIds" type:"list"`
+
+	// The number of availability zones you want to assign per cluster. Currently,
+	// FinSpace only support SINGLE for volumes.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// The timestamp at which the volume was created in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// A description of the volume.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, whose clusters can attach to
+	// the volume.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// The last time that the volume was updated in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// Specifies the configuration for the Network attached storage (NAS_1) file
+	// system volume.
+	Nas1Configuration *KxNAS1Configuration `locationName:"nas1Configuration" type:"structure"`
+
+	// The status of volume creation.
+	//
+	//    * CREATING – The volume creation is in progress.
+	//
+	//    * CREATE_FAILED – The volume creation has failed.
+	//
+	//    * ACTIVE – The volume is active.
+	//
+	//    * UPDATING – The volume is in the process of being updated.
+	//
+	//    * UPDATE_FAILED – The update action failed.
+	//
+	//    * UPDATED – The volume is successfully updated.
+	//
+	//    * DELETING – The volume is in the process of being deleted.
+	//
+	//    * DELETE_FAILED – The system failed to delete the volume.
+	//
+	//    * DELETED – The volume is successfully deleted.
+	Status *string `locationName:"status" type:"string" enum:"KxVolumeStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+
+	// The ARN identifier of the volume.
+	VolumeArn *string `locationName:"volumeArn" min:"20" type:"string"`
+
+	// A unique identifier for the volume.
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string"`
+
+	// The type of file system volume. Currently, FinSpace only supports NAS_1 volume
+	// type.
+	VolumeType *string `locationName:"volumeType" type:"string" enum:"KxVolumeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxVolumeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetKxVolumeOutput) GoString() string {
+	return s.String()
+}
+
+// SetAttachedClusters sets the AttachedClusters field's value.
+func (s *GetKxVolumeOutput) SetAttachedClusters(v []*KxAttachedCluster) *GetKxVolumeOutput {
+	s.AttachedClusters = v
+	return s
+}
+
+// SetAvailabilityZoneIds sets the AvailabilityZoneIds field's value.
+func (s *GetKxVolumeOutput) SetAvailabilityZoneIds(v []*string) *GetKxVolumeOutput {
+	s.AvailabilityZoneIds = v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *GetKxVolumeOutput) SetAzMode(v string) *GetKxVolumeOutput {
+	s.AzMode = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *GetKxVolumeOutput) SetCreatedTimestamp(v time.Time) *GetKxVolumeOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *GetKxVolumeOutput) SetDescription(v string) *GetKxVolumeOutput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *GetKxVolumeOutput) SetEnvironmentId(v string) *GetKxVolumeOutput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *GetKxVolumeOutput) SetLastModifiedTimestamp(v time.Time) *GetKxVolumeOutput {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetNas1Configuration sets the Nas1Configuration field's value.
+func (s *GetKxVolumeOutput) SetNas1Configuration(v *KxNAS1Configuration) *GetKxVolumeOutput {
+	s.Nas1Configuration = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetKxVolumeOutput) SetStatus(v string) *GetKxVolumeOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *GetKxVolumeOutput) SetStatusReason(v string) *GetKxVolumeOutput {
+	s.StatusReason = &v
+	return s
+}
+
+// SetVolumeArn sets the VolumeArn field's value.
+func (s *GetKxVolumeOutput) SetVolumeArn(v string) *GetKxVolumeOutput {
+	s.VolumeArn = &v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *GetKxVolumeOutput) SetVolumeName(v string) *GetKxVolumeOutput {
+	s.VolumeName = &v
+	return s
+}
+
+// SetVolumeType sets the VolumeType field's value.
+func (s *GetKxVolumeOutput) SetVolumeType(v string) *GetKxVolumeOutput {
+	s.VolumeType = &v
+	return s
+}
+
+// Defines the ICMP protocol that consists of the ICMP type and code.
+type IcmpTypeCode struct {
+	_ struct{} `type:"structure"`
+
+	// The ICMP code. A value of -1 means all codes for the specified ICMP type.
+	//
+	// Code is a required field
+	Code *int64 `locationName:"code" type:"integer" required:"true"`
+
+	// The ICMP type. A value of -1 means all types.
+	//
+	// Type is a required field
+	Type *int64 `locationName:"type" type:"integer" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IcmpTypeCode) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s IcmpTypeCode) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *IcmpTypeCode) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "IcmpTypeCode"}
+	if s.Code == nil {
+		invalidParams.Add(request.NewErrParamRequired("Code"))
+	}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCode sets the Code field's value.
+func (s *IcmpTypeCode) SetCode(v int64) *IcmpTypeCode {
+	s.Code = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *IcmpTypeCode) SetType(v int64) *IcmpTypeCode {
+	s.Type = &v
 	return s
 }
 
@@ -7664,6 +11434,73 @@ func (s *InvalidRequestException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The structure containing the metadata of the attached clusters.
+type KxAttachedCluster struct {
+	_ struct{} `type:"structure"`
+
+	// A unique name for the attached cluster.
+	ClusterName *string `locationName:"clusterName" min:"3" type:"string"`
+
+	// The status of the attached cluster.
+	//
+	//    * PENDING – The cluster is pending creation.
+	//
+	//    * CREATING – The cluster creation process is in progress.
+	//
+	//    * CREATE_FAILED – The cluster creation process has failed.
+	//
+	//    * RUNNING – The cluster creation process is running.
+	//
+	//    * UPDATING – The cluster is in the process of being updated.
+	//
+	//    * DELETING – The cluster is in the process of being deleted.
+	//
+	//    * DELETED – The cluster has been deleted.
+	//
+	//    * DELETE_FAILED – The cluster failed to delete.
+	ClusterStatus *string `locationName:"clusterStatus" type:"string" enum:"KxClusterStatus"`
+
+	// Specifies the type of cluster. The volume for TP and RDB cluster types will
+	// be used for TP logs.
+	ClusterType *string `locationName:"clusterType" type:"string" enum:"KxClusterType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxAttachedCluster) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxAttachedCluster) GoString() string {
+	return s.String()
+}
+
+// SetClusterName sets the ClusterName field's value.
+func (s *KxAttachedCluster) SetClusterName(v string) *KxAttachedCluster {
+	s.ClusterName = &v
+	return s
+}
+
+// SetClusterStatus sets the ClusterStatus field's value.
+func (s *KxAttachedCluster) SetClusterStatus(v string) *KxAttachedCluster {
+	s.ClusterStatus = &v
+	return s
+}
+
+// SetClusterType sets the ClusterType field's value.
+func (s *KxAttachedCluster) SetClusterType(v string) *KxAttachedCluster {
+	s.ClusterType = &v
+	return s
+}
+
 // The configuration for read only disk cache associated with a cluster.
 type KxCacheStorageConfiguration struct {
 	_ struct{} `type:"structure"`
@@ -7671,11 +11508,19 @@ type KxCacheStorageConfiguration struct {
 	// The size of cache in Gigabytes.
 	//
 	// Size is a required field
-	Size *int64 `locationName:"size" min:"1200" type:"integer" required:"true"`
+	Size *int64 `locationName:"size" type:"integer" required:"true"`
 
-	// The type of cache storage . The valid values are:
+	// The type of cache storage. The valid values are:
 	//
 	//    * CACHE_1000 – This type provides at least 1000 MB/s disk access throughput.
+	//
+	//    * CACHE_250 – This type provides at least 250 MB/s disk access throughput.
+	//
+	//    * CACHE_12 – This type provides at least 12 MB/s disk access throughput.
+	//
+	// For cache type CACHE_1000 and CACHE_250 you can select cache size as 1200
+	// GB or increments of 2400 GB. For cache type CACHE_12 you can select the cache
+	// size in increments of 6000 GB.
 	//
 	// Type is a required field
 	Type *string `locationName:"type" min:"8" type:"string" required:"true"`
@@ -7704,9 +11549,6 @@ func (s *KxCacheStorageConfiguration) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "KxCacheStorageConfiguration"}
 	if s.Size == nil {
 		invalidParams.Add(request.NewErrParamRequired("Size"))
-	}
-	if s.Size != nil && *s.Size < 1200 {
-		invalidParams.Add(request.NewErrParamMinValue("Size", 1200))
 	}
 	if s.Type == nil {
 		invalidParams.Add(request.NewErrParamRequired("Type"))
@@ -7823,7 +11665,7 @@ type KxCluster struct {
 	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
 
 	// The number of availability zones assigned per cluster. This can be one of
-	// the following
+	// the following:
 	//
 	//    * SINGLE – Assigns one availability zone per cluster.
 	//
@@ -7854,6 +11696,19 @@ type KxCluster struct {
 	//    in kdb systems. It allows you to create your own routing logic using the
 	//    initialization scripts and custom code. This type of cluster does not
 	//    require a writable local storage.
+	//
+	//    * GP – A general purpose cluster allows you to quickly iterate on code
+	//    during development by granting greater access to system commands and enabling
+	//    a fast reload of custom code. This cluster type can optionally mount databases
+	//    including cache and savedown storage. For this cluster type, the node
+	//    count is fixed at 1. It does not support autoscaling and supports only
+	//    SINGLE AZ mode.
+	//
+	//    * Tickerplant – A tickerplant cluster allows you to subscribe to feed
+	//    handlers based on IAM permissions. It can publish to RDBs, other Tickerplants,
+	//    and real-time subscribers (RTS). Tickerplants can persist messages to
+	//    log, which is readable by any RDB environment. It supports only single-node
+	//    that is only one kdb process.
 	ClusterType *string `locationName:"clusterType" type:"string" enum:"KxClusterType"`
 
 	// The timestamp at which the cluster was created in FinSpace. The value is
@@ -7899,6 +11754,9 @@ type KxCluster struct {
 
 	// The error message when a failed state occurs.
 	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+
+	// A list of volumes attached to the cluster.
+	Volumes []*Volume `locationName:"volumes" type:"list"`
 }
 
 // String returns the string representation.
@@ -7991,6 +11849,73 @@ func (s *KxCluster) SetStatusReason(v string) *KxCluster {
 	return s
 }
 
+// SetVolumes sets the Volumes field's value.
+func (s *KxCluster) SetVolumes(v []*Volume) *KxCluster {
+	s.Volumes = v
+	return s
+}
+
+// The configuration that allows you to choose how you want to update code on
+// a cluster. Depending on the option you choose, you can reduce the time it
+// takes to update the cluster.
+type KxClusterCodeDeploymentConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The type of deployment that you want on a cluster.
+	//
+	//    * ROLLING – This options updates the cluster by stopping the exiting
+	//    q process and starting a new q process with updated configuration.
+	//
+	//    * NO_RESTART – This option updates the cluster without stopping the
+	//    running q process. It is only available for GP type cluster. This option
+	//    is quicker as it reduces the turn around time to update configuration
+	//    on a cluster. With this deployment mode, you cannot update the initializationScript
+	//    and commandLineArguments parameters.
+	//
+	//    * FORCE – This option updates the cluster by immediately stopping all
+	//    the running processes before starting up new ones with the updated configuration.
+	//
+	// DeploymentStrategy is a required field
+	DeploymentStrategy *string `locationName:"deploymentStrategy" type:"string" required:"true" enum:"KxClusterCodeDeploymentStrategy"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxClusterCodeDeploymentConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxClusterCodeDeploymentConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KxClusterCodeDeploymentConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KxClusterCodeDeploymentConfiguration"}
+	if s.DeploymentStrategy == nil {
+		invalidParams.Add(request.NewErrParamRequired("DeploymentStrategy"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDeploymentStrategy sets the DeploymentStrategy field's value.
+func (s *KxClusterCodeDeploymentConfiguration) SetDeploymentStrategy(v string) *KxClusterCodeDeploymentConfiguration {
+	s.DeploymentStrategy = &v
+	return s
+}
+
 // Defines the key-value pairs to make them available inside the cluster.
 type KxCommandLineArgument struct {
 	_ struct{} `type:"structure"`
@@ -8061,6 +11986,9 @@ type KxDatabaseCacheConfiguration struct {
 	// CacheType is a required field
 	CacheType *string `locationName:"cacheType" min:"8" type:"string" required:"true"`
 
+	// The name of the dataview to be used for caching historical data on disk.
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string"`
+
 	// Specifies the portions of database that will be loaded into the cache for
 	// access.
 	//
@@ -8095,6 +12023,9 @@ func (s *KxDatabaseCacheConfiguration) Validate() error {
 	if s.CacheType != nil && len(*s.CacheType) < 8 {
 		invalidParams.Add(request.NewErrParamMinLen("CacheType", 8))
 	}
+	if s.DataviewName != nil && len(*s.DataviewName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewName", 3))
+	}
 	if s.DbPaths == nil {
 		invalidParams.Add(request.NewErrParamRequired("DbPaths"))
 	}
@@ -8108,6 +12039,12 @@ func (s *KxDatabaseCacheConfiguration) Validate() error {
 // SetCacheType sets the CacheType field's value.
 func (s *KxDatabaseCacheConfiguration) SetCacheType(v string) *KxDatabaseCacheConfiguration {
 	s.CacheType = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *KxDatabaseCacheConfiguration) SetDataviewName(v string) *KxDatabaseCacheConfiguration {
+	s.DataviewName = &v
 	return s
 }
 
@@ -8133,6 +12070,12 @@ type KxDatabaseConfiguration struct {
 	//
 	// DatabaseName is a required field
 	DatabaseName *string `locationName:"databaseName" min:"3" type:"string" required:"true"`
+
+	// The configuration of the dataview to be used with specified cluster.
+	DataviewConfiguration *KxDataviewConfiguration `locationName:"dataviewConfiguration" type:"structure"`
+
+	// The name of the dataview to be used for caching historical data on disk.
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string"`
 }
 
 // String returns the string representation.
@@ -8165,6 +12108,9 @@ func (s *KxDatabaseConfiguration) Validate() error {
 	if s.DatabaseName != nil && len(*s.DatabaseName) < 3 {
 		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 3))
 	}
+	if s.DataviewName != nil && len(*s.DataviewName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewName", 3))
+	}
 	if s.CacheConfigurations != nil {
 		for i, v := range s.CacheConfigurations {
 			if v == nil {
@@ -8173,6 +12119,11 @@ func (s *KxDatabaseConfiguration) Validate() error {
 			if err := v.Validate(); err != nil {
 				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "CacheConfigurations", i), err.(request.ErrInvalidParams))
 			}
+		}
+	}
+	if s.DataviewConfiguration != nil {
+		if err := s.DataviewConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("DataviewConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -8197,6 +12148,18 @@ func (s *KxDatabaseConfiguration) SetChangesetId(v string) *KxDatabaseConfigurat
 // SetDatabaseName sets the DatabaseName field's value.
 func (s *KxDatabaseConfiguration) SetDatabaseName(v string) *KxDatabaseConfiguration {
 	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewConfiguration sets the DataviewConfiguration field's value.
+func (s *KxDatabaseConfiguration) SetDataviewConfiguration(v *KxDataviewConfiguration) *KxDatabaseConfiguration {
+	s.DataviewConfiguration = v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *KxDatabaseConfiguration) SetDataviewName(v string) *KxDatabaseConfiguration {
+	s.DataviewName = &v
 	return s
 }
 
@@ -8251,6 +12214,462 @@ func (s *KxDatabaseListEntry) SetDatabaseName(v string) *KxDatabaseListEntry {
 // SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
 func (s *KxDatabaseListEntry) SetLastModifiedTimestamp(v time.Time) *KxDatabaseListEntry {
 	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// The active version of the dataview that is currently in use by this cluster.
+type KxDataviewActiveVersion struct {
+	_ struct{} `type:"structure"`
+
+	// The list of clusters that are currently using this dataview.
+	AttachedClusters []*string `locationName:"attachedClusters" type:"list"`
+
+	// A unique identifier for the changeset.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// The timestamp at which the dataview version was active. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// The configuration that contains the database path of the data that you want
+	// to place on each selected volume. Each segment must have a unique database
+	// path for each volume. If you do not explicitly specify any database path
+	// for a volume, they are accessible from the cluster through the default S3/object
+	// store segment.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+
+	// A unique identifier of the active version.
+	VersionId *string `locationName:"versionId" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewActiveVersion) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewActiveVersion) GoString() string {
+	return s.String()
+}
+
+// SetAttachedClusters sets the AttachedClusters field's value.
+func (s *KxDataviewActiveVersion) SetAttachedClusters(v []*string) *KxDataviewActiveVersion {
+	s.AttachedClusters = v
+	return s
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *KxDataviewActiveVersion) SetChangesetId(v string) *KxDataviewActiveVersion {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *KxDataviewActiveVersion) SetCreatedTimestamp(v time.Time) *KxDataviewActiveVersion {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *KxDataviewActiveVersion) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *KxDataviewActiveVersion {
+	s.SegmentConfigurations = v
+	return s
+}
+
+// SetVersionId sets the VersionId field's value.
+func (s *KxDataviewActiveVersion) SetVersionId(v string) *KxDataviewActiveVersion {
+	s.VersionId = &v
+	return s
+}
+
+// The structure that stores the configuration details of a dataview.
+type KxDataviewConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A unique identifier for the changeset.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// The unique identifier of the dataview.
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string"`
+
+	// The version of the dataview corresponding to a given changeset.
+	DataviewVersionId *string `locationName:"dataviewVersionId" min:"1" type:"string"`
+
+	// The db path and volume configuration for the segmented database.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KxDataviewConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KxDataviewConfiguration"}
+	if s.ChangesetId != nil && len(*s.ChangesetId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ChangesetId", 1))
+	}
+	if s.DataviewName != nil && len(*s.DataviewName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewName", 3))
+	}
+	if s.DataviewVersionId != nil && len(*s.DataviewVersionId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewVersionId", 1))
+	}
+	if s.SegmentConfigurations != nil {
+		for i, v := range s.SegmentConfigurations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "SegmentConfigurations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *KxDataviewConfiguration) SetChangesetId(v string) *KxDataviewConfiguration {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *KxDataviewConfiguration) SetDataviewName(v string) *KxDataviewConfiguration {
+	s.DataviewName = &v
+	return s
+}
+
+// SetDataviewVersionId sets the DataviewVersionId field's value.
+func (s *KxDataviewConfiguration) SetDataviewVersionId(v string) *KxDataviewConfiguration {
+	s.DataviewVersionId = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *KxDataviewConfiguration) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *KxDataviewConfiguration {
+	s.SegmentConfigurations = v
+	return s
+}
+
+// A collection of kdb dataview entries.
+type KxDataviewListEntry struct {
+	_ struct{} `type:"structure"`
+
+	// The active changeset versions for the given dataview entry.
+	ActiveVersions []*KxDataviewActiveVersion `locationName:"activeVersions" type:"list"`
+
+	// The option to specify whether you want to apply all the future additions
+	// and corrections automatically to the dataview when you ingest new changesets.
+	// The default value is false.
+	AutoUpdate *bool `locationName:"autoUpdate" type:"boolean"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The number of availability zones you want to assign per cluster. This can
+	// be one of the following
+	//
+	//    * SINGLE – Assigns one availability zone per cluster.
+	//
+	//    * MULTI – Assigns all the availability zones per cluster.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// A unique identifier for the changeset.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// The timestamp at which the dataview list entry was created in FinSpace. The
+	// value is determined as epoch time in milliseconds. For example, the value
+	// for Monday, November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// A unique identifier of the database.
+	DatabaseName *string `locationName:"databaseName" min:"3" type:"string"`
+
+	// A unique identifier of the dataview.
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string"`
+
+	// A description for the dataview list entry.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// The last time that the dataview list was updated in FinSpace. The value is
+	// determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// The configuration that contains the database path of the data that you want
+	// to place on each selected volume. Each segment must have a unique database
+	// path for each volume. If you do not explicitly specify any database path
+	// for a volume, they are accessible from the cluster through the default S3/object
+	// store segment.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+
+	// The status of a given dataview entry.
+	Status *string `locationName:"status" type:"string" enum:"KxDataviewStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewListEntry) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewListEntry) GoString() string {
+	return s.String()
+}
+
+// SetActiveVersions sets the ActiveVersions field's value.
+func (s *KxDataviewListEntry) SetActiveVersions(v []*KxDataviewActiveVersion) *KxDataviewListEntry {
+	s.ActiveVersions = v
+	return s
+}
+
+// SetAutoUpdate sets the AutoUpdate field's value.
+func (s *KxDataviewListEntry) SetAutoUpdate(v bool) *KxDataviewListEntry {
+	s.AutoUpdate = &v
+	return s
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *KxDataviewListEntry) SetAvailabilityZoneId(v string) *KxDataviewListEntry {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *KxDataviewListEntry) SetAzMode(v string) *KxDataviewListEntry {
+	s.AzMode = &v
+	return s
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *KxDataviewListEntry) SetChangesetId(v string) *KxDataviewListEntry {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *KxDataviewListEntry) SetCreatedTimestamp(v time.Time) *KxDataviewListEntry {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *KxDataviewListEntry) SetDatabaseName(v string) *KxDataviewListEntry {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *KxDataviewListEntry) SetDataviewName(v string) *KxDataviewListEntry {
+	s.DataviewName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *KxDataviewListEntry) SetDescription(v string) *KxDataviewListEntry {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *KxDataviewListEntry) SetEnvironmentId(v string) *KxDataviewListEntry {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *KxDataviewListEntry) SetLastModifiedTimestamp(v time.Time) *KxDataviewListEntry {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *KxDataviewListEntry) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *KxDataviewListEntry {
+	s.SegmentConfigurations = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *KxDataviewListEntry) SetStatus(v string) *KxDataviewListEntry {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *KxDataviewListEntry) SetStatusReason(v string) *KxDataviewListEntry {
+	s.StatusReason = &v
+	return s
+}
+
+// The configuration that contains the database path of the data that you want
+// to place on each selected volume. Each segment must have a unique database
+// path for each volume. If you do not explicitly specify any database path
+// for a volume, they are accessible from the cluster through the default S3/object
+// store segment.
+type KxDataviewSegmentConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The database path of the data that you want to place on each selected volume
+	// for the segment. Each segment must have a unique database path for each volume.
+	//
+	// DbPaths is a required field
+	DbPaths []*string `locationName:"dbPaths" min:"1" type:"list" required:"true"`
+
+	// The name of the volume where you want to add data.
+	//
+	// VolumeName is a required field
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewSegmentConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDataviewSegmentConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KxDataviewSegmentConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KxDataviewSegmentConfiguration"}
+	if s.DbPaths == nil {
+		invalidParams.Add(request.NewErrParamRequired("DbPaths"))
+	}
+	if s.DbPaths != nil && len(s.DbPaths) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DbPaths", 1))
+	}
+	if s.VolumeName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VolumeName"))
+	}
+	if s.VolumeName != nil && len(*s.VolumeName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VolumeName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDbPaths sets the DbPaths field's value.
+func (s *KxDataviewSegmentConfiguration) SetDbPaths(v []*string) *KxDataviewSegmentConfiguration {
+	s.DbPaths = v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *KxDataviewSegmentConfiguration) SetVolumeName(v string) *KxDataviewSegmentConfiguration {
+	s.VolumeName = &v
+	return s
+}
+
+// The configuration that allows you to choose how you want to update the databases
+// on a cluster. Depending on the option you choose, you can reduce the time
+// it takes to update the cluster.
+type KxDeploymentConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The type of deployment that you want on a cluster.
+	//
+	//    * ROLLING – This options updates the cluster by stopping the exiting
+	//    q process and starting a new q process with updated configuration.
+	//
+	//    * NO_RESTART – This option updates the cluster without stopping the
+	//    running q process. It is only available for HDB type cluster. This option
+	//    is quicker as it reduces the turn around time to update configuration
+	//    on a cluster. With this deployment mode, you cannot update the initializationScript
+	//    and commandLineArguments parameters.
+	//
+	// DeploymentStrategy is a required field
+	DeploymentStrategy *string `locationName:"deploymentStrategy" type:"string" required:"true" enum:"KxDeploymentStrategy"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDeploymentConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxDeploymentConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KxDeploymentConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KxDeploymentConfiguration"}
+	if s.DeploymentStrategy == nil {
+		invalidParams.Add(request.NewErrParamRequired("DeploymentStrategy"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDeploymentStrategy sets the DeploymentStrategy field's value.
+func (s *KxDeploymentConfiguration) SetDeploymentStrategy(v string) *KxDeploymentConfiguration {
+	s.DeploymentStrategy = &v
 	return s
 }
 
@@ -8456,6 +12875,61 @@ func (s *KxEnvironment) SetUpdateTimestamp(v time.Time) *KxEnvironment {
 	return s
 }
 
+// The structure containing the size and type of the network attached storage
+// (NAS_1) file system volume.
+type KxNAS1Configuration struct {
+	_ struct{} `type:"structure"`
+
+	// The size of the network attached storage.
+	Size *int64 `locationName:"size" min:"1200" type:"integer"`
+
+	// The type of the network attached storage.
+	Type *string `locationName:"type" type:"string" enum:"KxNAS1Type"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxNAS1Configuration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxNAS1Configuration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KxNAS1Configuration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KxNAS1Configuration"}
+	if s.Size != nil && *s.Size < 1200 {
+		invalidParams.Add(request.NewErrParamMinValue("Size", 1200))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetSize sets the Size field's value.
+func (s *KxNAS1Configuration) SetSize(v int64) *KxNAS1Configuration {
+	s.Size = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *KxNAS1Configuration) SetType(v string) *KxNAS1Configuration {
+	s.Type = &v
+	return s
+}
+
 // A structure that stores metadata for a kdb node.
 type KxNode struct {
 	_ struct{} `type:"structure"`
@@ -8515,18 +12989,18 @@ func (s *KxNode) SetNodeId(v string) *KxNode {
 type KxSavedownStorageConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The size of temporary storage in bytes.
-	//
-	// Size is a required field
-	Size *int64 `locationName:"size" min:"4" type:"integer" required:"true"`
+	// The size of temporary storage in gibibytes.
+	Size *int64 `locationName:"size" min:"10" type:"integer"`
 
 	// The type of writeable storage space for temporarily storing your savedown
 	// data. The valid values are:
 	//
 	//    * SDS01 – This type represents 3000 IOPS and io2 ebs volume type.
-	//
-	// Type is a required field
-	Type *string `locationName:"type" type:"string" required:"true" enum:"KxSavedownStorageType"`
+	Type *string `locationName:"type" type:"string" enum:"KxSavedownStorageType"`
+
+	// The name of the kdb volume that you want to use as writeable save-down storage
+	// for clusters.
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string"`
 }
 
 // String returns the string representation.
@@ -8550,14 +13024,11 @@ func (s KxSavedownStorageConfiguration) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *KxSavedownStorageConfiguration) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "KxSavedownStorageConfiguration"}
-	if s.Size == nil {
-		invalidParams.Add(request.NewErrParamRequired("Size"))
+	if s.Size != nil && *s.Size < 10 {
+		invalidParams.Add(request.NewErrParamMinValue("Size", 10))
 	}
-	if s.Size != nil && *s.Size < 4 {
-		invalidParams.Add(request.NewErrParamMinValue("Size", 4))
-	}
-	if s.Type == nil {
-		invalidParams.Add(request.NewErrParamRequired("Type"))
+	if s.VolumeName != nil && len(*s.VolumeName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VolumeName", 3))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -8578,6 +13049,224 @@ func (s *KxSavedownStorageConfiguration) SetType(v string) *KxSavedownStorageCon
 	return s
 }
 
+// SetVolumeName sets the VolumeName field's value.
+func (s *KxSavedownStorageConfiguration) SetVolumeName(v string) *KxSavedownStorageConfiguration {
+	s.VolumeName = &v
+	return s
+}
+
+// A structure for storing metadata of scaling group.
+type KxScalingGroup struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The list of clusters currently active in a given scaling group.
+	Clusters []*string `locationName:"clusters" type:"list"`
+
+	// The timestamp at which the scaling group was created in FinSpace. The value
+	// is determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// The memory and CPU capabilities of the scaling group host on which FinSpace
+	// Managed kdb clusters will be placed.
+	HostType *string `locationName:"hostType" min:"1" type:"string"`
+
+	// The last time that the scaling group was updated in FinSpace. The value is
+	// determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// A unique identifier for the kdb scaling group.
+	ScalingGroupName *string `locationName:"scalingGroupName" min:"3" type:"string"`
+
+	// The status of scaling groups.
+	Status *string `locationName:"status" type:"string" enum:"KxScalingGroupStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxScalingGroup) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxScalingGroup) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *KxScalingGroup) SetAvailabilityZoneId(v string) *KxScalingGroup {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetClusters sets the Clusters field's value.
+func (s *KxScalingGroup) SetClusters(v []*string) *KxScalingGroup {
+	s.Clusters = v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *KxScalingGroup) SetCreatedTimestamp(v time.Time) *KxScalingGroup {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetHostType sets the HostType field's value.
+func (s *KxScalingGroup) SetHostType(v string) *KxScalingGroup {
+	s.HostType = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *KxScalingGroup) SetLastModifiedTimestamp(v time.Time) *KxScalingGroup {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetScalingGroupName sets the ScalingGroupName field's value.
+func (s *KxScalingGroup) SetScalingGroupName(v string) *KxScalingGroup {
+	s.ScalingGroupName = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *KxScalingGroup) SetStatus(v string) *KxScalingGroup {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *KxScalingGroup) SetStatusReason(v string) *KxScalingGroup {
+	s.StatusReason = &v
+	return s
+}
+
+// The structure that stores the capacity configuration details of a scaling
+// group.
+type KxScalingGroupConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The number of vCPUs that you want to reserve for each node of this kdb cluster
+	// on the scaling group host.
+	Cpu *float64 `locationName:"cpu" min:"0.1" type:"double"`
+
+	// An optional hard limit on the amount of memory a kdb cluster can use.
+	MemoryLimit *int64 `locationName:"memoryLimit" min:"6" type:"integer"`
+
+	// A reservation of the minimum amount of memory that should be available on
+	// the scaling group for a kdb cluster to be successfully placed in a scaling
+	// group.
+	//
+	// MemoryReservation is a required field
+	MemoryReservation *int64 `locationName:"memoryReservation" min:"6" type:"integer" required:"true"`
+
+	// The number of kdb cluster nodes.
+	//
+	// NodeCount is a required field
+	NodeCount *int64 `locationName:"nodeCount" min:"1" type:"integer" required:"true"`
+
+	// A unique identifier for the kdb scaling group.
+	//
+	// ScalingGroupName is a required field
+	ScalingGroupName *string `locationName:"scalingGroupName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxScalingGroupConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxScalingGroupConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *KxScalingGroupConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "KxScalingGroupConfiguration"}
+	if s.Cpu != nil && *s.Cpu < 0.1 {
+		invalidParams.Add(request.NewErrParamMinValue("Cpu", 0.1))
+	}
+	if s.MemoryLimit != nil && *s.MemoryLimit < 6 {
+		invalidParams.Add(request.NewErrParamMinValue("MemoryLimit", 6))
+	}
+	if s.MemoryReservation == nil {
+		invalidParams.Add(request.NewErrParamRequired("MemoryReservation"))
+	}
+	if s.MemoryReservation != nil && *s.MemoryReservation < 6 {
+		invalidParams.Add(request.NewErrParamMinValue("MemoryReservation", 6))
+	}
+	if s.NodeCount == nil {
+		invalidParams.Add(request.NewErrParamRequired("NodeCount"))
+	}
+	if s.NodeCount != nil && *s.NodeCount < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("NodeCount", 1))
+	}
+	if s.ScalingGroupName == nil {
+		invalidParams.Add(request.NewErrParamRequired("ScalingGroupName"))
+	}
+	if s.ScalingGroupName != nil && len(*s.ScalingGroupName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("ScalingGroupName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCpu sets the Cpu field's value.
+func (s *KxScalingGroupConfiguration) SetCpu(v float64) *KxScalingGroupConfiguration {
+	s.Cpu = &v
+	return s
+}
+
+// SetMemoryLimit sets the MemoryLimit field's value.
+func (s *KxScalingGroupConfiguration) SetMemoryLimit(v int64) *KxScalingGroupConfiguration {
+	s.MemoryLimit = &v
+	return s
+}
+
+// SetMemoryReservation sets the MemoryReservation field's value.
+func (s *KxScalingGroupConfiguration) SetMemoryReservation(v int64) *KxScalingGroupConfiguration {
+	s.MemoryReservation = &v
+	return s
+}
+
+// SetNodeCount sets the NodeCount field's value.
+func (s *KxScalingGroupConfiguration) SetNodeCount(v int64) *KxScalingGroupConfiguration {
+	s.NodeCount = &v
+	return s
+}
+
+// SetScalingGroupName sets the ScalingGroupName field's value.
+func (s *KxScalingGroupConfiguration) SetScalingGroupName(v string) *KxScalingGroupConfiguration {
+	s.ScalingGroupName = &v
+	return s
+}
+
 // A structure that stores metadata for a kdb user.
 type KxUser struct {
 	_ struct{} `type:"structure"`
@@ -8592,7 +13281,7 @@ type KxUser struct {
 	UpdateTimestamp *time.Time `locationName:"updateTimestamp" type:"timestamp"`
 
 	// The Amazon Resource Name (ARN) that identifies the user. For more information
-	// about ARNs and how to use ARNs in policies, see IAM Identifiers (IAM/latest/UserGuide/reference_identifiers.html)
+	// about ARNs and how to use ARNs in policies, see IAM Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
 	// in the IAM User Guide.
 	UserArn *string `locationName:"userArn" min:"20" type:"string"`
 
@@ -8645,6 +13334,134 @@ func (s *KxUser) SetUserArn(v string) *KxUser {
 // SetUserName sets the UserName field's value.
 func (s *KxUser) SetUserName(v string) *KxUser {
 	s.UserName = &v
+	return s
+}
+
+// The structure that contains the metadata of the volume.
+type KxVolume struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneIds []*string `locationName:"availabilityZoneIds" type:"list"`
+
+	// The number of availability zones assigned to the volume. Currently, only
+	// SINGLE is supported.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// The timestamp at which the volume was created in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// A description of the volume.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// The last time that the volume was updated in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// The status of volume.
+	//
+	//    * CREATING – The volume creation is in progress.
+	//
+	//    * CREATE_FAILED – The volume creation has failed.
+	//
+	//    * ACTIVE – The volume is active.
+	//
+	//    * UPDATING – The volume is in the process of being updated.
+	//
+	//    * UPDATE_FAILED – The update action failed.
+	//
+	//    * UPDATED – The volume is successfully updated.
+	//
+	//    * DELETING – The volume is in the process of being deleted.
+	//
+	//    * DELETE_FAILED – The system failed to delete the volume.
+	//
+	//    * DELETED – The volume is successfully deleted.
+	Status *string `locationName:"status" type:"string" enum:"KxVolumeStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+
+	// A unique identifier for the volume.
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string"`
+
+	// The type of file system volume. Currently, FinSpace only supports NAS_1 volume
+	// type.
+	VolumeType *string `locationName:"volumeType" type:"string" enum:"KxVolumeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxVolume) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s KxVolume) GoString() string {
+	return s.String()
+}
+
+// SetAvailabilityZoneIds sets the AvailabilityZoneIds field's value.
+func (s *KxVolume) SetAvailabilityZoneIds(v []*string) *KxVolume {
+	s.AvailabilityZoneIds = v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *KxVolume) SetAzMode(v string) *KxVolume {
+	s.AzMode = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *KxVolume) SetCreatedTimestamp(v time.Time) *KxVolume {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *KxVolume) SetDescription(v string) *KxVolume {
+	s.Description = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *KxVolume) SetLastModifiedTimestamp(v time.Time) *KxVolume {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *KxVolume) SetStatus(v string) *KxVolume {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *KxVolume) SetStatusReason(v string) *KxVolume {
+	s.StatusReason = &v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *KxVolume) SetVolumeName(v string) *KxVolume {
+	s.VolumeName = &v
+	return s
+}
+
+// SetVolumeType sets the VolumeType field's value.
+func (s *KxVolume) SetVolumeType(v string) *KxVolume {
+	s.VolumeType = &v
 	return s
 }
 
@@ -9084,6 +13901,19 @@ type ListKxClustersInput struct {
 	//    in kdb systems. It allows you to create your own routing logic using the
 	//    initialization scripts and custom code. This type of cluster does not
 	//    require a writable local storage.
+	//
+	//    * GP – A general purpose cluster allows you to quickly iterate on code
+	//    during development by granting greater access to system commands and enabling
+	//    a fast reload of custom code. This cluster type can optionally mount databases
+	//    including cache and savedown storage. For this cluster type, the node
+	//    count is fixed at 1. It does not support autoscaling and supports only
+	//    SINGLE AZ mode.
+	//
+	//    * Tickerplant – A tickerplant cluster allows you to subscribe to feed
+	//    handlers based on IAM permissions. It can publish to RDBs, other Tickerplants,
+	//    and real-time subscribers (RTS). Tickerplants can persist messages to
+	//    log, which is readable by any RDB environment. It supports only single-node
+	//    that is only one kdb process.
 	ClusterType *string `location:"querystring" locationName:"clusterType" type:"string" enum:"KxClusterType"`
 
 	// A unique identifier for the kdb environment.
@@ -9309,6 +14139,134 @@ func (s *ListKxDatabasesOutput) SetNextToken(v string) *ListKxDatabasesOutput {
 	return s
 }
 
+type ListKxDataviewsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the database where the dataviews were created.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `location:"uri" locationName:"databaseName" min:"3" type:"string" required:"true"`
+
+	// A unique identifier for the kdb environment, for which you want to retrieve
+	// a list of dataviews.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// The maximum number of results to return in this request.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// A token that indicates where a results page should begin.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxDataviewsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxDataviewsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListKxDataviewsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListKxDataviewsInput"}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 3))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *ListKxDataviewsInput) SetDatabaseName(v string) *ListKxDataviewsInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *ListKxDataviewsInput) SetEnvironmentId(v string) *ListKxDataviewsInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListKxDataviewsInput) SetMaxResults(v int64) *ListKxDataviewsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListKxDataviewsInput) SetNextToken(v string) *ListKxDataviewsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListKxDataviewsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of kdb dataviews that are currently active for the given database.
+	KxDataviews []*KxDataviewListEntry `locationName:"kxDataviews" type:"list"`
+
+	// A token that indicates where a results page should begin.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxDataviewsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxDataviewsOutput) GoString() string {
+	return s.String()
+}
+
+// SetKxDataviews sets the KxDataviews field's value.
+func (s *ListKxDataviewsOutput) SetKxDataviews(v []*KxDataviewListEntry) *ListKxDataviewsOutput {
+	s.KxDataviews = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListKxDataviewsOutput) SetNextToken(v string) *ListKxDataviewsOutput {
+	s.NextToken = &v
+	return s
+}
+
 type ListKxEnvironmentsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -9399,6 +14357,117 @@ func (s *ListKxEnvironmentsOutput) SetEnvironments(v []*KxEnvironment) *ListKxEn
 // SetNextToken sets the NextToken field's value.
 func (s *ListKxEnvironmentsOutput) SetNextToken(v string) *ListKxEnvironmentsOutput {
 	s.NextToken = &v
+	return s
+}
+
+type ListKxScalingGroupsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A unique identifier for the kdb environment, for which you want to retrieve
+	// a list of scaling groups.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// The maximum number of results to return in this request.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// A token that indicates where a results page should begin.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxScalingGroupsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxScalingGroupsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListKxScalingGroupsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListKxScalingGroupsInput"}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *ListKxScalingGroupsInput) SetEnvironmentId(v string) *ListKxScalingGroupsInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListKxScalingGroupsInput) SetMaxResults(v int64) *ListKxScalingGroupsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListKxScalingGroupsInput) SetNextToken(v string) *ListKxScalingGroupsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListKxScalingGroupsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A token that indicates where a results page should begin.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+
+	// A list of scaling groups available in a kdb environment.
+	ScalingGroups []*KxScalingGroup `locationName:"scalingGroups" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxScalingGroupsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxScalingGroupsOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListKxScalingGroupsOutput) SetNextToken(v string) *ListKxScalingGroupsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetScalingGroups sets the ScalingGroups field's value.
+func (s *ListKxScalingGroupsOutput) SetScalingGroups(v []*KxScalingGroup) *ListKxScalingGroupsOutput {
+	s.ScalingGroups = v
 	return s
 }
 
@@ -9512,6 +14581,127 @@ func (s *ListKxUsersOutput) SetUsers(v []*KxUser) *ListKxUsersOutput {
 	return s
 }
 
+type ListKxVolumesInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A unique identifier for the kdb environment, whose clusters can attach to
+	// the volume.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// The maximum number of results to return in this request.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// A token that indicates where a results page should begin.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+
+	// The type of file system volume. Currently, FinSpace only supports NAS_1 volume
+	// type.
+	VolumeType *string `location:"querystring" locationName:"volumeType" type:"string" enum:"KxVolumeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxVolumesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxVolumesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListKxVolumesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListKxVolumesInput"}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *ListKxVolumesInput) SetEnvironmentId(v string) *ListKxVolumesInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListKxVolumesInput) SetMaxResults(v int64) *ListKxVolumesInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListKxVolumesInput) SetNextToken(v string) *ListKxVolumesInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetVolumeType sets the VolumeType field's value.
+func (s *ListKxVolumesInput) SetVolumeType(v string) *ListKxVolumesInput {
+	s.VolumeType = &v
+	return s
+}
+
+type ListKxVolumesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A summary of volumes.
+	KxVolumeSummaries []*KxVolume `locationName:"kxVolumeSummaries" type:"list"`
+
+	// A token that indicates where a results page should begin.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxVolumesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListKxVolumesOutput) GoString() string {
+	return s.String()
+}
+
+// SetKxVolumeSummaries sets the KxVolumeSummaries field's value.
+func (s *ListKxVolumesOutput) SetKxVolumeSummaries(v []*KxVolume) *ListKxVolumesOutput {
+	s.KxVolumeSummaries = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListKxVolumesOutput) SetNextToken(v string) *ListKxVolumesOutput {
+	s.NextToken = &v
+	return s
+}
+
 type ListTagsForResourceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -9589,6 +14779,201 @@ func (s ListTagsForResourceOutput) GoString() string {
 // SetTags sets the Tags field's value.
 func (s *ListTagsForResourceOutput) SetTags(v map[string]*string) *ListTagsForResourceOutput {
 	s.Tags = v
+	return s
+}
+
+// The network access control list (ACL) is an optional layer of security for
+// your VPC that acts as a firewall for controlling traffic in and out of one
+// or more subnets. The entry is a set of numbered ingress and egress rules
+// that determine whether a packet should be allowed in or out of a subnet associated
+// with the ACL. We process the entries in the ACL according to the rule numbers,
+// in ascending order.
+type NetworkACLEntry struct {
+	_ struct{} `type:"structure"`
+
+	// The IPv4 network range to allow or deny, in CIDR notation. For example, 172.16.0.0/24.
+	// We modify the specified CIDR block to its canonical form. For example, if
+	// you specify 100.68.0.18/18, we modify it to 100.68.0.0/18.
+	//
+	// CidrBlock is a required field
+	CidrBlock *string `locationName:"cidrBlock" min:"1" type:"string" required:"true"`
+
+	// Defines the ICMP protocol that consists of the ICMP type and code.
+	IcmpTypeCode *IcmpTypeCode `locationName:"icmpTypeCode" type:"structure"`
+
+	// The range of ports the rule applies to.
+	PortRange *PortRange `locationName:"portRange" type:"structure"`
+
+	// The protocol number. A value of -1 means all the protocols.
+	//
+	// Protocol is a required field
+	Protocol *string `locationName:"protocol" min:"1" type:"string" required:"true"`
+
+	// Indicates whether to allow or deny the traffic that matches the rule.
+	//
+	// RuleAction is a required field
+	RuleAction *string `locationName:"ruleAction" type:"string" required:"true" enum:"RuleAction"`
+
+	// The rule number for the entry. For example 100. All the network ACL entries
+	// are processed in ascending order by rule number.
+	//
+	// RuleNumber is a required field
+	RuleNumber *int64 `locationName:"ruleNumber" min:"1" type:"integer" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NetworkACLEntry) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NetworkACLEntry) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *NetworkACLEntry) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "NetworkACLEntry"}
+	if s.CidrBlock == nil {
+		invalidParams.Add(request.NewErrParamRequired("CidrBlock"))
+	}
+	if s.CidrBlock != nil && len(*s.CidrBlock) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CidrBlock", 1))
+	}
+	if s.Protocol == nil {
+		invalidParams.Add(request.NewErrParamRequired("Protocol"))
+	}
+	if s.Protocol != nil && len(*s.Protocol) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Protocol", 1))
+	}
+	if s.RuleAction == nil {
+		invalidParams.Add(request.NewErrParamRequired("RuleAction"))
+	}
+	if s.RuleNumber == nil {
+		invalidParams.Add(request.NewErrParamRequired("RuleNumber"))
+	}
+	if s.RuleNumber != nil && *s.RuleNumber < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("RuleNumber", 1))
+	}
+	if s.IcmpTypeCode != nil {
+		if err := s.IcmpTypeCode.Validate(); err != nil {
+			invalidParams.AddNested("IcmpTypeCode", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.PortRange != nil {
+		if err := s.PortRange.Validate(); err != nil {
+			invalidParams.AddNested("PortRange", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCidrBlock sets the CidrBlock field's value.
+func (s *NetworkACLEntry) SetCidrBlock(v string) *NetworkACLEntry {
+	s.CidrBlock = &v
+	return s
+}
+
+// SetIcmpTypeCode sets the IcmpTypeCode field's value.
+func (s *NetworkACLEntry) SetIcmpTypeCode(v *IcmpTypeCode) *NetworkACLEntry {
+	s.IcmpTypeCode = v
+	return s
+}
+
+// SetPortRange sets the PortRange field's value.
+func (s *NetworkACLEntry) SetPortRange(v *PortRange) *NetworkACLEntry {
+	s.PortRange = v
+	return s
+}
+
+// SetProtocol sets the Protocol field's value.
+func (s *NetworkACLEntry) SetProtocol(v string) *NetworkACLEntry {
+	s.Protocol = &v
+	return s
+}
+
+// SetRuleAction sets the RuleAction field's value.
+func (s *NetworkACLEntry) SetRuleAction(v string) *NetworkACLEntry {
+	s.RuleAction = &v
+	return s
+}
+
+// SetRuleNumber sets the RuleNumber field's value.
+func (s *NetworkACLEntry) SetRuleNumber(v int64) *NetworkACLEntry {
+	s.RuleNumber = &v
+	return s
+}
+
+// The range of ports the rule applies to.
+type PortRange struct {
+	_ struct{} `type:"structure"`
+
+	// The first port in the range.
+	//
+	// From is a required field
+	From *int64 `locationName:"from" type:"integer" required:"true"`
+
+	// The last port in the range.
+	//
+	// To is a required field
+	To *int64 `locationName:"to" type:"integer" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PortRange) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PortRange) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PortRange) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PortRange"}
+	if s.From == nil {
+		invalidParams.Add(request.NewErrParamRequired("From"))
+	}
+	if s.To == nil {
+		invalidParams.Add(request.NewErrParamRequired("To"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFrom sets the From field's value.
+func (s *PortRange) SetFrom(v int64) *PortRange {
+	s.From = &v
+	return s
+}
+
+// SetTo sets the To field's value.
+func (s *PortRange) SetTo(v int64) *PortRange {
+	s.To = &v
 	return s
 }
 
@@ -10026,10 +15411,49 @@ func (s *ThrottlingException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// A configuration to store the Tickerplant logs. It consists of a list of volumes
+// that will be mounted to your cluster. For the cluster type Tickerplant, the
+// location of the TP volume on the cluster will be available by using the global
+// variable .aws.tp_log_path.
+type TickerplantLogConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the volumes for tickerplant logs.
+	TickerplantLogVolumes []*string `locationName:"tickerplantLogVolumes" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TickerplantLogConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TickerplantLogConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetTickerplantLogVolumes sets the TickerplantLogVolumes field's value.
+func (s *TickerplantLogConfiguration) SetTickerplantLogVolumes(v []*string) *TickerplantLogConfiguration {
+	s.TickerplantLogVolumes = v
+	return s
+}
+
 // The structure of the transit gateway and network configuration that is used
 // to connect the kdb environment to an internal network.
 type TransitGatewayConfiguration struct {
 	_ struct{} `type:"structure"`
+
+	// The rules that define how you manage the outbound traffic from kdb network
+	// to your internal network.
+	AttachmentNetworkAclConfiguration []*NetworkACLEntry `locationName:"attachmentNetworkAclConfiguration" min:"1" type:"list"`
 
 	// The routing CIDR on behalf of kdb environment. It could be any "/26 range
 	// in the 100.64.0.0 CIDR space. After providing, it will be added to the customer's
@@ -10067,6 +15491,9 @@ func (s TransitGatewayConfiguration) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *TransitGatewayConfiguration) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "TransitGatewayConfiguration"}
+	if s.AttachmentNetworkAclConfiguration != nil && len(s.AttachmentNetworkAclConfiguration) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AttachmentNetworkAclConfiguration", 1))
+	}
 	if s.RoutableCIDRSpace == nil {
 		invalidParams.Add(request.NewErrParamRequired("RoutableCIDRSpace"))
 	}
@@ -10076,11 +15503,27 @@ func (s *TransitGatewayConfiguration) Validate() error {
 	if s.TransitGatewayID != nil && len(*s.TransitGatewayID) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("TransitGatewayID", 1))
 	}
+	if s.AttachmentNetworkAclConfiguration != nil {
+		for i, v := range s.AttachmentNetworkAclConfiguration {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AttachmentNetworkAclConfiguration", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAttachmentNetworkAclConfiguration sets the AttachmentNetworkAclConfiguration field's value.
+func (s *TransitGatewayConfiguration) SetAttachmentNetworkAclConfiguration(v []*NetworkACLEntry) *TransitGatewayConfiguration {
+	s.AttachmentNetworkAclConfiguration = v
+	return s
 }
 
 // SetRoutableCIDRSpace sets the RoutableCIDRSpace field's value.
@@ -10317,11 +15760,182 @@ func (s *UpdateEnvironmentOutput) SetEnvironment(v *Environment) *UpdateEnvironm
 	return s
 }
 
+type UpdateKxClusterCodeConfigurationInput struct {
+	_ struct{} `type:"structure"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The name of the cluster.
+	//
+	// ClusterName is a required field
+	ClusterName *string `location:"uri" locationName:"clusterName" min:"3" type:"string" required:"true"`
+
+	// The structure of the customer code available within the running cluster.
+	//
+	// Code is a required field
+	Code *CodeConfiguration `locationName:"code" type:"structure" required:"true"`
+
+	// Specifies the key-value pairs to make them available inside the cluster.
+	//
+	// You cannot update this parameter for a NO_RESTART deployment.
+	CommandLineArguments []*KxCommandLineArgument `locationName:"commandLineArguments" type:"list"`
+
+	// The configuration that allows you to choose how you want to update the code
+	// on a cluster.
+	DeploymentConfiguration *KxClusterCodeDeploymentConfiguration `locationName:"deploymentConfiguration" type:"structure"`
+
+	// A unique identifier of the kdb environment.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// Specifies a Q program that will be run at launch of a cluster. It is a relative
+	// path within .zip file that contains the custom code, which will be loaded
+	// on the cluster. It must include the file name itself. For example, somedir/init.q.
+	//
+	// You cannot update this parameter for a NO_RESTART deployment.
+	InitializationScript *string `locationName:"initializationScript" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxClusterCodeConfigurationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxClusterCodeConfigurationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateKxClusterCodeConfigurationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateKxClusterCodeConfigurationInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.ClusterName == nil {
+		invalidParams.Add(request.NewErrParamRequired("ClusterName"))
+	}
+	if s.ClusterName != nil && len(*s.ClusterName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("ClusterName", 3))
+	}
+	if s.Code == nil {
+		invalidParams.Add(request.NewErrParamRequired("Code"))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.InitializationScript != nil && len(*s.InitializationScript) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("InitializationScript", 1))
+	}
+	if s.Code != nil {
+		if err := s.Code.Validate(); err != nil {
+			invalidParams.AddNested("Code", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.CommandLineArguments != nil {
+		for i, v := range s.CommandLineArguments {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "CommandLineArguments", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.DeploymentConfiguration != nil {
+		if err := s.DeploymentConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("DeploymentConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *UpdateKxClusterCodeConfigurationInput) SetClientToken(v string) *UpdateKxClusterCodeConfigurationInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetClusterName sets the ClusterName field's value.
+func (s *UpdateKxClusterCodeConfigurationInput) SetClusterName(v string) *UpdateKxClusterCodeConfigurationInput {
+	s.ClusterName = &v
+	return s
+}
+
+// SetCode sets the Code field's value.
+func (s *UpdateKxClusterCodeConfigurationInput) SetCode(v *CodeConfiguration) *UpdateKxClusterCodeConfigurationInput {
+	s.Code = v
+	return s
+}
+
+// SetCommandLineArguments sets the CommandLineArguments field's value.
+func (s *UpdateKxClusterCodeConfigurationInput) SetCommandLineArguments(v []*KxCommandLineArgument) *UpdateKxClusterCodeConfigurationInput {
+	s.CommandLineArguments = v
+	return s
+}
+
+// SetDeploymentConfiguration sets the DeploymentConfiguration field's value.
+func (s *UpdateKxClusterCodeConfigurationInput) SetDeploymentConfiguration(v *KxClusterCodeDeploymentConfiguration) *UpdateKxClusterCodeConfigurationInput {
+	s.DeploymentConfiguration = v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *UpdateKxClusterCodeConfigurationInput) SetEnvironmentId(v string) *UpdateKxClusterCodeConfigurationInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetInitializationScript sets the InitializationScript field's value.
+func (s *UpdateKxClusterCodeConfigurationInput) SetInitializationScript(v string) *UpdateKxClusterCodeConfigurationInput {
+	s.InitializationScript = &v
+	return s
+}
+
+type UpdateKxClusterCodeConfigurationOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxClusterCodeConfigurationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxClusterCodeConfigurationOutput) GoString() string {
+	return s.String()
+}
+
 type UpdateKxClusterDatabasesInput struct {
 	_ struct{} `type:"structure"`
 
 	// A token that ensures idempotency. This token expires in 10 minutes.
-	ClientToken *string `locationName:"clientToken" min:"1" type:"string"`
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A unique name for the cluster that you want to modify.
 	//
@@ -10332,6 +15946,10 @@ type UpdateKxClusterDatabasesInput struct {
 	//
 	// Databases is a required field
 	Databases []*KxDatabaseConfiguration `locationName:"databases" type:"list" required:"true"`
+
+	// The configuration that allows you to choose how you want to update the databases
+	// on a cluster.
+	DeploymentConfiguration *KxDeploymentConfiguration `locationName:"deploymentConfiguration" type:"structure"`
 
 	// The unique identifier of a kdb environment.
 	//
@@ -10388,6 +16006,11 @@ func (s *UpdateKxClusterDatabasesInput) Validate() error {
 			}
 		}
 	}
+	if s.DeploymentConfiguration != nil {
+		if err := s.DeploymentConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("DeploymentConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -10410,6 +16033,12 @@ func (s *UpdateKxClusterDatabasesInput) SetClusterName(v string) *UpdateKxCluste
 // SetDatabases sets the Databases field's value.
 func (s *UpdateKxClusterDatabasesInput) SetDatabases(v []*KxDatabaseConfiguration) *UpdateKxClusterDatabasesInput {
 	s.Databases = v
+	return s
+}
+
+// SetDeploymentConfiguration sets the DeploymentConfiguration field's value.
+func (s *UpdateKxClusterDatabasesInput) SetDeploymentConfiguration(v *KxDeploymentConfiguration) *UpdateKxClusterDatabasesInput {
+	s.DeploymentConfiguration = v
 	return s
 }
 
@@ -10591,11 +16220,315 @@ func (s *UpdateKxDatabaseOutput) SetLastModifiedTimestamp(v time.Time) *UpdateKx
 	return s
 }
 
+type UpdateKxDataviewInput struct {
+	_ struct{} `type:"structure"`
+
+	// A unique identifier for the changeset.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The name of the database.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `location:"uri" locationName:"databaseName" min:"3" type:"string" required:"true"`
+
+	// The name of the dataview that you want to update.
+	//
+	// DataviewName is a required field
+	DataviewName *string `location:"uri" locationName:"dataviewName" min:"3" type:"string" required:"true"`
+
+	// The description for a dataview.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, where you want to update the
+	// dataview.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// The configuration that contains the database path of the data that you want
+	// to place on each selected volume. Each segment must have a unique database
+	// path for each volume. If you do not explicitly specify any database path
+	// for a volume, they are accessible from the cluster through the default S3/object
+	// store segment.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxDataviewInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxDataviewInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateKxDataviewInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateKxDataviewInput"}
+	if s.ChangesetId != nil && len(*s.ChangesetId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ChangesetId", 1))
+	}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 3))
+	}
+	if s.DataviewName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataviewName"))
+	}
+	if s.DataviewName != nil && len(*s.DataviewName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DataviewName", 3))
+	}
+	if s.Description != nil && len(*s.Description) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.SegmentConfigurations != nil {
+		for i, v := range s.SegmentConfigurations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "SegmentConfigurations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *UpdateKxDataviewInput) SetChangesetId(v string) *UpdateKxDataviewInput {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *UpdateKxDataviewInput) SetClientToken(v string) *UpdateKxDataviewInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *UpdateKxDataviewInput) SetDatabaseName(v string) *UpdateKxDataviewInput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *UpdateKxDataviewInput) SetDataviewName(v string) *UpdateKxDataviewInput {
+	s.DataviewName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateKxDataviewInput) SetDescription(v string) *UpdateKxDataviewInput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *UpdateKxDataviewInput) SetEnvironmentId(v string) *UpdateKxDataviewInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *UpdateKxDataviewInput) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *UpdateKxDataviewInput {
+	s.SegmentConfigurations = v
+	return s
+}
+
+type UpdateKxDataviewOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The current active changeset versions of the database on the given dataview.
+	ActiveVersions []*KxDataviewActiveVersion `locationName:"activeVersions" type:"list"`
+
+	// The option to specify whether you want to apply all the future additions
+	// and corrections automatically to the dataview when new changesets are ingested.
+	// The default value is false.
+	AutoUpdate *bool `locationName:"autoUpdate" type:"boolean"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneId *string `locationName:"availabilityZoneId" type:"string"`
+
+	// The number of availability zones you want to assign per cluster. This can
+	// be one of the following
+	//
+	//    * SINGLE – Assigns one availability zone per cluster.
+	//
+	//    * MULTI – Assigns all the availability zones per cluster.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// A unique identifier for the changeset.
+	ChangesetId *string `locationName:"changesetId" min:"1" type:"string"`
+
+	// The timestamp at which the dataview was created in FinSpace. The value is
+	// determined as epoch time in milliseconds. For example, the value for Monday,
+	// November 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// The name of the database.
+	DatabaseName *string `locationName:"databaseName" min:"3" type:"string"`
+
+	// The name of the database under which the dataview was created.
+	DataviewName *string `locationName:"dataviewName" min:"3" type:"string"`
+
+	// A description of the dataview.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment, where you want to update the
+	// dataview.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// The last time that the dataview was updated in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// The configuration that contains the database path of the data that you want
+	// to place on each selected volume. Each segment must have a unique database
+	// path for each volume. If you do not explicitly specify any database path
+	// for a volume, they are accessible from the cluster through the default S3/object
+	// store segment.
+	SegmentConfigurations []*KxDataviewSegmentConfiguration `locationName:"segmentConfigurations" type:"list"`
+
+	// The status of dataview creation.
+	//
+	//    * CREATING – The dataview creation is in progress.
+	//
+	//    * UPDATING – The dataview is in the process of being updated.
+	//
+	//    * ACTIVE – The dataview is active.
+	Status *string `locationName:"status" type:"string" enum:"KxDataviewStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxDataviewOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxDataviewOutput) GoString() string {
+	return s.String()
+}
+
+// SetActiveVersions sets the ActiveVersions field's value.
+func (s *UpdateKxDataviewOutput) SetActiveVersions(v []*KxDataviewActiveVersion) *UpdateKxDataviewOutput {
+	s.ActiveVersions = v
+	return s
+}
+
+// SetAutoUpdate sets the AutoUpdate field's value.
+func (s *UpdateKxDataviewOutput) SetAutoUpdate(v bool) *UpdateKxDataviewOutput {
+	s.AutoUpdate = &v
+	return s
+}
+
+// SetAvailabilityZoneId sets the AvailabilityZoneId field's value.
+func (s *UpdateKxDataviewOutput) SetAvailabilityZoneId(v string) *UpdateKxDataviewOutput {
+	s.AvailabilityZoneId = &v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *UpdateKxDataviewOutput) SetAzMode(v string) *UpdateKxDataviewOutput {
+	s.AzMode = &v
+	return s
+}
+
+// SetChangesetId sets the ChangesetId field's value.
+func (s *UpdateKxDataviewOutput) SetChangesetId(v string) *UpdateKxDataviewOutput {
+	s.ChangesetId = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *UpdateKxDataviewOutput) SetCreatedTimestamp(v time.Time) *UpdateKxDataviewOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *UpdateKxDataviewOutput) SetDatabaseName(v string) *UpdateKxDataviewOutput {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetDataviewName sets the DataviewName field's value.
+func (s *UpdateKxDataviewOutput) SetDataviewName(v string) *UpdateKxDataviewOutput {
+	s.DataviewName = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateKxDataviewOutput) SetDescription(v string) *UpdateKxDataviewOutput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *UpdateKxDataviewOutput) SetEnvironmentId(v string) *UpdateKxDataviewOutput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *UpdateKxDataviewOutput) SetLastModifiedTimestamp(v time.Time) *UpdateKxDataviewOutput {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetSegmentConfigurations sets the SegmentConfigurations field's value.
+func (s *UpdateKxDataviewOutput) SetSegmentConfigurations(v []*KxDataviewSegmentConfiguration) *UpdateKxDataviewOutput {
+	s.SegmentConfigurations = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *UpdateKxDataviewOutput) SetStatus(v string) *UpdateKxDataviewOutput {
+	s.Status = &v
+	return s
+}
+
 type UpdateKxEnvironmentInput struct {
 	_ struct{} `type:"structure"`
 
 	// A token that ensures idempotency. This token expires in 10 minutes.
-	ClientToken *string `locationName:"clientToken" min:"1" type:"string"`
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A description of the kdb environment.
 	Description *string `locationName:"description" min:"1" type:"string"`
@@ -10680,7 +16613,7 @@ type UpdateKxEnvironmentNetworkInput struct {
 	_ struct{} `type:"structure"`
 
 	// A token that ensures idempotency. This token expires in 10 minutes.
-	ClientToken *string `locationName:"clientToken" min:"1" type:"string"`
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A list of DNS server name and server IP. This is used to set up Route-53
 	// outbound resolvers.
@@ -11114,7 +17047,7 @@ type UpdateKxUserInput struct {
 	_ struct{} `type:"structure"`
 
 	// A token that ensures idempotency. This token expires in 10 minutes.
-	ClientToken *string `locationName:"clientToken" min:"1" type:"string"`
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// A unique identifier for the kdb environment.
 	//
@@ -11215,7 +17148,7 @@ type UpdateKxUserOutput struct {
 	IamRole *string `locationName:"iamRole" min:"20" type:"string"`
 
 	// The Amazon Resource Name (ARN) that identifies the user. For more information
-	// about ARNs and how to use ARNs in policies, see IAM Identifiers (IAM/latest/UserGuide/reference_identifiers.html)
+	// about ARNs and how to use ARNs in policies, see IAM Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
 	// in the IAM User Guide.
 	UserArn *string `locationName:"userArn" min:"20" type:"string"`
 
@@ -11262,6 +17195,277 @@ func (s *UpdateKxUserOutput) SetUserArn(v string) *UpdateKxUserOutput {
 // SetUserName sets the UserName field's value.
 func (s *UpdateKxUserOutput) SetUserName(v string) *UpdateKxUserOutput {
 	s.UserName = &v
+	return s
+}
+
+type UpdateKxVolumeInput struct {
+	_ struct{} `type:"structure"`
+
+	// A token that ensures idempotency. This token expires in 10 minutes.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// A description of the volume.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment where you created the storage
+	// volume.
+	//
+	// EnvironmentId is a required field
+	EnvironmentId *string `location:"uri" locationName:"environmentId" min:"1" type:"string" required:"true"`
+
+	// Specifies the configuration for the Network attached storage (NAS_1) file
+	// system volume.
+	Nas1Configuration *KxNAS1Configuration `locationName:"nas1Configuration" type:"structure"`
+
+	// A unique identifier for the volume.
+	//
+	// VolumeName is a required field
+	VolumeName *string `location:"uri" locationName:"volumeName" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxVolumeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxVolumeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateKxVolumeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateKxVolumeInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.Description != nil && len(*s.Description) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
+	}
+	if s.EnvironmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentId"))
+	}
+	if s.EnvironmentId != nil && len(*s.EnvironmentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnvironmentId", 1))
+	}
+	if s.VolumeName == nil {
+		invalidParams.Add(request.NewErrParamRequired("VolumeName"))
+	}
+	if s.VolumeName != nil && len(*s.VolumeName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("VolumeName", 3))
+	}
+	if s.Nas1Configuration != nil {
+		if err := s.Nas1Configuration.Validate(); err != nil {
+			invalidParams.AddNested("Nas1Configuration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *UpdateKxVolumeInput) SetClientToken(v string) *UpdateKxVolumeInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateKxVolumeInput) SetDescription(v string) *UpdateKxVolumeInput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *UpdateKxVolumeInput) SetEnvironmentId(v string) *UpdateKxVolumeInput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetNas1Configuration sets the Nas1Configuration field's value.
+func (s *UpdateKxVolumeInput) SetNas1Configuration(v *KxNAS1Configuration) *UpdateKxVolumeInput {
+	s.Nas1Configuration = v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *UpdateKxVolumeInput) SetVolumeName(v string) *UpdateKxVolumeInput {
+	s.VolumeName = &v
+	return s
+}
+
+type UpdateKxVolumeOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the clusters that a volume is attached to.
+	AttachedClusters []*KxAttachedCluster `locationName:"attachedClusters" type:"list"`
+
+	// The identifier of the availability zones.
+	AvailabilityZoneIds []*string `locationName:"availabilityZoneIds" type:"list"`
+
+	// The number of availability zones you want to assign per cluster. Currently,
+	// FinSpace only support SINGLE for volumes.
+	AzMode *string `locationName:"azMode" type:"string" enum:"KxAzMode"`
+
+	// The timestamp at which the volume was created in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	CreatedTimestamp *time.Time `locationName:"createdTimestamp" type:"timestamp"`
+
+	// The description for the volume.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// A unique identifier for the kdb environment where you want to update the
+	// volume.
+	EnvironmentId *string `locationName:"environmentId" min:"1" type:"string"`
+
+	// The last time that the volume was updated in FinSpace. The value is determined
+	// as epoch time in milliseconds. For example, the value for Monday, November
+	// 1, 2021 12:00:00 PM UTC is specified as 1635768000000.
+	LastModifiedTimestamp *time.Time `locationName:"lastModifiedTimestamp" type:"timestamp"`
+
+	// Specifies the configuration for the Network attached storage (NAS_1) file
+	// system volume.
+	Nas1Configuration *KxNAS1Configuration `locationName:"nas1Configuration" type:"structure"`
+
+	// The status of the volume.
+	//
+	//    * CREATING – The volume creation is in progress.
+	//
+	//    * CREATE_FAILED – The volume creation has failed.
+	//
+	//    * ACTIVE – The volume is active.
+	//
+	//    * UPDATING – The volume is in the process of being updated.
+	//
+	//    * UPDATE_FAILED – The update action failed.
+	//
+	//    * UPDATED – The volume is successfully updated.
+	//
+	//    * DELETING – The volume is in the process of being deleted.
+	//
+	//    * DELETE_FAILED – The system failed to delete the volume.
+	//
+	//    * DELETED – The volume is successfully deleted.
+	Status *string `locationName:"status" type:"string" enum:"KxVolumeStatus"`
+
+	// The error message when a failed state occurs.
+	StatusReason *string `locationName:"statusReason" min:"1" type:"string"`
+
+	// The ARN identifier of the volume.
+	VolumeArn *string `locationName:"volumeArn" min:"20" type:"string"`
+
+	// A unique identifier for the volume that you want to update.
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string"`
+
+	// The type of file system volume. Currently, FinSpace only supports NAS_1 volume
+	// type.
+	VolumeType *string `locationName:"volumeType" type:"string" enum:"KxVolumeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxVolumeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateKxVolumeOutput) GoString() string {
+	return s.String()
+}
+
+// SetAttachedClusters sets the AttachedClusters field's value.
+func (s *UpdateKxVolumeOutput) SetAttachedClusters(v []*KxAttachedCluster) *UpdateKxVolumeOutput {
+	s.AttachedClusters = v
+	return s
+}
+
+// SetAvailabilityZoneIds sets the AvailabilityZoneIds field's value.
+func (s *UpdateKxVolumeOutput) SetAvailabilityZoneIds(v []*string) *UpdateKxVolumeOutput {
+	s.AvailabilityZoneIds = v
+	return s
+}
+
+// SetAzMode sets the AzMode field's value.
+func (s *UpdateKxVolumeOutput) SetAzMode(v string) *UpdateKxVolumeOutput {
+	s.AzMode = &v
+	return s
+}
+
+// SetCreatedTimestamp sets the CreatedTimestamp field's value.
+func (s *UpdateKxVolumeOutput) SetCreatedTimestamp(v time.Time) *UpdateKxVolumeOutput {
+	s.CreatedTimestamp = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateKxVolumeOutput) SetDescription(v string) *UpdateKxVolumeOutput {
+	s.Description = &v
+	return s
+}
+
+// SetEnvironmentId sets the EnvironmentId field's value.
+func (s *UpdateKxVolumeOutput) SetEnvironmentId(v string) *UpdateKxVolumeOutput {
+	s.EnvironmentId = &v
+	return s
+}
+
+// SetLastModifiedTimestamp sets the LastModifiedTimestamp field's value.
+func (s *UpdateKxVolumeOutput) SetLastModifiedTimestamp(v time.Time) *UpdateKxVolumeOutput {
+	s.LastModifiedTimestamp = &v
+	return s
+}
+
+// SetNas1Configuration sets the Nas1Configuration field's value.
+func (s *UpdateKxVolumeOutput) SetNas1Configuration(v *KxNAS1Configuration) *UpdateKxVolumeOutput {
+	s.Nas1Configuration = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *UpdateKxVolumeOutput) SetStatus(v string) *UpdateKxVolumeOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReason sets the StatusReason field's value.
+func (s *UpdateKxVolumeOutput) SetStatusReason(v string) *UpdateKxVolumeOutput {
+	s.StatusReason = &v
+	return s
+}
+
+// SetVolumeArn sets the VolumeArn field's value.
+func (s *UpdateKxVolumeOutput) SetVolumeArn(v string) *UpdateKxVolumeOutput {
+	s.VolumeArn = &v
+	return s
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *UpdateKxVolumeOutput) SetVolumeName(v string) *UpdateKxVolumeOutput {
+	s.VolumeName = &v
+	return s
+}
+
+// SetVolumeType sets the VolumeType field's value.
+func (s *UpdateKxVolumeOutput) SetVolumeType(v string) *UpdateKxVolumeOutput {
+	s.VolumeType = &v
 	return s
 }
 
@@ -11327,6 +17531,48 @@ func (s *ValidationException) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *ValidationException) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+// The structure that consists of name and type of volume.
+type Volume struct {
+	_ struct{} `type:"structure"`
+
+	// A unique identifier for the volume.
+	VolumeName *string `locationName:"volumeName" min:"3" type:"string"`
+
+	// The type of file system volume. Currently, FinSpace only supports NAS_1 volume
+	// type.
+	VolumeType *string `locationName:"volumeType" type:"string" enum:"VolumeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Volume) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Volume) GoString() string {
+	return s.String()
+}
+
+// SetVolumeName sets the VolumeName field's value.
+func (s *Volume) SetVolumeName(v string) *Volume {
+	s.VolumeName = &v
+	return s
+}
+
+// SetVolumeType sets the VolumeType field's value.
+func (s *Volume) SetVolumeType(v string) *Volume {
+	s.VolumeType = &v
+	return s
 }
 
 // Configuration details about the network where the Privatelink endpoint of
@@ -11632,6 +17878,26 @@ func KxAzMode_Values() []string {
 }
 
 const (
+	// KxClusterCodeDeploymentStrategyNoRestart is a KxClusterCodeDeploymentStrategy enum value
+	KxClusterCodeDeploymentStrategyNoRestart = "NO_RESTART"
+
+	// KxClusterCodeDeploymentStrategyRolling is a KxClusterCodeDeploymentStrategy enum value
+	KxClusterCodeDeploymentStrategyRolling = "ROLLING"
+
+	// KxClusterCodeDeploymentStrategyForce is a KxClusterCodeDeploymentStrategy enum value
+	KxClusterCodeDeploymentStrategyForce = "FORCE"
+)
+
+// KxClusterCodeDeploymentStrategy_Values returns all elements of the KxClusterCodeDeploymentStrategy enum
+func KxClusterCodeDeploymentStrategy_Values() []string {
+	return []string{
+		KxClusterCodeDeploymentStrategyNoRestart,
+		KxClusterCodeDeploymentStrategyRolling,
+		KxClusterCodeDeploymentStrategyForce,
+	}
+}
+
+const (
 	// KxClusterStatusPending is a KxClusterStatus enum value
 	KxClusterStatusPending = "PENDING"
 
@@ -11680,6 +17946,12 @@ const (
 
 	// KxClusterTypeGateway is a KxClusterType enum value
 	KxClusterTypeGateway = "GATEWAY"
+
+	// KxClusterTypeGp is a KxClusterType enum value
+	KxClusterTypeGp = "GP"
+
+	// KxClusterTypeTickerplant is a KxClusterType enum value
+	KxClusterTypeTickerplant = "TICKERPLANT"
 )
 
 // KxClusterType_Values returns all elements of the KxClusterType enum
@@ -11688,6 +17960,72 @@ func KxClusterType_Values() []string {
 		KxClusterTypeHdb,
 		KxClusterTypeRdb,
 		KxClusterTypeGateway,
+		KxClusterTypeGp,
+		KxClusterTypeTickerplant,
+	}
+}
+
+const (
+	// KxDataviewStatusCreating is a KxDataviewStatus enum value
+	KxDataviewStatusCreating = "CREATING"
+
+	// KxDataviewStatusActive is a KxDataviewStatus enum value
+	KxDataviewStatusActive = "ACTIVE"
+
+	// KxDataviewStatusUpdating is a KxDataviewStatus enum value
+	KxDataviewStatusUpdating = "UPDATING"
+
+	// KxDataviewStatusFailed is a KxDataviewStatus enum value
+	KxDataviewStatusFailed = "FAILED"
+
+	// KxDataviewStatusDeleting is a KxDataviewStatus enum value
+	KxDataviewStatusDeleting = "DELETING"
+)
+
+// KxDataviewStatus_Values returns all elements of the KxDataviewStatus enum
+func KxDataviewStatus_Values() []string {
+	return []string{
+		KxDataviewStatusCreating,
+		KxDataviewStatusActive,
+		KxDataviewStatusUpdating,
+		KxDataviewStatusFailed,
+		KxDataviewStatusDeleting,
+	}
+}
+
+const (
+	// KxDeploymentStrategyNoRestart is a KxDeploymentStrategy enum value
+	KxDeploymentStrategyNoRestart = "NO_RESTART"
+
+	// KxDeploymentStrategyRolling is a KxDeploymentStrategy enum value
+	KxDeploymentStrategyRolling = "ROLLING"
+)
+
+// KxDeploymentStrategy_Values returns all elements of the KxDeploymentStrategy enum
+func KxDeploymentStrategy_Values() []string {
+	return []string{
+		KxDeploymentStrategyNoRestart,
+		KxDeploymentStrategyRolling,
+	}
+}
+
+const (
+	// KxNAS1TypeSsd1000 is a KxNAS1Type enum value
+	KxNAS1TypeSsd1000 = "SSD_1000"
+
+	// KxNAS1TypeSsd250 is a KxNAS1Type enum value
+	KxNAS1TypeSsd250 = "SSD_250"
+
+	// KxNAS1TypeHdd12 is a KxNAS1Type enum value
+	KxNAS1TypeHdd12 = "HDD_12"
+)
+
+// KxNAS1Type_Values returns all elements of the KxNAS1Type enum
+func KxNAS1Type_Values() []string {
+	return []string{
+		KxNAS1TypeSsd1000,
+		KxNAS1TypeSsd250,
+		KxNAS1TypeHdd12,
 	}
 }
 
@@ -11700,6 +18038,110 @@ const (
 func KxSavedownStorageType_Values() []string {
 	return []string{
 		KxSavedownStorageTypeSds01,
+	}
+}
+
+const (
+	// KxScalingGroupStatusCreating is a KxScalingGroupStatus enum value
+	KxScalingGroupStatusCreating = "CREATING"
+
+	// KxScalingGroupStatusCreateFailed is a KxScalingGroupStatus enum value
+	KxScalingGroupStatusCreateFailed = "CREATE_FAILED"
+
+	// KxScalingGroupStatusActive is a KxScalingGroupStatus enum value
+	KxScalingGroupStatusActive = "ACTIVE"
+
+	// KxScalingGroupStatusDeleting is a KxScalingGroupStatus enum value
+	KxScalingGroupStatusDeleting = "DELETING"
+
+	// KxScalingGroupStatusDeleted is a KxScalingGroupStatus enum value
+	KxScalingGroupStatusDeleted = "DELETED"
+
+	// KxScalingGroupStatusDeleteFailed is a KxScalingGroupStatus enum value
+	KxScalingGroupStatusDeleteFailed = "DELETE_FAILED"
+)
+
+// KxScalingGroupStatus_Values returns all elements of the KxScalingGroupStatus enum
+func KxScalingGroupStatus_Values() []string {
+	return []string{
+		KxScalingGroupStatusCreating,
+		KxScalingGroupStatusCreateFailed,
+		KxScalingGroupStatusActive,
+		KxScalingGroupStatusDeleting,
+		KxScalingGroupStatusDeleted,
+		KxScalingGroupStatusDeleteFailed,
+	}
+}
+
+const (
+	// KxVolumeStatusCreating is a KxVolumeStatus enum value
+	KxVolumeStatusCreating = "CREATING"
+
+	// KxVolumeStatusCreateFailed is a KxVolumeStatus enum value
+	KxVolumeStatusCreateFailed = "CREATE_FAILED"
+
+	// KxVolumeStatusActive is a KxVolumeStatus enum value
+	KxVolumeStatusActive = "ACTIVE"
+
+	// KxVolumeStatusUpdating is a KxVolumeStatus enum value
+	KxVolumeStatusUpdating = "UPDATING"
+
+	// KxVolumeStatusUpdated is a KxVolumeStatus enum value
+	KxVolumeStatusUpdated = "UPDATED"
+
+	// KxVolumeStatusUpdateFailed is a KxVolumeStatus enum value
+	KxVolumeStatusUpdateFailed = "UPDATE_FAILED"
+
+	// KxVolumeStatusDeleting is a KxVolumeStatus enum value
+	KxVolumeStatusDeleting = "DELETING"
+
+	// KxVolumeStatusDeleted is a KxVolumeStatus enum value
+	KxVolumeStatusDeleted = "DELETED"
+
+	// KxVolumeStatusDeleteFailed is a KxVolumeStatus enum value
+	KxVolumeStatusDeleteFailed = "DELETE_FAILED"
+)
+
+// KxVolumeStatus_Values returns all elements of the KxVolumeStatus enum
+func KxVolumeStatus_Values() []string {
+	return []string{
+		KxVolumeStatusCreating,
+		KxVolumeStatusCreateFailed,
+		KxVolumeStatusActive,
+		KxVolumeStatusUpdating,
+		KxVolumeStatusUpdated,
+		KxVolumeStatusUpdateFailed,
+		KxVolumeStatusDeleting,
+		KxVolumeStatusDeleted,
+		KxVolumeStatusDeleteFailed,
+	}
+}
+
+const (
+	// KxVolumeTypeNas1 is a KxVolumeType enum value
+	KxVolumeTypeNas1 = "NAS_1"
+)
+
+// KxVolumeType_Values returns all elements of the KxVolumeType enum
+func KxVolumeType_Values() []string {
+	return []string{
+		KxVolumeTypeNas1,
+	}
+}
+
+const (
+	// RuleActionAllow is a RuleAction enum value
+	RuleActionAllow = "allow"
+
+	// RuleActionDeny is a RuleAction enum value
+	RuleActionDeny = "deny"
+)
+
+// RuleAction_Values returns all elements of the RuleAction enum
+func RuleAction_Values() []string {
+	return []string{
+		RuleActionAllow,
+		RuleActionDeny,
 	}
 }
 
@@ -11728,5 +18170,17 @@ func TgwStatus_Values() []string {
 		TgwStatusUpdating,
 		TgwStatusFailedUpdate,
 		TgwStatusSuccessfullyUpdated,
+	}
+}
+
+const (
+	// VolumeTypeNas1 is a VolumeType enum value
+	VolumeTypeNas1 = "NAS_1"
+)
+
+// VolumeType_Values returns all elements of the VolumeType enum
+func VolumeType_Values() []string {
+	return []string{
+		VolumeTypeNas1,
 	}
 }

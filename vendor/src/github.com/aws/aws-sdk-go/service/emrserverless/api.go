@@ -406,8 +406,16 @@ func (c *EMRServerless) GetDashboardForJobRunRequest(input *GetDashboardForJobRu
 
 // GetDashboardForJobRun API operation for EMR Serverless.
 //
-// Returns a URL to access the job run dashboard. The generated URL is valid
-// for one hour, after which you must invoke the API again to generate a new
+// Creates and returns a URL that you can use to access the application UIs
+// for a job run.
+//
+// For jobs in a running state, the application UI is a live user interface
+// such as the Spark or Tez web UI. For completed jobs, the application UI is
+// a persistent application user interface such as the Spark History Server
+// or persistent Tez UI.
+//
+// The URL is valid for one hour after you generate it. To access the application
+// UI after that hour elapses, you must invoke the API again to generate a new
 // URL.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -1479,6 +1487,9 @@ type Application struct {
 	// No new resources will be created once any one of the defined limits is hit.
 	MaximumCapacity *MaximumAllowedResources `locationName:"maximumCapacity" type:"structure"`
 
+	// The configuration setting for monitoring.
+	MonitoringConfiguration *MonitoringConfiguration `locationName:"monitoringConfiguration" type:"structure"`
+
 	// The name of the application.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
@@ -1489,6 +1500,14 @@ type Application struct {
 	//
 	// ReleaseLabel is a required field
 	ReleaseLabel *string `locationName:"releaseLabel" min:"1" type:"string" required:"true"`
+
+	// The Configuration (https://docs.aws.amazon.com/emr-serverless/latest/APIReference/API_Configuration.html)
+	// specifications of an application. Each configuration consists of a classification
+	// and properties. You use this parameter when creating or updating an application.
+	// To see the runtimeConfiguration object of an application, run the GetApplication
+	// (https://docs.aws.amazon.com/emr-serverless/latest/APIReference/API_GetApplication.html)
+	// API operation.
+	RuntimeConfiguration []*Configuration `locationName:"runtimeConfiguration" type:"list"`
 
 	// The state of the application.
 	//
@@ -1587,6 +1606,12 @@ func (s *Application) SetMaximumCapacity(v *MaximumAllowedResources) *Applicatio
 	return s
 }
 
+// SetMonitoringConfiguration sets the MonitoringConfiguration field's value.
+func (s *Application) SetMonitoringConfiguration(v *MonitoringConfiguration) *Application {
+	s.MonitoringConfiguration = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *Application) SetName(v string) *Application {
 	s.Name = &v
@@ -1602,6 +1627,12 @@ func (s *Application) SetNetworkConfiguration(v *NetworkConfiguration) *Applicat
 // SetReleaseLabel sets the ReleaseLabel field's value.
 func (s *Application) SetReleaseLabel(v string) *Application {
 	s.ReleaseLabel = &v
+	return s
+}
+
+// SetRuntimeConfiguration sets the RuntimeConfiguration field's value.
+func (s *Application) SetRuntimeConfiguration(v []*Configuration) *Application {
+	s.RuntimeConfiguration = v
 	return s
 }
 
@@ -1968,6 +1999,111 @@ func (s *CancelJobRunOutput) SetJobRunId(v string) *CancelJobRunOutput {
 	return s
 }
 
+// The Amazon CloudWatch configuration for monitoring logs. You can configure
+// your jobs to send log information to CloudWatch.
+type CloudWatchLoggingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Enables CloudWatch logging.
+	//
+	// Enabled is a required field
+	Enabled *bool `locationName:"enabled" type:"boolean" required:"true"`
+
+	// The Key Management Service (KMS) key ARN to encrypt the logs that you store
+	// in CloudWatch Logs.
+	EncryptionKeyArn *string `locationName:"encryptionKeyArn" min:"20" type:"string"`
+
+	// The name of the log group in Amazon CloudWatch Logs where you want to publish
+	// your logs.
+	LogGroupName *string `locationName:"logGroupName" min:"1" type:"string"`
+
+	// Prefix for the CloudWatch log stream name.
+	LogStreamNamePrefix *string `locationName:"logStreamNamePrefix" min:"1" type:"string"`
+
+	// The types of logs that you want to publish to CloudWatch. If you don't specify
+	// any log types, driver STDOUT and STDERR logs will be published to CloudWatch
+	// Logs by default. For more information including the supported worker types
+	// for Hive and Spark, see Logging for EMR Serverless with CloudWatch (https://docs.aws.amazon.com/emr/latest/EMR-Serverless-UserGuide/logging.html#jobs-log-storage-cw).
+	//
+	//    * Key Valid Values: SPARK_DRIVER, SPARK_EXECUTOR, HIVE_DRIVER, TEZ_TASK
+	//
+	//    * Array Members Valid Values: STDOUT, STDERR, HIVE_LOG, TEZ_AM, SYSTEM_LOGS
+	LogTypes map[string][]*string `locationName:"logTypes" min:"1" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CloudWatchLoggingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CloudWatchLoggingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CloudWatchLoggingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CloudWatchLoggingConfiguration"}
+	if s.Enabled == nil {
+		invalidParams.Add(request.NewErrParamRequired("Enabled"))
+	}
+	if s.EncryptionKeyArn != nil && len(*s.EncryptionKeyArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("EncryptionKeyArn", 20))
+	}
+	if s.LogGroupName != nil && len(*s.LogGroupName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LogGroupName", 1))
+	}
+	if s.LogStreamNamePrefix != nil && len(*s.LogStreamNamePrefix) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LogStreamNamePrefix", 1))
+	}
+	if s.LogTypes != nil && len(s.LogTypes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LogTypes", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnabled sets the Enabled field's value.
+func (s *CloudWatchLoggingConfiguration) SetEnabled(v bool) *CloudWatchLoggingConfiguration {
+	s.Enabled = &v
+	return s
+}
+
+// SetEncryptionKeyArn sets the EncryptionKeyArn field's value.
+func (s *CloudWatchLoggingConfiguration) SetEncryptionKeyArn(v string) *CloudWatchLoggingConfiguration {
+	s.EncryptionKeyArn = &v
+	return s
+}
+
+// SetLogGroupName sets the LogGroupName field's value.
+func (s *CloudWatchLoggingConfiguration) SetLogGroupName(v string) *CloudWatchLoggingConfiguration {
+	s.LogGroupName = &v
+	return s
+}
+
+// SetLogStreamNamePrefix sets the LogStreamNamePrefix field's value.
+func (s *CloudWatchLoggingConfiguration) SetLogStreamNamePrefix(v string) *CloudWatchLoggingConfiguration {
+	s.LogStreamNamePrefix = &v
+	return s
+}
+
+// SetLogTypes sets the LogTypes field's value.
+func (s *CloudWatchLoggingConfiguration) SetLogTypes(v map[string][]*string) *CloudWatchLoggingConfiguration {
+	s.LogTypes = v
+	return s
+}
+
 // A configuration specification to be used when provisioning an application.
 // A configuration consists of a classification, properties, and optional nested
 // configurations. A classification refers to an application-specific configuration
@@ -2214,6 +2350,9 @@ type CreateApplicationInput struct {
 	// the defined limits is hit.
 	MaximumCapacity *MaximumAllowedResources `locationName:"maximumCapacity" type:"structure"`
 
+	// The configuration setting for monitoring.
+	MonitoringConfiguration *MonitoringConfiguration `locationName:"monitoringConfiguration" type:"structure"`
+
 	// The name of the application.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
@@ -2224,6 +2363,12 @@ type CreateApplicationInput struct {
 	//
 	// ReleaseLabel is a required field
 	ReleaseLabel *string `locationName:"releaseLabel" min:"1" type:"string" required:"true"`
+
+	// The Configuration (https://docs.aws.amazon.com/emr-serverless/latest/APIReference/API_Configuration.html)
+	// specifications to use when creating an application. Each configuration consists
+	// of a classification and properties. This configuration is applied to all
+	// the job runs submitted under the application.
+	RuntimeConfiguration []*Configuration `locationName:"runtimeConfiguration" type:"list"`
 
 	// The tags assigned to the application.
 	Tags map[string]*string `locationName:"tags" type:"map"`
@@ -2306,6 +2451,21 @@ func (s *CreateApplicationInput) Validate() error {
 			invalidParams.AddNested("MaximumCapacity", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.MonitoringConfiguration != nil {
+		if err := s.MonitoringConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("MonitoringConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.RuntimeConfiguration != nil {
+		for i, v := range s.RuntimeConfiguration {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "RuntimeConfiguration", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.WorkerTypeSpecifications != nil {
 		for i, v := range s.WorkerTypeSpecifications {
 			if v == nil {
@@ -2365,6 +2525,12 @@ func (s *CreateApplicationInput) SetMaximumCapacity(v *MaximumAllowedResources) 
 	return s
 }
 
+// SetMonitoringConfiguration sets the MonitoringConfiguration field's value.
+func (s *CreateApplicationInput) SetMonitoringConfiguration(v *MonitoringConfiguration) *CreateApplicationInput {
+	s.MonitoringConfiguration = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *CreateApplicationInput) SetName(v string) *CreateApplicationInput {
 	s.Name = &v
@@ -2380,6 +2546,12 @@ func (s *CreateApplicationInput) SetNetworkConfiguration(v *NetworkConfiguration
 // SetReleaseLabel sets the ReleaseLabel field's value.
 func (s *CreateApplicationInput) SetReleaseLabel(v string) *CreateApplicationInput {
 	s.ReleaseLabel = &v
+	return s
+}
+
+// SetRuntimeConfiguration sets the RuntimeConfiguration field's value.
+func (s *CreateApplicationInput) SetRuntimeConfiguration(v []*Configuration) *CreateApplicationInput {
+	s.RuntimeConfiguration = v
 	return s
 }
 
@@ -4026,6 +4198,10 @@ func (s *MaximumAllowedResources) SetMemory(v string) *MaximumAllowedResources {
 type MonitoringConfiguration struct {
 	_ struct{} `type:"structure"`
 
+	// The Amazon CloudWatch configuration for monitoring logs. You can configure
+	// your jobs to send log information to CloudWatch.
+	CloudWatchLoggingConfiguration *CloudWatchLoggingConfiguration `locationName:"cloudWatchLoggingConfiguration" type:"structure"`
+
 	// The managed log persistence configuration for a job run.
 	ManagedPersistenceMonitoringConfiguration *ManagedPersistenceMonitoringConfiguration `locationName:"managedPersistenceMonitoringConfiguration" type:"structure"`
 
@@ -4054,6 +4230,11 @@ func (s MonitoringConfiguration) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *MonitoringConfiguration) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "MonitoringConfiguration"}
+	if s.CloudWatchLoggingConfiguration != nil {
+		if err := s.CloudWatchLoggingConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("CloudWatchLoggingConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.ManagedPersistenceMonitoringConfiguration != nil {
 		if err := s.ManagedPersistenceMonitoringConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("ManagedPersistenceMonitoringConfiguration", err.(request.ErrInvalidParams))
@@ -4069,6 +4250,12 @@ func (s *MonitoringConfiguration) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetCloudWatchLoggingConfiguration sets the CloudWatchLoggingConfiguration field's value.
+func (s *MonitoringConfiguration) SetCloudWatchLoggingConfiguration(v *CloudWatchLoggingConfiguration) *MonitoringConfiguration {
+	s.CloudWatchLoggingConfiguration = v
+	return s
 }
 
 // SetManagedPersistenceMonitoringConfiguration sets the ManagedPersistenceMonitoringConfiguration field's value.
@@ -5044,12 +5231,21 @@ type UpdateApplicationInput struct {
 	// defined limits is hit.
 	MaximumCapacity *MaximumAllowedResources `locationName:"maximumCapacity" type:"structure"`
 
+	// The configuration setting for monitoring.
+	MonitoringConfiguration *MonitoringConfiguration `locationName:"monitoringConfiguration" type:"structure"`
+
 	// The network configuration for customer VPC connectivity.
 	NetworkConfiguration *NetworkConfiguration `locationName:"networkConfiguration" type:"structure"`
 
 	// The Amazon EMR release label for the application. You can change the release
 	// label to use a different release of Amazon EMR.
 	ReleaseLabel *string `locationName:"releaseLabel" min:"1" type:"string"`
+
+	// The Configuration (https://docs.aws.amazon.com/emr-serverless/latest/APIReference/API_Configuration.html)
+	// specifications to use when updating an application. Each configuration consists
+	// of a classification and properties. This configuration is applied across
+	// all the job runs submitted under the application.
+	RuntimeConfiguration []*Configuration `locationName:"runtimeConfiguration" type:"list"`
 
 	// The key-value pairs that specify worker type to WorkerTypeSpecificationInput.
 	// This parameter must contain all valid worker types for a Spark or Hive application.
@@ -5118,6 +5314,21 @@ func (s *UpdateApplicationInput) Validate() error {
 			invalidParams.AddNested("MaximumCapacity", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.MonitoringConfiguration != nil {
+		if err := s.MonitoringConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("MonitoringConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.RuntimeConfiguration != nil {
+		for i, v := range s.RuntimeConfiguration {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "RuntimeConfiguration", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.WorkerTypeSpecifications != nil {
 		for i, v := range s.WorkerTypeSpecifications {
 			if v == nil {
@@ -5183,6 +5394,12 @@ func (s *UpdateApplicationInput) SetMaximumCapacity(v *MaximumAllowedResources) 
 	return s
 }
 
+// SetMonitoringConfiguration sets the MonitoringConfiguration field's value.
+func (s *UpdateApplicationInput) SetMonitoringConfiguration(v *MonitoringConfiguration) *UpdateApplicationInput {
+	s.MonitoringConfiguration = v
+	return s
+}
+
 // SetNetworkConfiguration sets the NetworkConfiguration field's value.
 func (s *UpdateApplicationInput) SetNetworkConfiguration(v *NetworkConfiguration) *UpdateApplicationInput {
 	s.NetworkConfiguration = v
@@ -5192,6 +5409,12 @@ func (s *UpdateApplicationInput) SetNetworkConfiguration(v *NetworkConfiguration
 // SetReleaseLabel sets the ReleaseLabel field's value.
 func (s *UpdateApplicationInput) SetReleaseLabel(v string) *UpdateApplicationInput {
 	s.ReleaseLabel = &v
+	return s
+}
+
+// SetRuntimeConfiguration sets the RuntimeConfiguration field's value.
+func (s *UpdateApplicationInput) SetRuntimeConfiguration(v []*Configuration) *UpdateApplicationInput {
+	s.RuntimeConfiguration = v
 	return s
 }
 

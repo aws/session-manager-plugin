@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build windows
+//go:build windows
 
 // Example service program that beeps.
 //
@@ -11,10 +11,10 @@
 // stop / start / pause / continue any service, and how to
 // write to event log. It also shows how to use debug
 // facilities available in debug package.
-//
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
@@ -33,14 +33,17 @@ func usage(errmsg string) {
 	os.Exit(2)
 }
 
-func main() {
-	const svcName = "myservice"
+var svcName = "exampleservice"
 
-	isIntSess, err := svc.IsAnInteractiveSession()
+func main() {
+	flag.StringVar(&svcName, "name", svcName, "name of the service")
+	flag.Parse()
+
+	inService, err := svc.IsWindowsService()
 	if err != nil {
-		log.Fatalf("failed to determine if we are running in an interactive session: %v", err)
+		log.Fatalf("failed to determine if we are running in service: %v", err)
 	}
-	if !isIntSess {
+	if inService {
 		runService(svcName, false)
 		return
 	}
@@ -55,7 +58,7 @@ func main() {
 		runService(svcName, true)
 		return
 	case "install":
-		err = installService(svcName, "my service")
+		err = installService(svcName, "example service")
 	case "remove":
 		err = removeService(svcName)
 	case "start":

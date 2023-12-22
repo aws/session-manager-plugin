@@ -80,8 +80,7 @@ func (c *BillingConductor) AssociateAccountsRequest(input *AssociateAccountsInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - ServiceLimitExceededException
 //     The request would cause a service limit to exceed.
@@ -179,8 +178,7 @@ func (c *BillingConductor) AssociatePricingRulesRequest(input *AssociatePricingR
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - ServiceLimitExceededException
 //     The request would cause a service limit to exceed.
@@ -277,8 +275,7 @@ func (c *BillingConductor) BatchAssociateResourcesToCustomLineItemRequest(input 
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - ServiceLimitExceededException
 //     The request would cause a service limit to exceed.
@@ -375,8 +372,7 @@ func (c *BillingConductor) BatchDisassociateResourcesFromCustomLineItemRequest(i
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -471,8 +467,7 @@ func (c *BillingConductor) CreateBillingGroupRequest(input *CreateBillingGroupIn
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - ServiceLimitExceededException
 //     The request would cause a service limit to exceed.
@@ -568,8 +563,7 @@ func (c *BillingConductor) CreateCustomLineItemRequest(input *CreateCustomLineIt
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - ServiceLimitExceededException
 //     The request would cause a service limit to exceed.
@@ -664,8 +658,7 @@ func (c *BillingConductor) CreatePricingPlanRequest(input *CreatePricingPlanInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - ServiceLimitExceededException
 //     The request would cause a service limit to exceed.
@@ -763,8 +756,7 @@ func (c *BillingConductor) CreatePricingRuleRequest(input *CreatePricingRuleInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - ServiceLimitExceededException
 //     The request would cause a service limit to exceed.
@@ -855,8 +847,7 @@ func (c *BillingConductor) DeleteBillingGroupRequest(input *DeleteBillingGroupIn
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -948,8 +939,7 @@ func (c *BillingConductor) DeleteCustomLineItemRequest(input *DeleteCustomLineIt
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1041,8 +1031,7 @@ func (c *BillingConductor) DeletePricingPlanRequest(input *DeletePricingPlanInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1134,8 +1123,7 @@ func (c *BillingConductor) DeletePricingRuleRequest(input *DeletePricingRuleInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1226,8 +1214,7 @@ func (c *BillingConductor) DisassociateAccountsRequest(input *DisassociateAccoun
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1321,8 +1308,7 @@ func (c *BillingConductor) DisassociatePricingRulesRequest(input *DisassociatePr
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1347,6 +1333,99 @@ func (c *BillingConductor) DisassociatePricingRules(input *DisassociatePricingRu
 // for more information on using Contexts.
 func (c *BillingConductor) DisassociatePricingRulesWithContext(ctx aws.Context, input *DisassociatePricingRulesInput, opts ...request.Option) (*DisassociatePricingRulesOutput, error) {
 	req, out := c.DisassociatePricingRulesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetBillingGroupCostReport = "GetBillingGroupCostReport"
+
+// GetBillingGroupCostReportRequest generates a "aws/request.Request" representing the
+// client's request for the GetBillingGroupCostReport operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetBillingGroupCostReport for more information on using the GetBillingGroupCostReport
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetBillingGroupCostReportRequest method.
+//	req, resp := client.GetBillingGroupCostReportRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/GetBillingGroupCostReport
+func (c *BillingConductor) GetBillingGroupCostReportRequest(input *GetBillingGroupCostReportInput) (req *request.Request, output *GetBillingGroupCostReportOutput) {
+	op := &request.Operation{
+		Name:       opGetBillingGroupCostReport,
+		HTTPMethod: "POST",
+		HTTPPath:   "/get-billing-group-cost-report",
+	}
+
+	if input == nil {
+		input = &GetBillingGroupCostReportInput{}
+	}
+
+	output = &GetBillingGroupCostReportOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetBillingGroupCostReport API operation for AWSBillingConductor.
+//
+// Retrieves the margin summary report, which includes the Amazon Web Services
+// cost and charged amount (pro forma cost) by Amazon Web Service for a specific
+// billing group.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWSBillingConductor's
+// API operation GetBillingGroupCostReport for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ValidationException
+//     The input doesn't match with the constraints specified by Amazon Web Services.
+//
+//   - InternalServerException
+//     An unexpected error occurred while processing a request.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that doesn't exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/billingconductor-2021-07-30/GetBillingGroupCostReport
+func (c *BillingConductor) GetBillingGroupCostReport(input *GetBillingGroupCostReportInput) (*GetBillingGroupCostReportOutput, error) {
+	req, out := c.GetBillingGroupCostReportRequest(input)
+	return out, req.Send()
+}
+
+// GetBillingGroupCostReportWithContext is the same as GetBillingGroupCostReport with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetBillingGroupCostReport for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *BillingConductor) GetBillingGroupCostReportWithContext(ctx aws.Context, input *GetBillingGroupCostReportInput, opts ...request.Option) (*GetBillingGroupCostReportOutput, error) {
+	req, out := c.GetBillingGroupCostReportRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1422,8 +1501,7 @@ func (c *BillingConductor) ListAccountAssociationsRequest(input *ListAccountAsso
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1573,8 +1651,7 @@ func (c *BillingConductor) ListBillingGroupCostReportsRequest(input *ListBilling
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1724,8 +1801,7 @@ func (c *BillingConductor) ListBillingGroupsRequest(input *ListBillingGroupsInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -1873,8 +1949,7 @@ func (c *BillingConductor) ListCustomLineItemVersionsRequest(input *ListCustomLi
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -2021,8 +2096,7 @@ func (c *BillingConductor) ListCustomLineItemsRequest(input *ListCustomLineItems
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -2171,8 +2245,7 @@ func (c *BillingConductor) ListPricingPlansRequest(input *ListPricingPlansInput)
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -2317,8 +2390,7 @@ func (c *BillingConductor) ListPricingPlansAssociatedWithPricingRuleRequest(inpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -2467,8 +2539,7 @@ func (c *BillingConductor) ListPricingRulesRequest(input *ListPricingRulesInput)
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -2613,8 +2684,7 @@ func (c *BillingConductor) ListPricingRulesAssociatedToPricingPlanRequest(input 
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -2762,8 +2832,7 @@ func (c *BillingConductor) ListResourcesAssociatedToCustomLineItemRequest(input 
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -2905,8 +2974,7 @@ func (c *BillingConductor) ListTagsForResourceRequest(input *ListTagsForResource
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -3000,8 +3068,7 @@ func (c *BillingConductor) TagResourceRequest(input *TagResourceInput) (req *req
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -3093,8 +3160,7 @@ func (c *BillingConductor) UntagResourceRequest(input *UntagResourceInput) (req 
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -3188,8 +3254,7 @@ func (c *BillingConductor) UpdateBillingGroupRequest(input *UpdateBillingGroupIn
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -3280,8 +3345,7 @@ func (c *BillingConductor) UpdateCustomLineItemRequest(input *UpdateCustomLineIt
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -3375,8 +3439,7 @@ func (c *BillingConductor) UpdatePricingPlanRequest(input *UpdatePricingPlanInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -3470,8 +3533,7 @@ func (c *BillingConductor) UpdatePricingRuleRequest(input *UpdatePricingRuleInpu
 //     You do not have sufficient access to perform this action.
 //
 //   - ValidationException
-//     The input doesn't match with the constraints specified by Amazon Web Services
-//     services.
+//     The input doesn't match with the constraints specified by Amazon Web Services.
 //
 //   - InternalServerException
 //     An unexpected error occurred while processing a request.
@@ -3633,9 +3695,13 @@ func (s *AccountAssociationsListElement) SetBillingGroupArn(v string) *AccountAs
 }
 
 // The set of accounts that will be under the billing group. The set of accounts
-// resemble the linked accounts in a consolidated family.
+// resemble the linked accounts in a consolidated billing family.
 type AccountGrouping struct {
 	_ struct{} `type:"structure"`
+
+	// Specifies if this billing group will automatically associate newly added
+	// Amazon Web Services accounts that join your consolidated billing family.
+	AutoAssociate *bool `type:"boolean"`
 
 	// The account IDs that make up the billing group. Account IDs must be a part
 	// of the consolidated billing family, and not associated with another billing
@@ -3677,6 +3743,12 @@ func (s *AccountGrouping) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAutoAssociate sets the AutoAssociate field's value.
+func (s *AccountGrouping) SetAutoAssociate(v bool) *AccountGrouping {
+	s.AutoAssociate = &v
+	return s
 }
 
 // SetLinkedAccountIds sets the LinkedAccountIds field's value.
@@ -3955,6 +4027,50 @@ func (s *AssociateResourceResponseElement) SetArn(v string) *AssociateResourceRe
 // SetError sets the Error field's value.
 func (s *AssociateResourceResponseElement) SetError(v *AssociateResourceError) *AssociateResourceResponseElement {
 	s.Error = v
+	return s
+}
+
+// The key-value pair that represents the attribute by which the BillingGroupCostReportResults
+// are grouped. For example, if you want a service-level breakdown for Amazon
+// Simple Storage Service (Amazon S3) of the billing group, the attribute will
+// be a key-value pair of "PRODUCT_NAME" and "S3".
+type Attribute struct {
+	_ struct{} `type:"structure"`
+
+	// The key in a key-value pair that describes the margin summary.
+	Key *string `type:"string"`
+
+	// The value in a key-value pair that describes the margin summary.
+	Value *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Attribute) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Attribute) GoString() string {
+	return s.String()
+}
+
+// SetKey sets the Key field's value.
+func (s *Attribute) SetKey(v string) *Attribute {
+	s.Key = &v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *Attribute) SetValue(v string) *Attribute {
+	s.Value = &v
 	return s
 }
 
@@ -4275,9 +4391,106 @@ func (s *BillingGroupCostReportElement) SetProformaCost(v string) *BillingGroupC
 	return s
 }
 
+// A paginated call to retrieve a list of summary reports of actual Amazon Web
+// Services charges and the calculated Amazon Web Services charges, broken down
+// by attributes.
+type BillingGroupCostReportResultElement struct {
+	_ struct{} `type:"structure"`
+
+	// The actual Amazon Web Services charges for the billing group.
+	AWSCost *string `type:"string"`
+
+	// The Amazon Resource Number (ARN) that uniquely identifies the billing group.
+	Arn *string `type:"string"`
+
+	// The list of key-value pairs that represent the attributes by which the BillingGroupCostReportResults
+	// are grouped. For example, if you want the Amazon S3 service-level breakdown
+	// of a billing group for November 2023, the attributes list will contain a
+	// key-value pair of "PRODUCT_NAME" and "S3" and a key-value pair of "BILLING_PERIOD"
+	// and "Nov 2023".
+	Attributes []*Attribute `type:"list"`
+
+	// The displayed currency.
+	Currency *string `type:"string"`
+
+	// The billing group margin.
+	Margin *string `type:"string"`
+
+	// The percentage of the billing group margin.
+	MarginPercentage *string `type:"string"`
+
+	// The hypothetical Amazon Web Services charges based on the associated pricing
+	// plan of a billing group.
+	ProformaCost *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BillingGroupCostReportResultElement) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BillingGroupCostReportResultElement) GoString() string {
+	return s.String()
+}
+
+// SetAWSCost sets the AWSCost field's value.
+func (s *BillingGroupCostReportResultElement) SetAWSCost(v string) *BillingGroupCostReportResultElement {
+	s.AWSCost = &v
+	return s
+}
+
+// SetArn sets the Arn field's value.
+func (s *BillingGroupCostReportResultElement) SetArn(v string) *BillingGroupCostReportResultElement {
+	s.Arn = &v
+	return s
+}
+
+// SetAttributes sets the Attributes field's value.
+func (s *BillingGroupCostReportResultElement) SetAttributes(v []*Attribute) *BillingGroupCostReportResultElement {
+	s.Attributes = v
+	return s
+}
+
+// SetCurrency sets the Currency field's value.
+func (s *BillingGroupCostReportResultElement) SetCurrency(v string) *BillingGroupCostReportResultElement {
+	s.Currency = &v
+	return s
+}
+
+// SetMargin sets the Margin field's value.
+func (s *BillingGroupCostReportResultElement) SetMargin(v string) *BillingGroupCostReportResultElement {
+	s.Margin = &v
+	return s
+}
+
+// SetMarginPercentage sets the MarginPercentage field's value.
+func (s *BillingGroupCostReportResultElement) SetMarginPercentage(v string) *BillingGroupCostReportResultElement {
+	s.MarginPercentage = &v
+	return s
+}
+
+// SetProformaCost sets the ProformaCost field's value.
+func (s *BillingGroupCostReportResultElement) SetProformaCost(v string) *BillingGroupCostReportResultElement {
+	s.ProformaCost = &v
+	return s
+}
+
 // A representation of a billing group.
 type BillingGroupListElement struct {
 	_ struct{} `type:"structure"`
+
+	// Specifies if the billing group has automatic account association (AutoAssociate)
+	// enabled.
+	AccountGrouping *ListBillingGroupAccountGrouping `type:"structure"`
 
 	// The Amazon Resource Number (ARN) that can be used to uniquely identify the
 	// billing group.
@@ -4338,6 +4551,12 @@ func (s BillingGroupListElement) GoString() string {
 	return s.String()
 }
 
+// SetAccountGrouping sets the AccountGrouping field's value.
+func (s *BillingGroupListElement) SetAccountGrouping(v *ListBillingGroupAccountGrouping) *BillingGroupListElement {
+	s.AccountGrouping = v
+	return s
+}
+
 // SetArn sets the Arn field's value.
 func (s *BillingGroupListElement) SetArn(v string) *BillingGroupListElement {
 	s.Arn = &v
@@ -4395,6 +4614,72 @@ func (s *BillingGroupListElement) SetStatus(v string) *BillingGroupListElement {
 // SetStatusReason sets the StatusReason field's value.
 func (s *BillingGroupListElement) SetStatusReason(v string) *BillingGroupListElement {
 	s.StatusReason = &v
+	return s
+}
+
+// A time range for which the margin summary is effective. The time range can
+// be up to 12 months.
+type BillingPeriodRange struct {
+	_ struct{} `type:"structure"`
+
+	// The exclusive end billing period that defines a billing period range for
+	// the margin summary. For example, if you choose a billing period that starts
+	// in October 2023 and ends in December 2023, the margin summary will only include
+	// data from October 2023 and November 2023.
+	//
+	// ExclusiveEndBillingPeriod is a required field
+	ExclusiveEndBillingPeriod *string `type:"string" required:"true"`
+
+	// The inclusive start billing period that defines a billing period range for
+	// the margin summary.
+	//
+	// InclusiveStartBillingPeriod is a required field
+	InclusiveStartBillingPeriod *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BillingPeriodRange) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BillingPeriodRange) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BillingPeriodRange) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BillingPeriodRange"}
+	if s.ExclusiveEndBillingPeriod == nil {
+		invalidParams.Add(request.NewErrParamRequired("ExclusiveEndBillingPeriod"))
+	}
+	if s.InclusiveStartBillingPeriod == nil {
+		invalidParams.Add(request.NewErrParamRequired("InclusiveStartBillingPeriod"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetExclusiveEndBillingPeriod sets the ExclusiveEndBillingPeriod field's value.
+func (s *BillingPeriodRange) SetExclusiveEndBillingPeriod(v string) *BillingPeriodRange {
+	s.ExclusiveEndBillingPeriod = &v
+	return s
+}
+
+// SetInclusiveStartBillingPeriod sets the InclusiveStartBillingPeriod field's value.
+func (s *BillingPeriodRange) SetInclusiveStartBillingPeriod(v string) *BillingPeriodRange {
+	s.InclusiveStartBillingPeriod = &v
 	return s
 }
 
@@ -4528,7 +4813,7 @@ type CreateBillingGroupInput struct {
 	_ struct{} `type:"structure"`
 
 	// The set of accounts that will be under the billing group. The set of accounts
-	// resemble the linked accounts in a consolidated family.
+	// resemble the linked accounts in a consolidated billing family.
 	//
 	// AccountGrouping is a required field
 	AccountGrouping *AccountGrouping `type:"structure" required:"true"`
@@ -4699,6 +4984,10 @@ func (s *CreateBillingGroupOutput) SetArn(v string) *CreateBillingGroupOutput {
 type CreateCustomLineItemInput struct {
 	_ struct{} `type:"structure"`
 
+	// The Amazon Web Services account in which this custom line item will be applied
+	// to.
+	AccountId *string `type:"string"`
+
 	// The Amazon Resource Name (ARN) that references the billing group where the
 	// custom line item applies to.
 	//
@@ -4802,6 +5091,12 @@ func (s *CreateCustomLineItemInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAccountId sets the AccountId field's value.
+func (s *CreateCustomLineItemInput) SetAccountId(v string) *CreateCustomLineItemInput {
+	s.AccountId = &v
+	return s
 }
 
 // SetBillingGroupArn sets the BillingGroupArn field's value.
@@ -5403,6 +5698,9 @@ type CustomLineItemChargeDetails struct {
 	// flat custom line item.
 	Flat *CustomLineItemFlatChargeDetails `type:"structure"`
 
+	// A representation of the line item filter.
+	LineItemFilters []*LineItemFilter `type:"list"`
+
 	// A CustomLineItemPercentageChargeDetails that describes the charge details
 	// of a percentage custom line item.
 	Percentage *CustomLineItemPercentageChargeDetails `type:"structure"`
@@ -5443,6 +5741,16 @@ func (s *CustomLineItemChargeDetails) Validate() error {
 			invalidParams.AddNested("Flat", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.LineItemFilters != nil {
+		for i, v := range s.LineItemFilters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "LineItemFilters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.Percentage != nil {
 		if err := s.Percentage.Validate(); err != nil {
 			invalidParams.AddNested("Percentage", err.(request.ErrInvalidParams))
@@ -5458,6 +5766,12 @@ func (s *CustomLineItemChargeDetails) Validate() error {
 // SetFlat sets the Flat field's value.
 func (s *CustomLineItemChargeDetails) SetFlat(v *CustomLineItemFlatChargeDetails) *CustomLineItemChargeDetails {
 	s.Flat = v
+	return s
+}
+
+// SetLineItemFilters sets the LineItemFilters field's value.
+func (s *CustomLineItemChargeDetails) SetLineItemFilters(v []*LineItemFilter) *CustomLineItemChargeDetails {
+	s.LineItemFilters = v
 	return s
 }
 
@@ -5525,6 +5839,10 @@ func (s *CustomLineItemFlatChargeDetails) SetChargeValue(v float64) *CustomLineI
 type CustomLineItemListElement struct {
 	_ struct{} `type:"structure"`
 
+	// The Amazon Web Services account in which this custom line item will be applied
+	// to.
+	AccountId *string `type:"string"`
+
 	// The Amazon Resource Names (ARNs) for custom line items.
 	Arn *string `type:"string"`
 
@@ -5584,6 +5902,12 @@ func (s CustomLineItemListElement) String() string {
 // value will be replaced with "sensitive".
 func (s CustomLineItemListElement) GoString() string {
 	return s.String()
+}
+
+// SetAccountId sets the AccountId field's value.
+func (s *CustomLineItemListElement) SetAccountId(v string) *CustomLineItemListElement {
+	s.AccountId = &v
+	return s
 }
 
 // SetArn sets the Arn field's value.
@@ -5708,6 +6032,10 @@ func (s *CustomLineItemPercentageChargeDetails) SetPercentageValue(v float64) *C
 type CustomLineItemVersionListElement struct {
 	_ struct{} `type:"structure"`
 
+	// The Amazon Web Services account in which this custom line item will be applied
+	// to.
+	AccountId *string `type:"string"`
+
 	// A list of custom line item Amazon Resource Names (ARNs) to retrieve information.
 	Arn *string `type:"string"`
 
@@ -5773,6 +6101,12 @@ func (s CustomLineItemVersionListElement) String() string {
 // value will be replaced with "sensitive".
 func (s CustomLineItemVersionListElement) GoString() string {
 	return s.String()
+}
+
+// SetAccountId sets the AccountId field's value.
+func (s *CustomLineItemVersionListElement) SetAccountId(v string) *CustomLineItemVersionListElement {
+	s.AccountId = &v
+	return s
 }
 
 // SetArn sets the Arn field's value.
@@ -5993,7 +6327,7 @@ func (s *DeleteCustomLineItemInput) SetBillingPeriodRange(v *CustomLineItemBilli
 type DeleteCustomLineItemOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Then ARN of the deleted custom line item.
+	// The ARN of the deleted custom line item.
 	Arn *string `type:"string"`
 }
 
@@ -6443,6 +6777,139 @@ func (s *FreeTierConfig) SetActivated(v bool) *FreeTierConfig {
 	return s
 }
 
+type GetBillingGroupCostReportInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Number (ARN) that uniquely identifies the billing group.
+	//
+	// Arn is a required field
+	Arn *string `type:"string" required:"true"`
+
+	// A time range for which the margin summary is effective. You can specify up
+	// to 12 months.
+	BillingPeriodRange *BillingPeriodRange `type:"structure"`
+
+	// A list of strings that specify the attributes that are used to break down
+	// costs in the margin summary reports for the billing group. For example, you
+	// can view your costs by the Amazon Web Service name or the billing period.
+	GroupBy []*string `type:"list" enum:"GroupByAttributeName"`
+
+	// The maximum number of margin summary reports to retrieve.
+	MaxResults *int64 `min:"200" type:"integer"`
+
+	// The pagination token used on subsequent calls to get reports.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBillingGroupCostReportInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBillingGroupCostReportInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetBillingGroupCostReportInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetBillingGroupCostReportInput"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 200 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 200))
+	}
+	if s.BillingPeriodRange != nil {
+		if err := s.BillingPeriodRange.Validate(); err != nil {
+			invalidParams.AddNested("BillingPeriodRange", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetArn sets the Arn field's value.
+func (s *GetBillingGroupCostReportInput) SetArn(v string) *GetBillingGroupCostReportInput {
+	s.Arn = &v
+	return s
+}
+
+// SetBillingPeriodRange sets the BillingPeriodRange field's value.
+func (s *GetBillingGroupCostReportInput) SetBillingPeriodRange(v *BillingPeriodRange) *GetBillingGroupCostReportInput {
+	s.BillingPeriodRange = v
+	return s
+}
+
+// SetGroupBy sets the GroupBy field's value.
+func (s *GetBillingGroupCostReportInput) SetGroupBy(v []*string) *GetBillingGroupCostReportInput {
+	s.GroupBy = v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *GetBillingGroupCostReportInput) SetMaxResults(v int64) *GetBillingGroupCostReportInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *GetBillingGroupCostReportInput) SetNextToken(v string) *GetBillingGroupCostReportInput {
+	s.NextToken = &v
+	return s
+}
+
+type GetBillingGroupCostReportOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of margin summary reports.
+	BillingGroupCostReportResults []*BillingGroupCostReportResultElement `type:"list"`
+
+	// The pagination token used on subsequent calls to get reports.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBillingGroupCostReportOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBillingGroupCostReportOutput) GoString() string {
+	return s.String()
+}
+
+// SetBillingGroupCostReportResults sets the BillingGroupCostReportResults field's value.
+func (s *GetBillingGroupCostReportOutput) SetBillingGroupCostReportResults(v []*BillingGroupCostReportResultElement) *GetBillingGroupCostReportOutput {
+	s.BillingGroupCostReportResults = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *GetBillingGroupCostReportOutput) SetNextToken(v string) *GetBillingGroupCostReportOutput {
+	s.NextToken = &v
+	return s
+}
+
 // An unexpected error occurred while processing a request.
 type InternalServerException struct {
 	_            struct{}                  `type:"structure"`
@@ -6508,6 +6975,91 @@ func (s *InternalServerException) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *InternalServerException) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+// A representation of the line item filter for your custom line item. You can
+// use line item filters to include or exclude specific resource values from
+// the billing group's total cost. For example, if you create a custom line
+// item and you want to filter out a value, such as Savings Plan discounts,
+// you can update LineItemFilter to exclude it.
+type LineItemFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The attribute of the line item filter. This specifies what attribute that
+	// you can filter on.
+	//
+	// Attribute is a required field
+	Attribute *string `type:"string" required:"true" enum:"LineItemFilterAttributeName"`
+
+	// The match criteria of the line item filter. This parameter specifies whether
+	// not to include the resource value from the billing group total cost.
+	//
+	// MatchOption is a required field
+	MatchOption *string `type:"string" required:"true" enum:"MatchOption"`
+
+	// The values of the line item filter. This specifies the values to filter on.
+	// Currently, you can only exclude Savings Plan discounts.
+	//
+	// Values is a required field
+	Values []*string `min:"1" type:"list" required:"true" enum:"LineItemFilterValue"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LineItemFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LineItemFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LineItemFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LineItemFilter"}
+	if s.Attribute == nil {
+		invalidParams.Add(request.NewErrParamRequired("Attribute"))
+	}
+	if s.MatchOption == nil {
+		invalidParams.Add(request.NewErrParamRequired("MatchOption"))
+	}
+	if s.Values == nil {
+		invalidParams.Add(request.NewErrParamRequired("Values"))
+	}
+	if s.Values != nil && len(s.Values) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Values", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAttribute sets the Attribute field's value.
+func (s *LineItemFilter) SetAttribute(v string) *LineItemFilter {
+	s.Attribute = &v
+	return s
+}
+
+// SetMatchOption sets the MatchOption field's value.
+func (s *LineItemFilter) SetMatchOption(v string) *LineItemFilter {
+	s.MatchOption = &v
+	return s
+}
+
+// SetValues sets the Values field's value.
+func (s *LineItemFilter) SetValues(v []*string) *LineItemFilter {
+	s.Values = v
+	return s
 }
 
 // The filter on the account ID of the linked account, or any of the following:
@@ -6697,6 +7249,39 @@ func (s *ListAccountAssociationsOutput) SetNextToken(v string) *ListAccountAssoc
 	return s
 }
 
+// Specifies if the billing group has the following features enabled.
+type ListBillingGroupAccountGrouping struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies if this billing group will automatically associate newly added
+	// Amazon Web Services accounts that join your consolidated billing family.
+	AutoAssociate *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBillingGroupAccountGrouping) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBillingGroupAccountGrouping) GoString() string {
+	return s.String()
+}
+
+// SetAutoAssociate sets the AutoAssociate field's value.
+func (s *ListBillingGroupAccountGrouping) SetAutoAssociate(v bool) *ListBillingGroupAccountGrouping {
+	s.AutoAssociate = &v
+	return s
+}
+
 // The filter used to retrieve specific BillingGroupCostReportElements.
 type ListBillingGroupCostReportsFilter struct {
 	_ struct{} `type:"structure"`
@@ -6868,6 +7453,10 @@ type ListBillingGroupsFilter struct {
 	// The list of billing group Amazon Resource Names (ARNs) to retrieve information.
 	Arns []*string `min:"1" type:"list"`
 
+	// Specifies if this billing group will automatically associate newly added
+	// Amazon Web Services accounts that join your consolidated billing family.
+	AutoAssociate *bool `type:"boolean"`
+
 	// The pricing plan Amazon Resource Names (ARNs) to retrieve information.
 	PricingPlan *string `type:"string"`
 
@@ -6913,6 +7502,12 @@ func (s *ListBillingGroupsFilter) Validate() error {
 // SetArns sets the Arns field's value.
 func (s *ListBillingGroupsFilter) SetArns(v []*string) *ListBillingGroupsFilter {
 	s.Arns = v
+	return s
+}
+
+// SetAutoAssociate sets the AutoAssociate field's value.
+func (s *ListBillingGroupsFilter) SetAutoAssociate(v bool) *ListBillingGroupsFilter {
+	s.AutoAssociate = &v
 	return s
 }
 
@@ -7053,6 +7648,9 @@ type ListCustomLineItemChargeDetails struct {
 	// a flat custom line item.
 	Flat *ListCustomLineItemFlatChargeDetails `type:"structure"`
 
+	// A representation of the line item filter.
+	LineItemFilters []*LineItemFilter `type:"list"`
+
 	// A ListCustomLineItemPercentageChargeDetails that describes the charge details
 	// of a percentage custom line item.
 	Percentage *ListCustomLineItemPercentageChargeDetails `type:"structure"`
@@ -7085,6 +7683,12 @@ func (s ListCustomLineItemChargeDetails) GoString() string {
 // SetFlat sets the Flat field's value.
 func (s *ListCustomLineItemChargeDetails) SetFlat(v *ListCustomLineItemFlatChargeDetails) *ListCustomLineItemChargeDetails {
 	s.Flat = v
+	return s
+}
+
+// SetLineItemFilters sets the LineItemFilters field's value.
+func (s *ListCustomLineItemChargeDetails) SetLineItemFilters(v []*LineItemFilter) *ListCustomLineItemChargeDetails {
+	s.LineItemFilters = v
 	return s
 }
 
@@ -7371,6 +7975,10 @@ func (s *ListCustomLineItemVersionsOutput) SetNextToken(v string) *ListCustomLin
 type ListCustomLineItemsFilter struct {
 	_ struct{} `type:"structure"`
 
+	// The Amazon Web Services accounts in which this custom line item will be applied
+	// to.
+	AccountIds []*string `min:"1" type:"list"`
+
 	// A list of custom line item ARNs to retrieve information.
 	Arns []*string `min:"1" type:"list"`
 
@@ -7402,6 +8010,9 @@ func (s ListCustomLineItemsFilter) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *ListCustomLineItemsFilter) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "ListCustomLineItemsFilter"}
+	if s.AccountIds != nil && len(s.AccountIds) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AccountIds", 1))
+	}
 	if s.Arns != nil && len(s.Arns) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Arns", 1))
 	}
@@ -7416,6 +8027,12 @@ func (s *ListCustomLineItemsFilter) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAccountIds sets the AccountIds field's value.
+func (s *ListCustomLineItemsFilter) SetAccountIds(v []*string) *ListCustomLineItemsFilter {
+	s.AccountIds = v
+	return s
 }
 
 // SetArns sets the Arns field's value.
@@ -9161,8 +9778,45 @@ func (s UntagResourceOutput) GoString() string {
 	return s.String()
 }
 
+// Specifies if the billing group has the following features enabled.
+type UpdateBillingGroupAccountGrouping struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies if this billing group will automatically associate newly added
+	// Amazon Web Services accounts that join your consolidated billing family.
+	AutoAssociate *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateBillingGroupAccountGrouping) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateBillingGroupAccountGrouping) GoString() string {
+	return s.String()
+}
+
+// SetAutoAssociate sets the AutoAssociate field's value.
+func (s *UpdateBillingGroupAccountGrouping) SetAutoAssociate(v bool) *UpdateBillingGroupAccountGrouping {
+	s.AutoAssociate = &v
+	return s
+}
+
 type UpdateBillingGroupInput struct {
 	_ struct{} `type:"structure"`
+
+	// Specifies if the billing group has automatic account association (AutoAssociate)
+	// enabled.
+	AccountGrouping *UpdateBillingGroupAccountGrouping `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the billing group being updated.
 	//
@@ -9230,6 +9884,12 @@ func (s *UpdateBillingGroupInput) Validate() error {
 	return nil
 }
 
+// SetAccountGrouping sets the AccountGrouping field's value.
+func (s *UpdateBillingGroupInput) SetAccountGrouping(v *UpdateBillingGroupAccountGrouping) *UpdateBillingGroupInput {
+	s.AccountGrouping = v
+	return s
+}
+
 // SetArn sets the Arn field's value.
 func (s *UpdateBillingGroupInput) SetArn(v string) *UpdateBillingGroupInput {
 	s.Arn = &v
@@ -9262,6 +9922,10 @@ func (s *UpdateBillingGroupInput) SetStatus(v string) *UpdateBillingGroupInput {
 
 type UpdateBillingGroupOutput struct {
 	_ struct{} `type:"structure"`
+
+	// Specifies if the billing group has automatic account association (AutoAssociate)
+	// enabled.
+	AccountGrouping *UpdateBillingGroupAccountGrouping `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the billing group that was updated.
 	Arn *string `type:"string"`
@@ -9316,6 +9980,12 @@ func (s UpdateBillingGroupOutput) String() string {
 // value will be replaced with "sensitive".
 func (s UpdateBillingGroupOutput) GoString() string {
 	return s.String()
+}
+
+// SetAccountGrouping sets the AccountGrouping field's value.
+func (s *UpdateBillingGroupOutput) SetAccountGrouping(v *UpdateBillingGroupAccountGrouping) *UpdateBillingGroupOutput {
+	s.AccountGrouping = v
+	return s
 }
 
 // SetArn sets the Arn field's value.
@@ -9381,6 +10051,9 @@ type UpdateCustomLineItemChargeDetails struct {
 	// of a flat custom line item.
 	Flat *UpdateCustomLineItemFlatChargeDetails `type:"structure"`
 
+	// A representation of the line item filter.
+	LineItemFilters []*LineItemFilter `type:"list"`
+
 	// An UpdateCustomLineItemPercentageChargeDetails that describes the new charge
 	// details of a percentage custom line item.
 	Percentage *UpdateCustomLineItemPercentageChargeDetails `type:"structure"`
@@ -9412,6 +10085,16 @@ func (s *UpdateCustomLineItemChargeDetails) Validate() error {
 			invalidParams.AddNested("Flat", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.LineItemFilters != nil {
+		for i, v := range s.LineItemFilters {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "LineItemFilters", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.Percentage != nil {
 		if err := s.Percentage.Validate(); err != nil {
 			invalidParams.AddNested("Percentage", err.(request.ErrInvalidParams))
@@ -9427,6 +10110,12 @@ func (s *UpdateCustomLineItemChargeDetails) Validate() error {
 // SetFlat sets the Flat field's value.
 func (s *UpdateCustomLineItemChargeDetails) SetFlat(v *UpdateCustomLineItemFlatChargeDetails) *UpdateCustomLineItemChargeDetails {
 	s.Flat = v
+	return s
+}
+
+// SetLineItemFilters sets the LineItemFilters field's value.
+func (s *UpdateCustomLineItemChargeDetails) SetLineItemFilters(v []*LineItemFilter) *UpdateCustomLineItemChargeDetails {
+	s.LineItemFilters = v
 	return s
 }
 
@@ -10254,8 +10943,7 @@ func (s *UpdateTieringInput_) SetFreeTier(v *UpdateFreeTierConfig) *UpdateTierin
 	return s
 }
 
-// The input doesn't match with the constraints specified by Amazon Web Services
-// services.
+// The input doesn't match with the constraints specified by Amazon Web Services.
 type ValidationException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -10491,6 +11179,58 @@ func CustomLineItemType_Values() []string {
 }
 
 const (
+	// GroupByAttributeNameProductName is a GroupByAttributeName enum value
+	GroupByAttributeNameProductName = "PRODUCT_NAME"
+
+	// GroupByAttributeNameBillingPeriod is a GroupByAttributeName enum value
+	GroupByAttributeNameBillingPeriod = "BILLING_PERIOD"
+)
+
+// GroupByAttributeName_Values returns all elements of the GroupByAttributeName enum
+func GroupByAttributeName_Values() []string {
+	return []string{
+		GroupByAttributeNameProductName,
+		GroupByAttributeNameBillingPeriod,
+	}
+}
+
+const (
+	// LineItemFilterAttributeNameLineItemType is a LineItemFilterAttributeName enum value
+	LineItemFilterAttributeNameLineItemType = "LINE_ITEM_TYPE"
+)
+
+// LineItemFilterAttributeName_Values returns all elements of the LineItemFilterAttributeName enum
+func LineItemFilterAttributeName_Values() []string {
+	return []string{
+		LineItemFilterAttributeNameLineItemType,
+	}
+}
+
+const (
+	// LineItemFilterValueSavingsPlanNegation is a LineItemFilterValue enum value
+	LineItemFilterValueSavingsPlanNegation = "SAVINGS_PLAN_NEGATION"
+)
+
+// LineItemFilterValue_Values returns all elements of the LineItemFilterValue enum
+func LineItemFilterValue_Values() []string {
+	return []string{
+		LineItemFilterValueSavingsPlanNegation,
+	}
+}
+
+const (
+	// MatchOptionNotEqual is a MatchOption enum value
+	MatchOptionNotEqual = "NOT_EQUAL"
+)
+
+// MatchOption_Values returns all elements of the MatchOption enum
+func MatchOption_Values() []string {
+	return []string{
+		MatchOptionNotEqual,
+	}
+}
+
+const (
 	// PricingRuleScopeGlobal is a PricingRuleScope enum value
 	PricingRuleScopeGlobal = "GLOBAL"
 
@@ -10705,6 +11445,15 @@ const (
 
 	// ValidationExceptionReasonInvalidFilter is a ValidationExceptionReason enum value
 	ValidationExceptionReasonInvalidFilter = "INVALID_FILTER"
+
+	// ValidationExceptionReasonTooManyAutoAssociateBillingGroups is a ValidationExceptionReason enum value
+	ValidationExceptionReasonTooManyAutoAssociateBillingGroups = "TOO_MANY_AUTO_ASSOCIATE_BILLING_GROUPS"
+
+	// ValidationExceptionReasonCannotDeleteAutoAssociateBillingGroup is a ValidationExceptionReason enum value
+	ValidationExceptionReasonCannotDeleteAutoAssociateBillingGroup = "CANNOT_DELETE_AUTO_ASSOCIATE_BILLING_GROUP"
+
+	// ValidationExceptionReasonIllegalAccountId is a ValidationExceptionReason enum value
+	ValidationExceptionReasonIllegalAccountId = "ILLEGAL_ACCOUNT_ID"
 )
 
 // ValidationExceptionReason_Values returns all elements of the ValidationExceptionReason enum
@@ -10767,5 +11516,8 @@ func ValidationExceptionReason_Values() []string {
 		ValidationExceptionReasonIllegalUsageType,
 		ValidationExceptionReasonInvalidSkuCombo,
 		ValidationExceptionReasonInvalidFilter,
+		ValidationExceptionReasonTooManyAutoAssociateBillingGroups,
+		ValidationExceptionReasonCannotDeleteAutoAssociateBillingGroup,
+		ValidationExceptionReasonIllegalAccountId,
 	}
 }

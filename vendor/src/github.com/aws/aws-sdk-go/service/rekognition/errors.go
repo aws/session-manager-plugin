@@ -57,6 +57,13 @@ const (
 	// The provided image format is not supported.
 	ErrCodeInvalidImageFormatException = "InvalidImageFormatException"
 
+	// ErrCodeInvalidManifestException for service response error code
+	// "InvalidManifestException".
+	//
+	// Indicates that a provided manifest file is empty or larger than the allowed
+	// limit.
+	ErrCodeInvalidManifestException = "InvalidManifestException"
+
 	// ErrCodeInvalidPaginationTokenException for service response error code
 	// "InvalidPaginationTokenException".
 	//
@@ -86,10 +93,10 @@ const (
 	// "LimitExceededException".
 	//
 	// An Amazon Rekognition service limit was exceeded. For example, if you start
-	// too many Amazon Rekognition Video jobs concurrently, calls to start operations
-	// (StartLabelDetection, for example) will raise a LimitExceededException exception
-	// (HTTP status code: 400) until the number of concurrently running jobs is
-	// below the Amazon Rekognition service limit.
+	// too many jobs concurrently, subsequent calls to start operations (ex: StartLabelDetection)
+	// will raise a LimitExceededException exception (HTTP status code: 400) until
+	// the number of concurrently running jobs is below the Amazon Rekognition service
+	// limit.
 	ErrCodeLimitExceededException = "LimitExceededException"
 
 	// ErrCodeMalformedPolicyDocumentException for service response error code
@@ -168,6 +175,7 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"ImageTooLargeException":                 newErrorImageTooLargeException,
 	"InternalServerError":                    newErrorInternalServerError,
 	"InvalidImageFormatException":            newErrorInvalidImageFormatException,
+	"InvalidManifestException":               newErrorInvalidManifestException,
 	"InvalidPaginationTokenException":        newErrorInvalidPaginationTokenException,
 	"InvalidParameterException":              newErrorInvalidParameterException,
 	"InvalidPolicyRevisionIdException":       newErrorInvalidPolicyRevisionIdException,

@@ -5280,6 +5280,9 @@ func (c *Neptune) ModifyDBClusterRequest(input *ModifyDBClusterInput) (req *requ
 //   - ErrCodeDBClusterAlreadyExistsFault "DBClusterAlreadyExistsFault"
 //     User already has a DB cluster with the given identifier.
 //
+//   - ErrCodeStorageTypeNotSupportedFault "StorageTypeNotSupported"
+//     StorageType specified cannot be associated with the DB Instance.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/neptune-2014-10-31/ModifyDBCluster
 func (c *Neptune) ModifyDBCluster(input *ModifyDBClusterInput) (*ModifyDBClusterOutput, error) {
 	req, out := c.ModifyDBClusterRequest(input)
@@ -7286,8 +7289,7 @@ type AddRoleToDBClusterInput struct {
 	DBClusterIdentifier *string `type:"string" required:"true"`
 
 	// The name of the feature for the Neptune DB cluster that the IAM role is to
-	// be associated with. For the list of supported feature names, see DBEngineVersion
-	// (neptune/latest/userguide/api-other-apis.html#DBEngineVersion).
+	// be associated with. For the list of supported feature names, see DBEngineVersion.
 	FeatureName *string `type:"string"`
 
 	// The Amazon Resource Name (ARN) of the IAM role to associate with the Neptune
@@ -7759,6 +7761,9 @@ func (s *CharacterSet) SetCharacterSetName(v string) *CharacterSet {
 //
 // The EnableLogTypes and DisableLogTypes arrays determine which logs will be
 // exported (or not exported) to CloudWatch Logs.
+//
+// Valid log types are: audit (to publish audit logs) and slowquery (to publish
+// slow-query logs). See Publishing Neptune logs to Amazon CloudWatch logs (https://docs.aws.amazon.com/neptune/latest/userguide/cloudwatch-logs.html).
 type CloudwatchLogsExportConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -7829,6 +7834,9 @@ type ClusterPendingModifiedValues struct {
 	// This PendingCloudwatchLogsExports structure specifies pending changes to
 	// which CloudWatch logs are enabled and which are disabled.
 	PendingCloudwatchLogsExports *PendingCloudwatchLogsExports `type:"structure"`
+
+	// The storage type for the DB cluster.
+	StorageType *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -7888,6 +7896,12 @@ func (s *ClusterPendingModifiedValues) SetIops(v int64) *ClusterPendingModifiedV
 // SetPendingCloudwatchLogsExports sets the PendingCloudwatchLogsExports field's value.
 func (s *ClusterPendingModifiedValues) SetPendingCloudwatchLogsExports(v *PendingCloudwatchLogsExports) *ClusterPendingModifiedValues {
 	s.PendingCloudwatchLogsExports = v
+	return s
+}
+
+// SetStorageType sets the StorageType field's value.
+func (s *ClusterPendingModifiedValues) SetStorageType(v string) *ClusterPendingModifiedValues {
+	s.StorageType = &v
 	return s
 }
 
@@ -8667,8 +8681,10 @@ type CreateDBClusterInput struct {
 	// DestinationRegion is used for presigning the request to a given region.
 	DestinationRegion *string `type:"string"`
 
-	// The list of log types that need to be enabled for exporting to CloudWatch
-	// Logs.
+	// A list of the log types that this DB cluster should export to CloudWatch
+	// Logs. Valid log types are: audit (to publish audit logs) and slowquery (to
+	// publish slow-query logs). See Publishing Neptune logs to Amazon CloudWatch
+	// logs (https://docs.aws.amazon.com/neptune/latest/userguide/cloudwatch-logs.html).
 	EnableCloudwatchLogsExports []*string `type:"list"`
 
 	// If set to true, enables Amazon Identity and Access Management (IAM) authentication
@@ -8740,8 +8756,8 @@ type CreateDBClusterInput struct {
 	// backups are enabled using the BackupRetentionPeriod parameter.
 	//
 	// The default is a 30-minute window selected at random from an 8-hour block
-	// of time for each Amazon Region. To see the time blocks available, see Adjusting
-	// the Preferred Maintenance Window (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html)
+	// of time for each Amazon Region. To see the time blocks available, see Neptune
+	// Maintenance Window (https://docs.aws.amazon.com/neptune/latest/userguide/manage-console-maintaining.html#manage-console-maintaining-window)
 	// in the Amazon Neptune User Guide.
 	//
 	// Constraints:
@@ -8762,8 +8778,7 @@ type CreateDBClusterInput struct {
 	//
 	// The default is a 30-minute window selected at random from an 8-hour block
 	// of time for each Amazon Region, occurring on a random day of the week. To
-	// see the time blocks available, see Adjusting the Preferred Maintenance Window
-	// (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html)
+	// see the time blocks available, see Neptune Maintenance Window (https://docs.aws.amazon.com/neptune/latest/userguide/manage-console-maintaining.html#manage-console-maintaining-window)
 	// in the Amazon Neptune User Guide.
 	//
 	// Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun.
@@ -8788,6 +8803,21 @@ type CreateDBClusterInput struct {
 
 	// Specifies whether the DB cluster is encrypted.
 	StorageEncrypted *bool `type:"boolean"`
+
+	// The storage type to associate with the DB cluster.
+	//
+	// Valid Values:
+	//
+	//    * standard | iopt1
+	//
+	// Default:
+	//
+	//    * standard
+	//
+	// When you create a Neptune cluster with the storage type set to iopt1, the
+	// storage type is returned in the response. The storage type isn't returned
+	// when you set it to standard.
+	StorageType *string `type:"string"`
 
 	// The tags to assign to the new DB cluster.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
@@ -8995,6 +9025,12 @@ func (s *CreateDBClusterInput) SetStorageEncrypted(v bool) *CreateDBClusterInput
 	return s
 }
 
+// SetStorageType sets the StorageType field's value.
+func (s *CreateDBClusterInput) SetStorageType(v string) *CreateDBClusterInput {
+	s.StorageType = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *CreateDBClusterInput) SetTags(v []*Tag) *CreateDBClusterInput {
 	s.Tags = v
@@ -9012,7 +9048,7 @@ type CreateDBClusterOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -9546,7 +9582,11 @@ type CreateDBInstanceInput struct {
 
 	// The password for the given ARN from the key store in order to access the
 	// device.
-	TdeCredentialPassword *string `type:"string"`
+	//
+	// TdeCredentialPassword is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateDBInstanceInput's
+	// String and GoString methods.
+	TdeCredentialPassword *string `type:"string" sensitive:"true"`
 
 	// The time zone of the DB instance.
 	Timezone *string `type:"string"`
@@ -10448,7 +10488,7 @@ func (s *CreateGlobalClusterOutput) SetGlobalCluster(v *GlobalCluster) *CreateGl
 
 // Contains the details of an Amazon Neptune DB cluster.
 //
-// This data type is used as a response element in the DescribeDBClusters action.
+// This data type is used as a response element in the DescribeDBClusters.
 type DBCluster struct {
 	_ struct{} `type:"structure"`
 
@@ -10527,8 +10567,10 @@ type DBCluster struct {
 	// restore.
 	EarliestRestorableTime *time.Time `type:"timestamp"`
 
-	// A list of log types that this DB cluster is configured to export to CloudWatch
-	// Logs.
+	// A list of the log types that this DB cluster is configured to export to CloudWatch
+	// Logs. Valid log types are: audit (to publish audit logs to CloudWatch) and
+	// slowquery (to publish slow-query logs to CloudWatch). See Publishing Neptune
+	// logs to Amazon CloudWatch logs (https://docs.aws.amazon.com/neptune/latest/userguide/cloudwatch-logs.html).
 	EnabledCloudwatchLogsExports []*string `type:"list"`
 
 	// Specifies the connection endpoint for the primary instance of the DB cluster.
@@ -10550,6 +10592,9 @@ type DBCluster struct {
 	// True if mapping of Amazon Identity and Access Management (IAM) accounts to
 	// database accounts is enabled, and otherwise false.
 	IAMDatabaseAuthenticationEnabled *bool `type:"boolean"`
+
+	// The next time you can modify the DB cluster to use the iopt1 storage type.
+	IOOptimizedNextAllowedModificationTime *time.Time `type:"timestamp"`
 
 	// If StorageEncrypted is true, the Amazon KMS key identifier for the encrypted
 	// DB cluster.
@@ -10614,6 +10659,9 @@ type DBCluster struct {
 
 	// Specifies whether the DB cluster is encrypted.
 	StorageEncrypted *bool `type:"boolean"`
+
+	// The storage type associated with the DB cluster.
+	StorageType *string `type:"string"`
 
 	// Provides a list of VPC security groups that the DB cluster belongs to.
 	VpcSecurityGroups []*VpcSecurityGroupMembership `locationNameList:"VpcSecurityGroupMembership" type:"list"`
@@ -10799,6 +10847,12 @@ func (s *DBCluster) SetIAMDatabaseAuthenticationEnabled(v bool) *DBCluster {
 	return s
 }
 
+// SetIOOptimizedNextAllowedModificationTime sets the IOOptimizedNextAllowedModificationTime field's value.
+func (s *DBCluster) SetIOOptimizedNextAllowedModificationTime(v time.Time) *DBCluster {
+	s.IOOptimizedNextAllowedModificationTime = &v
+	return s
+}
+
 // SetKmsKeyId sets the KmsKeyId field's value.
 func (s *DBCluster) SetKmsKeyId(v string) *DBCluster {
 	s.KmsKeyId = &v
@@ -10886,6 +10940,12 @@ func (s *DBCluster) SetStatus(v string) *DBCluster {
 // SetStorageEncrypted sets the StorageEncrypted field's value.
 func (s *DBCluster) SetStorageEncrypted(v bool) *DBCluster {
 	s.StorageEncrypted = &v
+	return s
+}
+
+// SetStorageType sets the StorageType field's value.
+func (s *DBCluster) SetStorageType(v string) *DBCluster {
+	s.StorageType = &v
 	return s
 }
 
@@ -11202,8 +11262,7 @@ type DBClusterRole struct {
 	_ struct{} `type:"structure"`
 
 	// The name of the feature associated with the Amazon Identity and Access Management
-	// (IAM) role. For the list of supported feature names, see DescribeDBEngineVersions
-	// (https://docs.aws.amazon.com/neptune/latest/userguide/api-other-apis.html#DescribeDBEngineVersions).
+	// (IAM) role. For the list of supported feature names, see DescribeDBEngineVersions.
 	FeatureName *string `type:"string"`
 
 	// The Amazon Resource Name (ARN) of the IAM role that is associated with the
@@ -11346,6 +11405,9 @@ type DBClusterSnapshot struct {
 	// Specifies whether the DB cluster snapshot is encrypted.
 	StorageEncrypted *bool `type:"boolean"`
 
+	// The storage type associated with the DB cluster snapshot.
+	StorageType *string `type:"string"`
+
 	// Provides the VPC ID associated with the DB cluster snapshot.
 	VpcId *string `type:"string"`
 }
@@ -11479,6 +11541,12 @@ func (s *DBClusterSnapshot) SetStatus(v string) *DBClusterSnapshot {
 // SetStorageEncrypted sets the StorageEncrypted field's value.
 func (s *DBClusterSnapshot) SetStorageEncrypted(v bool) *DBClusterSnapshot {
 	s.StorageEncrypted = &v
+	return s
+}
+
+// SetStorageType sets the StorageType field's value.
+func (s *DBClusterSnapshot) SetStorageType(v string) *DBClusterSnapshot {
+	s.StorageType = &v
 	return s
 }
 
@@ -12837,7 +12905,7 @@ type DeleteDBClusterOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -16756,7 +16824,7 @@ type FailoverDBClusterOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -17459,7 +17527,8 @@ type ModifyDBClusterInput struct {
 	BackupRetentionPeriod *int64 `type:"integer"`
 
 	// The configuration setting for the log types to be enabled for export to CloudWatch
-	// Logs for a specific DB cluster.
+	// Logs for a specific DB cluster. See Using the CLI to publish Neptune audit
+	// logs to CloudWatch Logs (https://docs.aws.amazon.com/neptune/latest/userguide/cloudwatch-logs.html#cloudwatch-logs-cli).
 	CloudwatchLogsExportConfiguration *CloudwatchLogsExportConfiguration `type:"structure"`
 
 	// If set to true, tags are copied to any snapshot of the DB cluster that is
@@ -17513,7 +17582,7 @@ type ModifyDBClusterInput struct {
 	//
 	// For a list of valid engine versions, see Engine Releases for Amazon Neptune
 	// (https://docs.aws.amazon.com/neptune/latest/userguide/engine-releases.html),
-	// or call DescribeDBEngineVersions (https://docs.aws.amazon.com/neptune/latest/userguide/api-other-apis.html#DescribeDBEngineVersions).
+	// or call DescribeDBEngineVersions.
 	EngineVersion *string `type:"string"`
 
 	// Not supported by Neptune.
@@ -17578,6 +17647,17 @@ type ModifyDBClusterInput struct {
 	// For more information, see Using Amazon Neptune Serverless (https://docs.aws.amazon.com/neptune/latest/userguide/neptune-serverless-using.html)
 	// in the Amazon Neptune User Guide.
 	ServerlessV2ScalingConfiguration *ServerlessV2ScalingConfiguration `type:"structure"`
+
+	// The storage type to associate with the DB cluster.
+	//
+	// Valid Values:
+	//
+	//    * standard | iopt1
+	//
+	// Default:
+	//
+	//    * standard
+	StorageType *string `type:"string"`
 
 	// A list of VPC security groups that the DB cluster will belong to.
 	VpcSecurityGroupIds []*string `locationNameList:"VpcSecurityGroupId" type:"list"`
@@ -17722,6 +17802,12 @@ func (s *ModifyDBClusterInput) SetServerlessV2ScalingConfiguration(v *Serverless
 	return s
 }
 
+// SetStorageType sets the StorageType field's value.
+func (s *ModifyDBClusterInput) SetStorageType(v string) *ModifyDBClusterInput {
+	s.StorageType = &v
+	return s
+}
+
 // SetVpcSecurityGroupIds sets the VpcSecurityGroupIds field's value.
 func (s *ModifyDBClusterInput) SetVpcSecurityGroupIds(v []*string) *ModifyDBClusterInput {
 	s.VpcSecurityGroupIds = v
@@ -17733,7 +17819,7 @@ type ModifyDBClusterOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -18211,7 +18297,11 @@ type ModifyDBInstanceInput struct {
 
 	// The password for the given ARN from the key store in order to access the
 	// device.
-	TdeCredentialPassword *string `type:"string"`
+	//
+	// TdeCredentialPassword is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ModifyDBInstanceInput's
+	// String and GoString methods.
+	TdeCredentialPassword *string `type:"string" sensitive:"true"`
 
 	// A list of EC2 VPC security groups to authorize on this DB instance. This
 	// change is asynchronously applied as soon as possible.
@@ -19341,6 +19431,9 @@ func (s *Parameter) SetSource(v string) *Parameter {
 
 // A list of the log types whose configuration is still pending. In other words,
 // these log types are in the process of being activated or deactivated.
+//
+// Valid log types are: audit (to publish audit logs) and slowquery (to publish
+// slow-query logs). See Publishing Neptune logs to Amazon CloudWatch logs (https://docs.aws.amazon.com/neptune/latest/userguide/cloudwatch-logs.html).
 type PendingCloudwatchLogsExports struct {
 	_ struct{} `type:"structure"`
 
@@ -19675,7 +19768,7 @@ type PromoteReadReplicaDBClusterOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -19960,8 +20053,7 @@ type RemoveRoleFromDBClusterInput struct {
 	DBClusterIdentifier *string `type:"string" required:"true"`
 
 	// The name of the feature for the DB cluster that the IAM role is to be disassociated
-	// from. For the list of supported feature names, see DescribeDBEngineVersions
-	// (https://docs.aws.amazon.com/neptune/latest/userguide/api-other-apis.html#DescribeDBEngineVersions).
+	// from. For the list of supported feature names, see DescribeDBEngineVersions.
 	FeatureName *string `type:"string"`
 
 	// The Amazon Resource Name (ARN) of the IAM role to disassociate from the DB
@@ -20600,6 +20692,13 @@ type RestoreDBClusterFromSnapshotInput struct {
 	// SnapshotIdentifier is a required field
 	SnapshotIdentifier *string `type:"string" required:"true"`
 
+	// Specifies the storage type to be associated with the DB cluster.
+	//
+	// Valid values: standard, iopt1
+	//
+	// Default: standard
+	StorageType *string `type:"string"`
+
 	// The tags to be assigned to the restored DB cluster.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
@@ -20740,6 +20839,12 @@ func (s *RestoreDBClusterFromSnapshotInput) SetSnapshotIdentifier(v string) *Res
 	return s
 }
 
+// SetStorageType sets the StorageType field's value.
+func (s *RestoreDBClusterFromSnapshotInput) SetStorageType(v string) *RestoreDBClusterFromSnapshotInput {
+	s.StorageType = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *RestoreDBClusterFromSnapshotInput) SetTags(v []*Tag) *RestoreDBClusterFromSnapshotInput {
 	s.Tags = v
@@ -20757,7 +20862,7 @@ type RestoreDBClusterFromSnapshotOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -20911,6 +21016,13 @@ type RestoreDBClusterToPointInTimeInput struct {
 	// SourceDBClusterIdentifier is a required field
 	SourceDBClusterIdentifier *string `type:"string" required:"true"`
 
+	// Specifies the storage type to be associated with the DB cluster.
+	//
+	// Valid values: standard, iopt1
+	//
+	// Default: standard
+	StorageType *string `type:"string"`
+
 	// The tags to be applied to the restored DB cluster.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
@@ -21038,6 +21150,12 @@ func (s *RestoreDBClusterToPointInTimeInput) SetSourceDBClusterIdentifier(v stri
 	return s
 }
 
+// SetStorageType sets the StorageType field's value.
+func (s *RestoreDBClusterToPointInTimeInput) SetStorageType(v string) *RestoreDBClusterToPointInTimeInput {
+	s.StorageType = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *RestoreDBClusterToPointInTimeInput) SetTags(v []*Tag) *RestoreDBClusterToPointInTimeInput {
 	s.Tags = v
@@ -21061,7 +21179,7 @@ type RestoreDBClusterToPointInTimeOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -21237,7 +21355,7 @@ type StartDBClusterOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 
@@ -21317,7 +21435,7 @@ type StopDBClusterOutput struct {
 
 	// Contains the details of an Amazon Neptune DB cluster.
 	//
-	// This data type is used as a response element in the DescribeDBClusters action.
+	// This data type is used as a response element in the DescribeDBClusters.
 	DBCluster *DBCluster `type:"structure"`
 }
 

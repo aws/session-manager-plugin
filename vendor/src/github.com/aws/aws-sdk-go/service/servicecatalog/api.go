@@ -244,7 +244,7 @@ func (c *ServiceCatalog) AssociatePrincipalWithPortfolioRequest(input *Associate
 // The PortfolioID, PrincipalARN, and PrincipalType parameters are required.
 //
 // You can associate a maximum of 10 Principals with a portfolio using PrincipalType
-// as IAM_PATTERN
+// as IAM_PATTERN.
 //
 // When you associate a principal with portfolio, a potential privilege escalation
 // path may occur when that portfolio is then shared with other accounts. For
@@ -4802,7 +4802,7 @@ func (c *ServiceCatalog) ImportAsProvisionedProductRequest(input *ImportAsProvis
 // product.
 //
 // Resource import only supports CloudFormation stack ARNs. CloudFormation StackSets,
-// and non-root nested stacks are not supported.
+// and non-root nested stacks, are not supported.
 //
 // The CloudFormation stack must have one of the following statuses to be imported:
 // CREATE_COMPLETE, UPDATE_COMPLETE, UPDATE_ROLLBACK_COMPLETE, IMPORT_COMPLETE,
@@ -4811,13 +4811,16 @@ func (c *ServiceCatalog) ImportAsProvisionedProductRequest(input *ImportAsProvis
 // Import of the resource requires that the CloudFormation stack template matches
 // the associated Service Catalog product provisioning artifact.
 //
-// When you import an existing CloudFormation stack into a portfolio, constraints
-// that are associated with the product aren't applied during the import process.
-// The constraints are applied after you call UpdateProvisionedProduct for the
-// provisioned product.
+// When you import an existing CloudFormation stack into a portfolio, Service
+// Catalog does not apply the product's associated constraints during the import
+// process. Service Catalog applies the constraints after you call UpdateProvisionedProduct
+// for the provisioned product.
 //
 // The user or role that performs this operation must have the cloudformation:GetTemplate
 // and cloudformation:DescribeStacks IAM policy permissions.
+//
+// You can only import one provisioned product at a time. The product's CloudFormation
+// stack must have the IMPORT_COMPLETE status before you import another.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8387,7 +8390,7 @@ func (c *ServiceCatalog) UpdatePortfolioShareRequest(input *UpdatePortfolioShare
 //
 // The portfolio share cannot be updated if the CreatePortfolioShare operation
 // is IN_PROGRESS, as the share is not available to recipient entities. In this
-// case, you must wait for the portfolio share to be COMPLETED.
+// case, you must wait for the portfolio share to be completed.
 //
 // You must provide the accountId or organization node in the input, but not
 // both.
@@ -9093,7 +9096,7 @@ type AccessLevelFilter struct {
 	//    * User - Filter results based on the specified user.
 	Key *string `type:"string" enum:"AccessLevelFilterKey"`
 
-	// The user to which the access level applies. The only supported value is Self.
+	// The user to which the access level applies. The only supported value is self.
 	Value *string `type:"string"`
 }
 
@@ -20001,7 +20004,7 @@ type ProvisionedProductAttribute struct {
 	// The record identifier of the last request performed on this provisioned product
 	// of the following types:
 	//
-	//    * ProvisionedProduct
+	//    * ProvisionProduct
 	//
 	//    * UpdateProvisionedProduct
 	//
@@ -20016,7 +20019,7 @@ type ProvisionedProductAttribute struct {
 	// The record identifier of the last successful request performed on this provisioned
 	// product of the following types:
 	//
-	//    * ProvisionedProduct
+	//    * ProvisionProduct
 	//
 	//    * UpdateProvisionedProduct
 	//
@@ -20073,7 +20076,8 @@ type ProvisionedProductAttribute struct {
 	// One or more tags.
 	Tags []*Tag `type:"list"`
 
-	// The type of provisioned product. The supported values are CFN_STACK and CFN_STACKSET.
+	// The type of provisioned product. The supported values are CFN_STACK, CFN_STACKSET,
+	// TERRAFORM_OPEN_SOURCE, TERRAFORM_CLOUD, and EXTERNAL.
 	Type *string `type:"string"`
 
 	// The Amazon Resource Name (ARN) of the user.
@@ -20236,7 +20240,7 @@ type ProvisionedProductDetail struct {
 	// The record identifier of the last request performed on this provisioned product
 	// of the following types:
 	//
-	//    * ProvisionedProduct
+	//    * ProvisionProduct
 	//
 	//    * UpdateProvisionedProduct
 	//
@@ -20251,7 +20255,7 @@ type ProvisionedProductDetail struct {
 	// The record identifier of the last successful request performed on this provisioned
 	// product of the following types:
 	//
-	//    * ProvisionedProduct
+	//    * ProvisionProduct
 	//
 	//    * UpdateProvisionedProduct
 	//
@@ -20298,7 +20302,8 @@ type ProvisionedProductDetail struct {
 	// The current status message of the provisioned product.
 	StatusMessage *string `type:"string"`
 
-	// The type of provisioned product. The supported values are CFN_STACK and CFN_STACKSET.
+	// The type of provisioned product. The supported values are CFN_STACK, CFN_STACKSET,
+	// TERRAFORM_OPEN_SOURCE, TERRAFORM_CLOUD, and EXTERNAL.
 	Type *string `type:"string"`
 }
 
@@ -20751,10 +20756,11 @@ type ProvisioningArtifactDetail struct {
 	//
 	//    * CLOUD_FORMATION_TEMPLATE - CloudFormation template
 	//
-	//    * MARKETPLACE_AMI - Amazon Web Services Marketplace AMI
+	//    * TERRAFORM_OPEN_SOURCE - Terraform Open Source configuration file
 	//
-	//    * MARKETPLACE_CAR - Amazon Web Services Marketplace Clusters and Amazon
-	//    Web Services Resources
+	//    * TERRAFORM_CLOUD - Terraform Cloud configuration file
+	//
+	//    * EXTERNAL - External configuration file
 	Type *string `type:"string" enum:"ProvisioningArtifactType"`
 }
 
@@ -21009,6 +21015,9 @@ type ProvisioningArtifactProperties struct {
 
 	// If set to true, Service Catalog stops validating the specified provisioning
 	// artifact even if it is invalid.
+	//
+	// Service Catalog does not support template validation for the TERRAFORM_OS
+	// product type.
 	DisableTemplateValidation *bool `type:"boolean"`
 
 	// Specify the template source with one of the following options, but not both.
@@ -21032,12 +21041,11 @@ type ProvisioningArtifactProperties struct {
 	//
 	//    * CLOUD_FORMATION_TEMPLATE - CloudFormation template
 	//
-	//    * MARKETPLACE_AMI - Amazon Web Services Marketplace AMI
+	//    * TERRAFORM_OPEN_SOURCE - Terraform Open Source configuration file
 	//
-	//    * MARKETPLACE_CAR - Amazon Web Services Marketplace Clusters and Amazon
-	//    Web Services Resources
+	//    * TERRAFORM_CLOUD - Terraform Cloud configuration file
 	//
-	//    * TERRAFORM_OPEN_SOURCE - Terraform open source configuration file
+	//    * EXTERNAL - External configuration file
 	Type *string `type:"string" enum:"ProvisioningArtifactType"`
 }
 
@@ -21464,7 +21472,8 @@ type RecordDetail struct {
 	// The user-friendly name of the provisioned product.
 	ProvisionedProductName *string `min:"1" type:"string"`
 
-	// The type of provisioned product. The supported values are CFN_STACK and CFN_STACKSET.
+	// The type of provisioned product. The supported values are CFN_STACK, CFN_STACKSET,
+	// TERRAFORM_OPEN_SOURCE, TERRAFORM_CLOUD, and EXTERNAL.
 	ProvisionedProductType *string `type:"string"`
 
 	// The identifier of the provisioning artifact.
@@ -22642,7 +22651,7 @@ type SearchProvisionedProductsInput struct {
 	// The search filters.
 	//
 	// When the key is SearchQuery, the searchable fields are arn, createdTime,
-	// id, lastRecordId, idempotencyToken, name, physicalId, productId, provisioningArtifact,
+	// id, lastRecordId, idempotencyToken, name, physicalId, productId, provisioningArtifactId,
 	// type, status, tags, userArn, userArnSession, lastProvisioningRecordId, lastSuccessfulProvisioningRecordId,
 	// productName, and provisioningArtifactName.
 	//
@@ -25795,6 +25804,12 @@ const (
 
 	// ProductTypeTerraformOpenSource is a ProductType enum value
 	ProductTypeTerraformOpenSource = "TERRAFORM_OPEN_SOURCE"
+
+	// ProductTypeTerraformCloud is a ProductType enum value
+	ProductTypeTerraformCloud = "TERRAFORM_CLOUD"
+
+	// ProductTypeExternal is a ProductType enum value
+	ProductTypeExternal = "EXTERNAL"
 )
 
 // ProductType_Values returns all elements of the ProductType enum
@@ -25803,6 +25818,8 @@ func ProductType_Values() []string {
 		ProductTypeCloudFormationTemplate,
 		ProductTypeMarketplace,
 		ProductTypeTerraformOpenSource,
+		ProductTypeTerraformCloud,
+		ProductTypeExternal,
 	}
 }
 
@@ -25990,6 +26007,12 @@ const (
 
 	// ProvisioningArtifactTypeTerraformOpenSource is a ProvisioningArtifactType enum value
 	ProvisioningArtifactTypeTerraformOpenSource = "TERRAFORM_OPEN_SOURCE"
+
+	// ProvisioningArtifactTypeTerraformCloud is a ProvisioningArtifactType enum value
+	ProvisioningArtifactTypeTerraformCloud = "TERRAFORM_CLOUD"
+
+	// ProvisioningArtifactTypeExternal is a ProvisioningArtifactType enum value
+	ProvisioningArtifactTypeExternal = "EXTERNAL"
 )
 
 // ProvisioningArtifactType_Values returns all elements of the ProvisioningArtifactType enum
@@ -25999,6 +26022,8 @@ func ProvisioningArtifactType_Values() []string {
 		ProvisioningArtifactTypeMarketplaceAmi,
 		ProvisioningArtifactTypeMarketplaceCar,
 		ProvisioningArtifactTypeTerraformOpenSource,
+		ProvisioningArtifactTypeTerraformCloud,
+		ProvisioningArtifactTypeExternal,
 	}
 }
 
