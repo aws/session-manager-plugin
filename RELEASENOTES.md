@@ -1,5 +1,9 @@
 Latest
 ================
+- Upgrade aws-sdk-go and dependent Golang packages
+
+1.2.536.0
+================
 - Support reading StartSession API response parameters from environment variable
 - Migrate to use images from ECR repository
 
