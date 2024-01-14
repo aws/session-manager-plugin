@@ -42,11 +42,12 @@ type IPortSession interface {
 }
 
 type PortParameters struct {
-	PortNumber          string `json:"portNumber"`
-	LocalPortNumber     string `json:"localPortNumber"`
-	LocalUnixSocket     string `json:"localUnixSocket"`
-	LocalConnectionType string `json:"localConnectionType"`
-	Type                string `json:"type"`
+	PortNumber           string `json:"portNumber"`
+	LocalPortNumber      string `json:"localPortNumber"`
+	LocalUnixSocket      string `json:"localUnixSocket"`
+	LocalConnectionType  string `json:"localConnectionType"`
+	LocalListenerAddress string `json:"localListenerAddress"`
+	Type                 string `json:"type"`
 }
 
 func init() {

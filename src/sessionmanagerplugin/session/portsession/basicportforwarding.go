@@ -143,6 +143,10 @@ func (p *BasicPortForwarding) startLocalConn(log log.T) (err error) {
 // startLocalListener starts a local listener to given address
 func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (listener net.Listener, err error) {
 	var displayMessage string
+	localListenerAddress := p.portParameters.LocalListenerAddress
+	if localListenerAddress == "" {
+		localListenerAddress = "localhost"
+	}
 	switch p.portParameters.LocalConnectionType {
 	case "unix":
 		if listener, err = getNewListener(p.portParameters.LocalConnectionType, p.portParameters.LocalUnixSocket); err != nil {
@@ -150,7 +154,7 @@ func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (
 		}
 		displayMessage = fmt.Sprintf("Unix socket %s opened for sessionId %s.", p.portParameters.LocalUnixSocket, p.sessionId)
 	default:
-		if listener, err = getNewListener("tcp", "localhost:"+portNumber); err != nil {
+		if listener, err = getNewListener("tcp", localListenerAddress+":"+portNumber); err != nil {
 			return
 		}
 		// get port number the TCP listener opened
