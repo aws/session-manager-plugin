@@ -1,5 +1,5 @@
 COPY := cp -p
-GO_BUILD := go build -i
+GO_BUILD := go build
 
 # Default build configuration, can be overridden at build time.
 GOARCH?=$(shell go env GOARCH)
@@ -27,7 +27,7 @@ package:: create-package-folder package-rpm-amd64 package-rpm-386 package-rpm-ar
 release:: clean checkstyle release-test pre-release build prepack package copy-package-dependencies
 
 clean:: remove-prepacked-folder
-	rm -rf build/* bin/ pkg/ vendor/bin/ vendor/pkg/ .cover/
+	rm -rf build/* bin/ .cover/
 	find . -type f -name '*.log' -delete
 
 .PHONY: release-test

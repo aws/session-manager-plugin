@@ -87,12 +87,12 @@ type Session struct {
 	DisplayMode           sessionutil.DisplayMode
 }
 
-//startSession create the datachannel for session
+// startSession create the datachannel for session
 var startSession = func(session *Session, log log.T) error {
 	return session.Execute(log)
 }
 
-//setSessionHandlersWithSessionType set session handlers based on session subtype
+// setSessionHandlersWithSessionType set session handlers based on session subtype
 var setSessionHandlersWithSessionType = func(session *Session, log log.T) error {
 	// SessionType is set inside DataChannel
 	sessionSubType := SessionRegistry[session.SessionType]
@@ -217,7 +217,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	}
 }
 
-//Execute create data channel and start the session
+// Execute create data channel and start the session
 func (s *Session) Execute(log log.T) (err error) {
 	fmt.Fprintf(os.Stdout, "\nStarting session with SessionId: %s\n", s.SessionId)
 
