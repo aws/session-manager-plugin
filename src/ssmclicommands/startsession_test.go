@@ -16,6 +16,7 @@ package ssmclicommands
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/service/ssm"
@@ -75,7 +76,7 @@ func TestStartSessionCommand_ExecuteSuccess(t *testing.T) {
 		return startSessionOutput, nil
 	}
 
-	err, msg := command.Execute(parameter)
+	err, msg := command.Execute(os.Stdout, parameter)
 	assert.Nil(t, err)
 	assert.Equal(t, msg, "StartSession executed successfully")
 }
@@ -91,7 +92,7 @@ func TestStartSessionCommand_ExecuteGetSSMClientFailure(t *testing.T) {
 		return nil, fmt.Errorf("Get SSMClient Failure")
 	}
 
-	err, msg := command.Execute(parameter)
+	err, msg := command.Execute(os.Stdout, parameter)
 	assert.NotNil(t, err)
 	assert.Equal(t, err.Error(), "Get SSMClient Failure")
 	assert.Equal(t, msg, "StartSession failed")
@@ -115,7 +116,7 @@ func TestStartSessionCommand_ExecuteSessionFailure(t *testing.T) {
 		return startSessionOutput, nil
 	}
 
-	err, msg := command.Execute(parameter)
+	err, msg := command.Execute(os.Stdout, parameter)
 	assert.NotNil(t, err)
 	assert.Equal(t, err.Error(), "Execute Session Failure")
 	assert.Equal(t, msg, "StartSession failed")

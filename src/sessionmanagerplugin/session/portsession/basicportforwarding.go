@@ -16,6 +16,7 @@ package portsession
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"os/signal"
@@ -39,6 +40,7 @@ type BasicPortForwarding struct {
 	sessionId      string
 	portParameters PortParameters
 	session        session.Session
+	out            io.Writer
 }
 
 // getNewListener returns a new listener to given address and type like tcp, unix etc.
@@ -132,7 +134,7 @@ func (p *BasicPortForwarding) startLocalConn(log log.T) (err error) {
 		return err
 	}
 	log.Infof("Connection accepted for session %s.", p.sessionId)
-	fmt.Printf("Connection accepted for session %s.\n", p.sessionId)
+	fmt.Fprintf(p.out, "Connection accepted for session %s.\n", p.sessionId)
 
 	p.listener = &listener
 	p.stream = &tcpConn
@@ -159,7 +161,7 @@ func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (
 	}
 
 	log.Info(displayMessage)
-	fmt.Println(displayMessage)
+	fmt.Fprintln(p.out, displayMessage)
 	return
 }
 
@@ -169,13 +171,13 @@ func (p *BasicPortForwarding) handleControlSignals(log log.T) {
 	signal.Notify(c, sessionutil.ControlSignals...)
 	go func() {
 		<-c
-		fmt.Println("Terminate signal received, exiting.")
+		fmt.Fprintln(p.out, "Terminate signal received, exiting.")
 
 		if version.DoesAgentSupportTerminateSessionFlag(log, p.session.DataChannel.GetAgentVersion()) {
 			if err := p.session.DataChannel.SendFlag(log, message.TerminateSession); err != nil {
 				log.Errorf("Failed to send TerminateSession flag: %v", err)
 			}
-			fmt.Fprintf(os.Stdout, "\n\nExiting session with sessionId: %s.\n\n", p.sessionId)
+			fmt.Fprintf(p.out, "\n\nExiting session with sessionId: %s.\n\n", p.sessionId)
 			p.Stop()
 		} else {
 			p.session.TerminateSession(log)

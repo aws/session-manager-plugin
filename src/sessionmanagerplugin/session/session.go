@@ -85,14 +85,15 @@ type Session struct {
 	SessionType           string
 	SessionProperties     interface{}
 	DisplayMode           sessionutil.DisplayMode
+	Out                   io.Writer
 }
 
-//startSession create the datachannel for session
+// startSession create the datachannel for session
 var startSession = func(session *Session, log log.T) error {
 	return session.Execute(log)
 }
 
-//setSessionHandlersWithSessionType set session handlers based on session subtype
+// setSessionHandlersWithSessionType set session handlers based on session subtype
 var setSessionHandlersWithSessionType = func(session *Session, log log.T) error {
 	// SessionType is set inside DataChannel
 	sessionSubType := SessionRegistry[session.SessionType]
@@ -203,7 +204,8 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 		session.Endpoint = ssmEndpoint
 		session.ClientId = clientId
 		session.TargetId = target
-		session.DataChannel = &datachannel.DataChannel{}
+		session.DataChannel = &datachannel.DataChannel{Out: out}
+		session.Out = out
 
 	default:
 		fmt.Fprint(out, "Invalid Operation")
@@ -217,12 +219,12 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	}
 }
 
-//Execute create data channel and start the session
+// Execute create data channel and start the session
 func (s *Session) Execute(log log.T) (err error) {
-	fmt.Fprintf(os.Stdout, "\nStarting session with SessionId: %s\n", s.SessionId)
+	fmt.Fprintf(s.Out, "\nStarting session with SessionId: %s\n", s.SessionId)
 
 	// sets the display mode
-	s.DisplayMode = sessionutil.NewDisplayMode(log)
+	s.DisplayMode = sessionutil.NewDisplayMode(log, s.Out)
 
 	if err = s.OpenDataChannel(log); err != nil {
 		log.Errorf("Error in Opening data channel: %v", err)

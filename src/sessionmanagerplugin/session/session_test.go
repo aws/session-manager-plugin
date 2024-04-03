@@ -104,7 +104,7 @@ func TestValidateInputAndStartSessionWithWrongEnvVariableName(t *testing.T) {
 }
 
 func TestExecute(t *testing.T) {
-	sessionMock := &Session{}
+	sessionMock := &Session{Out: os.Stdout}
 	sessionMock.DataChannel = mockDataChannel
 	SetupMockActions()
 	mockDataChannel.On("Open", mock.Anything).Return(nil)
@@ -128,7 +128,7 @@ func TestExecute(t *testing.T) {
 }
 
 func TestExecuteAndStreamMessageResendTimesOut(t *testing.T) {
-	sessionMock := &Session{}
+	sessionMock := &Session{Out: os.Stdout}
 	sessionMock.DataChannel = mockDataChannel
 	SetupMockActions()
 	mockDataChannel.On("Open", mock.Anything).Return(nil)

@@ -16,6 +16,7 @@ package utils
 
 import (
 	"fmt"
+	"io"
 	"strings"
 )
 
@@ -30,7 +31,7 @@ var SsmCliCommands map[string]SsmCliCommand
 
 // CliCommand defines the interface for all commands the cli can execute
 type SsmCliCommand interface {
-	Execute(parameters map[string][]string) (error, string)
+	Execute(out io.Writer, parameters map[string][]string) (error, string)
 	Help() string
 	Name() string
 }

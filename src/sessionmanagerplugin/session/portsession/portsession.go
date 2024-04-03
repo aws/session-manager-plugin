@@ -15,6 +15,8 @@
 package portsession
 
 import (
+	"os"
+
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/jsonutil"
 	"github.com/aws/session-manager-plugin/src/log"
@@ -70,12 +72,14 @@ func (s *PortSession) Initialize(log log.T, sessionVar *session.Session) {
 				sessionId:      s.SessionId,
 				portParameters: s.portParameters,
 				session:        s.Session,
+				out:            os.Stdout,
 			}
 		} else {
 			s.portSessionType = &BasicPortForwarding{
 				sessionId:      s.SessionId,
 				portParameters: s.portParameters,
 				session:        s.Session,
+				out:            os.Stdout,
 			}
 		}
 	} else {
