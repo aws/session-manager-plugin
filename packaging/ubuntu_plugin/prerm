@@ -1,1 +1,3 @@
+#!/bin/sh
+
 echo "Start removing session-manager-plugin"
