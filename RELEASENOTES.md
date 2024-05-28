@@ -1,5 +1,9 @@
 Latest
 ================
+- Update dockerfile to use ecr image
+
+1.2.553.0
+================
 - Upgrade aws-sdk-go and dependent Golang packages
 
 1.2.536.0
