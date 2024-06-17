@@ -15,6 +15,8 @@
 package portsession
 
 import (
+	"os"
+
 	"github.com/aws/session-manager-plugin/src/communicator/mocks"
 	"github.com/aws/session-manager-plugin/src/datachannel"
 	"github.com/aws/session-manager-plugin/src/log"
@@ -41,11 +43,13 @@ func getSessionMock() session.Session {
 }
 
 func getSessionMockWithParams(properties interface{}, agentVersion string) session.Session {
-	datachannel := &datachannel.DataChannel{}
+	out := os.Stdout
+	datachannel := &datachannel.DataChannel{Out: out}
 	datachannel.SetAgentVersion(agentVersion)
 
 	var mockSession = session.Session{
 		DataChannel: datachannel,
+		Out:         out,
 	}
 
 	mockSession.DataChannel.Initialize(mockLog, "clientId", "sessionId", "targetId", false)

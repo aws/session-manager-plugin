@@ -21,8 +21,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"math"
-	"os"
 	"reflect"
 	"sync"
 	"time"
@@ -115,6 +115,9 @@ type DataChannel struct {
 
 	// AgentVersion received during handshake
 	agentVersion string
+
+	// Out is where user ssm plugin logs go
+	Out io.Writer
 }
 
 type ListMessageBuffer struct {
@@ -510,7 +513,7 @@ func (dataChannel *DataChannel) handleHandshakeComplete(log log.T, clientMessage
 		handshakeComplete.HandshakeTimeToComplete.Seconds())
 
 	if handshakeComplete.CustomerMessage != "" {
-		fmt.Fprintln(os.Stdout, handshakeComplete.CustomerMessage)
+		fmt.Fprintln(dataChannel.Out, handshakeComplete.CustomerMessage)
 	}
 
 	return err
@@ -783,9 +786,9 @@ func (dataChannel DataChannel) HandleChannelClosedMessage(log log.T, stopHandler
 
 	log.Infof("Exiting session with sessionId: %s with output: %s", sessionId, channelClosedMessage.Output)
 	if channelClosedMessage.Output == "" {
-		fmt.Fprintf(os.Stdout, "\n\nExiting session with sessionId: %s.\n\n", sessionId)
+		fmt.Fprintf(dataChannel.Out, "\n\nExiting session with sessionId: %s.\n\n", sessionId)
 	} else {
-		fmt.Fprintf(os.Stdout, "\n\nSessionId: %s : %s\n\n", sessionId, channelClosedMessage.Output)
+		fmt.Fprintf(dataChannel.Out, "\n\nSessionId: %s : %s\n\n", sessionId, channelClosedMessage.Output)
 	}
 
 	stopHandler()

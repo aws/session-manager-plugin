@@ -16,6 +16,7 @@ package session
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
 	wsChannelMock "github.com/aws/session-manager-plugin/src/communicator/mocks"
@@ -23,6 +24,7 @@ import (
 	"github.com/aws/session-manager-plugin/src/datachannel"
 	dataChannelMock "github.com/aws/session-manager-plugin/src/datachannel/mocks"
 	"github.com/aws/session-manager-plugin/src/message"
+	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/sessionutil"
 	"github.com/stretchr/testify/mock"
 
 	"github.com/stretchr/testify/assert"
@@ -38,7 +40,7 @@ func TestOpenDataChannel(t *testing.T) {
 	mockDataChannel = &dataChannelMock.IDataChannel{}
 	mockWsChannel = &wsChannelMock.IWebSocketChannel{}
 
-	sessionMock := &Session{}
+	sessionMock := &Session{Out: os.Stdout}
 	sessionMock.DataChannel = mockDataChannel
 	SetupMockActions()
 	mockDataChannel.On("Open", mock.Anything).Return(nil)
@@ -51,7 +53,7 @@ func TestOpenDataChannelWithError(t *testing.T) {
 	mockDataChannel = &dataChannelMock.IDataChannel{}
 	mockWsChannel = &wsChannelMock.IWebSocketChannel{}
 
-	sessionMock := &Session{}
+	sessionMock := &Session{Out: os.Stdout}
 	sessionMock.DataChannel = mockDataChannel
 	SetupMockActions()
 
@@ -69,10 +71,12 @@ func TestProcessFirstMessageOutputMessageFirst(t *testing.T) {
 		Payload:     []byte("testing"),
 	}
 
-	dataChannel := &datachannel.DataChannel{}
+	dataChannel := &datachannel.DataChannel{Out: os.Stdout}
 	dataChannel.Initialize(logger, clientId, sessionId, instanceId, false)
 	session := Session{
+		Out:         os.Stdout,
 		DataChannel: dataChannel,
+		DisplayMode: sessionutil.NewDisplayMode(logger, os.Stdout),
 	}
 
 	session.ProcessFirstMessage(logger, outputMessage)

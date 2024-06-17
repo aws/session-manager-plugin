@@ -52,7 +52,7 @@ func TestName(t *testing.T) {
 }
 
 func TestInitialize(t *testing.T) {
-	session := &session.Session{}
+	session := &session.Session{Out: os.Stdout}
 	shellSession := ShellSession{}
 	session.DataChannel = mockDataChannel
 	mockDataChannel.On("RegisterOutputStreamHandler", mock.Anything, true).Times(1)
@@ -63,7 +63,7 @@ func TestInitialize(t *testing.T) {
 }
 
 func TestHandleControlSignals(t *testing.T) {
-	session := session.Session{}
+	session := session.Session{Out: os.Stdout}
 	session.DataChannel = mockDataChannel
 	shellSession := ShellSession{}
 	shellSession.Session = session
@@ -154,7 +154,7 @@ func TestTerminalResizeWhenSessionSizeDataIsNotEqualToActualSize(t *testing.T) {
 
 func TestProcessStreamMessagePayload(t *testing.T) {
 	shellSession := ShellSession{}
-	shellSession.DisplayMode = sessionutil.NewDisplayMode(logger)
+	shellSession.DisplayMode = sessionutil.NewDisplayMode(logger, os.Stdout)
 
 	msg := message.ClientMessage{
 		Payload: []byte("Hello Agent\n"),
@@ -165,7 +165,7 @@ func TestProcessStreamMessagePayload(t *testing.T) {
 }
 
 func getDataChannel() *datachannel.DataChannel {
-	dataChannel := &datachannel.DataChannel{}
+	dataChannel := &datachannel.DataChannel{Out: os.Stdout}
 	dataChannel.Initialize(logger, clientId, sessionId, instanceId, false)
 	dataChannel.SetWsChannel(mockWsChannel)
 	return dataChannel

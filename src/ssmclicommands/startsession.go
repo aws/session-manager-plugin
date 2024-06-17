@@ -19,6 +19,7 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"io"
 	"strings"
 
 	sdkSession "github.com/aws/aws-sdk-go/aws/session"
@@ -88,7 +89,7 @@ type StartSessionCommand struct {
 	sdk      *ssm.SSM
 }
 
-//getSSMClient generate ssm client by configuration
+// getSSMClient generate ssm client by configuration
 var getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.SSM, error) {
 	sdkutil.SetRegionAndProfile(region, profile)
 
@@ -101,7 +102,7 @@ var getSSMClient = func(log log.T, region string, profile string, endpoint strin
 	return ssm.New(sdkSession), nil
 }
 
-//executeSession to open datachannel
+// executeSession to open datachannel
 var executeSession = func(log log.T, session *session.Session) (err error) {
 	return session.Execute(log)
 }
@@ -141,8 +142,8 @@ func (c *StartSessionCommand) Help() string {
 	return c.helpText
 }
 
-//validates and execute start-session command
-func (s *StartSessionCommand) Execute(parameters map[string][]string) (error, string) {
+// validates and execute start-session command
+func (s *StartSessionCommand) Execute(out io.Writer, parameters map[string][]string) (error, string) {
 	var (
 		err        error
 		region     string
@@ -191,7 +192,8 @@ func (s *StartSessionCommand) Execute(parameters map[string][]string) (error, st
 		Endpoint:    endpoint,
 		ClientId:    clientId,
 		TargetId:    instanceId,
-		DataChannel: &datachannel.DataChannel{},
+		DataChannel: &datachannel.DataChannel{Out: out},
+		Out:         out,
 	}
 
 	if err = executeSession(log, &session); err != nil {
@@ -202,7 +204,7 @@ func (s *StartSessionCommand) Execute(parameters map[string][]string) (error, st
 	return err, "StartSession executed successfully"
 }
 
-//func to validate start-session input
+// func to validate start-session input
 func (StartSessionCommand) validateStartSessionInput(parameters map[string][]string) []string {
 	validation := make([]string, 0)
 

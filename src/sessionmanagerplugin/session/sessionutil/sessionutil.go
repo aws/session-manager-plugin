@@ -14,10 +14,14 @@
 // Package sessionutil provides utility for sessions.
 package sessionutil
 
-import "github.com/aws/session-manager-plugin/src/log"
+import (
+	"io"
 
-func NewDisplayMode(log log.T) DisplayMode {
-	displayMode := DisplayMode{}
+	"github.com/aws/session-manager-plugin/src/log"
+)
+
+func NewDisplayMode(log log.T, out io.Writer) DisplayMode {
+	displayMode := DisplayMode{out: out}
 	displayMode.InitDisplayMode(log)
 	return displayMode
 }

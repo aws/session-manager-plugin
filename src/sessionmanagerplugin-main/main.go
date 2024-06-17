@@ -22,6 +22,14 @@ import (
 	_ "github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/shellsession"
 )
 
+var out = os.Stdout
+
+func init() {
+	if quietStr := os.Getenv("AWS_SSM_QUIET"); quietStr == "true" || quietStr == "1" {
+		out = os.Stderr
+	}
+}
+
 func main() {
-	session.ValidateInputAndStartSession(os.Args, os.Stdout)
+	session.ValidateInputAndStartSession(os.Args, out)
 }

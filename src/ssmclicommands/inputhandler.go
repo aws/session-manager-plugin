@@ -106,7 +106,7 @@ func ValidateInput(args []string, out io.Writer) {
 		if utils.IsHelp(subcommand, parameters) {
 			fmt.Fprintln(out, cmd.Help())
 		} else {
-			cmdErr, result := cmd.Execute(parameters)
+			cmdErr, result := cmd.Execute(out, parameters)
 			if cmdErr != nil {
 				utils.DisplayCommandUsage(out)
 				fmt.Fprint(out, cmdErr.Error())

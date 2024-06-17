@@ -19,6 +19,7 @@ package sessionutil
 
 import (
 	"fmt"
+	"io"
 	"net"
 	"os"
 	"syscall"
@@ -32,6 +33,7 @@ var EnvProgramFiles = os.Getenv("ProgramFiles")
 
 type DisplayMode struct {
 	handle windows.Handle
+	out    io.Writer
 }
 
 func (d *DisplayMode) InitDisplayMode(log log.T) {
@@ -71,7 +73,7 @@ func (d *DisplayMode) DisplayMessage(log log.T, message message.ClientMessage) {
 	// refer - https://docs.microsoft.com/en-us/windows/desktop/api/fileapi/nf-fileapi-writefile
 	if err = windows.WriteFile(d.handle, message.Payload, done, nil); err != nil {
 		log.Errorf("error occurred while writing to file: %v", err)
-		fmt.Fprintf(os.Stdout, "\nError getting the output. %s\n", err.Error())
+		fmt.Fprintf(d.out, "\nError getting the output. %s\n", err.Error())
 		os.Exit(0)
 	}
 }
