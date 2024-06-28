@@ -3879,7 +3879,9 @@ type AdBreak struct {
 	// How long (in milliseconds) after the beginning of the program that an ad
 	// starts. This value must fall within 100ms of a segment boundary, otherwise
 	// the ad break will be skipped.
-	OffsetMillis *int64 `type:"long"`
+	//
+	// OffsetMillis is a required field
+	OffsetMillis *int64 `type:"long" required:"true"`
 
 	// Ad break slate configuration.
 	Slate *SlateSource `type:"structure"`
@@ -3920,6 +3922,9 @@ func (s AdBreak) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AdBreak) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AdBreak"}
+	if s.OffsetMillis == nil {
+		invalidParams.Add(request.NewErrParamRequired("OffsetMillis"))
+	}
 	if s.AdBreakMetadata != nil {
 		for i, v := range s.AdBreakMetadata {
 			if v == nil {
@@ -4132,6 +4137,175 @@ func (s *Alert) SetRelatedResourceArns(v []*string) *Alert {
 // SetResourceArn sets the ResourceArn field's value.
 func (s *Alert) SetResourceArn(v string) *Alert {
 	s.ResourceArn = &v
+	return s
+}
+
+// A playlist of media (VOD and/or live) to be played instead of the default
+// media on a particular program.
+type AlternateMedia struct {
+	_ struct{} `type:"structure"`
+
+	// Ad break configuration parameters defined in AlternateMedia.
+	AdBreaks []*AdBreak `type:"list"`
+
+	// Clip range configuration for the VOD source associated with the program.
+	ClipRange *ClipRange `type:"structure"`
+
+	// The duration of the alternateMedia in milliseconds.
+	DurationMillis *int64 `type:"long"`
+
+	// The name of the live source for alternateMedia.
+	LiveSourceName *string `type:"string"`
+
+	// The date and time that the alternateMedia is scheduled to start, in epoch
+	// milliseconds.
+	ScheduledStartTimeMillis *int64 `type:"long"`
+
+	// The name of the source location for alternateMedia.
+	SourceLocationName *string `type:"string"`
+
+	// The name of the VOD source for alternateMedia.
+	VodSourceName *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AlternateMedia) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AlternateMedia) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AlternateMedia) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AlternateMedia"}
+	if s.AdBreaks != nil {
+		for i, v := range s.AdBreaks {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AdBreaks", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAdBreaks sets the AdBreaks field's value.
+func (s *AlternateMedia) SetAdBreaks(v []*AdBreak) *AlternateMedia {
+	s.AdBreaks = v
+	return s
+}
+
+// SetClipRange sets the ClipRange field's value.
+func (s *AlternateMedia) SetClipRange(v *ClipRange) *AlternateMedia {
+	s.ClipRange = v
+	return s
+}
+
+// SetDurationMillis sets the DurationMillis field's value.
+func (s *AlternateMedia) SetDurationMillis(v int64) *AlternateMedia {
+	s.DurationMillis = &v
+	return s
+}
+
+// SetLiveSourceName sets the LiveSourceName field's value.
+func (s *AlternateMedia) SetLiveSourceName(v string) *AlternateMedia {
+	s.LiveSourceName = &v
+	return s
+}
+
+// SetScheduledStartTimeMillis sets the ScheduledStartTimeMillis field's value.
+func (s *AlternateMedia) SetScheduledStartTimeMillis(v int64) *AlternateMedia {
+	s.ScheduledStartTimeMillis = &v
+	return s
+}
+
+// SetSourceLocationName sets the SourceLocationName field's value.
+func (s *AlternateMedia) SetSourceLocationName(v string) *AlternateMedia {
+	s.SourceLocationName = &v
+	return s
+}
+
+// SetVodSourceName sets the VodSourceName field's value.
+func (s *AlternateMedia) SetVodSourceName(v string) *AlternateMedia {
+	s.VodSourceName = &v
+	return s
+}
+
+// An AudienceMedia object contains an Audience and a list of AlternateMedia.
+type AudienceMedia struct {
+	_ struct{} `type:"structure"`
+
+	// The list of AlternateMedia defined in AudienceMedia.
+	AlternateMedia []*AlternateMedia `type:"list"`
+
+	// The Audience defined in AudienceMedia.
+	Audience *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AudienceMedia) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AudienceMedia) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AudienceMedia) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AudienceMedia"}
+	if s.AlternateMedia != nil {
+		for i, v := range s.AlternateMedia {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AlternateMedia", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAlternateMedia sets the AlternateMedia field's value.
+func (s *AudienceMedia) SetAlternateMedia(v []*AlternateMedia) *AudienceMedia {
+	s.AlternateMedia = v
+	return s
+}
+
+// SetAudience sets the Audience field's value.
+func (s *AudienceMedia) SetAudience(v string) *AudienceMedia {
+	s.Audience = &v
 	return s
 }
 
@@ -4451,6 +4625,9 @@ type Channel struct {
 	// Arn is a required field
 	Arn *string `type:"string" required:"true"`
 
+	// The list of audiences defined in channel.
+	Audiences []*string `type:"list"`
+
 	// The name of the channel.
 	//
 	// ChannelName is a required field
@@ -4528,6 +4705,12 @@ func (s *Channel) SetArn(v string) *Channel {
 	return s
 }
 
+// SetAudiences sets the Audiences field's value.
+func (s *Channel) SetAudiences(v []*string) *Channel {
+	s.Audiences = v
+	return s
+}
+
 // SetChannelName sets the ChannelName field's value.
 func (s *Channel) SetChannelName(v string) *Channel {
 	s.ChannelName = &v
@@ -4594,9 +4777,11 @@ type ClipRange struct {
 
 	// The end offset of the clip range, in milliseconds, starting from the beginning
 	// of the VOD source associated with the program.
-	//
-	// EndOffsetMillis is a required field
-	EndOffsetMillis *int64 `type:"long" required:"true"`
+	EndOffsetMillis *int64 `type:"long"`
+
+	// The start offset of the clip range, in milliseconds. This offset truncates
+	// the start at the number of milliseconds into the duration of the VOD source.
+	StartOffsetMillis *int64 `type:"long"`
 }
 
 // String returns the string representation.
@@ -4617,22 +4802,15 @@ func (s ClipRange) GoString() string {
 	return s.String()
 }
 
-// Validate inspects the fields of the type to determine if they are valid.
-func (s *ClipRange) Validate() error {
-	invalidParams := request.ErrInvalidParams{Context: "ClipRange"}
-	if s.EndOffsetMillis == nil {
-		invalidParams.Add(request.NewErrParamRequired("EndOffsetMillis"))
-	}
-
-	if invalidParams.Len() > 0 {
-		return invalidParams
-	}
-	return nil
-}
-
 // SetEndOffsetMillis sets the EndOffsetMillis field's value.
 func (s *ClipRange) SetEndOffsetMillis(v int64) *ClipRange {
 	s.EndOffsetMillis = &v
+	return s
+}
+
+// SetStartOffsetMillis sets the StartOffsetMillis field's value.
+func (s *ClipRange) SetStartOffsetMillis(v int64) *ClipRange {
+	s.StartOffsetMillis = &v
 	return s
 }
 
@@ -4850,6 +5028,9 @@ func (s *ConfigureLogsForPlaybackConfigurationOutput) SetPlaybackConfigurationNa
 type CreateChannelInput struct {
 	_ struct{} `type:"structure"`
 
+	// The list of audiences defined in channel.
+	Audiences []*string `type:"list"`
+
 	// The name of the channel.
 	//
 	// ChannelName is a required field
@@ -4944,6 +5125,12 @@ func (s *CreateChannelInput) Validate() error {
 	return nil
 }
 
+// SetAudiences sets the Audiences field's value.
+func (s *CreateChannelInput) SetAudiences(v []*string) *CreateChannelInput {
+	s.Audiences = v
+	return s
+}
+
 // SetChannelName sets the ChannelName field's value.
 func (s *CreateChannelInput) SetChannelName(v string) *CreateChannelInput {
 	s.ChannelName = &v
@@ -4991,6 +5178,9 @@ type CreateChannelOutput struct {
 
 	// The Amazon Resource Name (ARN) to assign to the channel.
 	Arn *string `type:"string"`
+
+	// The list of audiences defined in channel.
+	Audiences []*string `type:"list"`
 
 	// The name to assign to the channel.
 	ChannelName *string `type:"string"`
@@ -5048,6 +5238,12 @@ func (s CreateChannelOutput) GoString() string {
 // SetArn sets the Arn field's value.
 func (s *CreateChannelOutput) SetArn(v string) *CreateChannelOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAudiences sets the Audiences field's value.
+func (s *CreateChannelOutput) SetAudiences(v []*string) *CreateChannelOutput {
+	s.Audiences = v
 	return s
 }
 
@@ -5516,6 +5712,9 @@ type CreateProgramInput struct {
 	// The ad break configuration settings.
 	AdBreaks []*AdBreak `type:"list"`
 
+	// The list of AudienceMedia defined in program.
+	AudienceMedia []*AudienceMedia `type:"list"`
+
 	// The name of the channel for this Program.
 	//
 	// ChannelName is a required field
@@ -5592,6 +5791,16 @@ func (s *CreateProgramInput) Validate() error {
 			}
 		}
 	}
+	if s.AudienceMedia != nil {
+		for i, v := range s.AudienceMedia {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AudienceMedia", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.ScheduleConfiguration != nil {
 		if err := s.ScheduleConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("ScheduleConfiguration", err.(request.ErrInvalidParams))
@@ -5607,6 +5816,12 @@ func (s *CreateProgramInput) Validate() error {
 // SetAdBreaks sets the AdBreaks field's value.
 func (s *CreateProgramInput) SetAdBreaks(v []*AdBreak) *CreateProgramInput {
 	s.AdBreaks = v
+	return s
+}
+
+// SetAudienceMedia sets the AudienceMedia field's value.
+func (s *CreateProgramInput) SetAudienceMedia(v []*AudienceMedia) *CreateProgramInput {
+	s.AudienceMedia = v
 	return s
 }
 
@@ -5654,6 +5869,9 @@ type CreateProgramOutput struct {
 
 	// The ARN to assign to the program.
 	Arn *string `type:"string"`
+
+	// The list of AudienceMedia defined in program.
+	AudienceMedia []*AudienceMedia `type:"list"`
 
 	// The name to assign to the channel for this program.
 	ChannelName *string `type:"string"`
@@ -5710,6 +5928,12 @@ func (s *CreateProgramOutput) SetAdBreaks(v []*AdBreak) *CreateProgramOutput {
 // SetArn sets the Arn field's value.
 func (s *CreateProgramOutput) SetArn(v string) *CreateProgramOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAudienceMedia sets the AudienceMedia field's value.
+func (s *CreateProgramOutput) SetAudienceMedia(v []*AudienceMedia) *CreateProgramOutput {
+	s.AudienceMedia = v
 	return s
 }
 
@@ -7081,6 +7305,9 @@ type DescribeChannelOutput struct {
 	// The ARN of the channel.
 	Arn *string `type:"string"`
 
+	// The list of audiences defined in channel.
+	Audiences []*string `type:"list"`
+
 	// The name of the channel.
 	ChannelName *string `type:"string"`
 
@@ -7142,6 +7369,12 @@ func (s DescribeChannelOutput) GoString() string {
 // SetArn sets the Arn field's value.
 func (s *DescribeChannelOutput) SetArn(v string) *DescribeChannelOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAudiences sets the Audiences field's value.
+func (s *DescribeChannelOutput) SetAudiences(v []*string) *DescribeChannelOutput {
+	s.Audiences = v
 	return s
 }
 
@@ -7440,6 +7673,9 @@ type DescribeProgramOutput struct {
 	// The ARN of the program.
 	Arn *string `type:"string"`
 
+	// The list of AudienceMedia defined in program.
+	AudienceMedia []*AudienceMedia `type:"list"`
+
 	// The name of the channel that the program belongs to.
 	ChannelName *string `type:"string"`
 
@@ -7497,6 +7733,12 @@ func (s *DescribeProgramOutput) SetAdBreaks(v []*AdBreak) *DescribeProgramOutput
 // SetArn sets the Arn field's value.
 func (s *DescribeProgramOutput) SetArn(v string) *DescribeProgramOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAudienceMedia sets the AudienceMedia field's value.
+func (s *DescribeProgramOutput) SetAudienceMedia(v []*AudienceMedia) *DescribeProgramOutput {
+	s.AudienceMedia = v
 	return s
 }
 
@@ -7956,6 +8198,9 @@ func (s *GetChannelPolicyOutput) SetPolicy(v string) *GetChannelPolicyOutput {
 type GetChannelScheduleInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
+	// The single audience for GetChannelScheduleRequest.
+	Audience *string `location:"querystring" locationName:"audience" type:"string"`
+
 	// The name of the channel associated with this Channel Schedule.
 	//
 	// ChannelName is a required field
@@ -8018,6 +8263,12 @@ func (s *GetChannelScheduleInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAudience sets the Audience field's value.
+func (s *GetChannelScheduleInput) SetAudience(v string) *GetChannelScheduleInput {
+	s.Audience = &v
+	return s
 }
 
 // SetChannelName sets the ChannelName field's value.
@@ -8167,6 +8418,13 @@ type GetPlaybackConfigurationOutput struct {
 	// The configuration for HLS content.
 	HlsConfiguration *HlsConfiguration `type:"structure"`
 
+	// The setting that controls whether players can use stitched or guided ad insertion.
+	// The default, STITCHED_ONLY, forces all player sessions to use stitched (server-side)
+	// ad insertion. Choosing PLAYER_SELECT allows players to select either stitched
+	// or guided ad insertion at session-initialization time. The default for players
+	// that do not specify an insertion mode is stitched.
+	InsertionMode *string `type:"string" enum:"InsertionMode"`
+
 	// The configuration for pre-roll ad insertion.
 	LivePreRollConfiguration *LivePreRollConfiguration `type:"structure"`
 
@@ -8282,6 +8540,12 @@ func (s *GetPlaybackConfigurationOutput) SetDashConfiguration(v *DashConfigurati
 // SetHlsConfiguration sets the HlsConfiguration field's value.
 func (s *GetPlaybackConfigurationOutput) SetHlsConfiguration(v *HlsConfiguration) *GetPlaybackConfigurationOutput {
 	s.HlsConfiguration = v
+	return s
+}
+
+// SetInsertionMode sets the InsertionMode field's value.
+func (s *GetPlaybackConfigurationOutput) SetInsertionMode(v string) *GetPlaybackConfigurationOutput {
+	s.InsertionMode = &v
 	return s
 }
 
@@ -9918,6 +10182,13 @@ type PlaybackConfiguration struct {
 	// The configuration for HLS content.
 	HlsConfiguration *HlsConfiguration `type:"structure"`
 
+	// The setting that controls whether players can use stitched or guided ad insertion.
+	// The default, STITCHED_ONLY, forces all player sessions to use stitched (server-side)
+	// ad insertion. Choosing PLAYER_SELECT allows players to select either stitched
+	// or guided ad insertion at session-initialization time. The default for players
+	// that do not specify an insertion mode is stitched.
+	InsertionMode *string `type:"string" enum:"InsertionMode"`
+
 	// The configuration for pre-roll ad insertion.
 	LivePreRollConfiguration *LivePreRollConfiguration `type:"structure"`
 
@@ -10032,6 +10303,12 @@ func (s *PlaybackConfiguration) SetDashConfiguration(v *DashConfiguration) *Play
 // SetHlsConfiguration sets the HlsConfiguration field's value.
 func (s *PlaybackConfiguration) SetHlsConfiguration(v *HlsConfiguration) *PlaybackConfiguration {
 	s.HlsConfiguration = v
+	return s
+}
+
+// SetInsertionMode sets the InsertionMode field's value.
+func (s *PlaybackConfiguration) SetInsertionMode(v string) *PlaybackConfiguration {
+	s.InsertionMode = &v
 	return s
 }
 
@@ -10478,6 +10755,13 @@ type PutPlaybackConfigurationInput struct {
 	// The configuration for DASH content.
 	DashConfiguration *DashConfigurationForPut `type:"structure"`
 
+	// The setting that controls whether players can use stitched or guided ad insertion.
+	// The default, STITCHED_ONLY, forces all player sessions to use stitched (server-side)
+	// ad insertion. Choosing PLAYER_SELECT allows players to select either stitched
+	// or guided ad insertion at session-initialization time. The default for players
+	// that do not specify an insertion mode is stitched.
+	InsertionMode *string `type:"string" enum:"InsertionMode"`
+
 	// The configuration for pre-roll ad insertion.
 	LivePreRollConfiguration *LivePreRollConfiguration `type:"structure"`
 
@@ -10594,6 +10878,12 @@ func (s *PutPlaybackConfigurationInput) SetDashConfiguration(v *DashConfiguratio
 	return s
 }
 
+// SetInsertionMode sets the InsertionMode field's value.
+func (s *PutPlaybackConfigurationInput) SetInsertionMode(v string) *PutPlaybackConfigurationInput {
+	s.InsertionMode = &v
+	return s
+}
+
 // SetLivePreRollConfiguration sets the LivePreRollConfiguration field's value.
 func (s *PutPlaybackConfigurationInput) SetLivePreRollConfiguration(v *LivePreRollConfiguration) *PutPlaybackConfigurationInput {
 	s.LivePreRollConfiguration = v
@@ -10674,6 +10964,13 @@ type PutPlaybackConfigurationOutput struct {
 
 	// The configuration for HLS content.
 	HlsConfiguration *HlsConfiguration `type:"structure"`
+
+	// The setting that controls whether players can use stitched or guided ad insertion.
+	// The default, STITCHED_ONLY, forces all player sessions to use stitched (server-side)
+	// ad insertion. Choosing PLAYER_SELECT allows players to select either stitched
+	// or guided ad insertion at session-initialization time. The default for players
+	// that do not specify an insertion mode is stitched.
+	InsertionMode *string `type:"string" enum:"InsertionMode"`
 
 	// The configuration for pre-roll ad insertion.
 	LivePreRollConfiguration *LivePreRollConfiguration `type:"structure"`
@@ -10788,6 +11085,12 @@ func (s *PutPlaybackConfigurationOutput) SetDashConfiguration(v *DashConfigurati
 // SetHlsConfiguration sets the HlsConfiguration field's value.
 func (s *PutPlaybackConfigurationOutput) SetHlsConfiguration(v *HlsConfiguration) *PutPlaybackConfigurationOutput {
 	s.HlsConfiguration = v
+	return s
+}
+
+// SetInsertionMode sets the InsertionMode field's value.
+func (s *PutPlaybackConfigurationOutput) SetInsertionMode(v string) *PutPlaybackConfigurationOutput {
+	s.InsertionMode = &v
 	return s
 }
 
@@ -11116,11 +11419,6 @@ func (s *ScheduleConfiguration) Validate() error {
 	if s.Transition == nil {
 		invalidParams.Add(request.NewErrParamRequired("Transition"))
 	}
-	if s.ClipRange != nil {
-		if err := s.ClipRange.Validate(); err != nil {
-			invalidParams.AddNested("ClipRange", err.(request.ErrInvalidParams))
-		}
-	}
 	if s.Transition != nil {
 		if err := s.Transition.Validate(); err != nil {
 			invalidParams.AddNested("Transition", err.(request.ErrInvalidParams))
@@ -11159,6 +11457,9 @@ type ScheduleEntry struct {
 	//
 	// Arn is a required field
 	Arn *string `type:"string" required:"true"`
+
+	// The list of audiences defined in ScheduleEntry.
+	Audiences []*string `type:"list"`
 
 	// The name of the channel that uses this schedule.
 	//
@@ -11221,6 +11522,12 @@ func (s *ScheduleEntry) SetApproximateStartTime(v time.Time) *ScheduleEntry {
 // SetArn sets the Arn field's value.
 func (s *ScheduleEntry) SetArn(v string) *ScheduleEntry {
 	s.Arn = &v
+	return s
+}
+
+// SetAudiences sets the Audiences field's value.
+func (s *ScheduleEntry) SetAudiences(v []*string) *ScheduleEntry {
+	s.Audiences = v
 	return s
 }
 
@@ -12226,6 +12533,9 @@ func (s UntagResourceOutput) GoString() string {
 type UpdateChannelInput struct {
 	_ struct{} `type:"structure"`
 
+	// The list of audiences defined in channel.
+	Audiences []*string `type:"list"`
+
 	// The name of the channel.
 	//
 	// ChannelName is a required field
@@ -12297,6 +12607,12 @@ func (s *UpdateChannelInput) Validate() error {
 	return nil
 }
 
+// SetAudiences sets the Audiences field's value.
+func (s *UpdateChannelInput) SetAudiences(v []*string) *UpdateChannelInput {
+	s.Audiences = v
+	return s
+}
+
 // SetChannelName sets the ChannelName field's value.
 func (s *UpdateChannelInput) SetChannelName(v string) *UpdateChannelInput {
 	s.ChannelName = &v
@@ -12326,6 +12642,9 @@ type UpdateChannelOutput struct {
 
 	// The Amazon Resource Name (ARN) associated with the channel.
 	Arn *string `type:"string"`
+
+	// The list of audiences defined in channel.
+	Audiences []*string `type:"list"`
 
 	// The name of the channel.
 	ChannelName *string `type:"string"`
@@ -12389,6 +12708,12 @@ func (s UpdateChannelOutput) GoString() string {
 // SetArn sets the Arn field's value.
 func (s *UpdateChannelOutput) SetArn(v string) *UpdateChannelOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAudiences sets the Audiences field's value.
+func (s *UpdateChannelOutput) SetAudiences(v []*string) *UpdateChannelOutput {
+	s.Audiences = v
 	return s
 }
 
@@ -12636,6 +12961,9 @@ type UpdateProgramInput struct {
 	// The ad break configuration settings.
 	AdBreaks []*AdBreak `type:"list"`
 
+	// The list of AudienceMedia defined in program.
+	AudienceMedia []*AudienceMedia `type:"list"`
+
 	// The name of the channel for this Program.
 	//
 	// ChannelName is a required field
@@ -12698,9 +13026,14 @@ func (s *UpdateProgramInput) Validate() error {
 			}
 		}
 	}
-	if s.ScheduleConfiguration != nil {
-		if err := s.ScheduleConfiguration.Validate(); err != nil {
-			invalidParams.AddNested("ScheduleConfiguration", err.(request.ErrInvalidParams))
+	if s.AudienceMedia != nil {
+		for i, v := range s.AudienceMedia {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AudienceMedia", i), err.(request.ErrInvalidParams))
+			}
 		}
 	}
 
@@ -12713,6 +13046,12 @@ func (s *UpdateProgramInput) Validate() error {
 // SetAdBreaks sets the AdBreaks field's value.
 func (s *UpdateProgramInput) SetAdBreaks(v []*AdBreak) *UpdateProgramInput {
 	s.AdBreaks = v
+	return s
+}
+
+// SetAudienceMedia sets the AudienceMedia field's value.
+func (s *UpdateProgramInput) SetAudienceMedia(v []*AudienceMedia) *UpdateProgramInput {
+	s.AudienceMedia = v
 	return s
 }
 
@@ -12742,6 +13081,9 @@ type UpdateProgramOutput struct {
 
 	// The ARN to assign to the program.
 	Arn *string `type:"string"`
+
+	// The list of AudienceMedia defined in program.
+	AudienceMedia []*AudienceMedia `type:"list"`
 
 	// The name to assign to the channel for this program.
 	ChannelName *string `type:"string"`
@@ -12798,6 +13140,12 @@ func (s *UpdateProgramOutput) SetAdBreaks(v []*AdBreak) *UpdateProgramOutput {
 // SetArn sets the Arn field's value.
 func (s *UpdateProgramOutput) SetArn(v string) *UpdateProgramOutput {
 	s.Arn = &v
+	return s
+}
+
+// SetAudienceMedia sets the AudienceMedia field's value.
+func (s *UpdateProgramOutput) SetAudienceMedia(v []*AudienceMedia) *UpdateProgramOutput {
+	s.AudienceMedia = v
 	return s
 }
 
@@ -12882,21 +13230,6 @@ func (s UpdateProgramScheduleConfiguration) String() string {
 // value will be replaced with "sensitive".
 func (s UpdateProgramScheduleConfiguration) GoString() string {
 	return s.String()
-}
-
-// Validate inspects the fields of the type to determine if they are valid.
-func (s *UpdateProgramScheduleConfiguration) Validate() error {
-	invalidParams := request.ErrInvalidParams{Context: "UpdateProgramScheduleConfiguration"}
-	if s.ClipRange != nil {
-		if err := s.ClipRange.Validate(); err != nil {
-			invalidParams.AddNested("ClipRange", err.(request.ErrInvalidParams))
-		}
-	}
-
-	if invalidParams.Len() > 0 {
-		return invalidParams
-	}
-	return nil
 }
 
 // SetClipRange sets the ClipRange field's value.
@@ -13520,6 +13853,23 @@ func FillPolicy_Values() []string {
 	}
 }
 
+// Insertion Mode controls whether players can use stitched or guided ad insertion.
+const (
+	// InsertionModeStitchedOnly is a InsertionMode enum value
+	InsertionModeStitchedOnly = "STITCHED_ONLY"
+
+	// InsertionModePlayerSelect is a InsertionMode enum value
+	InsertionModePlayerSelect = "PLAYER_SELECT"
+)
+
+// InsertionMode_Values returns all elements of the InsertionMode enum
+func InsertionMode_Values() []string {
+	return []string{
+		InsertionModeStitchedOnly,
+		InsertionModePlayerSelect,
+	}
+}
+
 const (
 	// LogTypeAsRun is a LogType enum value
 	LogTypeAsRun = "AS_RUN"
@@ -13634,6 +13984,9 @@ const (
 
 	// ScheduleEntryTypeFillerSlate is a ScheduleEntryType enum value
 	ScheduleEntryTypeFillerSlate = "FILLER_SLATE"
+
+	// ScheduleEntryTypeAlternateMedia is a ScheduleEntryType enum value
+	ScheduleEntryTypeAlternateMedia = "ALTERNATE_MEDIA"
 )
 
 // ScheduleEntryType_Values returns all elements of the ScheduleEntryType enum
@@ -13641,6 +13994,7 @@ func ScheduleEntryType_Values() []string {
 	return []string{
 		ScheduleEntryTypeProgram,
 		ScheduleEntryTypeFillerSlate,
+		ScheduleEntryTypeAlternateMedia,
 	}
 }
 

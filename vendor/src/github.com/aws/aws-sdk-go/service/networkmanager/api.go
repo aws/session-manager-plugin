@@ -9962,8 +9962,18 @@ type Attachment struct {
 	// The Region where the edge is located.
 	EdgeLocation *string `min:"1" type:"string"`
 
+	// Describes the error associated with the attachment request.
+	LastModificationErrors []*AttachmentError `type:"list"`
+
+	// The name of the network function group.
+	NetworkFunctionGroupName *string `type:"string"`
+
 	// The ID of the attachment account owner.
 	OwnerAccountId *string `min:"12" type:"string"`
+
+	// Describes a proposed change to a network function group associated with the
+	// attachment.
+	ProposedNetworkFunctionGroupChange *ProposedNetworkFunctionGroupChange `type:"structure"`
 
 	// The attachment to move from one segment to another.
 	ProposedSegmentChange *ProposedSegmentChange `type:"structure"`
@@ -10044,9 +10054,27 @@ func (s *Attachment) SetEdgeLocation(v string) *Attachment {
 	return s
 }
 
+// SetLastModificationErrors sets the LastModificationErrors field's value.
+func (s *Attachment) SetLastModificationErrors(v []*AttachmentError) *Attachment {
+	s.LastModificationErrors = v
+	return s
+}
+
+// SetNetworkFunctionGroupName sets the NetworkFunctionGroupName field's value.
+func (s *Attachment) SetNetworkFunctionGroupName(v string) *Attachment {
+	s.NetworkFunctionGroupName = &v
+	return s
+}
+
 // SetOwnerAccountId sets the OwnerAccountId field's value.
 func (s *Attachment) SetOwnerAccountId(v string) *Attachment {
 	s.OwnerAccountId = &v
+	return s
+}
+
+// SetProposedNetworkFunctionGroupChange sets the ProposedNetworkFunctionGroupChange field's value.
+func (s *Attachment) SetProposedNetworkFunctionGroupChange(v *ProposedNetworkFunctionGroupChange) *Attachment {
+	s.ProposedNetworkFunctionGroupChange = v
 	return s
 }
 
@@ -10083,6 +10111,65 @@ func (s *Attachment) SetTags(v []*Tag) *Attachment {
 // SetUpdatedAt sets the UpdatedAt field's value.
 func (s *Attachment) SetUpdatedAt(v time.Time) *Attachment {
 	s.UpdatedAt = &v
+	return s
+}
+
+// Describes the error associated with an attachment request.
+type AttachmentError struct {
+	_ struct{} `type:"structure"`
+
+	// The error code for the attachment request.
+	Code *string `type:"string" enum:"AttachmentErrorCode"`
+
+	// The message associated with the error code.
+	Message *string `type:"string"`
+
+	// The ID of the attachment request.
+	RequestId *string `type:"string"`
+
+	// The ARN of the requested attachment resource.
+	ResourceArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AttachmentError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AttachmentError) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *AttachmentError) SetCode(v string) *AttachmentError {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *AttachmentError) SetMessage(v string) *AttachmentError {
+	s.Message = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *AttachmentError) SetRequestId(v string) *AttachmentError {
+	s.RequestId = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *AttachmentError) SetResourceArn(v string) *AttachmentError {
+	s.ResourceArn = &v
 	return s
 }
 
@@ -10338,10 +10425,14 @@ type ConnectPeer struct {
 	// The Connect peer Regions where edges are located.
 	EdgeLocation *string `min:"1" type:"string"`
 
+	// Describes the error associated with the attachment request.
+	LastModificationErrors []*ConnectPeerError `type:"list"`
+
 	// The state of the Connect peer.
 	State *string `type:"string" enum:"ConnectPeerState"`
 
-	// The subnet ARN for the Connect peer.
+	// The subnet ARN for the Connect peer. This only applies only when the protocol
+	// is NO_ENCAP.
 	SubnetArn *string `type:"string"`
 
 	// The list of key-value tags associated with the Connect peer.
@@ -10399,6 +10490,12 @@ func (s *ConnectPeer) SetCreatedAt(v time.Time) *ConnectPeer {
 // SetEdgeLocation sets the EdgeLocation field's value.
 func (s *ConnectPeer) SetEdgeLocation(v string) *ConnectPeer {
 	s.EdgeLocation = &v
+	return s
+}
+
+// SetLastModificationErrors sets the LastModificationErrors field's value.
+func (s *ConnectPeer) SetLastModificationErrors(v []*ConnectPeerError) *ConnectPeer {
+	s.LastModificationErrors = v
 	return s
 }
 
@@ -10612,6 +10709,65 @@ func (s *ConnectPeerConfiguration) SetPeerAddress(v string) *ConnectPeerConfigur
 // SetProtocol sets the Protocol field's value.
 func (s *ConnectPeerConfiguration) SetProtocol(v string) *ConnectPeerConfiguration {
 	s.Protocol = &v
+	return s
+}
+
+// Describes an error associated with a Connect peer request
+type ConnectPeerError struct {
+	_ struct{} `type:"structure"`
+
+	// The error code for the Connect peer request.
+	Code *string `type:"string" enum:"ConnectPeerErrorCode"`
+
+	// The message associated with the error code.
+	Message *string `type:"string"`
+
+	// The ID of the Connect peer request.
+	RequestId *string `type:"string"`
+
+	// The ARN of the requested Connect peer resource.
+	ResourceArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectPeerError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectPeerError) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *ConnectPeerError) SetCode(v string) *ConnectPeerError {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *ConnectPeerError) SetMessage(v string) *ConnectPeerError {
+	s.Message = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *ConnectPeerError) SetRequestId(v string) *ConnectPeerError {
+	s.RequestId = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *ConnectPeerError) SetResourceArn(v string) *ConnectPeerError {
+	s.ResourceArn = &v
 	return s
 }
 
@@ -10904,6 +11060,9 @@ type CoreNetwork struct {
 	// The ID of the global network that your core network is a part of.
 	GlobalNetworkId *string `type:"string"`
 
+	// The network function groups associated with a core network.
+	NetworkFunctionGroups []*CoreNetworkNetworkFunctionGroup `type:"list"`
+
 	// The segments within a core network.
 	Segments []*CoreNetworkSegment `type:"list"`
 
@@ -10965,6 +11124,12 @@ func (s *CoreNetwork) SetEdges(v []*CoreNetworkEdge) *CoreNetwork {
 // SetGlobalNetworkId sets the GlobalNetworkId field's value.
 func (s *CoreNetwork) SetGlobalNetworkId(v string) *CoreNetwork {
 	s.GlobalNetworkId = &v
+	return s
+}
+
+// SetNetworkFunctionGroups sets the NetworkFunctionGroups field's value.
+func (s *CoreNetwork) SetNetworkFunctionGroups(v []*CoreNetworkNetworkFunctionGroup) *CoreNetwork {
+	s.NetworkFunctionGroups = v
 	return s
 }
 
@@ -11156,6 +11321,9 @@ type CoreNetworkChangeEventValues struct {
 	// The edge location for the core network change event.
 	EdgeLocation *string `min:"1" type:"string"`
 
+	// The changed network function group name.
+	NetworkFunctionGroupName *string `type:"string"`
+
 	// The segment name if the change event is associated with a segment.
 	SegmentName *string `type:"string"`
 }
@@ -11196,6 +11364,12 @@ func (s *CoreNetworkChangeEventValues) SetEdgeLocation(v string) *CoreNetworkCha
 	return s
 }
 
+// SetNetworkFunctionGroupName sets the NetworkFunctionGroupName field's value.
+func (s *CoreNetworkChangeEventValues) SetNetworkFunctionGroupName(v string) *CoreNetworkChangeEventValues {
+	s.NetworkFunctionGroupName = &v
+	return s
+}
+
 // SetSegmentName sets the SegmentName field's value.
 func (s *CoreNetworkChangeEventValues) SetSegmentName(v string) *CoreNetworkChangeEventValues {
 	s.SegmentName = &v
@@ -11221,8 +11395,15 @@ type CoreNetworkChangeValues struct {
 	// The inside IP addresses used for core network change values.
 	InsideCidrBlocks []*string `type:"list"`
 
+	// The network function group name if the change event is associated with a
+	// network function group.
+	NetworkFunctionGroupName *string `type:"string"`
+
 	// The names of the segments in a core network.
 	SegmentName *string `type:"string"`
+
+	// Describes the service insertion action.
+	ServiceInsertionActions []*ServiceInsertionAction `type:"list"`
 
 	// The shared segments for a core network change value.
 	SharedSegments []*string `type:"list"`
@@ -11276,9 +11457,21 @@ func (s *CoreNetworkChangeValues) SetInsideCidrBlocks(v []*string) *CoreNetworkC
 	return s
 }
 
+// SetNetworkFunctionGroupName sets the NetworkFunctionGroupName field's value.
+func (s *CoreNetworkChangeValues) SetNetworkFunctionGroupName(v string) *CoreNetworkChangeValues {
+	s.NetworkFunctionGroupName = &v
+	return s
+}
+
 // SetSegmentName sets the SegmentName field's value.
 func (s *CoreNetworkChangeValues) SetSegmentName(v string) *CoreNetworkChangeValues {
 	s.SegmentName = &v
+	return s
+}
+
+// SetServiceInsertionActions sets the ServiceInsertionActions field's value.
+func (s *CoreNetworkChangeValues) SetServiceInsertionActions(v []*ServiceInsertionAction) *CoreNetworkChangeValues {
+	s.ServiceInsertionActions = v
 	return s
 }
 
@@ -11335,6 +11528,119 @@ func (s *CoreNetworkEdge) SetEdgeLocation(v string) *CoreNetworkEdge {
 // SetInsideCidrBlocks sets the InsideCidrBlocks field's value.
 func (s *CoreNetworkEdge) SetInsideCidrBlocks(v []*string) *CoreNetworkEdge {
 	s.InsideCidrBlocks = v
+	return s
+}
+
+// Describes a network function group.
+type CoreNetworkNetworkFunctionGroup struct {
+	_ struct{} `type:"structure"`
+
+	// The core network edge locations.
+	EdgeLocations []*string `type:"list"`
+
+	// The name of the network function group.
+	Name *string `type:"string"`
+
+	// The segments associated with the network function group.
+	Segments *ServiceInsertionSegments `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoreNetworkNetworkFunctionGroup) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoreNetworkNetworkFunctionGroup) GoString() string {
+	return s.String()
+}
+
+// SetEdgeLocations sets the EdgeLocations field's value.
+func (s *CoreNetworkNetworkFunctionGroup) SetEdgeLocations(v []*string) *CoreNetworkNetworkFunctionGroup {
+	s.EdgeLocations = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CoreNetworkNetworkFunctionGroup) SetName(v string) *CoreNetworkNetworkFunctionGroup {
+	s.Name = &v
+	return s
+}
+
+// SetSegments sets the Segments field's value.
+func (s *CoreNetworkNetworkFunctionGroup) SetSegments(v *ServiceInsertionSegments) *CoreNetworkNetworkFunctionGroup {
+	s.Segments = v
+	return s
+}
+
+// Describes a core network
+type CoreNetworkNetworkFunctionGroupIdentifier struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the core network.
+	CoreNetworkId *string `type:"string"`
+
+	// The location for the core network edge.
+	EdgeLocation *string `min:"1" type:"string"`
+
+	// The network function group name.
+	NetworkFunctionGroupName *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoreNetworkNetworkFunctionGroupIdentifier) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CoreNetworkNetworkFunctionGroupIdentifier) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CoreNetworkNetworkFunctionGroupIdentifier) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CoreNetworkNetworkFunctionGroupIdentifier"}
+	if s.EdgeLocation != nil && len(*s.EdgeLocation) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EdgeLocation", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCoreNetworkId sets the CoreNetworkId field's value.
+func (s *CoreNetworkNetworkFunctionGroupIdentifier) SetCoreNetworkId(v string) *CoreNetworkNetworkFunctionGroupIdentifier {
+	s.CoreNetworkId = &v
+	return s
+}
+
+// SetEdgeLocation sets the EdgeLocation field's value.
+func (s *CoreNetworkNetworkFunctionGroupIdentifier) SetEdgeLocation(v string) *CoreNetworkNetworkFunctionGroupIdentifier {
+	s.EdgeLocation = &v
+	return s
+}
+
+// SetNetworkFunctionGroupName sets the NetworkFunctionGroupName field's value.
+func (s *CoreNetworkNetworkFunctionGroupIdentifier) SetNetworkFunctionGroupName(v string) *CoreNetworkNetworkFunctionGroupIdentifier {
+	s.NetworkFunctionGroupName = &v
 	return s
 }
 
@@ -11976,7 +12282,8 @@ func (s *CreateConnectAttachmentOutput) SetConnectAttachment(v *ConnectAttachmen
 type CreateConnectPeerInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Connect peer BGP options.
+	// The Connect peer BGP options. This only applies only when the protocol is
+	// GRE.
 	BgpOptions *BgpOptions `type:"structure"`
 
 	// The client token associated with the request.
@@ -11987,7 +12294,8 @@ type CreateConnectPeerInput struct {
 	// ConnectAttachmentId is a required field
 	ConnectAttachmentId *string `type:"string" required:"true"`
 
-	// A Connect peer core network address.
+	// A Connect peer core network address. This only applies only when the protocol
+	// is GRE.
 	CoreNetworkAddress *string `min:"1" type:"string"`
 
 	// The inside IP addresses used for BGP peering.
@@ -11998,7 +12306,8 @@ type CreateConnectPeerInput struct {
 	// PeerAddress is a required field
 	PeerAddress *string `min:"1" type:"string" required:"true"`
 
-	// The subnet ARN for the Connect peer.
+	// The subnet ARN for the Connect peer. This only applies only when the protocol
+	// is NO_ENCAP.
 	SubnetArn *string `type:"string"`
 
 	// The tags associated with the peer request.
@@ -15136,6 +15445,47 @@ func (s *DisassociateTransitGatewayConnectPeerOutput) SetTransitGatewayConnectPe
 	return s
 }
 
+// Describes the edge that's used for the override.
+type EdgeOverride struct {
+	_ struct{} `type:"structure"`
+
+	// The list of edge locations.
+	EdgeSets [][]*string `type:"list"`
+
+	// The edge that should be used when overriding the current edge order.
+	UseEdge *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EdgeOverride) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EdgeOverride) GoString() string {
+	return s.String()
+}
+
+// SetEdgeSets sets the EdgeSets field's value.
+func (s *EdgeOverride) SetEdgeSets(v [][]*string) *EdgeOverride {
+	s.EdgeSets = v
+	return s
+}
+
+// SetUseEdge sets the UseEdge field's value.
+func (s *EdgeOverride) SetUseEdge(v string) *EdgeOverride {
+	s.UseEdge = &v
+	return s
+}
+
 type ExecuteCoreNetworkChangeSetInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -16602,11 +16952,19 @@ type GetNetworkResourceCountsInput struct {
 	//
 	// The following are the supported resource types for Network Manager:
 	//
+	//    * attachment
+	//
+	//    * connect-peer
+	//
 	//    * connection
+	//
+	//    * core-network
 	//
 	//    * device
 	//
 	//    * link
+	//
+	//    * peering
 	//
 	//    * site
 	//
@@ -16768,11 +17126,19 @@ type GetNetworkResourceRelationshipsInput struct {
 	//
 	// The following are the supported resource types for Network Manager:
 	//
+	//    * attachment
+	//
+	//    * connect-peer
+	//
 	//    * connection
+	//
+	//    * core-network
 	//
 	//    * device
 	//
 	//    * link
+	//
+	//    * peering
 	//
 	//    * site
 	//
@@ -16962,38 +17328,43 @@ type GetNetworkResourcesInput struct {
 	//
 	// The following are the supported resource types for Direct Connect:
 	//
-	//    * dxcon - The definition model is Connection (https://docs.aws.amazon.com/directconnect/latest/APIReference/API_Connection.html).
+	//    * dxcon
 	//
-	//    * dx-gateway - The definition model is DirectConnectGateway (https://docs.aws.amazon.com/directconnect/latest/APIReference/API_DirectConnectGateway.html).
+	//    * dx-gateway
 	//
-	//    * dx-vif - The definition model is VirtualInterface (https://docs.aws.amazon.com/directconnect/latest/APIReference/API_VirtualInterface.html).
+	//    * dx-vif
 	//
 	// The following are the supported resource types for Network Manager:
 	//
-	//    * connection - The definition model is Connection (https://docs.aws.amazon.com/networkmanager/latest/APIReference/API_Connection.html).
+	//    * attachment
 	//
-	//    * device - The definition model is Device (https://docs.aws.amazon.com/networkmanager/latest/APIReference/API_Device.html).
+	//    * connect-peer
 	//
-	//    * link - The definition model is Link (https://docs.aws.amazon.com/networkmanager/latest/APIReference/API_Link.html).
+	//    * connection
 	//
-	//    * site - The definition model is Site (https://docs.aws.amazon.com/networkmanager/latest/APIReference/API_Site.html).
+	//    * core-network
+	//
+	//    * device
+	//
+	//    * link
+	//
+	//    * peering
+	//
+	//    * site
 	//
 	// The following are the supported resource types for Amazon VPC:
 	//
-	//    * customer-gateway - The definition model is CustomerGateway (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CustomerGateway.html).
+	//    * customer-gateway
 	//
-	//    * transit-gateway - The definition model is TransitGateway (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_TransitGateway.html).
+	//    * transit-gateway
 	//
-	//    * transit-gateway-attachment - The definition model is TransitGatewayAttachment
-	//    (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_TransitGatewayAttachment.html).
+	//    * transit-gateway-attachment
 	//
-	//    * transit-gateway-connect-peer - The definition model is TransitGatewayConnectPeer
-	//    (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_TransitGatewayConnectPeer.html).
+	//    * transit-gateway-connect-peer
 	//
-	//    * transit-gateway-route-table - The definition model is TransitGatewayRouteTable
-	//    (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_TransitGatewayRouteTable.html).
+	//    * transit-gateway-route-table
 	//
-	//    * vpn-connection - The definition model is VpnConnection (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_VpnConnection.html).
+	//    * vpn-connection
 	ResourceType *string `location:"querystring" locationName:"resourceType" type:"string"`
 }
 
@@ -17372,37 +17743,11 @@ type GetNetworkTelemetryInput struct {
 	// The ARN of the resource.
 	ResourceArn *string `location:"querystring" locationName:"resourceArn" type:"string"`
 
-	// The resource type.
+	// The resource type. The following are the supported resource types:
 	//
-	// The following are the supported resource types for Direct Connect:
-	//
-	//    * dxcon
-	//
-	//    * dx-gateway
-	//
-	//    * dx-vif
-	//
-	// The following are the supported resource types for Network Manager:
-	//
-	//    * connection
-	//
-	//    * device
-	//
-	//    * link
-	//
-	//    * site
-	//
-	// The following are the supported resource types for Amazon VPC:
-	//
-	//    * customer-gateway
-	//
-	//    * transit-gateway
-	//
-	//    * transit-gateway-attachment
+	//    * connect-peer
 	//
 	//    * transit-gateway-connect-peer
-	//
-	//    * transit-gateway-route-table
 	//
 	//    * vpn-connection
 	ResourceType *string `location:"querystring" locationName:"resourceType" type:"string"`
@@ -19528,6 +19873,38 @@ func (s *Location) SetLongitude(v string) *Location {
 	return s
 }
 
+// Describes a network function group for service insertion.
+type NetworkFunctionGroup struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the network function group.
+	Name *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NetworkFunctionGroup) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NetworkFunctionGroup) GoString() string {
+	return s.String()
+}
+
+// SetName sets the Name field's value.
+func (s *NetworkFunctionGroup) SetName(v string) *NetworkFunctionGroup {
+	s.Name = &v
+	return s
+}
+
 // Describes a network resource.
 type NetworkResource struct {
 	_ struct{} `type:"structure"`
@@ -19572,11 +19949,19 @@ type NetworkResource struct {
 	//
 	// The following are the supported resource types for Network Manager:
 	//
+	//    * attachment
+	//
+	//    * connect-peer
+	//
 	//    * connection
+	//
+	//    * core-network
 	//
 	//    * device
 	//
 	//    * link
+	//
+	//    * peering
 	//
 	//    * site
 	//
@@ -19880,6 +20265,9 @@ type NetworkRouteDestination struct {
 	// The edge location for the network destination.
 	EdgeLocation *string `min:"1" type:"string"`
 
+	// The network function group name associated with the destination.
+	NetworkFunctionGroupName *string `type:"string"`
+
 	// The ID of the resource.
 	ResourceId *string `type:"string"`
 
@@ -19920,6 +20308,12 @@ func (s *NetworkRouteDestination) SetCoreNetworkAttachmentId(v string) *NetworkR
 // SetEdgeLocation sets the EdgeLocation field's value.
 func (s *NetworkRouteDestination) SetEdgeLocation(v string) *NetworkRouteDestination {
 	s.EdgeLocation = &v
+	return s
+}
+
+// SetNetworkFunctionGroupName sets the NetworkFunctionGroupName field's value.
+func (s *NetworkRouteDestination) SetNetworkFunctionGroupName(v string) *NetworkRouteDestination {
+	s.NetworkFunctionGroupName = &v
 	return s
 }
 
@@ -20180,6 +20574,9 @@ type Peering struct {
 	// The edge location for the peer.
 	EdgeLocation *string `min:"1" type:"string"`
 
+	// Describes the error associated with the Connect peer request.
+	LastModificationErrors []*PeeringError `type:"list"`
+
 	// The ID of the account owner.
 	OwnerAccountId *string `min:"12" type:"string"`
 
@@ -20241,6 +20638,12 @@ func (s *Peering) SetEdgeLocation(v string) *Peering {
 	return s
 }
 
+// SetLastModificationErrors sets the LastModificationErrors field's value.
+func (s *Peering) SetLastModificationErrors(v []*PeeringError) *Peering {
+	s.LastModificationErrors = v
+	return s
+}
+
 // SetOwnerAccountId sets the OwnerAccountId field's value.
 func (s *Peering) SetOwnerAccountId(v string) *Peering {
 	s.OwnerAccountId = &v
@@ -20273,6 +20676,158 @@ func (s *Peering) SetState(v string) *Peering {
 
 // SetTags sets the Tags field's value.
 func (s *Peering) SetTags(v []*Tag) *Peering {
+	s.Tags = v
+	return s
+}
+
+// Describes an error associated with a peering request.
+type PeeringError struct {
+	_ struct{} `type:"structure"`
+
+	// The error code for the peering request.
+	Code *string `type:"string" enum:"PeeringErrorCode"`
+
+	// The message associated with the error code.
+	Message *string `type:"string"`
+
+	// Provides additional information about missing permissions for the peering
+	// error.
+	MissingPermissionsContext *PermissionsErrorContext `type:"structure"`
+
+	// The ID of the Peering request.
+	RequestId *string `type:"string"`
+
+	// The ARN of the requested peering resource.
+	ResourceArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PeeringError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PeeringError) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *PeeringError) SetCode(v string) *PeeringError {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *PeeringError) SetMessage(v string) *PeeringError {
+	s.Message = &v
+	return s
+}
+
+// SetMissingPermissionsContext sets the MissingPermissionsContext field's value.
+func (s *PeeringError) SetMissingPermissionsContext(v *PermissionsErrorContext) *PeeringError {
+	s.MissingPermissionsContext = v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *PeeringError) SetRequestId(v string) *PeeringError {
+	s.RequestId = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *PeeringError) SetResourceArn(v string) *PeeringError {
+	s.ResourceArn = &v
+	return s
+}
+
+// Describes additional information about missing permissions.
+type PermissionsErrorContext struct {
+	_ struct{} `type:"structure"`
+
+	// The missing permissions.
+	MissingPermission *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PermissionsErrorContext) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PermissionsErrorContext) GoString() string {
+	return s.String()
+}
+
+// SetMissingPermission sets the MissingPermission field's value.
+func (s *PermissionsErrorContext) SetMissingPermission(v string) *PermissionsErrorContext {
+	s.MissingPermission = &v
+	return s
+}
+
+// Describes proposed changes to a network function group.
+type ProposedNetworkFunctionGroupChange struct {
+	_ struct{} `type:"structure"`
+
+	// The proposed new attachment policy rule number for the network function group.
+	AttachmentPolicyRuleNumber *int64 `type:"integer"`
+
+	// The proposed name change for the network function group name.
+	NetworkFunctionGroupName *string `type:"string"`
+
+	// The list of proposed changes to the key-value tags associated with the network
+	// function group.
+	Tags []*Tag `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProposedNetworkFunctionGroupChange) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProposedNetworkFunctionGroupChange) GoString() string {
+	return s.String()
+}
+
+// SetAttachmentPolicyRuleNumber sets the AttachmentPolicyRuleNumber field's value.
+func (s *ProposedNetworkFunctionGroupChange) SetAttachmentPolicyRuleNumber(v int64) *ProposedNetworkFunctionGroupChange {
+	s.AttachmentPolicyRuleNumber = &v
+	return s
+}
+
+// SetNetworkFunctionGroupName sets the NetworkFunctionGroupName field's value.
+func (s *ProposedNetworkFunctionGroupChange) SetNetworkFunctionGroupName(v string) *ProposedNetworkFunctionGroupChange {
+	s.NetworkFunctionGroupName = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *ProposedNetworkFunctionGroupChange) SetTags(v []*Tag) *ProposedNetworkFunctionGroupChange {
 	s.Tags = v
 	return s
 }
@@ -21270,6 +21825,9 @@ func (s *RouteAnalysisPath) SetPath(v []*PathComponent) *RouteAnalysisPath {
 type RouteTableIdentifier struct {
 	_ struct{} `type:"structure"`
 
+	// The route table identifier associated with the network function group.
+	CoreNetworkNetworkFunctionGroup *CoreNetworkNetworkFunctionGroupIdentifier `type:"structure"`
+
 	// The segment edge in a core network.
 	CoreNetworkSegmentEdge *CoreNetworkSegmentEdgeIdentifier `type:"structure"`
 
@@ -21299,6 +21857,11 @@ func (s RouteTableIdentifier) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *RouteTableIdentifier) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "RouteTableIdentifier"}
+	if s.CoreNetworkNetworkFunctionGroup != nil {
+		if err := s.CoreNetworkNetworkFunctionGroup.Validate(); err != nil {
+			invalidParams.AddNested("CoreNetworkNetworkFunctionGroup", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.CoreNetworkSegmentEdge != nil {
 		if err := s.CoreNetworkSegmentEdge.Validate(); err != nil {
 			invalidParams.AddNested("CoreNetworkSegmentEdge", err.(request.ErrInvalidParams))
@@ -21311,6 +21874,12 @@ func (s *RouteTableIdentifier) Validate() error {
 	return nil
 }
 
+// SetCoreNetworkNetworkFunctionGroup sets the CoreNetworkNetworkFunctionGroup field's value.
+func (s *RouteTableIdentifier) SetCoreNetworkNetworkFunctionGroup(v *CoreNetworkNetworkFunctionGroupIdentifier) *RouteTableIdentifier {
+	s.CoreNetworkNetworkFunctionGroup = v
+	return s
+}
+
 // SetCoreNetworkSegmentEdge sets the CoreNetworkSegmentEdge field's value.
 func (s *RouteTableIdentifier) SetCoreNetworkSegmentEdge(v *CoreNetworkSegmentEdgeIdentifier) *RouteTableIdentifier {
 	s.CoreNetworkSegmentEdge = v
@@ -21320,6 +21889,116 @@ func (s *RouteTableIdentifier) SetCoreNetworkSegmentEdge(v *CoreNetworkSegmentEd
 // SetTransitGatewayRouteTableArn sets the TransitGatewayRouteTableArn field's value.
 func (s *RouteTableIdentifier) SetTransitGatewayRouteTableArn(v string) *RouteTableIdentifier {
 	s.TransitGatewayRouteTableArn = &v
+	return s
+}
+
+// Describes the action that the service insertion will take for any segments
+// associated with it.
+type ServiceInsertionAction struct {
+	_ struct{} `type:"structure"`
+
+	// The action the service insertion takes for traffic. send-via sends east-west
+	// traffic between attachments. send-to sends north-south traffic to the security
+	// appliance, and then from that to either the Internet or to an on-premesis
+	// location.
+	Action *string `type:"string" enum:"SegmentActionServiceInsertion"`
+
+	// Describes the mode packets take for the send-via action. This is not used
+	// when the action is send-to. dual-hop packets traverse attachments in both
+	// the source to the destination core network edges. This mode requires that
+	// an inspection attachment must be present in all Regions of the service insertion-enabled
+	// segments. For single-hop, packets traverse a single intermediate inserted
+	// attachment. You can use EdgeOverride to specify a specific edge to use.
+	Mode *string `type:"string" enum:"SendViaMode"`
+
+	// The list of network function groups and any edge overrides for the chosen
+	// service insertion action. Used for both send-to or send-via.
+	Via *Via `type:"structure"`
+
+	// The list of destination segments if the service insertion action is send-via.
+	WhenSentTo *WhenSentTo `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceInsertionAction) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceInsertionAction) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *ServiceInsertionAction) SetAction(v string) *ServiceInsertionAction {
+	s.Action = &v
+	return s
+}
+
+// SetMode sets the Mode field's value.
+func (s *ServiceInsertionAction) SetMode(v string) *ServiceInsertionAction {
+	s.Mode = &v
+	return s
+}
+
+// SetVia sets the Via field's value.
+func (s *ServiceInsertionAction) SetVia(v *Via) *ServiceInsertionAction {
+	s.Via = v
+	return s
+}
+
+// SetWhenSentTo sets the WhenSentTo field's value.
+func (s *ServiceInsertionAction) SetWhenSentTo(v *WhenSentTo) *ServiceInsertionAction {
+	s.WhenSentTo = v
+	return s
+}
+
+// Describes the segments associated with the service insertion action.
+type ServiceInsertionSegments struct {
+	_ struct{} `type:"structure"`
+
+	// The list of segments associated with the send-to action.
+	SendTo []*string `type:"list"`
+
+	// The list of segments associated with the send-via action.
+	SendVia []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceInsertionSegments) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceInsertionSegments) GoString() string {
+	return s.String()
+}
+
+// SetSendTo sets the SendTo field's value.
+func (s *ServiceInsertionSegments) SetSendTo(v []*string) *ServiceInsertionSegments {
+	s.SendTo = v
+	return s
+}
+
+// SetSendVia sets the SendVia field's value.
+func (s *ServiceInsertionSegments) SetSendVia(v []*string) *ServiceInsertionSegments {
+	s.SendVia = v
 	return s
 }
 
@@ -23397,6 +24076,50 @@ func (s *ValidationExceptionField) SetName(v string) *ValidationExceptionField {
 	return s
 }
 
+// The list of network function groups and edge overrides for the service insertion
+// action. Used for both the send-to and send-via actions.
+type Via struct {
+	_ struct{} `type:"structure"`
+
+	// The list of network function groups associated with the service insertion
+	// action.
+	NetworkFunctionGroups []*NetworkFunctionGroup `type:"list"`
+
+	// Describes any edge overrides. An edge override is a specific edge to be used
+	// for traffic.
+	WithEdgeOverrides []*EdgeOverride `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Via) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Via) GoString() string {
+	return s.String()
+}
+
+// SetNetworkFunctionGroups sets the NetworkFunctionGroups field's value.
+func (s *Via) SetNetworkFunctionGroups(v []*NetworkFunctionGroup) *Via {
+	s.NetworkFunctionGroups = v
+	return s
+}
+
+// SetWithEdgeOverrides sets the WithEdgeOverrides field's value.
+func (s *Via) SetWithEdgeOverrides(v []*EdgeOverride) *Via {
+	s.WithEdgeOverrides = v
+	return s
+}
+
 // Describes a VPC attachment.
 type VpcAttachment struct {
 	_ struct{} `type:"structure"`
@@ -23488,6 +24211,79 @@ func (s *VpcOptions) SetApplianceModeSupport(v bool) *VpcOptions {
 func (s *VpcOptions) SetIpv6Support(v bool) *VpcOptions {
 	s.Ipv6Support = &v
 	return s
+}
+
+// Displays a list of the destination segments. Used only when the service insertion
+// action is send-to.
+type WhenSentTo struct {
+	_ struct{} `type:"structure"`
+
+	// The list of destination segments when the service insertion action is send-to.
+	WhenSentToSegmentsList []*string `type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s WhenSentTo) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s WhenSentTo) GoString() string {
+	return s.String()
+}
+
+// SetWhenSentToSegmentsList sets the WhenSentToSegmentsList field's value.
+func (s *WhenSentTo) SetWhenSentToSegmentsList(v []*string) *WhenSentTo {
+	s.WhenSentToSegmentsList = v
+	return s
+}
+
+const (
+	// AttachmentErrorCodeVpcNotFound is a AttachmentErrorCode enum value
+	AttachmentErrorCodeVpcNotFound = "VPC_NOT_FOUND"
+
+	// AttachmentErrorCodeSubnetNotFound is a AttachmentErrorCode enum value
+	AttachmentErrorCodeSubnetNotFound = "SUBNET_NOT_FOUND"
+
+	// AttachmentErrorCodeSubnetDuplicatedInAvailabilityZone is a AttachmentErrorCode enum value
+	AttachmentErrorCodeSubnetDuplicatedInAvailabilityZone = "SUBNET_DUPLICATED_IN_AVAILABILITY_ZONE"
+
+	// AttachmentErrorCodeSubnetNoFreeAddresses is a AttachmentErrorCode enum value
+	AttachmentErrorCodeSubnetNoFreeAddresses = "SUBNET_NO_FREE_ADDRESSES"
+
+	// AttachmentErrorCodeSubnetUnsupportedAvailabilityZone is a AttachmentErrorCode enum value
+	AttachmentErrorCodeSubnetUnsupportedAvailabilityZone = "SUBNET_UNSUPPORTED_AVAILABILITY_ZONE"
+
+	// AttachmentErrorCodeSubnetNoIpv6Cidrs is a AttachmentErrorCode enum value
+	AttachmentErrorCodeSubnetNoIpv6Cidrs = "SUBNET_NO_IPV6_CIDRS"
+
+	// AttachmentErrorCodeVpnConnectionNotFound is a AttachmentErrorCode enum value
+	AttachmentErrorCodeVpnConnectionNotFound = "VPN_CONNECTION_NOT_FOUND"
+
+	// AttachmentErrorCodeMaximumNoEncapLimitExceeded is a AttachmentErrorCode enum value
+	AttachmentErrorCodeMaximumNoEncapLimitExceeded = "MAXIMUM_NO_ENCAP_LIMIT_EXCEEDED"
+)
+
+// AttachmentErrorCode_Values returns all elements of the AttachmentErrorCode enum
+func AttachmentErrorCode_Values() []string {
+	return []string{
+		AttachmentErrorCodeVpcNotFound,
+		AttachmentErrorCodeSubnetNotFound,
+		AttachmentErrorCodeSubnetDuplicatedInAvailabilityZone,
+		AttachmentErrorCodeSubnetNoFreeAddresses,
+		AttachmentErrorCodeSubnetUnsupportedAvailabilityZone,
+		AttachmentErrorCodeSubnetNoIpv6Cidrs,
+		AttachmentErrorCodeVpnConnectionNotFound,
+		AttachmentErrorCodeMaximumNoEncapLimitExceeded,
+	}
 }
 
 const (
@@ -23638,6 +24434,9 @@ const (
 	// ChangeTypeCoreNetworkSegment is a ChangeType enum value
 	ChangeTypeCoreNetworkSegment = "CORE_NETWORK_SEGMENT"
 
+	// ChangeTypeNetworkFunctionGroup is a ChangeType enum value
+	ChangeTypeNetworkFunctionGroup = "NETWORK_FUNCTION_GROUP"
+
 	// ChangeTypeCoreNetworkEdge is a ChangeType enum value
 	ChangeTypeCoreNetworkEdge = "CORE_NETWORK_EDGE"
 
@@ -23667,6 +24466,7 @@ const (
 func ChangeType_Values() []string {
 	return []string{
 		ChangeTypeCoreNetworkSegment,
+		ChangeTypeNetworkFunctionGroup,
 		ChangeTypeCoreNetworkEdge,
 		ChangeTypeAttachmentMapping,
 		ChangeTypeAttachmentRoutePropagation,
@@ -23699,6 +24499,38 @@ func ConnectPeerAssociationState_Values() []string {
 		ConnectPeerAssociationStateAvailable,
 		ConnectPeerAssociationStateDeleting,
 		ConnectPeerAssociationStateDeleted,
+	}
+}
+
+const (
+	// ConnectPeerErrorCodeEdgeLocationNoFreeIps is a ConnectPeerErrorCode enum value
+	ConnectPeerErrorCodeEdgeLocationNoFreeIps = "EDGE_LOCATION_NO_FREE_IPS"
+
+	// ConnectPeerErrorCodeEdgeLocationPeerDuplicate is a ConnectPeerErrorCode enum value
+	ConnectPeerErrorCodeEdgeLocationPeerDuplicate = "EDGE_LOCATION_PEER_DUPLICATE"
+
+	// ConnectPeerErrorCodeSubnetNotFound is a ConnectPeerErrorCode enum value
+	ConnectPeerErrorCodeSubnetNotFound = "SUBNET_NOT_FOUND"
+
+	// ConnectPeerErrorCodeIpOutsideSubnetCidrRange is a ConnectPeerErrorCode enum value
+	ConnectPeerErrorCodeIpOutsideSubnetCidrRange = "IP_OUTSIDE_SUBNET_CIDR_RANGE"
+
+	// ConnectPeerErrorCodeInvalidInsideCidrBlock is a ConnectPeerErrorCode enum value
+	ConnectPeerErrorCodeInvalidInsideCidrBlock = "INVALID_INSIDE_CIDR_BLOCK"
+
+	// ConnectPeerErrorCodeNoAssociatedCidrBlock is a ConnectPeerErrorCode enum value
+	ConnectPeerErrorCodeNoAssociatedCidrBlock = "NO_ASSOCIATED_CIDR_BLOCK"
+)
+
+// ConnectPeerErrorCode_Values returns all elements of the ConnectPeerErrorCode enum
+func ConnectPeerErrorCode_Values() []string {
+	return []string{
+		ConnectPeerErrorCodeEdgeLocationNoFreeIps,
+		ConnectPeerErrorCodeEdgeLocationPeerDuplicate,
+		ConnectPeerErrorCodeSubnetNotFound,
+		ConnectPeerErrorCodeIpOutsideSubnetCidrRange,
+		ConnectPeerErrorCodeInvalidInsideCidrBlock,
+		ConnectPeerErrorCodeNoAssociatedCidrBlock,
 	}
 }
 
@@ -23943,6 +24775,38 @@ func LinkState_Values() []string {
 }
 
 const (
+	// PeeringErrorCodeTransitGatewayNotFound is a PeeringErrorCode enum value
+	PeeringErrorCodeTransitGatewayNotFound = "TRANSIT_GATEWAY_NOT_FOUND"
+
+	// PeeringErrorCodeTransitGatewayPeersLimitExceeded is a PeeringErrorCode enum value
+	PeeringErrorCodeTransitGatewayPeersLimitExceeded = "TRANSIT_GATEWAY_PEERS_LIMIT_EXCEEDED"
+
+	// PeeringErrorCodeMissingPermissions is a PeeringErrorCode enum value
+	PeeringErrorCodeMissingPermissions = "MISSING_PERMISSIONS"
+
+	// PeeringErrorCodeInternalError is a PeeringErrorCode enum value
+	PeeringErrorCodeInternalError = "INTERNAL_ERROR"
+
+	// PeeringErrorCodeEdgeLocationPeerDuplicate is a PeeringErrorCode enum value
+	PeeringErrorCodeEdgeLocationPeerDuplicate = "EDGE_LOCATION_PEER_DUPLICATE"
+
+	// PeeringErrorCodeInvalidTransitGatewayState is a PeeringErrorCode enum value
+	PeeringErrorCodeInvalidTransitGatewayState = "INVALID_TRANSIT_GATEWAY_STATE"
+)
+
+// PeeringErrorCode_Values returns all elements of the PeeringErrorCode enum
+func PeeringErrorCode_Values() []string {
+	return []string{
+		PeeringErrorCodeTransitGatewayNotFound,
+		PeeringErrorCodeTransitGatewayPeersLimitExceeded,
+		PeeringErrorCodeMissingPermissions,
+		PeeringErrorCodeInternalError,
+		PeeringErrorCodeEdgeLocationPeerDuplicate,
+		PeeringErrorCodeInvalidTransitGatewayState,
+	}
+}
+
+const (
 	// PeeringStateCreating is a PeeringState enum value
 	PeeringStateCreating = "CREATING"
 
@@ -24088,6 +24952,9 @@ const (
 
 	// RouteTableTypeCoreNetworkSegment is a RouteTableType enum value
 	RouteTableTypeCoreNetworkSegment = "CORE_NETWORK_SEGMENT"
+
+	// RouteTableTypeNetworkFunctionGroup is a RouteTableType enum value
+	RouteTableTypeNetworkFunctionGroup = "NETWORK_FUNCTION_GROUP"
 )
 
 // RouteTableType_Values returns all elements of the RouteTableType enum
@@ -24095,6 +24962,7 @@ func RouteTableType_Values() []string {
 	return []string{
 		RouteTableTypeTransitGatewayRouteTable,
 		RouteTableTypeCoreNetworkSegment,
+		RouteTableTypeNetworkFunctionGroup,
 	}
 }
 
@@ -24111,6 +24979,38 @@ func RouteType_Values() []string {
 	return []string{
 		RouteTypePropagated,
 		RouteTypeStatic,
+	}
+}
+
+const (
+	// SegmentActionServiceInsertionSendVia is a SegmentActionServiceInsertion enum value
+	SegmentActionServiceInsertionSendVia = "send-via"
+
+	// SegmentActionServiceInsertionSendTo is a SegmentActionServiceInsertion enum value
+	SegmentActionServiceInsertionSendTo = "send-to"
+)
+
+// SegmentActionServiceInsertion_Values returns all elements of the SegmentActionServiceInsertion enum
+func SegmentActionServiceInsertion_Values() []string {
+	return []string{
+		SegmentActionServiceInsertionSendVia,
+		SegmentActionServiceInsertionSendTo,
+	}
+}
+
+const (
+	// SendViaModeDualHop is a SendViaMode enum value
+	SendViaModeDualHop = "dual-hop"
+
+	// SendViaModeSingleHop is a SendViaMode enum value
+	SendViaModeSingleHop = "single-hop"
+)
+
+// SendViaMode_Values returns all elements of the SendViaMode enum
+func SendViaMode_Values() []string {
+	return []string{
+		SendViaModeDualHop,
+		SendViaModeSingleHop,
 	}
 }
 

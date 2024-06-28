@@ -32,12 +32,12 @@
     "GetPreparedStatement": "<p>Retrieves the prepared statement with the specified name from the specified workgroup.</p>",
     "GetQueryExecution": "<p>Returns information about a single execution of a query if you have access to the workgroup in which the query ran. Each time a query executes, information about the query execution is saved with a unique ID.</p>",
     "GetQueryResults": "<p>Streams the results of a single query execution specified by <code>QueryExecutionId</code> from the Athena query results location in Amazon S3. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Working with query results, recent queries, and output files</a> in the <i>Amazon Athena User Guide</i>. This request does not execute the query but returns results. Use <a>StartQueryExecution</a> to run a query.</p> <p>To stream query results successfully, the IAM principal with permission to call <code>GetQueryResults</code> also must have permissions to the Amazon S3 <code>GetObject</code> action for the Athena query results location.</p> <important> <p>IAM principals with permission to the Amazon S3 <code>GetObject</code> action for the query results location are able to retrieve query results from Amazon S3 even if permission to the <code>GetQueryResults</code> action is denied. To restrict user or role access, ensure that Amazon S3 permissions to the Athena query location are denied.</p> </important>",
-    "GetQueryRuntimeStatistics": "<p>Returns query execution runtime statistics related to a single execution of a query if you have access to the workgroup in which the query ran. Query execution runtime statistics are returned only when <a>QueryExecutionStatus$State</a> is in a SUCCEEDED or FAILED state. Stage-level input and output row count and data size statistics are not shown when a query has row-level filters defined in Lake Formation.</p>",
+    "GetQueryRuntimeStatistics": "<p>Returns query execution runtime statistics related to a single execution of a query if you have access to the workgroup in which the query ran. Statistics from the <code>Timeline</code> section of the response object are available as soon as <a>QueryExecutionStatus$State</a> is in a SUCCEEDED or FAILED state. The remaining non-timeline statistics in the response (like stage-level input and output row count and data size) are updated asynchronously and may not be available immediately after a query completes. The non-timeline statistics are also not included when a query has row-level filters defined in Lake Formation.</p>",
     "GetSession": "<p>Gets the full details of a previously created session, including the session status and configuration.</p>",
     "GetSessionStatus": "<p>Gets the current status of a session.</p>",
     "GetTableMetadata": "<p>Returns table metadata for the specified catalog, database, and table.</p>",
     "GetWorkGroup": "<p>Returns information about the workgroup with the specified name.</p>",
-    "ImportNotebook": "<p>Imports a single <code>ipynb</code> file to a Spark enabled workgroup. The maximum file size that can be imported is 10 megabytes. If an <code>ipynb</code> file with the same name already exists in the workgroup, throws an error.</p>",
+    "ImportNotebook": "<p>Imports a single <code>ipynb</code> file to a Spark enabled workgroup. To import the notebook, the request must specify a value for either <code>Payload</code> or <code>NoteBookS3LocationUri</code>. If neither is specified or both are specified, an <code>InvalidRequestException</code> occurs. The maximum file size that can be imported is 10 megabytes. If an <code>ipynb</code> file with the same name already exists in the workgroup, throws an error.</p>",
     "ListApplicationDPUSizes": "<p>Returns the supported DPU sizes for the supported application runtimes (for example, <code>Athena notebook version 1</code>). </p>",
     "ListCalculationExecutions": "<p>Lists the calculations that have been submitted to a session in descending order. Newer calculations are listed first; older calculations are listed later.</p>",
     "ListCapacityReservations": "<p>Lists the capacity reservations for the current account.</p>",
@@ -1485,7 +1485,7 @@
       "base": null,
       "refs": {
         "ExportNotebookOutput$Payload": "<p>The content of the exported notebook.</p>",
-        "ImportNotebookInput$Payload": "<p>The notebook content to be imported.</p>",
+        "ImportNotebookInput$Payload": "<p>The notebook content to be imported. The payload must be in <code>ipynb</code> format.</p>",
         "UpdateNotebookInput$Payload": "<p>The updated content for the notebook.</p>"
       }
     },
@@ -1663,7 +1663,7 @@
       "refs": {
         "QueryExecution$ResultConfiguration": "<p>The location in Amazon S3 where query and calculation results are stored and the encryption option, if any, used for query results. These are known as \"client-side settings\". If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup.</p>",
         "StartQueryExecutionInput$ResultConfiguration": "<p>Specifies information about where and how to save the results of the query execution. If the query runs in a workgroup, then workgroup's settings may override query settings. This affects the query results location. The workgroup settings override is specified in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
-        "WorkGroupConfiguration$ResultConfiguration": "<p>The configuration for the workgroup, which includes the location in Amazon S3 where query and calculation results are stored and the encryption option, if any, used for query and calculation results. To run the query, you must specify the query results location using one of the ways: either in the workgroup using this setting, or for individual queries (client-side), using <a>ResultConfiguration$OutputLocation</a>. If none of them is set, Athena issues an error that no output location is provided. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Working with query results, recent queries, and output files</a>.</p>"
+        "WorkGroupConfiguration$ResultConfiguration": "<p>The configuration for the workgroup, which includes the location in Amazon S3 where query and calculation results are stored and the encryption option, if any, used for query and calculation results. To run the query, you must specify the query results location using one of the ways: either in the workgroup using this setting, or for individual queries (client-side), using <a>ResultConfiguration$OutputLocation</a>. If none of them is set, Athena issues an error that no output location is provided.</p>"
       }
     },
     "ResultConfigurationUpdates": {
@@ -1675,8 +1675,8 @@
     "ResultOutputLocation": {
       "base": null,
       "refs": {
-        "ResultConfiguration$OutputLocation": "<p>The location in Amazon S3 where your query and calculation results are stored, such as <code>s3://path/to/query/bucket/</code>. To run the query, you must specify the query results location using one of the ways: either for individual queries using either this setting (client-side), or in the workgroup, using <a>WorkGroupConfiguration</a>. If none of them is set, Athena issues an error that no output location is provided. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Working with query results, recent queries, and output files</a>. If workgroup settings override client-side settings, then the query uses the settings specified for the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
-        "ResultConfigurationUpdates$OutputLocation": "<p>The location in Amazon S3 where your query and calculation results are stored, such as <code>s3://path/to/query/bucket/</code>. For more information, see <a href=\"https://docs.aws.amazon.com/athena/latest/ug/querying.html\">Working with query results, recent queries, and output files</a>. If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The \"workgroup settings override\" is specified in <code>EnforceWorkGroupConfiguration</code> (true/false) in the <code>WorkGroupConfiguration</code>. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
+        "ResultConfiguration$OutputLocation": "<p>The location in Amazon S3 where your query and calculation results are stored, such as <code>s3://path/to/query/bucket/</code>. To run the query, you must specify the query results location using one of the ways: either for individual queries using either this setting (client-side), or in the workgroup, using <a>WorkGroupConfiguration</a>. If none of them is set, Athena issues an error that no output location is provided. If workgroup settings override client-side settings, then the query uses the settings specified for the workgroup. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
+        "ResultConfigurationUpdates$OutputLocation": "<p>The location in Amazon S3 where your query and calculation results are stored, such as <code>s3://path/to/query/bucket/</code>. If workgroup settings override client-side settings, then the query uses the location for the query results and the encryption configuration that are specified for the workgroup. The \"workgroup settings override\" is specified in <code>EnforceWorkGroupConfiguration</code> (true/false) in the <code>WorkGroupConfiguration</code>. See <a>WorkGroupConfiguration$EnforceWorkGroupConfiguration</a>.</p>",
         "SessionConfiguration$WorkingDirectory": "<p>The Amazon S3 location that stores information for the notebook.</p>"
       }
     },
@@ -1715,7 +1715,7 @@
       "base": null,
       "refs": {
         "SessionConfiguration$ExecutionRole": "<p>The ARN of the execution role used to access user resources for Spark sessions and Identity Center enabled workgroups. This property applies only to Spark enabled workgroups and Identity Center enabled workgroups.</p>",
-        "WorkGroupConfiguration$ExecutionRole": "<p>The ARN of the execution role used to access user resources for Spark sessions and Identity Center enabled workgroups. This property applies only to Spark enabled workgroups and Identity Center enabled workgroups.</p>",
+        "WorkGroupConfiguration$ExecutionRole": "<p>The ARN of the execution role used to access user resources for Spark sessions and IAM Identity Center enabled workgroups. This property applies only to Spark enabled workgroups and IAM Identity Center enabled workgroups. The property is required for IAM Identity Center enabled workgroups.</p>",
         "WorkGroupConfigurationUpdates$ExecutionRole": "<p>The ARN of the execution role used to access user resources for Spark sessions and Identity Center enabled workgroups. This property applies only to Spark enabled workgroups and Identity Center enabled workgroups.</p>"
       }
     },
@@ -1743,7 +1743,8 @@
         "CalculationResult$StdOutS3Uri": "<p>The Amazon S3 location of the <code>stdout</code> file for the calculation.</p>",
         "CalculationResult$StdErrorS3Uri": "<p>The Amazon S3 location of the <code>stderr</code> error messages file for the calculation.</p>",
         "CalculationResult$ResultS3Uri": "<p>The Amazon S3 location of the folder for the calculation results.</p>",
-        "GetCalculationExecutionResponse$WorkingDirectory": "<p>The Amazon S3 location in which calculation results are stored.</p>"
+        "GetCalculationExecutionResponse$WorkingDirectory": "<p>The Amazon S3 location in which calculation results are stored.</p>",
+        "ImportNotebookInput$NotebookS3LocationUri": "<p>A URI that specifies the Amazon S3 location of a notebook file in <code>ipynb</code> format.</p>"
       }
     },
     "SessionAlreadyExistsException": {

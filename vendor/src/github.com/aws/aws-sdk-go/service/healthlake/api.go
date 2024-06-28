@@ -1785,6 +1785,9 @@ type DatastoreProperties struct {
 	// DatastoreTypeVersion is a required field
 	DatastoreTypeVersion *string `type:"string" required:"true" enum:"FHIRVersion"`
 
+	// The error cause for the current data store operation.
+	ErrorCause *ErrorCause `type:"structure"`
+
 	// The identity provider that you selected when you created the data store.
 	IdentityProviderConfiguration *IdentityProviderConfiguration `type:"structure"`
 
@@ -1854,6 +1857,12 @@ func (s *DatastoreProperties) SetDatastoreStatus(v string) *DatastoreProperties 
 // SetDatastoreTypeVersion sets the DatastoreTypeVersion field's value.
 func (s *DatastoreProperties) SetDatastoreTypeVersion(v string) *DatastoreProperties {
 	s.DatastoreTypeVersion = &v
+	return s
+}
+
+// SetErrorCause sets the ErrorCause field's value.
+func (s *DatastoreProperties) SetErrorCause(v *ErrorCause) *DatastoreProperties {
+	s.ErrorCause = v
 	return s
 }
 
@@ -2244,8 +2253,8 @@ func (s *DescribeFHIRImportJobInput) SetJobId(v string) *DescribeFHIRImportJobIn
 type DescribeFHIRImportJobOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The properties of the Import job request, including the ID, ARN, name, and
-	// the status of the job.
+	// The properties of the Import job request, including the ID, ARN, name, status
+	// of the job, and the progress report of the job.
 	//
 	// ImportJobProperties is a required field
 	ImportJobProperties *ImportJobProperties `type:"structure" required:"true"`
@@ -2272,6 +2281,48 @@ func (s DescribeFHIRImportJobOutput) GoString() string {
 // SetImportJobProperties sets the ImportJobProperties field's value.
 func (s *DescribeFHIRImportJobOutput) SetImportJobProperties(v *ImportJobProperties) *DescribeFHIRImportJobOutput {
 	s.ImportJobProperties = v
+	return s
+}
+
+// The error info of the create/delete data store operation.
+type ErrorCause struct {
+	_ struct{} `type:"structure"`
+
+	// The error category of the create/delete data store operation. Possible statuses
+	// are RETRYABLE_ERROR or NON_RETRYABLE_ERROR.
+	ErrorCategory *string `type:"string" enum:"ErrorCategory"`
+
+	// The text of the error message.
+	ErrorMessage *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ErrorCause) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ErrorCause) GoString() string {
+	return s.String()
+}
+
+// SetErrorCategory sets the ErrorCategory field's value.
+func (s *ErrorCause) SetErrorCategory(v string) *ErrorCause {
+	s.ErrorCategory = &v
+	return s
+}
+
+// SetErrorMessage sets the ErrorMessage field's value.
+func (s *ErrorCause) SetErrorMessage(v string) *ErrorCause {
+	s.ErrorMessage = &v
 	return s
 }
 
@@ -2490,8 +2541,8 @@ func (s *IdentityProviderConfiguration) SetMetadata(v string) *IdentityProviderC
 	return s
 }
 
-// Displays the properties of the import job, including the ID, Arn, Name, and
-// the status of the data store.
+// Displays the properties of the import job, including the ID, Arn, Name, the
+// status of the job, and the progress report of the job.
 type ImportJobProperties struct {
 	_ struct{} `type:"structure"`
 
@@ -2522,6 +2573,10 @@ type ImportJobProperties struct {
 
 	// The output data configuration that was supplied when the export job was created.
 	JobOutputDataConfig *OutputDataConfig `type:"structure"`
+
+	// Displays the progress of the import job, including total resources scanned,
+	// total resources ingested, and total size of data ingested.
+	JobProgressReport *JobProgressReport `type:"structure"`
 
 	// The job status for an Import job. Possible statuses are SUBMITTED, IN_PROGRESS,
 	// COMPLETED_WITH_ERRORS, COMPLETED, FAILED.
@@ -2596,6 +2651,12 @@ func (s *ImportJobProperties) SetJobName(v string) *ImportJobProperties {
 // SetJobOutputDataConfig sets the JobOutputDataConfig field's value.
 func (s *ImportJobProperties) SetJobOutputDataConfig(v *OutputDataConfig) *ImportJobProperties {
 	s.JobOutputDataConfig = v
+	return s
+}
+
+// SetJobProgressReport sets the JobProgressReport field's value.
+func (s *ImportJobProperties) SetJobProgressReport(v *JobProgressReport) *ImportJobProperties {
+	s.JobProgressReport = v
 	return s
 }
 
@@ -2712,6 +2773,102 @@ func (s *InternalServerException) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *InternalServerException) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+// The progress report of an import job.
+type JobProgressReport struct {
+	_ struct{} `type:"structure"`
+
+	// The throughput (in MB/sec) of the import job.
+	Throughput *float64 `type:"double"`
+
+	// The number of files that failed to be read from the input S3 bucket due to
+	// customer error.
+	TotalNumberOfFilesReadWithCustomerError *int64 `type:"long"`
+
+	// The number of files imported so far.
+	TotalNumberOfImportedFiles *int64 `type:"long"`
+
+	// The number of resources imported so far.
+	TotalNumberOfResourcesImported *int64 `type:"long"`
+
+	// The number of resources scanned from the input S3 bucket.
+	TotalNumberOfResourcesScanned *int64 `type:"long"`
+
+	// The number of resources that failed due to customer error.
+	TotalNumberOfResourcesWithCustomerError *int64 `type:"long"`
+
+	// The number of files scanned from input S3 bucket.
+	TotalNumberOfScannedFiles *int64 `type:"long"`
+
+	// The size (in MB) of the files scanned from the input S3 bucket.
+	TotalSizeOfScannedFilesInMB *float64 `type:"double"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JobProgressReport) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JobProgressReport) GoString() string {
+	return s.String()
+}
+
+// SetThroughput sets the Throughput field's value.
+func (s *JobProgressReport) SetThroughput(v float64) *JobProgressReport {
+	s.Throughput = &v
+	return s
+}
+
+// SetTotalNumberOfFilesReadWithCustomerError sets the TotalNumberOfFilesReadWithCustomerError field's value.
+func (s *JobProgressReport) SetTotalNumberOfFilesReadWithCustomerError(v int64) *JobProgressReport {
+	s.TotalNumberOfFilesReadWithCustomerError = &v
+	return s
+}
+
+// SetTotalNumberOfImportedFiles sets the TotalNumberOfImportedFiles field's value.
+func (s *JobProgressReport) SetTotalNumberOfImportedFiles(v int64) *JobProgressReport {
+	s.TotalNumberOfImportedFiles = &v
+	return s
+}
+
+// SetTotalNumberOfResourcesImported sets the TotalNumberOfResourcesImported field's value.
+func (s *JobProgressReport) SetTotalNumberOfResourcesImported(v int64) *JobProgressReport {
+	s.TotalNumberOfResourcesImported = &v
+	return s
+}
+
+// SetTotalNumberOfResourcesScanned sets the TotalNumberOfResourcesScanned field's value.
+func (s *JobProgressReport) SetTotalNumberOfResourcesScanned(v int64) *JobProgressReport {
+	s.TotalNumberOfResourcesScanned = &v
+	return s
+}
+
+// SetTotalNumberOfResourcesWithCustomerError sets the TotalNumberOfResourcesWithCustomerError field's value.
+func (s *JobProgressReport) SetTotalNumberOfResourcesWithCustomerError(v int64) *JobProgressReport {
+	s.TotalNumberOfResourcesWithCustomerError = &v
+	return s
+}
+
+// SetTotalNumberOfScannedFiles sets the TotalNumberOfScannedFiles field's value.
+func (s *JobProgressReport) SetTotalNumberOfScannedFiles(v int64) *JobProgressReport {
+	s.TotalNumberOfScannedFiles = &v
+	return s
+}
+
+// SetTotalSizeOfScannedFilesInMB sets the TotalSizeOfScannedFilesInMB field's value.
+func (s *JobProgressReport) SetTotalSizeOfScannedFilesInMB(v float64) *JobProgressReport {
+	s.TotalSizeOfScannedFilesInMB = &v
+	return s
 }
 
 // The customer-managed-key(CMK) used when creating a data store. If a customer
@@ -3166,7 +3323,7 @@ type ListFHIRImportJobsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// The properties of a listed FHIR import jobs, including the ID, ARN, name,
-	// and the status of the job.
+	// the status of the job, and the progress report of the job.
 	//
 	// ImportJobPropertiesList is a required field
 	ImportJobPropertiesList []*ImportJobProperties `type:"list" required:"true"`
@@ -4326,6 +4483,9 @@ const (
 
 	// DatastoreStatusDeleted is a DatastoreStatus enum value
 	DatastoreStatusDeleted = "DELETED"
+
+	// DatastoreStatusCreateFailed is a DatastoreStatus enum value
+	DatastoreStatusCreateFailed = "CREATE_FAILED"
 )
 
 // DatastoreStatus_Values returns all elements of the DatastoreStatus enum
@@ -4335,6 +4495,23 @@ func DatastoreStatus_Values() []string {
 		DatastoreStatusActive,
 		DatastoreStatusDeleting,
 		DatastoreStatusDeleted,
+		DatastoreStatusCreateFailed,
+	}
+}
+
+const (
+	// ErrorCategoryRetryableError is a ErrorCategory enum value
+	ErrorCategoryRetryableError = "RETRYABLE_ERROR"
+
+	// ErrorCategoryNonRetryableError is a ErrorCategory enum value
+	ErrorCategoryNonRetryableError = "NON_RETRYABLE_ERROR"
+)
+
+// ErrorCategory_Values returns all elements of the ErrorCategory enum
+func ErrorCategory_Values() []string {
+	return []string{
+		ErrorCategoryRetryableError,
+		ErrorCategoryNonRetryableError,
 	}
 }
 

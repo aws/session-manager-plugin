@@ -401,7 +401,8 @@ func (c *SecretsManager) CreateSecretRequest(input *CreateSecretInput) (req *req
 // Secrets Manager events with CloudTrail (https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
 //
 // Required permissions: secretsmanager:CreateSecret. If you include tags in
-// the secret, you also need secretsmanager:TagResource. For more information,
+// the secret, you also need secretsmanager:TagResource. To add replica Regions,
+// you must also have secretsmanager:ReplicateSecretToRegions. For more information,
 // see IAM policy actions for Secrets Manager (https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
 // and Authentication and access control in Secrets Manager (https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
 //
@@ -873,12 +874,10 @@ func (c *SecretsManager) GetRandomPasswordRequest(input *GetRandomPasswordInput)
 //
 // Generates a random password. We recommend that you specify the maximum length
 // and include every character type that the system you are generating a password
-// for can support.
+// for can support. By default, Secrets Manager uses uppercase and lowercase
+// letters, numbers, and the following characters in passwords: !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~
 //
 // Secrets Manager generates a CloudTrail log entry when you call this action.
-// Do not include sensitive information in request parameters because it might
-// be logged. For more information, see Logging Secrets Manager events with
-// CloudTrail (https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
 //
 // Required permissions: secretsmanager:GetRandomPassword. For more information,
 // see IAM policy actions for Secrets Manager (https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
@@ -1384,9 +1383,9 @@ func (c *SecretsManager) ListSecretsRequest(input *ListSecretsInput) (req *reque
 // account, not including secrets that are marked for deletion. To see secrets
 // marked for deletion, use the Secrets Manager console.
 //
-// ListSecrets is eventually consistent, however it might not reflect changes
-// from the last five minutes. To get the latest information for a specific
-// secret, use DescribeSecret.
+// All Secrets Manager operations are eventually consistent. ListSecrets might
+// not reflect changes from the last five minutes. You can get more recent information
+// for a specific secret by calling DescribeSecret.
 //
 // To list the versions of a secret, use ListSecretVersionIds.
 //
@@ -1702,9 +1701,9 @@ func (c *SecretsManager) PutSecretValueRequest(input *PutSecretValueInput) (req 
 // version; you can only create new ones.
 //
 // Secrets Manager generates a CloudTrail log entry when you call this action.
-// Do not include sensitive information in request parameters except SecretBinary
-// or SecretString because it might be logged. For more information, see Logging
-// Secrets Manager events with CloudTrail (https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
+// Do not include sensitive information in request parameters except SecretBinary,
+// SecretString, or RotationToken because it might be logged. For more information,
+// see Logging Secrets Manager events with CloudTrail (https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
 //
 // Required permissions: secretsmanager:PutSecretValue. For more information,
 // see IAM policy actions for Secrets Manager (https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
@@ -1940,8 +1939,12 @@ func (c *SecretsManager) ReplicateSecretToRegionsRequest(input *ReplicateSecretT
 // be logged. For more information, see Logging Secrets Manager events with
 // CloudTrail (https://docs.aws.amazon.com/secretsmanager/latest/userguide/retrieve-ct-entries.html).
 //
-// Required permissions: secretsmanager:ReplicateSecretToRegions. For more information,
-// see IAM policy actions for Secrets Manager (https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
+// Required permissions: secretsmanager:ReplicateSecretToRegions. If the primary
+// secret is encrypted with a KMS key other than aws/secretsmanager, you also
+// need kms:Decrypt permission to the key. To encrypt the replicated secret
+// with a KMS key other than aws/secretsmanager, you need kms:GenerateDataKey
+// and kms:Encrypt to the key. For more information, see IAM policy actions
+// for Secrets Manager (https://docs.aws.amazon.com/secretsmanager/latest/userguide/reference_iam-permissions.html#reference_iam-permissions_actions)
 // and Authentication and access control in Secrets Manager (https://docs.aws.amazon.com/secretsmanager/latest/userguide/auth-and-access.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -3065,7 +3068,8 @@ type BatchGetSecretValueInput struct {
 	//
 	// If there are more results available, in the response, Secrets Manager includes
 	// NextToken. To get the next results, call BatchGetSecretValue again with the
-	// value from NextToken.
+	// value from NextToken. To use this parameter, you must also use the Filters
+	// parameter.
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// A token that indicates where the output should continue from, if a previous
@@ -3390,6 +3394,10 @@ type CreateSecretInput struct {
 	//
 	// This parameter is not available in the Secrets Manager console.
 	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
+	//
 	// SecretBinary is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by CreateSecretInput's
 	// String and GoString methods.
@@ -3406,6 +3414,10 @@ type CreateSecretInput struct {
 	// Manager puts the protected secret text in only the SecretString parameter.
 	// The Secrets Manager console stores the information as a JSON structure of
 	// key/value pairs that a Lambda rotation function can parse.
+	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
 	//
 	// SecretString is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by CreateSecretInput's
@@ -4014,14 +4026,23 @@ type DescribeSecretOutput struct {
 	LastChangedDate *time.Time `type:"timestamp"`
 
 	// The last date and time that Secrets Manager rotated the secret. If the secret
-	// isn't configured for rotation, Secrets Manager returns null.
+	// isn't configured for rotation or rotation has been disabled, Secrets Manager
+	// returns null.
 	LastRotatedDate *time.Time `type:"timestamp"`
 
 	// The name of the secret.
 	Name *string `min:"1" type:"string"`
 
 	// The next rotation is scheduled to occur on or before this date. If the secret
-	// isn't configured for rotation, Secrets Manager returns null.
+	// isn't configured for rotation or rotation has been disabled, Secrets Manager
+	// returns null. If rotation fails, Secrets Manager retries the entire rotation
+	// process multiple times. If rotation is unsuccessful, this date may be in
+	// the past.
+	//
+	// This date represents the latest date that rotation will occur, but it is
+	// not an approximate rotation date. In some cases, for example if you turn
+	// off automatic rotation and then turn it back on, the next rotation may occur
+	// much sooner than this date.
 	NextRotationDate *time.Time `type:"timestamp"`
 
 	// The ID of the service that created this secret. For more information, see
@@ -4042,7 +4063,8 @@ type DescribeSecretOutput struct {
 	//    * InSync, which indicates that the replica was created.
 	ReplicationStatus []*ReplicationStatusType `type:"list"`
 
-	// Specifies whether automatic rotation is turned on for this secret.
+	// Specifies whether automatic rotation is turned on for this secret. If the
+	// secret has never been configured for rotation, Secrets Manager returns null.
 	//
 	// To turn on rotation, use RotateSecret. To turn off rotation, use CancelRotateSecret.
 	RotationEnabled *bool `type:"boolean"`
@@ -4607,7 +4629,8 @@ func (s *GetResourcePolicyOutput) SetResourcePolicy(v string) *GetResourcePolicy
 type GetSecretValueInput struct {
 	_ struct{} `type:"structure"`
 
-	// The ARN or name of the secret to retrieve.
+	// The ARN or name of the secret to retrieve. To retrieve a secret from another
+	// account, you must use an ARN.
 	//
 	// For an ARN, we recommend that you specify a complete ARN rather than a partial
 	// ARN. See Finding a secret from a partial ARN (https://docs.aws.amazon.com/secretsmanager/latest/userguide/troubleshoot.html#ARN_secretnamehyphen).
@@ -4707,13 +4730,17 @@ type GetSecretValueOutput struct {
 	Name *string `min:"1" type:"string"`
 
 	// The decrypted secret value, if the secret value was originally provided as
-	// binary data in the form of a byte array. The response parameter represents
-	// the binary data as a base64-encoded (https://tools.ietf.org/html/rfc4648#section-4)
-	// string.
+	// binary data in the form of a byte array. When you retrieve a SecretBinary
+	// using the HTTP API, the Python SDK, or the Amazon Web Services CLI, the value
+	// is Base64-encoded. Otherwise, it is not encoded.
 	//
 	// If the secret was created by using the Secrets Manager console, or if the
 	// secret value was originally provided as a string, then this field is omitted.
 	// The secret value appears in SecretString instead.
+	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
 	//
 	// SecretBinary is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by GetSecretValueOutput's
@@ -4727,6 +4754,10 @@ type GetSecretValueOutput struct {
 	//
 	// If this secret was created by using the console, then Secrets Manager stores
 	// the information as a JSON structure of key/value pairs.
+	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
 	//
 	// SecretString is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by GetSecretValueOutput's
@@ -5631,6 +5662,21 @@ type PutResourcePolicyInput struct {
 	// Specifies whether to block resource-based policies that allow broad access
 	// to the secret, for example those that use a wildcard for the principal. By
 	// default, public policies aren't blocked.
+	//
+	// Resource policy validation and the BlockPublicPolicy parameter help protect
+	// your resources by preventing public access from being granted through the
+	// resource policies that are directly attached to your secrets. In addition
+	// to using these features, carefully inspect the following policies to confirm
+	// that they do not grant public access:
+	//
+	//    * Identity-based policies attached to associated Amazon Web Services principals
+	//    (for example, IAM roles)
+	//
+	//    * Resource-based policies attached to associated Amazon Web Services resources
+	//    (for example, Key Management Service (KMS) keys)
+	//
+	// To review permissions to your secrets, see Determine who has permissions
+	// to your secrets (https://docs.aws.amazon.com/secretsmanager/latest/userguide/determine-acccess_examine-iam-policies.html).
 	BlockPublicPolicy *bool `type:"boolean"`
 
 	// A JSON-formatted string for an Amazon Web Services resource-based policy.
@@ -5779,6 +5825,21 @@ type PutSecretValueInput struct {
 	// This value becomes the VersionId of the new version.
 	ClientRequestToken *string `min:"32" type:"string" idempotencyToken:"true"`
 
+	// A unique identifier that indicates the source of the request. For cross-account
+	// rotation (when you rotate a secret in one account by using a Lambda rotation
+	// function in another account) and the Lambda rotation function assumes an
+	// IAM role to call Secrets Manager, Secrets Manager validates the identity
+	// with the rotation token. For more information, see How rotation works (https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotating-secrets.html).
+	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
+	//
+	// RotationToken is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PutSecretValueInput's
+	// String and GoString methods.
+	RotationToken *string `min:"36" type:"string" sensitive:"true"`
+
 	// The binary data to encrypt and store in the new version of the secret. To
 	// use this parameter in the command-line tools, we recommend that you store
 	// your binary data in a file and then pass the contents of the file as a parameter.
@@ -5786,6 +5847,10 @@ type PutSecretValueInput struct {
 	// You must include SecretBinary or SecretString, but not both.
 	//
 	// You can't access this value from the Secrets Manager console.
+	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
 	//
 	// SecretBinary is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PutSecretValueInput's
@@ -5810,6 +5875,10 @@ type PutSecretValueInput struct {
 	//
 	// We recommend you create the secret string as JSON key/value pairs, as shown
 	// in the example.
+	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
 	//
 	// SecretString is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PutSecretValueInput's
@@ -5856,6 +5925,9 @@ func (s *PutSecretValueInput) Validate() error {
 	if s.ClientRequestToken != nil && len(*s.ClientRequestToken) < 32 {
 		invalidParams.Add(request.NewErrParamMinLen("ClientRequestToken", 32))
 	}
+	if s.RotationToken != nil && len(*s.RotationToken) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("RotationToken", 36))
+	}
 	if s.SecretBinary != nil && len(s.SecretBinary) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("SecretBinary", 1))
 	}
@@ -5881,6 +5953,12 @@ func (s *PutSecretValueInput) Validate() error {
 // SetClientRequestToken sets the ClientRequestToken field's value.
 func (s *PutSecretValueInput) SetClientRequestToken(v string) *PutSecretValueInput {
 	s.ClientRequestToken = &v
+	return s
+}
+
+// SetRotationToken sets the RotationToken field's value.
+func (s *PutSecretValueInput) SetRotationToken(v string) *PutSecretValueInput {
+	s.RotationToken = &v
 	return s
 }
 
@@ -6571,7 +6649,7 @@ type RotateSecretInput struct {
 	//
 	// For secrets that use a Lambda rotation function to rotate, if you don't immediately
 	// rotate the secret, Secrets Manager tests the rotation configuration by running
-	// the testSecret step (https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_how.html)
+	// the testSecret step (https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_lambda-functions.html#rotate-secrets_lambda-functions-code)
 	// of the Lambda rotation function. The test creates an AWSPENDING version of
 	// the secret and then removes it.
 	//
@@ -6869,7 +6947,8 @@ type SecretListEntry struct {
 	Name *string `min:"1" type:"string"`
 
 	// The next rotation is scheduled to occur on or before this date. If the secret
-	// isn't configured for rotation, Secrets Manager returns null.
+	// isn't configured for rotation or rotation has been disabled, Secrets Manager
+	// returns null.
 	NextRotationDate *time.Time `type:"timestamp"`
 
 	// Returns the name of the service that created the secret.
@@ -7587,6 +7666,10 @@ type UpdateSecretInput struct {
 	//
 	// You can't access this parameter in the Secrets Manager console.
 	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
+	//
 	// SecretBinary is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by UpdateSecretInput's
 	// String and GoString methods.
@@ -7606,6 +7689,10 @@ type UpdateSecretInput struct {
 	// you use a JSON structure of key/value pairs for your secret value.
 	//
 	// Either SecretBinary or SecretString must have a value, but not both.
+	//
+	// Sensitive: This field contains sensitive information, so the service does
+	// not include it in CloudTrail log entries. If you create your own log entries,
+	// you must also avoid logging the information in this field.
 	//
 	// SecretString is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by UpdateSecretInput's
@@ -7895,7 +7982,8 @@ type ValidateResourcePolicyInput struct {
 	// ResourcePolicy is a required field
 	ResourcePolicy *string `min:"1" type:"string" required:"true"`
 
-	// This field is reserved for internal use.
+	// The ARN or name of the secret with the resource-based policy you want to
+	// validate.
 	SecretId *string `min:"1" type:"string"`
 }
 

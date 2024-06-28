@@ -267,6 +267,10 @@ func (c *Personalize) CreateCampaignRequest(input *CreateCampaignInput) (req *re
 
 // CreateCampaign API operation for Amazon Personalize.
 //
+// You incur campaign costs while it is active. To avoid unnecessary costs,
+// make sure to delete the campaign when you are finished. For information about
+// campaign costs, see Amazon Personalize pricing (https://aws.amazon.com/personalize/pricing/).
+//
 // Creates a campaign that deploys a solution version. When a client calls the
 // GetRecommendations (https://docs.aws.amazon.com/personalize/latest/dg/API_RS_GetRecommendations.html)
 // and GetPersonalizedRanking (https://docs.aws.amazon.com/personalize/latest/dg/API_RS_GetPersonalizedRanking.html)
@@ -274,26 +278,31 @@ func (c *Personalize) CreateCampaignRequest(input *CreateCampaignInput) (req *re
 //
 // # Minimum Provisioned TPS and Auto-Scaling
 //
-// A high minProvisionedTPS will increase your bill. We recommend starting with
+// A high minProvisionedTPS will increase your cost. We recommend starting with
 // 1 for minProvisionedTPS (the default). Track your usage using Amazon CloudWatch
 // metrics, and increase the minProvisionedTPS as necessary.
 //
-// A transaction is a single GetRecommendations or GetPersonalizedRanking call.
-// Transactions per second (TPS) is the throughput and unit of billing for Amazon
-// Personalize. The minimum provisioned TPS (minProvisionedTPS) specifies the
-// baseline throughput provisioned by Amazon Personalize, and thus, the minimum
-// billing charge.
+// When you create an Amazon Personalize campaign, you can specify the minimum
+// provisioned transactions per second (minProvisionedTPS) for the campaign.
+// This is the baseline transaction throughput for the campaign provisioned
+// by Amazon Personalize. It sets the minimum billing charge for the campaign
+// while it is active. A transaction is a single GetRecommendations or GetPersonalizedRanking
+// request. The default minProvisionedTPS is 1.
 //
-// If your TPS increases beyond minProvisionedTPS, Amazon Personalize auto-scales
+// If your TPS increases beyond the minProvisionedTPS, Amazon Personalize auto-scales
 // the provisioned capacity up and down, but never below minProvisionedTPS.
 // There's a short time delay while the capacity is increased that might cause
-// loss of transactions.
+// loss of transactions. When your traffic reduces, capacity returns to the
+// minProvisionedTPS.
 //
-// The actual TPS used is calculated as the average requests/second within a
-// 5-minute window. You pay for maximum of either the minimum provisioned TPS
-// or the actual TPS. We recommend starting with a low minProvisionedTPS, track
-// your usage using Amazon CloudWatch metrics, and then increase the minProvisionedTPS
-// as necessary.
+// You are charged for the the minimum provisioned TPS or, if your requests
+// exceed the minProvisionedTPS, the actual TPS. The actual TPS is the total
+// number of recommendation requests you make. We recommend starting with a
+// low minProvisionedTPS, track your usage using Amazon CloudWatch metrics,
+// and then increase the minProvisionedTPS as necessary.
+//
+// For more information about campaign costs, see Amazon Personalize pricing
+// (https://aws.amazon.com/personalize/pricing/).
 //
 // # Status
 //
@@ -362,6 +371,139 @@ func (c *Personalize) CreateCampaign(input *CreateCampaignInput) (*CreateCampaig
 // for more information on using Contexts.
 func (c *Personalize) CreateCampaignWithContext(ctx aws.Context, input *CreateCampaignInput, opts ...request.Option) (*CreateCampaignOutput, error) {
 	req, out := c.CreateCampaignRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opCreateDataDeletionJob = "CreateDataDeletionJob"
+
+// CreateDataDeletionJobRequest generates a "aws/request.Request" representing the
+// client's request for the CreateDataDeletionJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateDataDeletionJob for more information on using the CreateDataDeletionJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateDataDeletionJobRequest method.
+//	req, resp := client.CreateDataDeletionJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/CreateDataDeletionJob
+func (c *Personalize) CreateDataDeletionJobRequest(input *CreateDataDeletionJobInput) (req *request.Request, output *CreateDataDeletionJobOutput) {
+	op := &request.Operation{
+		Name:       opCreateDataDeletionJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateDataDeletionJobInput{}
+	}
+
+	output = &CreateDataDeletionJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateDataDeletionJob API operation for Amazon Personalize.
+//
+// Creates a batch job that deletes all references to specific users from an
+// Amazon Personalize dataset group in batches. You specify the users to delete
+// in a CSV file of userIds in an Amazon S3 bucket. After a job completes, Amazon
+// Personalize no longer trains on the users’ data and no longer considers
+// the users when generating user segments. For more information about creating
+// a data deletion job, see Deleting users (https://docs.aws.amazon.com/personalize/latest/dg/delete-records.html).
+//
+//   - Your input file must be a CSV file with a single USER_ID column that
+//     lists the users IDs. For more information about preparing the CSV file,
+//     see Preparing your data deletion file and uploading it to Amazon S3 (https://docs.aws.amazon.com/personalize/latest/dg/prepare-deletion-input-file.html).
+//
+//   - To give Amazon Personalize permission to access your input CSV file
+//     of userIds, you must specify an IAM service role that has permission to
+//     read from the data source. This role needs GetObject and ListBucket permissions
+//     for the bucket and its content. These permissions are the same as importing
+//     data. For information on granting access to your Amazon S3 bucket, see
+//     Giving Amazon Personalize Access to Amazon S3 Resources (https://docs.aws.amazon.com/personalize/latest/dg/granting-personalize-s3-access.html).
+//
+// After you create a job, it can take up to a day to delete all references
+// to the users from datasets and models. Until the job completes, Amazon Personalize
+// continues to use the data when training. And if you use a User Segmentation
+// recipe, the users might appear in user segments.
+//
+// # Status
+//
+// A data deletion job can have one of the following statuses:
+//
+//   - PENDING > IN_PROGRESS > COMPLETED -or- FAILED
+//
+// To get the status of the data deletion job, call DescribeDataDeletionJob
+// (https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeDataDeletionJob.html)
+// API operation and specify the Amazon Resource Name (ARN) of the job. If the
+// status is FAILED, the response includes a failureReason key, which describes
+// why the job failed.
+//
+// Related APIs
+//
+//   - ListDataDeletionJobs (https://docs.aws.amazon.com/personalize/latest/dg/API_ListDataDeletionJobs.html)
+//
+//   - DescribeDataDeletionJob (https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeDataDeletionJob.html)
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Personalize's
+// API operation CreateDataDeletionJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InvalidInputException
+//     Provide a valid value for the field or parameter.
+//
+//   - ResourceNotFoundException
+//     Could not find the specified resource.
+//
+//   - ResourceAlreadyExistsException
+//     The specified resource already exists.
+//
+//   - LimitExceededException
+//     The limit on the number of requests per second has been exceeded.
+//
+//   - ResourceInUseException
+//     The specified resource is in use.
+//
+//   - TooManyTagsException
+//     You have exceeded the maximum number of tags you can apply to this resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/CreateDataDeletionJob
+func (c *Personalize) CreateDataDeletionJob(input *CreateDataDeletionJobInput) (*CreateDataDeletionJobOutput, error) {
+	req, out := c.CreateDataDeletionJobRequest(input)
+	return out, req.Send()
+}
+
+// CreateDataDeletionJobWithContext is the same as CreateDataDeletionJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateDataDeletionJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Personalize) CreateDataDeletionJobWithContext(ctx aws.Context, input *CreateDataDeletionJobInput, opts ...request.Option) (*CreateDataDeletionJobOutput, error) {
+	req, out := c.CreateDataDeletionJobRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1482,24 +1624,41 @@ func (c *Personalize) CreateSolutionRequest(input *CreateSolutionInput) (req *re
 
 // CreateSolution API operation for Amazon Personalize.
 //
-// Creates the configuration for training a model. A trained model is known
-// as a solution version. After the configuration is created, you train the
-// model (create a solution version) by calling the CreateSolutionVersion (https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolutionVersion.html)
-// operation. Every time you call CreateSolutionVersion, a new version of the
-// solution is created.
+// After you create a solution, you can’t change its configuration. By default,
+// all new solutions use automatic training. With automatic training, you incur
+// training costs while your solution is active. You can't stop automatic training
+// for a solution. To avoid unnecessary costs, make sure to delete the solution
+// when you are finished. For information about training costs, see Amazon Personalize
+// pricing (https://aws.amazon.com/personalize/pricing/).
 //
-// After creating a solution version, you check its accuracy by calling GetSolutionMetrics
+// Creates the configuration for training a model (creating a solution version).
+// This configuration includes the recipe to use for model training and optional
+// training configuration, such as columns to use in training and feature transformation
+// parameters. For more information about configuring a solution, see Creating
+// and configuring a solution (https://docs.aws.amazon.com/personalize/latest/dg/customizing-solution-config.html).
+//
+// By default, new solutions use automatic training to create solution versions
+// every 7 days. You can change the training frequency. Automatic solution version
+// creation starts one hour after the solution is ACTIVE. If you manually create
+// a solution version within the hour, the solution skips the first automatic
+// training. For more information, see Configuring automatic training (https://docs.aws.amazon.com/personalize/latest/dg/solution-config-auto-training.html).
+//
+// To turn off automatic training, set performAutoTraining to false. If you
+// turn off automatic training, you must manually create a solution version
+// by calling the CreateSolutionVersion (https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolutionVersion.html)
+// operation.
+//
+// After training starts, you can get the solution version's Amazon Resource
+// Name (ARN) with the ListSolutionVersions (https://docs.aws.amazon.com/personalize/latest/dg/API_ListSolutionVersions.html)
+// API operation. To get its status, use the DescribeSolutionVersion (https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolutionVersion.html).
+//
+// After training completes you can evaluate model accuracy by calling GetSolutionMetrics
 // (https://docs.aws.amazon.com/personalize/latest/dg/API_GetSolutionMetrics.html).
-// When you are satisfied with the version, you deploy it using CreateCampaign
+// When you are satisfied with the solution version, you deploy it using CreateCampaign
 // (https://docs.aws.amazon.com/personalize/latest/dg/API_CreateCampaign.html).
 // The campaign provides recommendations to a client through the GetRecommendations
 // (https://docs.aws.amazon.com/personalize/latest/dg/API_RS_GetRecommendations.html)
 // API.
-//
-// To train a model, Amazon Personalize requires training data and a recipe.
-// The training data comes from the dataset group that you provide in the request.
-// A recipe specifies the training algorithm and a feature transformation. You
-// can specify one of the predefined recipes provided by Amazon Personalize.
 //
 // Amazon Personalize doesn't support configuring the hpoObjective for solution
 // hyperparameter optimization at this time.
@@ -1513,7 +1672,7 @@ func (c *Personalize) CreateSolutionRequest(input *CreateSolutionInput) (req *re
 //   - DELETE PENDING > DELETE IN_PROGRESS
 //
 // To get the status of the solution, call DescribeSolution (https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolution.html).
-// Wait until the status shows as ACTIVE before calling CreateSolutionVersion.
+// If you use manual training, the status must be ACTIVE before you call CreateSolutionVersion.
 //
 // Related APIs
 //
@@ -2845,6 +3004,89 @@ func (c *Personalize) DescribeCampaign(input *DescribeCampaignInput) (*DescribeC
 // for more information on using Contexts.
 func (c *Personalize) DescribeCampaignWithContext(ctx aws.Context, input *DescribeCampaignInput, opts ...request.Option) (*DescribeCampaignOutput, error) {
 	req, out := c.DescribeCampaignRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDescribeDataDeletionJob = "DescribeDataDeletionJob"
+
+// DescribeDataDeletionJobRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeDataDeletionJob operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeDataDeletionJob for more information on using the DescribeDataDeletionJob
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeDataDeletionJobRequest method.
+//	req, resp := client.DescribeDataDeletionJobRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/DescribeDataDeletionJob
+func (c *Personalize) DescribeDataDeletionJobRequest(input *DescribeDataDeletionJobInput) (req *request.Request, output *DescribeDataDeletionJobOutput) {
+	op := &request.Operation{
+		Name:       opDescribeDataDeletionJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeDataDeletionJobInput{}
+	}
+
+	output = &DescribeDataDeletionJobOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeDataDeletionJob API operation for Amazon Personalize.
+//
+// Describes the data deletion job created by CreateDataDeletionJob (https://docs.aws.amazon.com/personalize/latest/dg/API_CreateDataDeletionJob.html),
+// including the job status.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Personalize's
+// API operation DescribeDataDeletionJob for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InvalidInputException
+//     Provide a valid value for the field or parameter.
+//
+//   - ResourceNotFoundException
+//     Could not find the specified resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/DescribeDataDeletionJob
+func (c *Personalize) DescribeDataDeletionJob(input *DescribeDataDeletionJobInput) (*DescribeDataDeletionJobOutput, error) {
+	req, out := c.DescribeDataDeletionJobRequest(input)
+	return out, req.Send()
+}
+
+// DescribeDataDeletionJobWithContext is the same as DescribeDataDeletionJob with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeDataDeletionJob for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Personalize) DescribeDataDeletionJobWithContext(ctx aws.Context, input *DescribeDataDeletionJobInput, opts ...request.Option) (*DescribeDataDeletionJobOutput, error) {
+	req, out := c.DescribeDataDeletionJobRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -4462,6 +4704,92 @@ func (c *Personalize) ListCampaignsPagesWithContext(ctx aws.Context, input *List
 	}
 
 	return p.Err()
+}
+
+const opListDataDeletionJobs = "ListDataDeletionJobs"
+
+// ListDataDeletionJobsRequest generates a "aws/request.Request" representing the
+// client's request for the ListDataDeletionJobs operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListDataDeletionJobs for more information on using the ListDataDeletionJobs
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListDataDeletionJobsRequest method.
+//	req, resp := client.ListDataDeletionJobsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/ListDataDeletionJobs
+func (c *Personalize) ListDataDeletionJobsRequest(input *ListDataDeletionJobsInput) (req *request.Request, output *ListDataDeletionJobsOutput) {
+	op := &request.Operation{
+		Name:       opListDataDeletionJobs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ListDataDeletionJobsInput{}
+	}
+
+	output = &ListDataDeletionJobsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListDataDeletionJobs API operation for Amazon Personalize.
+//
+// Returns a list of data deletion jobs for a dataset group ordered by creation
+// time, with the most recent first. When a dataset group is not specified,
+// all the data deletion jobs associated with the account are listed. The response
+// provides the properties for each job, including the Amazon Resource Name
+// (ARN). For more information on data deletion jobs, see Deleting users (https://docs.aws.amazon.com/personalize/latest/dg/delete-records.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Personalize's
+// API operation ListDataDeletionJobs for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InvalidInputException
+//     Provide a valid value for the field or parameter.
+//
+//   - InvalidNextTokenException
+//     The token is not valid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/personalize-2018-05-22/ListDataDeletionJobs
+func (c *Personalize) ListDataDeletionJobs(input *ListDataDeletionJobsInput) (*ListDataDeletionJobsOutput, error) {
+	req, out := c.ListDataDeletionJobsRequest(input)
+	return out, req.Send()
+}
+
+// ListDataDeletionJobsWithContext is the same as ListDataDeletionJobs with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListDataDeletionJobs for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Personalize) ListDataDeletionJobsWithContext(ctx aws.Context, input *ListDataDeletionJobsInput, opts ...request.Option) (*ListDataDeletionJobsOutput, error) {
+	req, out := c.ListDataDeletionJobsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
 }
 
 const opListDatasetExportJobs = "ListDatasetExportJobs"
@@ -6203,10 +6531,10 @@ func (c *Personalize) ListSolutionsRequest(input *ListSolutionsInput) (req *requ
 
 // ListSolutions API operation for Amazon Personalize.
 //
-// Returns a list of solutions that use the given dataset group. When a dataset
-// group is not specified, all the solutions associated with the account are
-// listed. The response provides the properties for each solution, including
-// the Amazon Resource Name (ARN). For more information on solutions, see CreateSolution
+// Returns a list of solutions in a given dataset group. When a dataset group
+// is not specified, all the solutions associated with the account are listed.
+// The response provides the properties for each solution, including the Amazon
+// Resource Name (ARN). For more information on solutions, see CreateSolution
 // (https://docs.aws.amazon.com/personalize/latest/dg/API_CreateSolution.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -6789,8 +7117,8 @@ func (c *Personalize) UntagResourceRequest(input *UntagResourceInput) (req *requ
 
 // UntagResource API operation for Amazon Personalize.
 //
-// Remove tags (https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html)
-// that are attached to a resource.
+// Removes the specified tags that are attached to a resource. For more information,
+// see Removing tags from Amazon Personalize resources (https://docs.aws.amazon.com/personalize/latest/dg/tags-remove.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6881,7 +7209,16 @@ func (c *Personalize) UpdateCampaignRequest(input *UpdateCampaignInput) (req *re
 //
 // Updates a campaign to deploy a retrained solution version with an existing
 // campaign, change your campaign's minProvisionedTPS, or modify your campaign's
-// configuration, such as the exploration configuration.
+// configuration. For example, you can set enableMetadataWithRecommendations
+// to true for an existing campaign.
+//
+// To update a campaign to start automatically using the latest solution version,
+// specify the following:
+//
+//   - For the SolutionVersionArn parameter, specify the Amazon Resource Name
+//     (ARN) of your solution in SolutionArn/$LATEST format.
+//
+//   - In the campaignConfig, set syncWithLatestSolutionVersion to true.
 //
 // To update a campaign, the campaign status must be ACTIVE or CREATE FAILED.
 // Check the campaign status using the DescribeCampaign (https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeCampaign.html)
@@ -7435,6 +7772,58 @@ func (s AutoMLResult) GoString() string {
 // SetBestRecipeArn sets the BestRecipeArn field's value.
 func (s *AutoMLResult) SetBestRecipeArn(v string) *AutoMLResult {
 	s.BestRecipeArn = &v
+	return s
+}
+
+// The automatic training configuration to use when performAutoTraining is true.
+type AutoTrainingConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies how often to automatically train new solution versions. Specify
+	// a rate expression in rate(value unit) format. For value, specify a number
+	// between 1 and 30. For unit, specify day or days. For example, to automatically
+	// create a new solution version every 5 days, specify rate(5 days). The default
+	// is every 7 days.
+	//
+	// For more information about auto training, see Creating and configuring a
+	// solution (https://docs.aws.amazon.com/personalize/latest/dg/customizing-solution-config.html).
+	SchedulingExpression *string `locationName:"schedulingExpression" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutoTrainingConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutoTrainingConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AutoTrainingConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AutoTrainingConfig"}
+	if s.SchedulingExpression != nil && len(*s.SchedulingExpression) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SchedulingExpression", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetSchedulingExpression sets the SchedulingExpression field's value.
+func (s *AutoTrainingConfig) SetSchedulingExpression(v string) *AutoTrainingConfig {
+	s.SchedulingExpression = &v
 	return s
 }
 
@@ -8237,7 +8626,7 @@ type Campaign struct {
 	// The name of the campaign.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
-	// The Amazon Resource Name (ARN) of a specific version of the solution.
+	// The Amazon Resource Name (ARN) of the solution version the campaign uses.
 	SolutionVersionArn *string `locationName:"solutionVersionArn" type:"string"`
 
 	// The status of the campaign.
@@ -8335,7 +8724,8 @@ type CampaignConfig struct {
 	// Whether metadata with recommendations is enabled for the campaign. If enabled,
 	// you can specify the columns from your Items dataset in your request for recommendations.
 	// Amazon Personalize returns this data for each item in the recommendation
-	// response.
+	// response. For information about enabling metadata for a campaign, see Enabling
+	// metadata in recommendations for a campaign (https://docs.aws.amazon.com/personalize/latest/dg/campaigns.html#create-campaign-return-metadata).
 	//
 	// If you enable metadata in recommendations, you will incur additional costs.
 	// For more information, see Amazon Personalize pricing (https://aws.amazon.com/personalize/pricing/).
@@ -8348,6 +8738,16 @@ type CampaignConfig struct {
 	// (https://docs.aws.amazon.com/personalize/latest/dg/native-recipe-new-item-USER_PERSONALIZATION.html)
 	// recipe.
 	ItemExplorationConfig map[string]*string `locationName:"itemExplorationConfig" type:"map"`
+
+	// Whether the campaign automatically updates to use the latest solution version
+	// (trained model) of a solution. If you specify True, you must specify the
+	// ARN of your solution for the SolutionVersionArn parameter. It must be in
+	// SolutionArn/$LATEST format. The default is False and you must manually update
+	// the campaign to deploy the latest solution version.
+	//
+	// For more information about automatic campaign updates, see Enabling automatic
+	// campaign updates (https://docs.aws.amazon.com/personalize/latest/dg/campaigns.html#create-campaign-automatic-latest-sv-update).
+	SyncWithLatestSolutionVersion *bool `locationName:"syncWithLatestSolutionVersion" type:"boolean"`
 }
 
 // String returns the string representation.
@@ -8377,6 +8777,12 @@ func (s *CampaignConfig) SetEnableMetadataWithRecommendations(v bool) *CampaignC
 // SetItemExplorationConfig sets the ItemExplorationConfig field's value.
 func (s *CampaignConfig) SetItemExplorationConfig(v map[string]*string) *CampaignConfig {
 	s.ItemExplorationConfig = v
+	return s
+}
+
+// SetSyncWithLatestSolutionVersion sets the SyncWithLatestSolutionVersion field's value.
+func (s *CampaignConfig) SetSyncWithLatestSolutionVersion(v bool) *CampaignConfig {
+	s.SyncWithLatestSolutionVersion = &v
 	return s
 }
 
@@ -9101,7 +9507,16 @@ type CreateCampaignInput struct {
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
-	// The Amazon Resource Name (ARN) of the solution version to deploy.
+	// The Amazon Resource Name (ARN) of the trained model to deploy with the campaign.
+	// To specify the latest solution version of your solution, specify the ARN
+	// of your solution in SolutionArn/$LATEST format. You must use this format
+	// if you set syncWithLatestSolutionVersion to True in the CampaignConfig (https://docs.aws.amazon.com/personalize/latest/dg/API_CampaignConfig.html).
+	//
+	// To deploy a model that isn't the latest solution version of your solution,
+	// specify the ARN of the solution version.
+	//
+	// For more information about automatic campaign updates, see Enabling automatic
+	// campaign updates (https://docs.aws.amazon.com/personalize/latest/dg/campaigns.html#create-campaign-automatic-latest-sv-update).
 	//
 	// SolutionVersionArn is a required field
 	SolutionVersionArn *string `locationName:"solutionVersionArn" type:"string" required:"true"`
@@ -9219,6 +9634,150 @@ func (s CreateCampaignOutput) GoString() string {
 // SetCampaignArn sets the CampaignArn field's value.
 func (s *CreateCampaignOutput) SetCampaignArn(v string) *CreateCampaignOutput {
 	s.CampaignArn = &v
+	return s
+}
+
+type CreateDataDeletionJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon S3 bucket that contains the list of userIds of the users to delete.
+	//
+	// DataSource is a required field
+	DataSource *DataSource `locationName:"dataSource" type:"structure" required:"true"`
+
+	// The Amazon Resource Name (ARN) of the dataset group that has the datasets
+	// you want to delete records from.
+	//
+	// DatasetGroupArn is a required field
+	DatasetGroupArn *string `locationName:"datasetGroupArn" type:"string" required:"true"`
+
+	// The name for the data deletion job.
+	//
+	// JobName is a required field
+	JobName *string `locationName:"jobName" min:"1" type:"string" required:"true"`
+
+	// The Amazon Resource Name (ARN) of the IAM role that has permissions to read
+	// from the Amazon S3 data source.
+	//
+	// RoleArn is a required field
+	RoleArn *string `locationName:"roleArn" type:"string" required:"true"`
+
+	// A list of tags (https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html)
+	// to apply to the data deletion job.
+	Tags []*Tag `locationName:"tags" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataDeletionJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataDeletionJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateDataDeletionJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateDataDeletionJobInput"}
+	if s.DataSource == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSource"))
+	}
+	if s.DatasetGroupArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatasetGroupArn"))
+	}
+	if s.JobName == nil {
+		invalidParams.Add(request.NewErrParamRequired("JobName"))
+	}
+	if s.JobName != nil && len(*s.JobName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("JobName", 1))
+	}
+	if s.RoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSource sets the DataSource field's value.
+func (s *CreateDataDeletionJobInput) SetDataSource(v *DataSource) *CreateDataDeletionJobInput {
+	s.DataSource = v
+	return s
+}
+
+// SetDatasetGroupArn sets the DatasetGroupArn field's value.
+func (s *CreateDataDeletionJobInput) SetDatasetGroupArn(v string) *CreateDataDeletionJobInput {
+	s.DatasetGroupArn = &v
+	return s
+}
+
+// SetJobName sets the JobName field's value.
+func (s *CreateDataDeletionJobInput) SetJobName(v string) *CreateDataDeletionJobInput {
+	s.JobName = &v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *CreateDataDeletionJobInput) SetRoleArn(v string) *CreateDataDeletionJobInput {
+	s.RoleArn = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateDataDeletionJobInput) SetTags(v []*Tag) *CreateDataDeletionJobInput {
+	s.Tags = v
+	return s
+}
+
+type CreateDataDeletionJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the data deletion job.
+	DataDeletionJobArn *string `locationName:"dataDeletionJobArn" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataDeletionJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDataDeletionJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataDeletionJobArn sets the DataDeletionJobArn field's value.
+func (s *CreateDataDeletionJobOutput) SetDataDeletionJobArn(v string) *CreateDataDeletionJobOutput {
+	s.DataDeletionJobArn = &v
 	return s
 }
 
@@ -10531,7 +11090,7 @@ type CreateSolutionInput struct {
 	//
 	// We don't recommend enabling automated machine learning. Instead, match your
 	// use case to the available Amazon Personalize recipes. For more information,
-	// see Determining your use case. (https://docs.aws.amazon.com/personalize/latest/dg/determining-use-case.html)
+	// see Choosing a recipe (https://docs.aws.amazon.com/personalize/latest/dg/working-with-predefined-recipes.html).
 	//
 	// Whether to perform automated machine learning (AutoML). The default is false.
 	// For this case, you must specify recipeArn.
@@ -10543,6 +11102,22 @@ type CreateSolutionInput struct {
 	// the training process as compared to selecting a specific recipe.
 	PerformAutoML *bool `locationName:"performAutoML" type:"boolean"`
 
+	// Whether the solution uses automatic training to create new solution versions
+	// (trained models). The default is True and the solution automatically creates
+	// new solution versions every 7 days. You can change the training frequency
+	// by specifying a schedulingExpression in the AutoTrainingConfig as part of
+	// solution configuration. For more information about automatic training, see
+	// Configuring automatic training (https://docs.aws.amazon.com/personalize/latest/dg/solution-config-auto-training.html).
+	//
+	// Automatic solution version creation starts one hour after the solution is
+	// ACTIVE. If you manually create a solution version within the hour, the solution
+	// skips the first automatic training.
+	//
+	// After training starts, you can get the solution version's Amazon Resource
+	// Name (ARN) with the ListSolutionVersions (https://docs.aws.amazon.com/personalize/latest/dg/API_ListSolutionVersions.html)
+	// API operation. To get its status, use the DescribeSolutionVersion (https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeSolutionVersion.html).
+	PerformAutoTraining *bool `locationName:"performAutoTraining" type:"boolean"`
+
 	// Whether to perform hyperparameter optimization (HPO) on the specified or
 	// selected recipe. The default is false.
 	//
@@ -10550,8 +11125,9 @@ type CreateSolutionInput struct {
 	// set it to false.
 	PerformHPO *bool `locationName:"performHPO" type:"boolean"`
 
-	// The ARN of the recipe to use for model training. This is required when performAutoML
-	// is false.
+	// The Amazon Resource Name (ARN) of the recipe to use for model training. This
+	// is required when performAutoML is false. For information about different
+	// Amazon Personalize recipes and their ARNs, see Choosing a recipe (https://docs.aws.amazon.com/personalize/latest/dg/working-with-predefined-recipes.html).
 	RecipeArn *string `locationName:"recipeArn" type:"string"`
 
 	// The configuration to use with the solution. When performAutoML is set to
@@ -10639,6 +11215,12 @@ func (s *CreateSolutionInput) SetName(v string) *CreateSolutionInput {
 // SetPerformAutoML sets the PerformAutoML field's value.
 func (s *CreateSolutionInput) SetPerformAutoML(v bool) *CreateSolutionInput {
 	s.PerformAutoML = &v
+	return s
+}
+
+// SetPerformAutoTraining sets the PerformAutoTraining field's value.
+func (s *CreateSolutionInput) SetPerformAutoTraining(v bool) *CreateSolutionInput {
+	s.PerformAutoTraining = &v
 	return s
 }
 
@@ -10832,12 +11414,239 @@ func (s *CreateSolutionVersionOutput) SetSolutionVersionArn(v string) *CreateSol
 	return s
 }
 
-// Describes the data source that contains the data to upload to a dataset.
+// Describes a job that deletes all references to specific users from an Amazon
+// Personalize dataset group in batches. For information about creating a data
+// deletion job, see Deleting users (https://docs.aws.amazon.com/personalize/latest/dg/delete-records.html).
+type DataDeletionJob struct {
+	_ struct{} `type:"structure"`
+
+	// The creation date and time (in Unix time) of the data deletion job.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The Amazon Resource Name (ARN) of the data deletion job.
+	DataDeletionJobArn *string `locationName:"dataDeletionJobArn" type:"string"`
+
+	// Describes the data source that contains the data to upload to a dataset,
+	// or the list of records to delete from Amazon Personalize.
+	DataSource *DataSource `locationName:"dataSource" type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the dataset group the job deletes records
+	// from.
+	DatasetGroupArn *string `locationName:"datasetGroupArn" type:"string"`
+
+	// If a data deletion job fails, provides the reason why.
+	FailureReason *string `locationName:"failureReason" type:"string"`
+
+	// The name of the data deletion job.
+	JobName *string `locationName:"jobName" min:"1" type:"string"`
+
+	// The date and time (in Unix time) the data deletion job was last updated.
+	LastUpdatedDateTime *time.Time `locationName:"lastUpdatedDateTime" type:"timestamp"`
+
+	// The number of records deleted by a COMPLETED job.
+	NumDeleted *int64 `locationName:"numDeleted" type:"integer"`
+
+	// The Amazon Resource Name (ARN) of the IAM role that has permissions to read
+	// from the Amazon S3 data source.
+	RoleArn *string `locationName:"roleArn" type:"string"`
+
+	// The status of the data deletion job.
+	//
+	// A data deletion job can have one of the following statuses:
+	//
+	//    * PENDING > IN_PROGRESS > COMPLETED -or- FAILED
+	Status *string `locationName:"status" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataDeletionJob) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataDeletionJob) GoString() string {
+	return s.String()
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *DataDeletionJob) SetCreationDateTime(v time.Time) *DataDeletionJob {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetDataDeletionJobArn sets the DataDeletionJobArn field's value.
+func (s *DataDeletionJob) SetDataDeletionJobArn(v string) *DataDeletionJob {
+	s.DataDeletionJobArn = &v
+	return s
+}
+
+// SetDataSource sets the DataSource field's value.
+func (s *DataDeletionJob) SetDataSource(v *DataSource) *DataDeletionJob {
+	s.DataSource = v
+	return s
+}
+
+// SetDatasetGroupArn sets the DatasetGroupArn field's value.
+func (s *DataDeletionJob) SetDatasetGroupArn(v string) *DataDeletionJob {
+	s.DatasetGroupArn = &v
+	return s
+}
+
+// SetFailureReason sets the FailureReason field's value.
+func (s *DataDeletionJob) SetFailureReason(v string) *DataDeletionJob {
+	s.FailureReason = &v
+	return s
+}
+
+// SetJobName sets the JobName field's value.
+func (s *DataDeletionJob) SetJobName(v string) *DataDeletionJob {
+	s.JobName = &v
+	return s
+}
+
+// SetLastUpdatedDateTime sets the LastUpdatedDateTime field's value.
+func (s *DataDeletionJob) SetLastUpdatedDateTime(v time.Time) *DataDeletionJob {
+	s.LastUpdatedDateTime = &v
+	return s
+}
+
+// SetNumDeleted sets the NumDeleted field's value.
+func (s *DataDeletionJob) SetNumDeleted(v int64) *DataDeletionJob {
+	s.NumDeleted = &v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *DataDeletionJob) SetRoleArn(v string) *DataDeletionJob {
+	s.RoleArn = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DataDeletionJob) SetStatus(v string) *DataDeletionJob {
+	s.Status = &v
+	return s
+}
+
+// Provides a summary of the properties of a data deletion job. For a complete
+// listing, call the DescribeDataDeletionJob (https://docs.aws.amazon.com/personalize/latest/dg/API_DescribeDataDeletionJob.html)
+// API operation.
+type DataDeletionJobSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The creation date and time (in Unix time) of the data deletion job.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The Amazon Resource Name (ARN) of the data deletion job.
+	DataDeletionJobArn *string `locationName:"dataDeletionJobArn" type:"string"`
+
+	// The Amazon Resource Name (ARN) of the dataset group the job deleted records
+	// from.
+	DatasetGroupArn *string `locationName:"datasetGroupArn" type:"string"`
+
+	// If a data deletion job fails, provides the reason why.
+	FailureReason *string `locationName:"failureReason" type:"string"`
+
+	// The name of the data deletion job.
+	JobName *string `locationName:"jobName" min:"1" type:"string"`
+
+	// The date and time (in Unix time) the data deletion job was last updated.
+	LastUpdatedDateTime *time.Time `locationName:"lastUpdatedDateTime" type:"timestamp"`
+
+	// The status of the data deletion job.
+	//
+	// A data deletion job can have one of the following statuses:
+	//
+	//    * PENDING > IN_PROGRESS > COMPLETED -or- FAILED
+	Status *string `locationName:"status" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataDeletionJobSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataDeletionJobSummary) GoString() string {
+	return s.String()
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *DataDeletionJobSummary) SetCreationDateTime(v time.Time) *DataDeletionJobSummary {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetDataDeletionJobArn sets the DataDeletionJobArn field's value.
+func (s *DataDeletionJobSummary) SetDataDeletionJobArn(v string) *DataDeletionJobSummary {
+	s.DataDeletionJobArn = &v
+	return s
+}
+
+// SetDatasetGroupArn sets the DatasetGroupArn field's value.
+func (s *DataDeletionJobSummary) SetDatasetGroupArn(v string) *DataDeletionJobSummary {
+	s.DatasetGroupArn = &v
+	return s
+}
+
+// SetFailureReason sets the FailureReason field's value.
+func (s *DataDeletionJobSummary) SetFailureReason(v string) *DataDeletionJobSummary {
+	s.FailureReason = &v
+	return s
+}
+
+// SetJobName sets the JobName field's value.
+func (s *DataDeletionJobSummary) SetJobName(v string) *DataDeletionJobSummary {
+	s.JobName = &v
+	return s
+}
+
+// SetLastUpdatedDateTime sets the LastUpdatedDateTime field's value.
+func (s *DataDeletionJobSummary) SetLastUpdatedDateTime(v time.Time) *DataDeletionJobSummary {
+	s.LastUpdatedDateTime = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DataDeletionJobSummary) SetStatus(v string) *DataDeletionJobSummary {
+	s.Status = &v
+	return s
+}
+
+// Describes the data source that contains the data to upload to a dataset,
+// or the list of records to delete from Amazon Personalize.
 type DataSource struct {
 	_ struct{} `type:"structure"`
 
-	// The path to the Amazon S3 bucket where the data that you want to upload to
-	// your dataset is stored. For example:
+	// For dataset import jobs, the path to the Amazon S3 bucket where the data
+	// that you want to upload to your dataset is stored. For data deletion jobs,
+	// the path to the Amazon S3 bucket that stores the list of records to delete.
+	//
+	// For example:
+	//
+	// s3://bucket-name/folder-name/fileName.csv
+	//
+	// If your CSV files are in a folder in your Amazon S3 bucket and you want your
+	// import job or data deletion job to consider multiple files, you can specify
+	// the path to the folder. With a data deletion job, Amazon Personalize uses
+	// all files in the folder and any sub folder. Use the following syntax with
+	// a / after the folder name:
 	//
 	// s3://bucket-name/folder-name/
 	DataLocation *string `locationName:"dataLocation" type:"string"`
@@ -13163,6 +13972,93 @@ func (s DescribeCampaignOutput) GoString() string {
 // SetCampaign sets the Campaign field's value.
 func (s *DescribeCampaignOutput) SetCampaign(v *Campaign) *DescribeCampaignOutput {
 	s.Campaign = v
+	return s
+}
+
+type DescribeDataDeletionJobInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the data deletion job.
+	//
+	// DataDeletionJobArn is a required field
+	DataDeletionJobArn *string `locationName:"dataDeletionJobArn" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataDeletionJobInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataDeletionJobInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeDataDeletionJobInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeDataDeletionJobInput"}
+	if s.DataDeletionJobArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataDeletionJobArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataDeletionJobArn sets the DataDeletionJobArn field's value.
+func (s *DescribeDataDeletionJobInput) SetDataDeletionJobArn(v string) *DescribeDataDeletionJobInput {
+	s.DataDeletionJobArn = &v
+	return s
+}
+
+type DescribeDataDeletionJobOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the data deletion job, including the status.
+	//
+	// The status is one of the following values:
+	//
+	//    * PENDING
+	//
+	//    * IN_PROGRESS
+	//
+	//    * COMPLETED
+	//
+	//    * FAILED
+	DataDeletionJob *DataDeletionJob `locationName:"dataDeletionJob" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataDeletionJobOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeDataDeletionJobOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataDeletionJob sets the DataDeletionJob field's value.
+func (s *DescribeDataDeletionJobOutput) SetDataDeletionJob(v *DataDeletionJob) *DescribeDataDeletionJobOutput {
+	s.DataDeletionJob = v
 	return s
 }
 
@@ -15585,6 +16481,110 @@ func (s *ListCampaignsOutput) SetNextToken(v string) *ListCampaignsOutput {
 	return s
 }
 
+type ListDataDeletionJobsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the dataset group to list data deletion
+	// jobs for.
+	DatasetGroupArn *string `locationName:"datasetGroupArn" type:"string"`
+
+	// The maximum number of data deletion jobs to return.
+	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
+
+	// A token returned from the previous call to ListDataDeletionJobs for getting
+	// the next set of jobs (if they exist).
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataDeletionJobsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataDeletionJobsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListDataDeletionJobsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListDataDeletionJobsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDatasetGroupArn sets the DatasetGroupArn field's value.
+func (s *ListDataDeletionJobsInput) SetDatasetGroupArn(v string) *ListDataDeletionJobsInput {
+	s.DatasetGroupArn = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListDataDeletionJobsInput) SetMaxResults(v int64) *ListDataDeletionJobsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListDataDeletionJobsInput) SetNextToken(v string) *ListDataDeletionJobsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListDataDeletionJobsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of data deletion jobs.
+	DataDeletionJobs []*DataDeletionJobSummary `locationName:"dataDeletionJobs" type:"list"`
+
+	// A token for getting the next set of data deletion jobs (if they exist).
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataDeletionJobsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDataDeletionJobsOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataDeletionJobs sets the DataDeletionJobs field's value.
+func (s *ListDataDeletionJobsOutput) SetDataDeletionJobs(v []*DataDeletionJobSummary) *ListDataDeletionJobsOutput {
+	s.DataDeletionJobs = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListDataDeletionJobsOutput) SetNextToken(v string) *ListDataDeletionJobsOutput {
+	s.NextToken = &v
+	return s
+}
+
 type ListDatasetExportJobsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -16928,7 +17928,7 @@ func (s *ListSolutionsOutput) SetSolutions(v []*SolutionSummary) *ListSolutionsO
 type ListTagsForResourceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The resource's Amazon Resource Name.
+	// The resource's Amazon Resource Name (ARN).
 	//
 	// ResourceArn is a required field
 	ResourceArn *string `locationName:"resourceArn" type:"string" required:"true"`
@@ -17716,7 +18716,9 @@ type RecommenderConfig struct {
 	// Whether metadata with recommendations is enabled for the recommender. If
 	// enabled, you can specify the columns from your Items dataset in your request
 	// for recommendations. Amazon Personalize returns this data for each item in
-	// the recommendation response.
+	// the recommendation response. For information about enabling metadata for
+	// a recommender, see Enabling metadata in recommendations for a recommender
+	// (https://docs.aws.amazon.com/personalize/latest/dg/creating-recommenders.html#create-recommender-return-metadata).
 	//
 	// If you enable metadata in recommendations, you will incur additional costs.
 	// For more information, see Amazon Personalize pricing (https://aws.amazon.com/personalize/pricing/).
@@ -18228,8 +19230,20 @@ func (s *S3DataConfig) SetPath(v string) *S3DataConfig {
 	return s
 }
 
-// An object that provides information about a solution. A solution is a trained
-// model that can be deployed as a campaign.
+// After you create a solution, you can’t change its configuration. By default,
+// all new solutions use automatic training. With automatic training, you incur
+// training costs while your solution is active. You can't stop automatic training
+// for a solution. To avoid unnecessary costs, make sure to delete the solution
+// when you are finished. For information about training costs, see Amazon Personalize
+// pricing (https://aws.amazon.com/personalize/pricing/).
+//
+// An object that provides information about a solution. A solution includes
+// the custom recipe, customized parameters, and trained models (Solution Versions)
+// that Amazon Personalize uses to generate recommendations.
+//
+// After you create a solution, you can’t change its configuration. If you
+// need to make changes, you can clone the solution (https://docs.aws.amazon.com/personalize/latest/dg/cloning-solution.html)
+// with the Amazon Personalize console or create a new one.
 type Solution struct {
 	_ struct{} `type:"structure"`
 
@@ -18268,6 +19282,14 @@ type Solution struct {
 	// not be specified). When false (the default), Amazon Personalize uses recipeArn
 	// for training.
 	PerformAutoML *bool `locationName:"performAutoML" type:"boolean"`
+
+	// Specifies whether the solution automatically creates solution versions. The
+	// default is True and the solution automatically creates new solution versions
+	// every 7 days.
+	//
+	// For more information about auto training, see Creating and configuring a
+	// solution (https://docs.aws.amazon.com/personalize/latest/dg/customizing-solution-config.html).
+	PerformAutoTraining *bool `locationName:"performAutoTraining" type:"boolean"`
 
 	// Whether to perform hyperparameter optimization (HPO) on the chosen recipe.
 	// The default is false.
@@ -18359,6 +19381,12 @@ func (s *Solution) SetPerformAutoML(v bool) *Solution {
 	return s
 }
 
+// SetPerformAutoTraining sets the PerformAutoTraining field's value.
+func (s *Solution) SetPerformAutoTraining(v bool) *Solution {
+	s.PerformAutoTraining = &v
+	return s
+}
+
 // SetPerformHPO sets the PerformHPO field's value.
 func (s *Solution) SetPerformHPO(v bool) *Solution {
 	s.PerformHPO = &v
@@ -18399,6 +19427,9 @@ type SolutionConfig struct {
 	// The AutoMLConfig (https://docs.aws.amazon.com/personalize/latest/dg/API_AutoMLConfig.html)
 	// object containing a list of recipes to search when AutoML is performed.
 	AutoMLConfig *AutoMLConfig `locationName:"autoMLConfig" type:"structure"`
+
+	// Specifies the automatic training configuration to use.
+	AutoTrainingConfig *AutoTrainingConfig `locationName:"autoTrainingConfig" type:"structure"`
 
 	// Only events with a value greater than or equal to this threshold are used
 	// for training a model.
@@ -18441,6 +19472,11 @@ func (s SolutionConfig) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *SolutionConfig) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "SolutionConfig"}
+	if s.AutoTrainingConfig != nil {
+		if err := s.AutoTrainingConfig.Validate(); err != nil {
+			invalidParams.AddNested("AutoTrainingConfig", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.HpoConfig != nil {
 		if err := s.HpoConfig.Validate(); err != nil {
 			invalidParams.AddNested("HpoConfig", err.(request.ErrInvalidParams))
@@ -18467,6 +19503,12 @@ func (s *SolutionConfig) SetAlgorithmHyperParameters(v map[string]*string) *Solu
 // SetAutoMLConfig sets the AutoMLConfig field's value.
 func (s *SolutionConfig) SetAutoMLConfig(v *AutoMLConfig) *SolutionConfig {
 	s.AutoMLConfig = v
+	return s
+}
+
+// SetAutoTrainingConfig sets the AutoTrainingConfig field's value.
+func (s *SolutionConfig) SetAutoTrainingConfig(v *AutoTrainingConfig) *SolutionConfig {
+	s.AutoTrainingConfig = v
 	return s
 }
 
@@ -18655,18 +19697,13 @@ type SolutionVersion struct {
 	TrainingHours *float64 `locationName:"trainingHours" type:"double"`
 
 	// The scope of training to be performed when creating the solution version.
-	// The FULL option trains the solution version based on the entirety of the
-	// input solution's training data, while the UPDATE option processes only the
-	// data that has changed in comparison to the input solution. Choose UPDATE
-	// when you want to incrementally update your solution version instead of creating
-	// an entirely new one.
-	//
-	// The UPDATE option can only be used when you already have an active solution
-	// version created from the input solution using the FULL option and the input
-	// solution was trained with the User-Personalization (https://docs.aws.amazon.com/personalize/latest/dg/native-recipe-new-item-USER_PERSONALIZATION.html)
-	// recipe or the HRNN-Coldstart (https://docs.aws.amazon.com/personalize/latest/dg/native-recipe-hrnn-coldstart.html)
-	// recipe.
+	// A FULL training considers all of the data in your dataset group. An UPDATE
+	// processes only the data that has changed since the latest training. Only
+	// solution versions created with the User-Personalization recipe can use UPDATE.
 	TrainingMode *string `locationName:"trainingMode" type:"string" enum:"TrainingMode"`
+
+	// Whether the solution version was created automatically or manually.
+	TrainingType *string `locationName:"trainingType" type:"string" enum:"TrainingType"`
 
 	// If hyperparameter optimization was performed, contains the hyperparameter
 	// values of the best performing model.
@@ -18781,6 +19818,12 @@ func (s *SolutionVersion) SetTrainingMode(v string) *SolutionVersion {
 	return s
 }
 
+// SetTrainingType sets the TrainingType field's value.
+func (s *SolutionVersion) SetTrainingType(v string) *SolutionVersion {
+	s.TrainingType = &v
+	return s
+}
+
 // SetTunedHPOParams sets the TunedHPOParams field's value.
 func (s *SolutionVersion) SetTunedHPOParams(v *TunedHPOParams) *SolutionVersion {
 	s.TunedHPOParams = v
@@ -18811,6 +19854,15 @@ type SolutionVersionSummary struct {
 	//
 	//    * CREATE PENDING > CREATE IN_PROGRESS > ACTIVE -or- CREATE FAILED
 	Status *string `locationName:"status" type:"string"`
+
+	// The scope of training to be performed when creating the solution version.
+	// A FULL training considers all of the data in your dataset group. An UPDATE
+	// processes only the data that has changed since the latest training. Only
+	// solution versions created with the User-Personalization recipe can use UPDATE.
+	TrainingMode *string `locationName:"trainingMode" type:"string" enum:"TrainingMode"`
+
+	// Whether the solution version was created automatically or manually.
+	TrainingType *string `locationName:"trainingType" type:"string" enum:"TrainingType"`
 }
 
 // String returns the string representation.
@@ -18858,6 +19910,18 @@ func (s *SolutionVersionSummary) SetSolutionVersionArn(v string) *SolutionVersio
 // SetStatus sets the Status field's value.
 func (s *SolutionVersionSummary) SetStatus(v string) *SolutionVersionSummary {
 	s.Status = &v
+	return s
+}
+
+// SetTrainingMode sets the TrainingMode field's value.
+func (s *SolutionVersionSummary) SetTrainingMode(v string) *SolutionVersionSummary {
+	s.TrainingMode = &v
+	return s
+}
+
+// SetTrainingType sets the TrainingType field's value.
+func (s *SolutionVersionSummary) SetTrainingType(v string) *SolutionVersionSummary {
+	s.TrainingType = &v
 	return s
 }
 
@@ -19086,7 +20150,7 @@ func (s StopSolutionVersionCreationOutput) GoString() string {
 // The optional metadata that you apply to resources to help you categorize
 // and organize them. Each tag consists of a key and an optional value, both
 // of which you define. For more information see Tagging Amazon Personalize
-// recources (https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html).
+// resources (https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html).
 type Tag struct {
 	_ struct{} `type:"structure"`
 
@@ -19161,7 +20225,7 @@ type TagResourceInput struct {
 	ResourceArn *string `locationName:"resourceArn" type:"string" required:"true"`
 
 	// Tags to apply to the resource. For more information see Tagging Amazon Personalize
-	// recources (https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html).
+	// resources (https://docs.aws.amazon.com/personalize/latest/dg/tagging-resources.html).
 	//
 	// Tags is a required field
 	Tags []*Tag `locationName:"tags" type:"list" required:"true"`
@@ -19433,10 +20497,11 @@ type TrainingDataConfig struct {
 
 	// Specifies the columns to exclude from training. Each key is a dataset type,
 	// and each value is a list of columns. Exclude columns to control what data
-	// Amazon Personalize uses to generate recommendations. For example, you might
-	// have a column that you want to use only to filter recommendations. You can
-	// exclude this column from training and Amazon Personalize considers it only
-	// when filtering.
+	// Amazon Personalize uses to generate recommendations.
+	//
+	// For example, you might have a column that you want to use only to filter
+	// recommendations. You can exclude this column from training and Amazon Personalize
+	// considers it only when filtering.
 	ExcludedDatasetColumns map[string][]*string `locationName:"excludedDatasetColumns" type:"map"`
 }
 
@@ -19505,7 +20570,7 @@ type UntagResourceInput struct {
 	// ResourceArn is a required field
 	ResourceArn *string `locationName:"resourceArn" type:"string" required:"true"`
 
-	// Keys to remove from the resource's tags.
+	// The keys of the tags to be removed.
 	//
 	// TagKeys is a required field
 	TagKeys []*string `locationName:"tagKeys" type:"list" required:"true"`
@@ -19597,7 +20662,16 @@ type UpdateCampaignInput struct {
 	// the minProvisionedTPS as necessary.
 	MinProvisionedTPS *int64 `locationName:"minProvisionedTPS" min:"1" type:"integer"`
 
-	// The ARN of a new solution version to deploy.
+	// The Amazon Resource Name (ARN) of a new model to deploy. To specify the latest
+	// solution version of your solution, specify the ARN of your solution in SolutionArn/$LATEST
+	// format. You must use this format if you set syncWithLatestSolutionVersion
+	// to True in the CampaignConfig (https://docs.aws.amazon.com/personalize/latest/dg/API_CampaignConfig.html).
+	//
+	// To deploy a model that isn't the latest solution version of your solution,
+	// specify the ARN of the solution version.
+	//
+	// For more information about automatic campaign updates, see Enabling automatic
+	// campaign updates (https://docs.aws.amazon.com/personalize/latest/dg/campaigns.html#create-campaign-automatic-latest-sv-update).
 	SolutionVersionArn *string `locationName:"solutionVersionArn" type:"string"`
 }
 
@@ -20101,6 +21175,9 @@ const (
 
 	// TrainingModeUpdate is a TrainingMode enum value
 	TrainingModeUpdate = "UPDATE"
+
+	// TrainingModeAutotrain is a TrainingMode enum value
+	TrainingModeAutotrain = "AUTOTRAIN"
 )
 
 // TrainingMode_Values returns all elements of the TrainingMode enum
@@ -20108,5 +21185,22 @@ func TrainingMode_Values() []string {
 	return []string{
 		TrainingModeFull,
 		TrainingModeUpdate,
+		TrainingModeAutotrain,
+	}
+}
+
+const (
+	// TrainingTypeAutomatic is a TrainingType enum value
+	TrainingTypeAutomatic = "AUTOMATIC"
+
+	// TrainingTypeManual is a TrainingType enum value
+	TrainingTypeManual = "MANUAL"
+)
+
+// TrainingType_Values returns all elements of the TrainingType enum
+func TrainingType_Values() []string {
+	return []string{
+		TrainingTypeAutomatic,
+		TrainingTypeManual,
 	}
 }

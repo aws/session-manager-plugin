@@ -2740,11 +2740,13 @@ func (c *Athena) GetQueryRuntimeStatisticsRequest(input *GetQueryRuntimeStatisti
 // GetQueryRuntimeStatistics API operation for Amazon Athena.
 //
 // Returns query execution runtime statistics related to a single execution
-// of a query if you have access to the workgroup in which the query ran. Query
-// execution runtime statistics are returned only when QueryExecutionStatus$State
-// is in a SUCCEEDED or FAILED state. Stage-level input and output row count
-// and data size statistics are not shown when a query has row-level filters
-// defined in Lake Formation.
+// of a query if you have access to the workgroup in which the query ran. Statistics
+// from the Timeline section of the response object are available as soon as
+// QueryExecutionStatus$State is in a SUCCEEDED or FAILED state. The remaining
+// non-timeline statistics in the response (like stage-level input and output
+// row count and data size) are updated asynchronously and may not be available
+// immediately after a query completes. The non-timeline statistics are also
+// not included when a query has row-level filters defined in Lake Formation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3178,9 +3180,12 @@ func (c *Athena) ImportNotebookRequest(input *ImportNotebookInput) (req *request
 
 // ImportNotebook API operation for Amazon Athena.
 //
-// Imports a single ipynb file to a Spark enabled workgroup. The maximum file
-// size that can be imported is 10 megabytes. If an ipynb file with the same
-// name already exists in the workgroup, throws an error.
+// Imports a single ipynb file to a Spark enabled workgroup. To import the notebook,
+// the request must specify a value for either Payload or NoteBookS3LocationUri.
+// If neither is specified or both are specified, an InvalidRequestException
+// occurs. The maximum file size that can be imported is 10 megabytes. If an
+// ipynb file with the same name already exists in the workgroup, throws an
+// error.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -11781,10 +11786,11 @@ type ImportNotebookInput struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The notebook content to be imported.
-	//
-	// Payload is a required field
-	Payload *string `min:"1" type:"string" required:"true"`
+	// A URI that specifies the Amazon S3 location of a notebook file in ipynb format.
+	NotebookS3LocationUri *string `type:"string"`
+
+	// The notebook content to be imported. The payload must be in ipynb format.
+	Payload *string `min:"1" type:"string"`
 
 	// The notebook content type. Currently, the only valid type is IPYNB.
 	//
@@ -11827,9 +11833,6 @@ func (s *ImportNotebookInput) Validate() error {
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
 	}
-	if s.Payload == nil {
-		invalidParams.Add(request.NewErrParamRequired("Payload"))
-	}
 	if s.Payload != nil && len(*s.Payload) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Payload", 1))
 	}
@@ -11855,6 +11858,12 @@ func (s *ImportNotebookInput) SetClientRequestToken(v string) *ImportNotebookInp
 // SetName sets the Name field's value.
 func (s *ImportNotebookInput) SetName(v string) *ImportNotebookInput {
 	s.Name = &v
+	return s
+}
+
+// SetNotebookS3LocationUri sets the NotebookS3LocationUri field's value.
+func (s *ImportNotebookInput) SetNotebookS3LocationUri(v string) *ImportNotebookInput {
+	s.NotebookS3LocationUri = &v
 	return s
 }
 
@@ -15395,10 +15404,8 @@ type ResultConfiguration struct {
 	// query results location using one of the ways: either for individual queries
 	// using either this setting (client-side), or in the workgroup, using WorkGroupConfiguration.
 	// If none of them is set, Athena issues an error that no output location is
-	// provided. For more information, see Working with query results, recent queries,
-	// and output files (https://docs.aws.amazon.com/athena/latest/ug/querying.html).
-	// If workgroup settings override client-side settings, then the query uses
-	// the settings specified for the workgroup. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
+	// provided. If workgroup settings override client-side settings, then the query
+	// uses the settings specified for the workgroup. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
 	OutputLocation *string `type:"string"`
 }
 
@@ -15493,13 +15500,11 @@ type ResultConfigurationUpdates struct {
 	ExpectedBucketOwner *string `min:"12" type:"string"`
 
 	// The location in Amazon S3 where your query and calculation results are stored,
-	// such as s3://path/to/query/bucket/. For more information, see Working with
-	// query results, recent queries, and output files (https://docs.aws.amazon.com/athena/latest/ug/querying.html).
-	// If workgroup settings override client-side settings, then the query uses
-	// the location for the query results and the encryption configuration that
-	// are specified for the workgroup. The "workgroup settings override" is specified
-	// in EnforceWorkGroupConfiguration (true/false) in the WorkGroupConfiguration.
-	// See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
+	// such as s3://path/to/query/bucket/. If workgroup settings override client-side
+	// settings, then the query uses the location for the query results and the
+	// encryption configuration that are specified for the workgroup. The "workgroup
+	// settings override" is specified in EnforceWorkGroupConfiguration (true/false)
+	// in the WorkGroupConfiguration. See WorkGroupConfiguration$EnforceWorkGroupConfiguration.
 	OutputLocation *string `type:"string"`
 
 	// If set to true, indicates that the previously-specified ACL configuration
@@ -18451,8 +18456,9 @@ type WorkGroupConfiguration struct {
 	EngineVersion *EngineVersion `type:"structure"`
 
 	// The ARN of the execution role used to access user resources for Spark sessions
-	// and Identity Center enabled workgroups. This property applies only to Spark
-	// enabled workgroups and Identity Center enabled workgroups.
+	// and IAM Identity Center enabled workgroups. This property applies only to
+	// Spark enabled workgroups and IAM Identity Center enabled workgroups. The
+	// property is required for IAM Identity Center enabled workgroups.
 	ExecutionRole *string `min:"20" type:"string"`
 
 	// Specifies whether the workgroup is IAM Identity Center supported.
@@ -18479,8 +18485,7 @@ type WorkGroupConfiguration struct {
 	// specify the query results location using one of the ways: either in the workgroup
 	// using this setting, or for individual queries (client-side), using ResultConfiguration$OutputLocation.
 	// If none of them is set, Athena issues an error that no output location is
-	// provided. For more information, see Working with query results, recent queries,
-	// and output files (https://docs.aws.amazon.com/athena/latest/ug/querying.html).
+	// provided.
 	ResultConfiguration *ResultConfiguration `type:"structure"`
 }
 

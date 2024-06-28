@@ -100,6 +100,10 @@ type CostExplorerAPI interface {
 	GetAnomalySubscriptionsWithContext(aws.Context, *costexplorer.GetAnomalySubscriptionsInput, ...request.Option) (*costexplorer.GetAnomalySubscriptionsOutput, error)
 	GetAnomalySubscriptionsRequest(*costexplorer.GetAnomalySubscriptionsInput) (*request.Request, *costexplorer.GetAnomalySubscriptionsOutput)
 
+	GetApproximateUsageRecords(*costexplorer.GetApproximateUsageRecordsInput) (*costexplorer.GetApproximateUsageRecordsOutput, error)
+	GetApproximateUsageRecordsWithContext(aws.Context, *costexplorer.GetApproximateUsageRecordsInput, ...request.Option) (*costexplorer.GetApproximateUsageRecordsOutput, error)
+	GetApproximateUsageRecordsRequest(*costexplorer.GetApproximateUsageRecordsInput) (*request.Request, *costexplorer.GetApproximateUsageRecordsOutput)
+
 	GetCostAndUsage(*costexplorer.GetCostAndUsageInput) (*costexplorer.GetCostAndUsageOutput, error)
 	GetCostAndUsageWithContext(aws.Context, *costexplorer.GetCostAndUsageInput, ...request.Option) (*costexplorer.GetCostAndUsageOutput, error)
 	GetCostAndUsageRequest(*costexplorer.GetCostAndUsageInput) (*request.Request, *costexplorer.GetCostAndUsageOutput)
@@ -170,6 +174,13 @@ type CostExplorerAPI interface {
 	GetUsageForecastWithContext(aws.Context, *costexplorer.GetUsageForecastInput, ...request.Option) (*costexplorer.GetUsageForecastOutput, error)
 	GetUsageForecastRequest(*costexplorer.GetUsageForecastInput) (*request.Request, *costexplorer.GetUsageForecastOutput)
 
+	ListCostAllocationTagBackfillHistory(*costexplorer.ListCostAllocationTagBackfillHistoryInput) (*costexplorer.ListCostAllocationTagBackfillHistoryOutput, error)
+	ListCostAllocationTagBackfillHistoryWithContext(aws.Context, *costexplorer.ListCostAllocationTagBackfillHistoryInput, ...request.Option) (*costexplorer.ListCostAllocationTagBackfillHistoryOutput, error)
+	ListCostAllocationTagBackfillHistoryRequest(*costexplorer.ListCostAllocationTagBackfillHistoryInput) (*request.Request, *costexplorer.ListCostAllocationTagBackfillHistoryOutput)
+
+	ListCostAllocationTagBackfillHistoryPages(*costexplorer.ListCostAllocationTagBackfillHistoryInput, func(*costexplorer.ListCostAllocationTagBackfillHistoryOutput, bool) bool) error
+	ListCostAllocationTagBackfillHistoryPagesWithContext(aws.Context, *costexplorer.ListCostAllocationTagBackfillHistoryInput, func(*costexplorer.ListCostAllocationTagBackfillHistoryOutput, bool) bool, ...request.Option) error
+
 	ListCostAllocationTags(*costexplorer.ListCostAllocationTagsInput) (*costexplorer.ListCostAllocationTagsOutput, error)
 	ListCostAllocationTagsWithContext(aws.Context, *costexplorer.ListCostAllocationTagsInput, ...request.Option) (*costexplorer.ListCostAllocationTagsOutput, error)
 	ListCostAllocationTagsRequest(*costexplorer.ListCostAllocationTagsInput) (*request.Request, *costexplorer.ListCostAllocationTagsOutput)
@@ -195,6 +206,10 @@ type CostExplorerAPI interface {
 	ProvideAnomalyFeedback(*costexplorer.ProvideAnomalyFeedbackInput) (*costexplorer.ProvideAnomalyFeedbackOutput, error)
 	ProvideAnomalyFeedbackWithContext(aws.Context, *costexplorer.ProvideAnomalyFeedbackInput, ...request.Option) (*costexplorer.ProvideAnomalyFeedbackOutput, error)
 	ProvideAnomalyFeedbackRequest(*costexplorer.ProvideAnomalyFeedbackInput) (*request.Request, *costexplorer.ProvideAnomalyFeedbackOutput)
+
+	StartCostAllocationTagBackfill(*costexplorer.StartCostAllocationTagBackfillInput) (*costexplorer.StartCostAllocationTagBackfillOutput, error)
+	StartCostAllocationTagBackfillWithContext(aws.Context, *costexplorer.StartCostAllocationTagBackfillInput, ...request.Option) (*costexplorer.StartCostAllocationTagBackfillOutput, error)
+	StartCostAllocationTagBackfillRequest(*costexplorer.StartCostAllocationTagBackfillInput) (*request.Request, *costexplorer.StartCostAllocationTagBackfillOutput)
 
 	StartSavingsPlansPurchaseRecommendationGeneration(*costexplorer.StartSavingsPlansPurchaseRecommendationGenerationInput) (*costexplorer.StartSavingsPlansPurchaseRecommendationGenerationOutput, error)
 	StartSavingsPlansPurchaseRecommendationGenerationWithContext(aws.Context, *costexplorer.StartSavingsPlansPurchaseRecommendationGenerationInput, ...request.Option) (*costexplorer.StartSavingsPlansPurchaseRecommendationGenerationOutput, error)

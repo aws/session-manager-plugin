@@ -1210,7 +1210,7 @@ type CreateEnvironmentInput struct {
 	// it defaults to the latest version. For more information, see Apache Airflow
 	// versions on Amazon Managed Workflows for Apache Airflow (MWAA) (https://docs.aws.amazon.com/mwaa/latest/userguide/airflow-versions.html).
 	//
-	// Valid values: 1.10.12, 2.0.2, 2.2.2, 2.4.3, 2.5.1, 2.6.3, 2.7.2
+	// Valid values: 1.10.12, 2.0.2, 2.2.2, 2.4.3, 2.5.1, 2.6.3, 2.7.2 2.8.1
 	AirflowVersion *string `min:"1" type:"string"`
 
 	// The relative path to the DAGs folder on your Amazon S3 bucket. For example,
@@ -1230,8 +1230,9 @@ type CreateEnvironmentInput struct {
 	// CREATE_FAILED. You can delete the failed environment and create a new one.
 	EndpointManagement *string `type:"string" enum:"EndpointManagement"`
 
-	// The environment class type. Valid values: mw1.small, mw1.medium, mw1.large.
-	// For more information, see Amazon MWAA environment class (https://docs.aws.amazon.com/mwaa/latest/userguide/environment-class.html).
+	// The environment class type. Valid values: mw1.small, mw1.medium, mw1.large,
+	// mw1.xlarge, and mw1.2xlarge. For more information, see Amazon MWAA environment
+	// class (https://docs.aws.amazon.com/mwaa/latest/userguide/environment-class.html).
 	EnvironmentClass *string `min:"1" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the execution role for your environment.
@@ -1252,6 +1253,19 @@ type CreateEnvironmentInput struct {
 	// Defines the Apache Airflow logs to send to CloudWatch Logs.
 	LoggingConfiguration *LoggingConfigurationInput `type:"structure"`
 
+	// The maximum number of web servers that you want to run in your environment.
+	// Amazon MWAA scales the number of Apache Airflow web servers up to the number
+	// you specify for MaxWebservers when you interact with your Apache Airflow
+	// environment using Apache Airflow REST API, or the Apache Airflow CLI. For
+	// example, in scenarios where your workload requires network calls to the Apache
+	// Airflow REST API with a high transaction-per-second (TPS) rate, Amazon MWAA
+	// will increase the number of web servers up to the number set in MaxWebserers.
+	// As TPS rates decrease Amazon MWAA disposes of the additional web servers,
+	// and scales down to the number set in MinxWebserers.
+	//
+	// Valid values: Accepts between 2 and 5. Defaults to 2.
+	MaxWebservers *int64 `min:"2" type:"integer"`
+
 	// The maximum number of workers that you want to run in your environment. MWAA
 	// scales the number of Apache Airflow workers up to the number you specify
 	// in the MaxWorkers field. For example, 20. When there are no more tasks running,
@@ -1259,6 +1273,17 @@ type CreateEnvironmentInput struct {
 	// one worker that is included with your environment, or the number you specify
 	// in MinWorkers.
 	MaxWorkers *int64 `min:"1" type:"integer"`
+
+	// The minimum number of web servers that you want to run in your environment.
+	// Amazon MWAA scales the number of Apache Airflow web servers up to the number
+	// you specify for MaxWebservers when you interact with your Apache Airflow
+	// environment using Apache Airflow REST API, or the Apache Airflow CLI. As
+	// the transaction-per-second rate, and the network load, decrease, Amazon MWAA
+	// disposes of the additional web servers, and scales down to the number set
+	// in MinxWebserers.
+	//
+	// Valid values: Accepts between 2 and 5. Defaults to 2.
+	MinWebservers *int64 `min:"2" type:"integer"`
 
 	// The minimum number of workers that you want to run in your environment. MWAA
 	// scales the number of Apache Airflow workers up to the number you specify
@@ -1393,8 +1418,14 @@ func (s *CreateEnvironmentInput) Validate() error {
 	if s.KmsKey != nil && len(*s.KmsKey) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("KmsKey", 1))
 	}
+	if s.MaxWebservers != nil && *s.MaxWebservers < 2 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxWebservers", 2))
+	}
 	if s.MaxWorkers != nil && *s.MaxWorkers < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MaxWorkers", 1))
+	}
+	if s.MinWebservers != nil && *s.MinWebservers < 2 {
+		invalidParams.Add(request.NewErrParamMinValue("MinWebservers", 2))
 	}
 	if s.MinWorkers != nil && *s.MinWorkers < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MinWorkers", 1))
@@ -1503,9 +1534,21 @@ func (s *CreateEnvironmentInput) SetLoggingConfiguration(v *LoggingConfiguration
 	return s
 }
 
+// SetMaxWebservers sets the MaxWebservers field's value.
+func (s *CreateEnvironmentInput) SetMaxWebservers(v int64) *CreateEnvironmentInput {
+	s.MaxWebservers = &v
+	return s
+}
+
 // SetMaxWorkers sets the MaxWorkers field's value.
 func (s *CreateEnvironmentInput) SetMaxWorkers(v int64) *CreateEnvironmentInput {
 	s.MaxWorkers = &v
+	return s
+}
+
+// SetMinWebservers sets the MinWebservers field's value.
+func (s *CreateEnvironmentInput) SetMinWebservers(v int64) *CreateEnvironmentInput {
+	s.MinWebservers = &v
 	return s
 }
 
@@ -1676,6 +1719,13 @@ func (s *CreateWebLoginTokenInput) SetName(v string) *CreateWebLoginTokenInput {
 type CreateWebLoginTokenOutput struct {
 	_ struct{} `type:"structure"`
 
+	// The user name of the Apache Airflow identity creating the web login token.
+	AirflowIdentity *string `min:"1" type:"string"`
+
+	// The name of the IAM identity creating the web login token. This might be
+	// an IAM user, or an assumed or federated identity. For example, assumed-role/Admin/your-name.
+	IamIdentity *string `type:"string"`
+
 	// The Airflow web server hostname for the environment.
 	WebServerHostname *string `min:"1" type:"string"`
 
@@ -1703,6 +1753,18 @@ func (s CreateWebLoginTokenOutput) String() string {
 // value will be replaced with "sensitive".
 func (s CreateWebLoginTokenOutput) GoString() string {
 	return s.String()
+}
+
+// SetAirflowIdentity sets the AirflowIdentity field's value.
+func (s *CreateWebLoginTokenOutput) SetAirflowIdentity(v string) *CreateWebLoginTokenOutput {
+	s.AirflowIdentity = &v
+	return s
+}
+
+// SetIamIdentity sets the IamIdentity field's value.
+func (s *CreateWebLoginTokenOutput) SetIamIdentity(v string) *CreateWebLoginTokenOutput {
+	s.IamIdentity = &v
+	return s
 }
 
 // SetWebServerHostname sets the WebServerHostname field's value.
@@ -1868,7 +1930,7 @@ type Environment struct {
 
 	// The Apache Airflow version on your environment.
 	//
-	// Valid values: 1.10.12, 2.0.2, 2.2.2, 2.4.3, 2.5.1, 2.6.3, 2.7.2.
+	// Valid values: 1.10.12, 2.0.2, 2.2.2, 2.4.3, 2.5.1, 2.6.3, 2.7.2, 2.8.1.
 	AirflowVersion *string `min:"1" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the Amazon MWAA environment.
@@ -1897,8 +1959,9 @@ type Environment struct {
 	// to CUSTOMER, you must create, and manage, the VPC endpoints in your VPC.
 	EndpointManagement *string `type:"string" enum:"EndpointManagement"`
 
-	// The environment class type. Valid values: mw1.small, mw1.medium, mw1.large.
-	// For more information, see Amazon MWAA environment class (https://docs.aws.amazon.com/mwaa/latest/userguide/environment-class.html).
+	// The environment class type. Valid values: mw1.small, mw1.medium, mw1.large,
+	// mw1.xlarge, and mw1.2xlarge. For more information, see Amazon MWAA environment
+	// class (https://docs.aws.amazon.com/mwaa/latest/userguide/environment-class.html).
 	EnvironmentClass *string `min:"1" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the execution role in IAM that allows MWAA
@@ -1907,8 +1970,7 @@ type Environment struct {
 	// Amazon MWAA Execution role (https://docs.aws.amazon.com/mwaa/latest/userguide/mwaa-create-role.html).
 	ExecutionRoleArn *string `min:"1" type:"string"`
 
-	// The Amazon Web Services Key Management Service (KMS) encryption key used
-	// to encrypt the data in your environment.
+	// The KMS encryption key used to encrypt the data in your environment.
 	KmsKey *string `min:"1" type:"string"`
 
 	// The status of the last update on the environment.
@@ -1917,9 +1979,33 @@ type Environment struct {
 	// The Apache Airflow logs published to CloudWatch Logs.
 	LoggingConfiguration *LoggingConfiguration `type:"structure"`
 
+	// The maximum number of web servers that you want to run in your environment.
+	// Amazon MWAA scales the number of Apache Airflow web servers up to the number
+	// you specify for MaxWebservers when you interact with your Apache Airflow
+	// environment using Apache Airflow REST API, or the Apache Airflow CLI. For
+	// example, in scenarios where your workload requires network calls to the Apache
+	// Airflow REST API with a high transaction-per-second (TPS) rate, Amazon MWAA
+	// will increase the number of web servers up to the number set in MaxWebserers.
+	// As TPS rates decrease Amazon MWAA disposes of the additional web servers,
+	// and scales down to the number set in MinxWebserers.
+	//
+	// Valid values: Accepts between 2 and 5. Defaults to 2.
+	MaxWebservers *int64 `min:"2" type:"integer"`
+
 	// The maximum number of workers that run in your environment. For example,
 	// 20.
 	MaxWorkers *int64 `min:"1" type:"integer"`
+
+	// The minimum number of web servers that you want to run in your environment.
+	// Amazon MWAA scales the number of Apache Airflow web servers up to the number
+	// you specify for MaxWebservers when you interact with your Apache Airflow
+	// environment using Apache Airflow REST API, or the Apache Airflow CLI. As
+	// the transaction-per-second rate, and the network load, decrease, Amazon MWAA
+	// disposes of the additional web servers, and scales down to the number set
+	// in MinxWebserers.
+	//
+	// Valid values: Accepts between 2 and 5. Defaults to 2.
+	MinWebservers *int64 `min:"2" type:"integer"`
 
 	// The minimum number of workers that run in your environment. For example,
 	// 2.
@@ -2033,11 +2119,18 @@ type Environment struct {
 	//    * DELETED - Indicates the request to delete the environment is complete,
 	//    and the environment has been deleted.
 	//
-	//    * UNAVAILABLE - Indicates the request failed, but the environment was
-	//    unable to rollback and is not in a stable state.
+	//    * UNAVAILABLE - Indicates the request failed, but the environment did
+	//    not return to its previous state and is not stable.
 	//
 	//    * UPDATE_FAILED - Indicates the request to update the environment failed,
-	//    and the environment has rolled back successfully and is ready to use.
+	//    and the environment was restored to its previous state successfully and
+	//    is ready to use.
+	//
+	//    * MAINTENANCE - Indicates that the environment is undergoing maintenance.
+	//    Depending on the type of work Amazon MWAA is performing, your environment
+	//    might become unavailable during this process. After all operations are
+	//    done, your environment will return to its status prior to mainteneace
+	//    operations.
 	//
 	// We recommend reviewing our troubleshooting guide for a list of common errors
 	// and their solutions. For more information, see Amazon MWAA troubleshooting
@@ -2053,7 +2146,7 @@ type Environment struct {
 	// Airflow access modes (https://docs.aws.amazon.com/mwaa/latest/userguide/configuring-networking.html).
 	WebserverAccessMode *string `type:"string" enum:"WebserverAccessMode"`
 
-	// The Apache Airflow Web server host name for the Amazon MWAA environment.
+	// The Apache Airflow web server host name for the Amazon MWAA environment.
 	// For more information, see Accessing the Apache Airflow UI (https://docs.aws.amazon.com/mwaa/latest/userguide/access-airflow-ui.html).
 	WebserverUrl *string `min:"1" type:"string"`
 
@@ -2162,9 +2255,21 @@ func (s *Environment) SetLoggingConfiguration(v *LoggingConfiguration) *Environm
 	return s
 }
 
+// SetMaxWebservers sets the MaxWebservers field's value.
+func (s *Environment) SetMaxWebservers(v int64) *Environment {
+	s.MaxWebservers = &v
+	return s
+}
+
 // SetMaxWorkers sets the MaxWorkers field's value.
 func (s *Environment) SetMaxWorkers(v int64) *Environment {
 	s.MaxWorkers = &v
+	return s
+}
+
+// SetMinWebservers sets the MinWebservers field's value.
+func (s *Environment) SetMinWebservers(v int64) *Environment {
+	s.MinWebservers = &v
 	return s
 }
 
@@ -3540,15 +3645,16 @@ type UpdateEnvironmentInput struct {
 	// Airflow version. For more information about updating your resources, see
 	// Upgrading an Amazon MWAA environment (https://docs.aws.amazon.com/mwaa/latest/userguide/upgrading-environment.html).
 	//
-	// Valid values: 1.10.12, 2.0.2, 2.2.2, 2.4.3, 2.5.1, 2.6.3, 2.7.2.
+	// Valid values: 1.10.12, 2.0.2, 2.2.2, 2.4.3, 2.5.1, 2.6.3, 2.7.2, 2.8.1.
 	AirflowVersion *string `min:"1" type:"string"`
 
 	// The relative path to the DAGs folder on your Amazon S3 bucket. For example,
 	// dags. For more information, see Adding or updating DAGs (https://docs.aws.amazon.com/mwaa/latest/userguide/configuring-dag-folder.html).
 	DagS3Path *string `min:"1" type:"string"`
 
-	// The environment class type. Valid values: mw1.small, mw1.medium, mw1.large.
-	// For more information, see Amazon MWAA environment class (https://docs.aws.amazon.com/mwaa/latest/userguide/environment-class.html).
+	// The environment class type. Valid values: mw1.small, mw1.medium, mw1.large,
+	// mw1.xlarge, and mw1.2xlarge. For more information, see Amazon MWAA environment
+	// class (https://docs.aws.amazon.com/mwaa/latest/userguide/environment-class.html).
 	EnvironmentClass *string `min:"1" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the execution role in IAM that allows MWAA
@@ -3560,6 +3666,19 @@ type UpdateEnvironmentInput struct {
 	// The Apache Airflow log types to send to CloudWatch Logs.
 	LoggingConfiguration *LoggingConfigurationInput `type:"structure"`
 
+	// The maximum number of web servers that you want to run in your environment.
+	// Amazon MWAA scales the number of Apache Airflow web servers up to the number
+	// you specify for MaxWebservers when you interact with your Apache Airflow
+	// environment using Apache Airflow REST API, or the Apache Airflow CLI. For
+	// example, in scenarios where your workload requires network calls to the Apache
+	// Airflow REST API with a high transaction-per-second (TPS) rate, Amazon MWAA
+	// will increase the number of web servers up to the number set in MaxWebserers.
+	// As TPS rates decrease Amazon MWAA disposes of the additional web servers,
+	// and scales down to the number set in MinxWebserers.
+	//
+	// Valid values: Accepts between 2 and 5. Defaults to 2.
+	MaxWebservers *int64 `min:"2" type:"integer"`
+
 	// The maximum number of workers that you want to run in your environment. MWAA
 	// scales the number of Apache Airflow workers up to the number you specify
 	// in the MaxWorkers field. For example, 20. When there are no more tasks running,
@@ -3567,6 +3686,17 @@ type UpdateEnvironmentInput struct {
 	// one worker that is included with your environment, or the number you specify
 	// in MinWorkers.
 	MaxWorkers *int64 `min:"1" type:"integer"`
+
+	// The minimum number of web servers that you want to run in your environment.
+	// Amazon MWAA scales the number of Apache Airflow web servers up to the number
+	// you specify for MaxWebservers when you interact with your Apache Airflow
+	// environment using Apache Airflow REST API, or the Apache Airflow CLI. As
+	// the transaction-per-second rate, and the network load, decrease, Amazon MWAA
+	// disposes of the additional web servers, and scales down to the number set
+	// in MinxWebserers.
+	//
+	// Valid values: Accepts between 2 and 5. Defaults to 2.
+	MinWebservers *int64 `min:"2" type:"integer"`
 
 	// The minimum number of workers that you want to run in your environment. MWAA
 	// scales the number of Apache Airflow workers up to the number you specify
@@ -3678,8 +3808,14 @@ func (s *UpdateEnvironmentInput) Validate() error {
 	if s.ExecutionRoleArn != nil && len(*s.ExecutionRoleArn) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ExecutionRoleArn", 1))
 	}
+	if s.MaxWebservers != nil && *s.MaxWebservers < 2 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxWebservers", 2))
+	}
 	if s.MaxWorkers != nil && *s.MaxWorkers < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MaxWorkers", 1))
+	}
+	if s.MinWebservers != nil && *s.MinWebservers < 2 {
+		invalidParams.Add(request.NewErrParamMinValue("MinWebservers", 2))
 	}
 	if s.MinWorkers != nil && *s.MinWorkers < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MinWorkers", 1))
@@ -3767,9 +3903,21 @@ func (s *UpdateEnvironmentInput) SetLoggingConfiguration(v *LoggingConfiguration
 	return s
 }
 
+// SetMaxWebservers sets the MaxWebservers field's value.
+func (s *UpdateEnvironmentInput) SetMaxWebservers(v int64) *UpdateEnvironmentInput {
+	s.MaxWebservers = &v
+	return s
+}
+
 // SetMaxWorkers sets the MaxWorkers field's value.
 func (s *UpdateEnvironmentInput) SetMaxWorkers(v int64) *UpdateEnvironmentInput {
 	s.MaxWorkers = &v
+	return s
+}
+
+// SetMinWebservers sets the MinWebservers field's value.
+func (s *UpdateEnvironmentInput) SetMinWebservers(v int64) *UpdateEnvironmentInput {
+	s.MinWebservers = &v
 	return s
 }
 
@@ -4091,6 +4239,9 @@ const (
 
 	// EnvironmentStatusPending is a EnvironmentStatus enum value
 	EnvironmentStatusPending = "PENDING"
+
+	// EnvironmentStatusMaintenance is a EnvironmentStatus enum value
+	EnvironmentStatusMaintenance = "MAINTENANCE"
 )
 
 // EnvironmentStatus_Values returns all elements of the EnvironmentStatus enum
@@ -4107,6 +4258,7 @@ func EnvironmentStatus_Values() []string {
 		EnvironmentStatusRollingBack,
 		EnvironmentStatusCreatingSnapshot,
 		EnvironmentStatusPending,
+		EnvironmentStatusMaintenance,
 	}
 }
 

@@ -76,7 +76,7 @@ func (c *ACMPCA) CreateCertificateAuthorityRequest(input *CreateCertificateAutho
 //
 // Amazon Web Services Private CA assets that are stored in Amazon S3 can be
 // protected with encryption. For more information, see Encrypting Your CRLs
-// (https://docs.aws.amazon.com/privateca/latest/userguide/PcaCreateCa.html#crl-encryption).
+// (https://docs.aws.amazon.com/privateca/latest/userguide/crl-planning.html#crl-encryption).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1417,44 +1417,46 @@ func (c *ACMPCA) ImportCertificateAuthorityCertificateRequest(input *ImportCerti
 // Amazon Web Services Private CA allows the following extensions to be marked
 // critical in the imported CA certificate or chain.
 //
-//   - Basic constraints (must be marked critical)
-//
-//   - Subject alternative names
-//
-//   - Key usage
-//
-//   - Extended key usage
-//
 //   - Authority key identifier
 //
-//   - Subject key identifier
-//
-//   - Issuer alternative name
-//
-//   - Subject directory attributes
-//
-//   - Subject information access
+//   - Basic constraints (must be marked critical)
 //
 //   - Certificate policies
 //
-//   - Policy mappings
+//   - Extended key usage
 //
 //   - Inhibit anyPolicy
+//
+//   - Issuer alternative name
+//
+//   - Key usage
+//
+//   - Name constraints
+//
+//   - Policy mappings
+//
+//   - Subject alternative name
+//
+//   - Subject directory attributes
+//
+//   - Subject key identifier
+//
+//   - Subject information access
 //
 // Amazon Web Services Private CA rejects the following extensions when they
 // are marked critical in an imported CA certificate or chain.
 //
-//   - Name constraints
-//
-//   - Policy constraints
+//   - Authority information access
 //
 //   - CRL distribution points
 //
-//   - Authority information access
-//
 //   - Freshest CRL
 //
-//   - Any other extension
+//   - Policy constraints
+//
+// Amazon Web Services Private Certificate Authority will also reject any other
+// extension marked as critical not contained on the preceding list of allowed
+// extensions.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2771,6 +2773,7 @@ type ASN1Subject struct {
 	// located.
 	Country *string `min:"2" type:"string"`
 
+	//
 	// Contains a sequence of one or more X.500 relative distinguished names (RDNs),
 	// each of which consists of an object identifier (OID) and a value. For more
 	// information, see NIST’s definition of Object Identifier (OID) (https://csrc.nist.gov/glossary/term/Object_Identifier).
@@ -4030,13 +4033,15 @@ func (s CreatePermissionOutput) GoString() string {
 // by setting the Enabled parameter to true. Your private CA writes CRLs to
 // an S3 bucket that you specify in the S3BucketName parameter. You can hide
 // the name of your bucket by specifying a value for the CustomCname parameter.
-// Your private CA copies the CNAME or the S3 bucket name to the CRL Distribution
-// Points extension of each certificate it issues. Your S3 bucket policy must
-// give write permission to Amazon Web Services Private CA.
+// Your private CA by default copies the CNAME or the S3 bucket name to the
+// CRL Distribution Points extension of each certificate it issues. If you want
+// to configure this default behavior to be something different, you can set
+// the CrlDistributionPointExtensionConfiguration parameter. Your S3 bucket
+// policy must give write permission to Amazon Web Services Private CA.
 //
 // Amazon Web Services Private CA assets that are stored in Amazon S3 can be
 // protected with encryption. For more information, see Encrypting Your CRLs
-// (https://docs.aws.amazon.com/privateca/latest/userguide/PcaCreateCa.html#crl-encryption).
+// (https://docs.aws.amazon.com/privateca/latest/userguide/crl-planning.html#crl-encryption).
 //
 // Your private CA uses the value in the ExpirationInDays parameter to calculate
 // the nextUpdate field in the CRL. The CRL is refreshed prior to a certificate's
@@ -4086,6 +4091,12 @@ func (s CreatePermissionOutput) GoString() string {
 // in the Amazon Web Services Private Certificate Authority User Guide
 type CrlConfiguration struct {
 	_ struct{} `type:"structure"`
+
+	// Configures the behavior of the CRL Distribution Point extension for certificates
+	// issued by your certificate authority. If this field is not provided, then
+	// the CRl Distribution Point Extension will be present and contain the default
+	// CRL URL.
+	CrlDistributionPointExtensionConfiguration *CrlDistributionPointExtensionConfiguration `type:"structure"`
 
 	// Name inserted into the certificate CRL Distribution Points extension that
 	// enables the use of an alias for the CRL distribution point. Use this value
@@ -4168,11 +4179,22 @@ func (s *CrlConfiguration) Validate() error {
 	if s.S3BucketName != nil && len(*s.S3BucketName) < 3 {
 		invalidParams.Add(request.NewErrParamMinLen("S3BucketName", 3))
 	}
+	if s.CrlDistributionPointExtensionConfiguration != nil {
+		if err := s.CrlDistributionPointExtensionConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("CrlDistributionPointExtensionConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetCrlDistributionPointExtensionConfiguration sets the CrlDistributionPointExtensionConfiguration field's value.
+func (s *CrlConfiguration) SetCrlDistributionPointExtensionConfiguration(v *CrlDistributionPointExtensionConfiguration) *CrlConfiguration {
+	s.CrlDistributionPointExtensionConfiguration = v
+	return s
 }
 
 // SetCustomCname sets the CustomCname field's value.
@@ -4202,6 +4224,66 @@ func (s *CrlConfiguration) SetS3BucketName(v string) *CrlConfiguration {
 // SetS3ObjectAcl sets the S3ObjectAcl field's value.
 func (s *CrlConfiguration) SetS3ObjectAcl(v string) *CrlConfiguration {
 	s.S3ObjectAcl = &v
+	return s
+}
+
+// Contains configuration information for the default behavior of the CRL Distribution
+// Point (CDP) extension in certificates issued by your CA. This extension contains
+// a link to download the CRL, so you can check whether a certificate has been
+// revoked. To choose whether you want this extension omitted or not in certificates
+// issued by your CA, you can set the OmitExtension parameter.
+type CrlDistributionPointExtensionConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Configures whether the CRL Distribution Point extension should be populated
+	// with the default URL to the CRL. If set to true, then the CDP extension will
+	// not be present in any certificates issued by that CA unless otherwise specified
+	// through CSR or API passthrough.
+	//
+	// Only set this if you have another way to distribute the CRL Distribution
+	// Points ffor certificates issued by your CA, such as the Matter Distributed
+	// Compliance Ledger
+	//
+	// This configuration cannot be enabled with a custom CNAME set.
+	//
+	// OmitExtension is a required field
+	OmitExtension *bool `type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CrlDistributionPointExtensionConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CrlDistributionPointExtensionConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CrlDistributionPointExtensionConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CrlDistributionPointExtensionConfiguration"}
+	if s.OmitExtension == nil {
+		invalidParams.Add(request.NewErrParamRequired("OmitExtension"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetOmitExtension sets the OmitExtension field's value.
+func (s *CrlDistributionPointExtensionConfiguration) SetOmitExtension(v bool) *CrlDistributionPointExtensionConfiguration {
+	s.OmitExtension = &v
 	return s
 }
 
@@ -4281,6 +4363,7 @@ type CustomAttribute struct {
 	// ObjectIdentifier is a required field
 	ObjectIdentifier *string `type:"string" required:"true"`
 
+	//
 	// Specifies the attribute value of relative distinguished name (RDN).
 	//
 	// Value is a required field
@@ -4343,15 +4426,18 @@ func (s *CustomAttribute) SetValue(v string) *CustomAttribute {
 type CustomExtension struct {
 	_ struct{} `type:"structure"`
 
+	//
 	// Specifies the critical flag of the X.509 extension.
 	Critical *bool `type:"boolean"`
 
+	//
 	// Specifies the object identifier (OID) of the X.509 extension. For more information,
 	// see the Global OID reference database. (https://oidref.com/2.5.29)
 	//
 	// ObjectIdentifier is a required field
 	ObjectIdentifier *string `type:"string" required:"true"`
 
+	//
 	// Specifies the base64-encoded value of the X.509 extension.
 	//
 	// Value is a required field
@@ -5004,6 +5090,7 @@ type Extensions struct {
 	// paths that include this certificate.
 	CertificatePolicies []*PolicyInformation `min:"1" type:"list"`
 
+	//
 	// Contains a sequence of one or more X.509 extensions, each of which consists
 	// of an object identifier (OID), a base64-encoded value, and the critical flag.
 	// For more information, see the Global OID reference database. (https://oidref.com/2.5.29)
@@ -6628,6 +6715,9 @@ type ListCertificateAuthoritiesInput struct {
 	// of items to return in the response on each page. If additional items exist
 	// beyond the number you specify, the NextToken element is sent in the response.
 	// Use this NextToken value in a subsequent request to retrieve additional items.
+	//
+	// Although the maximum value is 1000, the action only returns a maximum of
+	// 100 items.
 	MaxResults *int64 `min:"1" type:"integer"`
 
 	// Use this parameter when paginating results in a subsequent request after

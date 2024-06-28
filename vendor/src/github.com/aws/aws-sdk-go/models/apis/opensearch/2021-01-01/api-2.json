@@ -4,10 +4,12 @@
     "apiVersion":"2021-01-01",
     "endpointPrefix":"es",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon OpenSearch Service",
     "serviceId":"OpenSearch",
     "signatureVersion":"v4",
-    "uid":"opensearch-2021-01-01"
+    "uid":"opensearch-2021-01-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptInboundConnection":{
@@ -88,6 +90,22 @@
         {"shape":"ValidationException"},
         {"shape":"InternalException"},
         {"shape":"BaseException"}
+      ]
+    },
+    "CancelDomainConfigChange":{
+      "name":"CancelDomainConfigChange",
+      "http":{
+        "method":"POST",
+        "requestUri":"/2021-01-01/opensearch/domain/{DomainName}/config/cancel"
+      },
+      "input":{"shape":"CancelDomainConfigChangeRequest"},
+      "output":{"shape":"CancelDomainConfigChangeResponse"},
+      "errors":[
+        {"shape":"BaseException"},
+        {"shape":"InternalException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ValidationException"},
+        {"shape":"DisabledOperationException"}
       ]
     },
     "CancelServiceSoftwareUpdate":{
@@ -982,6 +1000,25 @@
     }
   },
   "shapes":{
+    "AIMLOptionsInput":{
+      "type":"structure",
+      "members":{
+        "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsInput"}
+      }
+    },
+    "AIMLOptionsOutput":{
+      "type":"structure",
+      "members":{
+        "NaturalLanguageQueryGenerationOptions":{"shape":"NaturalLanguageQueryGenerationOptionsOutput"}
+      }
+    },
+    "AIMLOptionsStatus":{
+      "type":"structure",
+      "members":{
+        "Options":{"shape":"AIMLOptionsOutput"},
+        "Status":{"shape":"OptionStatus"}
+      }
+    },
     "ARN":{
       "type":"string",
       "max":2048,
@@ -1131,6 +1168,7 @@
         "Enabled":{"shape":"Boolean"},
         "InternalUserDatabaseEnabled":{"shape":"Boolean"},
         "SAMLOptions":{"shape":"SAMLOptionsOutput"},
+        "JWTOptions":{"shape":"JWTOptionsOutput"},
         "AnonymousAuthDisableDate":{"shape":"DisableTimestamp"},
         "AnonymousAuthEnabled":{"shape":"Boolean"}
       }
@@ -1142,6 +1180,7 @@
         "InternalUserDatabaseEnabled":{"shape":"Boolean"},
         "MasterUserOptions":{"shape":"MasterUserOptions"},
         "SAMLOptions":{"shape":"SAMLOptionsInput"},
+        "JWTOptions":{"shape":"JWTOptionsInput"},
         "AnonymousAuthEnabled":{"shape":"Boolean"}
       }
     },
@@ -1355,6 +1394,26 @@
       "exception":true
     },
     "Boolean":{"type":"boolean"},
+    "CancelDomainConfigChangeRequest":{
+      "type":"structure",
+      "required":["DomainName"],
+      "members":{
+        "DomainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"DomainName"
+        },
+        "DryRun":{"shape":"DryRun"}
+      }
+    },
+    "CancelDomainConfigChangeResponse":{
+      "type":"structure",
+      "members":{
+        "CancelledChangeIds":{"shape":"GUIDList"},
+        "CancelledChangeProperties":{"shape":"CancelledChangePropertyList"},
+        "DryRun":{"shape":"DryRun"}
+      }
+    },
     "CancelServiceSoftwareUpdateRequest":{
       "type":"structure",
       "required":["DomainName"],
@@ -1368,11 +1427,27 @@
         "ServiceSoftwareOptions":{"shape":"ServiceSoftwareOptions"}
       }
     },
+    "CancelledChangeProperty":{
+      "type":"structure",
+      "members":{
+        "PropertyName":{"shape":"String"},
+        "CancelledValue":{"shape":"String"},
+        "ActiveValue":{"shape":"String"}
+      }
+    },
+    "CancelledChangePropertyList":{
+      "type":"list",
+      "member":{"shape":"CancelledChangeProperty"}
+    },
     "ChangeProgressDetails":{
       "type":"structure",
       "members":{
         "ChangeId":{"shape":"GUID"},
-        "Message":{"shape":"Message"}
+        "Message":{"shape":"Message"},
+        "ConfigChangeStatus":{"shape":"ConfigChangeStatus"},
+        "InitiatedBy":{"shape":"InitiatedBy"},
+        "StartTime":{"shape":"UpdateTimestamp"},
+        "LastUpdatedTime":{"shape":"UpdateTimestamp"}
       }
     },
     "ChangeProgressStage":{
@@ -1407,7 +1482,10 @@
         "PendingProperties":{"shape":"StringList"},
         "CompletedProperties":{"shape":"StringList"},
         "TotalNumberOfStages":{"shape":"TotalNumberOfStages"},
-        "ChangeProgressStages":{"shape":"ChangeProgressStageList"}
+        "ChangeProgressStages":{"shape":"ChangeProgressStageList"},
+        "LastUpdatedTime":{"shape":"UpdateTimestamp"},
+        "ConfigChangeStatus":{"shape":"ConfigChangeStatus"},
+        "InitiatedBy":{"shape":"InitiatedBy"}
       }
     },
     "ClientToken":{
@@ -1491,6 +1569,19 @@
         "TargetVersions":{"shape":"VersionList"}
       }
     },
+    "ConfigChangeStatus":{
+      "type":"string",
+      "enum":[
+        "Pending",
+        "Initializing",
+        "Validating",
+        "ValidationFailed",
+        "ApplyingChanges",
+        "Completed",
+        "PendingUserInput",
+        "Cancelled"
+      ]
+    },
     "ConflictException":{
       "type":"structure",
       "members":{
@@ -1547,7 +1638,8 @@
         "TagList":{"shape":"TagList"},
         "AutoTuneOptions":{"shape":"AutoTuneOptionsInput"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
-        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"}
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
+        "AIMLOptions":{"shape":"AIMLOptionsInput"}
       }
     },
     "CreateDomainResponse":{
@@ -1639,7 +1731,8 @@
       "members":{
         "DataSourceType":{"shape":"DataSourceType"},
         "Name":{"shape":"DataSourceName"},
-        "Description":{"shape":"DataSourceDescription"}
+        "Description":{"shape":"DataSourceDescription"},
+        "Status":{"shape":"DataSourceStatus"}
       }
     },
     "DataSourceList":{
@@ -1651,6 +1744,13 @@
       "max":80,
       "min":3,
       "pattern":"[a-z][a-z0-9_]+"
+    },
+    "DataSourceStatus":{
+      "type":"string",
+      "enum":[
+        "ACTIVE",
+        "DISABLED"
+      ]
     },
     "DataSourceType":{
       "type":"structure",
@@ -2197,7 +2297,9 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptionsStatus"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptionsStatus"},
-        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptionsStatus"}
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptionsStatus"},
+        "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
+        "AIMLOptions":{"shape":"AIMLOptionsStatus"}
       }
     },
     "DomainEndpointOptions":{
@@ -2330,6 +2432,18 @@
         "DISSOCIATION_FAILED"
       ]
     },
+    "DomainProcessingStatusType":{
+      "type":"string",
+      "enum":[
+        "Creating",
+        "Active",
+        "Modifying",
+        "UpgradingEngineVersion",
+        "UpdatingServiceSoftware",
+        "Isolated",
+        "Deleting"
+      ]
+    },
     "DomainState":{
       "type":"string",
       "enum":[
@@ -2355,6 +2469,7 @@
         "Endpoint":{"shape":"ServiceUrl"},
         "EndpointV2":{"shape":"ServiceUrl"},
         "Endpoints":{"shape":"EndpointsMap"},
+        "DomainEndpointV2HostedZoneId":{"shape":"HostedZoneId"},
         "Processing":{"shape":"Boolean"},
         "UpgradeProcessing":{"shape":"Boolean"},
         "EngineVersion":{"shape":"VersionString"},
@@ -2375,7 +2490,10 @@
         "AutoTuneOptions":{"shape":"AutoTuneOptionsOutput"},
         "ChangeProgressDetails":{"shape":"ChangeProgressDetails"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
-        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"}
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
+        "DomainProcessingStatus":{"shape":"DomainProcessingStatusType"},
+        "ModifyingProperties":{"shape":"ModifyingPropertiesList"},
+        "AIMLOptions":{"shape":"AIMLOptionsOutput"}
       }
     },
     "DomainStatusList":{
@@ -2521,6 +2639,10 @@
       "min":36,
       "pattern":"\\p{XDigit}{8}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{4}-\\p{XDigit}{12}"
     },
+    "GUIDList":{
+      "type":"list",
+      "member":{"shape":"GUID"}
+    },
     "GetCompatibleVersionsRequest":{
       "type":"structure",
       "members":{
@@ -2561,7 +2683,8 @@
       "members":{
         "DataSourceType":{"shape":"DataSourceType"},
         "Name":{"shape":"DataSourceName"},
-        "Description":{"shape":"DataSourceDescription"}
+        "Description":{"shape":"DataSourceDescription"},
+        "Status":{"shape":"DataSourceStatus"}
       }
     },
     "GetDomainMaintenanceStatusRequest":{
@@ -2670,6 +2793,7 @@
         "UpgradeName":{"shape":"UpgradeName"}
       }
     },
+    "HostedZoneId":{"type":"string"},
     "IPAddressType":{
       "type":"string",
       "enum":[
@@ -2727,6 +2851,13 @@
     "InboundConnections":{
       "type":"list",
       "member":{"shape":"InboundConnection"}
+    },
+    "InitiatedBy":{
+      "type":"string",
+      "enum":[
+        "CUSTOMER",
+        "SERVICE"
+      ]
     },
     "InstanceCount":{
       "type":"integer",
@@ -2800,6 +2931,24 @@
     "Issues":{
       "type":"list",
       "member":{"shape":"Issue"}
+    },
+    "JWTOptionsInput":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "SubjectKey":{"shape":"SubjectKey"},
+        "RolesKey":{"shape":"RolesKey"},
+        "PublicKey":{"shape":"String"}
+      }
+    },
+    "JWTOptionsOutput":{
+      "type":"structure",
+      "members":{
+        "Enabled":{"shape":"Boolean"},
+        "SubjectKey":{"shape":"String"},
+        "RolesKey":{"shape":"String"},
+        "PublicKey":{"shape":"String"}
+      }
     },
     "KmsKeyId":{
       "type":"string",
@@ -3225,6 +3374,51 @@
       "min":0
     },
     "MinimumInstanceCount":{"type":"integer"},
+    "ModifyingProperties":{
+      "type":"structure",
+      "members":{
+        "Name":{"shape":"String"},
+        "ActiveValue":{"shape":"String"},
+        "PendingValue":{"shape":"String"},
+        "ValueType":{"shape":"PropertyValueType"}
+      }
+    },
+    "ModifyingPropertiesList":{
+      "type":"list",
+      "member":{"shape":"ModifyingProperties"}
+    },
+    "NaturalLanguageQueryGenerationCurrentState":{
+      "type":"string",
+      "enum":[
+        "NOT_ENABLED",
+        "ENABLE_COMPLETE",
+        "ENABLE_IN_PROGRESS",
+        "ENABLE_FAILED",
+        "DISABLE_COMPLETE",
+        "DISABLE_IN_PROGRESS",
+        "DISABLE_FAILED"
+      ]
+    },
+    "NaturalLanguageQueryGenerationDesiredState":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "NaturalLanguageQueryGenerationOptionsInput":{
+      "type":"structure",
+      "members":{
+        "DesiredState":{"shape":"NaturalLanguageQueryGenerationDesiredState"}
+      }
+    },
+    "NaturalLanguageQueryGenerationOptionsOutput":{
+      "type":"structure",
+      "members":{
+        "DesiredState":{"shape":"NaturalLanguageQueryGenerationDesiredState"},
+        "CurrentState":{"shape":"NaturalLanguageQueryGenerationCurrentState"}
+      }
+    },
     "NextToken":{"type":"string"},
     "NodeId":{
       "type":"string",
@@ -3339,6 +3533,14 @@
         "t3.large.search",
         "t3.xlarge.search",
         "t3.2xlarge.search",
+        "or1.medium.search",
+        "or1.large.search",
+        "or1.xlarge.search",
+        "or1.2xlarge.search",
+        "or1.4xlarge.search",
+        "or1.8xlarge.search",
+        "or1.12xlarge.search",
+        "or1.16xlarge.search",
         "ultrawarm1.medium.search",
         "ultrawarm1.large.search",
         "ultrawarm1.xlarge.search",
@@ -3607,6 +3809,13 @@
         "AWS_SERVICE"
       ]
     },
+    "PropertyValueType":{
+      "type":"string",
+      "enum":[
+        "PLAIN_TEXT",
+        "STRINGIFIED_JSON"
+      ]
+    },
     "PurchaseReservedInstanceOfferingRequest":{
       "type":"structure",
       "required":[
@@ -3771,6 +3980,11 @@
       "max":2048,
       "min":20,
       "pattern":"arn:(aws|aws\\-cn|aws\\-us\\-gov|aws\\-iso|aws\\-iso\\-b):iam::[0-9]+:role\\/.*"
+    },
+    "RolesKey":{
+      "type":"string",
+      "max":64,
+      "min":1
     },
     "RollbackOnDisable":{
       "type":"string",
@@ -4044,11 +4258,17 @@
       "type":"list",
       "member":{"shape":"String"}
     },
+    "SubjectKey":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "TLSSecurityPolicy":{
       "type":"string",
       "enum":[
         "Policy-Min-TLS-1-0-2019-07",
-        "Policy-Min-TLS-1-2-2019-07"
+        "Policy-Min-TLS-1-2-2019-07",
+        "Policy-Min-TLS-1-2-PFS-2023-10"
       ]
     },
     "Tag":{
@@ -4107,7 +4327,8 @@
           "locationName":"DataSourceName"
         },
         "DataSourceType":{"shape":"DataSourceType"},
-        "Description":{"shape":"DataSourceDescription"}
+        "Description":{"shape":"DataSourceDescription"},
+        "Status":{"shape":"DataSourceStatus"}
       }
     },
     "UpdateDataSourceResponse":{
@@ -4142,7 +4363,8 @@
         "DryRun":{"shape":"DryRun"},
         "DryRunMode":{"shape":"DryRunMode"},
         "OffPeakWindowOptions":{"shape":"OffPeakWindowOptions"},
-        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"}
+        "SoftwareUpdateOptions":{"shape":"SoftwareUpdateOptions"},
+        "AIMLOptions":{"shape":"AIMLOptionsInput"}
       }
     },
     "UpdateDomainConfigResponse":{

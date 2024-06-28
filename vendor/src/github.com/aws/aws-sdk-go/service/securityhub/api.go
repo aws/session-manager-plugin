@@ -8234,11 +8234,16 @@ func (c *SecurityHub) UpdateFindingsRequest(input *UpdateFindingsInput) (req *re
 
 // UpdateFindings API operation for AWS SecurityHub.
 //
-// UpdateFindings is deprecated. Instead of UpdateFindings, use BatchUpdateFindings.
+// UpdateFindings is a deprecated operation. Instead of UpdateFindings, use
+// the BatchUpdateFindings operation.
 //
 // Updates the Note and RecordState of the Security Hub-aggregated findings
 // that the filter attributes specify. Any member account that can view the
 // finding also sees the update to the finding.
+//
+// Finding updates made with UpdateFindings might not be persisted if the same
+// finding is later updated by the finding provider through the BatchImportFindings
+// operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9207,6 +9212,8 @@ type ActionLocalPortDetails struct {
 	Port *int64 `type:"integer"`
 
 	// The port name of the local connection.
+	//
+	// Length Constraints: 128.
 	PortName *string `type:"string"`
 }
 
@@ -9320,6 +9327,8 @@ type ActionRemotePortDetails struct {
 	Port *int64 `type:"integer"`
 
 	// The port name of the remote connection.
+	//
+	// Length Constraints: 128.
 	PortName *string `type:"string"`
 }
 
@@ -9774,9 +9783,20 @@ type AutomationRulesConfig struct {
 
 	// A timestamp that indicates when the rule was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedAt *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
 	// The principal that created a rule.
@@ -9818,9 +9838,20 @@ type AutomationRulesConfig struct {
 
 	// A timestamp that indicates when the rule was most recently updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	UpdatedAt *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 }
 
@@ -10092,9 +10123,20 @@ type AutomationRulesFindingFilters struct {
 
 	// A timestamp that indicates when this finding record was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// Array Members: Minimum number of 1 item. Maximum number of 20 items.
 	CreatedAt []*DateFilter `type:"list"`
@@ -10117,9 +10159,20 @@ type AutomationRulesFindingFilters struct {
 	// A timestamp that indicates when the potential security issue captured by
 	// a finding was first observed by the security findings product.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// Array Members: Minimum number of 1 item. Maximum number of 20 items.
 	FirstObservedAt []*DateFilter `type:"list"`
@@ -10137,9 +10190,20 @@ type AutomationRulesFindingFilters struct {
 	// A timestamp that indicates when the potential security issue captured by
 	// a finding was most recently observed by the security findings product.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// Array Members: Minimum number of 1 item. Maximum number of 20 items.
 	LastObservedAt []*DateFilter `type:"list"`
@@ -10149,9 +10213,22 @@ type AutomationRulesFindingFilters struct {
 	// Array Members: Minimum number of 1 item. Maximum number of 20 items.
 	NoteText []*StringFilter `type:"list"`
 
-	// The timestamp of when the note was updated. Uses the date-time format specified
-	// in RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
-	// The value cannot contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// The timestamp of when the note was updated.
+	//
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// Array Members: Minimum number of 1 item. Maximum number of 20 items.
 	NoteUpdatedAt []*DateFilter `type:"list"`
@@ -10262,9 +10339,20 @@ type AutomationRulesFindingFilters struct {
 
 	// A timestamp that indicates when the finding record was most recently updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// Array Members: Minimum number of 1 item. Maximum number of 20 items.
 	UpdatedAt []*DateFilter `type:"list"`
@@ -10538,9 +10626,20 @@ type AutomationRulesMetadata struct {
 
 	// A timestamp that indicates when the rule was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedAt *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
 	// The principal that created a rule.
@@ -10576,9 +10675,20 @@ type AutomationRulesMetadata struct {
 
 	// A timestamp that indicates when the rule was most recently updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces. For example, 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	UpdatedAt *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 }
 
@@ -11272,6 +11382,8 @@ type AwsApiCallAction struct {
 	AffectedResources map[string]*string `type:"map"`
 
 	// The name of the API method that was issued.
+	//
+	// Length Constraints: 128.
 	Api *string `type:"string"`
 
 	// Indicates whether the API call originated from a remote IP address (remoteip)
@@ -11282,20 +11394,40 @@ type AwsApiCallAction struct {
 	// that the API call originated from.
 	DomainDetails *AwsApiCallActionDomainDetails `type:"structure"`
 
-	// An ISO8601-formatted timestamp that indicates when the API call was first
-	// observed.
+	// A timestamp that indicates when the API call was first observed.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	FirstSeen *string `type:"string"`
 
-	// An ISO8601-formatted timestamp that indicates when the API call was most
-	// recently observed.
+	// A timestamp that indicates when the API call was most recently observed.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastSeen *string `type:"string"`
 
 	// Provided if CallerType is remoteIp. Provides information about the remote
@@ -11303,6 +11435,8 @@ type AwsApiCallAction struct {
 	RemoteIpDetails *ActionRemoteIpDetails `type:"structure"`
 
 	// The name of the Amazon Web Services service that the API method belongs to.
+	//
+	// Length Constraints: 128.
 	ServiceName *string `type:"string"`
 }
 
@@ -11378,6 +11512,8 @@ type AwsApiCallActionDomainDetails struct {
 	_ struct{} `type:"structure"`
 
 	// The name of the DNS domain that issued the API call.
+	//
+	// Length Constraints: 128.
 	Domain *string `type:"string"`
 }
 
@@ -11714,10 +11850,20 @@ type AwsApiGatewayRestApiDetails struct {
 
 	// Indicates when the API was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedDate *string `type:"string"`
 
 	// A description of the REST API.
@@ -11839,10 +11985,20 @@ type AwsApiGatewayStageDetails struct {
 
 	// Indicates when the stage was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedDate *string `type:"string"`
 
 	// The identifier of the deployment that the stage points to.
@@ -11856,10 +12012,20 @@ type AwsApiGatewayStageDetails struct {
 
 	// Indicates when the stage was most recently updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastUpdatedDate *string `type:"string"`
 
 	// Defines the method settings for the stage.
@@ -12026,10 +12192,20 @@ type AwsApiGatewayV2ApiDetails struct {
 
 	// Indicates when the API was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedDate *string `type:"string"`
 
 	// A description of the API.
@@ -12230,10 +12406,20 @@ type AwsApiGatewayV2StageDetails struct {
 
 	// Indicates when the stage was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedDate *string `type:"string"`
 
 	// Default route settings for the stage.
@@ -12251,10 +12437,20 @@ type AwsApiGatewayV2StageDetails struct {
 
 	// Indicates when the stage was most recently updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastUpdatedDate *string `type:"string"`
 
 	// The route settings for the stage.
@@ -13033,10 +13229,20 @@ type AwsAutoScalingAutoScalingGroupDetails struct {
 
 	// Indicates when the auto scaling group was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedTime *string `type:"string"`
 
 	// The amount of time, in seconds, that Amazon EC2 Auto Scaling waits before
@@ -13649,10 +13855,20 @@ type AwsAutoScalingLaunchConfigurationDetails struct {
 
 	// The creation date and time for the launch configuration.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedTime *string `type:"string"`
 
 	// Whether the launch configuration is optimized for Amazon EBS I/O.
@@ -14820,10 +15036,20 @@ type AwsCertificateManagerCertificateDetails struct {
 
 	// Indicates when the certificate was requested.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedAt *string `type:"string"`
 
 	// The fully qualified domain name (FQDN), such as www.example.com, that is
@@ -14853,10 +15079,20 @@ type AwsCertificateManagerCertificateDetails struct {
 	// Indicates when the certificate was imported. Provided if the certificate
 	// type is IMPORTED.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ImportedAt *string `type:"string"`
 
 	// The list of ARNs for the Amazon Web Services resources that use the certificate.
@@ -14865,10 +15101,20 @@ type AwsCertificateManagerCertificateDetails struct {
 	// Indicates when the certificate was issued. Provided if the certificate type
 	// is AMAZON_ISSUED.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	IssuedAt *string `type:"string"`
 
 	// The name of the certificate authority that issued and signed the certificate.
@@ -14885,18 +15131,38 @@ type AwsCertificateManagerCertificateDetails struct {
 
 	// The time after which the certificate becomes invalid.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	NotAfter *string `type:"string"`
 
 	// The time before which the certificate is not valid.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	NotBefore *string `type:"string"`
 
 	// Provides a value that specifies whether to add the certificate to a transparency
@@ -15322,10 +15588,20 @@ type AwsCertificateManagerCertificateRenewalSummary struct {
 
 	// Indicates when the renewal summary was last updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	UpdatedAt *string `type:"string"`
 }
 
@@ -15810,10 +16086,20 @@ type AwsCloudFrontDistributionDetails struct {
 
 	// Indicates when that the distribution was last modified.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastModifiedTime *string `type:"string"`
 
 	// A complex type that controls whether access logs are written for the distribution.
@@ -18293,10 +18579,20 @@ type AwsDynamoDbTableBillingModeSummary struct {
 	// If the billing mode is PAY_PER_REQUEST, indicates when the billing mode was
 	// set to that value.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastUpdateToPayPerRequestDateTime *string `type:"string"`
 }
 
@@ -18342,10 +18638,20 @@ type AwsDynamoDbTableDetails struct {
 
 	// Indicates when the table was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreationDateTime *string `type:"string"`
 
 	// Indicates whether deletion protection is to be enabled (true) or disabled
@@ -18826,18 +19132,38 @@ type AwsDynamoDbTableProvisionedThroughput struct {
 
 	// Indicates when the provisioned throughput was last decreased.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastDecreaseDateTime *string `type:"string"`
 
 	// Indicates when the provisioned throughput was last increased.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastIncreaseDateTime *string `type:"string"`
 
 	// The number of times during the current UTC calendar day that the provisioned
@@ -19068,10 +19394,20 @@ type AwsDynamoDbTableRestoreSummary struct {
 
 	// Indicates the point in time that the table was restored to.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	RestoreDateTime *string `type:"string"`
 
 	// Whether a restore is currently in progress.
@@ -19133,10 +19469,20 @@ type AwsDynamoDbTableSseDescription struct {
 	// If the key is inaccessible, the date and time when DynamoDB detected that
 	// the key was inaccessible.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	InaccessibleEncryptionDateTime *string `type:"string"`
 
 	// The ARN of the KMS key that is used for the KMS encryption.
@@ -19901,10 +20247,20 @@ type AwsEc2InstanceDetails struct {
 
 	// Indicates when the instance was launched.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LaunchedAt *string `type:"string"`
 
 	// Details about the metadata options for the Amazon EC2 instance.
@@ -22650,10 +23006,20 @@ type AwsEc2NetworkInterfaceAttachment struct {
 
 	// Indicates when the attachment initiated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	AttachTime *string `type:"string"`
 
 	// The identifier of the network interface attachment
@@ -23747,10 +24113,20 @@ type AwsEc2VolumeDetails struct {
 
 	// Indicates when the volume was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateTime *string `type:"string"`
 
 	// The device name for the volume that is attached to the instance.
@@ -24702,10 +25078,20 @@ type AwsEc2VpnConnectionVgwTelemetryDetails struct {
 
 	// The date and time of the last change in status.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastStatusChange *string `type:"string"`
 
 	// The Internet-routable IP address of the virtual private gateway's outside
@@ -24791,10 +25177,20 @@ type AwsEcrContainerImageDetails struct {
 
 	// The date and time when the image was pushed to the repository.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ImagePublishedAt *string `type:"string"`
 
 	// The list of tags that are associated with the image.
@@ -30474,10 +30870,20 @@ type AwsElbLoadBalancerDetails struct {
 
 	// Indicates when the load balancer was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedTime *string `type:"string"`
 
 	// The DNS name of the load balancer.
@@ -31023,10 +31429,20 @@ type AwsElbv2LoadBalancerDetails struct {
 
 	// Indicates when the load balancer was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedTime *string `type:"string"`
 
 	// The public DNS name of the load balancer.
@@ -32113,10 +32529,20 @@ type AwsIamAccessKeyDetails struct {
 
 	// Indicates when the IAM access key was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedAt *string `type:"string"`
 
 	// The ID of the principal associated with an access key.
@@ -32262,10 +32688,20 @@ type AwsIamAccessKeySessionContextAttributes struct {
 
 	// Indicates when the session was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreationDate *string `type:"string"`
 
 	// Indicates whether the session used multi-factor authentication (MFA).
@@ -32421,10 +32857,20 @@ type AwsIamGroupDetails struct {
 
 	// Indicates when the IAM group was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateDate *string `type:"string"`
 
 	// The identifier of the IAM group.
@@ -32535,10 +32981,20 @@ type AwsIamInstanceProfile struct {
 
 	// Indicates when the instance profile was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateDate *string `type:"string"`
 
 	// The identifier of the instance profile.
@@ -32640,10 +33096,20 @@ type AwsIamInstanceProfileRole struct {
 
 	// Indicates when the role was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateDate *string `type:"string"`
 
 	// The path to the role.
@@ -32774,10 +33240,20 @@ type AwsIamPolicyDetails struct {
 
 	// When the policy was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateDate *string `type:"string"`
 
 	// The identifier of the default version of the policy.
@@ -32807,10 +33283,20 @@ type AwsIamPolicyDetails struct {
 
 	// When the policy was most recently updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	UpdateDate *string `type:"string"`
 }
 
@@ -32904,10 +33390,20 @@ type AwsIamPolicyVersion struct {
 
 	// Indicates when the version was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateDate *string `type:"string"`
 
 	// Whether the version is the default version.
@@ -32965,10 +33461,20 @@ type AwsIamRoleDetails struct {
 
 	// Indicates when the role was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateDate *string `type:"string"`
 
 	// The list of instance profiles that contain this role.
@@ -33137,10 +33643,20 @@ type AwsIamUserDetails struct {
 
 	// Indicates when the user was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreateDate *string `type:"string"`
 
 	// A list of IAM groups that the user belongs to.
@@ -33384,10 +33900,20 @@ type AwsKmsKeyDetails struct {
 
 	// Indicates when the KMS key was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreationDate *float64 `type:"double"`
 
 	// A description of the KMS key.
@@ -33621,10 +34147,20 @@ type AwsLambdaFunctionDetails struct {
 
 	// Indicates when the function was last updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastModified *string `type:"string"`
 
 	// The function's layers.
@@ -34009,19 +34545,38 @@ func (s *AwsLambdaFunctionVpcConfig) SetVpcId(v string) *AwsLambdaFunctionVpcCon
 type AwsLambdaLayerVersionDetails struct {
 	_ struct{} `type:"structure"`
 
-	// The layer's compatible runtimes. Maximum number of five items.
+	// The layer's compatible function runtimes (https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html).
 	//
-	// Valid values: nodejs10.x | nodejs12.x | java8 | java11 | python2.7 | python3.6
-	// | python3.7 | python3.8 | dotnetcore1.0 | dotnetcore2.1 | go1.x | ruby2.5
-	// | provided
+	// The following list includes deprecated runtimes. For more information, see
+	// Runtime deprecation policy (https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy)
+	// in the Lambda Developer Guide.
+	//
+	// Array Members: Maximum number of 5 items.
+	//
+	// Valid Values: nodejs | nodejs4.3 | nodejs6.10 | nodejs8.10 | nodejs10.x |
+	// nodejs12.x | nodejs14.x | nodejs16.x | java8 | java8.al2 | java11 | python2.7
+	// | python3.6 | python3.7 | python3.8 | python3.9 | dotnetcore1.0 | dotnetcore2.0
+	// | dotnetcore2.1 | dotnetcore3.1 | dotnet6 | nodejs4.3-edge | go1.x | ruby2.5
+	// | ruby2.7 | provided | provided.al2 | nodejs18.x | python3.10 | java17 |
+	// ruby3.2 | python3.11 | nodejs20.x | provided.al2023 | python3.12 | java21
 	CompatibleRuntimes []*string `type:"list"`
 
 	// Indicates when the version was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedDate *string `type:"string"`
 
 	// The version number.
@@ -35767,10 +36322,20 @@ type AwsRdsDbClusterDetails struct {
 	// Indicates when the DB cluster was created, in Universal Coordinated Time
 	// (UTC).
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ClusterCreateTime *string `type:"string"`
 
 	// Whether tags are copied from the DB cluster to snapshots of the DB cluster.
@@ -36311,10 +36876,20 @@ type AwsRdsDbClusterSnapshotDetails struct {
 	// Indicates when the DB cluster was created, in Universal Coordinated Time
 	// (UTC).
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ClusterCreateTime *string `type:"string"`
 
 	// The DB cluster identifier.
@@ -36353,10 +36928,20 @@ type AwsRdsDbClusterSnapshotDetails struct {
 
 	// Indicates when the snapshot was taken.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	SnapshotCreateTime *string `type:"string"`
 
 	// The type of DB cluster snapshot.
@@ -36738,10 +37323,20 @@ type AwsRdsDbInstanceDetails struct {
 
 	// Indicates when the DB instance was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	InstanceCreateTime *string `type:"string"`
 
 	// Specifies the provisioned IOPS (I/O operations per second) for this DB instance.
@@ -36754,10 +37349,20 @@ type AwsRdsDbInstanceDetails struct {
 	// Specifies the latest time to which a database can be restored with point-in-time
 	// restore.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LatestRestorableTime *string `type:"string"`
 
 	// License model information for this DB instance.
@@ -38351,10 +38956,20 @@ type AwsRdsEventSubscriptionDetails struct {
 
 	// The datetime when the event notification subscription was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	SubscriptionCreationTime *string `type:"string"`
 }
 
@@ -38749,10 +39364,20 @@ type AwsRedshiftClusterDeferredMaintenanceWindow struct {
 
 	// The end of the time window for which maintenance was deferred.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	DeferMaintenanceEndTime *string `type:"string"`
 
 	// The identifier of the maintenance window.
@@ -38760,10 +39385,20 @@ type AwsRedshiftClusterDeferredMaintenanceWindow struct {
 
 	// The start of the time window for which maintenance was deferred.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	DeferMaintenanceStartTime *string `type:"string"`
 }
 
@@ -38835,10 +39470,20 @@ type AwsRedshiftClusterDetails struct {
 
 	// Indicates when the cluster was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ClusterCreateTime *string `type:"string"`
 
 	// The unique identifier of the cluster.
@@ -38909,10 +39554,20 @@ type AwsRedshiftClusterDetails struct {
 	// Indicates when the next snapshot is expected to be taken. The cluster must
 	// have a valid snapshot schedule and have backups enabled.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ExpectedNextSnapshotScheduleTime *string `type:"string"`
 
 	// The status of the next expected snapshot.
@@ -38954,10 +39609,20 @@ type AwsRedshiftClusterDetails struct {
 
 	// Indicates the start of the next maintenance window.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	NextMaintenanceWindowStartTime *string `type:"string"`
 
 	// The node type for the nodes in the cluster.
@@ -39488,18 +40153,38 @@ type AwsRedshiftClusterLoggingStatus struct {
 
 	// The last time when logs failed to be delivered.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastFailureTime *string `type:"string"`
 
 	// The last time that logs were delivered successfully.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastSuccessfulDeliveryTime *string `type:"string"`
 
 	// Indicates whether logging is enabled.
@@ -40364,10 +41049,20 @@ type AwsS3BucketBucketLifecycleConfigurationRulesDetails struct {
 
 	// The date when objects are moved or deleted.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ExpirationDate *string `type:"string"`
 
 	// The length in days of the lifetime for objects that are subject to the rule.
@@ -40766,10 +41461,20 @@ type AwsS3BucketBucketLifecycleConfigurationRulesTransitionsDetails struct {
 	// A date on which to transition objects to the specified storage class. If
 	// you provide Date, you cannot provide Days.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	Date *string `type:"string"`
 
 	// The number of days after which to transition the object to the specified
@@ -40893,10 +41598,20 @@ type AwsS3BucketDetails struct {
 
 	// Indicates when the S3 bucket was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedAt *string `type:"string"`
 
 	// The name of the bucket.
@@ -41783,10 +42498,20 @@ type AwsS3ObjectDetails struct {
 
 	// Indicates when the object was last modified.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastModified *string `type:"string"`
 
 	// The identifier of the KMS symmetric customer managed key that was used for
@@ -42258,10 +42983,14 @@ type AwsSecurityFinding struct {
 
 	// The Amazon Web Services account ID that a finding is generated in.
 	//
+	// Length Constraints: 12.
+	//
 	// AwsAccountId is a required field
 	AwsAccountId *string `type:"string" required:"true"`
 
 	// The name of the Amazon Web Services account from which a finding was generated.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 50.
 	AwsAccountName *string `type:"string"`
 
 	// The name of the company for the product that generated the finding.
@@ -42272,6 +43001,8 @@ type AwsSecurityFinding struct {
 	//
 	// When you use the Security Hub console or API to filter findings by company
 	// name, you use this attribute.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 128.
 	CompanyName *string `type:"string"`
 
 	// This data type is exclusive to findings that are generated as the result
@@ -42290,10 +43021,20 @@ type AwsSecurityFinding struct {
 	// Indicates when the security findings provider created the potential security
 	// issue that a finding captured.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// CreatedAt is a required field
 	CreatedAt *string `type:"string" required:"true"`
@@ -42304,9 +43045,9 @@ type AwsSecurityFinding struct {
 	// a score of 100 is reserved for the most critical resources.
 	Criticality *int64 `type:"integer"`
 
-	// A finding's description.
+	// A finding's description. Description is a required property.
 	//
-	// In this release, Description is a required property.
+	// Length Constraints: Minimum length of 1. Maximum length of 1024.
 	//
 	// Description is a required field
 	Description *string `type:"string" required:"true"`
@@ -42319,10 +43060,20 @@ type AwsSecurityFinding struct {
 	// Indicates when the security findings provider first observed the potential
 	// security issue that a finding captured.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	FirstObservedAt *string `type:"string"`
 
 	// Provides metadata for the Amazon CodeGuru detector associated with a finding.
@@ -42334,12 +43085,17 @@ type AwsSecurityFinding struct {
 
 	// The identifier for the solution-specific component (a discrete unit of logic)
 	// that generated a finding. In various security findings providers' solutions,
-	// this generator can be called a rule, a check, a detector, a plugin, etc.
+	// this generator can be called a rule, a check, a detector, a plugin, or something
+	// else.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 512.
 	//
 	// GeneratorId is a required field
 	GeneratorId *string `type:"string" required:"true"`
 
 	// The security findings provider-specific identifier for a finding.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 512.
 	//
 	// Id is a required field
 	Id *string `type:"string" required:"true"`
@@ -42347,13 +43103,25 @@ type AwsSecurityFinding struct {
 	// Indicates when the security findings provider most recently observed the
 	// potential security issue that a finding captured.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastObservedAt *string `type:"string"`
 
 	// A list of malware related to a finding.
+	//
+	// Array Members: Maximum number of 5 items.
 	Malware []*Malware `type:"list"`
 
 	// The details of network-related information about a finding.
@@ -42373,17 +43141,30 @@ type AwsSecurityFinding struct {
 	// The details of process-related information about a finding.
 	Process *ProcessDetails `type:"structure"`
 
-	// An ISO8601-formatted timestamp that indicates when Security Hub received
-	// a finding and begins to process it.
+	// A timestamp that indicates when Security Hub received a finding and begins
+	// to process it.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ProcessedAt *string `type:"string"`
 
 	// The ARN generated by Security Hub that uniquely identifies a product that
 	// generates findings. This can be the ARN for a third-party product that is
 	// integrated with Security Hub, or the ARN for a custom integration.
+	//
+	// Length Constraints: Minimum length of 12. Maximum length of 2048.
 	//
 	// ProductArn is a required field
 	ProductArn *string `type:"string" required:"true"`
@@ -42403,6 +43184,8 @@ type AwsSecurityFinding struct {
 	//
 	// When you use the Security Hub console or API to filter findings by product
 	// name, you use this attribute.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 128.
 	ProductName *string `type:"string"`
 
 	// The record state of a finding.
@@ -42412,9 +43195,13 @@ type AwsSecurityFinding struct {
 	//
 	// Security Hub populates this attribute automatically for each finding. You
 	// cannot update it using BatchImportFindings or BatchUpdateFindings.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 16.
 	Region *string `type:"string"`
 
 	// A list of related findings.
+	//
+	// Array Members: Minimum number of 1 item. Maximum number of 10 items.
 	RelatedFindings []*RelatedFinding `type:"list"`
 
 	// A data type that describes the remediation options for a finding.
@@ -42423,13 +43210,15 @@ type AwsSecurityFinding struct {
 	// A set of resource data types that describe the resources that the finding
 	// refers to.
 	//
+	// Array Members: Minimum number of 1 item. Maximum number of 32 items.
+	//
 	// Resources is a required field
 	Resources []*Resource `type:"list" required:"true"`
 
 	// Indicates whether the finding is a sample finding.
 	Sample *bool `type:"boolean"`
 
-	// The schema version that a finding is formatted for.
+	// The schema version that a finding is formatted for. The value is 2018-10-08.
 	//
 	// SchemaVersion is a required field
 	SchemaVersion *string `type:"string" required:"true"`
@@ -42442,15 +43231,19 @@ type AwsSecurityFinding struct {
 	SourceUrl *string `type:"string"`
 
 	// Threat intelligence details related to a finding.
+	//
+	// Array Members: Minimum number of 1 item. Maximum number of 5 items.
 	ThreatIntelIndicators []*ThreatIntelIndicator `type:"list"`
 
 	// Details about the threat detected in a security finding and the file paths
 	// that were affected by the threat.
+	//
+	// Array Members: Minimum number of 1 item. Maximum number of 32 items.
 	Threats []*Threat `type:"list"`
 
-	// A finding's title.
+	// A finding's title. Title is a required property.
 	//
-	// In this release, Title is a required property.
+	// Length Constraints: Minimum length of 1. Maximum length of 256.
 	//
 	// Title is a required field
 	Title *string `type:"string" required:"true"`
@@ -42460,20 +43253,35 @@ type AwsSecurityFinding struct {
 	//
 	// Valid namespace values are: Software and Configuration Checks | TTPs | Effects
 	// | Unusual Behaviors | Sensitive Data Identifications
+	//
+	// Array Members: Maximum number of 50 items.
 	Types []*string `type:"list"`
 
 	// Indicates when the security findings provider last updated the finding record.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// UpdatedAt is a required field
 	UpdatedAt *string `type:"string" required:"true"`
 
 	// A list of name/value string pairs associated with the finding. These are
 	// custom, user-defined fields added to a finding.
+	//
+	// Can contain up to 50 key-value pairs. For each key-value pair, the key can
+	// contain up to 128 characters, and the value can contain up to 1024 characters.
 	UserDefinedFields map[string]*string `type:"map"`
 
 	// Indicates the veracity of a finding.
@@ -42917,12 +43725,23 @@ type AwsSecurityFindingFilters struct {
 	// zero percent confidence and 100 means 100 percent confidence.
 	Confidence []*NumberFilter `type:"list"`
 
-	// An ISO8601-formatted timestamp that indicates when the security findings
-	// provider captured the potential security issue that a finding captured.
+	// A timestamp that indicates when the security findings provider created the
+	// potential security issue that a finding reflects.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	CreatedAt []*DateFilter `type:"list"`
 
 	// The level of importance assigned to the resources associated with the finding.
@@ -42970,12 +43789,23 @@ type AwsSecurityFindingFilters struct {
 	// | Unusual Behaviors | Sensitive Data Identifications
 	FindingProviderFieldsTypes []*StringFilter `type:"list"`
 
-	// An ISO8601-formatted timestamp that indicates when the security findings
-	// provider first observed the potential security issue that a finding captured.
+	// A timestamp that indicates when the security findings provider first observed
+	// the potential security issue that a finding captured.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	FirstObservedAt []*DateFilter `type:"list"`
 
 	// The identifier for the solution-specific component (a discrete unit of logic)
@@ -42991,13 +43821,23 @@ type AwsSecurityFindingFilters struct {
 	// Deprecated: The Keyword property is deprecated.
 	Keyword []*KeywordFilter `deprecated:"true" type:"list"`
 
-	// An ISO8601-formatted timestamp that indicates when the security findings
-	// provider most recently observed the potential security issue that a finding
-	// captured.
+	// A timestamp that indicates when the security findings provider most recently
+	// observed the potential security issue that a finding captured.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastObservedAt []*DateFilter `type:"list"`
 
 	// The name of the malware that was observed.
@@ -43057,9 +43897,20 @@ type AwsSecurityFindingFilters struct {
 
 	// A timestamp that identifies when the process was launched.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ProcessLaunchedAt []*DateFilter `type:"list"`
 
 	// The name of the process.
@@ -43077,9 +43928,20 @@ type AwsSecurityFindingFilters struct {
 
 	// A timestamp that identifies when the process was terminated.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ProcessTerminatedAt []*DateFilter `type:"list"`
 
 	// The ARN generated by Security Hub that uniquely identifies a third-party
@@ -43173,9 +44035,20 @@ type AwsSecurityFindingFilters struct {
 
 	// A timestamp that identifies when the container was started.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	ResourceContainerLaunchedAt []*DateFilter `type:"list"`
 
 	// The name of the container related to a finding.
@@ -43250,12 +44123,23 @@ type AwsSecurityFindingFilters struct {
 	// a finding.
 	Type []*StringFilter `type:"list"`
 
-	// An ISO8601-formatted timestamp that indicates when the security findings
-	// provider last updated the finding record.
+	// A timestamp that indicates when the security findings provider last updated
+	// the finding record.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	UpdatedAt []*DateFilter `type:"list"`
 
 	// A list of name/value string pairs associated with the finding. These are
@@ -48577,6 +49461,8 @@ type Compliance struct {
 	// For a control, the industry or regulatory framework requirements that are
 	// related to the control. The check for that control is aligned with these
 	// requirements.
+	//
+	// Array Members: Maximum number of 32 items.
 	RelatedRequirements []*string `type:"list"`
 
 	// The unique identifier of a control across standards. Values for this field
@@ -48595,8 +49481,9 @@ type Compliance struct {
 	//    configuration. FAILED - Standards check failed for at least one evaluated
 	//    resource. NOT_AVAILABLE - Check could not be performed due to a service
 	//    outage, API error, or because the result of the Config evaluation was
-	//    NOT_APPLICABLE. If the Config evaluation result was NOT_APPLICABLE, then
-	//    after 3 days, Security Hub automatically archives the finding.
+	//    NOT_APPLICABLE. If the Config evaluation result was NOT_APPLICABLE for
+	//    a Security Hub control, Security Hub automatically archives the finding
+	//    after 3 days.
 	Status *string `type:"string" enum:"ComplianceStatus"`
 
 	// For findings generated from controls, a list of reasons behind the value
@@ -49003,10 +49890,20 @@ type ContainerDetails struct {
 
 	// Indicates when the container started.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LaunchedAt *string `type:"string"`
 
 	// The name of the container related to a finding.
@@ -49873,7 +50770,7 @@ type CreateMembersInput struct {
 	// address.
 	//
 	// AccountDetails is a required field
-	AccountDetails []*AccountDetails `type:"list" required:"true"`
+	AccountDetails []*AccountDetails `min:"1" type:"list" required:"true"`
 }
 
 // String returns the string representation.
@@ -49899,6 +50796,9 @@ func (s *CreateMembersInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateMembersInput"}
 	if s.AccountDetails == nil {
 		invalidParams.Add(request.NewErrParamRequired("AccountDetails"))
+	}
+	if s.AccountDetails != nil && len(s.AccountDetails) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AccountDetails", 1))
 	}
 	if s.AccountDetails != nil {
 		for i, v := range s.AccountDetails {
@@ -50174,16 +51074,38 @@ type DateFilter struct {
 
 	// A timestamp that provides the end date for the date filter.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	End *string `type:"string"`
 
 	// A timestamp that provides the start date for the date filter.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	Start *string `type:"string"`
 }
 
@@ -51797,9 +52719,13 @@ type DnsRequestAction struct {
 	Blocked *bool `type:"boolean"`
 
 	// The DNS domain that is associated with the DNS request.
+	//
+	// Length Constraints: 128.
 	Domain *string `type:"string"`
 
 	// The protocol that was used for the DNS request.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 64.
 	Protocol *string `type:"string"`
 }
 
@@ -52233,15 +53159,23 @@ type FilePaths struct {
 	_ struct{} `type:"structure"`
 
 	// The name of the infected or suspicious file corresponding to the hash.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 128 length.
 	FileName *string `type:"string"`
 
 	// Path to the infected or suspicious file on the resource it was detected on.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 128 length.
 	FilePath *string `type:"string"`
 
 	// The hash value for the infected or suspicious file.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 128 length.
 	Hash *string `type:"string"`
 
 	// The Amazon Resource Name (ARN) of the resource on which the threat was detected.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 128 length.
 	ResourceId *string `type:"string"`
 }
 
@@ -52346,12 +53280,23 @@ type FindingHistoryRecord struct {
 	// or an Security Hub customer may call BatchUpdateFindings (https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_BatchUpdateFindings.html).
 	UpdateSource *FindingHistoryUpdateSource `type:"structure"`
 
-	// An ISO 8601-formatted timestamp that indicates when Security Hub processed
-	// the updated finding record.
+	// A timestamp that indicates when Security Hub processed the updated finding
+	// record.
 	//
-	// A correctly formatted example is 2020-05-21T20:16:34.724Z. The value cannot
-	// contain spaces, and date and time should be separated by T. For more information,
-	// see RFC 3339 section 5.6, Internet Date/Time Format (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	UpdateTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
 	// An array of objects that provides details about the finding change event,
@@ -52517,9 +53462,36 @@ func (s *FindingHistoryUpdateSource) SetType(v string) *FindingHistoryUpdateSour
 	return s
 }
 
-// In a BatchImportFindings request, finding providers use FindingProviderFields
-// to provide and update values for confidence, criticality, related findings,
-// severity, and types.
+// In a BatchImportFindings (https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_BatchImportFindings.html)
+// request, finding providers use FindingProviderFields to provide and update
+// values for the following fields:
+//
+//   - Confidence
+//
+//   - Criticality
+//
+//   - RelatedFindings
+//
+//   - Severity
+//
+//   - Types
+//
+// The preceding fields are nested under the FindingProviderFields object, but
+// also have analogues of the same name as top-level ASFF fields. When a new
+// finding is sent to Security Hub by a finding provider, Security Hub populates
+// the FindingProviderFields object automatically, if it is empty, based on
+// the corresponding top-level fields.
+//
+// Finding providers can update FindingProviderFields only by using the BatchImportFindings
+// operation. Finding providers can't update this object with the BatchUpdateFindings
+// (https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_BatchUpdateFindings.html)
+// operation. Customers can update the top-level fields by using the BatchUpdateFindings
+// operation. Customers can't update FindingProviderFields.
+//
+// For information about how Security Hub handles updates from BatchImportFindings
+// to FindingProviderFields and to the corresponding top-level attributes, see
+// Using FindingProviderFields (https://docs.aws.amazon.com/securityhub/latest/userguide/finding-update-batchimportfindings.html#batchimportfindings-findingproviderfields)
+// in the Security Hub User Guide.
 type FindingProviderFields struct {
 	_ struct{} `type:"structure"`
 
@@ -52618,7 +53590,32 @@ func (s *FindingProviderFields) SetTypes(v []*string) *FindingProviderFields {
 	return s
 }
 
-// The severity assigned to the finding by the finding provider.
+// The severity assigned to a finding by the finding provider. This object may
+// include one or more of the following attributes:
+//
+//   - Label
+//
+//   - Normalized
+//
+//   - Original
+//
+//   - Product
+//
+// If a BatchImportFindings (https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_BatchImportFindings.html)
+// request for a new finding only provides Label or only provides Normalized,
+// Security Hub automatically populates the value of the other field.
+//
+// The Normalized and Product attributes are included in the FindingProviderSeverity
+// structure to preserve the historical information associated with the finding,
+// even if the top-level Severity object is later modified using the BatchUpdateFindings
+// (https://docs.aws.amazon.com/securityhub/1.0/APIReference/API_BatchUpdateFindings.html)
+// operation.
+//
+// If the top-level Finding.Severity object is present, but Finding.FindingProviderFields
+// isn't present, Security Hub creates the FindingProviderFields.Severity object
+// and copies the entire Finding.Severity object into it. This ensures that
+// the original, provider-supplied details are retained within the FindingProviderFields.Severity
+// object, even if the top-level Severity object is overwritten.
 type FindingProviderSeverity struct {
 	_ struct{} `type:"structure"`
 
@@ -52626,6 +53623,8 @@ type FindingProviderSeverity struct {
 	Label *string `type:"string" enum:"SeverityLabel"`
 
 	// The finding provider's original value for the severity.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 64.
 	Original *string `type:"string"`
 }
 
@@ -52862,6 +53861,8 @@ type GeneratorDetails struct {
 	Description *string `type:"string"`
 
 	// An array of tags used to identify the detector associated with the finding.
+	//
+	// Array Members: Minimum number of 0 items. Maximum number of 10 items.
 	Labels []*string `type:"list"`
 
 	// The name of the detector used to identify the code vulnerability.
@@ -53504,10 +54505,7 @@ type GetFindingHistoryInput struct {
 	_ struct{} `type:"structure"`
 
 	// An ISO 8601-formatted timestamp that indicates the end time of the requested
-	// finding history. A correctly formatted example is 2020-05-21T20:16:34.724Z.
-	// The value cannot contain spaces, and date and time should be separated by
-	// T. For more information, see RFC 3339 section 5.6, Internet Date/Time Format
-	// (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// finding history.
 	//
 	// If you provide values for both StartTime and EndTime, Security Hub returns
 	// finding history for the specified time period. If you provide a value for
@@ -53520,6 +54518,21 @@ type GetFindingHistoryInput struct {
 	// of the finding to the time at which the API is called. In all of these scenarios,
 	// the response is limited to 100 results, and the maximum time period is limited
 	// to 90 days.
+	//
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	EndTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
 	// Identifies which finding to get the finding history for.
@@ -53537,11 +54550,7 @@ type GetFindingHistoryInput struct {
 	// Hub returns up to 100 results of finding history for each request.
 	NextToken *string `type:"string"`
 
-	// An ISO 8601-formatted timestamp that indicates the start time of the requested
-	// finding history. A correctly formatted example is 2020-05-21T20:16:34.724Z.
-	// The value cannot contain spaces, and date and time should be separated by
-	// T. For more information, see RFC 3339 section 5.6, Internet Date/Time Format
-	// (https://www.rfc-editor.org/rfc/rfc3339#section-5.6).
+	// A timestamp that indicates the start time of the requested finding history.
 	//
 	// If you provide values for both StartTime and EndTime, Security Hub returns
 	// finding history for the specified time period. If you provide a value for
@@ -53554,6 +54563,21 @@ type GetFindingHistoryInput struct {
 	// of the finding to the time at which the API is called. In all of these scenarios,
 	// the response is limited to 100 results, and the maximum time period is limited
 	// to 90 days.
+	//
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	StartTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 }
 
@@ -54368,8 +55392,9 @@ type Insight struct {
 	_ struct{} `type:"structure"`
 
 	// One or more attributes used to filter the findings included in the insight.
-	// The insight only includes findings that match the criteria defined in the
-	// filters.
+	// You can filter by up to ten finding attributes. For each attribute, you can
+	// provide up to 20 filter values. The insight only includes findings that match
+	// the criteria defined in the filters.
 	//
 	// Filters is a required field
 	Filters *AwsSecurityFindingFilters `type:"structure" required:"true"`
@@ -56429,10 +57454,14 @@ type Malware struct {
 
 	// The name of the malware that was observed.
 	//
+	// Length Constraints: Minimum of 1. Maximum of 64.
+	//
 	// Name is a required field
 	Name *string `type:"string" required:"true"`
 
 	// The file system path of the malware that was observed.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 512.
 	Path *string `type:"string"`
 
 	// The state of the malware that was observed.
@@ -56724,6 +57753,8 @@ type Network struct {
 	_ struct{} `type:"structure"`
 
 	// The destination domain of network-related information about a finding.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 128.
 	DestinationDomain *string `type:"string"`
 
 	// The destination IPv4 address of network-related information about a finding.
@@ -56742,9 +57773,13 @@ type Network struct {
 	OpenPortRange *PortRange `type:"structure"`
 
 	// The protocol of network-related information about a finding.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 16.
 	Protocol *string `type:"string"`
 
 	// The source domain of network-related information about a finding.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 128.
 	SourceDomain *string `type:"string"`
 
 	// The source IPv4 address of network-related information about a finding.
@@ -56866,6 +57901,8 @@ type NetworkConnectionAction struct {
 	LocalPortDetails *ActionLocalPortDetails `type:"structure"`
 
 	// The protocol used to make the network connection request.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 64.
 	Protocol *string `type:"string"`
 
 	// Information about the remote IP address that issued the network connection
@@ -56939,6 +57976,8 @@ type NetworkHeader struct {
 	Destination *NetworkPathComponentDetails `type:"structure"`
 
 	// The protocol used for the component.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 16.
 	Protocol *string `type:"string"`
 
 	// Information about the origin of the component.
@@ -56986,9 +58025,13 @@ type NetworkPathComponent struct {
 	_ struct{} `type:"structure"`
 
 	// The identifier of a component in the network path.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 32.
 	ComponentId *string `type:"string"`
 
 	// The type of component.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 32.
 	ComponentType *string `type:"string"`
 
 	// Information about the component that comes after the current component in
@@ -57089,15 +58132,27 @@ type Note struct {
 
 	// The text of a note.
 	//
+	// Length Constraints: Minimum of 1. Maximum of 512.
+	//
 	// Text is a required field
 	Text *string `type:"string" required:"true"`
 
-	// The timestamp of when the note was updated.
+	// A timestamp that indicates when the note was updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	//
 	// UpdatedAt is a required field
 	UpdatedAt *string `type:"string" required:"true"`
@@ -57705,53 +58760,91 @@ type PatchSummary struct {
 	_ struct{} `type:"structure"`
 
 	// The number of patches from the compliance standard that failed to install.
+	//
+	// The value can be an integer from 0 to 100000.
 	FailedCount *int64 `type:"integer"`
 
 	// The identifier of the compliance standard that was used to determine the
 	// patch compliance status.
 	//
+	// Length Constraints: Minimum length of 1. Maximum length of 256.
+	//
 	// Id is a required field
 	Id *string `type:"string" required:"true"`
 
 	// The number of patches from the compliance standard that were installed successfully.
+	//
+	// The value can be an integer from 0 to 100000.
 	InstalledCount *int64 `type:"integer"`
 
 	// The number of installed patches that are not part of the compliance standard.
+	//
+	// The value can be an integer from 0 to 100000.
 	InstalledOtherCount *int64 `type:"integer"`
 
 	// The number of patches that were applied, but that require the instance to
 	// be rebooted in order to be marked as installed.
+	//
+	// The value can be an integer from 0 to 100000.
 	InstalledPendingReboot *int64 `type:"integer"`
 
 	// The number of patches that are installed but are also on a list of patches
 	// that the customer rejected.
+	//
+	// The value can be an integer from 0 to 100000.
 	InstalledRejectedCount *int64 `type:"integer"`
 
 	// The number of patches that are part of the compliance standard but are not
 	// installed. The count includes patches that failed to install.
+	//
+	// The value can be an integer from 0 to 100000.
 	MissingCount *int64 `type:"integer"`
 
 	// The type of patch operation performed. For Patch Manager, the values are
 	// SCAN and INSTALL.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 256.
 	Operation *string `type:"string"`
 
 	// Indicates when the operation completed.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	OperationEndTime *string `type:"string"`
 
 	// Indicates when the operation started.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	OperationStartTime *string `type:"string"`
 
 	// The reboot option specified for the instance.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 256.
 	RebootOption *string `type:"string"`
 }
 
@@ -58088,13 +59181,25 @@ type ProcessDetails struct {
 
 	// Indicates when the process was launched.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LaunchedAt *string `type:"string"`
 
 	// The name of the process.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 64.
 	Name *string `type:"string"`
 
 	// The parent process ID. This field accepts positive integers between O and
@@ -58102,6 +59207,8 @@ type ProcessDetails struct {
 	ParentPid *int64 `type:"integer"`
 
 	// The path to the process executable.
+	//
+	// Length Constraints: Minimum of 1. Maximum of 512.
 	Path *string `type:"string"`
 
 	// The process ID.
@@ -58109,10 +59216,20 @@ type ProcessDetails struct {
 
 	// Indicates when the process was terminated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	TerminatedAt *string `type:"string"`
 }
 
@@ -58383,6 +59500,8 @@ type Recommendation struct {
 
 	// Describes the recommended steps to take to remediate an issue identified
 	// in a finding.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 512 length.
 	Text *string `type:"string"`
 
 	// A URL to a page or site that contains information about how to remediate
@@ -58585,6 +59704,8 @@ type Resource struct {
 
 	// The canonical Amazon Web Services external Region name where this resource
 	// is located.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 16.
 	Region *string `type:"string"`
 
 	// Identifies the role of the resource in the finding. A resource is either
@@ -58592,7 +59713,8 @@ type Resource struct {
 	ResourceRole *string `type:"string"`
 
 	// A list of Amazon Web Services tags associated with a resource at the time
-	// the finding was processed.
+	// the finding was processed. Tags must follow Amazon Web Services tag naming
+	// limits and requirements (https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html#tag-conventions).
 	Tags map[string]*string `type:"map"`
 
 	// The type of the resource that details are provided for. If possible, set
@@ -58601,6 +59723,8 @@ type Resource struct {
 	//
 	// If the resource does not match any of the provided types, then set Type to
 	// Other.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 256.
 	//
 	// Type is a required field
 	Type *string `type:"string" required:"true"`
@@ -61653,6 +62777,8 @@ type Severity struct {
 	// Deprecated. The normalized severity of a finding. Instead of providing Normalized,
 	// provide Label.
 	//
+	// The value of Normalized can be an integer between 0 and 100.
+	//
 	// If you provide Label and do not provide Normalized, then Normalized is set
 	// automatically as follows.
 	//
@@ -61668,6 +62794,8 @@ type Severity struct {
 	Normalized *int64 `type:"integer"`
 
 	// The native severity from the finding product that generated the finding.
+	//
+	// Length Constraints: Minimum length of 1. Maximum length of 64.
 	Original *string `type:"string"`
 
 	// Deprecated. This attribute isn't included in findings. Instead of providing
@@ -62786,8 +63914,9 @@ func (s *StandardsSubscriptionRequest) SetStandardsInput(v map[string]*string) *
 type StartConfigurationPolicyAssociationInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) or universally unique identifier (UUID) of
-	// the configuration policy.
+	// The Amazon Resource Name (ARN) of a configuration policy, the universally
+	// unique identifier (UUID) of a configuration policy, or a value of SELF_MANAGED_SECURITY_HUB
+	// for a self-managed configuration.
 	//
 	// ConfigurationPolicyIdentifier is a required field
 	ConfigurationPolicyIdentifier *string `type:"string" required:"true"`
@@ -62939,8 +64068,9 @@ func (s *StartConfigurationPolicyAssociationOutput) SetUpdatedAt(v time.Time) *S
 type StartConfigurationPolicyDisassociationInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) or universally unique identifier (UUID) of
-	// the configuration policy.
+	// The Amazon Resource Name (ARN) of a configuration policy, the universally
+	// unique identifier (UUID) of a configuration policy, or a value of SELF_MANAGED_SECURITY_HUB
+	// for a self-managed configuration.
 	//
 	// ConfigurationPolicyIdentifier is a required field
 	ConfigurationPolicyIdentifier *string `type:"string" required:"true"`
@@ -63544,15 +64674,21 @@ type Threat struct {
 	_ struct{} `type:"structure"`
 
 	// Provides information about the file paths that were affected by the threat.
+	//
+	// Array Members: Minimum number of 1 item. Maximum number of 5 items.
 	FilePaths []*FilePaths `type:"list"`
 
 	// This total number of items in which the threat has been detected.
 	ItemCount *int64 `type:"integer"`
 
 	// The name of the threat.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 128 length.
 	Name *string `type:"string"`
 
 	// The severity of the threat.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 128 length.
 	Severity *string `type:"string"`
 }
 
@@ -63608,13 +64744,25 @@ type ThreatIntelIndicator struct {
 	// Indicates when the most recent instance of a threat intelligence indicator
 	// was observed.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	LastObservedAt *string `type:"string"`
 
 	// The source of the threat intelligence indicator.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 64 length.
 	Source *string `type:"string"`
 
 	// The URL to the page or site where you can get more information about the
@@ -63625,6 +64773,8 @@ type ThreatIntelIndicator struct {
 	Type *string `type:"string" enum:"ThreatIntelIndicatorType"`
 
 	// The value of a threat intelligence indicator.
+	//
+	// Length Constraints: Minimum of 1 length. Maximum of 512 length.
 	Value *string `type:"string"`
 }
 
@@ -65398,6 +66548,10 @@ type Vulnerability struct {
 	// Id is a required field
 	Id *string `type:"string" required:"true"`
 
+	// The date and time of the last exploit associated with a finding discovered
+	// in your environment.
+	LastKnownExploitAt *string `type:"string"`
+
 	// A list of URLs that provide additional information about the vulnerability.
 	ReferenceUrls []*string `type:"list"`
 
@@ -65480,6 +66634,12 @@ func (s *Vulnerability) SetFixAvailable(v string) *Vulnerability {
 // SetId sets the Id field's value.
 func (s *Vulnerability) SetId(v string) *Vulnerability {
 	s.Id = &v
+	return s
+}
+
+// SetLastKnownExploitAt sets the LastKnownExploitAt field's value.
+func (s *Vulnerability) SetLastKnownExploitAt(v string) *Vulnerability {
+	s.LastKnownExploitAt = &v
 	return s
 }
 
@@ -65576,10 +66736,20 @@ type VulnerabilityVendor struct {
 
 	// Indicates when the vulnerability advisory was created.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	VendorCreatedAt *string `type:"string"`
 
 	// The severity that the vendor assigned to the vulnerability.
@@ -65587,10 +66757,20 @@ type VulnerabilityVendor struct {
 
 	// Indicates when the vulnerability advisory was last updated.
 	//
-	// Uses the date-time format specified in RFC 3339 section 5.6, Internet Date/Time
-	// Format (https://tools.ietf.org/html/rfc3339#section-5.6). The value cannot
-	// contain spaces, and date and time should be separated by T. For example,
-	// 2020-03-22T13:22:13.933Z.
+	// This field accepts only the specified formats. Timestamps can end with Z
+	// or ("+" / "-") time-hour [":" time-minute]. The time-secfrac after seconds
+	// is limited to a maximum of 9 digits. The offset is bounded by +/-18:00. Here
+	// are valid timestamp formats with examples:
+	//
+	//    * YYYY-MM-DDTHH:MM:SSZ (for example, 2019-01-31T23:00:00Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmmZ (for example, 2019-01-31T23:00:00.123456789Z)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS+HH:MM (for example, 2024-01-04T15:25:10+17:59)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS-HHMM (for example, 2024-01-04T15:25:10-1759)
+	//
+	//    * YYYY-MM-DDTHH:MM:SS.mmmmmmmmm+HH:MM (for example, 2024-01-04T15:25:10.123456789+17:59)
 	VendorUpdatedAt *string `type:"string"`
 }
 
@@ -66512,6 +67692,9 @@ const (
 
 	// TargetTypeOrganizationalUnit is a TargetType enum value
 	TargetTypeOrganizationalUnit = "ORGANIZATIONAL_UNIT"
+
+	// TargetTypeRoot is a TargetType enum value
+	TargetTypeRoot = "ROOT"
 )
 
 // TargetType_Values returns all elements of the TargetType enum
@@ -66519,6 +67702,7 @@ func TargetType_Values() []string {
 	return []string{
 		TargetTypeAccount,
 		TargetTypeOrganizationalUnit,
+		TargetTypeRoot,
 	}
 }
 

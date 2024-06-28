@@ -5615,9 +5615,19 @@ type CreateLoadBalancerInput struct {
 	// pool (CoIP pool).
 	CustomerOwnedIpv4Pool *string `type:"string"`
 
-	// The type of IP addresses used by the subnets for your load balancer. The
-	// possible values are ipv4 (for IPv4 addresses) and dualstack (for IPv4 and
-	// IPv6 addresses).
+	// Note: Internal load balancers must use the ipv4 IP address type.
+	//
+	// [Application Load Balancers] The IP address type. The possible values are
+	// ipv4 (for only IPv4 addresses), dualstack (for IPv4 and IPv6 addresses),
+	// and dualstack-without-public-ipv4 (for IPv6 only public addresses, with private
+	// IPv4 and IPv6 addresses).
+	//
+	// [Network Load Balancers] The IP address type. The possible values are ipv4
+	// (for only IPv4 addresses) and dualstack (for IPv4 and IPv6 addresses). You
+	// can’t specify dualstack for a load balancer with a UDP or TCP_UDP listener.
+	//
+	// [Gateway Load Balancers] The IP address type. The possible values are ipv4
+	// (for only IPv4 addresses) and dualstack (for IPv4 and IPv6 addresses).
 	IpAddressType *string `type:"string" enum:"IpAddressType"`
 
 	// The name of the load balancer.
@@ -5648,7 +5658,7 @@ type CreateLoadBalancerInput struct {
 	// groups for the load balancer.
 	SecurityGroups []*string `type:"list"`
 
-	// The IDs of the public subnets. You can specify only one subnet per Availability
+	// The IDs of the subnets. You can specify only one subnet per Availability
 	// Zone. You must specify either subnets or subnet mappings, but not both.
 	//
 	// [Application Load Balancers] You must specify subnets from at least two Availability
@@ -5670,7 +5680,7 @@ type CreateLoadBalancerInput struct {
 	// Zones. You cannot specify Elastic IP addresses for your subnets.
 	SubnetMappings []*SubnetMapping `type:"list"`
 
-	// The IDs of the public subnets. You can specify only one subnet per Availability
+	// The IDs of the subnets. You can specify only one subnet per Availability
 	// Zone. You must specify either subnets or subnet mappings, but not both. To
 	// specify an Elastic IP address, specify subnet mappings instead of subnets.
 	//
@@ -9022,9 +9032,16 @@ type LoadBalancer struct {
 	// to a Network Load Balancer through Amazon Web Services PrivateLink.
 	EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic *string `type:"string"`
 
-	// The type of IP addresses used by the subnets for your load balancer. The
-	// possible values are ipv4 (for IPv4 addresses) and dualstack (for IPv4 and
-	// IPv6 addresses).
+	// [Application Load Balancers] The type of IP addresses used for public or
+	// private connections by the subnets attached to your load balancer. The possible
+	// values are ipv4 (for only IPv4 addresses), dualstack (for IPv4 and IPv6 addresses),
+	// and dualstack-without-public-ipv4 (for IPv6 only public addresses, with private
+	// IPv4 and IPv6 addresses).
+	//
+	// [Network Load Balancers and Gateway Load Balancers] The type of IP addresses
+	// used for public or private connections by the subnets attached to your load
+	// balancer. The possible values are ipv4 (for only IPv4 addresses) and dualstack
+	// (for IPv4 and IPv6 addresses).
 	IpAddressType *string `type:"string" enum:"IpAddressType"`
 
 	// The Amazon Resource Name (ARN) of the load balancer.
@@ -9258,6 +9275,9 @@ type LoadBalancerAttribute struct {
 	//
 	//    * idle_timeout.timeout_seconds - The idle timeout value, in seconds. The
 	//    valid range is 1-4000 seconds. The default is 60 seconds.
+	//
+	//    * client_keep_alive.seconds - The client keep alive value, in seconds.
+	//    The valid range is 60-604800 seconds. The default is 3600 seconds.
 	//
 	//    * connection_logs.s3.enabled - Indicates whether connection logs are enabled.
 	//    The value is true or false. The default is false.
@@ -11212,9 +11232,19 @@ func (s *RulePriorityPair) SetRuleArn(v string) *RulePriorityPair {
 type SetIpAddressTypeInput struct {
 	_ struct{} `type:"structure"`
 
-	// The IP address type. The possible values are ipv4 (for IPv4 addresses) and
-	// dualstack (for IPv4 and IPv6 addresses). You can’t specify dualstack for
-	// a load balancer with a UDP or TCP_UDP listener.
+	// Note: Internal load balancers must use the ipv4 IP address type.
+	//
+	// [Application Load Balancers] The IP address type. The possible values are
+	// ipv4 (for only IPv4 addresses), dualstack (for IPv4 and IPv6 addresses),
+	// and dualstack-without-public-ipv4 (for IPv6 only public addresses, with private
+	// IPv4 and IPv6 addresses).
+	//
+	// [Network Load Balancers] The IP address type. The possible values are ipv4
+	// (for only IPv4 addresses) and dualstack (for IPv4 and IPv6 addresses). You
+	// can’t specify dualstack for a load balancer with a UDP or TCP_UDP listener.
+	//
+	// [Gateway Load Balancers] The IP address type. The possible values are ipv4
+	// (for only IPv4 addresses) and dualstack (for IPv4 and IPv6 addresses).
 	//
 	// IpAddressType is a required field
 	IpAddressType *string `type:"string" required:"true" enum:"IpAddressType"`
@@ -11504,6 +11534,11 @@ func (s *SetSecurityGroupsOutput) SetSecurityGroupIds(v []*string) *SetSecurityG
 type SetSubnetsInput struct {
 	_ struct{} `type:"structure"`
 
+	// [Application Load Balancers] The IP address type. The possible values are
+	// ipv4 (for only IPv4 addresses), dualstack (for IPv4 and IPv6 addresses),
+	// and dualstack-without-public-ipv4 (for IPv6 only public addresses, with private
+	// IPv4 and IPv6 addresses).
+	//
 	// [Network Load Balancers] The type of IP addresses used by the subnets for
 	// your load balancer. The possible values are ipv4 (for IPv4 addresses) and
 	// dualstack (for IPv4 and IPv6 addresses). You can’t specify dualstack for
@@ -11621,6 +11656,8 @@ type SetSubnetsOutput struct {
 	// Information about the subnets.
 	AvailabilityZones []*AvailabilityZone `type:"list"`
 
+	// [Application Load Balancers] The IP address type.
+	//
 	// [Network Load Balancers] The IP address type.
 	//
 	// [Gateway Load Balancers] The IP address type.
@@ -11672,6 +11709,8 @@ type SourceIpConditionConfig struct {
 	// IP address of the request matches one of the CIDR blocks. This condition
 	// is not satisfied by the addresses in the X-Forwarded-For header. To search
 	// for addresses in the X-Forwarded-For header, use HttpHeaderConditionConfig.
+	//
+	// The total number of values must be less than, or equal to five.
 	Values []*string `type:"list"`
 }
 
@@ -12334,6 +12373,13 @@ type TargetGroupAttribute struct {
 	//    whether the load balancer terminates connections to unhealthy targets.
 	//    The value is true or false. The default is true.
 	//
+	//    * target_health_state.unhealthy.draining_interval_seconds - The amount
+	//    of time for Elastic Load Balancing to wait before changing the state of
+	//    an unhealthy target from unhealthy.draining to unhealthy. The range is
+	//    0-360000 seconds. The default value is 0 seconds. Note: This attribute
+	//    can only be configured when target_health_state.unhealthy.connection_termination.enabled
+	//    is false.
+	//
 	// The following attributes are supported only by Gateway Load Balancers:
 	//
 	//    * target_failover.on_deregistration - Indicates how the Gateway Load Balancer
@@ -12920,6 +12966,9 @@ const (
 
 	// IpAddressTypeDualstack is a IpAddressType enum value
 	IpAddressTypeDualstack = "dualstack"
+
+	// IpAddressTypeDualstackWithoutPublicIpv4 is a IpAddressType enum value
+	IpAddressTypeDualstackWithoutPublicIpv4 = "dualstack-without-public-ipv4"
 )
 
 // IpAddressType_Values returns all elements of the IpAddressType enum
@@ -12927,6 +12976,7 @@ func IpAddressType_Values() []string {
 	return []string{
 		IpAddressTypeIpv4,
 		IpAddressTypeDualstack,
+		IpAddressTypeDualstackWithoutPublicIpv4,
 	}
 }
 
@@ -13152,6 +13202,9 @@ const (
 	// TargetHealthStateEnumUnhealthy is a TargetHealthStateEnum enum value
 	TargetHealthStateEnumUnhealthy = "unhealthy"
 
+	// TargetHealthStateEnumUnhealthyDraining is a TargetHealthStateEnum enum value
+	TargetHealthStateEnumUnhealthyDraining = "unhealthy.draining"
+
 	// TargetHealthStateEnumUnused is a TargetHealthStateEnum enum value
 	TargetHealthStateEnumUnused = "unused"
 
@@ -13168,6 +13221,7 @@ func TargetHealthStateEnum_Values() []string {
 		TargetHealthStateEnumInitial,
 		TargetHealthStateEnumHealthy,
 		TargetHealthStateEnumUnhealthy,
+		TargetHealthStateEnumUnhealthyDraining,
 		TargetHealthStateEnumUnused,
 		TargetHealthStateEnumDraining,
 		TargetHealthStateEnumUnavailable,

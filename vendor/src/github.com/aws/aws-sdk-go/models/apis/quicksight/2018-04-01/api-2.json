@@ -5,10 +5,12 @@
     "endpointPrefix":"quicksight",
     "jsonVersion":"1.0",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon QuickSight",
     "serviceId":"QuickSight",
     "signatureVersion":"v4",
-    "uid":"quicksight-2018-04-01"
+    "uid":"quicksight-2018-04-01",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "CancelIngestion":{
@@ -1345,6 +1347,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DescribeKeyRegistration":{
+      "name":"DescribeKeyRegistration",
+      "http":{
+        "method":"GET",
+        "requestUri":"/accounts/{AwsAccountId}/key-registration"
+      },
+      "input":{"shape":"DescribeKeyRegistrationRequest"},
+      "output":{"shape":"DescribeKeyRegistrationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "DescribeNamespace":{
       "name":"DescribeNamespace",
       "http":{
@@ -2576,6 +2593,7 @@
         {"shape":"ResourceNotFoundException"},
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
+        {"shape":"UnsupportedUserEditionException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -2790,6 +2808,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateKeyRegistration":{
+      "name":"UpdateKeyRegistration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/key-registration"
+      },
+      "input":{"shape":"UpdateKeyRegistrationRequest"},
+      "output":{"shape":"UpdateKeyRegistrationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "UpdatePublicSharingSettings":{
       "name":"UpdatePublicSharingSettings",
       "http":{
@@ -2841,6 +2874,22 @@
         {"shape":"PreconditionNotMetException"},
         {"shape":"InternalFailureException"},
         {"shape":"ResourceUnavailableException"}
+      ]
+    },
+    "UpdateSPICECapacityConfiguration":{
+      "name":"UpdateSPICECapacityConfiguration",
+      "http":{
+        "method":"POST",
+        "requestUri":"/accounts/{AwsAccountId}/spice-capacity-configuration"
+      },
+      "input":{"shape":"UpdateSPICECapacityConfigurationRequest"},
+      "output":{"shape":"UpdateSPICECapacityConfigurationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InvalidParameterValueException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"ThrottlingException"},
+        {"shape":"InternalFailureException"}
       ]
     },
     "UpdateTemplate":{
@@ -3335,7 +3384,15 @@
       "members":{
         "Dashboard":{"shape":"AnonymousUserDashboardEmbeddingConfiguration"},
         "DashboardVisual":{"shape":"AnonymousUserDashboardVisualEmbeddingConfiguration"},
-        "QSearchBar":{"shape":"AnonymousUserQSearchBarEmbeddingConfiguration"}
+        "QSearchBar":{"shape":"AnonymousUserQSearchBarEmbeddingConfiguration"},
+        "GenerativeQnA":{"shape":"AnonymousUserGenerativeQnAEmbeddingConfiguration"}
+      }
+    },
+    "AnonymousUserGenerativeQnAEmbeddingConfiguration":{
+      "type":"structure",
+      "required":["InitialTopicId"],
+      "members":{
+        "InitialTopicId":{"shape":"RestrictiveResourceId"}
       }
     },
     "AnonymousUserQSearchBarEmbeddingConfiguration":{
@@ -3550,7 +3607,8 @@
         "ClusterId",
         "ManifestFileLocation",
         "Warehouse",
-        "RoleArn"
+        "RoleArn",
+        "ProductType"
       ]
     },
     "AssetBundleExportJobDataSourcePropertyToOverrideList":{
@@ -4116,6 +4174,17 @@
       "max":5,
       "min":1
     },
+    "AssetBundleImportJobWarning":{
+      "type":"structure",
+      "members":{
+        "Arn":{"shape":"Arn"},
+        "Message":{"shape":"NonEmptyString"}
+      }
+    },
+    "AssetBundleImportJobWarningList":{
+      "type":"list",
+      "member":{"shape":"AssetBundleImportJobWarning"}
+    },
     "AssetBundleImportSource":{
       "type":"structure",
       "members":{
@@ -4426,7 +4495,8 @@
         "DataLabels":{"shape":"DataLabelOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
         "ReferenceLines":{"shape":"ReferenceLineList"},
-        "ContributionAnalysisDefaults":{"shape":"ContributionAnalysisDefaultList"}
+        "ContributionAnalysisDefaults":{"shape":"ContributionAnalysisDefaultList"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "BarChartFieldWells":{
@@ -4526,7 +4596,8 @@
         "SectionId":{"shape":"ShortRestrictiveResourceId"},
         "Content":{"shape":"BodySectionContent"},
         "Style":{"shape":"SectionStyle"},
-        "PageBreakConfiguration":{"shape":"SectionPageBreakConfiguration"}
+        "PageBreakConfiguration":{"shape":"SectionPageBreakConfiguration"},
+        "RepeatConfiguration":{"shape":"BodySectionRepeatConfiguration"}
       }
     },
     "BodySectionConfigurationList":{
@@ -4538,6 +4609,66 @@
       "type":"structure",
       "members":{
         "Layout":{"shape":"SectionLayoutConfiguration"}
+      }
+    },
+    "BodySectionDynamicCategoryDimensionConfiguration":{
+      "type":"structure",
+      "required":["Column"],
+      "members":{
+        "Column":{"shape":"ColumnIdentifier"},
+        "Limit":{
+          "shape":"BodySectionDynamicDimensionLimit",
+          "box":true
+        },
+        "SortByMetrics":{"shape":"BodySectionDynamicDimensionSortConfigurationList"}
+      }
+    },
+    "BodySectionDynamicDimensionLimit":{
+      "type":"integer",
+      "max":1000,
+      "min":1
+    },
+    "BodySectionDynamicDimensionSortConfigurationList":{
+      "type":"list",
+      "member":{"shape":"ColumnSort"},
+      "max":100
+    },
+    "BodySectionDynamicNumericDimensionConfiguration":{
+      "type":"structure",
+      "required":["Column"],
+      "members":{
+        "Column":{"shape":"ColumnIdentifier"},
+        "Limit":{
+          "shape":"BodySectionDynamicDimensionLimit",
+          "box":true
+        },
+        "SortByMetrics":{"shape":"BodySectionDynamicDimensionSortConfigurationList"}
+      }
+    },
+    "BodySectionRepeatConfiguration":{
+      "type":"structure",
+      "members":{
+        "DimensionConfigurations":{"shape":"BodySectionRepeatDimensionConfigurationList"},
+        "PageBreakConfiguration":{"shape":"BodySectionRepeatPageBreakConfiguration"},
+        "NonRepeatingVisuals":{"shape":"NonRepeatingVisualsList"}
+      }
+    },
+    "BodySectionRepeatDimensionConfiguration":{
+      "type":"structure",
+      "members":{
+        "DynamicCategoryDimensionConfiguration":{"shape":"BodySectionDynamicCategoryDimensionConfiguration"},
+        "DynamicNumericDimensionConfiguration":{"shape":"BodySectionDynamicNumericDimensionConfiguration"}
+      }
+    },
+    "BodySectionRepeatDimensionConfigurationList":{
+      "type":"list",
+      "member":{"shape":"BodySectionRepeatDimensionConfiguration"},
+      "max":3
+    },
+    "BodySectionRepeatPageBreakConfiguration":{
+      "type":"structure",
+      "members":{
+        "After":{"shape":"SectionAfterPageBreak"}
       }
     },
     "BookmarksConfigurations":{
@@ -4578,7 +4709,8 @@
         "Legend":{"shape":"LegendOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
         "ReferenceLines":{"shape":"ReferenceLineList"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "BoxPlotDimensionFieldList":{
@@ -4821,7 +4953,8 @@
       "members":{
         "FilterId":{"shape":"ShortRestrictiveResourceId"},
         "Column":{"shape":"ColumnIdentifier"},
-        "Configuration":{"shape":"CategoryFilterConfiguration"}
+        "Configuration":{"shape":"CategoryFilterConfiguration"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "CategoryFilterConfiguration":{
@@ -4861,6 +4994,18 @@
         "CUSTOM_FILTER_LIST",
         "FILTER_LIST"
       ]
+    },
+    "CategoryInnerFilter":{
+      "type":"structure",
+      "required":[
+        "Column",
+        "Configuration"
+      ],
+      "members":{
+        "Column":{"shape":"ColumnIdentifier"},
+        "Configuration":{"shape":"CategoryFilterConfiguration"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
+      }
     },
     "CategoryValue":{
       "type":"string",
@@ -4962,7 +5107,7 @@
     "ColumnConfigurationList":{
       "type":"list",
       "member":{"shape":"ColumnConfiguration"},
-      "max":200
+      "max":2000
     },
     "ColumnDataRole":{
       "type":"string",
@@ -5166,7 +5311,8 @@
         "Column":{"shape":"ColumnIdentifier"},
         "Label":{"shape":"String"},
         "Visibility":{"shape":"Visibility"},
-        "Aggregation":{"shape":"AggregationFunction"}
+        "Aggregation":{"shape":"AggregationFunction"},
+        "TooltipTarget":{"shape":"TooltipTarget"}
       }
     },
     "ComboChartAggregatedFieldWells":{
@@ -5197,7 +5343,8 @@
         "LineDataLabels":{"shape":"DataLabelOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
         "ReferenceLines":{"shape":"ReferenceLineList"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "ComboChartFieldWells":{
@@ -5390,6 +5537,12 @@
         "COLLECTIVE"
       ]
     },
+    "ContextMenuOption":{
+      "type":"structure",
+      "members":{
+        "AvailabilityStatus":{"shape":"DashboardBehavior"}
+      }
+    },
     "ContributionAnalysisDefault":{
       "type":"structure",
       "required":[
@@ -5455,7 +5608,6 @@
     "CreateAccountSubscriptionRequest":{
       "type":"structure",
       "required":[
-        "Edition",
         "AuthenticationMethod",
         "AwsAccountId",
         "AccountName",
@@ -5477,10 +5629,14 @@
         "AdminGroup":{"shape":"GroupsList"},
         "AuthorGroup":{"shape":"GroupsList"},
         "ReaderGroup":{"shape":"GroupsList"},
+        "AdminProGroup":{"shape":"GroupsList"},
+        "AuthorProGroup":{"shape":"GroupsList"},
+        "ReaderProGroup":{"shape":"GroupsList"},
         "FirstName":{"shape":"String"},
         "LastName":{"shape":"String"},
         "EmailAddress":{"shape":"String"},
-        "ContactNumber":{"shape":"String"}
+        "ContactNumber":{"shape":"String"},
+        "IAMIdentityCenterInstanceArn":{"shape":"String"}
       }
     },
     "CreateAccountSubscriptionResponse":{
@@ -6372,7 +6528,8 @@
       "members":{
         "ContentUrl":{"shape":"URLOperationTemplate"},
         "ContentType":{"shape":"CustomContentType"},
-        "ImageScaling":{"shape":"CustomContentImageScalingConfiguration"}
+        "ImageScaling":{"shape":"CustomContentImageScalingConfiguration"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "CustomContentImageScalingConfiguration":{
@@ -7564,6 +7721,52 @@
         "VARP"
       ]
     },
+    "DefaultDateTimePickerControlOptions":{
+      "type":"structure",
+      "members":{
+        "Type":{"shape":"SheetControlDateTimePickerType"},
+        "DisplayOptions":{"shape":"DateTimePickerControlDisplayOptions"}
+      }
+    },
+    "DefaultFilterControlConfiguration":{
+      "type":"structure",
+      "required":[
+        "Title",
+        "ControlOptions"
+      ],
+      "members":{
+        "Title":{"shape":"SheetControlTitle"},
+        "ControlOptions":{"shape":"DefaultFilterControlOptions"}
+      }
+    },
+    "DefaultFilterControlOptions":{
+      "type":"structure",
+      "members":{
+        "DefaultDateTimePickerOptions":{"shape":"DefaultDateTimePickerControlOptions"},
+        "DefaultListOptions":{"shape":"DefaultFilterListControlOptions"},
+        "DefaultDropdownOptions":{"shape":"DefaultFilterDropDownControlOptions"},
+        "DefaultTextFieldOptions":{"shape":"DefaultTextFieldControlOptions"},
+        "DefaultTextAreaOptions":{"shape":"DefaultTextAreaControlOptions"},
+        "DefaultSliderOptions":{"shape":"DefaultSliderControlOptions"},
+        "DefaultRelativeDateTimeOptions":{"shape":"DefaultRelativeDateTimeControlOptions"}
+      }
+    },
+    "DefaultFilterDropDownControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"DropDownControlDisplayOptions"},
+        "Type":{"shape":"SheetControlListType"},
+        "SelectableValues":{"shape":"FilterSelectableValues"}
+      }
+    },
+    "DefaultFilterListControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"ListControlDisplayOptions"},
+        "Type":{"shape":"SheetControlListType"},
+        "SelectableValues":{"shape":"FilterSelectableValues"}
+      }
+    },
     "DefaultFormatting":{
       "type":"structure",
       "members":{
@@ -7606,11 +7809,45 @@
         "SectionBased":{"shape":"DefaultSectionBasedLayoutConfiguration"}
       }
     },
+    "DefaultRelativeDateTimeControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"RelativeDateTimeControlDisplayOptions"}
+      }
+    },
     "DefaultSectionBasedLayoutConfiguration":{
       "type":"structure",
       "required":["CanvasSizeOptions"],
       "members":{
         "CanvasSizeOptions":{"shape":"SectionBasedLayoutCanvasSizeOptions"}
+      }
+    },
+    "DefaultSliderControlOptions":{
+      "type":"structure",
+      "required":[
+        "MaximumValue",
+        "MinimumValue",
+        "StepSize"
+      ],
+      "members":{
+        "DisplayOptions":{"shape":"SliderControlDisplayOptions"},
+        "Type":{"shape":"SheetControlSliderType"},
+        "MaximumValue":{"shape":"Double"},
+        "MinimumValue":{"shape":"Double"},
+        "StepSize":{"shape":"Double"}
+      }
+    },
+    "DefaultTextAreaControlOptions":{
+      "type":"structure",
+      "members":{
+        "Delimiter":{"shape":"TextAreaControlDelimiter"},
+        "DisplayOptions":{"shape":"TextAreaControlDisplayOptions"}
+      }
+    },
+    "DefaultTextFieldControlOptions":{
+      "type":"structure",
+      "members":{
+        "DisplayOptions":{"shape":"TextFieldControlDisplayOptions"}
       }
     },
     "DeleteAccountCustomizationRequest":{
@@ -8762,7 +8999,8 @@
         },
         "OverridePermissions":{"shape":"AssetBundleImportJobOverridePermissions"},
         "OverrideTags":{"shape":"AssetBundleImportJobOverrideTags"},
-        "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"}
+        "OverrideValidationStrategy":{"shape":"AssetBundleImportJobOverrideValidationStrategy"},
+        "Warnings":{"shape":"AssetBundleImportJobWarningList"}
       }
     },
     "DescribeDashboardDefinitionRequest":{
@@ -9414,12 +9652,39 @@
       "members":{
         "AwsAccountId":{"shape":"AwsAccountId"},
         "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "VpcIdRestrictionRuleMap":{"shape":"VpcIdRestrictionRuleMap"},
+        "VpcEndpointIdRestrictionRuleMap":{"shape":"VpcEndpointIdRestrictionRuleMap"},
         "Enabled":{"shape":"NullableBoolean"},
         "RequestId":{"shape":"String"},
         "Status":{
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "DescribeKeyRegistrationRequest":{
+      "type":"structure",
+      "required":["AwsAccountId"],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "DefaultKeyOnly":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"default-key-only"
+        }
+      }
+    },
+    "DescribeKeyRegistrationResponse":{
+      "type":"structure",
+      "members":{
+        "AwsAccountId":{"shape":"AwsAccountId"},
+        "KeyRegistration":{"shape":"KeyRegistration"},
+        "RequestId":{"shape":"NonEmptyString"},
+        "Status":{"shape":"StatusCode"}
       }
     },
     "DescribeNamespaceRequest":{
@@ -10241,6 +10506,24 @@
       "min":1,
       "sensitive":true
     },
+    "FailedKeyRegistrationEntries":{
+      "type":"list",
+      "member":{"shape":"FailedKeyRegistrationEntry"}
+    },
+    "FailedKeyRegistrationEntry":{
+      "type":"structure",
+      "required":[
+        "Message",
+        "StatusCode",
+        "SenderFault"
+      ],
+      "members":{
+        "KeyArn":{"shape":"String"},
+        "Message":{"shape":"NonEmptyString"},
+        "StatusCode":{"shape":"StatusCode"},
+        "SenderFault":{"shape":"Boolean"}
+      }
+    },
     "FieldBasedTooltip":{
       "type":"structure",
       "members":{
@@ -10328,7 +10611,8 @@
       "members":{
         "FieldId":{"shape":"FieldId"},
         "Label":{"shape":"String"},
-        "Visibility":{"shape":"Visibility"}
+        "Visibility":{"shape":"Visibility"},
+        "TooltipTarget":{"shape":"TooltipTarget"}
       }
     },
     "FieldValue":{
@@ -10381,7 +10665,8 @@
         "Legend":{"shape":"LegendOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
         "WindowOptions":{"shape":"GeospatialWindowOptions"},
-        "MapStyleOptions":{"shape":"GeospatialMapStyleOptions"}
+        "MapStyleOptions":{"shape":"GeospatialMapStyleOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "FilledMapDimensionFieldList":{
@@ -10436,7 +10721,8 @@
         "TimeEqualityFilter":{"shape":"TimeEqualityFilter"},
         "TimeRangeFilter":{"shape":"TimeRangeFilter"},
         "RelativeDatesFilter":{"shape":"RelativeDatesFilter"},
-        "TopBottomFilter":{"shape":"TopBottomFilter"}
+        "TopBottomFilter":{"shape":"TopBottomFilter"},
+        "NestedFilter":{"shape":"NestedFilter"}
       }
     },
     "FilterClass":{
@@ -10456,13 +10742,26 @@
         "TextField":{"shape":"FilterTextFieldControl"},
         "TextArea":{"shape":"FilterTextAreaControl"},
         "Slider":{"shape":"FilterSliderControl"},
-        "RelativeDateTime":{"shape":"FilterRelativeDateTimeControl"}
+        "RelativeDateTime":{"shape":"FilterRelativeDateTimeControl"},
+        "CrossSheet":{"shape":"FilterCrossSheetControl"}
       }
     },
     "FilterControlList":{
       "type":"list",
       "member":{"shape":"FilterControl"},
       "max":200
+    },
+    "FilterCrossSheetControl":{
+      "type":"structure",
+      "required":[
+        "FilterControlId",
+        "SourceFilterId"
+      ],
+      "members":{
+        "FilterControlId":{"shape":"ShortRestrictiveResourceId"},
+        "SourceFilterId":{"shape":"ShortRestrictiveResourceId"},
+        "CascadingControlConfiguration":{"shape":"CascadingControlConfiguration"}
+      }
     },
     "FilterDateTimePickerControl":{
       "type":"structure",
@@ -10973,7 +11272,8 @@
         "ValueLabelOptions":{"shape":"ChartAxisLabelOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
         "DataLabelOptions":{"shape":"FunnelChartDataLabelOptions"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "FunnelChartDataLabelOptions":{
@@ -11039,6 +11339,13 @@
         "ForegroundColor":{"shape":"ConditionalFormattingColor"}
       }
     },
+    "GaugeChartColorConfiguration":{
+      "type":"structure",
+      "members":{
+        "ForegroundColor":{"shape":"HexColor"},
+        "BackgroundColor":{"shape":"HexColor"}
+      }
+    },
     "GaugeChartConditionalFormatting":{
       "type":"structure",
       "members":{
@@ -11064,7 +11371,9 @@
         "GaugeChartOptions":{"shape":"GaugeChartOptions"},
         "DataLabels":{"shape":"DataLabelOptions"},
         "TooltipOptions":{"shape":"TooltipOptions"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "ColorConfiguration":{"shape":"GaugeChartColorConfiguration"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "GaugeChartFieldWells":{
@@ -11263,7 +11572,8 @@
         "WindowOptions":{"shape":"GeospatialWindowOptions"},
         "MapStyleOptions":{"shape":"GeospatialMapStyleOptions"},
         "PointStyleOptions":{"shape":"GeospatialPointStyleOptions"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "GeospatialMapFieldWells":{
@@ -11649,7 +11959,8 @@
         "ColorScale":{"shape":"ColorScale"},
         "Legend":{"shape":"LegendOptions"},
         "DataLabels":{"shape":"DataLabelOptions"},
-        "Tooltip":{"shape":"TooltipOptions"}
+        "Tooltip":{"shape":"TooltipOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "HeatMapDimensionFieldList":{
@@ -11737,7 +12048,8 @@
         "BinOptions":{"shape":"HistogramBinOptions"},
         "DataLabels":{"shape":"DataLabelOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "HistogramFieldWells":{
@@ -12016,6 +12328,12 @@
       "type":"list",
       "member":{"shape":"Ingestion"}
     },
+    "InnerFilter":{
+      "type":"structure",
+      "members":{
+        "CategoryInnerFilter":{"shape":"CategoryInnerFilter"}
+      }
+    },
     "InputColumn":{
       "type":"structure",
       "required":[
@@ -12050,7 +12368,8 @@
       "type":"structure",
       "members":{
         "Computations":{"shape":"ComputationList"},
-        "CustomNarrative":{"shape":"CustomNarrativeOptions"}
+        "CustomNarrative":{"shape":"CustomNarrativeOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "InsightVisual":{
@@ -12291,7 +12610,8 @@
       "members":{
         "FieldWells":{"shape":"KPIFieldWells"},
         "SortConfiguration":{"shape":"KPISortConfiguration"},
-        "KPIOptions":{"shape":"KPIOptions"}
+        "KPIOptions":{"shape":"KPIOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "KPIFieldWells":{
@@ -12384,6 +12704,10 @@
         "CLASSIC",
         "VERTICAL"
       ]
+    },
+    "KeyRegistration":{
+      "type":"list",
+      "member":{"shape":"RegisteredCustomerManagedKey"}
     },
     "LabelOptions":{
       "type":"structure",
@@ -12493,7 +12817,8 @@
         "ReferenceLines":{"shape":"ReferenceLineList"},
         "Tooltip":{"shape":"TooltipOptions"},
         "ContributionAnalysisDefaults":{"shape":"ContributionAnalysisDefaultList"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "LineChartDefaultSeriesSettings":{
@@ -12602,7 +12927,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^arn:aws:quicksight:[\\w\\-]+:\\d+:analysis/[\\w\\-]{1,512}"
+      "pattern":"^arn:aws[\\w\\-]*:quicksight:[\\w\\-]+:\\d+:analysis/[\\w\\-]{1,512}"
     },
     "LinkEntityArnList":{
       "type":"list",
@@ -14188,6 +14513,21 @@
         "NEGATIVE"
       ]
     },
+    "NestedFilter":{
+      "type":"structure",
+      "required":[
+        "FilterId",
+        "Column",
+        "IncludeInnerSet",
+        "InnerFilter"
+      ],
+      "members":{
+        "FilterId":{"shape":"ShortRestrictiveResourceId"},
+        "Column":{"shape":"ColumnIdentifier"},
+        "IncludeInnerSet":{"shape":"Boolean"},
+        "InnerFilter":{"shape":"InnerFilter"}
+      }
+    },
     "NetworkInterface":{
       "type":"structure",
       "members":{
@@ -14234,6 +14574,11 @@
     "NonEmptyString":{
       "type":"string",
       "pattern":".*\\S.*"
+    },
+    "NonRepeatingVisualsList":{
+      "type":"list",
+      "member":{"shape":"ShortRestrictiveResourceId"},
+      "max":20
     },
     "NullString":{
       "type":"string",
@@ -14315,7 +14660,8 @@
         "MatchOperator":{"shape":"NumericEqualityMatchOperator"},
         "AggregationFunction":{"shape":"AggregationFunction"},
         "ParameterName":{"shape":"ParameterName"},
-        "NullOption":{"shape":"FilterNullOption"}
+        "NullOption":{"shape":"FilterNullOption"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "NumericEqualityMatchOperator":{
@@ -14365,7 +14711,8 @@
         },
         "SelectAllOptions":{"shape":"NumericFilterSelectAllOptions"},
         "AggregationFunction":{"shape":"AggregationFunction"},
-        "NullOption":{"shape":"FilterNullOption"}
+        "NullOption":{"shape":"FilterNullOption"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "NumericRangeFilterValue":{
@@ -14834,7 +15181,8 @@
         "DataLabels":{"shape":"DataLabelOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
         "VisualPalette":{"shape":"VisualPalette"},
-        "ContributionAnalysisDefaults":{"shape":"ContributionAnalysisDefaultList"}
+        "ContributionAnalysisDefaults":{"shape":"ContributionAnalysisDefaultList"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "PieChartFieldWells":{
@@ -14918,7 +15266,7 @@
     "PivotTableConditionalFormattingOptionList":{
       "type":"list",
       "member":{"shape":"PivotTableConditionalFormattingOption"},
-      "max":100
+      "max":500
     },
     "PivotTableConditionalFormattingScope":{
       "type":"structure",
@@ -14947,7 +15295,8 @@
         "TableOptions":{"shape":"PivotTableOptions"},
         "TotalOptions":{"shape":"PivotTableTotalOptions"},
         "FieldOptions":{"shape":"PivotTableFieldOptions"},
-        "PaginatedReportOptions":{"shape":"PivotTablePaginatedReportOptions"}
+        "PaginatedReportOptions":{"shape":"PivotTablePaginatedReportOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "PivotTableDataPathOption":{
@@ -15285,6 +15634,13 @@
         "MEASURE"
       ]
     },
+    "PurchaseMode":{
+      "type":"string",
+      "enum":[
+        "MANUAL",
+        "AUTO_PURCHASE"
+      ]
+    },
     "PutDataSetRefreshPropertiesRequest":{
       "type":"structure",
       "required":[
@@ -15390,7 +15746,8 @@
         "ColorAxis":{"shape":"AxisDisplayOptions"},
         "ColorLabelOptions":{"shape":"ChartAxisLabelOptions"},
         "Legend":{"shape":"LegendOptions"},
-        "AxesRangeScale":{"shape":"RadarChartAxesRangeScale"}
+        "AxesRangeScale":{"shape":"RadarChartAxesRangeScale"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "RadarChartFieldWells":{
@@ -15474,10 +15831,7 @@
     },
     "RedshiftIAMParameters":{
       "type":"structure",
-      "required":[
-        "RoleArn",
-        "DatabaseUser"
-      ],
+      "required":["RoleArn"],
       "members":{
         "RoleArn":{"shape":"RoleArn"},
         "DatabaseUser":{"shape":"DatabaseUser"},
@@ -15701,6 +16055,13 @@
         }
       }
     },
+    "RegisteredCustomerManagedKey":{
+      "type":"structure",
+      "members":{
+        "KeyArn":{"shape":"String"},
+        "DefaultKey":{"shape":"Boolean"}
+      }
+    },
     "RegisteredUserConsoleFeatureConfigurations":{
       "type":"structure",
       "members":{
@@ -15735,7 +16096,14 @@
         "Dashboard":{"shape":"RegisteredUserDashboardEmbeddingConfiguration"},
         "QuickSightConsole":{"shape":"RegisteredUserQuickSightConsoleEmbeddingConfiguration"},
         "QSearchBar":{"shape":"RegisteredUserQSearchBarEmbeddingConfiguration"},
-        "DashboardVisual":{"shape":"RegisteredUserDashboardVisualEmbeddingConfiguration"}
+        "DashboardVisual":{"shape":"RegisteredUserDashboardVisualEmbeddingConfiguration"},
+        "GenerativeQnA":{"shape":"RegisteredUserGenerativeQnAEmbeddingConfiguration"}
+      }
+    },
+    "RegisteredUserGenerativeQnAEmbeddingConfiguration":{
+      "type":"structure",
+      "members":{
+        "InitialTopicId":{"shape":"RestrictiveResourceId"}
       }
     },
     "RegisteredUserQSearchBarEmbeddingConfiguration":{
@@ -15820,7 +16188,8 @@
         },
         "ParameterName":{"shape":"ParameterName"},
         "NullOption":{"shape":"FilterNullOption"},
-        "ExcludePeriodConfiguration":{"shape":"ExcludePeriodConfiguration"}
+        "ExcludePeriodConfiguration":{"shape":"ExcludePeriodConfiguration"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "RelativeFontSize":{
@@ -15958,7 +16327,10 @@
       "enum":[
         "ADMIN",
         "AUTHOR",
-        "READER"
+        "READER",
+        "ADMIN_PRO",
+        "AUTHOR_PRO",
+        "READER_PRO"
       ]
     },
     "RoleArn":{
@@ -16160,7 +16532,8 @@
       "members":{
         "FieldWells":{"shape":"SankeyDiagramFieldWells"},
         "SortConfiguration":{"shape":"SankeyDiagramSortConfiguration"},
-        "DataLabels":{"shape":"DataLabelOptions"}
+        "DataLabels":{"shape":"DataLabelOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "SankeyDiagramFieldWells":{
@@ -16210,7 +16583,8 @@
         "Legend":{"shape":"LegendOptions"},
         "DataLabels":{"shape":"DataLabelOptions"},
         "Tooltip":{"shape":"TooltipOptions"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "ScatterPlotFieldWells":{
@@ -16663,7 +17037,7 @@
     "SeriesItemList":{
       "type":"list",
       "member":{"shape":"SeriesItem"},
-      "max":10
+      "max":2000
     },
     "ServiceNowParameters":{
       "type":"structure",
@@ -17314,7 +17688,7 @@
     },
     "SqlQuery":{
       "type":"string",
-      "max":65536,
+      "max":168000,
       "min":1
     },
     "SqlServerParameters":{
@@ -17604,6 +17978,21 @@
         "StyleTargets":{"shape":"TableStyleTargetList"}
       }
     },
+    "SuccessfulKeyRegistrationEntries":{
+      "type":"list",
+      "member":{"shape":"SuccessfulKeyRegistrationEntry"}
+    },
+    "SuccessfulKeyRegistrationEntry":{
+      "type":"structure",
+      "required":[
+        "KeyArn",
+        "StatusCode"
+      ],
+      "members":{
+        "KeyArn":{"shape":"String"},
+        "StatusCode":{"shape":"StatusCode"}
+      }
+    },
     "Suffix":{
       "type":"string",
       "max":128,
@@ -17692,7 +18081,7 @@
     "TableConditionalFormattingOptionList":{
       "type":"list",
       "member":{"shape":"TableConditionalFormattingOption"},
-      "max":100
+      "max":500
     },
     "TableConfiguration":{
       "type":"structure",
@@ -17703,7 +18092,8 @@
         "TotalOptions":{"shape":"TotalOptions"},
         "FieldOptions":{"shape":"TableFieldOptions"},
         "PaginatedReportOptions":{"shape":"TablePaginatedReportOptions"},
-        "TableInlineVisualizations":{"shape":"TableInlineVisualizationList"}
+        "TableInlineVisualizations":{"shape":"TableInlineVisualizationList"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "TableFieldCustomIconContent":{
@@ -18359,7 +18749,8 @@
         "Value":{"shape":"Timestamp"},
         "ParameterName":{"shape":"ParameterName"},
         "TimeGranularity":{"shape":"TimeGranularity"},
-        "RollingDate":{"shape":"RollingDateConfiguration"}
+        "RollingDate":{"shape":"RollingDateConfiguration"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "TimeGranularity":{
@@ -18413,7 +18804,8 @@
         "RangeMaximumValue":{"shape":"TimeRangeFilterValue"},
         "NullOption":{"shape":"FilterNullOption"},
         "ExcludePeriodConfiguration":{"shape":"ExcludePeriodConfiguration"},
-        "TimeGranularity":{"shape":"TimeGranularity"}
+        "TimeGranularity":{"shape":"TimeGranularity"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "TimeRangeFilterValue":{
@@ -18445,6 +18837,14 @@
         "FieldBasedTooltip":{"shape":"FieldBasedTooltip"}
       }
     },
+    "TooltipTarget":{
+      "type":"string",
+      "enum":[
+        "BOTH",
+        "BAR",
+        "LINE"
+      ]
+    },
     "TooltipTitleType":{
       "type":"string",
       "enum":[
@@ -18475,7 +18875,8 @@
         },
         "AggregationSortConfigurations":{"shape":"AggregationSortConfigurationList"},
         "TimeGranularity":{"shape":"TimeGranularity"},
-        "ParameterName":{"shape":"ParameterName"}
+        "ParameterName":{"shape":"ParameterName"},
+        "DefaultFilterControlConfiguration":{"shape":"DefaultFilterControlConfiguration"}
       }
     },
     "TopBottomMoversComputation":{
@@ -18614,6 +19015,7 @@
       "members":{
         "Name":{"shape":"ResourceName"},
         "Description":{"shape":"LimitedString"},
+        "UserExperienceVersion":{"shape":"TopicUserExperienceVersion"},
         "DataSets":{"shape":"Datasets"}
       }
     },
@@ -18781,7 +19183,8 @@
       "members":{
         "Arn":{"shape":"Arn"},
         "TopicId":{"shape":"TopicId"},
-        "Name":{"shape":"ResourceName"}
+        "Name":{"shape":"ResourceName"},
+        "UserExperienceVersion":{"shape":"TopicUserExperienceVersion"}
       }
     },
     "TopicTimeGranularity":{
@@ -18795,6 +19198,13 @@
         "MONTH",
         "QUARTER",
         "YEAR"
+      ]
+    },
+    "TopicUserExperienceVersion":{
+      "type":"string",
+      "enum":[
+        "LEGACY",
+        "NEW_READER_EXPERIENCE"
       ]
     },
     "TotalAggregationComputation":{
@@ -18877,7 +19287,8 @@
         "ColorScale":{"shape":"ColorScale"},
         "Legend":{"shape":"LegendOptions"},
         "DataLabels":{"shape":"DataLabelOptions"},
-        "Tooltip":{"shape":"TooltipOptions"}
+        "Tooltip":{"shape":"TooltipOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "TreeMapDimensionFieldList":{
@@ -19705,6 +20116,8 @@
           "locationName":"AwsAccountId"
         },
         "IpRestrictionRuleMap":{"shape":"IpRestrictionRuleMap"},
+        "VpcIdRestrictionRuleMap":{"shape":"VpcIdRestrictionRuleMap"},
+        "VpcEndpointIdRestrictionRuleMap":{"shape":"VpcEndpointIdRestrictionRuleMap"},
         "Enabled":{"shape":"NullableBoolean"}
       }
     },
@@ -19717,6 +20130,29 @@
           "shape":"StatusCode",
           "location":"statusCode"
         }
+      }
+    },
+    "UpdateKeyRegistrationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "KeyRegistration"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "KeyRegistration":{"shape":"KeyRegistration"}
+      }
+    },
+    "UpdateKeyRegistrationResponse":{
+      "type":"structure",
+      "members":{
+        "FailedKeyRegistration":{"shape":"FailedKeyRegistrationEntries"},
+        "SuccessfulKeyRegistration":{"shape":"SuccessfulKeyRegistrationEntries"},
+        "RequestId":{"shape":"NonEmptyString"}
       }
     },
     "UpdateLinkPermissionList":{
@@ -19816,6 +20252,31 @@
       "members":{
         "RequestId":{"shape":"String"},
         "Status":{"shape":"StatusCode"}
+      }
+    },
+    "UpdateSPICECapacityConfigurationRequest":{
+      "type":"structure",
+      "required":[
+        "AwsAccountId",
+        "PurchaseMode"
+      ],
+      "members":{
+        "AwsAccountId":{
+          "shape":"AwsAccountId",
+          "location":"uri",
+          "locationName":"AwsAccountId"
+        },
+        "PurchaseMode":{"shape":"PurchaseMode"}
+      }
+    },
+    "UpdateSPICECapacityConfigurationResponse":{
+      "type":"structure",
+      "members":{
+        "RequestId":{"shape":"String"},
+        "Status":{
+          "shape":"StatusCode",
+          "location":"statusCode"
+        }
       }
     },
     "UpdateTemplateAliasRequest":{
@@ -20281,7 +20742,10 @@
         "AUTHOR",
         "READER",
         "RESTRICTED_AUTHOR",
-        "RESTRICTED_READER"
+        "RESTRICTED_READER",
+        "ADMIN_PRO",
+        "AUTHOR_PRO",
+        "READER_PRO"
       ]
     },
     "VPCConnection":{
@@ -20499,6 +20963,13 @@
         "DATA_POINT_MENU"
       ]
     },
+    "VisualInteractionOptions":{
+      "type":"structure",
+      "members":{
+        "VisualMenuOption":{"shape":"VisualMenuOption"},
+        "ContextMenuOption":{"shape":"ContextMenuOption"}
+      }
+    },
     "VisualList":{
       "type":"list",
       "member":{"shape":"Visual"},
@@ -20538,6 +21009,38 @@
         "VpcConnectionArn":{"shape":"Arn"}
       }
     },
+    "VpcEndpointId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^vpce-[0-9a-z]*$"
+    },
+    "VpcEndpointIdRestrictionRuleDescription":{
+      "type":"string",
+      "max":150,
+      "min":0
+    },
+    "VpcEndpointIdRestrictionRuleMap":{
+      "type":"map",
+      "key":{"shape":"VpcEndpointId"},
+      "value":{"shape":"VpcEndpointIdRestrictionRuleDescription"}
+    },
+    "VpcId":{
+      "type":"string",
+      "max":255,
+      "min":1,
+      "pattern":"^vpc-[0-9a-z]*$"
+    },
+    "VpcIdRestrictionRuleDescription":{
+      "type":"string",
+      "max":150,
+      "min":0
+    },
+    "VpcIdRestrictionRuleMap":{
+      "type":"map",
+      "key":{"shape":"VpcId"},
+      "value":{"shape":"VpcIdRestrictionRuleDescription"}
+    },
     "Warehouse":{
       "type":"string",
       "max":128
@@ -20548,6 +21051,12 @@
         "Categories":{"shape":"DimensionFieldList"},
         "Values":{"shape":"MeasureFieldList"},
         "Breakdowns":{"shape":"DimensionFieldList"}
+      }
+    },
+    "WaterfallChartColorConfiguration":{
+      "type":"structure",
+      "members":{
+        "GroupColorConfiguration":{"shape":"WaterfallChartGroupColorConfiguration"}
       }
     },
     "WaterfallChartConfiguration":{
@@ -20562,13 +21071,23 @@
         "PrimaryYAxisDisplayOptions":{"shape":"AxisDisplayOptions"},
         "Legend":{"shape":"LegendOptions"},
         "DataLabels":{"shape":"DataLabelOptions"},
-        "VisualPalette":{"shape":"VisualPalette"}
+        "VisualPalette":{"shape":"VisualPalette"},
+        "ColorConfiguration":{"shape":"WaterfallChartColorConfiguration"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "WaterfallChartFieldWells":{
       "type":"structure",
       "members":{
         "WaterfallChartAggregatedFieldWells":{"shape":"WaterfallChartAggregatedFieldWells"}
+      }
+    },
+    "WaterfallChartGroupColorConfiguration":{
+      "type":"structure",
+      "members":{
+        "PositiveBarColor":{"shape":"HexColor"},
+        "NegativeBarColor":{"shape":"HexColor"},
+        "TotalBarColor":{"shape":"HexColor"}
       }
     },
     "WaterfallChartOptions":{
@@ -20640,7 +21159,8 @@
         "FieldWells":{"shape":"WordCloudFieldWells"},
         "SortConfiguration":{"shape":"WordCloudSortConfiguration"},
         "CategoryLabelOptions":{"shape":"ChartAxisLabelOptions"},
-        "WordCloudOptions":{"shape":"WordCloudOptions"}
+        "WordCloudOptions":{"shape":"WordCloudOptions"},
+        "Interactions":{"shape":"VisualInteractionOptions"}
       }
     },
     "WordCloudCloudLayout":{

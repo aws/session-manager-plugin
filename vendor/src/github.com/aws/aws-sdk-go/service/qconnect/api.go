@@ -247,7 +247,7 @@ func (c *QConnect) CreateContentRequest(input *CreateContentInput) (req *request
 
 // CreateContent API operation for Amazon Q Connect.
 //
-// Creates Amazon Q content. Before to calling this API, use StartContentUpload
+// Creates Amazon Q in Connect content. Before to calling this API, use StartContentUpload
 // (https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_StartContentUpload.html)
 // to upload an asset.
 //
@@ -297,6 +297,125 @@ func (c *QConnect) CreateContent(input *CreateContentInput) (*CreateContentOutpu
 // for more information on using Contexts.
 func (c *QConnect) CreateContentWithContext(ctx aws.Context, input *CreateContentInput, opts ...request.Option) (*CreateContentOutput, error) {
 	req, out := c.CreateContentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opCreateContentAssociation = "CreateContentAssociation"
+
+// CreateContentAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the CreateContentAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateContentAssociation for more information on using the CreateContentAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateContentAssociationRequest method.
+//	req, resp := client.CreateContentAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateContentAssociation
+func (c *QConnect) CreateContentAssociationRequest(input *CreateContentAssociationInput) (req *request.Request, output *CreateContentAssociationOutput) {
+	op := &request.Operation{
+		Name:       opCreateContentAssociation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/knowledgeBases/{knowledgeBaseId}/contents/{contentId}/associations",
+	}
+
+	if input == nil {
+		input = &CreateContentAssociationInput{}
+	}
+
+	output = &CreateContentAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateContentAssociation API operation for Amazon Q Connect.
+//
+// Creates an association between a content resource in a knowledge base and
+// step-by-step guides (https://docs.aws.amazon.com/connect/latest/adminguide/step-by-step-guided-experiences.html).
+// Step-by-step guides offer instructions to agents for resolving common customer
+// issues. You create a content association to integrate Amazon Q in Connect
+// and step-by-step guides.
+//
+// After you integrate Amazon Q and step-by-step guides, when Amazon Q provides
+// a recommendation to an agent based on the intent that it's detected, it also
+// provides them with the option to start the step-by-step guide that you have
+// associated with the content.
+//
+// Note the following limitations:
+//
+//   - You can create only one content association for each content resource
+//     in a knowledge base.
+//
+//   - You can associate a step-by-step guide with multiple content resources.
+//
+// For more information, see Integrate Amazon Q in Connect with step-by-step
+// guides (https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html)
+// in the Amazon Connect Administrator Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Q Connect's
+// API operation CreateContentAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ConflictException
+//     The request could not be processed because of conflict in the current state
+//     of the resource. For example, if you're using a Create API (such as CreateAssistant)
+//     that accepts name, a conflicting resource (usually with the same name) is
+//     being created or mutated.
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by a service.
+//
+//   - ServiceQuotaExceededException
+//     You've exceeded your service quota. To perform the requested action, remove
+//     some of the relevant resources, or use service quotas to request a service
+//     quota increase.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     The specified resource does not exist.
+//
+//   - ThrottlingException
+//     The throttling limit has been exceeded.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/CreateContentAssociation
+func (c *QConnect) CreateContentAssociation(input *CreateContentAssociationInput) (*CreateContentAssociationOutput, error) {
+	req, out := c.CreateContentAssociationRequest(input)
+	return out, req.Send()
+}
+
+// CreateContentAssociationWithContext is the same as CreateContentAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateContentAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QConnect) CreateContentAssociationWithContext(ctx aws.Context, input *CreateContentAssociationInput, opts ...request.Option) (*CreateContentAssociationOutput, error) {
+	req, out := c.CreateContentAssociationRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -455,7 +574,7 @@ func (c *QConnect) CreateQuickResponseRequest(input *CreateQuickResponseInput) (
 
 // CreateQuickResponse API operation for Amazon Q Connect.
 //
-// Creates an Amazon Q quick response.
+// Creates an Amazon Q in Connect quick response.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -552,8 +671,8 @@ func (c *QConnect) CreateSessionRequest(input *CreateSessionInput) (req *request
 // CreateSession API operation for Amazon Q Connect.
 //
 // Creates a session. A session is a contextual container used for generating
-// recommendations. Amazon Connect creates a new Amazon Q session for each contact
-// on which Amazon Q is enabled.
+// recommendations. Amazon Connect creates a new Amazon Q in Connect session
+// for each contact on which Amazon Q in Connect is enabled.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -572,6 +691,9 @@ func (c *QConnect) CreateSessionRequest(input *CreateSessionInput) (req *request
 //
 //   - ValidationException
 //     The input fails to satisfy the constraints specified by a service.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
 //
 //   - ResourceNotFoundException
 //     The specified resource does not exist.
@@ -851,6 +973,96 @@ func (c *QConnect) DeleteContent(input *DeleteContentInput) (*DeleteContentOutpu
 // for more information on using Contexts.
 func (c *QConnect) DeleteContentWithContext(ctx aws.Context, input *DeleteContentInput, opts ...request.Option) (*DeleteContentOutput, error) {
 	req, out := c.DeleteContentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteContentAssociation = "DeleteContentAssociation"
+
+// DeleteContentAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteContentAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteContentAssociation for more information on using the DeleteContentAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteContentAssociationRequest method.
+//	req, resp := client.DeleteContentAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteContentAssociation
+func (c *QConnect) DeleteContentAssociationRequest(input *DeleteContentAssociationInput) (req *request.Request, output *DeleteContentAssociationOutput) {
+	op := &request.Operation{
+		Name:       opDeleteContentAssociation,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/knowledgeBases/{knowledgeBaseId}/contents/{contentId}/associations/{contentAssociationId}",
+	}
+
+	if input == nil {
+		input = &DeleteContentAssociationInput{}
+	}
+
+	output = &DeleteContentAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteContentAssociation API operation for Amazon Q Connect.
+//
+// Deletes the content association.
+//
+// For more information about content associations--what they are and when they
+// are used--see Integrate Amazon Q in Connect with step-by-step guides (https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html)
+// in the Amazon Connect Administrator Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Q Connect's
+// API operation DeleteContentAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by a service.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     The specified resource does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/DeleteContentAssociation
+func (c *QConnect) DeleteContentAssociation(input *DeleteContentAssociationInput) (*DeleteContentAssociationOutput, error) {
+	req, out := c.DeleteContentAssociationRequest(input)
+	return out, req.Send()
+}
+
+// DeleteContentAssociationWithContext is the same as DeleteContentAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteContentAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QConnect) DeleteContentAssociationWithContext(ctx aws.Context, input *DeleteContentAssociationInput, opts ...request.Option) (*DeleteContentAssociationOutput, error) {
+	req, out := c.DeleteContentAssociationRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1389,6 +1601,95 @@ func (c *QConnect) GetContentWithContext(ctx aws.Context, input *GetContentInput
 	return out, req.Send()
 }
 
+const opGetContentAssociation = "GetContentAssociation"
+
+// GetContentAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the GetContentAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetContentAssociation for more information on using the GetContentAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetContentAssociationRequest method.
+//	req, resp := client.GetContentAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetContentAssociation
+func (c *QConnect) GetContentAssociationRequest(input *GetContentAssociationInput) (req *request.Request, output *GetContentAssociationOutput) {
+	op := &request.Operation{
+		Name:       opGetContentAssociation,
+		HTTPMethod: "GET",
+		HTTPPath:   "/knowledgeBases/{knowledgeBaseId}/contents/{contentId}/associations/{contentAssociationId}",
+	}
+
+	if input == nil {
+		input = &GetContentAssociationInput{}
+	}
+
+	output = &GetContentAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetContentAssociation API operation for Amazon Q Connect.
+//
+// Returns the content association.
+//
+// For more information about content associations--what they are and when they
+// are used--see Integrate Amazon Q in Connect with step-by-step guides (https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html)
+// in the Amazon Connect Administrator Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Q Connect's
+// API operation GetContentAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by a service.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     The specified resource does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetContentAssociation
+func (c *QConnect) GetContentAssociation(input *GetContentAssociationInput) (*GetContentAssociationOutput, error) {
+	req, out := c.GetContentAssociationRequest(input)
+	return out, req.Send()
+}
+
+// GetContentAssociationWithContext is the same as GetContentAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetContentAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QConnect) GetContentAssociationWithContext(ctx aws.Context, input *GetContentAssociationInput, opts ...request.Option) (*GetContentAssociationOutput, error) {
+	req, out := c.GetContentAssociationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetContentSummary = "GetContentSummary"
 
 // GetContentSummaryRequest generates a "aws/request.Request" representing the
@@ -1754,7 +2055,12 @@ const opGetRecommendations = "GetRecommendations"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetRecommendations
+//
+// Deprecated: GetRecommendations API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) GetRecommendationsRequest(input *GetRecommendationsInput) (req *request.Request, output *GetRecommendationsOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, GetRecommendations, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opGetRecommendations,
 		HTTPMethod: "GET",
@@ -1771,6 +2077,11 @@ func (c *QConnect) GetRecommendationsRequest(input *GetRecommendationsInput) (re
 }
 
 // GetRecommendations API operation for Amazon Q Connect.
+//
+// This API will be discontinued starting June 1, 2024. To receive generative
+// responses after March 1, 2024, you will need to create a new Assistant in
+// the Amazon Connect console and integrate the Amazon Q in Connect JavaScript
+// library (amazon-q-connectjs) into your applications.
 //
 // Retrieves recommendations for the specified session. To avoid retrieving
 // the same recommendations in subsequent calls, use NotifyRecommendationsReceived
@@ -1799,6 +2110,8 @@ func (c *QConnect) GetRecommendationsRequest(input *GetRecommendationsInput) (re
 //     The specified resource does not exist.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/GetRecommendations
+//
+// Deprecated: GetRecommendations API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) GetRecommendations(input *GetRecommendationsInput) (*GetRecommendationsOutput, error) {
 	req, out := c.GetRecommendationsRequest(input)
 	return out, req.Send()
@@ -1813,6 +2126,8 @@ func (c *QConnect) GetRecommendations(input *GetRecommendationsInput) (*GetRecom
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: GetRecommendations API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) GetRecommendationsWithContext(ctx aws.Context, input *GetRecommendationsInput, opts ...request.Option) (*GetRecommendationsOutput, error) {
 	req, out := c.GetRecommendationsRequest(input)
 	req.SetContext(ctx)
@@ -2179,6 +2494,152 @@ func (c *QConnect) ListAssistantsPagesWithContext(ctx aws.Context, input *ListAs
 
 	for p.Next() {
 		if !fn(p.Page().(*ListAssistantsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListContentAssociations = "ListContentAssociations"
+
+// ListContentAssociationsRequest generates a "aws/request.Request" representing the
+// client's request for the ListContentAssociations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListContentAssociations for more information on using the ListContentAssociations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListContentAssociationsRequest method.
+//	req, resp := client.ListContentAssociationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListContentAssociations
+func (c *QConnect) ListContentAssociationsRequest(input *ListContentAssociationsInput) (req *request.Request, output *ListContentAssociationsOutput) {
+	op := &request.Operation{
+		Name:       opListContentAssociations,
+		HTTPMethod: "GET",
+		HTTPPath:   "/knowledgeBases/{knowledgeBaseId}/contents/{contentId}/associations",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListContentAssociationsInput{}
+	}
+
+	output = &ListContentAssociationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListContentAssociations API operation for Amazon Q Connect.
+//
+// Lists the content associations.
+//
+// For more information about content associations--what they are and when they
+// are used--see Integrate Amazon Q in Connect with step-by-step guides (https://docs.aws.amazon.com/connect/latest/adminguide/integrate-q-with-guides.html)
+// in the Amazon Connect Administrator Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Q Connect's
+// API operation ListContentAssociations for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by a service.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     The specified resource does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/ListContentAssociations
+func (c *QConnect) ListContentAssociations(input *ListContentAssociationsInput) (*ListContentAssociationsOutput, error) {
+	req, out := c.ListContentAssociationsRequest(input)
+	return out, req.Send()
+}
+
+// ListContentAssociationsWithContext is the same as ListContentAssociations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListContentAssociations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QConnect) ListContentAssociationsWithContext(ctx aws.Context, input *ListContentAssociationsInput, opts ...request.Option) (*ListContentAssociationsOutput, error) {
+	req, out := c.ListContentAssociationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListContentAssociationsPages iterates over the pages of a ListContentAssociations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListContentAssociations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListContentAssociations operation.
+//	pageNum := 0
+//	err := client.ListContentAssociationsPages(params,
+//	    func(page *qconnect.ListContentAssociationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *QConnect) ListContentAssociationsPages(input *ListContentAssociationsInput, fn func(*ListContentAssociationsOutput, bool) bool) error {
+	return c.ListContentAssociationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListContentAssociationsPagesWithContext same as ListContentAssociationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QConnect) ListContentAssociationsPagesWithContext(ctx aws.Context, input *ListContentAssociationsInput, fn func(*ListContentAssociationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListContentAssociationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListContentAssociationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListContentAssociationsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -3026,7 +3487,12 @@ const opQueryAssistant = "QueryAssistant"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/QueryAssistant
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) QueryAssistantRequest(input *QueryAssistantInput) (req *request.Request, output *QueryAssistantOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, QueryAssistant, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opQueryAssistant,
 		HTTPMethod: "POST",
@@ -3049,6 +3515,11 @@ func (c *QConnect) QueryAssistantRequest(input *QueryAssistantInput) (req *reque
 }
 
 // QueryAssistant API operation for Amazon Q Connect.
+//
+// This API will be discontinued starting June 1, 2024. To receive generative
+// responses after March 1, 2024, you will need to create a new Assistant in
+// the Amazon Connect console and integrate the Amazon Q in Connect JavaScript
+// library (amazon-q-connectjs) into your applications.
 //
 // Performs a manual search against the specified assistant. To retrieve recommendations
 // for an assistant, use GetRecommendations (https://docs.aws.amazon.com/amazon-q-connect/latest/APIReference/API_GetRecommendations.html).
@@ -3078,6 +3549,8 @@ func (c *QConnect) QueryAssistantRequest(input *QueryAssistantInput) (req *reque
 //     The specified resource does not exist.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/QueryAssistant
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) QueryAssistant(input *QueryAssistantInput) (*QueryAssistantOutput, error) {
 	req, out := c.QueryAssistantRequest(input)
 	return out, req.Send()
@@ -3092,6 +3565,8 @@ func (c *QConnect) QueryAssistant(input *QueryAssistantInput) (*QueryAssistantOu
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) QueryAssistantWithContext(ctx aws.Context, input *QueryAssistantInput, opts ...request.Option) (*QueryAssistantOutput, error) {
 	req, out := c.QueryAssistantRequest(input)
 	req.SetContext(ctx)
@@ -3115,6 +3590,8 @@ func (c *QConnect) QueryAssistantWithContext(ctx aws.Context, input *QueryAssist
 //	        fmt.Println(page)
 //	        return pageNum <= 3
 //	    })
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) QueryAssistantPages(input *QueryAssistantInput, fn func(*QueryAssistantOutput, bool) bool) error {
 	return c.QueryAssistantPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -3126,6 +3603,8 @@ func (c *QConnect) QueryAssistantPages(input *QueryAssistantInput, fn func(*Quer
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: QueryAssistant API will be discontinued starting June 1, 2024. To receive generative responses after March 1, 2024 you will need to create a new Assistant in the Connect console and integrate the Amazon Q in Connect JavaScript library (amazon-q-connectjs) into your applications.
 func (c *QConnect) QueryAssistantPagesWithContext(ctx aws.Context, input *QueryAssistantInput, fn func(*QueryAssistantOutput, bool) bool, opts ...request.Option) error {
 	p := request.Pagination{
 		NewRequest: func() (*request.Request, error) {
@@ -3428,7 +3907,8 @@ func (c *QConnect) SearchQuickResponsesRequest(input *SearchQuickResponsesInput)
 
 // SearchQuickResponses API operation for Amazon Q Connect.
 //
-// Searches existing Amazon Q quick responses in an Amazon Q knowledge base.
+// Searches existing Amazon Q in Connect quick responses in an Amazon Q in Connect
+// knowledge base.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3802,13 +4282,14 @@ func (c *QConnect) StartImportJobRequest(input *StartImportJobInput) (req *reque
 
 // StartImportJob API operation for Amazon Q Connect.
 //
-// Start an asynchronous job to import Amazon Q resources from an uploaded source
-// file. Before calling this API, use StartContentUpload (https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html)
+// Start an asynchronous job to import Amazon Q in Connect resources from an
+// uploaded source file. Before calling this API, use StartContentUpload (https://docs.aws.amazon.com/wisdom/latest/APIReference/API_StartContentUpload.html)
 // to upload an asset that contains the resource data.
 //
-//   - For importing Amazon Q quick responses, you need to upload a csv file
-//     including the quick responses. For information about how to format the
-//     csv file for importing quick responses, see Import quick responses (https://docs.aws.amazon.com/console/connect/quick-responses/add-data).
+//   - For importing Amazon Q in Connect quick responses, you need to upload
+//     a csv file including the quick responses. For information about how to
+//     format the csv file for importing quick responses, see Import quick responses
+//     (https://docs.aws.amazon.com/console/connect/quick-responses/add-data).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4158,9 +4639,9 @@ func (c *QConnect) UpdateKnowledgeBaseTemplateUriRequest(input *UpdateKnowledgeB
 //
 // Updates the template URI of a knowledge base. This is only supported for
 // knowledge bases of type EXTERNAL. Include a single variable in ${variable}
-// format; this interpolated by Amazon Q using ingested content. For example,
-// if you ingest a Salesforce article, it has an Id value, and you can set the
-// template URI to https://myInstanceName.lightning.force.com/lightning/r/Knowledge__kav/*${Id}*/view.
+// format; this interpolated by Amazon Q in Connect using ingested content.
+// For example, if you ingest a Salesforce article, it has an Id value, and
+// you can set the template URI to https://myInstanceName.lightning.force.com/lightning/r/Knowledge__kav/*${Id}*/view.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4245,7 +4726,7 @@ func (c *QConnect) UpdateQuickResponseRequest(input *UpdateQuickResponseInput) (
 
 // UpdateQuickResponse API operation for Amazon Q Connect.
 //
-// Updates an existing Amazon Q quick response.
+// Updates an existing Amazon Q in Connect quick response.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4292,6 +4773,93 @@ func (c *QConnect) UpdateQuickResponse(input *UpdateQuickResponseInput) (*Update
 // for more information on using Contexts.
 func (c *QConnect) UpdateQuickResponseWithContext(ctx aws.Context, input *UpdateQuickResponseInput, opts ...request.Option) (*UpdateQuickResponseOutput, error) {
 	req, out := c.UpdateQuickResponseRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateSession = "UpdateSession"
+
+// UpdateSessionRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateSession operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateSession for more information on using the UpdateSession
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateSessionRequest method.
+//	req, resp := client.UpdateSessionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateSession
+func (c *QConnect) UpdateSessionRequest(input *UpdateSessionInput) (req *request.Request, output *UpdateSessionOutput) {
+	op := &request.Operation{
+		Name:       opUpdateSession,
+		HTTPMethod: "POST",
+		HTTPPath:   "/assistants/{assistantId}/sessions/{sessionId}",
+	}
+
+	if input == nil {
+		input = &UpdateSessionInput{}
+	}
+
+	output = &UpdateSessionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateSession API operation for Amazon Q Connect.
+//
+// Updates a session. A session is a contextual container used for generating
+// recommendations. Amazon Connect updates the existing Amazon Q in Connect
+// session for each contact on which Amazon Q in Connect is enabled.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Q Connect's
+// API operation UpdateSession for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input fails to satisfy the constraints specified by a service.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ResourceNotFoundException
+//     The specified resource does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qconnect-2020-10-19/UpdateSession
+func (c *QConnect) UpdateSession(input *UpdateSessionInput) (*UpdateSessionOutput, error) {
+	req, out := c.UpdateSessionRequest(input)
+	return out, req.Send()
+}
+
+// UpdateSessionWithContext is the same as UpdateSession with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateSession for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QConnect) UpdateSessionWithContext(ctx aws.Context, input *UpdateSessionInput, opts ...request.Option) (*UpdateSessionOutput, error) {
+	req, out := c.UpdateSessionRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -4361,6 +4929,52 @@ func (s *AccessDeniedException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// Content association data for a step-by-step guide (https://docs.aws.amazon.com/connect/latest/adminguide/step-by-step-guided-experiences.html).
+type AmazonConnectGuideAssociationData struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of an Amazon Connect flow. Step-by-step guides
+	// are a type of flow.
+	FlowId *string `locationName:"flowId" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AmazonConnectGuideAssociationData) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AmazonConnectGuideAssociationData) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AmazonConnectGuideAssociationData) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AmazonConnectGuideAssociationData"}
+	if s.FlowId != nil && len(*s.FlowId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("FlowId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFlowId sets the FlowId field's value.
+func (s *AmazonConnectGuideAssociationData) SetFlowId(v string) *AmazonConnectGuideAssociationData {
+	s.FlowId = &v
+	return s
+}
+
 // Configuration information for Amazon AppIntegrations to automatically ingest
 // content.
 type AppIntegrationsConfiguration struct {
@@ -4400,7 +5014,8 @@ type AppIntegrationsConfiguration struct {
 	AppIntegrationArn *string `locationName:"appIntegrationArn" min:"1" type:"string" required:"true"`
 
 	// The fields from the source that are made available to your agents in Amazon
-	// Q. Optional if ObjectConfiguration is included in the provided DataIntegration.
+	// Q in Connect. Optional if ObjectConfiguration is included in the provided
+	// DataIntegration.
 	//
 	//    * For Salesforce (https://developer.salesforce.com/docs/atlas.en-us.knowledge_dev.meta/knowledge_dev/sforce_api_objects_knowledge__kav.htm),
 	//    you must include at least Id, ArticleNumber, VersionNumber, Title, PublishStatus,
@@ -4471,7 +5086,7 @@ func (s *AppIntegrationsConfiguration) SetObjectFields(v []*string) *AppIntegrat
 type AssistantAssociationData struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q assistant.
+	// The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
 	//
 	// AssistantArn is a required field
 	AssistantArn *string `locationName:"assistantArn" type:"string" required:"true"`
@@ -4486,7 +5101,7 @@ type AssistantAssociationData struct {
 	// AssistantAssociationId is a required field
 	AssistantAssociationId *string `locationName:"assistantAssociationId" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant.
+	// The identifier of the Amazon Q in Connect assistant.
 	//
 	// AssistantId is a required field
 	AssistantId *string `locationName:"assistantId" type:"string" required:"true"`
@@ -4565,12 +5180,13 @@ func (s *AssistantAssociationData) SetTags(v map[string]*string) *AssistantAssoc
 	return s
 }
 
-// The data that is input into Amazon Q as a result of the assistant association.
+// The data that is input into Amazon Q in Connect as a result of the assistant
+// association.
 type AssistantAssociationInputData struct {
 	_ struct{} `type:"structure"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// type knowledge base.
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string"`
 }
 
@@ -4634,7 +5250,7 @@ func (s *AssistantAssociationOutputData) SetKnowledgeBaseAssociation(v *Knowledg
 type AssistantAssociationSummary struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q assistant.
+	// The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
 	//
 	// AssistantArn is a required field
 	AssistantArn *string `locationName:"assistantArn" type:"string" required:"true"`
@@ -4649,7 +5265,7 @@ type AssistantAssociationSummary struct {
 	// AssistantAssociationId is a required field
 	AssistantAssociationId *string `locationName:"assistantAssociationId" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant.
+	// The identifier of the Amazon Q in Connect assistant.
 	//
 	// AssistantId is a required field
 	AssistantId *string `locationName:"assistantId" type:"string" required:"true"`
@@ -4728,11 +5344,11 @@ func (s *AssistantAssociationSummary) SetTags(v map[string]*string) *AssistantAs
 	return s
 }
 
-// The capability configuration for an Amazon Q assistant.
+// The capability configuration for an Amazon Q in Connect assistant.
 type AssistantCapabilityConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The type of Amazon Q assistant capability.
+	// The type of Amazon Q in Connect assistant capability.
 	Type *string `locationName:"type" type:"string" enum:"AssistantCapabilityType"`
 }
 
@@ -4764,23 +5380,23 @@ func (s *AssistantCapabilityConfiguration) SetType(v string) *AssistantCapabilit
 type AssistantData struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q assistant.
+	// The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
 	//
 	// AssistantArn is a required field
 	AssistantArn *string `locationName:"assistantArn" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant.
+	// The identifier of the Amazon Q in Connect assistant.
 	//
 	// AssistantId is a required field
 	AssistantId *string `locationName:"assistantId" type:"string" required:"true"`
 
-	// The configuration information for the Amazon Q assistant capability.
+	// The configuration information for the Amazon Q in Connect assistant capability.
 	CapabilityConfiguration *AssistantCapabilityConfiguration `locationName:"capabilityConfiguration" type:"structure"`
 
 	// The description.
 	Description *string `locationName:"description" min:"1" type:"string"`
 
-	// The configuration information for the Amazon Q assistant integration.
+	// The configuration information for the Amazon Q in Connect assistant integration.
 	IntegrationConfiguration *AssistantIntegrationConfiguration `locationName:"integrationConfiguration" type:"structure"`
 
 	// The name.
@@ -4792,12 +5408,12 @@ type AssistantData struct {
 	//
 	// This KMS key must have a policy that allows kms:CreateGrant, kms:DescribeKey,
 	// kms:Decrypt, and kms:GenerateDataKey* permissions to the IAM identity using
-	// the key to invoke Amazon Q. To use Amazon Q with chat, the key policy must
-	// also allow kms:Decrypt, kms:GenerateDataKey*, and kms:DescribeKey permissions
-	// to the connect.amazonaws.com service principal.
+	// the key to invoke Amazon Q in Connect. To use Amazon Q in Connect with chat,
+	// the key policy must also allow kms:Decrypt, kms:GenerateDataKey*, and kms:DescribeKey
+	// permissions to the connect.amazonaws.com service principal.
 	//
-	// For more information about setting up a customer managed key for Amazon Q,
-	// see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
+	// For more information about setting up a customer managed key for Amazon Q
+	// in Connect, see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
 	ServerSideEncryptionConfiguration *ServerSideEncryptionConfiguration `locationName:"serverSideEncryptionConfiguration" type:"structure"`
 
 	// The status of the assistant.
@@ -4892,7 +5508,7 @@ func (s *AssistantData) SetType(v string) *AssistantData {
 	return s
 }
 
-// The configuration information for the Amazon Q assistant integration.
+// The configuration information for the Amazon Q in Connect assistant integration.
 type AssistantIntegrationConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -4929,23 +5545,23 @@ func (s *AssistantIntegrationConfiguration) SetTopicIntegrationArn(v string) *As
 type AssistantSummary struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q assistant.
+	// The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
 	//
 	// AssistantArn is a required field
 	AssistantArn *string `locationName:"assistantArn" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant.
+	// The identifier of the Amazon Q in Connect assistant.
 	//
 	// AssistantId is a required field
 	AssistantId *string `locationName:"assistantId" type:"string" required:"true"`
 
-	// The configuration information for the Amazon Q assistant capability.
+	// The configuration information for the Amazon Q in Connect assistant capability.
 	CapabilityConfiguration *AssistantCapabilityConfiguration `locationName:"capabilityConfiguration" type:"structure"`
 
 	// The description of the assistant.
 	Description *string `locationName:"description" min:"1" type:"string"`
 
-	// The configuration information for the Amazon Q assistant integration.
+	// The configuration information for the Amazon Q in Connect assistant integration.
 	IntegrationConfiguration *AssistantIntegrationConfiguration `locationName:"integrationConfiguration" type:"structure"`
 
 	// The name of the assistant.
@@ -4957,12 +5573,12 @@ type AssistantSummary struct {
 	//
 	// This KMS key must have a policy that allows kms:CreateGrant, kms:DescribeKey,
 	// kms:Decrypt, and kms:GenerateDataKey* permissions to the IAM identity using
-	// the key to invoke Amazon Q. To use Amazon Q with chat, the key policy must
-	// also allow kms:Decrypt, kms:GenerateDataKey*, and kms:DescribeKey permissions
-	// to the connect.amazonaws.com service principal.
+	// the key to invoke Amazon Q in Connect. To use Amazon Q in Connect with chat,
+	// the key policy must also allow kms:Decrypt, kms:GenerateDataKey*, and kms:DescribeKey
+	// permissions to the connect.amazonaws.com service principal.
 	//
-	// For more information about setting up a customer managed key for Amazon Q,
-	// see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
+	// For more information about setting up a customer managed key for Amazon Q
+	// in Connect, see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
 	ServerSideEncryptionConfiguration *ServerSideEncryptionConfiguration `locationName:"serverSideEncryptionConfiguration" type:"structure"`
 
 	// The status of the assistant.
@@ -5217,6 +5833,295 @@ func (s *ConnectConfiguration) SetInstanceId(v string) *ConnectConfiguration {
 	return s
 }
 
+// The contents of a content association.
+type ContentAssociationContents struct {
+	_ struct{} `type:"structure"`
+
+	// The data of the step-by-step guide association.
+	AmazonConnectGuideAssociation *AmazonConnectGuideAssociationData `locationName:"amazonConnectGuideAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentAssociationContents) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentAssociationContents) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ContentAssociationContents) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ContentAssociationContents"}
+	if s.AmazonConnectGuideAssociation != nil {
+		if err := s.AmazonConnectGuideAssociation.Validate(); err != nil {
+			invalidParams.AddNested("AmazonConnectGuideAssociation", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAmazonConnectGuideAssociation sets the AmazonConnectGuideAssociation field's value.
+func (s *ContentAssociationContents) SetAmazonConnectGuideAssociation(v *AmazonConnectGuideAssociationData) *ContentAssociationContents {
+	s.AmazonConnectGuideAssociation = v
+	return s
+}
+
+// Information about the content association.
+type ContentAssociationData struct {
+	_ struct{} `type:"structure"`
+
+	// The content association.
+	//
+	// AssociationData is a required field
+	AssociationData *ContentAssociationContents `locationName:"associationData" type:"structure" required:"true"`
+
+	// The type of association.
+	//
+	// AssociationType is a required field
+	AssociationType *string `locationName:"associationType" type:"string" required:"true" enum:"ContentAssociationType"`
+
+	// The Amazon Resource Name (ARN) of the content.
+	//
+	// ContentArn is a required field
+	ContentArn *string `locationName:"contentArn" type:"string" required:"true"`
+
+	// The Amazon Resource Name (ARN) of the content association.
+	//
+	// ContentAssociationArn is a required field
+	ContentAssociationArn *string `locationName:"contentAssociationArn" type:"string" required:"true"`
+
+	// The identifier of the content association. Can be either the ID or the ARN.
+	// URLs cannot contain the ARN.
+	//
+	// ContentAssociationId is a required field
+	ContentAssociationId *string `locationName:"contentAssociationId" type:"string" required:"true"`
+
+	// The identifier of the content.
+	//
+	// ContentId is a required field
+	ContentId *string `locationName:"contentId" type:"string" required:"true"`
+
+	// The Amazon Resource Name (ARN) of the knowledge base.
+	//
+	// KnowledgeBaseArn is a required field
+	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
+
+	// The identifier of the knowledge base.
+	//
+	// KnowledgeBaseId is a required field
+	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
+
+	// The tags used to organize, track, or control access for this resource.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentAssociationData) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentAssociationData) GoString() string {
+	return s.String()
+}
+
+// SetAssociationData sets the AssociationData field's value.
+func (s *ContentAssociationData) SetAssociationData(v *ContentAssociationContents) *ContentAssociationData {
+	s.AssociationData = v
+	return s
+}
+
+// SetAssociationType sets the AssociationType field's value.
+func (s *ContentAssociationData) SetAssociationType(v string) *ContentAssociationData {
+	s.AssociationType = &v
+	return s
+}
+
+// SetContentArn sets the ContentArn field's value.
+func (s *ContentAssociationData) SetContentArn(v string) *ContentAssociationData {
+	s.ContentArn = &v
+	return s
+}
+
+// SetContentAssociationArn sets the ContentAssociationArn field's value.
+func (s *ContentAssociationData) SetContentAssociationArn(v string) *ContentAssociationData {
+	s.ContentAssociationArn = &v
+	return s
+}
+
+// SetContentAssociationId sets the ContentAssociationId field's value.
+func (s *ContentAssociationData) SetContentAssociationId(v string) *ContentAssociationData {
+	s.ContentAssociationId = &v
+	return s
+}
+
+// SetContentId sets the ContentId field's value.
+func (s *ContentAssociationData) SetContentId(v string) *ContentAssociationData {
+	s.ContentId = &v
+	return s
+}
+
+// SetKnowledgeBaseArn sets the KnowledgeBaseArn field's value.
+func (s *ContentAssociationData) SetKnowledgeBaseArn(v string) *ContentAssociationData {
+	s.KnowledgeBaseArn = &v
+	return s
+}
+
+// SetKnowledgeBaseId sets the KnowledgeBaseId field's value.
+func (s *ContentAssociationData) SetKnowledgeBaseId(v string) *ContentAssociationData {
+	s.KnowledgeBaseId = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *ContentAssociationData) SetTags(v map[string]*string) *ContentAssociationData {
+	s.Tags = v
+	return s
+}
+
+// Summary information about a content association.
+type ContentAssociationSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The content association.
+	//
+	// AssociationData is a required field
+	AssociationData *ContentAssociationContents `locationName:"associationData" type:"structure" required:"true"`
+
+	// The type of association.
+	//
+	// AssociationType is a required field
+	AssociationType *string `locationName:"associationType" type:"string" required:"true" enum:"ContentAssociationType"`
+
+	// The Amazon Resource Name (ARN) of the content.
+	//
+	// ContentArn is a required field
+	ContentArn *string `locationName:"contentArn" type:"string" required:"true"`
+
+	// The Amazon Resource Name (ARN) of the content association.
+	//
+	// ContentAssociationArn is a required field
+	ContentAssociationArn *string `locationName:"contentAssociationArn" type:"string" required:"true"`
+
+	// The identifier of the content association. Can be either the ID or the ARN.
+	// URLs cannot contain the ARN.
+	//
+	// ContentAssociationId is a required field
+	ContentAssociationId *string `locationName:"contentAssociationId" type:"string" required:"true"`
+
+	// The identifier of the content.
+	//
+	// ContentId is a required field
+	ContentId *string `locationName:"contentId" type:"string" required:"true"`
+
+	// The Amazon Resource Name (ARN) of the knowledge base.
+	//
+	// KnowledgeBaseArn is a required field
+	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
+
+	// The identifier of the knowledge base.
+	//
+	// KnowledgeBaseId is a required field
+	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
+
+	// The tags used to organize, track, or control access for this resource.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentAssociationSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentAssociationSummary) GoString() string {
+	return s.String()
+}
+
+// SetAssociationData sets the AssociationData field's value.
+func (s *ContentAssociationSummary) SetAssociationData(v *ContentAssociationContents) *ContentAssociationSummary {
+	s.AssociationData = v
+	return s
+}
+
+// SetAssociationType sets the AssociationType field's value.
+func (s *ContentAssociationSummary) SetAssociationType(v string) *ContentAssociationSummary {
+	s.AssociationType = &v
+	return s
+}
+
+// SetContentArn sets the ContentArn field's value.
+func (s *ContentAssociationSummary) SetContentArn(v string) *ContentAssociationSummary {
+	s.ContentArn = &v
+	return s
+}
+
+// SetContentAssociationArn sets the ContentAssociationArn field's value.
+func (s *ContentAssociationSummary) SetContentAssociationArn(v string) *ContentAssociationSummary {
+	s.ContentAssociationArn = &v
+	return s
+}
+
+// SetContentAssociationId sets the ContentAssociationId field's value.
+func (s *ContentAssociationSummary) SetContentAssociationId(v string) *ContentAssociationSummary {
+	s.ContentAssociationId = &v
+	return s
+}
+
+// SetContentId sets the ContentId field's value.
+func (s *ContentAssociationSummary) SetContentId(v string) *ContentAssociationSummary {
+	s.ContentId = &v
+	return s
+}
+
+// SetKnowledgeBaseArn sets the KnowledgeBaseArn field's value.
+func (s *ContentAssociationSummary) SetKnowledgeBaseArn(v string) *ContentAssociationSummary {
+	s.KnowledgeBaseArn = &v
+	return s
+}
+
+// SetKnowledgeBaseId sets the KnowledgeBaseId field's value.
+func (s *ContentAssociationSummary) SetKnowledgeBaseId(v string) *ContentAssociationSummary {
+	s.KnowledgeBaseId = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *ContentAssociationSummary) SetTags(v map[string]*string) *ContentAssociationSummary {
+	s.Tags = v
+	return s
+}
+
 // Information about the content.
 type ContentData struct {
 	_ struct{} `type:"structure"`
@@ -5241,8 +6146,7 @@ type ContentData struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -5252,8 +6156,8 @@ type ContentData struct {
 
 	// A key/value map to store attributes without affecting tagging or recommendations.
 	// For example, when synchronizing data between an external system and Amazon
-	// Q, you can store an external version identifier as metadata to utilize for
-	// determining drift.
+	// Q in Connect, you can store an external version identifier as metadata to
+	// utilize for determining drift.
 	//
 	// Metadata is a required field
 	Metadata map[string]*string `locationName:"metadata" type:"map" required:"true"`
@@ -5504,7 +6408,7 @@ type ContentReference struct {
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// type knowledge base.
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string"`
 }
 
@@ -5575,15 +6479,15 @@ type ContentSummary struct {
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// type knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
 
 	// A key/value map to store attributes without affecting tagging or recommendations.
 	// For example, when synchronizing data between an external system and Amazon
-	// Q, you can store an external version identifier as metadata to utilize for
-	// determining drift.
+	// Q in Connect, you can store an external version identifier as metadata to
+	// utilize for determining drift.
 	//
 	// Metadata is a required field
 	Metadata map[string]*string `locationName:"metadata" type:"map" required:"true"`
@@ -5699,8 +6603,8 @@ func (s *ContentSummary) SetTitle(v string) *ContentSummary {
 type CreateAssistantAssociationInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -5850,12 +6754,12 @@ type CreateAssistantInput struct {
 	//
 	// The customer managed key must have a policy that allows kms:CreateGrant,
 	// kms:DescribeKey, kms:Decrypt, and kms:GenerateDataKey* permissions to the
-	// IAM identity using the key to invoke Amazon Q. To use Amazon Q with chat,
-	// the key policy must also allow kms:Decrypt, kms:GenerateDataKey*, and kms:DescribeKey
-	// permissions to the connect.amazonaws.com service principal.
+	// IAM identity using the key to invoke Amazon Q in Connect. To use Amazon Q
+	// in Connect with chat, the key policy must also allow kms:Decrypt, kms:GenerateDataKey*,
+	// and kms:DescribeKey permissions to the connect.amazonaws.com service principal.
 	//
-	// For more information about setting up a customer managed key for Amazon Q,
-	// see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
+	// For more information about setting up a customer managed key for Amazon Q
+	// in Connect, see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
 	ServerSideEncryptionConfiguration *ServerSideEncryptionConfiguration `locationName:"serverSideEncryptionConfiguration" type:"structure"`
 
 	// The tags used to organize, track, or control access for this resource.
@@ -5982,6 +6886,160 @@ func (s *CreateAssistantOutput) SetAssistant(v *AssistantData) *CreateAssistantO
 	return s
 }
 
+type CreateContentAssociationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the associated resource.
+	//
+	// Association is a required field
+	Association *ContentAssociationContents `locationName:"association" type:"structure" required:"true"`
+
+	// The type of association.
+	//
+	// AssociationType is a required field
+	AssociationType *string `locationName:"associationType" type:"string" required:"true" enum:"ContentAssociationType"`
+
+	// A unique, case-sensitive identifier that you provide to ensure the idempotency
+	// of the request. If not provided, the Amazon Web Services SDK populates this
+	// field. For more information about idempotency, see Making retries safe with
+	// idempotent APIs (https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/).
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The identifier of the content.
+	//
+	// ContentId is a required field
+	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
+
+	// The identifier of the knowledge base.
+	//
+	// KnowledgeBaseId is a required field
+	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
+
+	// The tags used to organize, track, or control access for this resource.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateContentAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateContentAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateContentAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateContentAssociationInput"}
+	if s.Association == nil {
+		invalidParams.Add(request.NewErrParamRequired("Association"))
+	}
+	if s.AssociationType == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssociationType"))
+	}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.ContentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ContentId"))
+	}
+	if s.ContentId != nil && len(*s.ContentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ContentId", 1))
+	}
+	if s.KnowledgeBaseId == nil {
+		invalidParams.Add(request.NewErrParamRequired("KnowledgeBaseId"))
+	}
+	if s.KnowledgeBaseId != nil && len(*s.KnowledgeBaseId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("KnowledgeBaseId", 1))
+	}
+	if s.Association != nil {
+		if err := s.Association.Validate(); err != nil {
+			invalidParams.AddNested("Association", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssociation sets the Association field's value.
+func (s *CreateContentAssociationInput) SetAssociation(v *ContentAssociationContents) *CreateContentAssociationInput {
+	s.Association = v
+	return s
+}
+
+// SetAssociationType sets the AssociationType field's value.
+func (s *CreateContentAssociationInput) SetAssociationType(v string) *CreateContentAssociationInput {
+	s.AssociationType = &v
+	return s
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *CreateContentAssociationInput) SetClientToken(v string) *CreateContentAssociationInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetContentId sets the ContentId field's value.
+func (s *CreateContentAssociationInput) SetContentId(v string) *CreateContentAssociationInput {
+	s.ContentId = &v
+	return s
+}
+
+// SetKnowledgeBaseId sets the KnowledgeBaseId field's value.
+func (s *CreateContentAssociationInput) SetKnowledgeBaseId(v string) *CreateContentAssociationInput {
+	s.KnowledgeBaseId = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateContentAssociationInput) SetTags(v map[string]*string) *CreateContentAssociationInput {
+	s.Tags = v
+	return s
+}
+
+type CreateContentAssociationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The association between Amazon Q in Connect content and another resource.
+	ContentAssociation *ContentAssociationData `locationName:"contentAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateContentAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateContentAssociationOutput) GoString() string {
+	return s.String()
+}
+
+// SetContentAssociation sets the ContentAssociation field's value.
+func (s *CreateContentAssociationOutput) SetContentAssociation(v *ContentAssociationData) *CreateContentAssociationOutput {
+	s.ContentAssociation = v
+	return s
+}
+
 type CreateContentInput struct {
 	_ struct{} `type:"structure"`
 
@@ -5992,16 +7050,16 @@ type CreateContentInput struct {
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// type knowledge base. Can be either the ID or the ARN. URLs cannot contain
+	// the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
 
 	// A key/value map to store attributes without affecting tagging or recommendations.
 	// For example, when synchronizing data between an external system and Amazon
-	// Q, you can store an external version identifier as metadata to utilize for
-	// determining drift.
+	// Q in Connect, you can store an external version identifier as metadata to
+	// utilize for determining drift.
 	Metadata map[string]*string `locationName:"metadata" type:"map"`
 
 	// The name of the content. Each piece of content in a knowledge base must have
@@ -6194,10 +7252,10 @@ type CreateKnowledgeBaseInput struct {
 	//
 	// This KMS key must have a policy that allows kms:CreateGrant, kms:DescribeKey,
 	// kms:Decrypt, and kms:GenerateDataKey* permissions to the IAM identity using
-	// the key to invoke Amazon Q.
+	// the key to invoke Amazon Q in Connect.
 	//
-	// For more information about setting up a customer managed key for Amazon Q,
-	// see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
+	// For more information about setting up a customer managed key for Amazon Q
+	// in Connect, see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
 	ServerSideEncryptionConfiguration *ServerSideEncryptionConfiguration `locationName:"serverSideEncryptionConfiguration" type:"structure"`
 
 	// The source of the knowledge base content. Only set this argument for EXTERNAL
@@ -6381,9 +7439,8 @@ type CreateQuickResponseInput struct {
 	// Whether the quick response is active.
 	IsActive *bool `locationName:"isActive" type:"boolean"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -6577,8 +7634,8 @@ func (s *CreateQuickResponseOutput) SetQuickResponse(v *QuickResponseData) *Crea
 type CreateSessionInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -6596,6 +7653,9 @@ type CreateSessionInput struct {
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
+
+	// An object that can be used to specify Tag conditions.
+	TagFilter *TagFilter `locationName:"tagFilter" type:"structure"`
 
 	// The tags used to organize, track, or control access for this resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
@@ -6640,6 +7700,11 @@ func (s *CreateSessionInput) Validate() error {
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
 	}
+	if s.TagFilter != nil {
+		if err := s.TagFilter.Validate(); err != nil {
+			invalidParams.AddNested("TagFilter", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -6668,6 +7733,12 @@ func (s *CreateSessionInput) SetDescription(v string) *CreateSessionInput {
 // SetName sets the Name field's value.
 func (s *CreateSessionInput) SetName(v string) *CreateSessionInput {
 	s.Name = &v
+	return s
+}
+
+// SetTagFilter sets the TagFilter field's value.
+func (s *CreateSessionInput) SetTagFilter(v *TagFilter) *CreateSessionInput {
+	s.TagFilter = v
 	return s
 }
 
@@ -6853,8 +7924,8 @@ type DeleteAssistantAssociationInput struct {
 	// AssistantAssociationId is a required field
 	AssistantAssociationId *string `location:"uri" locationName:"assistantAssociationId" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -6937,8 +8008,8 @@ func (s DeleteAssistantAssociationOutput) GoString() string {
 type DeleteAssistantInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -7006,6 +8077,112 @@ func (s DeleteAssistantOutput) GoString() string {
 	return s.String()
 }
 
+type DeleteContentAssociationInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The identifier of the content association. Can be either the ID or the ARN.
+	// URLs cannot contain the ARN.
+	//
+	// ContentAssociationId is a required field
+	ContentAssociationId *string `location:"uri" locationName:"contentAssociationId" type:"string" required:"true"`
+
+	// The identifier of the content.
+	//
+	// ContentId is a required field
+	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
+
+	// The identifier of the knowledge base.
+	//
+	// KnowledgeBaseId is a required field
+	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteContentAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteContentAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteContentAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteContentAssociationInput"}
+	if s.ContentAssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ContentAssociationId"))
+	}
+	if s.ContentAssociationId != nil && len(*s.ContentAssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ContentAssociationId", 1))
+	}
+	if s.ContentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ContentId"))
+	}
+	if s.ContentId != nil && len(*s.ContentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ContentId", 1))
+	}
+	if s.KnowledgeBaseId == nil {
+		invalidParams.Add(request.NewErrParamRequired("KnowledgeBaseId"))
+	}
+	if s.KnowledgeBaseId != nil && len(*s.KnowledgeBaseId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("KnowledgeBaseId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetContentAssociationId sets the ContentAssociationId field's value.
+func (s *DeleteContentAssociationInput) SetContentAssociationId(v string) *DeleteContentAssociationInput {
+	s.ContentAssociationId = &v
+	return s
+}
+
+// SetContentId sets the ContentId field's value.
+func (s *DeleteContentAssociationInput) SetContentId(v string) *DeleteContentAssociationInput {
+	s.ContentId = &v
+	return s
+}
+
+// SetKnowledgeBaseId sets the KnowledgeBaseId field's value.
+func (s *DeleteContentAssociationInput) SetKnowledgeBaseId(v string) *DeleteContentAssociationInput {
+	s.KnowledgeBaseId = &v
+	return s
+}
+
+type DeleteContentAssociationOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteContentAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteContentAssociationOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteContentInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -7015,9 +8192,8 @@ type DeleteContentInput struct {
 	// ContentId is a required field
 	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -7105,8 +8281,7 @@ type DeleteImportJobInput struct {
 	// ImportJobId is a required field
 	ImportJobId *string `location:"uri" locationName:"importJobId" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -7262,8 +8437,7 @@ type DeleteQuickResponseInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The knowledge base from which the quick response is deleted. The identifier
-	// of the knowledge base. This should not be a QUICK_RESPONSES type knowledge
-	// base if you're storing Amazon Q Content resource to it.
+	// of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -7746,8 +8920,8 @@ type GetAssistantAssociationInput struct {
 	// AssistantAssociationId is a required field
 	AssistantAssociationId *string `location:"uri" locationName:"assistantAssociationId" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -7839,8 +9013,8 @@ func (s *GetAssistantAssociationOutput) SetAssistantAssociation(v *AssistantAsso
 type GetAssistantInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -7917,6 +9091,121 @@ func (s *GetAssistantOutput) SetAssistant(v *AssistantData) *GetAssistantOutput 
 	return s
 }
 
+type GetContentAssociationInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The identifier of the content association. Can be either the ID or the ARN.
+	// URLs cannot contain the ARN.
+	//
+	// ContentAssociationId is a required field
+	ContentAssociationId *string `location:"uri" locationName:"contentAssociationId" type:"string" required:"true"`
+
+	// The identifier of the content.
+	//
+	// ContentId is a required field
+	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
+
+	// The identifier of the knowledge base.
+	//
+	// KnowledgeBaseId is a required field
+	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetContentAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetContentAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetContentAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetContentAssociationInput"}
+	if s.ContentAssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ContentAssociationId"))
+	}
+	if s.ContentAssociationId != nil && len(*s.ContentAssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ContentAssociationId", 1))
+	}
+	if s.ContentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ContentId"))
+	}
+	if s.ContentId != nil && len(*s.ContentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ContentId", 1))
+	}
+	if s.KnowledgeBaseId == nil {
+		invalidParams.Add(request.NewErrParamRequired("KnowledgeBaseId"))
+	}
+	if s.KnowledgeBaseId != nil && len(*s.KnowledgeBaseId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("KnowledgeBaseId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetContentAssociationId sets the ContentAssociationId field's value.
+func (s *GetContentAssociationInput) SetContentAssociationId(v string) *GetContentAssociationInput {
+	s.ContentAssociationId = &v
+	return s
+}
+
+// SetContentId sets the ContentId field's value.
+func (s *GetContentAssociationInput) SetContentId(v string) *GetContentAssociationInput {
+	s.ContentId = &v
+	return s
+}
+
+// SetKnowledgeBaseId sets the KnowledgeBaseId field's value.
+func (s *GetContentAssociationInput) SetKnowledgeBaseId(v string) *GetContentAssociationInput {
+	s.KnowledgeBaseId = &v
+	return s
+}
+
+type GetContentAssociationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The association between Amazon Q in Connect content and another resource.
+	ContentAssociation *ContentAssociationData `locationName:"contentAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetContentAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetContentAssociationOutput) GoString() string {
+	return s.String()
+}
+
+// SetContentAssociation sets the ContentAssociation field's value.
+func (s *GetContentAssociationOutput) SetContentAssociation(v *ContentAssociationData) *GetContentAssociationOutput {
+	s.ContentAssociation = v
+	return s
+}
+
 type GetContentInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -7927,8 +9216,8 @@ type GetContentInput struct {
 	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// type knowledge base. Can be either the ID or the ARN. URLs cannot contain
+	// the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -8026,9 +9315,8 @@ type GetContentSummaryInput struct {
 	// ContentId is a required field
 	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -8217,9 +9505,8 @@ func (s *GetImportJobOutput) SetImportJob(v *ImportJobData) *GetImportJobOutput 
 type GetKnowledgeBaseInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -8397,8 +9684,8 @@ func (s *GetQuickResponseOutput) SetQuickResponse(v *QuickResponseData) *GetQuic
 type GetRecommendationsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -8531,8 +9818,8 @@ func (s *GetRecommendationsOutput) SetTriggers(v []*RecommendationTrigger) *GetR
 type GetSessionInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -8627,11 +9914,11 @@ func (s *GetSessionOutput) SetSession(v *SessionData) *GetSessionOutput {
 	return s
 }
 
-// The configuration information of the grouping of Amazon Q users.
+// The configuration information of the grouping of Amazon Q in Connect users.
 type GroupingConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The criteria used for grouping Amazon Q users.
+	// The criteria used for grouping Amazon Q in Connect users.
 	//
 	// The following is the list of supported criteria values.
 	//
@@ -8646,7 +9933,7 @@ type GroupingConfiguration struct {
 	// String and GoString methods.
 	Criteria *string `locationName:"criteria" min:"1" type:"string" sensitive:"true"`
 
-	// The list of values that define different groups of Amazon Q users.
+	// The list of values that define different groups of Amazon Q in Connect users.
 	//
 	//    * When setting criteria to RoutingProfileArn, you need to provide a list
 	//    of ARNs of Amazon Connect routing profiles (https://docs.aws.amazon.com/connect/latest/APIReference/API_RoutingProfile.html)
@@ -8751,7 +10038,7 @@ type ImportJobData struct {
 	// The configuration information of the external data source.
 	ExternalSourceConfiguration *ExternalSourceConfiguration `locationName:"externalSourceConfiguration" type:"structure"`
 
-	// The link to donwload the information of resource data that failed to be imported.
+	// The link to download the information of resource data that failed to be imported.
 	//
 	// FailedRecordReport is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ImportJobData's
@@ -8773,8 +10060,7 @@ type ImportJobData struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -8784,7 +10070,7 @@ type ImportJobData struct {
 	// LastModifiedTime is a required field
 	LastModifiedTime *time.Time `locationName:"lastModifiedTime" type:"timestamp" timestampFormat:"unixTimestamp" required:"true"`
 
-	// The metadata fields of the imported Amazon Q resources.
+	// The metadata fields of the imported Amazon Q in Connect resources.
 	Metadata map[string]*string `locationName:"metadata" type:"map"`
 
 	// The status of the import job.
@@ -8937,8 +10223,7 @@ type ImportJobSummary struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -8948,7 +10233,7 @@ type ImportJobSummary struct {
 	// LastModifiedTime is a required field
 	LastModifiedTime *time.Time `locationName:"lastModifiedTime" type:"timestamp" timestampFormat:"unixTimestamp" required:"true"`
 
-	// The metadata fields of the imported Amazon Q resources.
+	// The metadata fields of the imported Amazon Q in Connect resources.
 	Metadata map[string]*string `locationName:"metadata" type:"map"`
 
 	// The status of the import job.
@@ -9048,8 +10333,7 @@ type KnowledgeBaseAssociationData struct {
 	// The Amazon Resource Name (ARN) of the knowledge base.
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string"`
 }
 
@@ -9095,8 +10379,7 @@ type KnowledgeBaseData struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -9123,10 +10406,10 @@ type KnowledgeBaseData struct {
 	//
 	// This KMS key must have a policy that allows kms:CreateGrant, kms:DescribeKey,
 	// kms:Decrypt, and kms:GenerateDataKey* permissions to the IAM identity using
-	// the key to invoke Amazon Q.
+	// the key to invoke Amazon Q in Connect.
 	//
-	// For more information about setting up a customer managed key for Amazon Q,
-	// see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
+	// For more information about setting up a customer managed key for Amazon Q
+	// in Connect, see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
 	ServerSideEncryptionConfiguration *ServerSideEncryptionConfiguration `locationName:"serverSideEncryptionConfiguration" type:"structure"`
 
 	// Source configuration information about the knowledge base.
@@ -9237,8 +10520,7 @@ type KnowledgeBaseSummary struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -9260,10 +10542,10 @@ type KnowledgeBaseSummary struct {
 	//
 	// This KMS key must have a policy that allows kms:CreateGrant, kms:DescribeKey,
 	// kms:Decrypt, and kms:GenerateDataKey* permissions to the IAM identity using
-	// the key to invoke Amazon Q.
+	// the key to invoke Amazon Q in Connect.
 	//
-	// For more information about setting up a customer managed key for Amazon Q,
-	// see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
+	// For more information about setting up a customer managed key for Amazon Q
+	// in Connect, see Enable Amazon Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
 	ServerSideEncryptionConfiguration *ServerSideEncryptionConfiguration `locationName:"serverSideEncryptionConfiguration" type:"structure"`
 
 	// Configuration information about the external data source.
@@ -9359,8 +10641,8 @@ func (s *KnowledgeBaseSummary) SetTags(v map[string]*string) *KnowledgeBaseSumma
 type ListAssistantAssociationsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -9572,12 +10854,145 @@ func (s *ListAssistantsOutput) SetNextToken(v string) *ListAssistantsOutput {
 	return s
 }
 
+type ListContentAssociationsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The identifier of the content.
+	//
+	// ContentId is a required field
+	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
+
+	// The identifier of the knowledge base.
+	//
+	// KnowledgeBaseId is a required field
+	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
+
+	// The maximum number of results to return per page.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// The token for the next set of results. Use the value returned in the previous
+	// response in the next request to retrieve the next set of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListContentAssociationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListContentAssociationsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListContentAssociationsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListContentAssociationsInput"}
+	if s.ContentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ContentId"))
+	}
+	if s.ContentId != nil && len(*s.ContentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ContentId", 1))
+	}
+	if s.KnowledgeBaseId == nil {
+		invalidParams.Add(request.NewErrParamRequired("KnowledgeBaseId"))
+	}
+	if s.KnowledgeBaseId != nil && len(*s.KnowledgeBaseId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("KnowledgeBaseId", 1))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetContentId sets the ContentId field's value.
+func (s *ListContentAssociationsInput) SetContentId(v string) *ListContentAssociationsInput {
+	s.ContentId = &v
+	return s
+}
+
+// SetKnowledgeBaseId sets the KnowledgeBaseId field's value.
+func (s *ListContentAssociationsInput) SetKnowledgeBaseId(v string) *ListContentAssociationsInput {
+	s.KnowledgeBaseId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListContentAssociationsInput) SetMaxResults(v int64) *ListContentAssociationsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListContentAssociationsInput) SetNextToken(v string) *ListContentAssociationsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListContentAssociationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Summary information about content associations.
+	//
+	// ContentAssociationSummaries is a required field
+	ContentAssociationSummaries []*ContentAssociationSummary `locationName:"contentAssociationSummaries" type:"list" required:"true"`
+
+	// If there are additional results, this is the token for the next set of results.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListContentAssociationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListContentAssociationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetContentAssociationSummaries sets the ContentAssociationSummaries field's value.
+func (s *ListContentAssociationsOutput) SetContentAssociationSummaries(v []*ContentAssociationSummary) *ListContentAssociationsOutput {
+	s.ContentAssociationSummaries = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListContentAssociationsOutput) SetNextToken(v string) *ListContentAssociationsOutput {
+	s.NextToken = &v
+	return s
+}
+
 type ListContentsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// type knowledge base. Can be either the ID or the ARN. URLs cannot contain
+	// the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -9693,9 +11108,8 @@ func (s *ListContentsOutput) SetNextToken(v string) *ListContentsOutput {
 type ListImportJobsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -9911,9 +11325,8 @@ func (s *ListKnowledgeBasesOutput) SetNextToken(v string) *ListKnowledgeBasesOut
 type ListQuickResponsesInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -10151,8 +11564,8 @@ func (s *NotifyRecommendationsReceivedError) SetRecommendationId(v string) *Noti
 type NotifyRecommendationsReceivedInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -10270,6 +11683,72 @@ func (s *NotifyRecommendationsReceivedOutput) SetRecommendationIds(v []*string) 
 	return s
 }
 
+// A list of conditions which would be applied together with an OR condition.
+type OrCondition struct {
+	_ struct{} `type:"structure"`
+
+	// A list of conditions which would be applied together with an AND condition.
+	AndConditions []*TagCondition `locationName:"andConditions" type:"list"`
+
+	// A leaf node condition which can be used to specify a tag condition.
+	TagCondition *TagCondition `locationName:"tagCondition" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrCondition) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OrCondition) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *OrCondition) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "OrCondition"}
+	if s.AndConditions != nil {
+		for i, v := range s.AndConditions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AndConditions", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.TagCondition != nil {
+		if err := s.TagCondition.Validate(); err != nil {
+			invalidParams.AddNested("TagCondition", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAndConditions sets the AndConditions field's value.
+func (s *OrCondition) SetAndConditions(v []*TagCondition) *OrCondition {
+	s.AndConditions = v
+	return s
+}
+
+// SetTagCondition sets the TagCondition field's value.
+func (s *OrCondition) SetTagCondition(v *TagCondition) *OrCondition {
+	s.TagCondition = v
+	return s
+}
+
 // The provided revisionId does not match, indicating the content has been modified
 // since it was last read.
 type PreconditionFailedException struct {
@@ -10338,7 +11817,7 @@ func (s *PreconditionFailedException) RequestID() string {
 type PutFeedbackInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q assistant.
+	// The identifier of the Amazon Q in Connect assistant.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -10434,12 +11913,12 @@ func (s *PutFeedbackInput) SetTargetType(v string) *PutFeedbackInput {
 type PutFeedbackOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q assistant.
+	// The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
 	//
 	// AssistantArn is a required field
 	AssistantArn *string `locationName:"assistantArn" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant.
+	// The identifier of the Amazon Q in Connect assistant.
 	//
 	// AssistantId is a required field
 	AssistantId *string `locationName:"assistantId" type:"string" required:"true"`
@@ -10511,8 +11990,8 @@ func (s *PutFeedbackOutput) SetTargetType(v string) *PutFeedbackOutput {
 type QueryAssistantInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -10536,8 +12015,8 @@ type QueryAssistantInput struct {
 	// QueryText is a required field
 	QueryText *string `locationName:"queryText" type:"string" required:"true" sensitive:"true"`
 
-	// The identifier of the Amazon Q session. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect session. Can be either the ID or
+	// the ARN. URLs cannot contain the ARN.
 	SessionId *string `locationName:"sessionId" type:"string"`
 }
 
@@ -10952,9 +12431,8 @@ type QuickResponseData struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -11629,9 +13107,8 @@ type QuickResponseSearchResultData struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -11849,8 +13326,7 @@ type QuickResponseSummary struct {
 	// KnowledgeBaseArn is a required field
 	KnowledgeBaseArn *string `locationName:"knowledgeBaseArn" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it.
+	// The identifier of the knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -12231,9 +13707,8 @@ func (s *RecommendationTriggerData) SetQuery(v *QueryRecommendationTriggerData) 
 type RemoveKnowledgeBaseTemplateUriInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -12567,8 +14042,8 @@ type SearchContentInput struct {
 	_ struct{} `type:"structure"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// type knowledge base. Can be either the ID or the ARN. URLs cannot contain
+	// the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -12912,8 +14387,8 @@ func (s *SearchQuickResponsesOutput) SetResults(v []*QuickResponseSearchResultDa
 type SearchSessionsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q assistant. Can be either the ID or the ARN.
-	// URLs cannot contain the ARN.
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
 	//
 	// AssistantId is a required field
 	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
@@ -13050,8 +14525,8 @@ type ServerSideEncryptionConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// The customer managed key used for encryption. For more information about
-	// setting up a customer managed key for Amazon Q, see Enable Amazon Q in Connect
-	// for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
+	// setting up a customer managed key for Amazon Q in Connect, see Enable Amazon
+	// Q in Connect for your instance (https://docs.aws.amazon.com/connect/latest/adminguide/enable-q.html).
 	// For information about valid ID values, see Key identifiers (KeyId) (https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#key-id).
 	KmsKeyId *string `locationName:"kmsKeyId" min:"1" type:"string"`
 }
@@ -13184,6 +14659,9 @@ type SessionData struct {
 	// SessionId is a required field
 	SessionId *string `locationName:"sessionId" type:"string" required:"true"`
 
+	// An object that can be used to specify Tag conditions.
+	TagFilter *TagFilter `locationName:"tagFilter" type:"structure"`
+
 	// The tags used to organize, track, or control access for this resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
@@ -13236,6 +14714,12 @@ func (s *SessionData) SetSessionId(v string) *SessionData {
 	return s
 }
 
+// SetTagFilter sets the TagFilter field's value.
+func (s *SessionData) SetTagFilter(v *TagFilter) *SessionData {
+	s.TagFilter = v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *SessionData) SetTags(v map[string]*string) *SessionData {
 	s.Tags = v
@@ -13279,12 +14763,12 @@ func (s *SessionIntegrationConfiguration) SetTopicIntegrationArn(v string) *Sess
 type SessionSummary struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q assistant.
+	// The Amazon Resource Name (ARN) of the Amazon Q in Connect assistant.
 	//
 	// AssistantArn is a required field
 	AssistantArn *string `locationName:"assistantArn" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q assistant.
+	// The identifier of the Amazon Q in Connect assistant.
 	//
 	// AssistantId is a required field
 	AssistantId *string `locationName:"assistantId" type:"string" required:"true"`
@@ -13465,9 +14949,8 @@ type StartContentUploadInput struct {
 	// ContentType is a required field
 	ContentType *string `locationName:"contentType" type:"string" required:"true"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -13622,17 +15105,16 @@ type StartImportJobInput struct {
 	// ImportJobType is a required field
 	ImportJobType *string `locationName:"importJobType" type:"string" required:"true" enum:"ImportJobType"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
-	//    * For importing Amazon Q quick responses, this should be a QUICK_RESPONSES
-	//    type knowledge base.
+	//    * For importing Amazon Q in Connect quick responses, this should be a
+	//    QUICK_RESPONSES type knowledge base.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
 
-	// The metadata fields of the imported Amazon Q resources.
+	// The metadata fields of the imported Amazon Q in Connect resources.
 	Metadata map[string]*string `locationName:"metadata" type:"map"`
 
 	// A pointer to the uploaded asset. This value is returned by StartContentUpload
@@ -13760,6 +15242,153 @@ func (s *StartImportJobOutput) SetImportJob(v *ImportJobData) *StartImportJobOut
 	return s
 }
 
+// A leaf node condition which can be used to specify a tag condition.
+type TagCondition struct {
+	_ struct{} `type:"structure"`
+
+	// The tag key in the tag condition.
+	//
+	// Key is a required field
+	Key *string `locationName:"key" min:"1" type:"string" required:"true"`
+
+	// The tag value in the tag condition.
+	Value *string `locationName:"value" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagCondition) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagCondition) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TagCondition) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TagCondition"}
+	if s.Key == nil {
+		invalidParams.Add(request.NewErrParamRequired("Key"))
+	}
+	if s.Key != nil && len(*s.Key) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Key", 1))
+	}
+	if s.Value != nil && len(*s.Value) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Value", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetKey sets the Key field's value.
+func (s *TagCondition) SetKey(v string) *TagCondition {
+	s.Key = &v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *TagCondition) SetValue(v string) *TagCondition {
+	s.Value = &v
+	return s
+}
+
+// An object that can be used to specify Tag conditions.
+type TagFilter struct {
+	_ struct{} `type:"structure"`
+
+	// A list of conditions which would be applied together with an AND condition.
+	AndConditions []*TagCondition `locationName:"andConditions" type:"list"`
+
+	// A list of conditions which would be applied together with an OR condition.
+	OrConditions []*OrCondition `locationName:"orConditions" type:"list"`
+
+	// A leaf node condition which can be used to specify a tag condition.
+	TagCondition *TagCondition `locationName:"tagCondition" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TagFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TagFilter"}
+	if s.AndConditions != nil {
+		for i, v := range s.AndConditions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AndConditions", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.OrConditions != nil {
+		for i, v := range s.OrConditions {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "OrConditions", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.TagCondition != nil {
+		if err := s.TagCondition.Validate(); err != nil {
+			invalidParams.AddNested("TagCondition", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAndConditions sets the AndConditions field's value.
+func (s *TagFilter) SetAndConditions(v []*TagCondition) *TagFilter {
+	s.AndConditions = v
+	return s
+}
+
+// SetOrConditions sets the OrConditions field's value.
+func (s *TagFilter) SetOrConditions(v []*OrCondition) *TagFilter {
+	s.OrConditions = v
+	return s
+}
+
+// SetTagCondition sets the TagCondition field's value.
+func (s *TagFilter) SetTagCondition(v *TagCondition) *TagFilter {
+	s.TagCondition = v
+	return s
+}
+
 type TagResourceInput struct {
 	_ struct{} `type:"structure"`
 
@@ -13884,6 +15513,70 @@ func (s *TextData) SetExcerpt(v *DocumentText) *TextData {
 func (s *TextData) SetTitle(v *DocumentText) *TextData {
 	s.Title = v
 	return s
+}
+
+// The throttling limit has been exceeded.
+type ThrottlingException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ThrottlingException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ThrottlingException) GoString() string {
+	return s.String()
+}
+
+func newErrorThrottlingException(v protocol.ResponseMetadata) error {
+	return &ThrottlingException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ThrottlingException) Code() string {
+	return "ThrottlingException"
+}
+
+// Message returns the exception's message.
+func (s *ThrottlingException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ThrottlingException) OrigErr() error {
+	return nil
+}
+
+func (s *ThrottlingException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ThrottlingException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ThrottlingException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 // Amazon Q in Connect throws this exception if you have too many tags in your
@@ -14052,16 +15745,15 @@ type UpdateContentInput struct {
 	ContentId *string `location:"uri" locationName:"contentId" type:"string" required:"true"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN
+	// type knowledge base. Can be either the ID or the ARN
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
 
 	// A key/value map to store attributes without affecting tagging or recommendations.
 	// For example, when synchronizing data between an external system and Amazon
-	// Q, you can store an external version identifier as metadata to utilize for
-	// determining drift.
+	// Q in Connect, you can store an external version identifier as metadata to
+	// utilize for determining drift.
 	Metadata map[string]*string `locationName:"metadata" type:"map"`
 
 	// The URI for the article. If the knowledge base has a templateUri, setting
@@ -14222,8 +15914,8 @@ type UpdateKnowledgeBaseTemplateUriInput struct {
 	_ struct{} `type:"structure"`
 
 	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// type knowledge base. Can be either the ID or the ARN. URLs cannot contain
+	// the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -14345,9 +16037,8 @@ type UpdateQuickResponseInput struct {
 	// Whether the quick response is active.
 	IsActive *bool `locationName:"isActive" type:"boolean"`
 
-	// The identifier of the knowledge base. This should not be a QUICK_RESPONSES
-	// type knowledge base if you're storing Amazon Q Content resource to it. Can
-	// be either the ID or the ARN. URLs cannot contain the ARN.
+	// The identifier of the knowledge base. Can be either the ID or the ARN. URLs
+	// cannot contain the ARN.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
@@ -14556,6 +16247,131 @@ func (s *UpdateQuickResponseOutput) SetQuickResponse(v *QuickResponseData) *Upda
 	return s
 }
 
+type UpdateSessionInput struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the Amazon Q in Connect assistant. Can be either the ID
+	// or the ARN. URLs cannot contain the ARN.
+	//
+	// AssistantId is a required field
+	AssistantId *string `location:"uri" locationName:"assistantId" type:"string" required:"true"`
+
+	// The description.
+	Description *string `locationName:"description" min:"1" type:"string"`
+
+	// The identifier of the session. Can be either the ID or the ARN. URLs cannot
+	// contain the ARN.
+	//
+	// SessionId is a required field
+	SessionId *string `location:"uri" locationName:"sessionId" type:"string" required:"true"`
+
+	// An object that can be used to specify Tag conditions.
+	TagFilter *TagFilter `locationName:"tagFilter" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSessionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSessionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateSessionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateSessionInput"}
+	if s.AssistantId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssistantId"))
+	}
+	if s.AssistantId != nil && len(*s.AssistantId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssistantId", 1))
+	}
+	if s.Description != nil && len(*s.Description) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
+	}
+	if s.SessionId == nil {
+		invalidParams.Add(request.NewErrParamRequired("SessionId"))
+	}
+	if s.SessionId != nil && len(*s.SessionId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SessionId", 1))
+	}
+	if s.TagFilter != nil {
+		if err := s.TagFilter.Validate(); err != nil {
+			invalidParams.AddNested("TagFilter", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssistantId sets the AssistantId field's value.
+func (s *UpdateSessionInput) SetAssistantId(v string) *UpdateSessionInput {
+	s.AssistantId = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateSessionInput) SetDescription(v string) *UpdateSessionInput {
+	s.Description = &v
+	return s
+}
+
+// SetSessionId sets the SessionId field's value.
+func (s *UpdateSessionInput) SetSessionId(v string) *UpdateSessionInput {
+	s.SessionId = &v
+	return s
+}
+
+// SetTagFilter sets the TagFilter field's value.
+func (s *UpdateSessionInput) SetTagFilter(v *TagFilter) *UpdateSessionInput {
+	s.TagFilter = v
+	return s
+}
+
+type UpdateSessionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the session.
+	Session *SessionData `locationName:"session" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSessionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSessionOutput) GoString() string {
+	return s.String()
+}
+
+// SetSession sets the Session field's value.
+func (s *UpdateSessionOutput) SetSession(v *SessionData) *UpdateSessionOutput {
+	s.Session = v
+	return s
+}
+
 // The input fails to satisfy the constraints specified by a service.
 type ValidationException struct {
 	_            struct{}                  `type:"structure"`
@@ -14689,6 +16505,18 @@ const (
 func AssociationType_Values() []string {
 	return []string{
 		AssociationTypeKnowledgeBase,
+	}
+}
+
+const (
+	// ContentAssociationTypeAmazonConnectGuide is a ContentAssociationType enum value
+	ContentAssociationTypeAmazonConnectGuide = "AMAZON_CONNECT_GUIDE"
+)
+
+// ContentAssociationType_Values returns all elements of the ContentAssociationType enum
+func ContentAssociationType_Values() []string {
+	return []string{
+		ContentAssociationTypeAmazonConnectGuide,
 	}
 }
 

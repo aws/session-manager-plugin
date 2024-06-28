@@ -5713,6 +5713,10 @@ type ConversionProperties struct {
 	// ids
 	VolumeToConversionMap map[string]map[string]*string `locationName:"volumeToConversionMap" type:"map"`
 
+	// A mapping between the volumes being converted and the product codes associated
+	// with them
+	VolumeToProductCodes map[string][]*ProductCode `locationName:"volumeToProductCodes" type:"map"`
+
 	// A mapping between the volumes and their sizes
 	VolumeToVolumeSize map[string]*int64 `locationName:"volumeToVolumeSize" type:"map"`
 }
@@ -5756,6 +5760,12 @@ func (s *ConversionProperties) SetRootVolumeName(v string) *ConversionProperties
 // SetVolumeToConversionMap sets the VolumeToConversionMap field's value.
 func (s *ConversionProperties) SetVolumeToConversionMap(v map[string]map[string]*string) *ConversionProperties {
 	s.VolumeToConversionMap = v
+	return s
+}
+
+// SetVolumeToProductCodes sets the VolumeToProductCodes field's value.
+func (s *ConversionProperties) SetVolumeToProductCodes(v map[string][]*ProductCode) *ConversionProperties {
+	s.VolumeToProductCodes = v
 	return s
 }
 
@@ -6649,6 +6659,9 @@ type DataReplicationInfo struct {
 
 	// AWS Availability zone into which data is being replicated.
 	StagingAvailabilityZone *string `locationName:"stagingAvailabilityZone" type:"string"`
+
+	// The ARN of the staging Outpost
+	StagingOutpostArn *string `locationName:"stagingOutpostArn" min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -6711,6 +6724,12 @@ func (s *DataReplicationInfo) SetStagingAvailabilityZone(v string) *DataReplicat
 	return s
 }
 
+// SetStagingOutpostArn sets the StagingOutpostArn field's value.
+func (s *DataReplicationInfo) SetStagingOutpostArn(v string) *DataReplicationInfo {
+	s.StagingOutpostArn = &v
+	return s
+}
+
 // A disk that should be replicated.
 type DataReplicationInfoReplicatedDisk struct {
 	_ struct{} `type:"structure"`
@@ -6729,6 +6748,9 @@ type DataReplicationInfoReplicatedDisk struct {
 
 	// The total amount of data to be replicated in bytes.
 	TotalStorageBytes *int64 `locationName:"totalStorageBytes" type:"long"`
+
+	// The status of the volume.
+	VolumeStatus *string `locationName:"volumeStatus" type:"string" enum:"VolumeStatus"`
 }
 
 // String returns the string representation.
@@ -6776,6 +6798,12 @@ func (s *DataReplicationInfoReplicatedDisk) SetRescannedStorageBytes(v int64) *D
 // SetTotalStorageBytes sets the TotalStorageBytes field's value.
 func (s *DataReplicationInfoReplicatedDisk) SetTotalStorageBytes(v int64) *DataReplicationInfoReplicatedDisk {
 	s.TotalStorageBytes = &v
+	return s
+}
+
+// SetVolumeStatus sets the VolumeStatus field's value.
+func (s *DataReplicationInfoReplicatedDisk) SetVolumeStatus(v string) *DataReplicationInfoReplicatedDisk {
+	s.VolumeStatus = &v
 	return s
 }
 
@@ -11266,6 +11294,47 @@ func (s *ParticipatingServer) SetSourceServerID(v string) *ParticipatingServer {
 	return s
 }
 
+// Properties of a product code associated with a volume.
+type ProductCode struct {
+	_ struct{} `type:"structure"`
+
+	// Id of a product code associated with a volume.
+	ProductCodeId *string `locationName:"productCodeId" min:"25" type:"string"`
+
+	// Mode of a product code associated with a volume.
+	ProductCodeMode *string `locationName:"productCodeMode" type:"string" enum:"ProductCodeMode"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProductCode) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProductCode) GoString() string {
+	return s.String()
+}
+
+// SetProductCodeId sets the ProductCodeId field's value.
+func (s *ProductCode) SetProductCodeId(v string) *ProductCode {
+	s.ProductCodeId = &v
+	return s
+}
+
+// SetProductCodeMode sets the ProductCodeMode field's value.
+func (s *ProductCode) SetProductCodeMode(v string) *ProductCode {
+	s.ProductCodeMode = &v
+	return s
+}
+
 type PutLaunchActionInput struct {
 	_ struct{} `type:"structure"`
 
@@ -11648,6 +11717,9 @@ type RecoveryInstance struct {
 	// Properties of the Recovery Instance machine.
 	RecoveryInstanceProperties *RecoveryInstanceProperties `locationName:"recoveryInstanceProperties" type:"structure"`
 
+	// The ARN of the source Outpost
+	SourceOutpostArn *string `locationName:"sourceOutpostArn" min:"20" type:"string"`
+
 	// The Source Server ID that this Recovery Instance is associated with.
 	SourceServerID *string `locationName:"sourceServerID" min:"19" type:"string"`
 
@@ -11755,6 +11827,12 @@ func (s *RecoveryInstance) SetRecoveryInstanceProperties(v *RecoveryInstanceProp
 	return s
 }
 
+// SetSourceOutpostArn sets the SourceOutpostArn field's value.
+func (s *RecoveryInstance) SetSourceOutpostArn(v string) *RecoveryInstance {
+	s.SourceOutpostArn = &v
+	return s
+}
+
 // SetSourceServerID sets the SourceServerID field's value.
 func (s *RecoveryInstance) SetSourceServerID(v string) *RecoveryInstance {
 	s.SourceServerID = &v
@@ -11832,6 +11910,9 @@ type RecoveryInstanceDataReplicationInfo struct {
 
 	// AWS Availability zone into which data is being replicated.
 	StagingAvailabilityZone *string `locationName:"stagingAvailabilityZone" type:"string"`
+
+	// The ARN of the staging Outpost
+	StagingOutpostArn *string `locationName:"stagingOutpostArn" min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -11891,6 +11972,12 @@ func (s *RecoveryInstanceDataReplicationInfo) SetReplicatedDisks(v []*RecoveryIn
 // SetStagingAvailabilityZone sets the StagingAvailabilityZone field's value.
 func (s *RecoveryInstanceDataReplicationInfo) SetStagingAvailabilityZone(v string) *RecoveryInstanceDataReplicationInfo {
 	s.StagingAvailabilityZone = &v
+	return s
+}
+
+// SetStagingOutpostArn sets the StagingOutpostArn field's value.
+func (s *RecoveryInstanceDataReplicationInfo) SetStagingOutpostArn(v string) *RecoveryInstanceDataReplicationInfo {
+	s.StagingOutpostArn = &v
 	return s
 }
 
@@ -13138,6 +13225,9 @@ type SourceCloudProperties struct {
 
 	// AWS Region for an EC2-originated Source Server.
 	OriginRegion *string `locationName:"originRegion" type:"string"`
+
+	// The ARN of the source Outpost
+	SourceOutpostArn *string `locationName:"sourceOutpostArn" min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -13173,6 +13263,12 @@ func (s *SourceCloudProperties) SetOriginAvailabilityZone(v string) *SourceCloud
 // SetOriginRegion sets the OriginRegion field's value.
 func (s *SourceCloudProperties) SetOriginRegion(v string) *SourceCloudProperties {
 	s.OriginRegion = &v
+	return s
+}
+
+// SetSourceOutpostArn sets the SourceOutpostArn field's value.
+func (s *SourceCloudProperties) SetSourceOutpostArn(v string) *SourceCloudProperties {
+	s.SourceOutpostArn = &v
 	return s
 }
 
@@ -17196,6 +17292,22 @@ func PITPolicyRuleUnits_Values() []string {
 }
 
 const (
+	// ProductCodeModeEnabled is a ProductCodeMode enum value
+	ProductCodeModeEnabled = "ENABLED"
+
+	// ProductCodeModeDisabled is a ProductCodeMode enum value
+	ProductCodeModeDisabled = "DISABLED"
+)
+
+// ProductCodeMode_Values returns all elements of the ProductCodeMode enum
+func ProductCodeMode_Values() []string {
+	return []string{
+		ProductCodeModeEnabled,
+		ProductCodeModeDisabled,
+	}
+}
+
+const (
 	// RecoveryInstanceDataReplicationInitiationStepNameLinkFailbackClientWithRecoveryInstance is a RecoveryInstanceDataReplicationInitiationStepName enum value
 	RecoveryInstanceDataReplicationInitiationStepNameLinkFailbackClientWithRecoveryInstance = "LINK_FAILBACK_CLIENT_WITH_RECOVERY_INSTANCE"
 
@@ -17594,5 +17706,33 @@ func ValidationExceptionReason_Values() []string {
 		ValidationExceptionReasonCannotParse,
 		ValidationExceptionReasonFieldValidationFailed,
 		ValidationExceptionReasonOther,
+	}
+}
+
+const (
+	// VolumeStatusRegular is a VolumeStatus enum value
+	VolumeStatusRegular = "REGULAR"
+
+	// VolumeStatusContainsMarketplaceProductCodes is a VolumeStatus enum value
+	VolumeStatusContainsMarketplaceProductCodes = "CONTAINS_MARKETPLACE_PRODUCT_CODES"
+
+	// VolumeStatusMissingVolumeAttributes is a VolumeStatus enum value
+	VolumeStatusMissingVolumeAttributes = "MISSING_VOLUME_ATTRIBUTES"
+
+	// VolumeStatusMissingVolumeAttributesAndPrecheckUnavailable is a VolumeStatus enum value
+	VolumeStatusMissingVolumeAttributesAndPrecheckUnavailable = "MISSING_VOLUME_ATTRIBUTES_AND_PRECHECK_UNAVAILABLE"
+
+	// VolumeStatusPending is a VolumeStatus enum value
+	VolumeStatusPending = "PENDING"
+)
+
+// VolumeStatus_Values returns all elements of the VolumeStatus enum
+func VolumeStatus_Values() []string {
+	return []string{
+		VolumeStatusRegular,
+		VolumeStatusContainsMarketplaceProductCodes,
+		VolumeStatusMissingVolumeAttributes,
+		VolumeStatusMissingVolumeAttributesAndPrecheckUnavailable,
+		VolumeStatusPending,
 	}
 }

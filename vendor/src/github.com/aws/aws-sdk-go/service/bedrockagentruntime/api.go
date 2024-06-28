@@ -72,8 +72,37 @@ func (c *BedrockAgentRuntime) InvokeAgentRequest(input *InvokeAgentInput) (req *
 
 // InvokeAgent API operation for Agents for Amazon Bedrock Runtime.
 //
-// Invokes the specified Bedrock model to run inference using the input provided
-// in the request body.
+// The CLI doesn't support InvokeAgent.
+//
+// Sends a prompt for the agent to process and respond to. Note the following
+// fields for the request:
+//
+//   - To continue the same conversation with an agent, use the same sessionId
+//     value in the request.
+//
+//   - To activate trace enablement, turn enableTrace to true. Trace enablement
+//     helps you follow the agent's reasoning process that led it to the information
+//     it processed, the actions it took, and the final result it yielded. For
+//     more information, see Trace enablement (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events).
+//
+//   - End a conversation by setting endSession to true.
+//
+//   - In the sessionState object, you can include attributes for the session
+//     or prompt or, if you configured an action group to return control, results
+//     from invocation of the action group.
+//
+// The response is returned in the bytes field of the chunk object.
+//
+//   - The attribution object contains citations for parts of the response.
+//
+//   - If you set enableTrace to true in the request, you can trace the agent's
+//     steps and reasoning process that led it to the response.
+//
+//   - If the action predicted was configured to return control, the response
+//     returns parameters for the action, elicited from the user, in the returnControl
+//     field.
+//
+//   - Errors are also surfaced in the response.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -85,35 +114,35 @@ func (c *BedrockAgentRuntime) InvokeAgentRequest(input *InvokeAgentInput) (req *
 // Returned Error Types:
 //
 //   - ConflictException
-//     This exception is thrown when there is a conflict performing an operation
+//     There was a conflict performing an operation. Resolve the conflict and retry
+//     your request.
 //
 //   - ResourceNotFoundException
-//     This exception is thrown when a resource referenced by the operation does
-//     not exist
+//     The specified resource Amazon Resource Name (ARN) was not found. Check the
+//     Amazon Resource Name (ARN) and try your request again.
 //
 //   - ValidationException
-//     This exception is thrown when the request's input validation fails
+//     Input validation failed. Check your request parameters and retry the request.
 //
 //   - InternalServerException
-//     This exception is thrown if there was an unexpected error during processing
-//     of request
+//     An internal server error occurred. Retry your request.
 //
 //   - DependencyFailedException
-//     This exception is thrown when a request fails due to dependency like Lambda,
-//     Bedrock, STS resource due to a customer fault (i.e. bad configuration)
+//     There was an issue with a dependency. Check the resource configurations and
+//     retry the request.
 //
 //   - BadGatewayException
-//     This exception is thrown when a request fails due to dependency like Lambda,
-//     Bedrock, STS resource
+//     There was an issue with a dependency due to a server issue. Retry your request.
 //
 //   - ThrottlingException
-//     This exception is thrown when the number of requests exceeds the limit
+//     The number of requests exceeds the limit. Resubmit your request later.
 //
 //   - AccessDeniedException
-//     This exception is thrown when a request is denied per access permissions
+//     The request is denied because of missing access permissions. Check your permissions
+//     and retry your request.
 //
 //   - ServiceQuotaExceededException
-//     This exception is thrown when a request is made beyond the service quota
+//     The number of requests exceeds the service quota. Resubmit your request later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/InvokeAgent
 func (c *BedrockAgentRuntime) InvokeAgent(input *InvokeAgentInput) (*InvokeAgentOutput, error) {
@@ -220,6 +249,7 @@ func (es *InvokeAgentEventStream) waitStreamPartClose() {
 // These events are:
 //
 //   - PayloadPart
+//   - ReturnControlPayload
 //   - TracePart
 //   - ResponseStreamUnknownEvent
 func (es *InvokeAgentEventStream) Events() <-chan ResponseStreamEvent {
@@ -335,7 +365,7 @@ func (c *BedrockAgentRuntime) RetrieveRequest(input *RetrieveInput) (req *reques
 
 // Retrieve API operation for Agents for Amazon Bedrock Runtime.
 //
-// Retrieve from knowledge base.
+// Queries a knowledge base and retrieves information from it.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -347,35 +377,35 @@ func (c *BedrockAgentRuntime) RetrieveRequest(input *RetrieveInput) (req *reques
 // Returned Error Types:
 //
 //   - ConflictException
-//     This exception is thrown when there is a conflict performing an operation
+//     There was a conflict performing an operation. Resolve the conflict and retry
+//     your request.
 //
 //   - ResourceNotFoundException
-//     This exception is thrown when a resource referenced by the operation does
-//     not exist
+//     The specified resource Amazon Resource Name (ARN) was not found. Check the
+//     Amazon Resource Name (ARN) and try your request again.
 //
 //   - ValidationException
-//     This exception is thrown when the request's input validation fails
+//     Input validation failed. Check your request parameters and retry the request.
 //
 //   - InternalServerException
-//     This exception is thrown if there was an unexpected error during processing
-//     of request
+//     An internal server error occurred. Retry your request.
 //
 //   - DependencyFailedException
-//     This exception is thrown when a request fails due to dependency like Lambda,
-//     Bedrock, STS resource due to a customer fault (i.e. bad configuration)
+//     There was an issue with a dependency. Check the resource configurations and
+//     retry the request.
 //
 //   - BadGatewayException
-//     This exception is thrown when a request fails due to dependency like Lambda,
-//     Bedrock, STS resource
+//     There was an issue with a dependency due to a server issue. Retry your request.
 //
 //   - ThrottlingException
-//     This exception is thrown when the number of requests exceeds the limit
+//     The number of requests exceeds the limit. Resubmit your request later.
 //
 //   - AccessDeniedException
-//     This exception is thrown when a request is denied per access permissions
+//     The request is denied because of missing access permissions. Check your permissions
+//     and retry your request.
 //
 //   - ServiceQuotaExceededException
-//     This exception is thrown when a request is made beyond the service quota
+//     The number of requests exceeds the service quota. Resubmit your request later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/Retrieve
 func (c *BedrockAgentRuntime) Retrieve(input *RetrieveInput) (*RetrieveOutput, error) {
@@ -493,7 +523,8 @@ func (c *BedrockAgentRuntime) RetrieveAndGenerateRequest(input *RetrieveAndGener
 
 // RetrieveAndGenerate API operation for Agents for Amazon Bedrock Runtime.
 //
-// # RetrieveAndGenerate API
+// Queries a knowledge base and generates responses based on the retrieved results.
+// The response only cites sources that are relevant to the query.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -505,35 +536,35 @@ func (c *BedrockAgentRuntime) RetrieveAndGenerateRequest(input *RetrieveAndGener
 // Returned Error Types:
 //
 //   - ConflictException
-//     This exception is thrown when there is a conflict performing an operation
+//     There was a conflict performing an operation. Resolve the conflict and retry
+//     your request.
 //
 //   - ResourceNotFoundException
-//     This exception is thrown when a resource referenced by the operation does
-//     not exist
+//     The specified resource Amazon Resource Name (ARN) was not found. Check the
+//     Amazon Resource Name (ARN) and try your request again.
 //
 //   - ValidationException
-//     This exception is thrown when the request's input validation fails
+//     Input validation failed. Check your request parameters and retry the request.
 //
 //   - InternalServerException
-//     This exception is thrown if there was an unexpected error during processing
-//     of request
+//     An internal server error occurred. Retry your request.
 //
 //   - DependencyFailedException
-//     This exception is thrown when a request fails due to dependency like Lambda,
-//     Bedrock, STS resource due to a customer fault (i.e. bad configuration)
+//     There was an issue with a dependency. Check the resource configurations and
+//     retry the request.
 //
 //   - BadGatewayException
-//     This exception is thrown when a request fails due to dependency like Lambda,
-//     Bedrock, STS resource
+//     There was an issue with a dependency due to a server issue. Retry your request.
 //
 //   - ThrottlingException
-//     This exception is thrown when the number of requests exceeds the limit
+//     The number of requests exceeds the limit. Resubmit your request later.
 //
 //   - AccessDeniedException
-//     This exception is thrown when a request is denied per access permissions
+//     The request is denied because of missing access permissions. Check your permissions
+//     and retry your request.
 //
 //   - ServiceQuotaExceededException
-//     This exception is thrown when a request is made beyond the service quota
+//     The number of requests exceeds the service quota. Resubmit your request later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/bedrock-agent-runtime-2023-07-26/RetrieveAndGenerate
 func (c *BedrockAgentRuntime) RetrieveAndGenerate(input *RetrieveAndGenerateInput) (*RetrieveAndGenerateOutput, error) {
@@ -557,12 +588,12 @@ func (c *BedrockAgentRuntime) RetrieveAndGenerateWithContext(ctx aws.Context, in
 	return out, req.Send()
 }
 
-// This exception is thrown when a request is denied per access permissions
+// The request is denied because of missing access permissions. Check your permissions
+// and retry your request.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -651,31 +682,41 @@ func (s *AccessDeniedException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// input to lambda used in action group
+// Contains information about the action group being invoked. For more information
+// about the possible structures, see the InvocationInput tab in OrchestrationTrace
+// (https://docs.aws.amazon.com/bedrock/latest/userguide/trace-orchestration.html)
+// in the Amazon Bedrock User Guide.
 type ActionGroupInvocationInput_ struct {
 	_ struct{} `type:"structure"`
 
-	// Agent Trace Action Group Name
+	// The name of the action group.
 	//
 	// ActionGroupName is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ActionGroupInvocationInput_'s
 	// String and GoString methods.
 	ActionGroupName *string `locationName:"actionGroupName" type:"string" sensitive:"true"`
 
-	// Agent Trace Action Group API path
+	// The path to the API to call, based off the action group.
 	//
 	// ApiPath is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ActionGroupInvocationInput_'s
 	// String and GoString methods.
 	ApiPath *string `locationName:"apiPath" type:"string" sensitive:"true"`
 
-	// list of parameters included in action group invocation
+	// The function in the action group to call.
+	//
+	// Function is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ActionGroupInvocationInput_'s
+	// String and GoString methods.
+	Function *string `locationName:"function" type:"string" sensitive:"true"`
+
+	// The parameters in the Lambda input event.
 	Parameters []*Parameter `locationName:"parameters" type:"list"`
 
-	// Request Body Content Map
+	// The parameters in the request body for the Lambda input event.
 	RequestBody *RequestBody `locationName:"requestBody" type:"structure"`
 
-	// Agent Trace Action Group Action verb
+	// The API method being used, based off the action group.
 	//
 	// Verb is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ActionGroupInvocationInput_'s
@@ -713,6 +754,12 @@ func (s *ActionGroupInvocationInput_) SetApiPath(v string) *ActionGroupInvocatio
 	return s
 }
 
+// SetFunction sets the Function field's value.
+func (s *ActionGroupInvocationInput_) SetFunction(v string) *ActionGroupInvocationInput_ {
+	s.Function = &v
+	return s
+}
+
 // SetParameters sets the Parameters field's value.
 func (s *ActionGroupInvocationInput_) SetParameters(v []*Parameter) *ActionGroupInvocationInput_ {
 	s.Parameters = v
@@ -731,11 +778,12 @@ func (s *ActionGroupInvocationInput_) SetVerb(v string) *ActionGroupInvocationIn
 	return s
 }
 
-// output from lambda used in action group
+// Contains the JSON-formatted string returned by the API invoked by the action
+// group.
 type ActionGroupInvocationOutput_ struct {
 	_ struct{} `type:"structure"`
 
-	// Agent Trace Action Group Lambda Invocation Output String
+	// The JSON-formatted string returned by the API invoked by the action group.
 	//
 	// Text is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ActionGroupInvocationOutput_'s
@@ -767,11 +815,290 @@ func (s *ActionGroupInvocationOutput_) SetText(v string) *ActionGroupInvocationO
 	return s
 }
 
-// Citations associated with final agent response
+// Contains information about the API operation that the agent predicts should
+// be called.
+//
+// This data type is used in the following API operations:
+//
+//   - In the returnControl field of the InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+type ApiInvocationInput_ struct {
+	_ struct{} `type:"structure"`
+
+	// The action group that the API operation belongs to.
+	//
+	// ActionGroup is a required field
+	ActionGroup *string `locationName:"actionGroup" type:"string" required:"true"`
+
+	// The path to the API operation.
+	//
+	// ApiPath is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ApiInvocationInput_'s
+	// String and GoString methods.
+	ApiPath *string `locationName:"apiPath" type:"string" sensitive:"true"`
+
+	// The HTTP method of the API operation.
+	HttpMethod *string `locationName:"httpMethod" type:"string"`
+
+	// The parameters to provide for the API request, as the agent elicited from
+	// the user.
+	Parameters []*ApiParameter `locationName:"parameters" type:"list"`
+
+	// The request body to provide for the API request, as the agent elicited from
+	// the user.
+	RequestBody *ApiRequestBody `locationName:"requestBody" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiInvocationInput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiInvocationInput_) GoString() string {
+	return s.String()
+}
+
+// SetActionGroup sets the ActionGroup field's value.
+func (s *ApiInvocationInput_) SetActionGroup(v string) *ApiInvocationInput_ {
+	s.ActionGroup = &v
+	return s
+}
+
+// SetApiPath sets the ApiPath field's value.
+func (s *ApiInvocationInput_) SetApiPath(v string) *ApiInvocationInput_ {
+	s.ApiPath = &v
+	return s
+}
+
+// SetHttpMethod sets the HttpMethod field's value.
+func (s *ApiInvocationInput_) SetHttpMethod(v string) *ApiInvocationInput_ {
+	s.HttpMethod = &v
+	return s
+}
+
+// SetParameters sets the Parameters field's value.
+func (s *ApiInvocationInput_) SetParameters(v []*ApiParameter) *ApiInvocationInput_ {
+	s.Parameters = v
+	return s
+}
+
+// SetRequestBody sets the RequestBody field's value.
+func (s *ApiInvocationInput_) SetRequestBody(v *ApiRequestBody) *ApiInvocationInput_ {
+	s.RequestBody = v
+	return s
+}
+
+// Information about a parameter to provide to the API request.
+//
+// This data type is used in the following API operations:
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+type ApiParameter struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the parameter.
+	Name *string `locationName:"name" type:"string"`
+
+	// The data type for the parameter.
+	Type *string `locationName:"type" type:"string"`
+
+	// The value of the parameter.
+	Value *string `locationName:"value" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiParameter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiParameter) GoString() string {
+	return s.String()
+}
+
+// SetName sets the Name field's value.
+func (s *ApiParameter) SetName(v string) *ApiParameter {
+	s.Name = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *ApiParameter) SetType(v string) *ApiParameter {
+	s.Type = &v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *ApiParameter) SetValue(v string) *ApiParameter {
+	s.Value = &v
+	return s
+}
+
+// The request body to provide for the API request, as the agent elicited from
+// the user.
+//
+// This data type is used in the following API operations:
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+type ApiRequestBody struct {
+	_ struct{} `type:"structure"`
+
+	// The content of the request body. The key of the object in this field is a
+	// media type defining the format of the request body.
+	Content map[string]*PropertyParameters `locationName:"content" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiRequestBody) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiRequestBody) GoString() string {
+	return s.String()
+}
+
+// SetContent sets the Content field's value.
+func (s *ApiRequestBody) SetContent(v map[string]*PropertyParameters) *ApiRequestBody {
+	s.Content = v
+	return s
+}
+
+// Contains information about the API operation that was called from the action
+// group and the response body that was returned.
+//
+// This data type is used in the following API operations:
+//
+//   - In the returnControlInvocationResults of the InvokeAgent request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_RequestSyntax)
+type ApiResult struct {
+	_ struct{} `type:"structure"`
+
+	// The action group that the API operation belongs to.
+	//
+	// ActionGroup is a required field
+	ActionGroup *string `locationName:"actionGroup" type:"string" required:"true"`
+
+	// The path to the API operation.
+	//
+	// ApiPath is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ApiResult's
+	// String and GoString methods.
+	ApiPath *string `locationName:"apiPath" type:"string" sensitive:"true"`
+
+	// The HTTP method for the API operation.
+	HttpMethod *string `locationName:"httpMethod" type:"string"`
+
+	// http status code from API execution response (for example: 200, 400, 500).
+	HttpStatusCode *int64 `locationName:"httpStatusCode" type:"integer"`
+
+	// The response body from the API operation. The key of the object is the content
+	// type (currently, only TEXT is supported). The response may be returned directly
+	// or from the Lambda function.
+	ResponseBody map[string]*ContentBody `locationName:"responseBody" type:"map"`
+
+	// Controls the final response state returned to end user when API/Function
+	// execution failed. When this state is FAILURE, the request would fail with
+	// dependency failure exception. When this state is REPROMPT, the API/function
+	// response will be sent to model for re-prompt
+	ResponseState *string `locationName:"responseState" type:"string" enum:"ResponseState"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiResult) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ApiResult) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ApiResult"}
+	if s.ActionGroup == nil {
+		invalidParams.Add(request.NewErrParamRequired("ActionGroup"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetActionGroup sets the ActionGroup field's value.
+func (s *ApiResult) SetActionGroup(v string) *ApiResult {
+	s.ActionGroup = &v
+	return s
+}
+
+// SetApiPath sets the ApiPath field's value.
+func (s *ApiResult) SetApiPath(v string) *ApiResult {
+	s.ApiPath = &v
+	return s
+}
+
+// SetHttpMethod sets the HttpMethod field's value.
+func (s *ApiResult) SetHttpMethod(v string) *ApiResult {
+	s.HttpMethod = &v
+	return s
+}
+
+// SetHttpStatusCode sets the HttpStatusCode field's value.
+func (s *ApiResult) SetHttpStatusCode(v int64) *ApiResult {
+	s.HttpStatusCode = &v
+	return s
+}
+
+// SetResponseBody sets the ResponseBody field's value.
+func (s *ApiResult) SetResponseBody(v map[string]*ContentBody) *ApiResult {
+	s.ResponseBody = v
+	return s
+}
+
+// SetResponseState sets the ResponseState field's value.
+func (s *ApiResult) SetResponseState(v string) *ApiResult {
+	s.ResponseState = &v
+	return s
+}
+
+// Contains citations for a part of an agent response.
 type Attribution struct {
 	_ struct{} `type:"structure"`
 
-	// List of citations
+	// A list of citations and related information for a part of an agent response.
 	Citations []*Citation `locationName:"citations" type:"list"`
 }
 
@@ -799,16 +1126,15 @@ func (s *Attribution) SetCitations(v []*Citation) *Attribution {
 	return s
 }
 
-// This exception is thrown when a request fails due to dependency like Lambda,
-// Bedrock, STS resource
+// There was an issue with a dependency due to a server issue. Retry your request.
 type BadGatewayException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 
-	// Non Blank String
+	// The name of the dependency that caused the issue, such as Amazon Bedrock,
+	// Lambda, or STS.
 	ResourceName *string `locationName:"resourceName" type:"string"`
 }
 
@@ -897,14 +1223,114 @@ func (s *BadGatewayException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Citation associated with the agent response
+// This property contains the document to chat with, along with its attributes.
+type ByteContentDoc struct {
+	_ struct{} `type:"structure"`
+
+	// The MIME type of the document contained in the wrapper object.
+	//
+	// ContentType is a required field
+	ContentType *string `locationName:"contentType" type:"string" required:"true"`
+
+	// The byte value of the file to upload, encoded as a Base-64 string.
+	//
+	// Data is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ByteContentDoc's
+	// String and GoString methods.
+	//
+	// Data is automatically base64 encoded/decoded by the SDK.
+	//
+	// Data is a required field
+	Data []byte `locationName:"data" min:"1" type:"blob" required:"true" sensitive:"true"`
+
+	// The file name of the document contained in the wrapper object.
+	//
+	// Identifier is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ByteContentDoc's
+	// String and GoString methods.
+	//
+	// Identifier is a required field
+	Identifier *string `locationName:"identifier" min:"1" type:"string" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ByteContentDoc) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ByteContentDoc) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ByteContentDoc) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ByteContentDoc"}
+	if s.ContentType == nil {
+		invalidParams.Add(request.NewErrParamRequired("ContentType"))
+	}
+	if s.Data == nil {
+		invalidParams.Add(request.NewErrParamRequired("Data"))
+	}
+	if s.Data != nil && len(s.Data) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Data", 1))
+	}
+	if s.Identifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("Identifier"))
+	}
+	if s.Identifier != nil && len(*s.Identifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Identifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetContentType sets the ContentType field's value.
+func (s *ByteContentDoc) SetContentType(v string) *ByteContentDoc {
+	s.ContentType = &v
+	return s
+}
+
+// SetData sets the Data field's value.
+func (s *ByteContentDoc) SetData(v []byte) *ByteContentDoc {
+	s.Data = v
+	return s
+}
+
+// SetIdentifier sets the Identifier field's value.
+func (s *ByteContentDoc) SetIdentifier(v string) *ByteContentDoc {
+	s.Identifier = &v
+	return s
+}
+
+// An object containing a segment of the generated response that is based on
+// a source in the knowledge base, alongside information about the source.
+//
+// This data type is used in the following API operations:
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the citations field
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the citations field
 type Citation struct {
 	_ struct{} `type:"structure"`
 
-	// Generate response part
+	// Contains the generated response and metadata
 	GeneratedResponsePart *GeneratedResponsePart `locationName:"generatedResponsePart" type:"structure"`
 
-	// list of retrieved references
+	// Contains metadata about the sources cited for the generated response.
 	RetrievedReferences []*RetrievedReference `locationName:"retrievedReferences" type:"list"`
 }
 
@@ -938,12 +1364,12 @@ func (s *Citation) SetRetrievedReferences(v []*RetrievedReference) *Citation {
 	return s
 }
 
-// This exception is thrown when there is a conflict performing an operation
+// There was a conflict performing an operation. Resolve the conflict and retry
+// your request.
 type ConflictException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -1032,16 +1458,53 @@ func (s *ConflictException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// This exception is thrown when a request fails due to dependency like Lambda,
-// Bedrock, STS resource due to a customer fault (i.e. bad configuration)
+// Contains the body of the API response.
+//
+// This data type is used in the following API operations:
+//
+//   - In the returnControlInvocationResults field of the InvokeAgent request
+//     (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_RequestSyntax)
+type ContentBody struct {
+	_ struct{} `type:"structure"`
+
+	// The body of the API response.
+	Body *string `locationName:"body" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentBody) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContentBody) GoString() string {
+	return s.String()
+}
+
+// SetBody sets the Body field's value.
+func (s *ContentBody) SetBody(v string) *ContentBody {
+	s.Body = &v
+	return s
+}
+
+// There was an issue with a dependency. Check the resource configurations and
+// retry the request.
 type DependencyFailedException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 
-	// Non Blank String
+	// The name of the dependency that caused the issue, such as Amazon Bedrock,
+	// Lambda, or STS.
 	ResourceName *string `locationName:"resourceName" type:"string"`
 }
 
@@ -1130,18 +1593,259 @@ func (s *DependencyFailedException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Trace Part which is emitted when agent trace could not be generated
+// The unique external source of the content contained in the wrapper object.
+type ExternalSource struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier, contentType, and data of the external source wrapper object.
+	ByteContent *ByteContentDoc `locationName:"byteContent" type:"structure"`
+
+	// The S3 location of the external source wrapper object.
+	S3Location *S3ObjectDoc `locationName:"s3Location" type:"structure"`
+
+	// The source type of the external source wrapper object.
+	//
+	// SourceType is a required field
+	SourceType *string `locationName:"sourceType" type:"string" required:"true" enum:"ExternalSourceType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExternalSource) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExternalSource) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ExternalSource) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ExternalSource"}
+	if s.SourceType == nil {
+		invalidParams.Add(request.NewErrParamRequired("SourceType"))
+	}
+	if s.ByteContent != nil {
+		if err := s.ByteContent.Validate(); err != nil {
+			invalidParams.AddNested("ByteContent", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.S3Location != nil {
+		if err := s.S3Location.Validate(); err != nil {
+			invalidParams.AddNested("S3Location", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetByteContent sets the ByteContent field's value.
+func (s *ExternalSource) SetByteContent(v *ByteContentDoc) *ExternalSource {
+	s.ByteContent = v
+	return s
+}
+
+// SetS3Location sets the S3Location field's value.
+func (s *ExternalSource) SetS3Location(v *S3ObjectDoc) *ExternalSource {
+	s.S3Location = v
+	return s
+}
+
+// SetSourceType sets the SourceType field's value.
+func (s *ExternalSource) SetSourceType(v string) *ExternalSource {
+	s.SourceType = &v
+	return s
+}
+
+// Contains the generation configuration of the external source wrapper object.
+type ExternalSourcesGenerationConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The configuration details for the guardrail.
+	GuardrailConfiguration *GuardrailConfiguration `locationName:"guardrailConfiguration" type:"structure"`
+
+	// Configuration settings for inference when using RetrieveAndGenerate to generate
+	// responses while using an external source.
+	InferenceConfig *InferenceConfig `locationName:"inferenceConfig" type:"structure"`
+
+	// Contain the textPromptTemplate string for the external source wrapper object.
+	PromptTemplate *PromptTemplate `locationName:"promptTemplate" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExternalSourcesGenerationConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExternalSourcesGenerationConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ExternalSourcesGenerationConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ExternalSourcesGenerationConfiguration"}
+	if s.GuardrailConfiguration != nil {
+		if err := s.GuardrailConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("GuardrailConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.PromptTemplate != nil {
+		if err := s.PromptTemplate.Validate(); err != nil {
+			invalidParams.AddNested("PromptTemplate", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetGuardrailConfiguration sets the GuardrailConfiguration field's value.
+func (s *ExternalSourcesGenerationConfiguration) SetGuardrailConfiguration(v *GuardrailConfiguration) *ExternalSourcesGenerationConfiguration {
+	s.GuardrailConfiguration = v
+	return s
+}
+
+// SetInferenceConfig sets the InferenceConfig field's value.
+func (s *ExternalSourcesGenerationConfiguration) SetInferenceConfig(v *InferenceConfig) *ExternalSourcesGenerationConfiguration {
+	s.InferenceConfig = v
+	return s
+}
+
+// SetPromptTemplate sets the PromptTemplate field's value.
+func (s *ExternalSourcesGenerationConfiguration) SetPromptTemplate(v *PromptTemplate) *ExternalSourcesGenerationConfiguration {
+	s.PromptTemplate = v
+	return s
+}
+
+// The configurations of the external source wrapper object in the retrieveAndGenerate
+// function.
+type ExternalSourcesRetrieveAndGenerateConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The prompt used with the external source wrapper object with the retrieveAndGenerate
+	// function.
+	GenerationConfiguration *ExternalSourcesGenerationConfiguration `locationName:"generationConfiguration" type:"structure"`
+
+	// The modelArn used with the external source wrapper object in the retrieveAndGenerate
+	// function.
+	//
+	// ModelArn is a required field
+	ModelArn *string `locationName:"modelArn" min:"20" type:"string" required:"true"`
+
+	// The document used with the external source wrapper object in the retrieveAndGenerate
+	// function.
+	//
+	// Sources is a required field
+	Sources []*ExternalSource `locationName:"sources" min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExternalSourcesRetrieveAndGenerateConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExternalSourcesRetrieveAndGenerateConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ExternalSourcesRetrieveAndGenerateConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ExternalSourcesRetrieveAndGenerateConfiguration"}
+	if s.ModelArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ModelArn"))
+	}
+	if s.ModelArn != nil && len(*s.ModelArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("ModelArn", 20))
+	}
+	if s.Sources == nil {
+		invalidParams.Add(request.NewErrParamRequired("Sources"))
+	}
+	if s.Sources != nil && len(s.Sources) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Sources", 1))
+	}
+	if s.GenerationConfiguration != nil {
+		if err := s.GenerationConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("GenerationConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Sources != nil {
+		for i, v := range s.Sources {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Sources", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetGenerationConfiguration sets the GenerationConfiguration field's value.
+func (s *ExternalSourcesRetrieveAndGenerateConfiguration) SetGenerationConfiguration(v *ExternalSourcesGenerationConfiguration) *ExternalSourcesRetrieveAndGenerateConfiguration {
+	s.GenerationConfiguration = v
+	return s
+}
+
+// SetModelArn sets the ModelArn field's value.
+func (s *ExternalSourcesRetrieveAndGenerateConfiguration) SetModelArn(v string) *ExternalSourcesRetrieveAndGenerateConfiguration {
+	s.ModelArn = &v
+	return s
+}
+
+// SetSources sets the Sources field's value.
+func (s *ExternalSourcesRetrieveAndGenerateConfiguration) SetSources(v []*ExternalSource) *ExternalSourcesRetrieveAndGenerateConfiguration {
+	s.Sources = v
+	return s
+}
+
+// Contains information about the failure of the interaction.
 type FailureTrace struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Agent Trace Failed Reason String
+	// The reason the interaction failed.
 	//
 	// FailureReason is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by FailureTrace's
 	// String and GoString methods.
 	FailureReason *string `locationName:"failureReason" type:"string" sensitive:"true"`
 
-	// Identifier for trace
+	// The unique identifier of the trace.
 	TraceId *string `locationName:"traceId" min:"2" type:"string"`
 }
 
@@ -1175,11 +1879,11 @@ func (s *FailureTrace) SetTraceId(v string) *FailureTrace {
 	return s
 }
 
-// Agent finish output
+// Contains details about the response to the user.
 type FinalResponse struct {
 	_ struct{} `type:"structure"`
 
-	// Agent Trace Action Group Lambda Invocation Output String
+	// The text in the response to the user.
 	//
 	// Text is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by FinalResponse's
@@ -1211,12 +1915,221 @@ func (s *FinalResponse) SetText(v string) *FinalResponse {
 	return s
 }
 
-// Generate response part
+// Contains information about the function that the agent predicts should be
+// called.
+//
+// This data type is used in the following API operations:
+//
+//   - In the returnControl field of the InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+type FunctionInvocationInput_ struct {
+	_ struct{} `type:"structure"`
+
+	// The action group that the function belongs to.
+	//
+	// ActionGroup is a required field
+	ActionGroup *string `locationName:"actionGroup" type:"string" required:"true"`
+
+	// The name of the function.
+	Function *string `locationName:"function" type:"string"`
+
+	// A list of parameters of the function.
+	Parameters []*FunctionParameter `locationName:"parameters" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FunctionInvocationInput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FunctionInvocationInput_) GoString() string {
+	return s.String()
+}
+
+// SetActionGroup sets the ActionGroup field's value.
+func (s *FunctionInvocationInput_) SetActionGroup(v string) *FunctionInvocationInput_ {
+	s.ActionGroup = &v
+	return s
+}
+
+// SetFunction sets the Function field's value.
+func (s *FunctionInvocationInput_) SetFunction(v string) *FunctionInvocationInput_ {
+	s.Function = &v
+	return s
+}
+
+// SetParameters sets the Parameters field's value.
+func (s *FunctionInvocationInput_) SetParameters(v []*FunctionParameter) *FunctionInvocationInput_ {
+	s.Parameters = v
+	return s
+}
+
+// Contains information about a parameter of the function.
+//
+// This data type is used in the following API operations:
+//
+//   - In the returnControl field of the InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+type FunctionParameter struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the parameter.
+	Name *string `locationName:"name" type:"string"`
+
+	// The data type of the parameter.
+	Type *string `locationName:"type" type:"string"`
+
+	// The value of the parameter.
+	Value *string `locationName:"value" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FunctionParameter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FunctionParameter) GoString() string {
+	return s.String()
+}
+
+// SetName sets the Name field's value.
+func (s *FunctionParameter) SetName(v string) *FunctionParameter {
+	s.Name = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *FunctionParameter) SetType(v string) *FunctionParameter {
+	s.Type = &v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *FunctionParameter) SetValue(v string) *FunctionParameter {
+	s.Value = &v
+	return s
+}
+
+// Contains information about the function that was called from the action group
+// and the response that was returned.
+//
+// This data type is used in the following API operations:
+//
+//   - In the returnControlInvocationResults of the InvokeAgent request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_RequestSyntax)
+type FunctionResult struct {
+	_ struct{} `type:"structure"`
+
+	// The action group that the function belongs to.
+	//
+	// ActionGroup is a required field
+	ActionGroup *string `locationName:"actionGroup" type:"string" required:"true"`
+
+	// The name of the function that was called.
+	Function *string `locationName:"function" type:"string"`
+
+	// The response from the function call using the parameters. The key of the
+	// object is the content type (currently, only TEXT is supported). The response
+	// may be returned directly or from the Lambda function.
+	ResponseBody map[string]*ContentBody `locationName:"responseBody" type:"map"`
+
+	// Controls the final response state returned to end user when API/Function
+	// execution failed. When this state is FAILURE, the request would fail with
+	// dependency failure exception. When this state is REPROMPT, the API/function
+	// response will be sent to model for re-prompt
+	ResponseState *string `locationName:"responseState" type:"string" enum:"ResponseState"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FunctionResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FunctionResult) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *FunctionResult) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "FunctionResult"}
+	if s.ActionGroup == nil {
+		invalidParams.Add(request.NewErrParamRequired("ActionGroup"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetActionGroup sets the ActionGroup field's value.
+func (s *FunctionResult) SetActionGroup(v string) *FunctionResult {
+	s.ActionGroup = &v
+	return s
+}
+
+// SetFunction sets the Function field's value.
+func (s *FunctionResult) SetFunction(v string) *FunctionResult {
+	s.Function = &v
+	return s
+}
+
+// SetResponseBody sets the ResponseBody field's value.
+func (s *FunctionResult) SetResponseBody(v map[string]*ContentBody) *FunctionResult {
+	s.ResponseBody = v
+	return s
+}
+
+// SetResponseState sets the ResponseState field's value.
+func (s *FunctionResult) SetResponseState(v string) *FunctionResult {
+	s.ResponseState = &v
+	return s
+}
+
+// Contains metadata about a part of the generated response that is accompanied
+// by a citation.
+//
+// This data type is used in the following API operations:
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the generatedResponsePart field
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the generatedResponsePart field
 type GeneratedResponsePart struct {
 	_ struct{} `type:"structure"`
 
-	// Text response part
-	TextResponsePart *TextResponsePart `locationName:"textResponsePart" type:"structure"`
+	// Contains metadata about a textual part of the generated response that is
+	// accompanied by a citation.
+	//
+	// TextResponsePart is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GeneratedResponsePart's
+	// String and GoString methods.
+	TextResponsePart *TextResponsePart `locationName:"textResponsePart" type:"structure" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -1243,24 +2156,822 @@ func (s *GeneratedResponsePart) SetTextResponsePart(v *TextResponsePart) *Genera
 	return s
 }
 
-// Configurations for controlling the inference response of an InvokeAgent API
-// call
+// Contains configurations for response generation based on the knowledge base
+// query results.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+type GenerationConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The configuration details for the guardrail.
+	GuardrailConfiguration *GuardrailConfiguration `locationName:"guardrailConfiguration" type:"structure"`
+
+	// Configuration settings for inference when using RetrieveAndGenerate to generate
+	// responses while using a knowledge base as a source.
+	InferenceConfig *InferenceConfig `locationName:"inferenceConfig" type:"structure"`
+
+	// Contains the template for the prompt that's sent to the model for response
+	// generation.
+	PromptTemplate *PromptTemplate `locationName:"promptTemplate" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerationConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GenerationConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GenerationConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GenerationConfiguration"}
+	if s.GuardrailConfiguration != nil {
+		if err := s.GuardrailConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("GuardrailConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.PromptTemplate != nil {
+		if err := s.PromptTemplate.Validate(); err != nil {
+			invalidParams.AddNested("PromptTemplate", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetGuardrailConfiguration sets the GuardrailConfiguration field's value.
+func (s *GenerationConfiguration) SetGuardrailConfiguration(v *GuardrailConfiguration) *GenerationConfiguration {
+	s.GuardrailConfiguration = v
+	return s
+}
+
+// SetInferenceConfig sets the InferenceConfig field's value.
+func (s *GenerationConfiguration) SetInferenceConfig(v *InferenceConfig) *GenerationConfiguration {
+	s.InferenceConfig = v
+	return s
+}
+
+// SetPromptTemplate sets the PromptTemplate field's value.
+func (s *GenerationConfiguration) SetPromptTemplate(v *PromptTemplate) *GenerationConfiguration {
+	s.PromptTemplate = v
+	return s
+}
+
+// Assessment details of the content analyzed by Guardrails.
+type GuardrailAssessment struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// Content policy details of the Guardrail.
+	//
+	// ContentPolicy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailAssessment's
+	// String and GoString methods.
+	ContentPolicy *GuardrailContentPolicyAssessment `locationName:"contentPolicy" type:"structure" sensitive:"true"`
+
+	// Sensitive Information policy details of Guardrail.
+	//
+	// SensitiveInformationPolicy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailAssessment's
+	// String and GoString methods.
+	SensitiveInformationPolicy *GuardrailSensitiveInformationPolicyAssessment `locationName:"sensitiveInformationPolicy" type:"structure" sensitive:"true"`
+
+	// Topic policy details of the Guardrail.
+	//
+	// TopicPolicy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailAssessment's
+	// String and GoString methods.
+	TopicPolicy *GuardrailTopicPolicyAssessment `locationName:"topicPolicy" type:"structure" sensitive:"true"`
+
+	// Word policy details of the Guardrail.
+	//
+	// WordPolicy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailAssessment's
+	// String and GoString methods.
+	WordPolicy *GuardrailWordPolicyAssessment `locationName:"wordPolicy" type:"structure" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailAssessment) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailAssessment) GoString() string {
+	return s.String()
+}
+
+// SetContentPolicy sets the ContentPolicy field's value.
+func (s *GuardrailAssessment) SetContentPolicy(v *GuardrailContentPolicyAssessment) *GuardrailAssessment {
+	s.ContentPolicy = v
+	return s
+}
+
+// SetSensitiveInformationPolicy sets the SensitiveInformationPolicy field's value.
+func (s *GuardrailAssessment) SetSensitiveInformationPolicy(v *GuardrailSensitiveInformationPolicyAssessment) *GuardrailAssessment {
+	s.SensitiveInformationPolicy = v
+	return s
+}
+
+// SetTopicPolicy sets the TopicPolicy field's value.
+func (s *GuardrailAssessment) SetTopicPolicy(v *GuardrailTopicPolicyAssessment) *GuardrailAssessment {
+	s.TopicPolicy = v
+	return s
+}
+
+// SetWordPolicy sets the WordPolicy field's value.
+func (s *GuardrailAssessment) SetWordPolicy(v *GuardrailWordPolicyAssessment) *GuardrailAssessment {
+	s.WordPolicy = v
+	return s
+}
+
+// The configuration details for the guardrail.
+type GuardrailConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier for the guardrail.
+	//
+	// GuardrailId is a required field
+	GuardrailId *string `locationName:"guardrailId" type:"string" required:"true"`
+
+	// The version of the guardrail.
+	//
+	// GuardrailVersion is a required field
+	GuardrailVersion *string `locationName:"guardrailVersion" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GuardrailConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GuardrailConfiguration"}
+	if s.GuardrailId == nil {
+		invalidParams.Add(request.NewErrParamRequired("GuardrailId"))
+	}
+	if s.GuardrailVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("GuardrailVersion"))
+	}
+	if s.GuardrailVersion != nil && len(*s.GuardrailVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("GuardrailVersion", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetGuardrailId sets the GuardrailId field's value.
+func (s *GuardrailConfiguration) SetGuardrailId(v string) *GuardrailConfiguration {
+	s.GuardrailId = &v
+	return s
+}
+
+// SetGuardrailVersion sets the GuardrailVersion field's value.
+func (s *GuardrailConfiguration) SetGuardrailVersion(v string) *GuardrailConfiguration {
+	s.GuardrailVersion = &v
+	return s
+}
+
+// Details of the content filter used in the Guardrail.
+type GuardrailContentFilter struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The action placed on the content by the Guardrail filter.
+	Action *string `locationName:"action" type:"string" enum:"GuardrailContentPolicyAction"`
+
+	// The confidence level regarding the content detected in the filter by the
+	// Guardrail.
+	Confidence *string `locationName:"confidence" type:"string" enum:"GuardrailContentFilterConfidence"`
+
+	// The type of content detected in the filter by the Guardrail.
+	Type *string `locationName:"type" type:"string" enum:"GuardrailContentFilterType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailContentFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailContentFilter) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GuardrailContentFilter) SetAction(v string) *GuardrailContentFilter {
+	s.Action = &v
+	return s
+}
+
+// SetConfidence sets the Confidence field's value.
+func (s *GuardrailContentFilter) SetConfidence(v string) *GuardrailContentFilter {
+	s.Confidence = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *GuardrailContentFilter) SetType(v string) *GuardrailContentFilter {
+	s.Type = &v
+	return s
+}
+
+// The details of the policy assessment in the Guardrails filter.
+type GuardrailContentPolicyAssessment struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The filter details of the policy assessment used in the Guardrails filter.
+	//
+	// Filters is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailContentPolicyAssessment's
+	// String and GoString methods.
+	Filters []*GuardrailContentFilter `locationName:"filters" type:"list" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailContentPolicyAssessment) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailContentPolicyAssessment) GoString() string {
+	return s.String()
+}
+
+// SetFilters sets the Filters field's value.
+func (s *GuardrailContentPolicyAssessment) SetFilters(v []*GuardrailContentFilter) *GuardrailContentPolicyAssessment {
+	s.Filters = v
+	return s
+}
+
+// The custom word details for the filter in the Guardrail.
+type GuardrailCustomWord struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The action details for the custom word filter in the Guardrail.
+	Action *string `locationName:"action" type:"string" enum:"GuardrailWordPolicyAction"`
+
+	// The match details for the custom word filter in the Guardrail.
+	Match *string `locationName:"match" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailCustomWord) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailCustomWord) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GuardrailCustomWord) SetAction(v string) *GuardrailCustomWord {
+	s.Action = &v
+	return s
+}
+
+// SetMatch sets the Match field's value.
+func (s *GuardrailCustomWord) SetMatch(v string) *GuardrailCustomWord {
+	s.Match = &v
+	return s
+}
+
+// The managed word details for the filter in the Guardrail.
+type GuardrailManagedWord struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The action details for the managed word filter in the Guardrail.
+	Action *string `locationName:"action" type:"string" enum:"GuardrailWordPolicyAction"`
+
+	// The match details for the managed word filter in the Guardrail.
+	Match *string `locationName:"match" type:"string"`
+
+	// The type details for the managed word filter in the Guardrail.
+	Type *string `locationName:"type" type:"string" enum:"GuardrailManagedWordType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailManagedWord) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailManagedWord) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GuardrailManagedWord) SetAction(v string) *GuardrailManagedWord {
+	s.Action = &v
+	return s
+}
+
+// SetMatch sets the Match field's value.
+func (s *GuardrailManagedWord) SetMatch(v string) *GuardrailManagedWord {
+	s.Match = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *GuardrailManagedWord) SetType(v string) *GuardrailManagedWord {
+	s.Type = &v
+	return s
+}
+
+// The Guardrail filter to identify and remove personally identifiable information
+// (PII).
+type GuardrailPiiEntityFilter struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The action of the Guardrail filter to identify and remove PII.
+	Action *string `locationName:"action" type:"string" enum:"GuardrailSensitiveInformationPolicyAction"`
+
+	// The match to settings in the Guardrail filter to identify and remove PII.
+	Match *string `locationName:"match" type:"string"`
+
+	// The type of PII the Guardrail filter has identified and removed.
+	Type *string `locationName:"type" type:"string" enum:"GuardrailPiiEntityType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailPiiEntityFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailPiiEntityFilter) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GuardrailPiiEntityFilter) SetAction(v string) *GuardrailPiiEntityFilter {
+	s.Action = &v
+	return s
+}
+
+// SetMatch sets the Match field's value.
+func (s *GuardrailPiiEntityFilter) SetMatch(v string) *GuardrailPiiEntityFilter {
+	s.Match = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *GuardrailPiiEntityFilter) SetType(v string) *GuardrailPiiEntityFilter {
+	s.Type = &v
+	return s
+}
+
+// The details for the regex filter used in the Guardrail.
+type GuardrailRegexFilter struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The action details for the regex filter used in the Guardrail.
+	Action *string `locationName:"action" type:"string" enum:"GuardrailSensitiveInformationPolicyAction"`
+
+	// The match details for the regex filter used in the Guardrail.
+	Match *string `locationName:"match" type:"string"`
+
+	// The name details for the regex filter used in the Guardrail.
+	Name *string `locationName:"name" type:"string"`
+
+	// The regex details for the regex filter used in the Guardrail.
+	Regex *string `locationName:"regex" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailRegexFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailRegexFilter) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GuardrailRegexFilter) SetAction(v string) *GuardrailRegexFilter {
+	s.Action = &v
+	return s
+}
+
+// SetMatch sets the Match field's value.
+func (s *GuardrailRegexFilter) SetMatch(v string) *GuardrailRegexFilter {
+	s.Match = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *GuardrailRegexFilter) SetName(v string) *GuardrailRegexFilter {
+	s.Name = &v
+	return s
+}
+
+// SetRegex sets the Regex field's value.
+func (s *GuardrailRegexFilter) SetRegex(v string) *GuardrailRegexFilter {
+	s.Regex = &v
+	return s
+}
+
+// The details of the sensitive policy assessment used in the Guardrail.
+type GuardrailSensitiveInformationPolicyAssessment struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The details of the PII entities used in the sensitive policy assessment for
+	// the Guardrail.
+	//
+	// PiiEntities is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailSensitiveInformationPolicyAssessment's
+	// String and GoString methods.
+	PiiEntities []*GuardrailPiiEntityFilter `locationName:"piiEntities" type:"list" sensitive:"true"`
+
+	// The details of the regexes used in the sensitive policy assessment for the
+	// Guardrail.
+	//
+	// Regexes is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailSensitiveInformationPolicyAssessment's
+	// String and GoString methods.
+	Regexes []*GuardrailRegexFilter `locationName:"regexes" type:"list" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailSensitiveInformationPolicyAssessment) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailSensitiveInformationPolicyAssessment) GoString() string {
+	return s.String()
+}
+
+// SetPiiEntities sets the PiiEntities field's value.
+func (s *GuardrailSensitiveInformationPolicyAssessment) SetPiiEntities(v []*GuardrailPiiEntityFilter) *GuardrailSensitiveInformationPolicyAssessment {
+	s.PiiEntities = v
+	return s
+}
+
+// SetRegexes sets the Regexes field's value.
+func (s *GuardrailSensitiveInformationPolicyAssessment) SetRegexes(v []*GuardrailRegexFilter) *GuardrailSensitiveInformationPolicyAssessment {
+	s.Regexes = v
+	return s
+}
+
+// The details for a specific topic defined in the Guardrail.
+type GuardrailTopic struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The action details on a specific topic in the Guardrail.
+	Action *string `locationName:"action" type:"string" enum:"GuardrailTopicPolicyAction"`
+
+	// The name details on a specific topic in the Guardrail.
+	Name *string `locationName:"name" type:"string"`
+
+	// The type details on a specific topic in the Guardrail.
+	Type *string `locationName:"type" type:"string" enum:"GuardrailTopicType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailTopic) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailTopic) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GuardrailTopic) SetAction(v string) *GuardrailTopic {
+	s.Action = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *GuardrailTopic) SetName(v string) *GuardrailTopic {
+	s.Name = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *GuardrailTopic) SetType(v string) *GuardrailTopic {
+	s.Type = &v
+	return s
+}
+
+// The details of the policy assessment used in the Guardrail.
+type GuardrailTopicPolicyAssessment struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The topic details of the policy assessment used in the Guardrail.
+	//
+	// Topics is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailTopicPolicyAssessment's
+	// String and GoString methods.
+	Topics []*GuardrailTopic `locationName:"topics" type:"list" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailTopicPolicyAssessment) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailTopicPolicyAssessment) GoString() string {
+	return s.String()
+}
+
+// SetTopics sets the Topics field's value.
+func (s *GuardrailTopicPolicyAssessment) SetTopics(v []*GuardrailTopic) *GuardrailTopicPolicyAssessment {
+	s.Topics = v
+	return s
+}
+
+// The trace details used in the Guardrail.
+type GuardrailTrace struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The trace action details used with the Guardrail.
+	Action *string `locationName:"action" type:"string" enum:"GuardrailAction"`
+
+	// The details of the input assessments used in the Guardrail Trace.
+	InputAssessments []*GuardrailAssessment `locationName:"inputAssessments" type:"list"`
+
+	// The details of the output assessments used in the Guardrail Trace.
+	OutputAssessments []*GuardrailAssessment `locationName:"outputAssessments" type:"list"`
+
+	// The details of the trace Id used in the Guardrail Trace.
+	TraceId *string `locationName:"traceId" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailTrace) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailTrace) GoString() string {
+	return s.String()
+}
+
+// SetAction sets the Action field's value.
+func (s *GuardrailTrace) SetAction(v string) *GuardrailTrace {
+	s.Action = &v
+	return s
+}
+
+// SetInputAssessments sets the InputAssessments field's value.
+func (s *GuardrailTrace) SetInputAssessments(v []*GuardrailAssessment) *GuardrailTrace {
+	s.InputAssessments = v
+	return s
+}
+
+// SetOutputAssessments sets the OutputAssessments field's value.
+func (s *GuardrailTrace) SetOutputAssessments(v []*GuardrailAssessment) *GuardrailTrace {
+	s.OutputAssessments = v
+	return s
+}
+
+// SetTraceId sets the TraceId field's value.
+func (s *GuardrailTrace) SetTraceId(v string) *GuardrailTrace {
+	s.TraceId = &v
+	return s
+}
+
+// The assessment details for words defined in the Guardrail filter.
+type GuardrailWordPolicyAssessment struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The custom word details for words defined in the Guardrail filter.
+	//
+	// CustomWords is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailWordPolicyAssessment's
+	// String and GoString methods.
+	CustomWords []*GuardrailCustomWord `locationName:"customWords" type:"list" sensitive:"true"`
+
+	// The managed word lists for words defined in the Guardrail filter.
+	//
+	// ManagedWordLists is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GuardrailWordPolicyAssessment's
+	// String and GoString methods.
+	ManagedWordLists []*GuardrailManagedWord `locationName:"managedWordLists" type:"list" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailWordPolicyAssessment) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GuardrailWordPolicyAssessment) GoString() string {
+	return s.String()
+}
+
+// SetCustomWords sets the CustomWords field's value.
+func (s *GuardrailWordPolicyAssessment) SetCustomWords(v []*GuardrailCustomWord) *GuardrailWordPolicyAssessment {
+	s.CustomWords = v
+	return s
+}
+
+// SetManagedWordLists sets the ManagedWordLists field's value.
+func (s *GuardrailWordPolicyAssessment) SetManagedWordLists(v []*GuardrailManagedWord) *GuardrailWordPolicyAssessment {
+	s.ManagedWordLists = v
+	return s
+}
+
+// The configuration for inference settings when generating responses using
+// RetrieveAndGenerate.
+type InferenceConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Configuration settings specific to text generation while generating responses
+	// using RetrieveAndGenerate.
+	TextInferenceConfig *TextInferenceConfig `locationName:"textInferenceConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InferenceConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InferenceConfig) GoString() string {
+	return s.String()
+}
+
+// SetTextInferenceConfig sets the TextInferenceConfig field's value.
+func (s *InferenceConfig) SetTextInferenceConfig(v *TextInferenceConfig) *InferenceConfig {
+	s.TextInferenceConfig = v
+	return s
+}
+
+// Specifications about the inference parameters that were provided alongside
+// the prompt. These are specified in the PromptOverrideConfiguration (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html)
+// object that was set when the agent was created or updated. For more information,
+// see Inference parameters for foundation models (https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html).
 type InferenceConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Maximum length of output
+	// The maximum number of tokens allowed in the generated response.
 	MaximumLength *int64 `locationName:"maximumLength" type:"integer"`
 
-	// List of stop sequences
+	// A list of stop sequences. A stop sequence is a sequence of characters that
+	// causes the model to stop generating the response.
 	StopSequences []*string `locationName:"stopSequences" type:"list"`
 
-	// Controls randomness, higher values increase diversity
+	// The likelihood of the model selecting higher-probability options while generating
+	// a response. A lower value makes the model more likely to choose higher-probability
+	// options, while a higher value makes the model more likely to choose lower-probability
+	// options.
 	Temperature *float64 `locationName:"temperature" type:"float"`
 
-	// Sample from the k most likely next tokens
+	// While generating a response, the model determines the probability of the
+	// following token at each point of generation. The value that you set for topK
+	// is the number of most-likely candidates from which the model chooses the
+	// next token in the sequence. For example, if you set topK to 50, the model
+	// selects the next token from among the top 50 most likely choices.
 	TopK *int64 `locationName:"topK" type:"integer"`
 
-	// Cumulative probability cutoff for token selection
+	// While generating a response, the model determines the probability of the
+	// following token at each point of generation. The value that you set for Top
+	// P determines the number of most-likely candidates from which the model chooses
+	// the next token in the sequence. For example, if you set topP to 80, the model
+	// only selects the next token from the top 80% of the probability distribution
+	// of next tokens.
 	TopP *float64 `locationName:"topP" type:"float"`
 }
 
@@ -1312,13 +3023,11 @@ func (s *InferenceConfiguration) SetTopP(v float64) *InferenceConfiguration {
 	return s
 }
 
-// This exception is thrown if there was an unexpected error during processing
-// of request
+// An internal server error occurred. Retry your request.
 type InternalServerException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -1407,20 +3116,70 @@ func (s *InternalServerException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Trace Part which contains input details for action group or knowledge base
+// Contains details about the API operation or function that the agent predicts
+// should be called.
+//
+// This data type is used in the following API operations:
+//
+//   - In the returnControl field of the InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+type InvocationInputMember struct {
+	_ struct{} `type:"structure"`
+
+	// Contains information about the API operation that the agent predicts should
+	// be called.
+	ApiInvocationInput *ApiInvocationInput_ `locationName:"apiInvocationInput" type:"structure"`
+
+	// Contains information about the function that the agent predicts should be
+	// called.
+	FunctionInvocationInput *FunctionInvocationInput_ `locationName:"functionInvocationInput" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InvocationInputMember) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InvocationInputMember) GoString() string {
+	return s.String()
+}
+
+// SetApiInvocationInput sets the ApiInvocationInput field's value.
+func (s *InvocationInputMember) SetApiInvocationInput(v *ApiInvocationInput_) *InvocationInputMember {
+	s.ApiInvocationInput = v
+	return s
+}
+
+// SetFunctionInvocationInput sets the FunctionInvocationInput field's value.
+func (s *InvocationInputMember) SetFunctionInvocationInput(v *FunctionInvocationInput_) *InvocationInputMember {
+	s.FunctionInvocationInput = v
+	return s
+}
+
+// Contains information pertaining to the action group or knowledge base that
+// is being invoked.
 type InvocationInput_ struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// input to lambda used in action group
+	// Contains information about the action group to be invoked.
 	ActionGroupInvocationInput *ActionGroupInvocationInput_ `locationName:"actionGroupInvocationInput" type:"structure"`
 
-	// types of invocations
+	// Specifies whether the agent is invoking an action group or a knowledge base.
 	InvocationType *string `locationName:"invocationType" type:"string" enum:"InvocationType"`
 
-	// Input to lambda used in action group
+	// Contains details about the knowledge base to look up and the query to be
+	// made.
 	KnowledgeBaseLookupInput *KnowledgeBaseLookupInput_ `locationName:"knowledgeBaseLookupInput" type:"structure"`
 
-	// Identifier for trace
+	// The unique identifier of the trace.
 	TraceId *string `locationName:"traceId" min:"2" type:"string"`
 }
 
@@ -1466,42 +3225,114 @@ func (s *InvocationInput_) SetTraceId(v string) *InvocationInput_ {
 	return s
 }
 
-// InvokeAgent Request
+// A result from the invocation of an action. For more information, see Return
+// control to the agent developer (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html)
+// and Control session context (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html).
+//
+// This data type is used in the following API operations:
+//
+//   - InvokeAgent request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_RequestSyntax)
+type InvocationResultMember struct {
+	_ struct{} `type:"structure"`
+
+	// The result from the API response from the action group invocation.
+	ApiResult *ApiResult `locationName:"apiResult" type:"structure"`
+
+	// The result from the function from the action group invocation.
+	FunctionResult *FunctionResult `locationName:"functionResult" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InvocationResultMember) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InvocationResultMember) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *InvocationResultMember) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "InvocationResultMember"}
+	if s.ApiResult != nil {
+		if err := s.ApiResult.Validate(); err != nil {
+			invalidParams.AddNested("ApiResult", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.FunctionResult != nil {
+		if err := s.FunctionResult.Validate(); err != nil {
+			invalidParams.AddNested("FunctionResult", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApiResult sets the ApiResult field's value.
+func (s *InvocationResultMember) SetApiResult(v *ApiResult) *InvocationResultMember {
+	s.ApiResult = v
+	return s
+}
+
+// SetFunctionResult sets the FunctionResult field's value.
+func (s *InvocationResultMember) SetFunctionResult(v *FunctionResult) *InvocationResultMember {
+	s.FunctionResult = v
+	return s
+}
+
 type InvokeAgentInput struct {
 	_ struct{} `type:"structure"`
 
-	// Identifier for Agent Alias
+	// The alias of the agent to use.
 	//
 	// AgentAliasId is a required field
 	AgentAliasId *string `location:"uri" locationName:"agentAliasId" type:"string" required:"true"`
 
-	// Identifier for Agent
+	// The unique identifier of the agent to use.
 	//
 	// AgentId is a required field
 	AgentId *string `location:"uri" locationName:"agentId" type:"string" required:"true"`
 
-	// Enable agent trace events for improved debugging
+	// Specifies whether to turn on the trace or not to track the agent's reasoning
+	// process. For more information, see Trace enablement (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-events).
 	EnableTrace *bool `locationName:"enableTrace" type:"boolean"`
 
-	// End current session
+	// Specifies whether to end the session with the agent or not.
 	EndSession *bool `locationName:"endSession" type:"boolean"`
 
-	// Input data in the format specified in the Content-Type request header.
+	// The prompt text to send the agent.
+	//
+	// If you include returnControlInvocationResults in the sessionState field,
+	// the inputText field will be ignored.
 	//
 	// InputText is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by InvokeAgentInput's
 	// String and GoString methods.
-	//
-	// InputText is a required field
-	InputText *string `locationName:"inputText" type:"string" required:"true" sensitive:"true"`
+	InputText *string `locationName:"inputText" type:"string" sensitive:"true"`
 
-	// Identifier used for the current session
+	// The unique identifier of the session. Use the same value across requests
+	// to continue the same conversation.
 	//
 	// SessionId is a required field
 	SessionId *string `location:"uri" locationName:"sessionId" min:"2" type:"string" required:"true"`
 
-	// Session state passed by customer. Base64 encoded json string representation
-	// of SessionState.
+	// Contains parameters that specify various attributes of the session. For more
+	// information, see Control session context (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html).
+	//
+	// If you include returnControlInvocationResults in the sessionState field,
+	// the inputText field will be ignored.
 	SessionState *SessionState `locationName:"sessionState" type:"structure"`
 }
 
@@ -1538,14 +3369,16 @@ func (s *InvokeAgentInput) Validate() error {
 	if s.AgentId != nil && len(*s.AgentId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("AgentId", 1))
 	}
-	if s.InputText == nil {
-		invalidParams.Add(request.NewErrParamRequired("InputText"))
-	}
 	if s.SessionId == nil {
 		invalidParams.Add(request.NewErrParamRequired("SessionId"))
 	}
 	if s.SessionId != nil && len(*s.SessionId) < 2 {
 		invalidParams.Add(request.NewErrParamMinLen("SessionId", 2))
+	}
+	if s.SessionState != nil {
+		if err := s.SessionState.Validate(); err != nil {
+			invalidParams.AddNested("SessionState", err.(request.ErrInvalidParams))
+		}
 	}
 
 	if invalidParams.Len() > 0 {
@@ -1596,18 +3429,17 @@ func (s *InvokeAgentInput) SetSessionState(v *SessionState) *InvokeAgentInput {
 	return s
 }
 
-// InvokeAgent Response
 type InvokeAgentOutput struct {
 	_ struct{} `type:"structure" payload:"Completion"`
 
 	eventStream *InvokeAgentEventStream
 
-	// streaming response mimetype of the model
+	// The MIME type of the input data in the request. The default value is application/json.
 	//
 	// ContentType is a required field
 	ContentType *string `location:"header" locationName:"x-amzn-bedrock-agent-content-type" type:"string" required:"true"`
 
-	// streaming response mimetype of the model
+	// The unique identifier of the session with the agent.
 	//
 	// SessionId is a required field
 	SessionId *string `location:"header" locationName:"x-amz-bedrock-agent-session-id" min:"2" type:"string" required:"true"`
@@ -1648,18 +3480,19 @@ func (s *InvokeAgentOutput) GetStream() *InvokeAgentEventStream {
 	return s.eventStream
 }
 
-// Input to lambda used in action group
+// Contains details about the knowledge base to look up and the query to be
+// made.
 type KnowledgeBaseLookupInput_ struct {
 	_ struct{} `type:"structure"`
 
-	// Agent Trace Action Group Knowledge Base Id
+	// The unique identifier of the knowledge base to look up.
 	//
 	// KnowledgeBaseId is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by KnowledgeBaseLookupInput_'s
 	// String and GoString methods.
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" sensitive:"true"`
 
-	// Agent Trace Action Group Lambda Invocation Output String
+	// The query made to the knowledge base.
 	//
 	// Text is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by KnowledgeBaseLookupInput_'s
@@ -1697,11 +3530,11 @@ func (s *KnowledgeBaseLookupInput_) SetText(v string) *KnowledgeBaseLookupInput_
 	return s
 }
 
-// Input to lambda used in action group
+// Contains details about the results from looking up the knowledge base.
 type KnowledgeBaseLookupOutput_ struct {
 	_ struct{} `type:"structure"`
 
-	// list of retrieved references
+	// Contains metadata about the sources cited for the generated response.
 	RetrievedReferences []*RetrievedReference `locationName:"retrievedReferences" type:"list"`
 }
 
@@ -1729,11 +3562,16 @@ func (s *KnowledgeBaseLookupOutput_) SetRetrievedReferences(v []*RetrievedRefere
 	return s
 }
 
-// Knowledge base input query.
+// Contains the query made to the knowledge base.
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax)
+//     – in the retrievalQuery field
 type KnowledgeBaseQuery struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Knowledge base input query in text
+	// The text of the query made to the knowledge base.
 	//
 	// Text is a required field
 	Text *string `locationName:"text" type:"string" required:"true"`
@@ -1776,11 +3614,21 @@ func (s *KnowledgeBaseQuery) SetText(v string) *KnowledgeBaseQuery {
 	return s
 }
 
-// Search parameters for retrieving from knowledge base.
+// Contains configurations for the knowledge base query and retrieval process.
+// For more information, see Query configurations (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html).
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax)
+//     – in the retrievalConfiguration field
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the retrievalConfiguration field
 type KnowledgeBaseRetrievalConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Knowledge base vector search configuration
+	// Contains details about how the results from the vector search should be returned.
+	// For more information, see Query configurations (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html).
 	//
 	// VectorSearchConfiguration is a required field
 	VectorSearchConfiguration *KnowledgeBaseVectorSearchConfiguration `locationName:"vectorSearchConfiguration" type:"structure" required:"true"`
@@ -1828,19 +3676,32 @@ func (s *KnowledgeBaseRetrievalConfiguration) SetVectorSearchConfiguration(v *Kn
 	return s
 }
 
-// Result item returned from a knowledge base retrieval.
+// Details about a result from querying the knowledge base.
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax)
+//     – in the retrievalResults field
 type KnowledgeBaseRetrievalResult struct {
 	_ struct{} `type:"structure"`
 
-	// Content of a retrieval result.
+	// Contains a chunk of text from a data source in the knowledge base.
+	//
+	// Content is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by KnowledgeBaseRetrievalResult's
+	// String and GoString methods.
 	//
 	// Content is a required field
-	Content *RetrievalResultContent `locationName:"content" type:"structure" required:"true"`
+	Content *RetrievalResultContent `locationName:"content" type:"structure" required:"true" sensitive:"true"`
 
-	// The source location of a retrieval result.
-	Location *RetrievalResultLocation `locationName:"location" type:"structure"`
+	// Contains information about the location of the data source.
+	//
+	// Location is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by KnowledgeBaseRetrievalResult's
+	// String and GoString methods.
+	Location *RetrievalResultLocation `locationName:"location" type:"structure" sensitive:"true"`
 
-	// The relevance score of a result.
+	// The level of relevance of the result to the query.
 	Score *float64 `locationName:"score" type:"double"`
 }
 
@@ -1880,19 +3741,36 @@ func (s *KnowledgeBaseRetrievalResult) SetScore(v float64) *KnowledgeBaseRetriev
 	return s
 }
 
-// Configurations for retrieval and generation for knowledge base.
+// Contains details about the resource being queried.
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax)
+//     – in the knowledgeBaseConfiguration field
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the knowledgeBaseConfiguration field
 type KnowledgeBaseRetrieveAndGenerateConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Identifier of the KnowledgeBase
+	// Contains configurations for response generation based on the knowwledge base
+	// query results.
+	GenerationConfiguration *GenerationConfiguration `locationName:"generationConfiguration" type:"structure"`
+
+	// The unique identifier of the knowledge base that is queried and the foundation
+	// model used for generation.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `locationName:"knowledgeBaseId" type:"string" required:"true"`
 
-	// Arn of a Bedrock model.
+	// The ARN of the foundation model used to generate a response.
 	//
 	// ModelArn is a required field
 	ModelArn *string `locationName:"modelArn" min:"20" type:"string" required:"true"`
+
+	// Contains configurations for how to retrieve and return the knowledge base
+	// query.
+	RetrievalConfiguration *KnowledgeBaseRetrievalConfiguration `locationName:"retrievalConfiguration" type:"structure"`
 }
 
 // String returns the string representation.
@@ -1925,11 +3803,27 @@ func (s *KnowledgeBaseRetrieveAndGenerateConfiguration) Validate() error {
 	if s.ModelArn != nil && len(*s.ModelArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("ModelArn", 20))
 	}
+	if s.GenerationConfiguration != nil {
+		if err := s.GenerationConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("GenerationConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.RetrievalConfiguration != nil {
+		if err := s.RetrievalConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("RetrievalConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetGenerationConfiguration sets the GenerationConfiguration field's value.
+func (s *KnowledgeBaseRetrieveAndGenerateConfiguration) SetGenerationConfiguration(v *GenerationConfiguration) *KnowledgeBaseRetrieveAndGenerateConfiguration {
+	s.GenerationConfiguration = v
+	return s
 }
 
 // SetKnowledgeBaseId sets the KnowledgeBaseId field's value.
@@ -1944,14 +3838,44 @@ func (s *KnowledgeBaseRetrieveAndGenerateConfiguration) SetModelArn(v string) *K
 	return s
 }
 
-// Knowledge base vector search configuration
+// SetRetrievalConfiguration sets the RetrievalConfiguration field's value.
+func (s *KnowledgeBaseRetrieveAndGenerateConfiguration) SetRetrievalConfiguration(v *KnowledgeBaseRetrievalConfiguration) *KnowledgeBaseRetrieveAndGenerateConfiguration {
+	s.RetrievalConfiguration = v
+	return s
+}
+
+// Configurations for how to perform the search query and return results. For
+// more information, see Query configurations (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html).
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax)
+//     – in the vectorSearchConfiguration field
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the vectorSearchConfiguration field
 type KnowledgeBaseVectorSearchConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Top-K results to retrieve from knowledge base.
+	// Specifies the filters to use on the metadata in the knowledge base data sources
+	// before returning results. For more information, see Query configurations
+	// (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html).
 	//
-	// NumberOfResults is a required field
-	NumberOfResults *int64 `locationName:"numberOfResults" min:"1" type:"integer" required:"true"`
+	// Filter is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by KnowledgeBaseVectorSearchConfiguration's
+	// String and GoString methods.
+	Filter *RetrievalFilter `locationName:"filter" type:"structure" sensitive:"true"`
+
+	// The number of source chunks to retrieve.
+	NumberOfResults *int64 `locationName:"numberOfResults" min:"1" type:"integer"`
+
+	// By default, Amazon Bedrock decides a search strategy for you. If you're using
+	// an Amazon OpenSearch Serverless vector store that contains a filterable text
+	// field, you can specify whether to query the knowledge base with a HYBRID
+	// search using both vector embeddings and raw text, or SEMANTIC search using
+	// only vector embeddings. For other vector store configurations, only SEMANTIC
+	// search is available. For more information, see Test a knowledge base (https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base-test.html).
+	OverrideSearchType *string `locationName:"overrideSearchType" type:"string" enum:"SearchType"`
 }
 
 // String returns the string representation.
@@ -1975,11 +3899,13 @@ func (s KnowledgeBaseVectorSearchConfiguration) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *KnowledgeBaseVectorSearchConfiguration) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "KnowledgeBaseVectorSearchConfiguration"}
-	if s.NumberOfResults == nil {
-		invalidParams.Add(request.NewErrParamRequired("NumberOfResults"))
-	}
 	if s.NumberOfResults != nil && *s.NumberOfResults < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("NumberOfResults", 1))
+	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
 	}
 
 	if invalidParams.Len() > 0 {
@@ -1988,40 +3914,67 @@ func (s *KnowledgeBaseVectorSearchConfiguration) Validate() error {
 	return nil
 }
 
+// SetFilter sets the Filter field's value.
+func (s *KnowledgeBaseVectorSearchConfiguration) SetFilter(v *RetrievalFilter) *KnowledgeBaseVectorSearchConfiguration {
+	s.Filter = v
+	return s
+}
+
 // SetNumberOfResults sets the NumberOfResults field's value.
 func (s *KnowledgeBaseVectorSearchConfiguration) SetNumberOfResults(v int64) *KnowledgeBaseVectorSearchConfiguration {
 	s.NumberOfResults = &v
 	return s
 }
 
-// Trace Part which contains information used to call Invoke Model
+// SetOverrideSearchType sets the OverrideSearchType field's value.
+func (s *KnowledgeBaseVectorSearchConfiguration) SetOverrideSearchType(v string) *KnowledgeBaseVectorSearchConfiguration {
+	s.OverrideSearchType = &v
+	return s
+}
+
+// The input for the pre-processing step.
+//
+//   - The type matches the agent step.
+//
+//   - The text contains the prompt.
+//
+//   - The inferenceConfiguration, parserMode, and overrideLambda values are
+//     set in the PromptOverrideConfiguration (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html)
+//     object that was set when the agent was created or updated.
 type ModelInvocationInput_ struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Configurations for controlling the inference response of an InvokeAgent API
-	// call
+	// Specifications about the inference parameters that were provided alongside
+	// the prompt. These are specified in the PromptOverrideConfiguration (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html)
+	// object that was set when the agent was created or updated. For more information,
+	// see Inference parameters for foundation models (https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html).
 	InferenceConfiguration *InferenceConfiguration `locationName:"inferenceConfiguration" type:"structure"`
 
-	// ARN of a Lambda.
+	// The ARN of the Lambda function to use when parsing the raw foundation model
+	// output in parts of the agent sequence.
 	OverrideLambda *string `locationName:"overrideLambda" type:"string"`
 
-	// indicates if agent uses default prompt or overriden prompt
+	// Specifies whether to override the default parser Lambda function when parsing
+	// the raw foundation model output in the part of the agent sequence defined
+	// by the promptType.
 	ParserMode *string `locationName:"parserMode" type:"string" enum:"CreationMode"`
 
-	// indicates if agent uses default prompt or overriden prompt
+	// Specifies whether the default prompt template was OVERRIDDEN. If it was,
+	// the basePromptTemplate that was set in the PromptOverrideConfiguration (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html)
+	// object when the agent was created or updated is used instead.
 	PromptCreationMode *string `locationName:"promptCreationMode" type:"string" enum:"CreationMode"`
 
-	// Prompt Message
+	// The text that prompted the agent at this step.
 	//
 	// Text is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ModelInvocationInput_'s
 	// String and GoString methods.
 	Text *string `locationName:"text" type:"string" sensitive:"true"`
 
-	// Identifier for trace
+	// The unique identifier of the trace.
 	TraceId *string `locationName:"traceId" min:"2" type:"string"`
 
-	// types of prompts
+	// The step in the agent sequence.
 	Type *string `locationName:"type" type:"string" enum:"PromptType"`
 }
 
@@ -2085,31 +4038,43 @@ func (s *ModelInvocationInput_) SetType(v string) *ModelInvocationInput_ {
 	return s
 }
 
-// Trace Part which contains output details for action group or knowledge base
-// or final response
+// Contains the result or output of an action group or knowledge base, or the
+// response to the user.
 type Observation struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// output from lambda used in action group
+	// Contains the JSON-formatted string returned by the API invoked by the action
+	// group.
 	ActionGroupInvocationOutput *ActionGroupInvocationOutput_ `locationName:"actionGroupInvocationOutput" type:"structure"`
 
-	// Agent finish output
+	// Contains details about the response to the user.
 	FinalResponse *FinalResponse `locationName:"finalResponse" type:"structure"`
 
-	// Input to lambda used in action group
+	// Contains details about the results from looking up the knowledge base.
 	KnowledgeBaseLookupOutput *KnowledgeBaseLookupOutput_ `locationName:"knowledgeBaseLookupOutput" type:"structure"`
 
-	// Observation information if there were reprompts
+	// Contains details about the response to reprompt the input.
 	//
 	// RepromptResponse is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by Observation's
 	// String and GoString methods.
 	RepromptResponse *RepromptResponse `locationName:"repromptResponse" type:"structure" sensitive:"true"`
 
-	// Identifier for trace
+	// The unique identifier of the trace.
 	TraceId *string `locationName:"traceId" min:"2" type:"string"`
 
-	// types of observations
+	// Specifies what kind of information the agent returns in the observation.
+	// The following values are possible.
+	//
+	//    * ACTION_GROUP – The agent returns the result of an action group.
+	//
+	//    * KNOWLEDGE_BASE – The agent returns information from a knowledge base.
+	//
+	//    * FINISH – The agent returns a final response to the user with no follow-up.
+	//
+	//    * ASK_USER – The agent asks the user a question.
+	//
+	//    * REPROMPT – The agent prompts the user again for the same information.
 	Type *string `locationName:"type" type:"string" enum:"Type"`
 }
 
@@ -2167,33 +4132,44 @@ func (s *Observation) SetType(v string) *Observation {
 	return s
 }
 
-// Trace contains intermidate response during orchestration
+// Details about the orchestration step, in which the agent determines the order
+// in which actions are executed and which knowledge bases are retrieved.
 type OrchestrationTrace struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Trace Part which contains input details for action group or knowledge base
+	// Contains information pertaining to the action group or knowledge base that
+	// is being invoked.
 	//
 	// InvocationInput is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by OrchestrationTrace's
 	// String and GoString methods.
 	InvocationInput *InvocationInput_ `locationName:"invocationInput" type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information used to call Invoke Model
+	// The input for the orchestration step.
+	//
+	//    * The type is ORCHESTRATION.
+	//
+	//    * The text contains the prompt.
+	//
+	//    * The inferenceConfiguration, parserMode, and overrideLambda values are
+	//    set in the PromptOverrideConfiguration (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html)
+	//    object that was set when the agent was created or updated.
 	//
 	// ModelInvocationInput is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by OrchestrationTrace's
 	// String and GoString methods.
 	ModelInvocationInput *ModelInvocationInput_ `locationName:"modelInvocationInput" type:"structure" sensitive:"true"`
 
-	// Trace Part which contains output details for action group or knowledge base
-	// or final response
+	// Details about the observation (the output of the action group Lambda or knowledge
+	// base) made by the agent.
 	//
 	// Observation is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by OrchestrationTrace's
 	// String and GoString methods.
 	Observation *Observation `locationName:"observation" type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information related to reasoning
+	// Details about the reasoning, based on the input, that the agent uses to justify
+	// carrying out an action group or getting information from a knowledge base.
 	//
 	// Rationale is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by OrchestrationTrace's
@@ -2243,17 +4219,17 @@ func (s *OrchestrationTrace) SetRationale(v *Rationale) *OrchestrationTrace {
 	return s
 }
 
-// parameters included in action group invocation
+// A parameter for the API request or function.
 type Parameter struct {
 	_ struct{} `type:"structure"`
 
-	// Name of parameter
+	// The name of the parameter.
 	Name *string `locationName:"name" type:"string"`
 
-	// Type of parameter
+	// The type of the parameter.
 	Type *string `locationName:"type" type:"string"`
 
-	// Value of parameter
+	// The value of the parameter.
 	Value *string `locationName:"value" type:"string"`
 }
 
@@ -2293,14 +4269,14 @@ func (s *Parameter) SetValue(v string) *Parameter {
 	return s
 }
 
-// Base 64 endoded byte response
+// Contains a part of an agent response and citations for it.
 type PayloadPart struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Citations associated with final agent response
+	// Contains citations for a part of an agent response.
 	Attribution *Attribution `locationName:"attribution" type:"structure"`
 
-	// PartBody of the payload in bytes
+	// A part of the agent response in bytes.
 	//
 	// Bytes is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PayloadPart's
@@ -2369,18 +4345,19 @@ func (s *PayloadPart) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstrea
 	return msg, err
 }
 
-// Trace Part which contains information related to postprocessing
+// The foundation model output from the post-processing step.
 type PostProcessingModelInvocationOutput_ struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information if preprocessing was successful
+	// Details about the response from the Lambda parsing of the output of the post-processing
+	// step.
 	//
 	// ParsedResponse is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PostProcessingModelInvocationOutput_'s
 	// String and GoString methods.
 	ParsedResponse *PostProcessingParsedResponse `locationName:"parsedResponse" type:"structure" sensitive:"true"`
 
-	// Identifier for trace
+	// The unique identifier of the trace.
 	TraceId *string `locationName:"traceId" min:"2" type:"string"`
 }
 
@@ -2414,11 +4391,12 @@ func (s *PostProcessingModelInvocationOutput_) SetTraceId(v string) *PostProcess
 	return s
 }
 
-// Trace Part which contains information if preprocessing was successful
+// Details about the response from the Lambda parsing of the output from the
+// post-processing step.
 type PostProcessingParsedResponse struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Agent Trace Output String
+	// The text returned by the parser.
 	//
 	// Text is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PostProcessingParsedResponse's
@@ -2450,18 +4428,26 @@ func (s *PostProcessingParsedResponse) SetText(v string) *PostProcessingParsedRe
 	return s
 }
 
-// Trace Part which contains information related to post processing step
+// Details about the post-processing step, in which the agent shapes the response.
 type PostProcessingTrace struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information used to call Invoke Model
+	// The input for the post-processing step.
+	//
+	//    * The type is POST_PROCESSING.
+	//
+	//    * The text contains the prompt.
+	//
+	//    * The inferenceConfiguration, parserMode, and overrideLambda values are
+	//    set in the PromptOverrideConfiguration (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html)
+	//    object that was set when the agent was created or updated.
 	//
 	// ModelInvocationInput is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PostProcessingTrace's
 	// String and GoString methods.
 	ModelInvocationInput *ModelInvocationInput_ `locationName:"modelInvocationInput" type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information related to postprocessing
+	// The foundation model output from the post-processing step.
 	//
 	// ModelInvocationOutput is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PostProcessingTrace's
@@ -2499,18 +4485,19 @@ func (s *PostProcessingTrace) SetModelInvocationOutput(v *PostProcessingModelInv
 	return s
 }
 
-// Trace Part which contains information related to preprocessing
+// The foundation model output from the pre-processing step.
 type PreProcessingModelInvocationOutput_ struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information if preprocessing was successful
+	// Details about the response from the Lambda parsing of the output of the pre-processing
+	// step.
 	//
 	// ParsedResponse is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PreProcessingModelInvocationOutput_'s
 	// String and GoString methods.
 	ParsedResponse *PreProcessingParsedResponse `locationName:"parsedResponse" type:"structure" sensitive:"true"`
 
-	// Identifier for trace
+	// The unique identifier of the trace.
 	TraceId *string `locationName:"traceId" min:"2" type:"string"`
 }
 
@@ -2544,14 +4531,18 @@ func (s *PreProcessingModelInvocationOutput_) SetTraceId(v string) *PreProcessin
 	return s
 }
 
-// Trace Part which contains information if preprocessing was successful
+// Details about the response from the Lambda parsing of the output from the
+// pre-processing step.
 type PreProcessingParsedResponse struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Boolean value
+	// Whether the user input is valid or not. If false, the agent doesn't proceed
+	// to orchestration.
 	IsValid *bool `locationName:"isValid" type:"boolean"`
 
-	// Agent Trace Rationale String
+	// The text returned by the parsing of the pre-processing step, explaining the
+	// steps that the agent plans to take in orchestration, if the user input is
+	// valid.
 	//
 	// Rationale is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PreProcessingParsedResponse's
@@ -2589,18 +4580,27 @@ func (s *PreProcessingParsedResponse) SetRationale(v string) *PreProcessingParse
 	return s
 }
 
-// Trace Part which contains information related to preprocessing step
+// Details about the pre-processing step, in which the agent contextualizes
+// and categorizes user inputs.
 type PreProcessingTrace struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information used to call Invoke Model
+	// The input for the pre-processing step.
+	//
+	//    * The type is PRE_PROCESSING.
+	//
+	//    * The text contains the prompt.
+	//
+	//    * The inferenceConfiguration, parserMode, and overrideLambda values are
+	//    set in the PromptOverrideConfiguration (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent_PromptOverrideConfiguration.html)
+	//    object that was set when the agent was created or updated.
 	//
 	// ModelInvocationInput is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PreProcessingTrace's
 	// String and GoString methods.
 	ModelInvocationInput *ModelInvocationInput_ `locationName:"modelInvocationInput" type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information related to preprocessing
+	// The foundation model output from the pre-processing step.
 	//
 	// ModelInvocationOutput is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by PreProcessingTrace's
@@ -2638,18 +4638,116 @@ func (s *PreProcessingTrace) SetModelInvocationOutput(v *PreProcessingModelInvoc
 	return s
 }
 
-// Trace Part which contains information related to reasoning
+// Contains the template for the prompt that's sent to the model for response
+// generation. For more information, see Knowledge base prompt templates (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html#kb-test-config-sysprompt).
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the filter field
+type PromptTemplate struct {
+	_ struct{} `type:"structure"`
+
+	// The template for the prompt that's sent to the model for response generation.
+	// You can include prompt placeholders, which become replaced before the prompt
+	// is sent to the model to provide instructions and context to the model. In
+	// addition, you can include XML tags to delineate meaningful sections of the
+	// prompt template.
+	//
+	// For more information, see the following resources:
+	//
+	//    * Knowledge base prompt templates (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html#kb-test-config-sysprompt)
+	//
+	//    * Use XML tags with Anthropic Claude models (https://docs.anthropic.com/claude/docs/use-xml-tags)
+	//
+	// TextPromptTemplate is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PromptTemplate's
+	// String and GoString methods.
+	TextPromptTemplate *string `locationName:"textPromptTemplate" min:"1" type:"string" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PromptTemplate) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PromptTemplate) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PromptTemplate) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PromptTemplate"}
+	if s.TextPromptTemplate != nil && len(*s.TextPromptTemplate) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TextPromptTemplate", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTextPromptTemplate sets the TextPromptTemplate field's value.
+func (s *PromptTemplate) SetTextPromptTemplate(v string) *PromptTemplate {
+	s.TextPromptTemplate = &v
+	return s
+}
+
+// Contains the parameters in the request body.
+type PropertyParameters struct {
+	_ struct{} `type:"structure"`
+
+	// A list of parameters in the request body.
+	Properties []*Parameter `locationName:"properties" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PropertyParameters) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PropertyParameters) GoString() string {
+	return s.String()
+}
+
+// SetProperties sets the Properties field's value.
+func (s *PropertyParameters) SetProperties(v []*Parameter) *PropertyParameters {
+	s.Properties = v
+	return s
+}
+
+// Contains the reasoning, based on the input, that the agent uses to justify
+// carrying out an action group or getting information from a knowledge base.
 type Rationale struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Agent Trace Rationale String
+	// The reasoning or thought process of the agent, based on the input.
 	//
 	// Text is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by Rationale's
 	// String and GoString methods.
 	Text *string `locationName:"text" type:"string" sensitive:"true"`
 
-	// Identifier for trace
+	// The unique identifier of the trace step.
 	TraceId *string `locationName:"traceId" min:"2" type:"string"`
 }
 
@@ -2683,18 +4781,18 @@ func (s *Rationale) SetTraceId(v string) *Rationale {
 	return s
 }
 
-// Observation information if there were reprompts
+// Contains details about the agent's response to reprompt the input.
 type RepromptResponse struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Parsing error source
+	// Specifies what output is prompting the agent to reprompt the input.
 	//
 	// Source is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by RepromptResponse's
 	// String and GoString methods.
 	Source *string `locationName:"source" type:"string" enum:"Source" sensitive:"true"`
 
-	// Reprompt response text
+	// The text reprompting the input.
 	Text *string `locationName:"text" type:"string"`
 }
 
@@ -2728,11 +4826,11 @@ func (s *RepromptResponse) SetText(v string) *RepromptResponse {
 	return s
 }
 
-// Request Body Content Map
+// The parameters in the API request body.
 type RequestBody struct {
 	_ struct{} `type:"structure"`
 
-	// Content type paramter map
+	// The content in the request body.
 	Content map[string][]*Parameter `locationName:"content" type:"map"`
 }
 
@@ -2760,13 +4858,12 @@ func (s *RequestBody) SetContent(v map[string][]*Parameter) *RequestBody {
 	return s
 }
 
-// This exception is thrown when a resource referenced by the operation does
-// not exist
+// The specified resource Amazon Resource Name (ARN) was not found. Check the
+// Amazon Resource Name (ARN) and try your request again.
 type ResourceNotFoundException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -2861,6 +4958,7 @@ func (s *ResourceNotFoundException) RequestID() string {
 // These events are:
 //
 //   - PayloadPart
+//   - ReturnControlPayload
 //   - TracePart
 type ResponseStreamEvent interface {
 	eventResponseStream()
@@ -2876,6 +4974,7 @@ type ResponseStreamEvent interface {
 // These events are:
 //
 //   - PayloadPart
+//   - ReturnControlPayload
 //   - TracePart
 //   - ResponseStreamUnknownEvent
 type ResponseStreamReader interface {
@@ -2975,6 +5074,8 @@ func (u unmarshalerForResponseStreamEvent) UnmarshalerForEventName(eventType str
 	switch eventType {
 	case "chunk":
 		return &PayloadPart{}, nil
+	case "returnControl":
+		return &ReturnControlPayload{}, nil
 	case "trace":
 		return &TracePart{}, nil
 	case "accessDeniedException":
@@ -3029,11 +5130,112 @@ func (e *ResponseStreamUnknownEvent) UnmarshalEvent(
 	return nil
 }
 
-// Content of a retrieval result.
-type RetrievalResultContent struct {
-	_ struct{} `type:"structure"`
+// Specifies the filters to use on the metadata attributes in the knowledge
+// base data sources before returning results. For more information, see Query
+// configurations (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html).
+// See the examples below to see how to use these filters.
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_RequestSyntax)
+//     – in the filter field
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the filter field
+type RetrievalFilter struct {
+	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Content of a retrieval result in text
+	// Knowledge base data sources are returned if their metadata attributes fulfill
+	// all the filter conditions inside this list.
+	AndAll []*RetrievalFilter `locationName:"andAll" min:"2" type:"list"`
+
+	// Knowledge base data sources are returned if their metadata attributes fulfill
+	// at least one of the filter conditions inside this list.
+	OrAll []*RetrievalFilter `locationName:"orAll" min:"2" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RetrievalFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RetrievalFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RetrievalFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RetrievalFilter"}
+	if s.AndAll != nil && len(s.AndAll) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("AndAll", 2))
+	}
+	if s.OrAll != nil && len(s.OrAll) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("OrAll", 2))
+	}
+	if s.AndAll != nil {
+		for i, v := range s.AndAll {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AndAll", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.OrAll != nil {
+		for i, v := range s.OrAll {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "OrAll", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAndAll sets the AndAll field's value.
+func (s *RetrievalFilter) SetAndAll(v []*RetrievalFilter) *RetrievalFilter {
+	s.AndAll = v
+	return s
+}
+
+// SetOrAll sets the OrAll field's value.
+func (s *RetrievalFilter) SetOrAll(v []*RetrievalFilter) *RetrievalFilter {
+	s.OrAll = v
+	return s
+}
+
+// Contains the cited text from the data source.
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax)
+//     – in the content field
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the content field
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the content field
+type RetrievalResultContent struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The cited text from the data source.
 	//
 	// Text is a required field
 	Text *string `locationName:"text" type:"string" required:"true"`
@@ -3063,14 +5265,25 @@ func (s *RetrievalResultContent) SetText(v string) *RetrievalResultContent {
 	return s
 }
 
-// The source location of a retrieval result.
+// Contains information about the location of the data source.
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax)
+//     – in the location field
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the location field
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the locatino field
 type RetrievalResultLocation struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" sensitive:"true"`
 
-	// The S3 location of a retrieval result.
+	// Contains the S3 location of the data source.
 	S3Location *RetrievalResultS3Location `locationName:"s3Location" type:"structure"`
 
-	// The location type of a retrieval result.
+	// The type of the location of the data source.
 	//
 	// Type is a required field
 	Type *string `locationName:"type" type:"string" required:"true" enum:"RetrievalResultLocationType"`
@@ -3106,11 +5319,22 @@ func (s *RetrievalResultLocation) SetType(v string) *RetrievalResultLocation {
 	return s
 }
 
-// The S3 location of a retrieval result.
+// Contains the S3 location of the data source.
+//
+// This data type is used in the following API operations:
+//
+//   - Retrieve response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_Retrieve.html#API_agent-runtime_Retrieve_ResponseSyntax)
+//     – in the s3Location field
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the s3Location field
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the s3Location field
 type RetrievalResultS3Location struct {
 	_ struct{} `type:"structure"`
 
-	// URI of S3 location
+	// The S3 URI of the data source.
 	Uri *string `locationName:"uri" type:"string"`
 }
 
@@ -3138,14 +5362,23 @@ func (s *RetrievalResultS3Location) SetUri(v string) *RetrievalResultS3Location 
 	return s
 }
 
-// Configures the retrieval and generation for the session.
+// Contains details about the resource being queried.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the retrieveAndGenerateConfiguration field
 type RetrieveAndGenerateConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Configurations for retrieval and generation for knowledge base.
+	// The configuration used with the external source wrapper object in the retrieveAndGenerate
+	// function.
+	ExternalSourcesConfiguration *ExternalSourcesRetrieveAndGenerateConfiguration `locationName:"externalSourcesConfiguration" type:"structure"`
+
+	// Contains details about the resource being queried.
 	KnowledgeBaseConfiguration *KnowledgeBaseRetrieveAndGenerateConfiguration `locationName:"knowledgeBaseConfiguration" type:"structure"`
 
-	// The type of RetrieveAndGenerate.
+	// The type of resource that is queried by the request.
 	//
 	// Type is a required field
 	Type *string `locationName:"type" type:"string" required:"true" enum:"RetrieveAndGenerateType"`
@@ -3175,6 +5408,11 @@ func (s *RetrieveAndGenerateConfiguration) Validate() error {
 	if s.Type == nil {
 		invalidParams.Add(request.NewErrParamRequired("Type"))
 	}
+	if s.ExternalSourcesConfiguration != nil {
+		if err := s.ExternalSourcesConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("ExternalSourcesConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.KnowledgeBaseConfiguration != nil {
 		if err := s.KnowledgeBaseConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("KnowledgeBaseConfiguration", err.(request.ErrInvalidParams))
@@ -3185,6 +5423,12 @@ func (s *RetrieveAndGenerateConfiguration) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetExternalSourcesConfiguration sets the ExternalSourcesConfiguration field's value.
+func (s *RetrieveAndGenerateConfiguration) SetExternalSourcesConfiguration(v *ExternalSourcesRetrieveAndGenerateConfiguration) *RetrieveAndGenerateConfiguration {
+	s.ExternalSourcesConfiguration = v
+	return s
 }
 
 // SetKnowledgeBaseConfiguration sets the KnowledgeBaseConfiguration field's value.
@@ -3202,7 +5446,7 @@ func (s *RetrieveAndGenerateConfiguration) SetType(v string) *RetrieveAndGenerat
 type RetrieveAndGenerateInput struct {
 	_ struct{} `type:"structure"`
 
-	// Customer input of the turn
+	// Contains the query to be made to the knowledge base.
 	//
 	// Input is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by RetrieveAndGenerateInput's
@@ -3211,13 +5455,15 @@ type RetrieveAndGenerateInput struct {
 	// Input is a required field
 	Input *RetrieveAndGenerateInput_ `locationName:"input" type:"structure" required:"true" sensitive:"true"`
 
-	// Configures the retrieval and generation for the session.
+	// Contains configurations for the knowledge base query and retrieval process.
+	// For more information, see Query configurations (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html).
 	RetrieveAndGenerateConfiguration *RetrieveAndGenerateConfiguration `locationName:"retrieveAndGenerateConfiguration" type:"structure"`
 
-	// Configures common parameters of the session.
+	// Contains details about the session with the knowledge base.
 	SessionConfiguration *RetrieveAndGenerateSessionConfiguration `locationName:"sessionConfiguration" type:"structure"`
 
-	// Identifier of the session.
+	// The unique identifier of the session. Reuse the same value to continue the
+	// same session with the knowledge base.
 	SessionId *string `locationName:"sessionId" min:"2" type:"string"`
 }
 
@@ -3294,11 +5540,16 @@ func (s *RetrieveAndGenerateInput) SetSessionId(v string) *RetrieveAndGenerateIn
 	return s
 }
 
-// Customer input of the turn
+// Contains the query made to the knowledge base.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the input field
 type RetrieveAndGenerateInput_ struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Customer input of the turn in text
+	// The query made to the knowledge base.
 	//
 	// Text is a required field
 	Text *string `locationName:"text" type:"string" required:"true"`
@@ -3344,10 +5595,14 @@ func (s *RetrieveAndGenerateInput_) SetText(v string) *RetrieveAndGenerateInput_
 type RetrieveAndGenerateOutput struct {
 	_ struct{} `type:"structure"`
 
-	// List of citations
+	// A list of segments of the generated response that are based on sources in
+	// the knowledge base, alongside information about the sources.
 	Citations []*Citation `locationName:"citations" type:"list"`
 
-	// Service response of the turn
+	// Specifies if there is a guardrail intervention in the response.
+	GuardrailAction *string `locationName:"guardrailAction" type:"string" enum:"GuadrailAction"`
+
+	// Contains the response generated from querying the knowledge base.
 	//
 	// Output is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by RetrieveAndGenerateOutput's
@@ -3356,7 +5611,8 @@ type RetrieveAndGenerateOutput struct {
 	// Output is a required field
 	Output *RetrieveAndGenerateOutput_ `locationName:"output" type:"structure" required:"true" sensitive:"true"`
 
-	// Identifier of the session.
+	// The unique identifier of the session. Reuse the same value to continue the
+	// same session with the knowledge base.
 	//
 	// SessionId is a required field
 	SessionId *string `locationName:"sessionId" min:"2" type:"string" required:"true"`
@@ -3386,6 +5642,12 @@ func (s *RetrieveAndGenerateOutput) SetCitations(v []*Citation) *RetrieveAndGene
 	return s
 }
 
+// SetGuardrailAction sets the GuardrailAction field's value.
+func (s *RetrieveAndGenerateOutput) SetGuardrailAction(v string) *RetrieveAndGenerateOutput {
+	s.GuardrailAction = &v
+	return s
+}
+
 // SetOutput sets the Output field's value.
 func (s *RetrieveAndGenerateOutput) SetOutput(v *RetrieveAndGenerateOutput_) *RetrieveAndGenerateOutput {
 	s.Output = v
@@ -3398,11 +5660,16 @@ func (s *RetrieveAndGenerateOutput) SetSessionId(v string) *RetrieveAndGenerateO
 	return s
 }
 
-// Service response of the turn
+// Contains the response generated from querying the knowledge base.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the output field
 type RetrieveAndGenerateOutput_ struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Service response of the turn in text
+	// The response generated from querying the knowledge base.
 	//
 	// Text is a required field
 	Text *string `locationName:"text" type:"string" required:"true"`
@@ -3432,11 +5699,16 @@ func (s *RetrieveAndGenerateOutput_) SetText(v string) *RetrieveAndGenerateOutpu
 	return s
 }
 
-// Configures common parameters of the session.
+// Contains configuration about the session with the knowledge base.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate request (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_RequestSyntax)
+//     – in the sessionConfiguration field
 type RetrieveAndGenerateSessionConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The KMS key arn to encrypt the customer data of the session.
+	// The ARN of the KMS key encrypting the session.
 	//
 	// KmsKeyArn is a required field
 	KmsKeyArn *string `locationName:"kmsKeyArn" min:"1" type:"string" required:"true"`
@@ -3485,18 +5757,21 @@ func (s *RetrieveAndGenerateSessionConfiguration) SetKmsKeyArn(v string) *Retrie
 type RetrieveInput struct {
 	_ struct{} `type:"structure"`
 
-	// Identifier of the KnowledgeBase
+	// The unique identifier of the knowledge base to query.
 	//
 	// KnowledgeBaseId is a required field
 	KnowledgeBaseId *string `location:"uri" locationName:"knowledgeBaseId" type:"string" required:"true"`
 
-	// Opaque continuation token of previous paginated response.
+	// If there are more results than can fit in the response, the response returns
+	// a nextToken. Use this token in the nextToken field of another request to
+	// retrieve the next batch of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
-	// Search parameters for retrieving from knowledge base.
+	// Contains configurations for the knowledge base query and retrieval process.
+	// For more information, see Query configurations (https://docs.aws.amazon.com/bedrock/latest/userguide/kb-test-config.html).
 	RetrievalConfiguration *KnowledgeBaseRetrievalConfiguration `locationName:"retrievalConfiguration" type:"structure"`
 
-	// Knowledge base input query.
+	// Contains the query to send the knowledge base.
 	//
 	// RetrievalQuery is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by RetrieveInput's
@@ -3583,10 +5858,12 @@ func (s *RetrieveInput) SetRetrievalQuery(v *KnowledgeBaseQuery) *RetrieveInput 
 type RetrieveOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Opaque continuation token of previous paginated response.
+	// If there are more results than can fit in the response, the response returns
+	// a nextToken. Use this token in the nextToken field of another request to
+	// retrieve the next batch of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
-	// List of knowledge base retrieval results
+	// A list of results from querying the knowledge base.
 	//
 	// RetrievalResults is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by RetrieveOutput's
@@ -3626,15 +5903,31 @@ func (s *RetrieveOutput) SetRetrievalResults(v []*KnowledgeBaseRetrievalResult) 
 	return s
 }
 
-// Retrieved reference
+// Contains metadata about a source cited for the generated response.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the retrievedReferences field
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the retrievedReferences field
 type RetrievedReference struct {
 	_ struct{} `type:"structure"`
 
-	// Content of a retrieval result.
-	Content *RetrievalResultContent `locationName:"content" type:"structure"`
+	// Contains the cited text from the data source.
+	//
+	// Content is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by RetrievedReference's
+	// String and GoString methods.
+	Content *RetrievalResultContent `locationName:"content" type:"structure" sensitive:"true"`
 
-	// The source location of a retrieval result.
-	Location *RetrievalResultLocation `locationName:"location" type:"structure"`
+	// Contains information about the location of the data source.
+	//
+	// Location is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by RetrievedReference's
+	// String and GoString methods.
+	Location *RetrievalResultLocation `locationName:"location" type:"structure" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -3667,12 +5960,138 @@ func (s *RetrievedReference) SetLocation(v *RetrievalResultLocation) *RetrievedR
 	return s
 }
 
-// This exception is thrown when a request is made beyond the service quota
+// Contains information to return from the action group that the agent has predicted
+// to invoke.
+//
+// This data type is used in the following API operations:
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+type ReturnControlPayload struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The identifier of the action group invocation.
+	InvocationId *string `locationName:"invocationId" type:"string"`
+
+	// A list of objects that contain information about the parameters and inputs
+	// that need to be sent into the API operation or function, based on what the
+	// agent determines from its session with the user.
+	InvocationInputs []*InvocationInputMember `locationName:"invocationInputs" min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ReturnControlPayload) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ReturnControlPayload) GoString() string {
+	return s.String()
+}
+
+// SetInvocationId sets the InvocationId field's value.
+func (s *ReturnControlPayload) SetInvocationId(v string) *ReturnControlPayload {
+	s.InvocationId = &v
+	return s
+}
+
+// SetInvocationInputs sets the InvocationInputs field's value.
+func (s *ReturnControlPayload) SetInvocationInputs(v []*InvocationInputMember) *ReturnControlPayload {
+	s.InvocationInputs = v
+	return s
+}
+
+// The ReturnControlPayload is and event in the ResponseStream group of events.
+func (s *ReturnControlPayload) eventResponseStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the ReturnControlPayload value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *ReturnControlPayload) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *ReturnControlPayload) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
+// The unique wrapper object of the document from the S3 location.
+type S3ObjectDoc struct {
+	_ struct{} `type:"structure"`
+
+	// The file location of the S3 wrapper object.
+	//
+	// Uri is a required field
+	Uri *string `locationName:"uri" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3ObjectDoc) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3ObjectDoc) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *S3ObjectDoc) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "S3ObjectDoc"}
+	if s.Uri == nil {
+		invalidParams.Add(request.NewErrParamRequired("Uri"))
+	}
+	if s.Uri != nil && len(*s.Uri) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Uri", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetUri sets the Uri field's value.
+func (s *S3ObjectDoc) SetUri(v string) *S3ObjectDoc {
+	s.Uri = &v
+	return s
+}
+
+// The number of requests exceeds the service quota. Resubmit your request later.
 type ServiceQuotaExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -3761,14 +6180,38 @@ func (s *ServiceQuotaExceededException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Session state provided
+// Contains parameters that specify various attributes that persist across a
+// session or prompt. You can define session state attributes as key-value pairs
+// when writing a Lambda function (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-lambda.html)
+// for an action group or pass them when making an InvokeAgent (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html)
+// request. Use session state attributes to control and provide conversational
+// context for your agent and to help customize your agent's behavior. For more
+// information, see Control session context (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html).
 type SessionState struct {
 	_ struct{} `type:"structure"`
 
-	// Prompt Session Attributes
+	// The identifier of the invocation of an action. This value must match the
+	// invocationId returned in the InvokeAgent response for the action whose results
+	// are provided in the returnControlInvocationResults field. For more information,
+	// see Return control to the agent developer (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html)
+	// and Control session context (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html).
+	InvocationId *string `locationName:"invocationId" type:"string"`
+
+	// Contains attributes that persist across a prompt and the values of those
+	// attributes. These attributes replace the $prompt_session_attributes$ placeholder
+	// variable in the orchestration prompt template. For more information, see
+	// Prompt template placeholder variables (https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-placeholders.html).
 	PromptSessionAttributes map[string]*string `locationName:"promptSessionAttributes" type:"map"`
 
-	// Session Attributes
+	// Contains information about the results from the action group invocation.
+	// For more information, see Return control to the agent developer (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-returncontrol.html)
+	// and Control session context (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-session-state.html).
+	//
+	// If you include this field, the inputText field will be ignored.
+	ReturnControlInvocationResults []*InvocationResultMember `locationName:"returnControlInvocationResults" min:"1" type:"list"`
+
+	// Contains attributes that persist across a session and the values of those
+	// attributes.
 	SessionAttributes map[string]*string `locationName:"sessionAttributes" type:"map"`
 }
 
@@ -3790,9 +6233,44 @@ func (s SessionState) GoString() string {
 	return s.String()
 }
 
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SessionState) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SessionState"}
+	if s.ReturnControlInvocationResults != nil && len(s.ReturnControlInvocationResults) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ReturnControlInvocationResults", 1))
+	}
+	if s.ReturnControlInvocationResults != nil {
+		for i, v := range s.ReturnControlInvocationResults {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ReturnControlInvocationResults", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInvocationId sets the InvocationId field's value.
+func (s *SessionState) SetInvocationId(v string) *SessionState {
+	s.InvocationId = &v
+	return s
+}
+
 // SetPromptSessionAttributes sets the PromptSessionAttributes field's value.
 func (s *SessionState) SetPromptSessionAttributes(v map[string]*string) *SessionState {
 	s.PromptSessionAttributes = v
+	return s
+}
+
+// SetReturnControlInvocationResults sets the ReturnControlInvocationResults field's value.
+func (s *SessionState) SetReturnControlInvocationResults(v []*InvocationResultMember) *SessionState {
+	s.ReturnControlInvocationResults = v
 	return s
 }
 
@@ -3802,14 +6280,23 @@ func (s *SessionState) SetSessionAttributes(v map[string]*string) *SessionState 
 	return s
 }
 
-// Span of text
+// Contains information about where the text with a citation begins and ends
+// in the generated output.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the span field
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the span field
 type Span struct {
 	_ struct{} `type:"structure"`
 
-	// End of span
+	// Where the text with a citation ends in the generated output.
 	End *int64 `locationName:"end" type:"integer"`
 
-	// Start of span
+	// Where the text with a citation starts in the generated output.
 	Start *int64 `locationName:"start" type:"integer"`
 }
 
@@ -3843,14 +6330,101 @@ func (s *Span) SetStart(v int64) *Span {
 	return s
 }
 
-// Text response part
-type TextResponsePart struct {
+// Configuration settings for text generation using a language model via the
+// RetrieveAndGenerate operation. Includes parameters like temperature, top-p,
+// maximum token count, and stop sequences.
+//
+// The valid range of maxTokens depends on the accepted values for your chosen
+// model's inference parameters. To see the inference parameters for your model,
+// see Inference parameters for foundation models. (https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html)
+type TextInferenceConfig struct {
 	_ struct{} `type:"structure"`
 
-	// Span of text
+	// The maximum number of tokens to generate in the output text. Do not use the
+	// minimum of 0 or the maximum of 65536. The limit values described here are
+	// arbitary values, for actual values consult the limits defined by your specific
+	// model.
+	MaxTokens *int64 `locationName:"maxTokens" type:"integer"`
+
+	// A list of sequences of characters that, if generated, will cause the model
+	// to stop generating further tokens. Do not use a minimum length of 1 or a
+	// maximum length of 1000. The limit values described here are arbitary values,
+	// for actual values consult the limits defined by your specific model.
+	StopSequences []*string `locationName:"stopSequences" type:"list"`
+
+	// Controls the random-ness of text generated by the language model, influencing
+	// how much the model sticks to the most predictable next words versus exploring
+	// more surprising options. A lower temperature value (e.g. 0.2 or 0.3) makes
+	// model outputs more deterministic or predictable, while a higher temperature
+	// (e.g. 0.8 or 0.9) makes the outputs more creative or unpredictable.
+	Temperature *float64 `locationName:"temperature" type:"float"`
+
+	// A probability distribution threshold which controls what the model considers
+	// for the set of possible next tokens. The model will only consider the top
+	// p% of the probability distribution when generating the next token.
+	TopP *float64 `locationName:"topP" type:"float"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TextInferenceConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TextInferenceConfig) GoString() string {
+	return s.String()
+}
+
+// SetMaxTokens sets the MaxTokens field's value.
+func (s *TextInferenceConfig) SetMaxTokens(v int64) *TextInferenceConfig {
+	s.MaxTokens = &v
+	return s
+}
+
+// SetStopSequences sets the StopSequences field's value.
+func (s *TextInferenceConfig) SetStopSequences(v []*string) *TextInferenceConfig {
+	s.StopSequences = v
+	return s
+}
+
+// SetTemperature sets the Temperature field's value.
+func (s *TextInferenceConfig) SetTemperature(v float64) *TextInferenceConfig {
+	s.Temperature = &v
+	return s
+}
+
+// SetTopP sets the TopP field's value.
+func (s *TextInferenceConfig) SetTopP(v float64) *TextInferenceConfig {
+	s.TopP = &v
+	return s
+}
+
+// Contains the part of the generated text that contains a citation, alongside
+// where it begins and ends.
+//
+// This data type is used in the following API operations:
+//
+//   - RetrieveAndGenerate response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_RetrieveAndGenerate.html#API_agent-runtime_RetrieveAndGenerate_ResponseSyntax)
+//     – in the textResponsePart field
+//
+//   - InvokeAgent response (https://docs.aws.amazon.com/bedrock/latest/APIReference/API_agent-runtime_InvokeAgent.html#API_agent-runtime_InvokeAgent_ResponseSyntax)
+//     – in the textResponsePart field
+type TextResponsePart struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// Contains information about where the text with a citation begins and ends
+	// in the generated output.
 	Span *Span `locationName:"span" type:"structure"`
 
-	// Response part in text
+	// The part of the generated text that contains a citation.
 	Text *string `locationName:"text" type:"string"`
 }
 
@@ -3884,12 +6458,11 @@ func (s *TextResponsePart) SetText(v string) *TextResponsePart {
 	return s
 }
 
-// This exception is thrown when the number of requests exceeds the limit
+// The number of requests exceeds the limit. Resubmit your request later.
 type ThrottlingException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -3978,32 +6551,44 @@ func (s *ThrottlingException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Trace contains intermidate response for customer
+// Contains one part of the agent's reasoning process and results from calling
+// API actions and querying knowledge bases. You can use the trace to understand
+// how the agent arrived at the response it provided the customer. For more
+// information, see Trace enablement (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement).
 type Trace struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Trace Part which is emitted when agent trace could not be generated
+	// Contains information about the failure of the interaction.
 	//
 	// FailureTrace is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by Trace's
 	// String and GoString methods.
 	FailureTrace *FailureTrace `locationName:"failureTrace" type:"structure" sensitive:"true"`
 
-	// Trace contains intermidate response during orchestration
+	// The trace details for a trace defined in the Guardrail filter.
+	//
+	// GuardrailTrace is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Trace's
+	// String and GoString methods.
+	GuardrailTrace *GuardrailTrace `locationName:"guardrailTrace" type:"structure" sensitive:"true"`
+
+	// Details about the orchestration step, in which the agent determines the order
+	// in which actions are executed and which knowledge bases are retrieved.
 	//
 	// OrchestrationTrace is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by Trace's
 	// String and GoString methods.
 	OrchestrationTrace *OrchestrationTrace `locationName:"orchestrationTrace" type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information related to post processing step
+	// Details about the post-processing step, in which the agent shapes the response..
 	//
 	// PostProcessingTrace is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by Trace's
 	// String and GoString methods.
 	PostProcessingTrace *PostProcessingTrace `locationName:"postProcessingTrace" type:"structure" sensitive:"true"`
 
-	// Trace Part which contains information related to preprocessing step
+	// Details about the pre-processing step, in which the agent contextualizes
+	// and categorizes user inputs.
 	//
 	// PreProcessingTrace is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by Trace's
@@ -4035,6 +6620,12 @@ func (s *Trace) SetFailureTrace(v *FailureTrace) *Trace {
 	return s
 }
 
+// SetGuardrailTrace sets the GuardrailTrace field's value.
+func (s *Trace) SetGuardrailTrace(v *GuardrailTrace) *Trace {
+	s.GuardrailTrace = v
+	return s
+}
+
 // SetOrchestrationTrace sets the OrchestrationTrace field's value.
 func (s *Trace) SetOrchestrationTrace(v *OrchestrationTrace) *Trace {
 	s.OrchestrationTrace = v
@@ -4053,20 +6644,30 @@ func (s *Trace) SetPreProcessingTrace(v *PreProcessingTrace) *Trace {
 	return s
 }
 
-// Trace Part which contains intermidate response for customer
+// Contains information about the agent and session, alongside the agent's reasoning
+// process and results from calling API actions and querying knowledge bases
+// and metadata about the trace. You can use the trace to understand how the
+// agent arrived at the response it provided the customer. For more information,
+// see Trace enablement (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement).
 type TracePart struct {
 	_ struct{} `type:"structure" sensitive:"true"`
 
-	// Identifier of the agent alias.
+	// The unique identifier of the alias of the agent.
 	AgentAliasId *string `locationName:"agentAliasId" type:"string"`
 
-	// Identifier of the agent.
+	// The unique identifier of the agent.
 	AgentId *string `locationName:"agentId" type:"string"`
 
-	// Identifier of the session.
+	// The version of the agent.
+	AgentVersion *string `locationName:"agentVersion" min:"1" type:"string"`
+
+	// The unique identifier of the session with the agent.
 	SessionId *string `locationName:"sessionId" min:"2" type:"string"`
 
-	// Trace contains intermidate response for customer
+	// Contains one part of the agent's reasoning process and results from calling
+	// API actions and querying knowledge bases. You can use the trace to understand
+	// how the agent arrived at the response it provided the customer. For more
+	// information, see Trace enablement (https://docs.aws.amazon.com/bedrock/latest/userguide/agents-test.html#trace-enablement).
 	//
 	// Trace is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by TracePart's
@@ -4101,6 +6702,12 @@ func (s *TracePart) SetAgentAliasId(v string) *TracePart {
 // SetAgentId sets the AgentId field's value.
 func (s *TracePart) SetAgentId(v string) *TracePart {
 	s.AgentId = &v
+	return s
+}
+
+// SetAgentVersion sets the AgentVersion field's value.
+func (s *TracePart) SetAgentVersion(v string) *TracePart {
+	s.AgentVersion = &v
 	return s
 }
 
@@ -4145,12 +6752,11 @@ func (s *TracePart) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.
 	return msg, err
 }
 
-// This exception is thrown when the request's input validation fails
+// Input validation failed. Check your request parameters and retry the request.
 type ValidationException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
-	// Non Blank String
 	Message_ *string `locationName:"message" type:"string"`
 }
 
@@ -4239,7 +6845,6 @@ func (s *ValidationException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// indicates if agent uses default prompt or overriden prompt
 const (
 	// CreationModeDefault is a CreationMode enum value
 	CreationModeDefault = "DEFAULT"
@@ -4256,7 +6861,318 @@ func CreationMode_Values() []string {
 	}
 }
 
-// types of invocations
+const (
+	// ExternalSourceTypeS3 is a ExternalSourceType enum value
+	ExternalSourceTypeS3 = "S3"
+
+	// ExternalSourceTypeByteContent is a ExternalSourceType enum value
+	ExternalSourceTypeByteContent = "BYTE_CONTENT"
+)
+
+// ExternalSourceType_Values returns all elements of the ExternalSourceType enum
+func ExternalSourceType_Values() []string {
+	return []string{
+		ExternalSourceTypeS3,
+		ExternalSourceTypeByteContent,
+	}
+}
+
+const (
+	// GuadrailActionIntervened is a GuadrailAction enum value
+	GuadrailActionIntervened = "INTERVENED"
+
+	// GuadrailActionNone is a GuadrailAction enum value
+	GuadrailActionNone = "NONE"
+)
+
+// GuadrailAction_Values returns all elements of the GuadrailAction enum
+func GuadrailAction_Values() []string {
+	return []string{
+		GuadrailActionIntervened,
+		GuadrailActionNone,
+	}
+}
+
+const (
+	// GuardrailActionIntervened is a GuardrailAction enum value
+	GuardrailActionIntervened = "INTERVENED"
+
+	// GuardrailActionNone is a GuardrailAction enum value
+	GuardrailActionNone = "NONE"
+)
+
+// GuardrailAction_Values returns all elements of the GuardrailAction enum
+func GuardrailAction_Values() []string {
+	return []string{
+		GuardrailActionIntervened,
+		GuardrailActionNone,
+	}
+}
+
+const (
+	// GuardrailContentFilterConfidenceNone is a GuardrailContentFilterConfidence enum value
+	GuardrailContentFilterConfidenceNone = "NONE"
+
+	// GuardrailContentFilterConfidenceLow is a GuardrailContentFilterConfidence enum value
+	GuardrailContentFilterConfidenceLow = "LOW"
+
+	// GuardrailContentFilterConfidenceMedium is a GuardrailContentFilterConfidence enum value
+	GuardrailContentFilterConfidenceMedium = "MEDIUM"
+
+	// GuardrailContentFilterConfidenceHigh is a GuardrailContentFilterConfidence enum value
+	GuardrailContentFilterConfidenceHigh = "HIGH"
+)
+
+// GuardrailContentFilterConfidence_Values returns all elements of the GuardrailContentFilterConfidence enum
+func GuardrailContentFilterConfidence_Values() []string {
+	return []string{
+		GuardrailContentFilterConfidenceNone,
+		GuardrailContentFilterConfidenceLow,
+		GuardrailContentFilterConfidenceMedium,
+		GuardrailContentFilterConfidenceHigh,
+	}
+}
+
+const (
+	// GuardrailContentFilterTypeInsults is a GuardrailContentFilterType enum value
+	GuardrailContentFilterTypeInsults = "INSULTS"
+
+	// GuardrailContentFilterTypeHate is a GuardrailContentFilterType enum value
+	GuardrailContentFilterTypeHate = "HATE"
+
+	// GuardrailContentFilterTypeSexual is a GuardrailContentFilterType enum value
+	GuardrailContentFilterTypeSexual = "SEXUAL"
+
+	// GuardrailContentFilterTypeViolence is a GuardrailContentFilterType enum value
+	GuardrailContentFilterTypeViolence = "VIOLENCE"
+
+	// GuardrailContentFilterTypeMisconduct is a GuardrailContentFilterType enum value
+	GuardrailContentFilterTypeMisconduct = "MISCONDUCT"
+
+	// GuardrailContentFilterTypePromptAttack is a GuardrailContentFilterType enum value
+	GuardrailContentFilterTypePromptAttack = "PROMPT_ATTACK"
+)
+
+// GuardrailContentFilterType_Values returns all elements of the GuardrailContentFilterType enum
+func GuardrailContentFilterType_Values() []string {
+	return []string{
+		GuardrailContentFilterTypeInsults,
+		GuardrailContentFilterTypeHate,
+		GuardrailContentFilterTypeSexual,
+		GuardrailContentFilterTypeViolence,
+		GuardrailContentFilterTypeMisconduct,
+		GuardrailContentFilterTypePromptAttack,
+	}
+}
+
+const (
+	// GuardrailContentPolicyActionBlocked is a GuardrailContentPolicyAction enum value
+	GuardrailContentPolicyActionBlocked = "BLOCKED"
+)
+
+// GuardrailContentPolicyAction_Values returns all elements of the GuardrailContentPolicyAction enum
+func GuardrailContentPolicyAction_Values() []string {
+	return []string{
+		GuardrailContentPolicyActionBlocked,
+	}
+}
+
+const (
+	// GuardrailManagedWordTypeProfanity is a GuardrailManagedWordType enum value
+	GuardrailManagedWordTypeProfanity = "PROFANITY"
+)
+
+// GuardrailManagedWordType_Values returns all elements of the GuardrailManagedWordType enum
+func GuardrailManagedWordType_Values() []string {
+	return []string{
+		GuardrailManagedWordTypeProfanity,
+	}
+}
+
+const (
+	// GuardrailPiiEntityTypeAddress is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeAddress = "ADDRESS"
+
+	// GuardrailPiiEntityTypeAge is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeAge = "AGE"
+
+	// GuardrailPiiEntityTypeAwsAccessKey is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeAwsAccessKey = "AWS_ACCESS_KEY"
+
+	// GuardrailPiiEntityTypeAwsSecretKey is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeAwsSecretKey = "AWS_SECRET_KEY"
+
+	// GuardrailPiiEntityTypeCaHealthNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeCaHealthNumber = "CA_HEALTH_NUMBER"
+
+	// GuardrailPiiEntityTypeCaSocialInsuranceNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeCaSocialInsuranceNumber = "CA_SOCIAL_INSURANCE_NUMBER"
+
+	// GuardrailPiiEntityTypeCreditDebitCardCvv is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeCreditDebitCardCvv = "CREDIT_DEBIT_CARD_CVV"
+
+	// GuardrailPiiEntityTypeCreditDebitCardExpiry is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeCreditDebitCardExpiry = "CREDIT_DEBIT_CARD_EXPIRY"
+
+	// GuardrailPiiEntityTypeCreditDebitCardNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeCreditDebitCardNumber = "CREDIT_DEBIT_CARD_NUMBER"
+
+	// GuardrailPiiEntityTypeDriverId is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeDriverId = "DRIVER_ID"
+
+	// GuardrailPiiEntityTypeEmail is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeEmail = "EMAIL"
+
+	// GuardrailPiiEntityTypeInternationalBankAccountNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeInternationalBankAccountNumber = "INTERNATIONAL_BANK_ACCOUNT_NUMBER"
+
+	// GuardrailPiiEntityTypeIpAddress is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeIpAddress = "IP_ADDRESS"
+
+	// GuardrailPiiEntityTypeLicensePlate is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeLicensePlate = "LICENSE_PLATE"
+
+	// GuardrailPiiEntityTypeMacAddress is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeMacAddress = "MAC_ADDRESS"
+
+	// GuardrailPiiEntityTypeName is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeName = "NAME"
+
+	// GuardrailPiiEntityTypePassword is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypePassword = "PASSWORD"
+
+	// GuardrailPiiEntityTypePhone is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypePhone = "PHONE"
+
+	// GuardrailPiiEntityTypePin is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypePin = "PIN"
+
+	// GuardrailPiiEntityTypeSwiftCode is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeSwiftCode = "SWIFT_CODE"
+
+	// GuardrailPiiEntityTypeUkNationalHealthServiceNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUkNationalHealthServiceNumber = "UK_NATIONAL_HEALTH_SERVICE_NUMBER"
+
+	// GuardrailPiiEntityTypeUkNationalInsuranceNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUkNationalInsuranceNumber = "UK_NATIONAL_INSURANCE_NUMBER"
+
+	// GuardrailPiiEntityTypeUkUniqueTaxpayerReferenceNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUkUniqueTaxpayerReferenceNumber = "UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER"
+
+	// GuardrailPiiEntityTypeUrl is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUrl = "URL"
+
+	// GuardrailPiiEntityTypeUsername is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUsername = "USERNAME"
+
+	// GuardrailPiiEntityTypeUsBankAccountNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUsBankAccountNumber = "US_BANK_ACCOUNT_NUMBER"
+
+	// GuardrailPiiEntityTypeUsBankRoutingNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUsBankRoutingNumber = "US_BANK_ROUTING_NUMBER"
+
+	// GuardrailPiiEntityTypeUsIndividualTaxIdentificationNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUsIndividualTaxIdentificationNumber = "US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER"
+
+	// GuardrailPiiEntityTypeUsPassportNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUsPassportNumber = "US_PASSPORT_NUMBER"
+
+	// GuardrailPiiEntityTypeUsSocialSecurityNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeUsSocialSecurityNumber = "US_SOCIAL_SECURITY_NUMBER"
+
+	// GuardrailPiiEntityTypeVehicleIdentificationNumber is a GuardrailPiiEntityType enum value
+	GuardrailPiiEntityTypeVehicleIdentificationNumber = "VEHICLE_IDENTIFICATION_NUMBER"
+)
+
+// GuardrailPiiEntityType_Values returns all elements of the GuardrailPiiEntityType enum
+func GuardrailPiiEntityType_Values() []string {
+	return []string{
+		GuardrailPiiEntityTypeAddress,
+		GuardrailPiiEntityTypeAge,
+		GuardrailPiiEntityTypeAwsAccessKey,
+		GuardrailPiiEntityTypeAwsSecretKey,
+		GuardrailPiiEntityTypeCaHealthNumber,
+		GuardrailPiiEntityTypeCaSocialInsuranceNumber,
+		GuardrailPiiEntityTypeCreditDebitCardCvv,
+		GuardrailPiiEntityTypeCreditDebitCardExpiry,
+		GuardrailPiiEntityTypeCreditDebitCardNumber,
+		GuardrailPiiEntityTypeDriverId,
+		GuardrailPiiEntityTypeEmail,
+		GuardrailPiiEntityTypeInternationalBankAccountNumber,
+		GuardrailPiiEntityTypeIpAddress,
+		GuardrailPiiEntityTypeLicensePlate,
+		GuardrailPiiEntityTypeMacAddress,
+		GuardrailPiiEntityTypeName,
+		GuardrailPiiEntityTypePassword,
+		GuardrailPiiEntityTypePhone,
+		GuardrailPiiEntityTypePin,
+		GuardrailPiiEntityTypeSwiftCode,
+		GuardrailPiiEntityTypeUkNationalHealthServiceNumber,
+		GuardrailPiiEntityTypeUkNationalInsuranceNumber,
+		GuardrailPiiEntityTypeUkUniqueTaxpayerReferenceNumber,
+		GuardrailPiiEntityTypeUrl,
+		GuardrailPiiEntityTypeUsername,
+		GuardrailPiiEntityTypeUsBankAccountNumber,
+		GuardrailPiiEntityTypeUsBankRoutingNumber,
+		GuardrailPiiEntityTypeUsIndividualTaxIdentificationNumber,
+		GuardrailPiiEntityTypeUsPassportNumber,
+		GuardrailPiiEntityTypeUsSocialSecurityNumber,
+		GuardrailPiiEntityTypeVehicleIdentificationNumber,
+	}
+}
+
+const (
+	// GuardrailSensitiveInformationPolicyActionBlocked is a GuardrailSensitiveInformationPolicyAction enum value
+	GuardrailSensitiveInformationPolicyActionBlocked = "BLOCKED"
+
+	// GuardrailSensitiveInformationPolicyActionAnonymized is a GuardrailSensitiveInformationPolicyAction enum value
+	GuardrailSensitiveInformationPolicyActionAnonymized = "ANONYMIZED"
+)
+
+// GuardrailSensitiveInformationPolicyAction_Values returns all elements of the GuardrailSensitiveInformationPolicyAction enum
+func GuardrailSensitiveInformationPolicyAction_Values() []string {
+	return []string{
+		GuardrailSensitiveInformationPolicyActionBlocked,
+		GuardrailSensitiveInformationPolicyActionAnonymized,
+	}
+}
+
+const (
+	// GuardrailTopicPolicyActionBlocked is a GuardrailTopicPolicyAction enum value
+	GuardrailTopicPolicyActionBlocked = "BLOCKED"
+)
+
+// GuardrailTopicPolicyAction_Values returns all elements of the GuardrailTopicPolicyAction enum
+func GuardrailTopicPolicyAction_Values() []string {
+	return []string{
+		GuardrailTopicPolicyActionBlocked,
+	}
+}
+
+const (
+	// GuardrailTopicTypeDeny is a GuardrailTopicType enum value
+	GuardrailTopicTypeDeny = "DENY"
+)
+
+// GuardrailTopicType_Values returns all elements of the GuardrailTopicType enum
+func GuardrailTopicType_Values() []string {
+	return []string{
+		GuardrailTopicTypeDeny,
+	}
+}
+
+const (
+	// GuardrailWordPolicyActionBlocked is a GuardrailWordPolicyAction enum value
+	GuardrailWordPolicyActionBlocked = "BLOCKED"
+)
+
+// GuardrailWordPolicyAction_Values returns all elements of the GuardrailWordPolicyAction enum
+func GuardrailWordPolicyAction_Values() []string {
+	return []string{
+		GuardrailWordPolicyActionBlocked,
+	}
+}
+
 const (
 	// InvocationTypeActionGroup is a InvocationType enum value
 	InvocationTypeActionGroup = "ACTION_GROUP"
@@ -4277,7 +7193,6 @@ func InvocationType_Values() []string {
 	}
 }
 
-// types of prompts
 const (
 	// PromptTypePreProcessing is a PromptType enum value
 	PromptTypePreProcessing = "PRE_PROCESSING"
@@ -4302,7 +7217,22 @@ func PromptType_Values() []string {
 	}
 }
 
-// The location type of a retrieval result.
+const (
+	// ResponseStateFailure is a ResponseState enum value
+	ResponseStateFailure = "FAILURE"
+
+	// ResponseStateReprompt is a ResponseState enum value
+	ResponseStateReprompt = "REPROMPT"
+)
+
+// ResponseState_Values returns all elements of the ResponseState enum
+func ResponseState_Values() []string {
+	return []string{
+		ResponseStateFailure,
+		ResponseStateReprompt,
+	}
+}
+
 const (
 	// RetrievalResultLocationTypeS3 is a RetrievalResultLocationType enum value
 	RetrievalResultLocationTypeS3 = "S3"
@@ -4315,20 +7245,38 @@ func RetrievalResultLocationType_Values() []string {
 	}
 }
 
-// The type of RetrieveAndGenerate.
 const (
 	// RetrieveAndGenerateTypeKnowledgeBase is a RetrieveAndGenerateType enum value
 	RetrieveAndGenerateTypeKnowledgeBase = "KNOWLEDGE_BASE"
+
+	// RetrieveAndGenerateTypeExternalSources is a RetrieveAndGenerateType enum value
+	RetrieveAndGenerateTypeExternalSources = "EXTERNAL_SOURCES"
 )
 
 // RetrieveAndGenerateType_Values returns all elements of the RetrieveAndGenerateType enum
 func RetrieveAndGenerateType_Values() []string {
 	return []string{
 		RetrieveAndGenerateTypeKnowledgeBase,
+		RetrieveAndGenerateTypeExternalSources,
 	}
 }
 
-// Parsing error source
+const (
+	// SearchTypeHybrid is a SearchType enum value
+	SearchTypeHybrid = "HYBRID"
+
+	// SearchTypeSemantic is a SearchType enum value
+	SearchTypeSemantic = "SEMANTIC"
+)
+
+// SearchType_Values returns all elements of the SearchType enum
+func SearchType_Values() []string {
+	return []string{
+		SearchTypeHybrid,
+		SearchTypeSemantic,
+	}
+}
+
 const (
 	// SourceActionGroup is a Source enum value
 	SourceActionGroup = "ACTION_GROUP"
@@ -4349,7 +7297,6 @@ func Source_Values() []string {
 	}
 }
 
-// types of observations
 const (
 	// TypeActionGroup is a Type enum value
 	TypeActionGroup = "ACTION_GROUP"

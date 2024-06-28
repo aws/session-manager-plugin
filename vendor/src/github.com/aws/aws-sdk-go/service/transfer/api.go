@@ -263,7 +263,7 @@ func (c *Transfer) CreateConnectorRequest(input *CreateConnectorInput) (req *req
 // the AS2 or SFTP protocol. For AS2, the connector is required for sending
 // files to an externally hosted AS2 server. For SFTP, the connector is required
 // when sending files to an SFTP server or receiving files from an SFTP server.
-// For more details about connectors, see Create AS2 connectors (https://docs.aws.amazon.com/transfer/latest/userguide/create-b2b-server.html#configure-as2-connector)
+// For more details about connectors, see Configure AS2 connectors (https://docs.aws.amazon.com/transfer/latest/userguide/configure-as2-connector.html)
 // and Create SFTP connectors (https://docs.aws.amazon.com/transfer/latest/userguide/configure-sftp-connector.html).
 //
 // You must specify exactly one configuration object: either for AS2 (As2Config)
@@ -2331,10 +2331,11 @@ func (c *Transfer) DescribeSecurityPolicyRequest(input *DescribeSecurityPolicyIn
 
 // DescribeSecurityPolicy API operation for AWS Transfer Family.
 //
-// Describes the security policy that is attached to your file transfer protocol-enabled
-// server. The response contains a description of the security policy's properties.
+// Describes the security policy that is attached to your server or SFTP connector.
+// The response contains a description of the security policy's properties.
 // For more information about security policies, see Working with security policies
-// (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html).
+// for servers (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html)
+// or Working with security policies for SFTP connectors (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies-connectors.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4006,8 +4007,10 @@ func (c *Transfer) ListSecurityPoliciesRequest(input *ListSecurityPoliciesInput)
 
 // ListSecurityPolicies API operation for AWS Transfer Family.
 //
-// Lists the security policies that are attached to your file transfer protocol-enabled
-// servers.
+// Lists the security policies that are attached to your servers and SFTP connectors.
+// For more information about security policies, see Working with security policies
+// for servers (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html)
+// or Working with security policies for SFTP connectors (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies-connectors.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4797,6 +4800,132 @@ func (c *Transfer) SendWorkflowStepStateWithContext(ctx aws.Context, input *Send
 	return out, req.Send()
 }
 
+const opStartDirectoryListing = "StartDirectoryListing"
+
+// StartDirectoryListingRequest generates a "aws/request.Request" representing the
+// client's request for the StartDirectoryListing operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartDirectoryListing for more information on using the StartDirectoryListing
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartDirectoryListingRequest method.
+//	req, resp := client.StartDirectoryListingRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartDirectoryListing
+func (c *Transfer) StartDirectoryListingRequest(input *StartDirectoryListingInput) (req *request.Request, output *StartDirectoryListingOutput) {
+	op := &request.Operation{
+		Name:       opStartDirectoryListing,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &StartDirectoryListingInput{}
+	}
+
+	output = &StartDirectoryListingOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartDirectoryListing API operation for AWS Transfer Family.
+//
+// Retrieves a list of the contents of a directory from a remote SFTP server.
+// You specify the connector ID, the output path, and the remote directory path.
+// You can also specify the optional MaxItems value to control the maximum number
+// of items that are listed from the remote directory. This API returns a list
+// of all files and directories in the remote directory (up to the maximum value),
+// but does not return files or folders in sub-directories. That is, it only
+// returns a list of files and directories one-level deep.
+//
+// After you receive the listing file, you can provide the files that you want
+// to transfer to the RetrieveFilePaths parameter of the StartFileTransfer API
+// call.
+//
+// The naming convention for the output file is connector-ID-listing-ID.json.
+// The output file contains the following information:
+//
+//   - filePath: the complete path of a remote file, relative to the directory
+//     of the listing request for your SFTP connector on the remote server.
+//
+//   - modifiedTimestamp: the last time the file was modified, in UTC time
+//     format. This field is optional. If the remote file attributes don't contain
+//     a timestamp, it is omitted from the file listing.
+//
+//   - size: the size of the file, in bytes. This field is optional. If the
+//     remote file attributes don't contain a file size, it is omitted from the
+//     file listing.
+//
+//   - path: the complete path of a remote directory, relative to the directory
+//     of the listing request for your SFTP connector on the remote server.
+//
+//   - truncated: a flag indicating whether the list output contains all of
+//     the items contained in the remote directory or not. If your Truncated
+//     output value is true, you can increase the value provided in the optional
+//     max-items input attribute to be able to list more items (up to the maximum
+//     allowed list size of 10,000 items).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Transfer Family's
+// API operation StartDirectoryListing for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     This exception is thrown when a resource is not found by the Amazon Web ServicesTransfer
+//     Family service.
+//
+//   - InvalidRequestException
+//     This exception is thrown when the client submits a malformed request.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - InternalServiceError
+//     This exception is thrown when an error occurs in the Transfer Family service.
+//
+//   - ServiceUnavailableException
+//     The request has failed because the Amazon Web ServicesTransfer Family service
+//     is not available.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/transfer-2018-11-05/StartDirectoryListing
+func (c *Transfer) StartDirectoryListing(input *StartDirectoryListingInput) (*StartDirectoryListingOutput, error) {
+	req, out := c.StartDirectoryListingRequest(input)
+	return out, req.Send()
+}
+
+// StartDirectoryListingWithContext is the same as StartDirectoryListing with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartDirectoryListing for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Transfer) StartDirectoryListingWithContext(ctx aws.Context, input *StartDirectoryListingInput, opts ...request.Option) (*StartDirectoryListingOutput, error) {
+	req, out := c.StartDirectoryListingRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartFileTransfer = "StartFileTransfer"
 
 // StartFileTransferRequest generates a "aws/request.Request" representing the
@@ -4850,7 +4979,7 @@ func (c *Transfer) StartFileTransferRequest(input *StartFileTransferInput) (req 
 //     In both cases, you specify the ConnectorId. Depending on the direction
 //     of the transfer, you also specify the following items: If you are transferring
 //     file from a partner's SFTP server to Amazon Web Services storage, you
-//     specify one or more RetreiveFilePaths to identify the files you want to
+//     specify one or more RetrieveFilePaths to identify the files you want to
 //     transfer, and a LocalDirectoryPath to specify the destination folder.
 //     If you are transferring file to a partner's SFTP server from Amazon Web
 //     Services storage, you specify one or more SendFilePaths to identify the
@@ -6251,6 +6380,19 @@ func (c *Transfer) UpdateUserRequest(input *UpdateUserInput) (req *request.Reque
 //
 // The response returns the ServerId and the UserName for the updated user.
 //
+// In the console, you can select Restricted when you create or update a user.
+// This ensures that the user can't access anything outside of their home directory.
+// The programmatic way to configure this behavior is to update the user. Set
+// their HomeDirectoryType to LOGICAL, and specify HomeDirectoryMappings with
+// Entry as root (/) and Target as their home directory.
+//
+// For example, if the user's home directory is /test/admin-user, the following
+// command updates the user so that their configuration in the console shows
+// the Restricted flag as selected.
+//
+// aws transfer update-user --server-id <server-id> --user-name admin-user --home-directory-type
+// LOGICAL --home-directory-mappings "[{\"Entry\":\"/\", \"Target\":\"/test/admin-user\"}]"
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -6406,8 +6548,13 @@ type As2ConnectorConfig struct {
 
 	// The algorithm that is used to encrypt the file.
 	//
-	// You can only specify NONE if the URL for your connector uses HTTPS. This
-	// ensures that no traffic is sent in clear text.
+	// Note the following:
+	//
+	//    * Do not use the DES_EDE3_CBC algorithm unless you must support a legacy
+	//    client that requires it, as it is a weak encryption algorithm.
+	//
+	//    * You can only specify NONE if the URL for your connector uses HTTPS.
+	//    Using HTTPS ensures that no traffic is sent in clear text.
 	EncryptionAlgorithm *string `type:"string" enum:"EncryptionAlg"`
 
 	// A unique identifier for the AS2 local profile.
@@ -7232,6 +7379,9 @@ type CreateConnectorInput struct {
 	// events. When set, you can view connector activity in your CloudWatch logs.
 	LoggingRole *string `min:"20" type:"string"`
 
+	// Specifies the name of the security policy for the connector.
+	SecurityPolicyName *string `type:"string"`
+
 	// A structure that contains the parameters for an SFTP connector object.
 	SftpConfig *SftpConnectorConfig `type:"structure"`
 
@@ -7323,6 +7473,12 @@ func (s *CreateConnectorInput) SetAs2Config(v *As2ConnectorConfig) *CreateConnec
 // SetLoggingRole sets the LoggingRole field's value.
 func (s *CreateConnectorInput) SetLoggingRole(v string) *CreateConnectorInput {
 	s.LoggingRole = &v
+	return s
+}
+
+// SetSecurityPolicyName sets the SecurityPolicyName field's value.
+func (s *CreateConnectorInput) SetSecurityPolicyName(v string) *CreateConnectorInput {
+	s.SecurityPolicyName = &v
 	return s
 }
 
@@ -7733,7 +7889,7 @@ type CreateServerInput struct {
 	// Type to FILE if you want a mapping to have a file target.
 	S3StorageOptions *S3StorageOptions `type:"structure"`
 
-	// Specifies the name of the security policy that is attached to the server.
+	// Specifies the name of the security policy for the server.
 	SecurityPolicyName *string `type:"string"`
 
 	// Specifies the log groups to which your server logs are sent.
@@ -10191,7 +10347,7 @@ func (s *DescribeProfileOutput) SetProfile(v *DescribedProfile) *DescribeProfile
 type DescribeSecurityPolicyInput struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the name of the security policy that is attached to the server.
+	// Specify the text name of the security policy for which you want the details.
 	//
 	// SecurityPolicyName is a required field
 	SecurityPolicyName *string `type:"string" required:"true"`
@@ -10887,7 +11043,13 @@ type DescribedCertificate struct {
 	// If there is no private key, the type is CERTIFICATE.
 	Type *string `type:"string" enum:"CertificateType"`
 
-	// Specifies whether this certificate is used for signing or encryption.
+	// Specifies how this certificate is used. It can be used in the following ways:
+	//
+	//    * SIGNING: For signing AS2 messages
+	//
+	//    * ENCRYPTION: For encrypting AS2 messages
+	//
+	//    * TLS: For securing AS2 communications sent over HTTPS
 	Usage *string `type:"string" enum:"CertificateUsageType"`
 }
 
@@ -11044,6 +11206,13 @@ type DescribedConnector struct {
 	// events. When set, you can view connector activity in your CloudWatch logs.
 	LoggingRole *string `min:"20" type:"string"`
 
+	// The text name of the security policy for the specified connector.
+	SecurityPolicyName *string `type:"string"`
+
+	// The list of egress IP addresses of this connector. These IP addresses are
+	// assigned automatically when you create the connector.
+	ServiceManagedEgressIpAddresses []*string `type:"list"`
+
 	// A structure that contains the parameters for an SFTP connector object.
 	SftpConfig *SftpConnectorConfig `type:"structure"`
 
@@ -11099,6 +11268,18 @@ func (s *DescribedConnector) SetConnectorId(v string) *DescribedConnector {
 // SetLoggingRole sets the LoggingRole field's value.
 func (s *DescribedConnector) SetLoggingRole(v string) *DescribedConnector {
 	s.LoggingRole = &v
+	return s
+}
+
+// SetSecurityPolicyName sets the SecurityPolicyName field's value.
+func (s *DescribedConnector) SetSecurityPolicyName(v string) *DescribedConnector {
+	s.SecurityPolicyName = &v
+	return s
+}
+
+// SetServiceManagedEgressIpAddresses sets the ServiceManagedEgressIpAddresses field's value.
+func (s *DescribedConnector) SetServiceManagedEgressIpAddresses(v []*string) *DescribedConnector {
+	s.ServiceManagedEgressIpAddresses = v
 	return s
 }
 
@@ -11409,35 +11590,54 @@ func (s *DescribedProfile) SetTags(v []*Tag) *DescribedProfile {
 	return s
 }
 
-// Describes the properties of a security policy that was specified. For more
-// information about security policies, see Working with security policies (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html).
+// Describes the properties of a security policy that you specify. For more
+// information about security policies, see Working with security policies for
+// servers (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies.html)
+// or Working with security policies for SFTP connectors (https://docs.aws.amazon.com/transfer/latest/userguide/security-policies-connectors.html).
 type DescribedSecurityPolicy struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies whether this policy enables Federal Information Processing Standards
-	// (FIPS).
+	// (FIPS). This parameter applies to both server and connector security policies.
 	Fips *bool `type:"boolean"`
 
-	// Specifies the name of the security policy that is attached to the server.
+	// Lists the file transfer protocols that the security policy applies to.
+	Protocols []*string `min:"1" type:"list" enum:"SecurityPolicyProtocol"`
+
+	// The text name of the specified security policy.
 	//
 	// SecurityPolicyName is a required field
 	SecurityPolicyName *string `type:"string" required:"true"`
 
-	// Specifies the enabled Secure Shell (SSH) cipher encryption algorithms in
-	// the security policy that is attached to the server.
+	// Lists the enabled Secure Shell (SSH) cipher encryption algorithms in the
+	// security policy that is attached to the server or connector. This parameter
+	// applies to both server and connector security policies.
 	SshCiphers []*string `type:"list"`
 
-	// Specifies the enabled SSH key exchange (KEX) encryption algorithms in the
-	// security policy that is attached to the server.
+	// Lists the host key algorithms for the security policy.
+	//
+	// This parameter only applies to security policies for connectors.
+	SshHostKeyAlgorithms []*string `type:"list"`
+
+	// Lists the enabled SSH key exchange (KEX) encryption algorithms in the security
+	// policy that is attached to the server or connector. This parameter applies
+	// to both server and connector security policies.
 	SshKexs []*string `type:"list"`
 
-	// Specifies the enabled SSH message authentication code (MAC) encryption algorithms
-	// in the security policy that is attached to the server.
+	// Lists the enabled SSH message authentication code (MAC) encryption algorithms
+	// in the security policy that is attached to the server or connector. This
+	// parameter applies to both server and connector security policies.
 	SshMacs []*string `type:"list"`
 
-	// Specifies the enabled Transport Layer Security (TLS) cipher encryption algorithms
+	// Lists the enabled Transport Layer Security (TLS) cipher encryption algorithms
 	// in the security policy that is attached to the server.
+	//
+	// This parameter only applies to security policies for servers.
 	TlsCiphers []*string `type:"list"`
+
+	// The resource type to which the security policy applies, either server or
+	// connector.
+	Type *string `type:"string" enum:"SecurityPolicyResourceType"`
 }
 
 // String returns the string representation.
@@ -11464,6 +11664,12 @@ func (s *DescribedSecurityPolicy) SetFips(v bool) *DescribedSecurityPolicy {
 	return s
 }
 
+// SetProtocols sets the Protocols field's value.
+func (s *DescribedSecurityPolicy) SetProtocols(v []*string) *DescribedSecurityPolicy {
+	s.Protocols = v
+	return s
+}
+
 // SetSecurityPolicyName sets the SecurityPolicyName field's value.
 func (s *DescribedSecurityPolicy) SetSecurityPolicyName(v string) *DescribedSecurityPolicy {
 	s.SecurityPolicyName = &v
@@ -11473,6 +11679,12 @@ func (s *DescribedSecurityPolicy) SetSecurityPolicyName(v string) *DescribedSecu
 // SetSshCiphers sets the SshCiphers field's value.
 func (s *DescribedSecurityPolicy) SetSshCiphers(v []*string) *DescribedSecurityPolicy {
 	s.SshCiphers = v
+	return s
+}
+
+// SetSshHostKeyAlgorithms sets the SshHostKeyAlgorithms field's value.
+func (s *DescribedSecurityPolicy) SetSshHostKeyAlgorithms(v []*string) *DescribedSecurityPolicy {
+	s.SshHostKeyAlgorithms = v
 	return s
 }
 
@@ -11494,6 +11706,12 @@ func (s *DescribedSecurityPolicy) SetTlsCiphers(v []*string) *DescribedSecurityP
 	return s
 }
 
+// SetType sets the Type field's value.
+func (s *DescribedSecurityPolicy) SetType(v string) *DescribedSecurityPolicy {
+	s.Type = &v
+	return s
+}
+
 // Describes the properties of a file transfer protocol-enabled server that
 // was specified.
 type DescribedServer struct {
@@ -11504,11 +11722,22 @@ type DescribedServer struct {
 	// Arn is a required field
 	Arn *string `min:"20" type:"string" required:"true"`
 
+	// The list of egress IP addresses of this server. These IP addresses are only
+	// relevant for servers that use the AS2 protocol. They are used for sending
+	// asynchronous MDNs.
+	//
+	// These IP addresses are assigned automatically when you create an AS2 server.
+	// Additionally, if you update an existing server and add the AS2 protocol,
+	// static IP addresses are assigned as well.
+	As2ServiceManagedEgressIpAddresses []*string `type:"list"`
+
 	// Specifies the ARN of the Amazon Web ServicesCertificate Manager (ACM) certificate.
 	// Required when Protocols is set to FTPS.
 	Certificate *string `type:"string"`
 
 	// Specifies the domain of the storage system that is used for file transfers.
+	// There are two domains available: Amazon Simple Storage Service (Amazon S3)
+	// and Amazon Elastic File System (Amazon EFS). The default value is S3.
 	Domain *string `type:"string" enum:"Domain"`
 
 	// The virtual private cloud (VPC) endpoint settings that are configured for
@@ -11639,7 +11868,7 @@ type DescribedServer struct {
 	// Type to FILE if you want a mapping to have a file target.
 	S3StorageOptions *S3StorageOptions `type:"structure"`
 
-	// Specifies the name of the security policy that is attached to the server.
+	// Specifies the name of the security policy for the server.
 	SecurityPolicyName *string `type:"string"`
 
 	// Specifies the unique system-assigned identifier for a server that you instantiate.
@@ -11709,6 +11938,12 @@ func (s DescribedServer) GoString() string {
 // SetArn sets the Arn field's value.
 func (s *DescribedServer) SetArn(v string) *DescribedServer {
 	s.Arn = &v
+	return s
+}
+
+// SetAs2ServiceManagedEgressIpAddresses sets the As2ServiceManagedEgressIpAddresses field's value.
+func (s *DescribedServer) SetAs2ServiceManagedEgressIpAddresses(v []*string) *DescribedServer {
+	s.As2ServiceManagedEgressIpAddresses = v
 	return s
 }
 
@@ -12148,8 +12383,34 @@ type EndpointDetails struct {
 	// A list of address allocation IDs that are required to attach an Elastic IP
 	// address to your server's endpoint.
 	//
-	// This property can only be set when EndpointType is set to VPC and it is only
-	// valid in the UpdateServer API.
+	// An address allocation ID corresponds to the allocation ID of an Elastic IP
+	// address. This value can be retrieved from the allocationId field from the
+	// Amazon EC2 Address (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_Address.html)
+	// data type. One way to retrieve this value is by calling the EC2 DescribeAddresses
+	// (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeAddresses.html)
+	// API.
+	//
+	// This parameter is optional. Set this parameter if you want to make your VPC
+	// endpoint public-facing. For details, see Create an internet-facing endpoint
+	// for your server (https://docs.aws.amazon.com/transfer/latest/userguide/create-server-in-vpc.html#create-internet-facing-endpoint).
+	//
+	// This property can only be set as follows:
+	//
+	//    * EndpointType must be set to VPC
+	//
+	//    * The Transfer Family server must be offline.
+	//
+	//    * You cannot set this parameter for Transfer Family servers that use the
+	//    FTP protocol.
+	//
+	//    * The server must already have SubnetIds populated (SubnetIds and AddressAllocationIds
+	//    cannot be updated simultaneously).
+	//
+	//    * AddressAllocationIds can't contain duplicates, and must be equal in
+	//    length to SubnetIds. For example, if you have three subnet IDs, you must
+	//    also specify three address allocation IDs.
+	//
+	//    * Call the UpdateServer API to set or change this parameter.
 	AddressAllocationIds []*string `type:"list"`
 
 	// A list of security groups IDs that are available to attach to your server's
@@ -12547,7 +12808,8 @@ func (s *HomeDirectoryMapEntry) SetType(v string) *HomeDirectoryMapEntry {
 type IdentityProviderDetails struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Directory Service directory that you want to stop sharing.
+	// The identifier of the Directory Service directory that you want to use as
+	// your identity provider.
 	DirectoryId *string `min:"12" type:"string"`
 
 	// The ARN for a Lambda function to use for the Identity provider.
@@ -12694,7 +12956,13 @@ type ImportCertificateInput struct {
 	// Key-value pairs that can be used to group and search for certificates.
 	Tags []*Tag `min:"1" type:"list"`
 
-	// Specifies whether this certificate is used for signing or encryption.
+	// Specifies how this certificate is used. It can be used in the following ways:
+	//
+	//    * SIGNING: For signing AS2 messages
+	//
+	//    * ENCRYPTION: For encrypting AS2 messages
+	//
+	//    * TLS: For securing AS2 communications sent over HTTPS
 	//
 	// Usage is a required field
 	Usage *string `type:"string" required:"true" enum:"CertificateUsageType"`
@@ -15003,7 +15271,13 @@ type ListedCertificate struct {
 	// key, the type is CERTIFICATE.
 	Type *string `type:"string" enum:"CertificateType"`
 
-	// Specifies whether this certificate is used for signing or encryption.
+	// Specifies how this certificate is used. It can be used in the following ways:
+	//
+	//    * SIGNING: For signing AS2 messages
+	//
+	//    * ENCRYPTION: For encrypting AS2 messages
+	//
+	//    * TLS: For securing AS2 communications sent over HTTPS
 	Usage *string `type:"string" enum:"CertificateUsageType"`
 }
 
@@ -15351,6 +15625,8 @@ type ListedServer struct {
 	Arn *string `min:"20" type:"string" required:"true"`
 
 	// Specifies the domain of the storage system that is used for file transfers.
+	// There are two domains available: Amazon Simple Storage Service (Amazon S3)
+	// and Amazon Elastic File System (Amazon EFS). The default value is S3.
 	Domain *string `type:"string" enum:"Domain"`
 
 	// Specifies the type of VPC endpoint that your server is connected to. If your
@@ -16484,6 +16760,12 @@ func (s *ServiceUnavailableException) RequestID() string {
 
 // Contains the details for an SFTP connector object. The connector object is
 // used for transferring files to and from a partner's SFTP server.
+//
+// Because the SftpConnectorConfig data type is used for both creating and updating
+// SFTP connectors, its parameters, TrustedHostKeys and UserSecretId are marked
+// as not required. This is a bit misleading, as they are not required when
+// you are updating an existing SFTP connector, but are required when you are
+// creating a new SFTP connector.
 type SftpConnectorConfig struct {
 	_ struct{} `type:"structure"`
 
@@ -16503,6 +16785,18 @@ type SftpConnectorConfig struct {
 	//    * For ECDSA keys, the <key type> string is either ecdsa-sha2-nistp256,
 	//    ecdsa-sha2-nistp384, or ecdsa-sha2-nistp521, depending on the size of
 	//    the key you generated.
+	//
+	// Run this command to retrieve the SFTP server host key, where your SFTP server
+	// name is ftp.host.com.
+	//
+	// ssh-keyscan ftp.host.com
+	//
+	// This prints the public host key to standard output.
+	//
+	// ftp.host.com ssh-rsa AAAAB3Nza...<long-string-for-public-key
+	//
+	// Copy and paste this string into the TrustedHostKeys field for the create-connector
+	// command or into the Trusted host keys field in the console.
 	TrustedHostKeys []*string `min:"1" type:"list"`
 
 	// The identifier for the secret (in Amazon Web Services Secrets Manager) that
@@ -16618,6 +16912,149 @@ func (s *SshPublicKey) SetSshPublicKeyBody(v string) *SshPublicKey {
 // SetSshPublicKeyId sets the SshPublicKeyId field's value.
 func (s *SshPublicKey) SetSshPublicKeyId(v string) *SshPublicKey {
 	s.SshPublicKeyId = &v
+	return s
+}
+
+type StartDirectoryListingInput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier for the connector.
+	//
+	// ConnectorId is a required field
+	ConnectorId *string `min:"19" type:"string" required:"true"`
+
+	// An optional parameter where you can specify the maximum number of file/directory
+	// names to retrieve. The default value is 1,000.
+	MaxItems *int64 `min:"1" type:"integer"`
+
+	// Specifies the path (bucket and prefix) in Amazon S3 storage to store the
+	// results of the directory listing.
+	//
+	// OutputDirectoryPath is a required field
+	OutputDirectoryPath *string `min:"1" type:"string" required:"true"`
+
+	// Specifies the directory on the remote SFTP server for which you want to list
+	// its contents.
+	//
+	// RemoteDirectoryPath is a required field
+	RemoteDirectoryPath *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDirectoryListingInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDirectoryListingInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartDirectoryListingInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartDirectoryListingInput"}
+	if s.ConnectorId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ConnectorId"))
+	}
+	if s.ConnectorId != nil && len(*s.ConnectorId) < 19 {
+		invalidParams.Add(request.NewErrParamMinLen("ConnectorId", 19))
+	}
+	if s.MaxItems != nil && *s.MaxItems < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxItems", 1))
+	}
+	if s.OutputDirectoryPath == nil {
+		invalidParams.Add(request.NewErrParamRequired("OutputDirectoryPath"))
+	}
+	if s.OutputDirectoryPath != nil && len(*s.OutputDirectoryPath) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("OutputDirectoryPath", 1))
+	}
+	if s.RemoteDirectoryPath == nil {
+		invalidParams.Add(request.NewErrParamRequired("RemoteDirectoryPath"))
+	}
+	if s.RemoteDirectoryPath != nil && len(*s.RemoteDirectoryPath) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RemoteDirectoryPath", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetConnectorId sets the ConnectorId field's value.
+func (s *StartDirectoryListingInput) SetConnectorId(v string) *StartDirectoryListingInput {
+	s.ConnectorId = &v
+	return s
+}
+
+// SetMaxItems sets the MaxItems field's value.
+func (s *StartDirectoryListingInput) SetMaxItems(v int64) *StartDirectoryListingInput {
+	s.MaxItems = &v
+	return s
+}
+
+// SetOutputDirectoryPath sets the OutputDirectoryPath field's value.
+func (s *StartDirectoryListingInput) SetOutputDirectoryPath(v string) *StartDirectoryListingInput {
+	s.OutputDirectoryPath = &v
+	return s
+}
+
+// SetRemoteDirectoryPath sets the RemoteDirectoryPath field's value.
+func (s *StartDirectoryListingInput) SetRemoteDirectoryPath(v string) *StartDirectoryListingInput {
+	s.RemoteDirectoryPath = &v
+	return s
+}
+
+type StartDirectoryListingOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Returns a unique identifier for the directory listing call.
+	//
+	// ListingId is a required field
+	ListingId *string `min:"1" type:"string" required:"true"`
+
+	// Returns the file name where the results are stored. This is a combination
+	// of the connector ID and the listing ID: <connector-id>-<listing-id>.json.
+	//
+	// OutputFileName is a required field
+	OutputFileName *string `min:"26" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDirectoryListingOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDirectoryListingOutput) GoString() string {
+	return s.String()
+}
+
+// SetListingId sets the ListingId field's value.
+func (s *StartDirectoryListingOutput) SetListingId(v string) *StartDirectoryListingOutput {
+	s.ListingId = &v
+	return s
+}
+
+// SetOutputFileName sets the OutputFileName field's value.
+func (s *StartDirectoryListingOutput) SetOutputFileName(v string) *StartDirectoryListingOutput {
+	s.OutputFileName = &v
 	return s
 }
 
@@ -18216,6 +18653,9 @@ type UpdateConnectorInput struct {
 	// events. When set, you can view connector activity in your CloudWatch logs.
 	LoggingRole *string `min:"20" type:"string"`
 
+	// Specifies the name of the security policy for the connector.
+	SecurityPolicyName *string `type:"string"`
+
 	// A structure that contains the parameters for an SFTP connector object.
 	SftpConfig *SftpConnectorConfig `type:"structure"`
 
@@ -18294,6 +18734,12 @@ func (s *UpdateConnectorInput) SetConnectorId(v string) *UpdateConnectorInput {
 // SetLoggingRole sets the LoggingRole field's value.
 func (s *UpdateConnectorInput) SetLoggingRole(v string) *UpdateConnectorInput {
 	s.LoggingRole = &v
+	return s
+}
+
+// SetSecurityPolicyName sets the SecurityPolicyName field's value.
+func (s *UpdateConnectorInput) SetSecurityPolicyName(v string) *UpdateConnectorInput {
+	s.SecurityPolicyName = &v
 	return s
 }
 
@@ -18747,7 +19193,7 @@ type UpdateServerInput struct {
 	// Type to FILE if you want a mapping to have a file target.
 	S3StorageOptions *S3StorageOptions `type:"structure"`
 
-	// Specifies the name of the security policy that is attached to the server.
+	// Specifies the name of the security policy for the server.
 	SecurityPolicyName *string `type:"string"`
 
 	// A system-assigned unique identifier for a server instance that the Transfer
@@ -19652,6 +20098,9 @@ const (
 
 	// CertificateUsageTypeEncryption is a CertificateUsageType enum value
 	CertificateUsageTypeEncryption = "ENCRYPTION"
+
+	// CertificateUsageTypeTls is a CertificateUsageType enum value
+	CertificateUsageTypeTls = "TLS"
 )
 
 // CertificateUsageType_Values returns all elements of the CertificateUsageType enum
@@ -19659,6 +20108,7 @@ func CertificateUsageType_Values() []string {
 	return []string{
 		CertificateUsageTypeSigning,
 		CertificateUsageTypeEncryption,
+		CertificateUsageTypeTls,
 	}
 }
 
@@ -19738,6 +20188,9 @@ const (
 	// EncryptionAlgAes256Cbc is a EncryptionAlg enum value
 	EncryptionAlgAes256Cbc = "AES256_CBC"
 
+	// EncryptionAlgDesEde3Cbc is a EncryptionAlg enum value
+	EncryptionAlgDesEde3Cbc = "DES_EDE3_CBC"
+
 	// EncryptionAlgNone is a EncryptionAlg enum value
 	EncryptionAlgNone = "NONE"
 )
@@ -19748,6 +20201,7 @@ func EncryptionAlg_Values() []string {
 		EncryptionAlgAes128Cbc,
 		EncryptionAlgAes192Cbc,
 		EncryptionAlgAes256Cbc,
+		EncryptionAlgDesEde3Cbc,
 		EncryptionAlgNone,
 	}
 }
@@ -20023,6 +20477,38 @@ func Protocol_Values() []string {
 		ProtocolFtp,
 		ProtocolFtps,
 		ProtocolAs2,
+	}
+}
+
+const (
+	// SecurityPolicyProtocolSftp is a SecurityPolicyProtocol enum value
+	SecurityPolicyProtocolSftp = "SFTP"
+
+	// SecurityPolicyProtocolFtps is a SecurityPolicyProtocol enum value
+	SecurityPolicyProtocolFtps = "FTPS"
+)
+
+// SecurityPolicyProtocol_Values returns all elements of the SecurityPolicyProtocol enum
+func SecurityPolicyProtocol_Values() []string {
+	return []string{
+		SecurityPolicyProtocolSftp,
+		SecurityPolicyProtocolFtps,
+	}
+}
+
+const (
+	// SecurityPolicyResourceTypeServer is a SecurityPolicyResourceType enum value
+	SecurityPolicyResourceTypeServer = "SERVER"
+
+	// SecurityPolicyResourceTypeConnector is a SecurityPolicyResourceType enum value
+	SecurityPolicyResourceTypeConnector = "CONNECTOR"
+)
+
+// SecurityPolicyResourceType_Values returns all elements of the SecurityPolicyResourceType enum
+func SecurityPolicyResourceType_Values() []string {
+	return []string{
+		SecurityPolicyResourceTypeServer,
+		SecurityPolicyResourceTypeConnector,
 	}
 }
 

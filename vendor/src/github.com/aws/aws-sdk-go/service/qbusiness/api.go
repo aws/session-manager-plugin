@@ -3,13 +3,22 @@
 package qbusiness
 
 import (
+	"bytes"
 	"fmt"
+	"io"
+	"sync"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/awsutil"
+	"github.com/aws/aws-sdk-go/aws/client"
 	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go/aws/signer/v4"
 	"github.com/aws/aws-sdk-go/private/protocol"
+	"github.com/aws/aws-sdk-go/private/protocol/eventstream"
+	"github.com/aws/aws-sdk-go/private/protocol/eventstream/eventstreamapi"
+	"github.com/aws/aws-sdk-go/private/protocol/rest"
 	"github.com/aws/aws-sdk-go/private/protocol/restjson"
 )
 
@@ -57,7 +66,7 @@ func (c *QBusiness) BatchDeleteDocumentRequest(input *BatchDeleteDocumentInput) 
 // BatchDeleteDocument API operation for QBusiness.
 //
 // Asynchronously deletes one or more documents added using the BatchPutDocument
-// API from an Amazon Q index.
+// API from an Amazon Q Business index.
 //
 // You can see the progress of the deletion, and any error messages related
 // to the process, by using CloudWatch.
@@ -76,8 +85,8 @@ func (c *QBusiness) BatchDeleteDocumentRequest(input *BatchDeleteDocumentInput) 
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -89,8 +98,8 @@ func (c *QBusiness) BatchDeleteDocumentRequest(input *BatchDeleteDocumentInput) 
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -161,17 +170,17 @@ func (c *QBusiness) BatchPutDocumentRequest(input *BatchPutDocumentInput) (req *
 
 // BatchPutDocument API operation for QBusiness.
 //
-// Adds one or more documents to an Amazon Q index.
+// Adds one or more documents to an Amazon Q Business index.
 //
 // You use this API to:
 //
 //   - ingest your structured and unstructured documents and documents stored
-//     in an Amazon S3 bucket into an Amazon Q index.
+//     in an Amazon S3 bucket into an Amazon Q Business index.
 //
-//   - add custom attributes to documents in an Amazon Q index.
+//   - add custom attributes to documents in an Amazon Q Business index.
 //
 //   - attach an access control list to the documents added to an Amazon Q
-//     index.
+//     Business index.
 //
 // You can see the progress of the deletion, and any error messages related
 // to the process, by using CloudWatch.
@@ -190,8 +199,8 @@ func (c *QBusiness) BatchPutDocumentRequest(input *BatchPutDocumentInput) (req *
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -203,15 +212,15 @@ func (c *QBusiness) BatchPutDocumentRequest(input *BatchPutDocumentInput) (req *
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/BatchPutDocument
 func (c *QBusiness) BatchPutDocument(input *BatchPutDocumentInput) (*BatchPutDocumentOutput, error) {
@@ -233,6 +242,400 @@ func (c *QBusiness) BatchPutDocumentWithContext(ctx aws.Context, input *BatchPut
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+const opChat = "Chat"
+
+// ChatRequest generates a "aws/request.Request" representing the
+// client's request for the Chat operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See Chat for more information on using the Chat
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ChatRequest method.
+//	req, resp := client.ChatRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/Chat
+func (c *QBusiness) ChatRequest(input *ChatInput) (req *request.Request, output *ChatOutput) {
+	op := &request.Operation{
+		Name:       opChat,
+		HTTPMethod: "POST",
+		HTTPPath:   "/applications/{applicationId}/conversations",
+	}
+
+	if input == nil {
+		input = &ChatInput{}
+	}
+
+	output = &ChatOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.UnmarshalMeta.PushBack(
+		protocol.RequireHTTPMinProtocol{Major: 2}.Handler,
+	)
+
+	es := NewChatEventStream()
+	output.eventStream = es
+
+	req.Handlers.Sign.PushFront(es.setupInputPipe)
+	req.Handlers.UnmarshalError.PushBackNamed(request.NamedHandler{
+		Name: "InputPipeCloser",
+		Fn: func(r *request.Request) {
+			err := es.closeInputPipe()
+			if err != nil {
+				r.Error = awserr.New(eventstreamapi.InputWriterCloseErrorCode, err.Error(), r.Error)
+			}
+		},
+	})
+	req.Handlers.Build.PushBack(request.WithSetRequestHeaders(map[string]string{
+		"Content-Type":         "application/vnd.amazon.eventstream",
+		"X-Amz-Content-Sha256": "STREAMING-AWS4-HMAC-SHA256-EVENTS",
+	}))
+	req.Handlers.Build.Swap(restjson.BuildHandler.Name, rest.BuildHandler)
+	eventstreamapi.ApplyHTTPTransportFixes(req)
+	req.Handlers.Send.Swap(client.LogHTTPRequestHandler.Name, client.LogHTTPRequestHeaderHandler)
+	req.Handlers.Unmarshal.PushBack(es.runInputStream)
+
+	req.Handlers.Send.Swap(client.LogHTTPResponseHandler.Name, client.LogHTTPResponseHeaderHandler)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, rest.UnmarshalHandler)
+	req.Handlers.Unmarshal.PushBack(es.runOutputStream)
+	req.Handlers.Unmarshal.PushBack(es.runOnStreamPartClose)
+	return
+}
+
+// Chat API operation for QBusiness.
+//
+// Starts or continues a streaming Amazon Q Business conversation.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for QBusiness's
+// API operation Chat for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     The resource you want to use doesn’t exist. Make sure you have provided
+//     the correct resource and try again.
+//
+//   - InternalServerException
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     for help.
+//
+//   - LicenseNotFoundException
+//     You don't have permissions to perform the action because your license is
+//     inactive. Ask your admin to activate your license and try again after your
+//     licence is active.
+//
+//   - ConflictException
+//     You are trying to perform an action that conflicts with the current status
+//     of your resource. Fix any inconsistences with your resources and try again.
+//
+//   - ThrottlingException
+//     The request was denied due to throttling. Reduce the number of requests and
+//     try again.
+//
+//   - ValidationException
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this action. Make sure you have the required
+//     permission policies and user accounts and try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/Chat
+func (c *QBusiness) Chat(input *ChatInput) (*ChatOutput, error) {
+	req, out := c.ChatRequest(input)
+	return out, req.Send()
+}
+
+// ChatWithContext is the same as Chat with the addition of
+// the ability to pass a context and additional request options.
+//
+// See Chat for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *QBusiness) ChatWithContext(ctx aws.Context, input *ChatInput, opts ...request.Option) (*ChatOutput, error) {
+	req, out := c.ChatRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+var _ awserr.Error
+var _ time.Time
+
+// ChatEventStream provides the event stream handling for the Chat.
+//
+// For testing and mocking the event stream this type should be initialized via
+// the NewChatEventStream constructor function. Using the functional options
+// to pass in nested mock behavior.
+type ChatEventStream struct {
+
+	// Writer is the EventStream writer for the ChatInputStream
+	// events. This value is automatically set by the SDK when the API call is made
+	// Use this member when unit testing your code with the SDK to mock out the
+	// EventStream Writer.
+	//
+	// Must not be nil.
+	Writer ChatInputStreamWriter
+
+	inputWriter io.WriteCloser
+
+	// Reader is the EventStream reader for the ChatOutputStream
+	// events. This value is automatically set by the SDK when the API call is made
+	// Use this member when unit testing your code with the SDK to mock out the
+	// EventStream Reader.
+	//
+	// Must not be nil.
+	Reader ChatOutputStreamReader
+
+	outputReader io.ReadCloser
+
+	done      chan struct{}
+	closeOnce sync.Once
+	err       *eventstreamapi.OnceError
+}
+
+// NewChatEventStream initializes an ChatEventStream.
+// This function should only be used for testing and mocking the ChatEventStream
+// stream within your application.
+//
+// The Writer member must be set before writing events to the stream.
+//
+// The Reader member must be set before reading events from the stream.
+//
+//	es := NewChatEventStream(func(o *ChatEventStream){
+//	    es.Writer = myMockStreamWriter
+//	    es.Reader = myMockStreamReader
+//	})
+func NewChatEventStream(opts ...func(*ChatEventStream)) *ChatEventStream {
+	es := &ChatEventStream{
+		done: make(chan struct{}),
+		err:  eventstreamapi.NewOnceError(),
+	}
+
+	for _, fn := range opts {
+		fn(es)
+	}
+
+	return es
+}
+
+func (es *ChatEventStream) runOnStreamPartClose(r *request.Request) {
+	if es.done == nil {
+		return
+	}
+	go es.waitStreamPartClose()
+
+}
+
+func (es *ChatEventStream) waitStreamPartClose() {
+	var inputErrCh <-chan struct{}
+	if v, ok := es.Writer.(interface{ ErrorSet() <-chan struct{} }); ok {
+		inputErrCh = v.ErrorSet()
+	}
+	var outputErrCh <-chan struct{}
+	if v, ok := es.Reader.(interface{ ErrorSet() <-chan struct{} }); ok {
+		outputErrCh = v.ErrorSet()
+	}
+	var outputClosedCh <-chan struct{}
+	if v, ok := es.Reader.(interface{ Closed() <-chan struct{} }); ok {
+		outputClosedCh = v.Closed()
+	}
+
+	select {
+	case <-es.done:
+	case <-inputErrCh:
+		es.err.SetError(es.Writer.Err())
+		es.Close()
+	case <-outputErrCh:
+		es.err.SetError(es.Reader.Err())
+		es.Close()
+	case <-outputClosedCh:
+		if err := es.Reader.Err(); err != nil {
+			es.err.SetError(es.Reader.Err())
+		}
+		es.Close()
+	}
+}
+
+func (es *ChatEventStream) setupInputPipe(r *request.Request) {
+	inputReader, inputWriter := io.Pipe()
+	r.SetStreamingBody(inputReader)
+	es.inputWriter = inputWriter
+}
+
+// Closes the input-pipe writer
+func (es *ChatEventStream) closeInputPipe() error {
+	if es.inputWriter != nil {
+		return es.inputWriter.Close()
+	}
+	return nil
+}
+
+// Send writes the event to the stream blocking until the event is written.
+// Returns an error if the event was not written.
+//
+// These events are:
+//
+//   - AttachmentInputEvent
+//   - AuthChallengeResponseEvent
+//   - ConfigurationEvent
+//   - EndOfInputEvent
+//   - TextInputEvent
+func (es *ChatEventStream) Send(ctx aws.Context, event ChatInputStreamEvent) error {
+	return es.Writer.Send(ctx, event)
+}
+
+func (es *ChatEventStream) runInputStream(r *request.Request) {
+	var opts []func(*eventstream.Encoder)
+	if r.Config.Logger != nil && r.Config.LogLevel.Matches(aws.LogDebugWithEventStreamBody) {
+		opts = append(opts, eventstream.EncodeWithLogger(r.Config.Logger))
+	}
+	var encoder eventstreamapi.Encoder = eventstream.NewEncoder(es.inputWriter, opts...)
+
+	var closer aws.MultiCloser
+	sigSeed, err := v4.GetSignedRequestSignature(r.HTTPRequest)
+	if err != nil {
+		r.Error = awserr.New(request.ErrCodeSerialization,
+			"unable to get initial request's signature", err)
+		return
+	}
+	signer := eventstreamapi.NewSignEncoder(
+		v4.NewStreamSigner(r.ClientInfo.SigningRegion, r.ClientInfo.SigningName,
+			sigSeed, r.Config.Credentials),
+		encoder,
+	)
+	encoder = signer
+	closer = append(closer, signer)
+	closer = append(closer, es.inputWriter)
+
+	eventWriter := eventstreamapi.NewEventWriter(encoder,
+		protocol.HandlerPayloadMarshal{
+			Marshalers: r.Handlers.BuildStream,
+		},
+		eventTypeForChatInputStreamEvent,
+	)
+
+	es.Writer = &writeChatInputStream{
+		StreamWriter: eventstreamapi.NewStreamWriter(eventWriter, closer),
+	}
+}
+
+// Events returns a channel to read events from.
+//
+// These events are:
+//
+//   - ActionReviewEvent
+//   - AuthChallengeRequestEvent
+//   - FailedAttachmentEvent
+//   - MetadataEvent
+//   - TextOutputEvent
+//   - ChatOutputStreamUnknownEvent
+func (es *ChatEventStream) Events() <-chan ChatOutputStreamEvent {
+	return es.Reader.Events()
+}
+
+func (es *ChatEventStream) runOutputStream(r *request.Request) {
+	var opts []func(*eventstream.Decoder)
+	if r.Config.Logger != nil && r.Config.LogLevel.Matches(aws.LogDebugWithEventStreamBody) {
+		opts = append(opts, eventstream.DecodeWithLogger(r.Config.Logger))
+	}
+
+	unmarshalerForEvent := unmarshalerForChatOutputStreamEvent{
+		metadata: protocol.ResponseMetadata{
+			StatusCode: r.HTTPResponse.StatusCode,
+			RequestID:  r.RequestID,
+		},
+	}.UnmarshalerForEventName
+
+	decoder := eventstream.NewDecoder(r.HTTPResponse.Body, opts...)
+	eventReader := eventstreamapi.NewEventReader(decoder,
+		protocol.HandlerPayloadUnmarshal{
+			Unmarshalers: r.Handlers.UnmarshalStream,
+		},
+		unmarshalerForEvent,
+	)
+
+	es.outputReader = r.HTTPResponse.Body
+	es.Reader = newReadChatOutputStream(eventReader)
+}
+
+// Close closes the stream. This will also cause the stream to be closed.
+// Close must be called when done using the stream API. Not calling Close
+// may result in resource leaks.
+//
+// Will close the underlying EventStream writer, and no more events can be
+// sent.
+//
+// You can use the closing of the Reader's Events channel to terminate your
+// application's read from the API's stream.
+func (es *ChatEventStream) Close() (err error) {
+	es.closeOnce.Do(es.safeClose)
+	return es.Err()
+}
+
+func (es *ChatEventStream) safeClose() {
+	if es.done != nil {
+		close(es.done)
+	}
+
+	t := time.NewTicker(time.Second)
+	defer t.Stop()
+	writeCloseDone := make(chan error)
+	go func() {
+		if err := es.Writer.Close(); err != nil {
+			es.err.SetError(err)
+		}
+		close(writeCloseDone)
+	}()
+	select {
+	case <-t.C:
+	case <-writeCloseDone:
+	}
+	if err := es.closeInputPipe(); err != nil {
+		es.err.SetError(err)
+	}
+
+	es.Reader.Close()
+	if es.outputReader != nil {
+		es.outputReader.Close()
+	}
+}
+
+// Err returns any error that occurred while reading or writing EventStream
+// Events from the service API's response. Returns nil if there were no errors.
+func (es *ChatEventStream) Err() error {
+	if err := es.err.Err(); err != nil {
+		return err
+	}
+	if err := es.Writer.Err(); err != nil {
+		return err
+	}
+	if err := es.Reader.Err(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 const opChatSync = "ChatSync"
@@ -278,7 +681,7 @@ func (c *QBusiness) ChatSyncRequest(input *ChatSyncInput) (req *request.Request,
 
 // ChatSync API operation for QBusiness.
 //
-// Starts or continues a non-streaming Amazon Q conversation.
+// Starts or continues a non-streaming Amazon Q Business conversation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -294,8 +697,8 @@ func (c *QBusiness) ChatSyncRequest(input *ChatSyncInput) (req *request.Request,
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - LicenseNotFoundException
@@ -312,8 +715,8 @@ func (c *QBusiness) ChatSyncRequest(input *ChatSyncInput) (req *request.Request,
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -384,7 +787,14 @@ func (c *QBusiness) CreateApplicationRequest(input *CreateApplicationInput) (req
 
 // CreateApplication API operation for QBusiness.
 //
-// Creates an Amazon Q application.
+// Creates an Amazon Q Business application.
+//
+// There are new tiers for Amazon Q Business. Not all features in Amazon Q Business
+// Pro are also available in Amazon Q Business Lite. For information on what's
+// included in Amazon Q Business Lite and what's included in Amazon Q Business
+// Pro, see Amazon Q Business tiers (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#user-sub-tiers).
+// You must use the Amazon Q Business console to assign subscription tiers to
+// users.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -400,8 +810,8 @@ func (c *QBusiness) CreateApplicationRequest(input *CreateApplicationInput) (req
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -413,15 +823,15 @@ func (c *QBusiness) CreateApplicationRequest(input *CreateApplicationInput) (req
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateApplication
 func (c *QBusiness) CreateApplication(input *CreateApplicationInput) (*CreateApplicationOutput, error) {
@@ -488,15 +898,15 @@ func (c *QBusiness) CreateIndexRequest(input *CreateIndexInput) (req *request.Re
 
 // CreateIndex API operation for QBusiness.
 //
-// Creates an Amazon Q index.
+// Creates an Amazon Q Business index.
 //
 // To determine if index creation has completed, check the Status field returned
 // from a call to DescribeIndex. The Status field is set to ACTIVE when the
 // index is ready to use.
 //
 // Once the index is active, you can index your documents using the BatchPutDocument
-// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_BatchPutDocument.html)
-// API or the CreateDataSource (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_CreateDataSource.html)
+// (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_BatchPutDocument.html)
+// API or the CreateDataSource (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_CreateDataSource.html)
 // API.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -513,8 +923,8 @@ func (c *QBusiness) CreateIndexRequest(input *CreateIndexInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -526,15 +936,15 @@ func (c *QBusiness) CreateIndexRequest(input *CreateIndexInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateIndex
 func (c *QBusiness) CreateIndex(input *CreateIndexInput) (*CreateIndexOutput, error) {
@@ -601,7 +1011,7 @@ func (c *QBusiness) CreatePluginRequest(input *CreatePluginInput) (req *request.
 
 // CreatePlugin API operation for QBusiness.
 //
-// Creates an Amazon Q plugin.
+// Creates an Amazon Q Business plugin.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -617,8 +1027,8 @@ func (c *QBusiness) CreatePluginRequest(input *CreatePluginInput) (req *request.
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -630,15 +1040,15 @@ func (c *QBusiness) CreatePluginRequest(input *CreatePluginInput) (req *request.
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreatePlugin
 func (c *QBusiness) CreatePlugin(input *CreatePluginInput) (*CreatePluginOutput, error) {
@@ -705,7 +1115,7 @@ func (c *QBusiness) CreateRetrieverRequest(input *CreateRetrieverInput) (req *re
 
 // CreateRetriever API operation for QBusiness.
 //
-// Adds a retriever to your Amazon Q application.
+// Adds a retriever to your Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -721,8 +1131,8 @@ func (c *QBusiness) CreateRetrieverRequest(input *CreateRetrieverInput) (req *re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -734,15 +1144,15 @@ func (c *QBusiness) CreateRetrieverRequest(input *CreateRetrieverInput) (req *re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateRetriever
 func (c *QBusiness) CreateRetriever(input *CreateRetrieverInput) (*CreateRetrieverOutput, error) {
@@ -827,8 +1237,8 @@ func (c *QBusiness) CreateUserRequest(input *CreateUserInput) (req *request.Requ
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -840,15 +1250,15 @@ func (c *QBusiness) CreateUserRequest(input *CreateUserInput) (req *request.Requ
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateUser
 func (c *QBusiness) CreateUser(input *CreateUserInput) (*CreateUserOutput, error) {
@@ -915,7 +1325,7 @@ func (c *QBusiness) CreateWebExperienceRequest(input *CreateWebExperienceInput) 
 
 // CreateWebExperience API operation for QBusiness.
 //
-// Creates an Amazon Q web experience.
+// Creates an Amazon Q Business web experience.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -931,8 +1341,8 @@ func (c *QBusiness) CreateWebExperienceRequest(input *CreateWebExperienceInput) 
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -944,15 +1354,15 @@ func (c *QBusiness) CreateWebExperienceRequest(input *CreateWebExperienceInput) 
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/CreateWebExperience
 func (c *QBusiness) CreateWebExperience(input *CreateWebExperienceInput) (*CreateWebExperienceOutput, error) {
@@ -1020,7 +1430,7 @@ func (c *QBusiness) DeleteApplicationRequest(input *DeleteApplicationInput) (req
 
 // DeleteApplication API operation for QBusiness.
 //
-// Deletes an Amazon Q application.
+// Deletes an Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1036,8 +1446,8 @@ func (c *QBusiness) DeleteApplicationRequest(input *DeleteApplicationInput) (req
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1049,8 +1459,8 @@ func (c *QBusiness) DeleteApplicationRequest(input *DeleteApplicationInput) (req
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1122,7 +1532,7 @@ func (c *QBusiness) DeleteChatControlsConfigurationRequest(input *DeleteChatCont
 
 // DeleteChatControlsConfiguration API operation for QBusiness.
 //
-// Deletes chat controls configured for an existing Amazon Q application.
+// Deletes chat controls configured for an existing Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1138,8 +1548,8 @@ func (c *QBusiness) DeleteChatControlsConfigurationRequest(input *DeleteChatCont
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -1147,8 +1557,8 @@ func (c *QBusiness) DeleteChatControlsConfigurationRequest(input *DeleteChatCont
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1220,7 +1630,7 @@ func (c *QBusiness) DeleteConversationRequest(input *DeleteConversationInput) (r
 
 // DeleteConversation API operation for QBusiness.
 //
-// Deletes an Amazon Q web experience conversation.
+// Deletes an Amazon Q Business web experience conversation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1236,8 +1646,8 @@ func (c *QBusiness) DeleteConversationRequest(input *DeleteConversationInput) (r
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - LicenseNotFoundException
@@ -1250,8 +1660,8 @@ func (c *QBusiness) DeleteConversationRequest(input *DeleteConversationInput) (r
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1323,9 +1733,9 @@ func (c *QBusiness) DeleteDataSourceRequest(input *DeleteDataSourceInput) (req *
 
 // DeleteDataSource API operation for QBusiness.
 //
-// Deletes an Amazon Q data source connector. While the data source is being
-// deleted, the Status field returned by a call to the DescribeDataSource API
-// is set to DELETING.
+// Deletes an Amazon Q Business data source connector. While the data source
+// is being deleted, the Status field returned by a call to the DescribeDataSource
+// API is set to DELETING.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1341,8 +1751,8 @@ func (c *QBusiness) DeleteDataSourceRequest(input *DeleteDataSourceInput) (req *
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1354,8 +1764,8 @@ func (c *QBusiness) DeleteDataSourceRequest(input *DeleteDataSourceInput) (req *
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1452,8 +1862,8 @@ func (c *QBusiness) DeleteGroupRequest(input *DeleteGroupInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1465,8 +1875,8 @@ func (c *QBusiness) DeleteGroupRequest(input *DeleteGroupInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1538,7 +1948,7 @@ func (c *QBusiness) DeleteIndexRequest(input *DeleteIndexInput) (req *request.Re
 
 // DeleteIndex API operation for QBusiness.
 //
-// Deletes an Amazon Q index.
+// Deletes an Amazon Q Business index.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1554,8 +1964,8 @@ func (c *QBusiness) DeleteIndexRequest(input *DeleteIndexInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1567,8 +1977,8 @@ func (c *QBusiness) DeleteIndexRequest(input *DeleteIndexInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1640,7 +2050,7 @@ func (c *QBusiness) DeletePluginRequest(input *DeletePluginInput) (req *request.
 
 // DeletePlugin API operation for QBusiness.
 //
-// Deletes an Amazon Q plugin.
+// Deletes an Amazon Q Business plugin.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1656,8 +2066,8 @@ func (c *QBusiness) DeletePluginRequest(input *DeletePluginInput) (req *request.
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1669,8 +2079,8 @@ func (c *QBusiness) DeletePluginRequest(input *DeletePluginInput) (req *request.
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1742,7 +2152,7 @@ func (c *QBusiness) DeleteRetrieverRequest(input *DeleteRetrieverInput) (req *re
 
 // DeleteRetriever API operation for QBusiness.
 //
-// Deletes the retriever used by an Amazon Q application.
+// Deletes the retriever used by an Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1758,8 +2168,8 @@ func (c *QBusiness) DeleteRetrieverRequest(input *DeleteRetrieverInput) (req *re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1771,8 +2181,8 @@ func (c *QBusiness) DeleteRetrieverRequest(input *DeleteRetrieverInput) (req *re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1860,8 +2270,8 @@ func (c *QBusiness) DeleteUserRequest(input *DeleteUserInput) (req *request.Requ
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1873,8 +2283,8 @@ func (c *QBusiness) DeleteUserRequest(input *DeleteUserInput) (req *request.Requ
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -1946,7 +2356,7 @@ func (c *QBusiness) DeleteWebExperienceRequest(input *DeleteWebExperienceInput) 
 
 // DeleteWebExperience API operation for QBusiness.
 //
-// Deletes an Amazon Q web experience.
+// Deletes an Amazon Q Business web experience.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1962,8 +2372,8 @@ func (c *QBusiness) DeleteWebExperienceRequest(input *DeleteWebExperienceInput) 
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -1975,8 +2385,8 @@ func (c *QBusiness) DeleteWebExperienceRequest(input *DeleteWebExperienceInput) 
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2047,7 +2457,7 @@ func (c *QBusiness) GetApplicationRequest(input *GetApplicationInput) (req *requ
 
 // GetApplication API operation for QBusiness.
 //
-// Gets information about an existing Amazon Q application.
+// Gets information about an existing Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2063,8 +2473,8 @@ func (c *QBusiness) GetApplicationRequest(input *GetApplicationInput) (req *requ
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -2072,8 +2482,8 @@ func (c *QBusiness) GetApplicationRequest(input *GetApplicationInput) (req *requ
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2151,7 +2561,7 @@ func (c *QBusiness) GetChatControlsConfigurationRequest(input *GetChatControlsCo
 // GetChatControlsConfiguration API operation for QBusiness.
 //
 // Gets information about an chat controls configured for an existing Amazon
-// Q application.
+// Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2167,8 +2577,8 @@ func (c *QBusiness) GetChatControlsConfigurationRequest(input *GetChatControlsCo
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -2176,8 +2586,8 @@ func (c *QBusiness) GetChatControlsConfigurationRequest(input *GetChatControlsCo
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2299,7 +2709,7 @@ func (c *QBusiness) GetDataSourceRequest(input *GetDataSourceInput) (req *reques
 
 // GetDataSource API operation for QBusiness.
 //
-// Gets information about an existing Amazon Q data source connector.
+// Gets information about an existing Amazon Q Business data source connector.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2315,8 +2725,8 @@ func (c *QBusiness) GetDataSourceRequest(input *GetDataSourceInput) (req *reques
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -2324,8 +2734,8 @@ func (c *QBusiness) GetDataSourceRequest(input *GetDataSourceInput) (req *reques
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2412,8 +2822,8 @@ func (c *QBusiness) GetGroupRequest(input *GetGroupInput) (req *request.Request,
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -2425,8 +2835,8 @@ func (c *QBusiness) GetGroupRequest(input *GetGroupInput) (req *request.Request,
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2497,7 +2907,7 @@ func (c *QBusiness) GetIndexRequest(input *GetIndexInput) (req *request.Request,
 
 // GetIndex API operation for QBusiness.
 //
-// Gets information about an existing Amazon Q index.
+// Gets information about an existing Amazon Q Business index.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2513,8 +2923,8 @@ func (c *QBusiness) GetIndexRequest(input *GetIndexInput) (req *request.Request,
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -2522,8 +2932,8 @@ func (c *QBusiness) GetIndexRequest(input *GetIndexInput) (req *request.Request,
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2594,7 +3004,7 @@ func (c *QBusiness) GetPluginRequest(input *GetPluginInput) (req *request.Reques
 
 // GetPlugin API operation for QBusiness.
 //
-// Gets information about an existing Amazon Q plugin.
+// Gets information about an existing Amazon Q Business plugin.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2610,8 +3020,8 @@ func (c *QBusiness) GetPluginRequest(input *GetPluginInput) (req *request.Reques
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -2619,8 +3029,8 @@ func (c *QBusiness) GetPluginRequest(input *GetPluginInput) (req *request.Reques
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2691,7 +3101,8 @@ func (c *QBusiness) GetRetrieverRequest(input *GetRetrieverInput) (req *request.
 
 // GetRetriever API operation for QBusiness.
 //
-// Gets information about an existing retriever used by an Amazon Q application.
+// Gets information about an existing retriever used by an Amazon Q Business
+// application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2707,8 +3118,8 @@ func (c *QBusiness) GetRetrieverRequest(input *GetRetrieverInput) (req *request.
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -2716,8 +3127,8 @@ func (c *QBusiness) GetRetrieverRequest(input *GetRetrieverInput) (req *request.
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2805,8 +3216,8 @@ func (c *QBusiness) GetUserRequest(input *GetUserInput) (req *request.Request, o
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -2818,8 +3229,8 @@ func (c *QBusiness) GetUserRequest(input *GetUserInput) (req *request.Request, o
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2890,7 +3301,7 @@ func (c *QBusiness) GetWebExperienceRequest(input *GetWebExperienceInput) (req *
 
 // GetWebExperience API operation for QBusiness.
 //
-// Gets information about an existing Amazon Q web experience.
+// Gets information about an existing Amazon Q Business web experience.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2906,8 +3317,8 @@ func (c *QBusiness) GetWebExperienceRequest(input *GetWebExperienceInput) (req *
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -2915,8 +3326,8 @@ func (c *QBusiness) GetWebExperienceRequest(input *GetWebExperienceInput) (req *
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -2993,7 +3404,7 @@ func (c *QBusiness) ListApplicationsRequest(input *ListApplicationsInput) (req *
 
 // ListApplications API operation for QBusiness.
 //
-// Lists Amazon Q applications.
+// Lists Amazon Q Business applications.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3005,8 +3416,8 @@ func (c *QBusiness) ListApplicationsRequest(input *ListApplicationsInput) (req *
 // Returned Error Types:
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -3014,8 +3425,8 @@ func (c *QBusiness) ListApplicationsRequest(input *ListApplicationsInput) (req *
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -3143,7 +3554,7 @@ func (c *QBusiness) ListConversationsRequest(input *ListConversationsInput) (req
 
 // ListConversations API operation for QBusiness.
 //
-// Lists one or more Amazon Q conversations.
+// Lists one or more Amazon Q Business conversations.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3159,8 +3570,8 @@ func (c *QBusiness) ListConversationsRequest(input *ListConversationsInput) (req
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - LicenseNotFoundException
@@ -3173,8 +3584,8 @@ func (c *QBusiness) ListConversationsRequest(input *ListConversationsInput) (req
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -3302,7 +3713,7 @@ func (c *QBusiness) ListDataSourceSyncJobsRequest(input *ListDataSourceSyncJobsI
 
 // ListDataSourceSyncJobs API operation for QBusiness.
 //
-// Get information about an Amazon Q data source connector synchronization.
+// Get information about an Amazon Q Business data source connector synchronization.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3318,8 +3729,8 @@ func (c *QBusiness) ListDataSourceSyncJobsRequest(input *ListDataSourceSyncJobsI
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -3327,8 +3738,8 @@ func (c *QBusiness) ListDataSourceSyncJobsRequest(input *ListDataSourceSyncJobsI
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -3456,7 +3867,7 @@ func (c *QBusiness) ListDataSourcesRequest(input *ListDataSourcesInput) (req *re
 
 // ListDataSources API operation for QBusiness.
 //
-// Lists the Amazon Q data source connectors that you have created.
+// Lists the Amazon Q Business data source connectors that you have created.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3472,8 +3883,8 @@ func (c *QBusiness) ListDataSourcesRequest(input *ListDataSourcesInput) (req *re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -3481,8 +3892,8 @@ func (c *QBusiness) ListDataSourcesRequest(input *ListDataSourcesInput) (req *re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -3626,8 +4037,8 @@ func (c *QBusiness) ListDocumentsRequest(input *ListDocumentsInput) (req *reques
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -3635,8 +4046,8 @@ func (c *QBusiness) ListDocumentsRequest(input *ListDocumentsInput) (req *reques
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -3780,8 +4191,8 @@ func (c *QBusiness) ListGroupsRequest(input *ListGroupsInput) (req *request.Requ
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -3793,8 +4204,8 @@ func (c *QBusiness) ListGroupsRequest(input *ListGroupsInput) (req *request.Requ
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -3922,7 +4333,7 @@ func (c *QBusiness) ListIndicesRequest(input *ListIndicesInput) (req *request.Re
 
 // ListIndices API operation for QBusiness.
 //
-// Lists the Amazon Q indices you have created.
+// Lists the Amazon Q Business indices you have created.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3938,8 +4349,8 @@ func (c *QBusiness) ListIndicesRequest(input *ListIndicesInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -3947,8 +4358,8 @@ func (c *QBusiness) ListIndicesRequest(input *ListIndicesInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -4076,7 +4487,7 @@ func (c *QBusiness) ListMessagesRequest(input *ListMessagesInput) (req *request.
 
 // ListMessages API operation for QBusiness.
 //
-// Gets a list of messages associated with an Amazon Q web experience.
+// Gets a list of messages associated with an Amazon Q Business web experience.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4092,8 +4503,8 @@ func (c *QBusiness) ListMessagesRequest(input *ListMessagesInput) (req *request.
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - LicenseNotFoundException
@@ -4106,8 +4517,8 @@ func (c *QBusiness) ListMessagesRequest(input *ListMessagesInput) (req *request.
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -4235,7 +4646,7 @@ func (c *QBusiness) ListPluginsRequest(input *ListPluginsInput) (req *request.Re
 
 // ListPlugins API operation for QBusiness.
 //
-// Lists configured Amazon Q plugins.
+// Lists configured Amazon Q Business plugins.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4251,8 +4662,8 @@ func (c *QBusiness) ListPluginsRequest(input *ListPluginsInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -4260,8 +4671,8 @@ func (c *QBusiness) ListPluginsRequest(input *ListPluginsInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -4389,7 +4800,7 @@ func (c *QBusiness) ListRetrieversRequest(input *ListRetrieversInput) (req *requ
 
 // ListRetrievers API operation for QBusiness.
 //
-// Lists the retriever used by an Amazon Q application.
+// Lists the retriever used by an Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4405,8 +4816,8 @@ func (c *QBusiness) ListRetrieversRequest(input *ListRetrieversInput) (req *requ
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -4414,8 +4825,8 @@ func (c *QBusiness) ListRetrieversRequest(input *ListRetrieversInput) (req *requ
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -4537,8 +4948,8 @@ func (c *QBusiness) ListTagsForResourceRequest(input *ListTagsForResourceInput) 
 
 // ListTagsForResource API operation for QBusiness.
 //
-// Gets a list of tags associated with a specified resource. Amazon Q applications
-// and data sources can have tags associated with them.
+// Gets a list of tags associated with a specified resource. Amazon Q Business
+// applications and data sources can have tags associated with them.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4554,8 +4965,8 @@ func (c *QBusiness) ListTagsForResourceRequest(input *ListTagsForResourceInput) 
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -4563,8 +4974,8 @@ func (c *QBusiness) ListTagsForResourceRequest(input *ListTagsForResourceInput) 
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -4641,7 +5052,7 @@ func (c *QBusiness) ListWebExperiencesRequest(input *ListWebExperiencesInput) (r
 
 // ListWebExperiences API operation for QBusiness.
 //
-// Lists one or more Amazon Q Web Experiences.
+// Lists one or more Amazon Q Business Web Experiences.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4657,8 +5068,8 @@ func (c *QBusiness) ListWebExperiencesRequest(input *ListWebExperiencesInput) (r
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -4666,8 +5077,8 @@ func (c *QBusiness) ListWebExperiencesRequest(input *ListWebExperiencesInput) (r
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -4790,7 +5201,7 @@ func (c *QBusiness) PutFeedbackRequest(input *PutFeedbackInput) (req *request.Re
 
 // PutFeedback API operation for QBusiness.
 //
-// Enables your end user to to provide feedback on their Amazon Q generated
+// Enables your end user to provide feedback on their Amazon Q Business generated
 // chat responses.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -4807,8 +5218,8 @@ func (c *QBusiness) PutFeedbackRequest(input *PutFeedbackInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -4816,8 +5227,8 @@ func (c *QBusiness) PutFeedbackRequest(input *PutFeedbackInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -4897,7 +5308,7 @@ func (c *QBusiness) PutGroupRequest(input *PutGroupInput) (req *request.Request,
 // groups include their own list of users or people who work in these teams.
 // Only users who work in research and engineering, and therefore belong in
 // the intellectual property group, can see top-secret company documents in
-// their Amazon Q chat results.
+// their Amazon Q Business chat results.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4913,8 +5324,8 @@ func (c *QBusiness) PutGroupRequest(input *PutGroupInput) (req *request.Request,
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -4926,15 +5337,15 @@ func (c *QBusiness) PutGroupRequest(input *PutGroupInput) (req *request.Request,
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/PutGroup
 func (c *QBusiness) PutGroup(input *PutGroupInput) (*PutGroupOutput, error) {
@@ -5002,7 +5413,7 @@ func (c *QBusiness) StartDataSourceSyncJobRequest(input *StartDataSourceSyncJobI
 // StartDataSourceSyncJob API operation for QBusiness.
 //
 // Starts a data source connector synchronization job. If a synchronization
-// job is already in progress, Amazon Q returns a ConflictException.
+// job is already in progress, Amazon Q Business returns a ConflictException.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5018,8 +5429,8 @@ func (c *QBusiness) StartDataSourceSyncJobRequest(input *StartDataSourceSyncJobI
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5031,15 +5442,15 @@ func (c *QBusiness) StartDataSourceSyncJobRequest(input *StartDataSourceSyncJobI
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/StartDataSourceSyncJob
 func (c *QBusiness) StartDataSourceSyncJob(input *StartDataSourceSyncJobInput) (*StartDataSourceSyncJobOutput, error) {
@@ -5107,7 +5518,8 @@ func (c *QBusiness) StopDataSourceSyncJobRequest(input *StopDataSourceSyncJobInp
 
 // StopDataSourceSyncJob API operation for QBusiness.
 //
-// Stops an Amazon Q data source connector synchronization job already in progress.
+// Stops an Amazon Q Business data source connector synchronization job already
+// in progress.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5123,8 +5535,8 @@ func (c *QBusiness) StopDataSourceSyncJobRequest(input *StopDataSourceSyncJobInp
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -5132,8 +5544,8 @@ func (c *QBusiness) StopDataSourceSyncJobRequest(input *StopDataSourceSyncJobInp
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -5205,9 +5617,9 @@ func (c *QBusiness) TagResourceRequest(input *TagResourceInput) (req *request.Re
 
 // TagResource API operation for QBusiness.
 //
-// Adds the specified tag to the specified Amazon Q application or data source
-// resource. If the tag already exists, the existing value is replaced with
-// the new value.
+// Adds the specified tag to the specified Amazon Q Business application or
+// data source resource. If the tag already exists, the existing value is replaced
+// with the new value.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5223,8 +5635,8 @@ func (c *QBusiness) TagResourceRequest(input *TagResourceInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5236,8 +5648,8 @@ func (c *QBusiness) TagResourceRequest(input *TagResourceInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -5309,7 +5721,7 @@ func (c *QBusiness) UntagResourceRequest(input *UntagResourceInput) (req *reques
 
 // UntagResource API operation for QBusiness.
 //
-// Removes a tag from an Amazon Q application or a data source.
+// Removes a tag from an Amazon Q Business application or a data source.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5325,8 +5737,8 @@ func (c *QBusiness) UntagResourceRequest(input *UntagResourceInput) (req *reques
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -5334,8 +5746,8 @@ func (c *QBusiness) UntagResourceRequest(input *UntagResourceInput) (req *reques
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -5407,7 +5819,7 @@ func (c *QBusiness) UpdateApplicationRequest(input *UpdateApplicationInput) (req
 
 // UpdateApplication API operation for QBusiness.
 //
-// Updates an existing Amazon Q application.
+// Updates an existing Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5423,8 +5835,8 @@ func (c *QBusiness) UpdateApplicationRequest(input *UpdateApplicationInput) (req
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5436,8 +5848,8 @@ func (c *QBusiness) UpdateApplicationRequest(input *UpdateApplicationInput) (req
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -5509,7 +5921,8 @@ func (c *QBusiness) UpdateChatControlsConfigurationRequest(input *UpdateChatCont
 
 // UpdateChatControlsConfiguration API operation for QBusiness.
 //
-// Updates an set of chat controls configured for an existing Amazon Q application.
+// Updates an set of chat controls configured for an existing Amazon Q Business
+// application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5525,8 +5938,8 @@ func (c *QBusiness) UpdateChatControlsConfigurationRequest(input *UpdateChatCont
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5538,15 +5951,15 @@ func (c *QBusiness) UpdateChatControlsConfigurationRequest(input *UpdateChatCont
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateChatControlsConfiguration
 func (c *QBusiness) UpdateChatControlsConfiguration(input *UpdateChatControlsConfigurationInput) (*UpdateChatControlsConfigurationOutput, error) {
@@ -5614,7 +6027,7 @@ func (c *QBusiness) UpdateDataSourceRequest(input *UpdateDataSourceInput) (req *
 
 // UpdateDataSource API operation for QBusiness.
 //
-// Updates an existing Amazon Q data source connector.
+// Updates an existing Amazon Q Business data source connector.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5630,8 +6043,8 @@ func (c *QBusiness) UpdateDataSourceRequest(input *UpdateDataSourceInput) (req *
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5643,8 +6056,8 @@ func (c *QBusiness) UpdateDataSourceRequest(input *UpdateDataSourceInput) (req *
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -5716,7 +6129,7 @@ func (c *QBusiness) UpdateIndexRequest(input *UpdateIndexInput) (req *request.Re
 
 // UpdateIndex API operation for QBusiness.
 //
-// Updates an Amazon Q index.
+// Updates an Amazon Q Business index.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5732,8 +6145,8 @@ func (c *QBusiness) UpdateIndexRequest(input *UpdateIndexInput) (req *request.Re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5745,15 +6158,15 @@ func (c *QBusiness) UpdateIndexRequest(input *UpdateIndexInput) (req *request.Re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateIndex
 func (c *QBusiness) UpdateIndex(input *UpdateIndexInput) (*UpdateIndexOutput, error) {
@@ -5821,7 +6234,7 @@ func (c *QBusiness) UpdatePluginRequest(input *UpdatePluginInput) (req *request.
 
 // UpdatePlugin API operation for QBusiness.
 //
-// Updates an Amazon Q plugin.
+// Updates an Amazon Q Business plugin.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5837,8 +6250,8 @@ func (c *QBusiness) UpdatePluginRequest(input *UpdatePluginInput) (req *request.
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5850,15 +6263,15 @@ func (c *QBusiness) UpdatePluginRequest(input *UpdatePluginInput) (req *request.
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdatePlugin
 func (c *QBusiness) UpdatePlugin(input *UpdatePluginInput) (*UpdatePluginOutput, error) {
@@ -5926,7 +6339,7 @@ func (c *QBusiness) UpdateRetrieverRequest(input *UpdateRetrieverInput) (req *re
 
 // UpdateRetriever API operation for QBusiness.
 //
-// Updates the retriever used for your Amazon Q application.
+// Updates the retriever used for your Amazon Q Business application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5942,8 +6355,8 @@ func (c *QBusiness) UpdateRetrieverRequest(input *UpdateRetrieverInput) (req *re
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -5955,15 +6368,15 @@ func (c *QBusiness) UpdateRetrieverRequest(input *UpdateRetrieverInput) (req *re
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateRetriever
 func (c *QBusiness) UpdateRetriever(input *UpdateRetrieverInput) (*UpdateRetrieverOutput, error) {
@@ -6046,8 +6459,8 @@ func (c *QBusiness) UpdateUserRequest(input *UpdateUserInput) (req *request.Requ
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ThrottlingException
@@ -6055,15 +6468,15 @@ func (c *QBusiness) UpdateUserRequest(input *UpdateUserInput) (req *request.Requ
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
 //     permission policies and user accounts and try again.
 //
 //   - ServiceQuotaExceededException
-//     You have exceeded the set limits for your Amazon Q service.
+//     You have exceeded the set limits for your Amazon Q Business service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/qbusiness-2023-11-27/UpdateUser
 func (c *QBusiness) UpdateUser(input *UpdateUserInput) (*UpdateUserOutput, error) {
@@ -6131,7 +6544,7 @@ func (c *QBusiness) UpdateWebExperienceRequest(input *UpdateWebExperienceInput) 
 
 // UpdateWebExperience API operation for QBusiness.
 //
-// Updates an Amazon Q web experience.
+// Updates an Amazon Q Business web experience.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6147,8 +6560,8 @@ func (c *QBusiness) UpdateWebExperienceRequest(input *UpdateWebExperienceInput) 
 //     the correct resource and try again.
 //
 //   - InternalServerException
-//     An issue occurred with the internal server used for your Amazon Q service.
-//     Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+//     An issue occurred with the internal server used for your Amazon Q Business
+//     service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 //     for help.
 //
 //   - ConflictException
@@ -6160,8 +6573,8 @@ func (c *QBusiness) UpdateWebExperienceRequest(input *UpdateWebExperienceInput) 
 //     try again.
 //
 //   - ValidationException
-//     The input doesn't meet the constraints set by the Amazon Q service. Provide
-//     the correct input and try again.
+//     The input doesn't meet the constraints set by the Amazon Q Business service.
+//     Provide the correct input and try again.
 //
 //   - AccessDeniedException
 //     You don't have access to perform this action. Make sure you have the required
@@ -6187,6 +6600,71 @@ func (c *QBusiness) UpdateWebExperienceWithContext(ctx aws.Context, input *Updat
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+// Contains details about the OpenAPI schema for a custom plugin. For more information,
+// see custom plugin OpenAPI schemas (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/custom-plugin.html#plugins-api-schema).
+// You can either include the schema directly in the payload field or you can
+// upload it to an S3 bucket and specify the S3 bucket location in the s3 field.
+type APISchema struct {
+	_ struct{} `type:"structure"`
+
+	// The JSON or YAML-formatted payload defining the OpenAPI schema for a custom
+	// plugin.
+	//
+	// Payload is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by APISchema's
+	// String and GoString methods.
+	Payload *string `locationName:"payload" type:"string" sensitive:"true"`
+
+	// Contains details about the S3 object containing the OpenAPI schema for a
+	// custom plugin. The schema could be in either JSON or YAML format.
+	S3 *S3 `locationName:"s3" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s APISchema) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s APISchema) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *APISchema) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "APISchema"}
+	if s.S3 != nil {
+		if err := s.S3.Validate(); err != nil {
+			invalidParams.AddNested("S3", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPayload sets the Payload field's value.
+func (s *APISchema) SetPayload(v string) *APISchema {
+	s.Payload = &v
+	return s
+}
+
+// SetS3 sets the S3 field's value.
+func (s *APISchema) SetS3(v *S3) *APISchema {
+	s.S3 = v
+	return s
 }
 
 // Used to configure access permissions for a document.
@@ -6389,15 +6867,15 @@ func (s *AccessDeniedException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// An output event that Amazon Q returns to an user who wants to perform a plugin
-// action during a non-streaming chat conversation. It contains information
+// An output event that Amazon Q Business returns to an user who wants to perform
+// a plugin action during a non-streaming chat conversation. It contains information
 // about the selected action with a list of possible user input fields, some
-// pre-populated by Amazon Q.
+// pre-populated by Amazon Q Business.
 type ActionReview struct {
 	_ struct{} `type:"structure"`
 
-	// Field values that an end user needs to provide to Amazon Q for Amazon Q to
-	// perform the requested plugin action.
+	// Field values that an end user needs to provide to Amazon Q Business for Amazon
+	// Q Business to perform the requested plugin action.
 	Payload map[string]*ActionReviewPayloadField `locationName:"payload" type:"map"`
 
 	// A string used to retain information about the hierarchical contexts within
@@ -6453,13 +6931,145 @@ func (s *ActionReview) SetPluginType(v string) *ActionReview {
 	return s
 }
 
+// An output event that Amazon Q Business returns to an user who wants to perform
+// a plugin action during a streaming chat conversation. It contains information
+// about the selected action with a list of possible user input fields, some
+// pre-populated by Amazon Q Business.
+type ActionReviewEvent struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the conversation with which the action review event is
+	// associated.
+	ConversationId *string `locationName:"conversationId" min:"36" type:"string"`
+
+	// Field values that an end user needs to provide to Amazon Q Business for Amazon
+	// Q Business to perform the requested plugin action.
+	Payload map[string]*ActionReviewPayloadField `locationName:"payload" type:"map"`
+
+	// A string used to retain information about the hierarchical contexts within
+	// an action review event payload.
+	PayloadFieldNameSeparator *string `locationName:"payloadFieldNameSeparator" min:"1" type:"string"`
+
+	// The identifier of the plugin associated with the action review event.
+	PluginId *string `locationName:"pluginId" min:"36" type:"string"`
+
+	// The type of plugin.
+	PluginType *string `locationName:"pluginType" type:"string" enum:"PluginType"`
+
+	// The identifier of an Amazon Q Business AI generated associated with the action
+	// review event.
+	SystemMessageId *string `locationName:"systemMessageId" min:"36" type:"string"`
+
+	// The identifier of the conversation with which the plugin action is associated.
+	UserMessageId *string `locationName:"userMessageId" min:"36" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ActionReviewEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ActionReviewEvent) GoString() string {
+	return s.String()
+}
+
+// SetConversationId sets the ConversationId field's value.
+func (s *ActionReviewEvent) SetConversationId(v string) *ActionReviewEvent {
+	s.ConversationId = &v
+	return s
+}
+
+// SetPayload sets the Payload field's value.
+func (s *ActionReviewEvent) SetPayload(v map[string]*ActionReviewPayloadField) *ActionReviewEvent {
+	s.Payload = v
+	return s
+}
+
+// SetPayloadFieldNameSeparator sets the PayloadFieldNameSeparator field's value.
+func (s *ActionReviewEvent) SetPayloadFieldNameSeparator(v string) *ActionReviewEvent {
+	s.PayloadFieldNameSeparator = &v
+	return s
+}
+
+// SetPluginId sets the PluginId field's value.
+func (s *ActionReviewEvent) SetPluginId(v string) *ActionReviewEvent {
+	s.PluginId = &v
+	return s
+}
+
+// SetPluginType sets the PluginType field's value.
+func (s *ActionReviewEvent) SetPluginType(v string) *ActionReviewEvent {
+	s.PluginType = &v
+	return s
+}
+
+// SetSystemMessageId sets the SystemMessageId field's value.
+func (s *ActionReviewEvent) SetSystemMessageId(v string) *ActionReviewEvent {
+	s.SystemMessageId = &v
+	return s
+}
+
+// SetUserMessageId sets the UserMessageId field's value.
+func (s *ActionReviewEvent) SetUserMessageId(v string) *ActionReviewEvent {
+	s.UserMessageId = &v
+	return s
+}
+
+// The ActionReviewEvent is and event in the ChatOutputStream group of events.
+func (s *ActionReviewEvent) eventChatOutputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the ActionReviewEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *ActionReviewEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *ActionReviewEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
 // A user input field in an plugin action review payload.
 type ActionReviewPayloadField struct {
 	_ struct{} `type:"structure"`
 
+	// The expected data format for the action review input field value. For example,
+	// in PTO request, from and to would be of datetime allowed format.
+	AllowedFormat *string `locationName:"allowedFormat" min:"1" type:"string"`
+
 	// Information about the field values that an end user can use to provide to
-	// Amazon Q for Amazon Q to perform the requested plugin action.
+	// Amazon Q Business for Amazon Q Business to perform the requested plugin action.
 	AllowedValues []*ActionReviewPayloadFieldAllowedValue `locationName:"allowedValues" type:"list"`
+
+	// The field level description of each action review input field. This could
+	// be an explanation of the field. In the Amazon Q Business web experience,
+	// these descriptions could be used to display as tool tips to help users understand
+	// the field.
+	DisplayDescription *string `locationName:"displayDescription" min:"1" type:"string"`
 
 	// The name of the field.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
@@ -6492,9 +7102,21 @@ func (s ActionReviewPayloadField) GoString() string {
 	return s.String()
 }
 
+// SetAllowedFormat sets the AllowedFormat field's value.
+func (s *ActionReviewPayloadField) SetAllowedFormat(v string) *ActionReviewPayloadField {
+	s.AllowedFormat = &v
+	return s
+}
+
 // SetAllowedValues sets the AllowedValues field's value.
 func (s *ActionReviewPayloadField) SetAllowedValues(v []*ActionReviewPayloadFieldAllowedValue) *ActionReviewPayloadField {
 	s.AllowedValues = v
+	return s
+}
+
+// SetDisplayDescription sets the DisplayDescription field's value.
+func (s *ActionReviewPayloadField) SetDisplayDescription(v string) *ActionReviewPayloadField {
+	s.DisplayDescription = &v
 	return s
 }
 
@@ -6523,7 +7145,7 @@ func (s *ActionReviewPayloadField) SetType(v string) *ActionReviewPayloadField {
 }
 
 // Information about the field values that an end user can use to provide to
-// Amazon Q for Amazon Q to perform the requested plugin action.
+// Amazon Q Business for Amazon Q Business to perform the requested plugin action.
 type ActionReviewPayloadFieldAllowedValue struct {
 	_ struct{} `type:"structure"`
 }
@@ -6546,24 +7168,24 @@ func (s ActionReviewPayloadFieldAllowedValue) GoString() string {
 	return s.String()
 }
 
-// Summary information for an Amazon Q application.
+// Summary information for an Amazon Q Business application.
 type Application struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the Amazon Q application.
+	// The identifier for the Amazon Q Business application.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
-	// The Unix timestamp when the Amazon Q application was created.
+	// The Unix timestamp when the Amazon Q Business application was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The name of the Amazon Q application.
+	// The name of the Amazon Q Business application.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
-	// The status of the Amazon Q application. The application is ready to use when
-	// the status is ACTIVE.
+	// The status of the Amazon Q Business application. The application is ready
+	// to use when the status is ACTIVE.
 	Status *string `locationName:"status" type:"string" enum:"ApplicationStatus"`
 
-	// The Unix timestamp when the Amazon Q application was last updated.
+	// The Unix timestamp when the Amazon Q Business application was last updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 }
 
@@ -6647,6 +7269,108 @@ func (s AppliedAttachmentsConfiguration) GoString() string {
 func (s *AppliedAttachmentsConfiguration) SetAttachmentsControlMode(v string) *AppliedAttachmentsConfiguration {
 	s.AttachmentsControlMode = &v
 	return s
+}
+
+// The creator mode specific admin controls configured for an Amazon Q Business
+// application. Determines whether an end user can generate LLM-only responses
+// when they use the web experience.
+//
+// For more information, see Admin controls and guardrails (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html)
+// and Conversation settings (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope).
+type AppliedCreatorModeConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Information about whether creator mode is enabled or disabled for an Amazon
+	// Q Business application.
+	//
+	// CreatorModeControl is a required field
+	CreatorModeControl *string `locationName:"creatorModeControl" type:"string" required:"true" enum:"CreatorModeControl"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AppliedCreatorModeConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AppliedCreatorModeConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetCreatorModeControl sets the CreatorModeControl field's value.
+func (s *AppliedCreatorModeConfiguration) SetCreatorModeControl(v string) *AppliedCreatorModeConfiguration {
+	s.CreatorModeControl = &v
+	return s
+}
+
+// A file input event activated by a end user request to upload files into their
+// web experience chat.
+type AttachmentInputEvent struct {
+	_ struct{} `type:"structure"`
+
+	// A file directly uploaded into a web experience chat.
+	Attachment *AttachmentInput_ `locationName:"attachment" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AttachmentInputEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AttachmentInputEvent) GoString() string {
+	return s.String()
+}
+
+// SetAttachment sets the Attachment field's value.
+func (s *AttachmentInputEvent) SetAttachment(v *AttachmentInput_) *AttachmentInputEvent {
+	s.Attachment = v
+	return s
+}
+
+// The AttachmentInputEvent is and event in the ChatInputStream group of events.
+func (s *AttachmentInputEvent) eventChatInputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the AttachmentInputEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *AttachmentInputEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *AttachmentInputEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
 }
 
 // A file directly uploaded into a web experience chat.
@@ -6812,8 +7536,7 @@ func (s *AttachmentsConfiguration) SetAttachmentsControlMode(v string) *Attachme
 	return s
 }
 
-// Enables filtering of Amazon Q web experience responses based on document
-// attributes or metadata fields.
+// Enables filtering of responses based on document attributes or metadata fields.
 type AttributeFilter struct {
 	_ struct{} `type:"structure"`
 
@@ -6821,30 +7544,41 @@ type AttributeFilter struct {
 	AndAllFilters []*AttributeFilter `locationName:"andAllFilters" type:"list"`
 
 	// Returns true when a document contains all the specified document attributes
-	// or metadata fields.
+	// or metadata fields. Supported for the following document attribute value
+	// types (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeValue.html):
+	// stringListValue.
 	ContainsAll *DocumentAttribute `locationName:"containsAll" type:"structure"`
 
 	// Returns true when a document contains any of the specified document attributes
-	// or metadata fields.
+	// or metadata fields. Supported for the following document attribute value
+	// types (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeValue.html):
+	// stringListValue.
 	ContainsAny *DocumentAttribute `locationName:"containsAny" type:"structure"`
 
 	// Performs an equals operation on two document attributes or metadata fields.
+	// Supported for the following document attribute value types (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeValue.html):
+	// dateValue, longValue, stringListValue and stringValue.
 	EqualsTo *DocumentAttribute `locationName:"equalsTo" type:"structure"`
 
 	// Performs a greater than operation on two document attributes or metadata
-	// fields. Use with a document attribute of type Date or Long.
+	// fields. Supported for the following document attribute value types (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeValue.html):
+	// dateValue and longValue.
 	GreaterThan *DocumentAttribute `locationName:"greaterThan" type:"structure"`
 
 	// Performs a greater or equals than operation on two document attributes or
-	// metadata fields. Use with a document attribute of type Date or Long.
+	// metadata fields. Supported for the following document attribute value types
+	// (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeValue.html):
+	// dateValue and longValue.
 	GreaterThanOrEquals *DocumentAttribute `locationName:"greaterThanOrEquals" type:"structure"`
 
 	// Performs a less than operation on two document attributes or metadata fields.
-	// Use with a document attribute of type Date or Long.
+	// Supported for the following document attribute value types (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeValue.html):
+	// dateValue and longValue.
 	LessThan *DocumentAttribute `locationName:"lessThan" type:"structure"`
 
 	// Performs a less than or equals operation on two document attributes or metadata
-	// fields. Use with a document attribute of type Date or Long.
+	// fields.Supported for the following document attribute value type (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeValue.html):
+	// dateValue and longValue.
 	LessThanOrEquals *DocumentAttribute `locationName:"lessThanOrEquals" type:"structure"`
 
 	// Performs a logical NOT operation on all supplied filters.
@@ -6992,12 +7726,226 @@ func (s *AttributeFilter) SetOrAllFilters(v []*AttributeFilter) *AttributeFilter
 	return s
 }
 
+// A request made by Amazon Q Business to a third paty authentication server
+// to authenticate a custom plugin user.
+type AuthChallengeRequest struct {
+	_ struct{} `type:"structure"`
+
+	// The URL sent by Amazon Q Business to the third party authentication server
+	// to authenticate a custom plugin user through an OAuth protocol.
+	//
+	// AuthorizationUrl is a required field
+	AuthorizationUrl *string `locationName:"authorizationUrl" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeRequest) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeRequest) GoString() string {
+	return s.String()
+}
+
+// SetAuthorizationUrl sets the AuthorizationUrl field's value.
+func (s *AuthChallengeRequest) SetAuthorizationUrl(v string) *AuthChallengeRequest {
+	s.AuthorizationUrl = &v
+	return s
+}
+
+// An authentication verification event activated by an end user request to
+// use a custom plugin.
+type AuthChallengeRequestEvent struct {
+	_ struct{} `type:"structure"`
+
+	// The URL sent by Amazon Q Business to a third party authentication server
+	// in response to an authentication verification event activated by an end user
+	// request to use a custom plugin.
+	//
+	// AuthorizationUrl is a required field
+	AuthorizationUrl *string `locationName:"authorizationUrl" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeRequestEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeRequestEvent) GoString() string {
+	return s.String()
+}
+
+// SetAuthorizationUrl sets the AuthorizationUrl field's value.
+func (s *AuthChallengeRequestEvent) SetAuthorizationUrl(v string) *AuthChallengeRequestEvent {
+	s.AuthorizationUrl = &v
+	return s
+}
+
+// The AuthChallengeRequestEvent is and event in the ChatOutputStream group of events.
+func (s *AuthChallengeRequestEvent) eventChatOutputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the AuthChallengeRequestEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *AuthChallengeRequestEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *AuthChallengeRequestEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
+// Contains details of the authentication information received from a third
+// party authentication server in response to an authentication challenge.
+type AuthChallengeResponse struct {
+	_ struct{} `type:"structure"`
+
+	// The mapping of key-value pairs in an authentication challenge response.
+	//
+	// ResponseMap is a required field
+	ResponseMap map[string]*string `locationName:"responseMap" type:"map" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeResponse) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeResponse) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AuthChallengeResponse) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AuthChallengeResponse"}
+	if s.ResponseMap == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResponseMap"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResponseMap sets the ResponseMap field's value.
+func (s *AuthChallengeResponse) SetResponseMap(v map[string]*string) *AuthChallengeResponse {
+	s.ResponseMap = v
+	return s
+}
+
+// An authentication verification event response by a third party authentication
+// server to Amazon Q Business.
+type AuthChallengeResponseEvent struct {
+	_ struct{} `type:"structure"`
+
+	// The mapping of key-value pairs in an authentication challenge response.
+	//
+	// ResponseMap is a required field
+	ResponseMap map[string]*string `locationName:"responseMap" type:"map" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeResponseEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthChallengeResponseEvent) GoString() string {
+	return s.String()
+}
+
+// SetResponseMap sets the ResponseMap field's value.
+func (s *AuthChallengeResponseEvent) SetResponseMap(v map[string]*string) *AuthChallengeResponseEvent {
+	s.ResponseMap = v
+	return s
+}
+
+// The AuthChallengeResponseEvent is and event in the ChatInputStream group of events.
+func (s *AuthChallengeResponseEvent) eventChatInputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the AuthChallengeResponseEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *AuthChallengeResponseEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *AuthChallengeResponseEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
 // Information about the basic authentication credentials used to configure
 // a plugin.
 type BasicAuthConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The ARN of an IAM role used by Amazon Q to access the basic authentication
+	// The ARN of an IAM role used by Amazon Q Business to access the basic authentication
 	// credentials stored in a Secrets Manager secret.
 	//
 	// RoleArn is a required field
@@ -7059,7 +8007,7 @@ func (s *BasicAuthConfiguration) SetSecretArn(v string) *BasicAuthConfiguration 
 type BatchDeleteDocumentInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -7067,12 +8015,13 @@ type BatchDeleteDocumentInput struct {
 	// The identifier of the data source sync during which the documents were deleted.
 	DataSourceSyncId *string `locationName:"dataSourceSyncId" min:"36" type:"string"`
 
-	// Documents deleted from the Amazon Q index.
+	// Documents deleted from the Amazon Q Business index.
 	//
 	// Documents is a required field
 	Documents []*DeleteDocument `locationName:"documents" type:"list" required:"true"`
 
-	// The identifier of the Amazon Q index that contains the documents to delete.
+	// The identifier of the Amazon Q Business index that contains the documents
+	// to delete.
 	//
 	// IndexId is a required field
 	IndexId *string `location:"uri" locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -7161,8 +8110,8 @@ func (s *BatchDeleteDocumentInput) SetIndexId(v string) *BatchDeleteDocumentInpu
 type BatchDeleteDocumentOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of documents that couldn't be removed from the Amazon Q index. Each
-	// entry contains an error message that indicates why the document couldn't
+	// A list of documents that couldn't be removed from the Amazon Q Business index.
+	// Each entry contains an error message that indicates why the document couldn't
 	// be removed from the index.
 	FailedDocuments []*FailedDocument `locationName:"failedDocuments" type:"list"`
 }
@@ -7194,7 +8143,7 @@ func (s *BatchDeleteDocumentOutput) SetFailedDocuments(v []*FailedDocument) *Bat
 type BatchPutDocumentInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -7207,7 +8156,7 @@ type BatchPutDocumentInput struct {
 	// Documents is a required field
 	Documents []*Document `locationName:"documents" min:"1" type:"list" required:"true"`
 
-	// The identifier of the Amazon Q index to add the documents to.
+	// The identifier of the Amazon Q Business index to add the documents to.
 	//
 	// IndexId is a required field
 	IndexId *string `location:"uri" locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -7309,8 +8258,8 @@ func (s *BatchPutDocumentInput) SetRoleArn(v string) *BatchPutDocumentInput {
 type BatchPutDocumentOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of documents that were not added to the Amazon Q index because the
-	// document failed a validation check. Each document contains an error message
+	// A list of documents that were not added to the Amazon Q Business index because
+	// the document failed a validation check. Each document contains an error message
 	// that indicates why the document couldn't be added to the index.
 	FailedDocuments []*FailedDocument `locationName:"failedDocuments" type:"list"`
 }
@@ -7344,7 +8293,7 @@ func (s *BatchPutDocumentOutput) SetFailedDocuments(v []*FailedDocument) *BatchP
 type BlockedPhrasesConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// A list of phrases blocked from a Amazon Q web experience chat.
+	// A list of phrases blocked from a Amazon Q Business web experience chat.
 	BlockedPhrases []*string `locationName:"blockedPhrases" type:"list"`
 
 	// The configured custom message displayed to an end user informing them that
@@ -7382,14 +8331,15 @@ func (s *BlockedPhrasesConfiguration) SetSystemMessageOverride(v string) *Blocke
 	return s
 }
 
-// Updates a blocked phrases configuration in your Amazon Q application.
+// Updates a blocked phrases configuration in your Amazon Q Business application.
 type BlockedPhrasesConfigurationUpdate struct {
 	_ struct{} `type:"structure"`
 
-	// Creates or updates a blocked phrases configuration in your Amazon Q application.
+	// Creates or updates a blocked phrases configuration in your Amazon Q Business
+	// application.
 	BlockedPhrasesToCreateOrUpdate []*string `locationName:"blockedPhrasesToCreateOrUpdate" type:"list"`
 
-	// Deletes a blocked phrases configuration in your Amazon Q application.
+	// Deletes a blocked phrases configuration in your Amazon Q Business application.
 	BlockedPhrasesToDelete []*string `locationName:"blockedPhrasesToDelete" type:"list"`
 
 	// The configured custom message displayed to your end user when they use blocked
@@ -7433,10 +8383,434 @@ func (s *BlockedPhrasesConfigurationUpdate) SetSystemMessageOverride(v string) *
 	return s
 }
 
+type ChatInput struct {
+	_ struct{} `type:"structure" payload:"InputStream"`
+
+	// The identifier of the Amazon Q Business application linked to a streaming
+	// Amazon Q Business conversation.
+	//
+	// ApplicationId is a required field
+	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
+
+	// A token that you provide to identify the chat input.
+	ClientToken *string `location:"querystring" locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The identifier of the Amazon Q Business conversation.
+	ConversationId *string `location:"querystring" locationName:"conversationId" min:"36" type:"string"`
+
+	// The identifier used to associate a user message with a AI generated response.
+	ParentMessageId *string `location:"querystring" locationName:"parentMessageId" min:"36" type:"string"`
+
+	// The groups that a user associated with the chat input belongs to.
+	UserGroups []*string `location:"querystring" locationName:"userGroups" type:"list"`
+
+	// The identifier of the user attached to the chat input.
+	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ChatInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ChatInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ChatInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ChatInput"}
+	if s.ApplicationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ApplicationId"))
+	}
+	if s.ApplicationId != nil && len(*s.ApplicationId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("ApplicationId", 36))
+	}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.ConversationId != nil && len(*s.ConversationId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("ConversationId", 36))
+	}
+	if s.ParentMessageId != nil && len(*s.ParentMessageId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("ParentMessageId", 36))
+	}
+	if s.UserId != nil && len(*s.UserId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("UserId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApplicationId sets the ApplicationId field's value.
+func (s *ChatInput) SetApplicationId(v string) *ChatInput {
+	s.ApplicationId = &v
+	return s
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *ChatInput) SetClientToken(v string) *ChatInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetConversationId sets the ConversationId field's value.
+func (s *ChatInput) SetConversationId(v string) *ChatInput {
+	s.ConversationId = &v
+	return s
+}
+
+// SetParentMessageId sets the ParentMessageId field's value.
+func (s *ChatInput) SetParentMessageId(v string) *ChatInput {
+	s.ParentMessageId = &v
+	return s
+}
+
+// SetUserGroups sets the UserGroups field's value.
+func (s *ChatInput) SetUserGroups(v []*string) *ChatInput {
+	s.UserGroups = v
+	return s
+}
+
+// SetUserId sets the UserId field's value.
+func (s *ChatInput) SetUserId(v string) *ChatInput {
+	s.UserId = &v
+	return s
+}
+
+// ChatInputStreamEvent groups together all EventStream
+// events writes for ChatInputStream.
+//
+// These events are:
+//
+//   - AttachmentInputEvent
+//   - AuthChallengeResponseEvent
+//   - ConfigurationEvent
+//   - EndOfInputEvent
+//   - TextInputEvent
+type ChatInputStreamEvent interface {
+	eventChatInputStream()
+	eventstreamapi.Marshaler
+	eventstreamapi.Unmarshaler
+}
+
+// ChatInputStreamWriter provides the interface for writing events to the stream.
+// The default implementation for this interface will be ChatInputStream.
+//
+// The writer's Close method must allow multiple concurrent calls.
+//
+// These events are:
+//
+//   - AttachmentInputEvent
+//   - AuthChallengeResponseEvent
+//   - ConfigurationEvent
+//   - EndOfInputEvent
+//   - TextInputEvent
+type ChatInputStreamWriter interface {
+	// Sends writes events to the stream blocking until the event has been
+	// written. An error is returned if the write fails.
+	Send(aws.Context, ChatInputStreamEvent) error
+
+	// Close will stop the writer writing to the event stream.
+	Close() error
+
+	// Returns any error that has occurred while writing to the event stream.
+	Err() error
+}
+
+type writeChatInputStream struct {
+	*eventstreamapi.StreamWriter
+}
+
+func (w *writeChatInputStream) Send(ctx aws.Context, event ChatInputStreamEvent) error {
+	return w.StreamWriter.Send(ctx, event)
+}
+
+func eventTypeForChatInputStreamEvent(event eventstreamapi.Marshaler) (string, error) {
+	switch event.(type) {
+	case *AttachmentInputEvent:
+		return "attachmentEvent", nil
+	case *AuthChallengeResponseEvent:
+		return "authChallengeResponseEvent", nil
+	case *ConfigurationEvent:
+		return "configurationEvent", nil
+	case *EndOfInputEvent:
+		return "endOfInputEvent", nil
+	case *TextInputEvent:
+		return "textEvent", nil
+	default:
+		return "", awserr.New(
+			request.ErrCodeSerialization,
+			fmt.Sprintf("unknown event type, %T, for ChatInputStream", event),
+			nil,
+		)
+	}
+}
+
+// Configuration information for Amazon Q Business conversation modes.
+//
+// For more information, see Admin controls and guardrails (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html)
+// and Conversation settings (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope).
+type ChatModeConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Configuration information required to invoke chat in PLUGIN_MODE.
+	PluginConfiguration *PluginConfiguration `locationName:"pluginConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ChatModeConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ChatModeConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ChatModeConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ChatModeConfiguration"}
+	if s.PluginConfiguration != nil {
+		if err := s.PluginConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("PluginConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPluginConfiguration sets the PluginConfiguration field's value.
+func (s *ChatModeConfiguration) SetPluginConfiguration(v *PluginConfiguration) *ChatModeConfiguration {
+	s.PluginConfiguration = v
+	return s
+}
+
+type ChatOutput struct {
+	_ struct{} `type:"structure" payload:"OutputStream"`
+
+	eventStream *ChatEventStream
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ChatOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ChatOutput) GoString() string {
+	return s.String()
+}
+
+// GetStream returns the type to interact with the event stream.
+func (s *ChatOutput) GetStream() *ChatEventStream {
+	return s.eventStream
+}
+
+// ChatOutputStreamEvent groups together all EventStream
+// events writes for ChatOutputStream.
+//
+// These events are:
+//
+//   - ActionReviewEvent
+//   - AuthChallengeRequestEvent
+//   - FailedAttachmentEvent
+//   - MetadataEvent
+//   - TextOutputEvent
+type ChatOutputStreamEvent interface {
+	eventChatOutputStream()
+	eventstreamapi.Marshaler
+	eventstreamapi.Unmarshaler
+}
+
+// ChatOutputStreamReader provides the interface for reading to the stream. The
+// default implementation for this interface will be ChatOutputStream.
+//
+// The reader's Close method must allow multiple concurrent calls.
+//
+// These events are:
+//
+//   - ActionReviewEvent
+//   - AuthChallengeRequestEvent
+//   - FailedAttachmentEvent
+//   - MetadataEvent
+//   - TextOutputEvent
+//   - ChatOutputStreamUnknownEvent
+type ChatOutputStreamReader interface {
+	// Returns a channel of events as they are read from the event stream.
+	Events() <-chan ChatOutputStreamEvent
+
+	// Close will stop the reader reading events from the stream.
+	Close() error
+
+	// Returns any error that has occurred while reading from the event stream.
+	Err() error
+}
+
+type readChatOutputStream struct {
+	eventReader *eventstreamapi.EventReader
+	stream      chan ChatOutputStreamEvent
+	err         *eventstreamapi.OnceError
+
+	done      chan struct{}
+	closeOnce sync.Once
+}
+
+func newReadChatOutputStream(eventReader *eventstreamapi.EventReader) *readChatOutputStream {
+	r := &readChatOutputStream{
+		eventReader: eventReader,
+		stream:      make(chan ChatOutputStreamEvent),
+		done:        make(chan struct{}),
+		err:         eventstreamapi.NewOnceError(),
+	}
+	go r.readEventStream()
+
+	return r
+}
+
+// Close will close the underlying event stream reader.
+func (r *readChatOutputStream) Close() error {
+	r.closeOnce.Do(r.safeClose)
+	return r.Err()
+}
+
+func (r *readChatOutputStream) ErrorSet() <-chan struct{} {
+	return r.err.ErrorSet()
+}
+
+func (r *readChatOutputStream) Closed() <-chan struct{} {
+	return r.done
+}
+
+func (r *readChatOutputStream) safeClose() {
+	close(r.done)
+}
+
+func (r *readChatOutputStream) Err() error {
+	return r.err.Err()
+}
+
+func (r *readChatOutputStream) Events() <-chan ChatOutputStreamEvent {
+	return r.stream
+}
+
+func (r *readChatOutputStream) readEventStream() {
+	defer r.Close()
+	defer close(r.stream)
+
+	for {
+		event, err := r.eventReader.ReadEvent()
+		if err != nil {
+			if err == io.EOF {
+				return
+			}
+			select {
+			case <-r.done:
+				// If closed already ignore the error
+				return
+			default:
+			}
+			if _, ok := err.(*eventstreamapi.UnknownMessageTypeError); ok {
+				continue
+			}
+			r.err.SetError(err)
+			return
+		}
+
+		select {
+		case r.stream <- event.(ChatOutputStreamEvent):
+		case <-r.done:
+			return
+		}
+	}
+}
+
+type unmarshalerForChatOutputStreamEvent struct {
+	metadata protocol.ResponseMetadata
+}
+
+func (u unmarshalerForChatOutputStreamEvent) UnmarshalerForEventName(eventType string) (eventstreamapi.Unmarshaler, error) {
+	switch eventType {
+	case "actionReviewEvent":
+		return &ActionReviewEvent{}, nil
+	case "authChallengeRequestEvent":
+		return &AuthChallengeRequestEvent{}, nil
+	case "failedAttachmentEvent":
+		return &FailedAttachmentEvent{}, nil
+	case "metadataEvent":
+		return &MetadataEvent{}, nil
+	case "textEvent":
+		return &TextOutputEvent{}, nil
+	default:
+		return &ChatOutputStreamUnknownEvent{Type: eventType}, nil
+	}
+}
+
+// ChatOutputStreamUnknownEvent provides a failsafe event for the
+// ChatOutputStream group of events when an unknown event is received.
+type ChatOutputStreamUnknownEvent struct {
+	Type    string
+	Message eventstream.Message
+}
+
+// The ChatOutputStreamUnknownEvent is and event in the ChatOutputStream
+// group of events.
+func (s *ChatOutputStreamUnknownEvent) eventChatOutputStream() {}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (e *ChatOutputStreamUnknownEvent) MarshalEvent(pm protocol.PayloadMarshaler) (
+	msg eventstream.Message, err error,
+) {
+	return e.Message.Clone(), nil
+}
+
+// UnmarshalEvent unmarshals the EventStream Message into the ChatOutputStream value.
+// This method is only used internally within the SDK's EventStream handling.
+func (e *ChatOutputStreamUnknownEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	e.Message = msg.Clone()
+	return nil
+}
+
 type ChatSyncInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application linked to the Amazon Q conversation.
+	// The identifier of the Amazon Q Business application linked to the Amazon
+	// Q Business conversation.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -7445,26 +8819,49 @@ type ChatSyncInput struct {
 	// 5 files of upto 10 MB each.
 	Attachments []*AttachmentInput_ `locationName:"attachments" min:"1" type:"list"`
 
-	// Enables filtering of Amazon Q web experience responses based on document
-	// attributes or metadata fields.
+	// Enables filtering of Amazon Q Business web experience responses based on
+	// document attributes or metadata fields.
 	AttributeFilter *AttributeFilter `locationName:"attributeFilter" type:"structure"`
+
+	// An authentication verification event response by a third party authentication
+	// server to Amazon Q Business.
+	AuthChallengeResponse *AuthChallengeResponse `locationName:"authChallengeResponse" type:"structure"`
+
+	// The chat modes available to an Amazon Q Business end user.
+	//
+	//    * RETRIEVAL_MODE - The default chat mode for an Amazon Q Business application.
+	//    When this mode is enabled, Amazon Q Business generates responses only
+	//    from data sources connected to an Amazon Q Business application.
+	//
+	//    * CREATOR_MODE - By selecting this mode, users can choose to generate
+	//    responses only from the LLM knowledge, without consulting connected data
+	//    sources, for a chat request.
+	//
+	//    * PLUGIN_MODE - By selecting this mode, users can choose to use plugins
+	//    in chat.
+	//
+	// For more information, see Admin controls and guardrails (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html),
+	// Plugins (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/plugins.html),
+	// and Conversation settings (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope).
+	ChatMode *string `locationName:"chatMode" type:"string" enum:"ChatMode"`
+
+	// The chat mode configuration for an Amazon Q Business application.
+	ChatModeConfiguration *ChatModeConfiguration `locationName:"chatModeConfiguration" type:"structure"`
 
 	// A token that you provide to identify a chat request.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
-	// The identifier of the Amazon Q conversation.
+	// The identifier of the Amazon Q Business conversation.
 	ConversationId *string `locationName:"conversationId" min:"36" type:"string"`
 
-	// The identifier of the previous end user text input message in a conversation.
+	// The identifier of the previous system message in a conversation.
 	ParentMessageId *string `locationName:"parentMessageId" min:"36" type:"string"`
 
 	// The groups that a user associated with the chat input belongs to.
 	UserGroups []*string `location:"querystring" locationName:"userGroups" type:"list"`
 
 	// The identifier of the user attached to the chat input.
-	//
-	// UserId is a required field
-	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string" required:"true"`
+	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string"`
 
 	// A end user message in a conversation.
 	UserMessage *string `locationName:"userMessage" min:"1" type:"string"`
@@ -7509,9 +8906,6 @@ func (s *ChatSyncInput) Validate() error {
 	if s.ParentMessageId != nil && len(*s.ParentMessageId) < 36 {
 		invalidParams.Add(request.NewErrParamMinLen("ParentMessageId", 36))
 	}
-	if s.UserId == nil {
-		invalidParams.Add(request.NewErrParamRequired("UserId"))
-	}
 	if s.UserId != nil && len(*s.UserId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("UserId", 1))
 	}
@@ -7531,6 +8925,16 @@ func (s *ChatSyncInput) Validate() error {
 	if s.AttributeFilter != nil {
 		if err := s.AttributeFilter.Validate(); err != nil {
 			invalidParams.AddNested("AttributeFilter", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.AuthChallengeResponse != nil {
+		if err := s.AuthChallengeResponse.Validate(); err != nil {
+			invalidParams.AddNested("AuthChallengeResponse", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.ChatModeConfiguration != nil {
+		if err := s.ChatModeConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("ChatModeConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -7555,6 +8959,24 @@ func (s *ChatSyncInput) SetAttachments(v []*AttachmentInput_) *ChatSyncInput {
 // SetAttributeFilter sets the AttributeFilter field's value.
 func (s *ChatSyncInput) SetAttributeFilter(v *AttributeFilter) *ChatSyncInput {
 	s.AttributeFilter = v
+	return s
+}
+
+// SetAuthChallengeResponse sets the AuthChallengeResponse field's value.
+func (s *ChatSyncInput) SetAuthChallengeResponse(v *AuthChallengeResponse) *ChatSyncInput {
+	s.AuthChallengeResponse = v
+	return s
+}
+
+// SetChatMode sets the ChatMode field's value.
+func (s *ChatSyncInput) SetChatMode(v string) *ChatSyncInput {
+	s.ChatMode = &v
+	return s
+}
+
+// SetChatModeConfiguration sets the ChatModeConfiguration field's value.
+func (s *ChatSyncInput) SetChatModeConfiguration(v *ChatModeConfiguration) *ChatSyncInput {
+	s.ChatModeConfiguration = v
 	return s
 }
 
@@ -7597,11 +9019,15 @@ func (s *ChatSyncInput) SetUserMessage(v string) *ChatSyncInput {
 type ChatSyncOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A request from Amazon Q to the end user for information Amazon Q needs to
-	// successfully complete a requested plugin action.
+	// A request from Amazon Q Business to the end user for information Amazon Q
+	// Business needs to successfully complete a requested plugin action.
 	ActionReview *ActionReview `locationName:"actionReview" type:"structure"`
 
-	// The identifier of the Amazon Q conversation.
+	// An authentication verification event activated by an end user request to
+	// use a custom plugin.
+	AuthChallengeRequest *AuthChallengeRequest `locationName:"authChallengeRequest" type:"structure"`
+
+	// The identifier of the Amazon Q Business conversation.
 	ConversationId *string `locationName:"conversationId" min:"36" type:"string"`
 
 	// A list of files which failed to upload during chat.
@@ -7613,10 +9039,11 @@ type ChatSyncOutput struct {
 	// An AI-generated message in a conversation.
 	SystemMessage *string `locationName:"systemMessage" min:"1" type:"string"`
 
-	// The identifier of an Amazon Q AI generated message within the conversation.
+	// The identifier of an Amazon Q Business AI generated message within the conversation.
 	SystemMessageId *string `locationName:"systemMessageId" min:"36" type:"string"`
 
-	// The identifier of an Amazon Q end user text input message within the conversation.
+	// The identifier of an Amazon Q Business end user text input message within
+	// the conversation.
 	UserMessageId *string `locationName:"userMessageId" min:"36" type:"string"`
 }
 
@@ -7641,6 +9068,12 @@ func (s ChatSyncOutput) GoString() string {
 // SetActionReview sets the ActionReview field's value.
 func (s *ChatSyncOutput) SetActionReview(v *ActionReview) *ChatSyncOutput {
 	s.ActionReview = v
+	return s
+}
+
+// SetAuthChallengeRequest sets the AuthChallengeRequest field's value.
+func (s *ChatSyncOutput) SetAuthChallengeRequest(v *AuthChallengeRequest) *ChatSyncOutput {
+	s.AuthChallengeRequest = v
 	return s
 }
 
@@ -7678,6 +9111,104 @@ func (s *ChatSyncOutput) SetSystemMessageId(v string) *ChatSyncOutput {
 func (s *ChatSyncOutput) SetUserMessageId(v string) *ChatSyncOutput {
 	s.UserMessageId = &v
 	return s
+}
+
+// A configuration event activated by an end user request to select a specific
+// chat mode.
+type ConfigurationEvent struct {
+	_ struct{} `type:"structure"`
+
+	// Enables filtering of responses based on document attributes or metadata fields.
+	AttributeFilter *AttributeFilter `locationName:"attributeFilter" type:"structure"`
+
+	// The chat modes available to an Amazon Q Business end user.
+	//
+	//    * RETRIEVAL_MODE - The default chat mode for an Amazon Q Business application.
+	//    When this mode is enabled, Amazon Q Business generates responses only
+	//    from data sources connected to an Amazon Q Business application.
+	//
+	//    * CREATOR_MODE - By selecting this mode, users can choose to generate
+	//    responses only from the LLM knowledge, without consulting connected data
+	//    sources, for a chat request.
+	//
+	//    * PLUGIN_MODE - By selecting this mode, users can choose to use plugins
+	//    in chat.
+	//
+	// For more information, see Admin controls and guardrails (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html),
+	// Plugins (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/plugins.html),
+	// and Conversation settings (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope).
+	ChatMode *string `locationName:"chatMode" type:"string" enum:"ChatMode"`
+
+	// Configuration information for Amazon Q Business conversation modes.
+	//
+	// For more information, see Admin controls and guardrails (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html)
+	// and Conversation settings (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope).
+	ChatModeConfiguration *ChatModeConfiguration `locationName:"chatModeConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConfigurationEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConfigurationEvent) GoString() string {
+	return s.String()
+}
+
+// SetAttributeFilter sets the AttributeFilter field's value.
+func (s *ConfigurationEvent) SetAttributeFilter(v *AttributeFilter) *ConfigurationEvent {
+	s.AttributeFilter = v
+	return s
+}
+
+// SetChatMode sets the ChatMode field's value.
+func (s *ConfigurationEvent) SetChatMode(v string) *ConfigurationEvent {
+	s.ChatMode = &v
+	return s
+}
+
+// SetChatModeConfiguration sets the ChatModeConfiguration field's value.
+func (s *ConfigurationEvent) SetChatModeConfiguration(v *ChatModeConfiguration) *ConfigurationEvent {
+	s.ChatModeConfiguration = v
+	return s
+}
+
+// The ConfigurationEvent is and event in the ChatInputStream group of events.
+func (s *ConfigurationEvent) eventChatInputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the ConfigurationEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *ConfigurationEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *ConfigurationEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
 }
 
 // You are trying to perform an action that conflicts with the current status
@@ -7756,10 +9287,10 @@ func (s *ConflictException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// A rule for configuring how Amazon Q responds when it encounters a a blocked
-// topic. You can configure a custom message to inform your end users that they
-// have asked about a restricted topic and suggest any next steps they should
-// take.
+// A rule for configuring how Amazon Q Business responds when it encounters
+// a a blocked topic. You can configure a custom message to inform your end
+// users that they have asked about a restricted topic and suggest any next
+// steps they should take.
 type ContentBlockerRule struct {
 	_ struct{} `type:"structure"`
 
@@ -7792,12 +9323,13 @@ func (s *ContentBlockerRule) SetSystemMessageOverride(v string) *ContentBlockerR
 	return s
 }
 
-// Rules for retrieving content from data sources connected to a Amazon Q application
-// for a specific topic control configuration.
+// Rules for retrieving content from data sources connected to a Amazon Q Business
+// application for a specific topic control configuration.
 type ContentRetrievalRule struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies data sources in a Amazon Q application to use for content generation.
+	// Specifies data sources in a Amazon Q Business application to use for content
+	// generation.
 	EligibleDataSources []*EligibleDataSource `locationName:"eligibleDataSources" type:"list"`
 }
 
@@ -7845,11 +9377,11 @@ func (s *ContentRetrievalRule) SetEligibleDataSources(v []*EligibleDataSource) *
 	return s
 }
 
-// A conversation in an Amazon Q application.
+// A conversation in an Amazon Q Business application.
 type Conversation struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q conversation.
+	// The identifier of the Amazon Q Business conversation.
 	ConversationId *string `locationName:"conversationId" min:"36" type:"string"`
 
 	// The start time of the conversation.
@@ -7902,31 +9434,36 @@ type CreateApplicationInput struct {
 	AttachmentsConfiguration *AttachmentsConfiguration `locationName:"attachmentsConfiguration" type:"structure"`
 
 	// A token that you provide to identify the request to create your Amazon Q
-	// application.
+	// Business application.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
-	// A description for the Amazon Q application.
+	// A description for the Amazon Q Business application.
 	Description *string `locationName:"description" type:"string"`
 
-	// A name for the Amazon Q application.
+	// A name for the Amazon Q Business application.
 	//
 	// DisplayName is a required field
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" required:"true"`
 
 	// The identifier of the KMS key that is used to encrypt your data. Amazon Q
-	// doesn't support asymmetric keys.
+	// Business doesn't support asymmetric keys.
 	EncryptionConfiguration *EncryptionConfiguration `locationName:"encryptionConfiguration" type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the IAM Identity Center instance you are
+	// either creating for—or connecting to—your Amazon Q Business application.
+	IdentityCenterInstanceArn *string `locationName:"identityCenterInstanceArn" min:"10" type:"string"`
+
+	// An option to allow end users to create and use Amazon Q Apps in the web experience.
+	QAppsConfiguration *QAppsConfiguration `locationName:"qAppsConfiguration" type:"structure"`
 
 	// The Amazon Resource Name (ARN) of an IAM role with permissions to access
 	// your Amazon CloudWatch logs and metrics.
-	//
-	// RoleArn is a required field
-	RoleArn *string `locationName:"roleArn" type:"string" required:"true"`
+	RoleArn *string `locationName:"roleArn" type:"string"`
 
-	// A list of key-value pairs that identify or categorize your Amazon Q application.
-	// You can also use tags to help control access to the application. Tag keys
-	// and values can consist of Unicode letters, digits, white space, and any of
-	// the following symbols: _ . : / = + - @.
+	// A list of key-value pairs that identify or categorize your Amazon Q Business
+	// application. You can also use tags to help control access to the application.
+	// Tag keys and values can consist of Unicode letters, digits, white space,
+	// and any of the following symbols: _ . : / = + - @.
 	Tags []*Tag `locationName:"tags" type:"list"`
 }
 
@@ -7960,8 +9497,8 @@ func (s *CreateApplicationInput) Validate() error {
 	if s.DisplayName != nil && len(*s.DisplayName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DisplayName", 1))
 	}
-	if s.RoleArn == nil {
-		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
+	if s.IdentityCenterInstanceArn != nil && len(*s.IdentityCenterInstanceArn) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("IdentityCenterInstanceArn", 10))
 	}
 	if s.AttachmentsConfiguration != nil {
 		if err := s.AttachmentsConfiguration.Validate(); err != nil {
@@ -7971,6 +9508,11 @@ func (s *CreateApplicationInput) Validate() error {
 	if s.EncryptionConfiguration != nil {
 		if err := s.EncryptionConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("EncryptionConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.QAppsConfiguration != nil {
+		if err := s.QAppsConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("QAppsConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.Tags != nil {
@@ -8020,6 +9562,18 @@ func (s *CreateApplicationInput) SetEncryptionConfiguration(v *EncryptionConfigu
 	return s
 }
 
+// SetIdentityCenterInstanceArn sets the IdentityCenterInstanceArn field's value.
+func (s *CreateApplicationInput) SetIdentityCenterInstanceArn(v string) *CreateApplicationInput {
+	s.IdentityCenterInstanceArn = &v
+	return s
+}
+
+// SetQAppsConfiguration sets the QAppsConfiguration field's value.
+func (s *CreateApplicationInput) SetQAppsConfiguration(v *QAppsConfiguration) *CreateApplicationInput {
+	s.QAppsConfiguration = v
+	return s
+}
+
 // SetRoleArn sets the RoleArn field's value.
 func (s *CreateApplicationInput) SetRoleArn(v string) *CreateApplicationInput {
 	s.RoleArn = &v
@@ -8035,10 +9589,10 @@ func (s *CreateApplicationInput) SetTags(v []*Tag) *CreateApplicationInput {
 type CreateApplicationOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q application.
+	// The Amazon Resource Name (ARN) of the Amazon Q Business application.
 	ApplicationArn *string `locationName:"applicationArn" type:"string"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 }
 
@@ -8075,7 +9629,7 @@ func (s *CreateApplicationOutput) SetApplicationId(v string) *CreateApplicationO
 type CreateIndexInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application using the index.
+	// The identifier of the Amazon Q Business application using the index.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -8089,10 +9643,10 @@ type CreateIndexInput struct {
 	// one index.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
-	// A description for the Amazon Q index.
+	// A description for the Amazon Q Business index.
 	Description *string `locationName:"description" type:"string"`
 
-	// A name for the Amazon Q index.
+	// A name for the Amazon Q Business index.
 	//
 	// DisplayName is a required field
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" required:"true"`
@@ -8102,6 +9656,10 @@ type CreateIndexInput struct {
 	// consist of Unicode letters, digits, white space, and any of the following
 	// symbols: _ . : / = + - @.
 	Tags []*Tag `locationName:"tags" type:"list"`
+
+	// The index type that's suitable for your needs. For more information on what's
+	// included in each type of index, see Amazon Q Business tiers (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/tiers.html#index-tiers).
+	Type *string `locationName:"type" type:"string" enum:"IndexType"`
 }
 
 // String returns the string representation.
@@ -8198,13 +9756,19 @@ func (s *CreateIndexInput) SetTags(v []*Tag) *CreateIndexInput {
 	return s
 }
 
+// SetType sets the Type field's value.
+func (s *CreateIndexInput) SetType(v string) *CreateIndexInput {
+	s.Type = &v
+	return s
+}
+
 type CreateIndexOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of an Amazon Q index.
+	// The Amazon Resource Name (ARN) of an Amazon Q Business index.
 	IndexArn *string `locationName:"indexArn" type:"string"`
 
-	// The identifier for the Amazon Q index.
+	// The identifier for the Amazon Q Business index.
 	IndexId *string `locationName:"indexId" min:"36" type:"string"`
 }
 
@@ -8246,14 +9810,17 @@ type CreatePluginInput struct {
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// Authentication configuration information for an Amazon Q plugin.
+	// Authentication configuration information for an Amazon Q Business plugin.
 	//
 	// AuthConfiguration is a required field
 	AuthConfiguration *PluginAuthConfiguration `locationName:"authConfiguration" type:"structure" required:"true"`
 
 	// A token that you provide to identify the request to create your Amazon Q
-	// plugin.
+	// Business plugin.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// Contains configuration for a custom plugin.
+	CustomPluginConfiguration *CustomPluginConfiguration `locationName:"customPluginConfiguration" type:"structure"`
 
 	// A the name for your plugin.
 	//
@@ -8261,9 +9828,7 @@ type CreatePluginInput struct {
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" required:"true"`
 
 	// The source URL used for plugin configuration.
-	//
-	// ServerUrl is a required field
-	ServerUrl *string `locationName:"serverUrl" min:"1" type:"string" required:"true"`
+	ServerUrl *string `locationName:"serverUrl" min:"1" type:"string"`
 
 	// A list of key-value pairs that identify or categorize the data source connector.
 	// You can also use tags to help control access to the data source connector.
@@ -8316,9 +9881,6 @@ func (s *CreatePluginInput) Validate() error {
 	if s.DisplayName != nil && len(*s.DisplayName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DisplayName", 1))
 	}
-	if s.ServerUrl == nil {
-		invalidParams.Add(request.NewErrParamRequired("ServerUrl"))
-	}
 	if s.ServerUrl != nil && len(*s.ServerUrl) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ServerUrl", 1))
 	}
@@ -8328,6 +9890,11 @@ func (s *CreatePluginInput) Validate() error {
 	if s.AuthConfiguration != nil {
 		if err := s.AuthConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("AuthConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.CustomPluginConfiguration != nil {
+		if err := s.CustomPluginConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("CustomPluginConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.Tags != nil {
@@ -8365,6 +9932,12 @@ func (s *CreatePluginInput) SetClientToken(v string) *CreatePluginInput {
 	return s
 }
 
+// SetCustomPluginConfiguration sets the CustomPluginConfiguration field's value.
+func (s *CreatePluginInput) SetCustomPluginConfiguration(v *CustomPluginConfiguration) *CreatePluginInput {
+	s.CustomPluginConfiguration = v
+	return s
+}
+
 // SetDisplayName sets the DisplayName field's value.
 func (s *CreatePluginInput) SetDisplayName(v string) *CreatePluginInput {
 	s.DisplayName = &v
@@ -8392,6 +9965,9 @@ func (s *CreatePluginInput) SetType(v string) *CreatePluginInput {
 type CreatePluginOutput struct {
 	_ struct{} `type:"structure"`
 
+	// The current status of a plugin. A plugin is modified asynchronously.
+	BuildStatus *string `locationName:"buildStatus" type:"string" enum:"PluginBuildStatus"`
+
 	// The Amazon Resource Name (ARN) of a plugin.
 	PluginArn *string `locationName:"pluginArn" type:"string"`
 
@@ -8417,6 +9993,12 @@ func (s CreatePluginOutput) GoString() string {
 	return s.String()
 }
 
+// SetBuildStatus sets the BuildStatus field's value.
+func (s *CreatePluginOutput) SetBuildStatus(v string) *CreatePluginOutput {
+	s.BuildStatus = &v
+	return s
+}
+
 // SetPluginArn sets the PluginArn field's value.
 func (s *CreatePluginOutput) SetPluginArn(v string) *CreatePluginOutput {
 	s.PluginArn = &v
@@ -8432,17 +10014,17 @@ func (s *CreatePluginOutput) SetPluginId(v string) *CreatePluginOutput {
 type CreateRetrieverInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of your Amazon Q application.
+	// The identifier of your Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
 	// A token that you provide to identify the request to create your Amazon Q
-	// application retriever.
+	// Business application retriever.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
-	// Provides information on how the retriever used for your Amazon Q application
-	// is configured.
+	// Provides information on how the retriever used for your Amazon Q Business
+	// application is configured.
 	//
 	// Configuration is a required field
 	Configuration *RetrieverConfiguration `locationName:"configuration" type:"structure" required:"true"`
@@ -8452,7 +10034,7 @@ type CreateRetrieverInput struct {
 	// DisplayName is a required field
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" required:"true"`
 
-	// The ARN of an IAM role used by Amazon Q to access the basic authentication
+	// The ARN of an IAM role used by Amazon Q Business to access the basic authentication
 	// credentials stored in a Secrets Manager secret.
 	RoleArn *string `locationName:"roleArn" type:"string"`
 
@@ -8623,7 +10205,7 @@ type CreateUserInput struct {
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
 	// A token that you provide to identify the request to create your Amazon Q
-	// user mapping.
+	// Business user mapping.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The list of user aliases in the mapping.
@@ -8737,31 +10319,36 @@ func (s CreateUserOutput) GoString() string {
 type CreateWebExperienceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q web experience.
+	// The identifier of the Amazon Q Business web experience.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// A token you provide to identify a request to create an Amazon Q web experience.
+	// A token you provide to identify a request to create an Amazon Q Business
+	// web experience.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The Amazon Resource Name (ARN) of the service role attached to your web experience.
+	RoleArn *string `locationName:"roleArn" type:"string"`
 
 	// Determines whether sample prompts are enabled in the web experience for an
 	// end user.
 	SamplePromptsControlMode *string `locationName:"samplePromptsControlMode" type:"string" enum:"WebExperienceSamplePromptsControlMode"`
 
-	// A subtitle to personalize your Amazon Q web experience.
+	// A subtitle to personalize your Amazon Q Business web experience.
 	Subtitle *string `locationName:"subtitle" type:"string"`
 
-	// A list of key-value pairs that identify or categorize your Amazon Q web experience.
-	// You can also use tags to help control access to the web experience. Tag keys
-	// and values can consist of Unicode letters, digits, white space, and any of
-	// the following symbols: _ . : / = + - @.
+	// A list of key-value pairs that identify or categorize your Amazon Q Business
+	// web experience. You can also use tags to help control access to the web experience.
+	// Tag keys and values can consist of Unicode letters, digits, white space,
+	// and any of the following symbols: _ . : / = + - @.
 	Tags []*Tag `locationName:"tags" type:"list"`
 
-	// The title for your Amazon Q web experience.
+	// The title for your Amazon Q Business web experience.
 	Title *string `locationName:"title" type:"string"`
 
-	// The customized welcome message for end users of an Amazon Q web experience.
+	// The customized welcome message for end users of an Amazon Q Business web
+	// experience.
 	WelcomeMessage *string `locationName:"welcomeMessage" type:"string"`
 }
 
@@ -8824,6 +10411,12 @@ func (s *CreateWebExperienceInput) SetClientToken(v string) *CreateWebExperience
 	return s
 }
 
+// SetRoleArn sets the RoleArn field's value.
+func (s *CreateWebExperienceInput) SetRoleArn(v string) *CreateWebExperienceInput {
+	s.RoleArn = &v
+	return s
+}
+
 // SetSamplePromptsControlMode sets the SamplePromptsControlMode field's value.
 func (s *CreateWebExperienceInput) SetSamplePromptsControlMode(v string) *CreateWebExperienceInput {
 	s.SamplePromptsControlMode = &v
@@ -8857,10 +10450,10 @@ func (s *CreateWebExperienceInput) SetWelcomeMessage(v string) *CreateWebExperie
 type CreateWebExperienceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of an Amazon Q web experience.
+	// The Amazon Resource Name (ARN) of an Amazon Q Business web experience.
 	WebExperienceArn *string `locationName:"webExperienceArn" type:"string"`
 
-	// The identifier of the Amazon Q web experience.
+	// The identifier of the Amazon Q Business web experience.
 	WebExperienceId *string `locationName:"webExperienceId" min:"36" type:"string"`
 }
 
@@ -8894,26 +10487,161 @@ func (s *CreateWebExperienceOutput) SetWebExperienceId(v string) *CreateWebExper
 	return s
 }
 
-// A data source in an Amazon Q application.
+// Configuration information required to invoke chat in CREATOR_MODE.
+//
+// For more information, see Admin controls and guardrails (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html)
+// and Conversation settings (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope).
+type CreatorModeConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Status information about whether CREATOR_MODE has been enabled or disabled.
+	// The default status is DISABLED.
+	//
+	// CreatorModeControl is a required field
+	CreatorModeControl *string `locationName:"creatorModeControl" type:"string" required:"true" enum:"CreatorModeControl"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreatorModeConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreatorModeConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreatorModeConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreatorModeConfiguration"}
+	if s.CreatorModeControl == nil {
+		invalidParams.Add(request.NewErrParamRequired("CreatorModeControl"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCreatorModeControl sets the CreatorModeControl field's value.
+func (s *CreatorModeConfiguration) SetCreatorModeControl(v string) *CreatorModeConfiguration {
+	s.CreatorModeControl = &v
+	return s
+}
+
+// Configuration information required to create a custom plugin.
+type CustomPluginConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Contains either details about the S3 object containing the OpenAPI schema
+	// for the action group or the JSON or YAML-formatted payload defining the schema.
+	//
+	// ApiSchema is a required field
+	ApiSchema *APISchema `locationName:"apiSchema" type:"structure" required:"true"`
+
+	// The type of OpenAPI schema to use.
+	//
+	// ApiSchemaType is a required field
+	ApiSchemaType *string `locationName:"apiSchemaType" type:"string" required:"true" enum:"APISchemaType"`
+
+	// A description for your custom plugin configuration.
+	//
+	// Description is a required field
+	Description *string `locationName:"description" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CustomPluginConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CustomPluginConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CustomPluginConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CustomPluginConfiguration"}
+	if s.ApiSchema == nil {
+		invalidParams.Add(request.NewErrParamRequired("ApiSchema"))
+	}
+	if s.ApiSchemaType == nil {
+		invalidParams.Add(request.NewErrParamRequired("ApiSchemaType"))
+	}
+	if s.Description == nil {
+		invalidParams.Add(request.NewErrParamRequired("Description"))
+	}
+	if s.Description != nil && len(*s.Description) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
+	}
+	if s.ApiSchema != nil {
+		if err := s.ApiSchema.Validate(); err != nil {
+			invalidParams.AddNested("ApiSchema", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApiSchema sets the ApiSchema field's value.
+func (s *CustomPluginConfiguration) SetApiSchema(v *APISchema) *CustomPluginConfiguration {
+	s.ApiSchema = v
+	return s
+}
+
+// SetApiSchemaType sets the ApiSchemaType field's value.
+func (s *CustomPluginConfiguration) SetApiSchemaType(v string) *CustomPluginConfiguration {
+	s.ApiSchemaType = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CustomPluginConfiguration) SetDescription(v string) *CustomPluginConfiguration {
+	s.Description = &v
+	return s
+}
+
+// A data source in an Amazon Q Business application.
 type DataSource struct {
 	_ struct{} `type:"structure"`
 
-	// The Unix timestamp when the Amazon Q data source was created.
+	// The Unix timestamp when the Amazon Q Business data source was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The identifier of the Amazon Q data source.
+	// The identifier of the Amazon Q Business data source.
 	DataSourceId *string `locationName:"dataSourceId" min:"36" type:"string"`
 
-	// The name of the Amazon Q data source.
+	// The name of the Amazon Q Business data source.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
-	// The status of the Amazon Q data source.
+	// The status of the Amazon Q Business data source.
 	Status *string `locationName:"status" type:"string" enum:"DataSourceStatus"`
 
-	// The type of the Amazon Q data source.
+	// The type of the Amazon Q Business data source.
 	Type *string `locationName:"type" min:"1" type:"string"`
 
-	// The Unix timestamp when the Amazon Q data source was last updated.
+	// The Unix timestamp when the Amazon Q Business data source was last updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 }
 
@@ -8971,7 +10699,7 @@ func (s *DataSource) SetUpdatedAt(v time.Time) *DataSource {
 	return s
 }
 
-// Provides information about an Amazon Q data source connector synchronization
+// Provides information about an Amazon Q Business data source connector synchronization
 // job.
 type DataSourceSyncJob struct {
 	_ struct{} `type:"structure"`
@@ -9064,8 +10792,8 @@ func (s *DataSourceSyncJob) SetStatus(v string) *DataSourceSyncJob {
 	return s
 }
 
-// Maps a batch delete document request to a specific Amazon Q data source connector
-// sync job.
+// Maps a batch delete document request to a specific Amazon Q Business data
+// source connector sync job.
 type DataSourceSyncJobMetrics struct {
 	_ struct{} `type:"structure"`
 
@@ -9144,7 +10872,7 @@ type DataSourceVpcConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// A list of identifiers of security groups within your Amazon VPC. The security
-	// groups should enable Amazon Q to connect to the data source.
+	// groups should enable Amazon Q Business to connect to the data source.
 	//
 	// SecurityGroupIds is a required field
 	SecurityGroupIds []*string `locationName:"securityGroupIds" min:"1" type:"list" required:"true"`
@@ -9206,10 +10934,70 @@ func (s *DataSourceVpcConfiguration) SetSubnetIds(v []*string) *DataSourceVpcCon
 	return s
 }
 
+// Provides information on boosting DATE type document attributes.
+//
+// For more information on how boosting document attributes work in Amazon Q
+// Business, see Boosting using document attributes (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html).
+type DateAttributeBoostingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the duration, in seconds, of a boost applies to a DATE type document
+	// attribute.
+	BoostingDurationInSeconds *int64 `locationName:"boostingDurationInSeconds" type:"long"`
+
+	// Specifies how much a document attribute is boosted.
+	//
+	// BoostingLevel is a required field
+	BoostingLevel *string `locationName:"boostingLevel" type:"string" required:"true" enum:"DocumentAttributeBoostingLevel"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DateAttributeBoostingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DateAttributeBoostingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DateAttributeBoostingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DateAttributeBoostingConfiguration"}
+	if s.BoostingLevel == nil {
+		invalidParams.Add(request.NewErrParamRequired("BoostingLevel"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBoostingDurationInSeconds sets the BoostingDurationInSeconds field's value.
+func (s *DateAttributeBoostingConfiguration) SetBoostingDurationInSeconds(v int64) *DateAttributeBoostingConfiguration {
+	s.BoostingDurationInSeconds = &v
+	return s
+}
+
+// SetBoostingLevel sets the BoostingLevel field's value.
+func (s *DateAttributeBoostingConfiguration) SetBoostingLevel(v string) *DateAttributeBoostingConfiguration {
+	s.BoostingLevel = &v
+	return s
+}
+
 type DeleteApplicationInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -9352,20 +11140,19 @@ func (s DeleteChatControlsConfigurationOutput) GoString() string {
 type DeleteConversationInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application associated with the conversation.
+	// The identifier of the Amazon Q Business application associated with the conversation.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q web experience conversation being deleted.
+	// The identifier of the Amazon Q Business web experience conversation being
+	// deleted.
 	//
 	// ConversationId is a required field
 	ConversationId *string `location:"uri" locationName:"conversationId" min:"36" type:"string" required:"true"`
 
 	// The identifier of the user who is deleting the conversation.
-	//
-	// UserId is a required field
-	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string" required:"true"`
+	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -9400,9 +11187,6 @@ func (s *DeleteConversationInput) Validate() error {
 	}
 	if s.ConversationId != nil && len(*s.ConversationId) < 36 {
 		invalidParams.Add(request.NewErrParamMinLen("ConversationId", 36))
-	}
-	if s.UserId == nil {
-		invalidParams.Add(request.NewErrParamRequired("UserId"))
 	}
 	if s.UserId != nil && len(*s.UserId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("UserId", 1))
@@ -9457,7 +11241,8 @@ func (s DeleteConversationOutput) GoString() string {
 type DeleteDataSourceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application used with the data source connector.
+	// The identifier of the Amazon Q Business application used with the data source
+	// connector.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -9559,7 +11344,7 @@ func (s DeleteDataSourceOutput) GoString() string {
 	return s.String()
 }
 
-// A document deleted from an Amazon Q data source connector.
+// A document deleted from an Amazon Q Business data source connector.
 type DeleteDocument struct {
 	_ struct{} `type:"structure"`
 
@@ -9737,12 +11522,13 @@ func (s DeleteGroupOutput) GoString() string {
 type DeleteIndexInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application the Amazon Q index is linked to.
+	// The identifier of the Amazon Q Business application the Amazon Q Business
+	// index is linked to.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q index.
+	// The identifier of the Amazon Q Business index.
 	//
 	// IndexId is a required field
 	IndexId *string `location:"uri" locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -9825,7 +11611,7 @@ func (s DeleteIndexOutput) GoString() string {
 type DeletePluginInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier the application attached to the Amazon Q plugin.
+	// The identifier the application attached to the Amazon Q Business plugin.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -9913,7 +11699,7 @@ func (s DeletePluginOutput) GoString() string {
 type DeleteRetrieverInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application using the retriever.
+	// The identifier of the Amazon Q Business application using the retriever.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -10089,12 +11875,13 @@ func (s DeleteUserOutput) GoString() string {
 type DeleteWebExperienceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application linked to the Amazon Q web experience.
+	// The identifier of the Amazon Q Business application linked to the Amazon
+	// Q Business web experience.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q web experience being deleted.
+	// The identifier of the Amazon Q Business web experience being deleted.
 	//
 	// WebExperienceId is a required field
 	WebExperienceId *string `location:"uri" locationName:"webExperienceId" min:"36" type:"string" required:"true"`
@@ -10174,15 +11961,15 @@ func (s DeleteWebExperienceOutput) GoString() string {
 	return s.String()
 }
 
-// A document in an Amazon Q application.
+// A document in an Amazon Q Business application.
 type Document struct {
 	_ struct{} `type:"structure"`
 
 	// Configuration information for access permission to a document.
 	AccessConfiguration *AccessConfiguration `locationName:"accessConfiguration" type:"structure"`
 
-	// Custom attributes to apply to the document for refining Amazon Q web experience
-	// responses.
+	// Custom attributes to apply to the document for refining Amazon Q Business
+	// web experience responses.
 	Attributes []*DocumentAttribute `locationName:"attributes" min:"1" type:"list"`
 
 	// The contents of the document.
@@ -10379,9 +12166,111 @@ func (s *DocumentAttribute) SetValue(v *DocumentAttributeValue) *DocumentAttribu
 	return s
 }
 
+// Provides information on boosting supported Amazon Q Business document attribute
+// types. When an end user chat query matches document attributes that have
+// been boosted, Amazon Q Business prioritizes generating responses from content
+// that matches the boosted document attributes.
+//
+// For STRING and STRING_LIST type document attributes to be used for boosting
+// on the console and the API, they must be enabled for search using the DocumentAttributeConfiguration
+// (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html)
+// object of the UpdateIndex (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html)
+// API. If you haven't enabled searching on these attributes, you can't boost
+// attributes of these data types on either the console or the API.
+//
+// For more information on how boosting document attributes work in Amazon Q
+// Business, see Boosting using document attributes (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html).
+type DocumentAttributeBoostingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Provides information on boosting DATE type document attributes.
+	DateConfiguration *DateAttributeBoostingConfiguration `locationName:"dateConfiguration" type:"structure"`
+
+	// Provides information on boosting NUMBER type document attributes.
+	NumberConfiguration *NumberAttributeBoostingConfiguration `locationName:"numberConfiguration" type:"structure"`
+
+	// Provides information on boosting STRING type document attributes.
+	StringConfiguration *StringAttributeBoostingConfiguration `locationName:"stringConfiguration" type:"structure"`
+
+	// Provides information on boosting STRING_LIST type document attributes.
+	StringListConfiguration *StringListAttributeBoostingConfiguration `locationName:"stringListConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DocumentAttributeBoostingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DocumentAttributeBoostingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DocumentAttributeBoostingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DocumentAttributeBoostingConfiguration"}
+	if s.DateConfiguration != nil {
+		if err := s.DateConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("DateConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.NumberConfiguration != nil {
+		if err := s.NumberConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("NumberConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.StringConfiguration != nil {
+		if err := s.StringConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("StringConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.StringListConfiguration != nil {
+		if err := s.StringListConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("StringListConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDateConfiguration sets the DateConfiguration field's value.
+func (s *DocumentAttributeBoostingConfiguration) SetDateConfiguration(v *DateAttributeBoostingConfiguration) *DocumentAttributeBoostingConfiguration {
+	s.DateConfiguration = v
+	return s
+}
+
+// SetNumberConfiguration sets the NumberConfiguration field's value.
+func (s *DocumentAttributeBoostingConfiguration) SetNumberConfiguration(v *NumberAttributeBoostingConfiguration) *DocumentAttributeBoostingConfiguration {
+	s.NumberConfiguration = v
+	return s
+}
+
+// SetStringConfiguration sets the StringConfiguration field's value.
+func (s *DocumentAttributeBoostingConfiguration) SetStringConfiguration(v *StringAttributeBoostingConfiguration) *DocumentAttributeBoostingConfiguration {
+	s.StringConfiguration = v
+	return s
+}
+
+// SetStringListConfiguration sets the StringListConfiguration field's value.
+func (s *DocumentAttributeBoostingConfiguration) SetStringListConfiguration(v *StringListAttributeBoostingConfiguration) *DocumentAttributeBoostingConfiguration {
+	s.StringListConfiguration = v
+	return s
+}
+
 // The condition used for the target document attribute or metadata field when
-// ingesting documents into Amazon Q. You use this with DocumentAttributeTarget
-// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_DocumentAttributeTarget.html)
+// ingesting documents into Amazon Q Business. You use this with DocumentAttributeTarget
+// (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeTarget.html)
 // to apply the condition.
 //
 // For example, you can create the 'Department' target field and have it prefill
@@ -10390,10 +12279,10 @@ func (s *DocumentAttribute) SetValue(v *DocumentAttributeValue) *DocumentAttribu
 // 'financial' in its URI value, then prefill the target field 'Department'
 // with the target value 'Finance' for the document.
 //
-// Amazon Q can't create a target field if it has not already been created as
-// an index field. After you create your index field, you can create a document
-// metadata field using DocumentAttributeTarget. Amazon Q then will map your
-// newly created metadata field to your index field.
+// Amazon Q Business can't create a target field if it has not already been
+// created as an index field. After you create your index field, you can create
+// a document metadata field using DocumentAttributeTarget. Amazon Q Business
+// then will map your newly created metadata field to your index field.
 type DocumentAttributeCondition struct {
 	_ struct{} `type:"structure"`
 
@@ -10402,8 +12291,8 @@ type DocumentAttributeCondition struct {
 	// For example, 'Source_URI' could be an identifier for the attribute or metadata
 	// field that contains source URIs associated with the documents.
 	//
-	// Amazon Q currently doesn't support _document_body as an attribute key used
-	// for the condition.
+	// Amazon Q Business currently doesn't support _document_body as an attribute
+	// key used for the condition.
 	//
 	// Key is a required field
 	Key *string `locationName:"key" min:"1" type:"string" required:"true"`
@@ -10413,8 +12302,8 @@ type DocumentAttributeCondition struct {
 	// For example, 'Source_URI' could be an identifier for the attribute or metadata
 	// field that contains source URIs associated with the documents.
 	//
-	// Amazon Kendra currently does not support _document_body as an attribute key
-	// used for the condition.
+	// Amazon Q Business currently does not support _document_body as an attribute
+	// key used for the condition.
 	//
 	// Operator is a required field
 	Operator *string `locationName:"operator" type:"string" required:"true" enum:"DocumentEnrichmentConditionOperator"`
@@ -10548,7 +12437,7 @@ func (s *DocumentAttributeConfiguration) SetType(v string) *DocumentAttributeCon
 }
 
 // The target document attribute or metadata field you want to alter when ingesting
-// documents into Amazon Q.
+// documents into Amazon Q Business.
 //
 // For example, you can delete all customer identification numbers associated
 // with the documents, stored in the document metadata field called 'Customer_ID'
@@ -10556,13 +12445,13 @@ func (s *DocumentAttributeConfiguration) SetType(v string) *DocumentAttributeCon
 // This removes all customer ID values in the field 'Customer_ID'. This would
 // scrub personally identifiable information from each document's metadata.
 //
-// Amazon Q can't create a target field if it has not already been created as
-// an index field. After you create your index field, you can create a document
-// metadata field using DocumentAttributeTarget (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_DocumentAttributeTarget.html).
-// Amazon Q will then map your newly created document attribute to your index
-// field.
+// Amazon Q Business can't create a target field if it has not already been
+// created as an index field. After you create your index field, you can create
+// a document metadata field using DocumentAttributeTarget (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeTarget.html).
+// Amazon Q Business will then map your newly created document attribute to
+// your index field.
 //
-// You can also use this with DocumentAttributeCondition (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_DocumentAttributeCondition.html).
+// You can also use this with DocumentAttributeCondition (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeCondition.html).
 type DocumentAttributeTarget struct {
 	_ struct{} `type:"structure"`
 
@@ -10705,9 +12594,9 @@ type DocumentContent struct {
 
 	// The contents of the document. Documents passed to the blob parameter must
 	// be base64 encoded. Your code might not need to encode the document file bytes
-	// if you're using an Amazon Web Services SDK to call Amazon Q APIs. If you
-	// are calling the Amazon Q endpoint directly using REST, you must base64 encode
-	// the contents before sending.
+	// if you're using an Amazon Web Services SDK to call Amazon Q Business APIs.
+	// If you are calling the Amazon Q Business endpoint directly using REST, you
+	// must base64 encode the contents before sending.
 	// Blob is automatically base64 encoded/decoded by the SDK.
 	Blob []byte `locationName:"blob" type:"blob"`
 
@@ -10760,7 +12649,7 @@ func (s *DocumentContent) SetS3(v *S3) *DocumentContent {
 	return s
 }
 
-// The details of a document within an Amazon Q index.
+// The details of a document within an Amazon Q Business index.
 type DocumentDetails struct {
 	_ struct{} `type:"structure"`
 
@@ -10836,20 +12725,19 @@ type DocumentEnrichmentConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// Configuration information to alter document attributes or metadata fields
-	// and content when ingesting documents into Amazon Q.
+	// and content when ingesting documents into Amazon Q Business.
 	InlineConfigurations []*InlineDocumentEnrichmentConfiguration `locationName:"inlineConfigurations" min:"1" type:"list"`
 
 	// Provides the configuration information for invoking a Lambda function in
 	// Lambda to alter document metadata and content when ingesting documents into
-	// Amazon Q.
+	// Amazon Q Business.
 	//
-	// You can configure your Lambda function using PreExtractionHookConfiguration
-	// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_CustomDocumentEnrichmentConfiguration.html)
-	// if you want to apply advanced alterations on the original or raw documents.
+	// You can configure your Lambda function using the PreExtractionHookConfiguration
+	// parameter if you want to apply advanced alterations on the original or raw
+	// documents.
 	//
-	// If you want to apply advanced alterations on the Amazon Q structured documents,
-	// you must configure your Lambda function using PostExtractionHookConfiguration
-	// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_CustomDocumentEnrichmentConfiguration.html).
+	// If you want to apply advanced alterations on the Amazon Q Business structured
+	// documents, you must configure your Lambda function using PostExtractionHookConfiguration.
 	//
 	// You can only invoke one Lambda function. However, this function can invoke
 	// other functions it requires.
@@ -10859,15 +12747,14 @@ type DocumentEnrichmentConfiguration struct {
 
 	// Provides the configuration information for invoking a Lambda function in
 	// Lambda to alter document metadata and content when ingesting documents into
-	// Amazon Q.
+	// Amazon Q Business.
 	//
-	// You can configure your Lambda function using PreExtractionHookConfiguration
-	// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_CustomDocumentEnrichmentConfiguration.html)
-	// if you want to apply advanced alterations on the original or raw documents.
+	// You can configure your Lambda function using the PreExtractionHookConfiguration
+	// parameter if you want to apply advanced alterations on the original or raw
+	// documents.
 	//
-	// If you want to apply advanced alterations on the Amazon Q structured documents,
-	// you must configure your Lambda function using PostExtractionHookConfiguration
-	// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_CustomDocumentEnrichmentConfiguration.html).
+	// If you want to apply advanced alterations on the Amazon Q Business structured
+	// documents, you must configure your Lambda function using PostExtractionHookConfiguration.
 	//
 	// You can only invoke one Lambda function. However, this function can invoke
 	// other functions it requires.
@@ -10945,7 +12832,8 @@ func (s *DocumentEnrichmentConfiguration) SetPreExtractionHookConfiguration(v *H
 	return s
 }
 
-// The identifier of the data source Amazon Q will generate responses from.
+// The identifier of the data source Amazon Q Business will generate responses
+// from.
 type EligibleDataSource struct {
 	_ struct{} `type:"structure"`
 
@@ -11003,11 +12891,12 @@ func (s *EligibleDataSource) SetIndexId(v string) *EligibleDataSource {
 }
 
 // Provides the identifier of the KMS key used to encrypt data indexed by Amazon
-// Q. Amazon Q doesn't support asymmetric keys.
+// Q Business. Amazon Q Business doesn't support asymmetric keys.
 type EncryptionConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the KMS key. Amazon Q doesn't support asymmetric keys.
+	// The identifier of the KMS key. Amazon Q Business doesn't support asymmetric
+	// keys.
 	//
 	// KmsKeyId is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by EncryptionConfiguration's
@@ -11052,6 +12941,48 @@ func (s *EncryptionConfiguration) SetKmsKeyId(v string) *EncryptionConfiguration
 	return s
 }
 
+// The end of the streaming input for the Chat API.
+type EndOfInputEvent struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EndOfInputEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EndOfInputEvent) GoString() string {
+	return s.String()
+}
+
+// The EndOfInputEvent is and event in the ChatInputStream group of events.
+func (s *EndOfInputEvent) eventChatInputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the EndOfInputEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *EndOfInputEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *EndOfInputEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	return msg, err
+}
+
 // Provides information about a data source sync error.
 type ErrorDetail struct {
 	_ struct{} `type:"structure"`
@@ -11093,21 +13024,109 @@ func (s *ErrorDetail) SetErrorMessage(v string) *ErrorDetail {
 	return s
 }
 
-// A list of documents that could not be removed from an Amazon Q index. Each
-// entry contains an error message that indicates why the document couldn't
+// A failed file upload during web experience chat.
+type FailedAttachmentEvent struct {
+	_ struct{} `type:"structure"`
+
+	// The details of a file uploaded during chat.
+	Attachment *AttachmentOutput_ `locationName:"attachment" type:"structure"`
+
+	// The identifier of the conversation associated with the failed file upload.
+	ConversationId *string `locationName:"conversationId" min:"36" type:"string"`
+
+	// The identifier of the AI-generated message associated with the file upload.
+	SystemMessageId *string `locationName:"systemMessageId" min:"36" type:"string"`
+
+	// The identifier of the end user chat message associated with the file upload.
+	UserMessageId *string `locationName:"userMessageId" min:"36" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailedAttachmentEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailedAttachmentEvent) GoString() string {
+	return s.String()
+}
+
+// SetAttachment sets the Attachment field's value.
+func (s *FailedAttachmentEvent) SetAttachment(v *AttachmentOutput_) *FailedAttachmentEvent {
+	s.Attachment = v
+	return s
+}
+
+// SetConversationId sets the ConversationId field's value.
+func (s *FailedAttachmentEvent) SetConversationId(v string) *FailedAttachmentEvent {
+	s.ConversationId = &v
+	return s
+}
+
+// SetSystemMessageId sets the SystemMessageId field's value.
+func (s *FailedAttachmentEvent) SetSystemMessageId(v string) *FailedAttachmentEvent {
+	s.SystemMessageId = &v
+	return s
+}
+
+// SetUserMessageId sets the UserMessageId field's value.
+func (s *FailedAttachmentEvent) SetUserMessageId(v string) *FailedAttachmentEvent {
+	s.UserMessageId = &v
+	return s
+}
+
+// The FailedAttachmentEvent is and event in the ChatOutputStream group of events.
+func (s *FailedAttachmentEvent) eventChatOutputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the FailedAttachmentEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *FailedAttachmentEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *FailedAttachmentEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
+// A list of documents that could not be removed from an Amazon Q Business index.
+// Each entry contains an error message that indicates why the document couldn't
 // be removed from the index.
 type FailedDocument struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q data source connector that contains the failed
-	// document.
+	// The identifier of the Amazon Q Business data source connector that contains
+	// the failed document.
 	DataSourceId *string `locationName:"dataSourceId" min:"36" type:"string"`
 
 	// An explanation for why the document couldn't be removed from the index.
 	Error *ErrorDetail `locationName:"error" type:"structure"`
 
 	// The identifier of the document that couldn't be removed from the Amazon Q
-	// index.
+	// Business index.
 	Id *string `locationName:"id" min:"1" type:"string"`
 }
 
@@ -11150,7 +13169,7 @@ func (s *FailedDocument) SetId(v string) *FailedDocument {
 type GetApplicationInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -11199,40 +13218,48 @@ func (s *GetApplicationInput) SetApplicationId(v string) *GetApplicationInput {
 type GetApplicationOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q application.
+	// The Amazon Resource Name (ARN) of the Amazon Q Business application.
 	ApplicationArn *string `locationName:"applicationArn" type:"string"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
 	// Settings for whether end users can upload files directly during chat.
 	AttachmentsConfiguration *AppliedAttachmentsConfiguration `locationName:"attachmentsConfiguration" type:"structure"`
 
-	// The Unix timestamp when the Amazon Q application was last updated.
+	// The Unix timestamp when the Amazon Q Business application was last updated.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// A description for the Amazon Q application.
+	// A description for the Amazon Q Business application.
 	Description *string `locationName:"description" type:"string"`
 
-	// The name of the Amazon Q application.
+	// The name of the Amazon Q Business application.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
 	// The identifier of the Amazon Web Services KMS key that is used to encrypt
-	// your data. Amazon Q doesn't support asymmetric keys.
+	// your data. Amazon Q Business doesn't support asymmetric keys.
 	EncryptionConfiguration *EncryptionConfiguration `locationName:"encryptionConfiguration" type:"structure"`
 
 	// If the Status field is set to ERROR, the ErrorMessage field contains a description
 	// of the error that caused the synchronization to fail.
 	Error *ErrorDetail `locationName:"error" type:"structure"`
 
+	// The Amazon Resource Name (ARN) of the AWS IAM Identity Center instance attached
+	// to your Amazon Q Business application.
+	IdentityCenterApplicationArn *string `locationName:"identityCenterApplicationArn" min:"10" type:"string"`
+
+	// Settings for whether end users can create and use Amazon Q Apps in the web
+	// experience.
+	QAppsConfiguration *QAppsConfiguration `locationName:"qAppsConfiguration" type:"structure"`
+
 	// The Amazon Resource Name (ARN) of the IAM with permissions to access your
 	// CloudWatch logs and metrics.
 	RoleArn *string `locationName:"roleArn" type:"string"`
 
-	// The status of the Amazon Q application.
+	// The status of the Amazon Q Business application.
 	Status *string `locationName:"status" type:"string" enum:"ApplicationStatus"`
 
-	// The Unix timestamp when the Amazon Q application was last updated.
+	// The Unix timestamp when the Amazon Q Business application was last updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 }
 
@@ -11302,6 +13329,18 @@ func (s *GetApplicationOutput) SetError(v *ErrorDetail) *GetApplicationOutput {
 	return s
 }
 
+// SetIdentityCenterApplicationArn sets the IdentityCenterApplicationArn field's value.
+func (s *GetApplicationOutput) SetIdentityCenterApplicationArn(v string) *GetApplicationOutput {
+	s.IdentityCenterApplicationArn = &v
+	return s
+}
+
+// SetQAppsConfiguration sets the QAppsConfiguration field's value.
+func (s *GetApplicationOutput) SetQAppsConfiguration(v *QAppsConfiguration) *GetApplicationOutput {
+	s.QAppsConfiguration = v
+	return s
+}
+
 // SetRoleArn sets the RoleArn field's value.
 func (s *GetApplicationOutput) SetRoleArn(v string) *GetApplicationOutput {
 	s.RoleArn = &v
@@ -11332,8 +13371,9 @@ type GetChatControlsConfigurationInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of Amazon Q chat controls configured.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of Amazon Q Business chat
+	// controls configured.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -11401,18 +13441,22 @@ type GetChatControlsConfigurationOutput struct {
 	// The phrases blocked from chat by your chat control configuration.
 	BlockedPhrases *BlockedPhrasesConfiguration `locationName:"blockedPhrases" type:"structure"`
 
+	// The configuration details for CREATOR_MODE.
+	CreatorModeConfiguration *AppliedCreatorModeConfiguration `locationName:"creatorModeConfiguration" type:"structure"`
+
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of Amazon Q chat controls configured.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of Amazon Q Business chat
+	// controls configured.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
-	// The response scope configured for a Amazon Q application. This determines
+	// The response scope configured for a Amazon Q Business application. This determines
 	// whether your application uses its retrieval augmented generation (RAG) system
 	// to generate answers only from your enterprise data, or also uses the large
 	// language models (LLM) knowledge to respons to end user questions in chat.
 	ResponseScope *string `locationName:"responseScope" type:"string" enum:"ResponseScope"`
 
-	// The topic specific controls configured for a Amazon Q application.
+	// The topic specific controls configured for a Amazon Q Business application.
 	TopicConfigurations []*TopicConfiguration `locationName:"topicConfigurations" type:"list"`
 }
 
@@ -11440,6 +13484,12 @@ func (s *GetChatControlsConfigurationOutput) SetBlockedPhrases(v *BlockedPhrases
 	return s
 }
 
+// SetCreatorModeConfiguration sets the CreatorModeConfiguration field's value.
+func (s *GetChatControlsConfigurationOutput) SetCreatorModeConfiguration(v *AppliedCreatorModeConfiguration) *GetChatControlsConfigurationOutput {
+	s.CreatorModeConfiguration = v
+	return s
+}
+
 // SetNextToken sets the NextToken field's value.
 func (s *GetChatControlsConfigurationOutput) SetNextToken(v string) *GetChatControlsConfigurationOutput {
 	s.NextToken = &v
@@ -11461,7 +13511,7 @@ func (s *GetChatControlsConfigurationOutput) SetTopicConfigurations(v []*TopicCo
 type GetDataSourceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -11544,7 +13594,7 @@ func (s *GetDataSourceInput) SetIndexId(v string) *GetDataSourceInput {
 type GetDataSourceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
 	// The Unix timestamp when the data source connector was created.
@@ -11584,7 +13634,7 @@ type GetDataSourceOutput struct {
 	// caused the data source connector to fail.
 	Status *string `locationName:"status" type:"string" enum:"DataSourceStatus"`
 
-	// The schedule for Amazon Q to update the index.
+	// The schedule for Amazon Q Business to update the index.
 	SyncSchedule *string `locationName:"syncSchedule" type:"string"`
 
 	// The type of the data source connector. For example, S3.
@@ -11844,12 +13894,12 @@ func (s *GetGroupOutput) SetStatusHistory(v []*GroupStatusDetail) *GetGroupOutpu
 type GetIndexInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application connected to the index.
+	// The identifier of the Amazon Q Business application connected to the index.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q index you want information on.
+	// The identifier of the Amazon Q Business index you want information on.
 	//
 	// IndexId is a required field
 	IndexId *string `location:"uri" locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -11910,19 +13960,19 @@ func (s *GetIndexInput) SetIndexId(v string) *GetIndexInput {
 type GetIndexOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application associated with the index.
+	// The identifier of the Amazon Q Business application associated with the index.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
-	// The storage capacity units chosen for your Amazon Q index.
+	// The storage capacity units chosen for your Amazon Q Business index.
 	CapacityConfiguration *IndexCapacityConfiguration `locationName:"capacityConfiguration" type:"structure"`
 
-	// The Unix timestamp when the Amazon Q index was created.
+	// The Unix timestamp when the Amazon Q Business index was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The description for the Amazon Q index.
+	// The description for the Amazon Q Business index.
 	Description *string `locationName:"description" type:"string"`
 
-	// The name of the Amazon Q index.
+	// The name of the Amazon Q Business index.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
 	// Configuration information for document attributes or metadata. Document metadata
@@ -11935,10 +13985,10 @@ type GetIndexOutput struct {
 	// message that explains why.
 	Error *ErrorDetail `locationName:"error" type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q index.
+	// The Amazon Resource Name (ARN) of the Amazon Q Business index.
 	IndexArn *string `locationName:"indexArn" type:"string"`
 
-	// The identifier of the Amazon Q index.
+	// The identifier of the Amazon Q Business index.
 	IndexId *string `locationName:"indexId" min:"36" type:"string"`
 
 	// Provides information about the number of documents indexed.
@@ -11949,7 +13999,10 @@ type GetIndexOutput struct {
 	// a message that explains why.
 	Status *string `locationName:"status" type:"string" enum:"IndexStatus"`
 
-	// The Unix timestamp when the Amazon Q index was last updated.
+	// The type of index attached to your Amazon Q Business application.
+	Type *string `locationName:"type" type:"string" enum:"IndexType"`
+
+	// The Unix timestamp when the Amazon Q Business index was last updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 }
 
@@ -12037,6 +14090,12 @@ func (s *GetIndexOutput) SetStatus(v string) *GetIndexOutput {
 	return s
 }
 
+// SetType sets the Type field's value.
+func (s *GetIndexOutput) SetType(v string) *GetIndexOutput {
+	s.Type = &v
+	return s
+}
+
 // SetUpdatedAt sets the UpdatedAt field's value.
 func (s *GetIndexOutput) SetUpdatedAt(v time.Time) *GetIndexOutput {
 	s.UpdatedAt = &v
@@ -12115,11 +14174,17 @@ type GetPluginOutput struct {
 	// The identifier of the application which contains the plugin.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
-	// Authentication configuration information for an Amazon Q plugin.
+	// Authentication configuration information for an Amazon Q Business plugin.
 	AuthConfiguration *PluginAuthConfiguration `locationName:"authConfiguration" type:"structure"`
+
+	// The current status of a plugin. A plugin is modified asynchronously.
+	BuildStatus *string `locationName:"buildStatus" type:"string" enum:"PluginBuildStatus"`
 
 	// The timestamp for when the plugin was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
+
+	// Configuration information required to create a custom plugin.
+	CustomPluginConfiguration *CustomPluginConfiguration `locationName:"customPluginConfiguration" type:"structure"`
 
 	// The name of the plugin.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
@@ -12174,9 +14239,21 @@ func (s *GetPluginOutput) SetAuthConfiguration(v *PluginAuthConfiguration) *GetP
 	return s
 }
 
+// SetBuildStatus sets the BuildStatus field's value.
+func (s *GetPluginOutput) SetBuildStatus(v string) *GetPluginOutput {
+	s.BuildStatus = &v
+	return s
+}
+
 // SetCreatedAt sets the CreatedAt field's value.
 func (s *GetPluginOutput) SetCreatedAt(v time.Time) *GetPluginOutput {
 	s.CreatedAt = &v
+	return s
+}
+
+// SetCustomPluginConfiguration sets the CustomPluginConfiguration field's value.
+func (s *GetPluginOutput) SetCustomPluginConfiguration(v *CustomPluginConfiguration) *GetPluginOutput {
+	s.CustomPluginConfiguration = v
 	return s
 }
 
@@ -12225,7 +14302,7 @@ func (s *GetPluginOutput) SetUpdatedAt(v time.Time) *GetPluginOutput {
 type GetRetrieverInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application using the retriever.
+	// The identifier of the Amazon Q Business application using the retriever.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -12291,11 +14368,11 @@ func (s *GetRetrieverInput) SetRetrieverId(v string) *GetRetrieverInput {
 type GetRetrieverOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application using the retriever.
+	// The identifier of the Amazon Q Business application using the retriever.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
-	// Provides information on how the retriever used for your Amazon Q application
-	// is configured.
+	// Provides information on how the retriever used for your Amazon Q Business
+	// application is configured.
 	Configuration *RetrieverConfiguration `locationName:"configuration" type:"structure"`
 
 	// The Unix timestamp when the retriever was created.
@@ -12502,12 +14579,12 @@ func (s *GetUserOutput) SetUserAliases(v []*UserAlias) *GetUserOutput {
 type GetWebExperienceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application linked to the web experience.
+	// The identifier of the Amazon Q Business application linked to the web experience.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q web experience.
+	// The identifier of the Amazon Q Business web experience.
 	//
 	// WebExperienceId is a required field
 	WebExperienceId *string `location:"uri" locationName:"webExperienceId" min:"36" type:"string" required:"true"`
@@ -12568,48 +14645,55 @@ func (s *GetWebExperienceInput) SetWebExperienceId(v string) *GetWebExperienceIn
 type GetWebExperienceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application linked to the web experience.
+	// The identifier of the Amazon Q Business application linked to the web experience.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
-	// The authentication configuration information for your Amazon Q web experience.
-	AuthenticationConfiguration *WebExperienceAuthConfiguration `locationName:"authenticationConfiguration" type:"structure"`
+	// The authentication configuration information for your Amazon Q Business web
+	// experience.
+	//
+	// Deprecated: Property associated with legacy SAML IdP flow. Deprecated in favor of using AWS IAM Identity Center for user management.
+	AuthenticationConfiguration *WebExperienceAuthConfiguration `locationName:"authenticationConfiguration" deprecated:"true" type:"structure"`
 
-	// The Unix timestamp when the retriever was created.
+	// The Unix timestamp when the Amazon Q Business web experience was last created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The endpoint of your Amazon Q web experience.
+	// The endpoint of your Amazon Q Business web experience.
 	DefaultEndpoint *string `locationName:"defaultEndpoint" min:"1" type:"string"`
 
 	// When the Status field value is FAILED, the ErrorMessage field contains a
 	// description of the error that caused the data source connector to fail.
 	Error *ErrorDetail `locationName:"error" type:"structure"`
 
+	// The Amazon Resource Name (ARN) of the service role attached to your web experience.
+	RoleArn *string `locationName:"roleArn" type:"string"`
+
 	// Determines whether sample prompts are enabled in the web experience for an
 	// end user.
 	SamplePromptsControlMode *string `locationName:"samplePromptsControlMode" type:"string" enum:"WebExperienceSamplePromptsControlMode"`
 
-	// The current status of the Amazon Q web experience. When the Status field
-	// value is FAILED, the ErrorMessage field contains a description of the error
-	// that caused the data source connector to fail.
+	// The current status of the Amazon Q Business web experience. When the Status
+	// field value is FAILED, the ErrorMessage field contains a description of the
+	// error that caused the data source connector to fail.
 	Status *string `locationName:"status" type:"string" enum:"WebExperienceStatus"`
 
-	// The subtitle for your Amazon Q web experience.
+	// The subtitle for your Amazon Q Business web experience.
 	Subtitle *string `locationName:"subtitle" type:"string"`
 
-	// The title for your Amazon Q web experience.
+	// The title for your Amazon Q Business web experience.
 	Title *string `locationName:"title" type:"string"`
 
-	// The Unix timestamp when the data source connector was last updated.
+	// The Unix timestamp when the Amazon Q Business web experience was last updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 
 	// The Amazon Resource Name (ARN) of the role with the permission to access
-	// the Amazon Q web experience and required resources.
+	// the Amazon Q Business web experience and required resources.
 	WebExperienceArn *string `locationName:"webExperienceArn" type:"string"`
 
-	// The identifier of the Amazon Q web experience.
+	// The identifier of the Amazon Q Business web experience.
 	WebExperienceId *string `locationName:"webExperienceId" min:"36" type:"string"`
 
-	// The customized welcome message for end users of an Amazon Q web experience.
+	// The customized welcome message for end users of an Amazon Q Business web
+	// experience.
 	WelcomeMessage *string `locationName:"welcomeMessage" type:"string"`
 }
 
@@ -12658,6 +14742,12 @@ func (s *GetWebExperienceOutput) SetDefaultEndpoint(v string) *GetWebExperienceO
 // SetError sets the Error field's value.
 func (s *GetWebExperienceOutput) SetError(v *ErrorDetail) *GetWebExperienceOutput {
 	s.Error = v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *GetWebExperienceOutput) SetRoleArn(v string) *GetWebExperienceOutput {
+	s.RoleArn = &v
 	return s
 }
 
@@ -12710,7 +14800,7 @@ func (s *GetWebExperienceOutput) SetWelcomeMessage(v string) *GetWebExperienceOu
 }
 
 // A list of users or sub groups that belong to a group. This is for generating
-// Amazon Q chat results only from document a user has access to.
+// Amazon Q Business chat results only from document a user has access to.
 type GroupMembers struct {
 	_ struct{} `type:"structure"`
 
@@ -12797,7 +14887,7 @@ type GroupStatusDetail struct {
 	// The details of an error associated a group status.
 	ErrorDetail *ErrorDetail `locationName:"errorDetail" type:"structure"`
 
-	// The Unix timestamp when the Amazon Q application was last updated.
+	// The Unix timestamp when the Amazon Q Business application was last updated.
 	LastUpdatedAt *time.Time `locationName:"lastUpdatedAt" type:"timestamp"`
 
 	// The status of a group.
@@ -12874,15 +14964,14 @@ func (s *GroupSummary) SetGroupName(v string) *GroupSummary {
 
 // Provides the configuration information for invoking a Lambda function in
 // Lambda to alter document metadata and content when ingesting documents into
-// Amazon Q.
+// Amazon Q Business.
 //
-// You can configure your Lambda function using PreExtractionHookConfiguration
-// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_CustomDocumentEnrichmentConfiguration.html)
-// if you want to apply advanced alterations on the original or raw documents.
+// You can configure your Lambda function using the PreExtractionHookConfiguration
+// parameter if you want to apply advanced alterations on the original or raw
+// documents.
 //
-// If you want to apply advanced alterations on the Amazon Q structured documents,
-// you must configure your Lambda function using PostExtractionHookConfiguration
-// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_CustomDocumentEnrichmentConfiguration.html).
+// If you want to apply advanced alterations on the Amazon Q Business structured
+// documents, you must configure your Lambda function using PostExtractionHookConfiguration.
 //
 // You can only invoke one Lambda function. However, this function can invoke
 // other functions it requires.
@@ -12894,7 +14983,8 @@ type HookConfiguration struct {
 	// The condition used for when a Lambda function should be invoked.
 	//
 	// For example, you can specify a condition that if there are empty date-time
-	// values, then Amazon Q should invoke a function that inserts the current date-time.
+	// values, then Amazon Q Business should invoke a function that inserts the
+	// current date-time.
 	InvocationCondition *DocumentAttributeCondition `locationName:"invocationCondition" type:"structure"`
 
 	// The Amazon Resource Name (ARN) of a role with permission to run a Lambda
@@ -12976,7 +15066,7 @@ func (s *HookConfiguration) SetS3BucketName(v string) *HookConfiguration {
 	return s
 }
 
-// Summary information for your Amazon Q index.
+// Summary information for your Amazon Q Business index.
 type Index struct {
 	_ struct{} `type:"structure"`
 
@@ -13049,7 +15139,7 @@ func (s *Index) SetUpdatedAt(v time.Time) *Index {
 type IndexCapacityConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The number of storage units configured for an Amazon Q index.
+	// The number of storage units configured for an Amazon Q Business index.
 	Units *int64 `locationName:"units" min:"1" type:"integer"`
 }
 
@@ -13123,18 +15213,18 @@ func (s *IndexStatistics) SetTextDocumentStatistics(v *TextDocumentStatistics) *
 }
 
 // Provides the configuration information for applying basic logic to alter
-// document metadata and content when ingesting documents into Amazon Q.
+// document metadata and content when ingesting documents into Amazon Q Business.
 //
 // To apply advanced logic, to go beyond what you can do with basic logic, see
-// HookConfiguration (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_HookConfiguration.html).
+// HookConfiguration (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_HookConfiguration.html).
 //
 // For more information, see Custom document enrichment (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/custom-document-enrichment.html).
 type InlineDocumentEnrichmentConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// The condition used for the target document attribute or metadata field when
-	// ingesting documents into Amazon Q. You use this with DocumentAttributeTarget
-	// (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_DocumentAttributeTarget.html)
+	// ingesting documents into Amazon Q Business. You use this with DocumentAttributeTarget
+	// (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeTarget.html)
 	// to apply the condition.
 	//
 	// For example, you can create the 'Department' target field and have it prefill
@@ -13143,10 +15233,10 @@ type InlineDocumentEnrichmentConfiguration struct {
 	// 'financial' in its URI value, then prefill the target field 'Department'
 	// with the target value 'Finance' for the document.
 	//
-	// Amazon Q can't create a target field if it has not already been created as
-	// an index field. After you create your index field, you can create a document
-	// metadata field using DocumentAttributeTarget. Amazon Q then will map your
-	// newly created metadata field to your index field.
+	// Amazon Q Business can't create a target field if it has not already been
+	// created as an index field. After you create your index field, you can create
+	// a document metadata field using DocumentAttributeTarget. Amazon Q Business
+	// then will map your newly created metadata field to your index field.
 	Condition *DocumentAttributeCondition `locationName:"condition" type:"structure"`
 
 	// TRUE to delete content if the condition used for the target attribute is
@@ -13154,7 +15244,7 @@ type InlineDocumentEnrichmentConfiguration struct {
 	DocumentContentOperator *string `locationName:"documentContentOperator" type:"string" enum:"DocumentContentOperator"`
 
 	// The target document attribute or metadata field you want to alter when ingesting
-	// documents into Amazon Q.
+	// documents into Amazon Q Business.
 	//
 	// For example, you can delete all customer identification numbers associated
 	// with the documents, stored in the document metadata field called 'Customer_ID'
@@ -13162,13 +15252,13 @@ type InlineDocumentEnrichmentConfiguration struct {
 	// This removes all customer ID values in the field 'Customer_ID'. This would
 	// scrub personally identifiable information from each document's metadata.
 	//
-	// Amazon Q can't create a target field if it has not already been created as
-	// an index field. After you create your index field, you can create a document
-	// metadata field using DocumentAttributeTarget (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_DocumentAttributeTarget.html).
-	// Amazon Q will then map your newly created document attribute to your index
-	// field.
+	// Amazon Q Business can't create a target field if it has not already been
+	// created as an index field. After you create your index field, you can create
+	// a document metadata field using DocumentAttributeTarget (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeTarget.html).
+	// Amazon Q Business will then map your newly created document attribute to
+	// your index field.
 	//
-	// You can also use this with DocumentAttributeCondition (https://docs.aws.amazon.com/enterpriseq/latest/APIReference/API_DocumentAttributeCondition.html).
+	// You can also use this with DocumentAttributeCondition (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeCondition.html).
 	Target *DocumentAttributeTarget `locationName:"target" type:"structure"`
 }
 
@@ -13228,8 +15318,8 @@ func (s *InlineDocumentEnrichmentConfiguration) SetTarget(v *DocumentAttributeTa
 	return s
 }
 
-// An issue occurred with the internal server used for your Amazon Q service.
-// Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
+// An issue occurred with the internal server used for your Amazon Q Business
+// service. Wait some minutes and try again, or contact Support (http://aws.amazon.com/contact-us/)
 // for help.
 type InternalServerException struct {
 	_            struct{}                  `type:"structure"`
@@ -13413,12 +15503,12 @@ func (s *LicenseNotFoundException) RequestID() string {
 type ListApplicationsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The maximum number of Amazon Q applications to return.
+	// The maximum number of Amazon Q Business applications to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of Amazon Q applications.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of Amazon Q Business applications.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -13472,11 +15562,11 @@ type ListApplicationsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// An array of summary information on the configuration of one or more Amazon
-	// Q applications.
+	// Q Business applications.
 	Applications []*Application `locationName:"applications" type:"list"`
 
-	// If the response is truncated, Amazon Q returns this token. You can use this
-	// token in a subsequent request to retrieve the next set of applications.
+	// If the response is truncated, Amazon Q Business returns this token. You can
+	// use this token in a subsequent request to retrieve the next set of applications.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -13513,23 +15603,22 @@ func (s *ListApplicationsOutput) SetNextToken(v string) *ListApplicationsOutput 
 type ListConversationsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The maximum number of Amazon Q conversations to return.
+	// The maximum number of Amazon Q Business conversations to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of Amazon Q conversations.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of Amazon Q Business conversations.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
-	// The identifier of the user involved in the Amazon Q web experience conversation.
-	//
-	// UserId is a required field
-	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string" required:"true"`
+	// The identifier of the user involved in the Amazon Q Business web experience
+	// conversation.
+	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -13564,9 +15653,6 @@ func (s *ListConversationsInput) Validate() error {
 	}
 	if s.NextToken != nil && len(*s.NextToken) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
-	}
-	if s.UserId == nil {
-		invalidParams.Add(request.NewErrParamRequired("UserId"))
 	}
 	if s.UserId != nil && len(*s.UserId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("UserId", 1))
@@ -13606,11 +15692,11 @@ type ListConversationsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// An array of summary information on the configuration of one or more Amazon
-	// Q web experiences.
+	// Q Business web experiences.
 	Conversations []*Conversation `locationName:"conversations" type:"list"`
 
-	// If the response is truncated, Amazon Q returns this token, which you can
-	// use in a later request to list the next set of messages.
+	// If the response is truncated, Amazon Q Business returns this token, which
+	// you can use in a later request to list the next set of messages.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -13647,7 +15733,8 @@ func (s *ListConversationsOutput) SetNextToken(v string) *ListConversationsOutpu
 type ListDataSourceSyncJobsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application connected to the data source.
+	// The identifier of the Amazon Q Business application connected to the data
+	// source.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -13660,7 +15747,7 @@ type ListDataSourceSyncJobsInput struct {
 	// The end time of the data source connector sync.
 	EndTime *time.Time `location:"querystring" locationName:"endTime" type:"timestamp"`
 
-	// The identifier of the index used with the Amazon Q data source connector.
+	// The identifier of the index used with the Amazon Q Business data source connector.
 	//
 	// IndexId is a required field
 	IndexId *string `location:"uri" locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -13669,8 +15756,8 @@ type ListDataSourceSyncJobsInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incpmplete because there is more data to retriever,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of responses.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of responses.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
 	// The start time of the data source connector sync.
@@ -13787,8 +15874,8 @@ type ListDataSourceSyncJobsOutput struct {
 	// A history of synchronization jobs for the data source connector.
 	History []*DataSourceSyncJob `locationName:"history" type:"list"`
 
-	// If the response is truncated, Amazon Q returns this token. You can use this
-	// token in any subsequent request to retrieve the next set of jobs.
+	// If the response is truncated, Amazon Q Business returns this token. You can
+	// use this token in any subsequent request to retrieve the next set of jobs.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -13825,7 +15912,8 @@ func (s *ListDataSourceSyncJobsOutput) SetNextToken(v string) *ListDataSourceSyn
 type ListDataSourcesInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application linked to the data source connectors.
+	// The identifier of the Amazon Q Business application linked to the data source
+	// connectors.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -13839,8 +15927,9 @@ type ListDataSourcesInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of Amazon Q data source connectors.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of Amazon Q Business data
+	// source connectors.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -13920,8 +16009,9 @@ type ListDataSourcesOutput struct {
 	// An array of summary information for one or more data source connector.
 	DataSources []*DataSource `locationName:"dataSources" type:"list"`
 
-	// If the response is truncated, Amazon Q returns this token. You can use this
-	// token in a subsequent request to retrieve the next set of data source connectors.
+	// If the response is truncated, Amazon Q Business returns this token. You can
+	// use this token in a subsequent request to retrieve the next set of data source
+	// connectors.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -13975,8 +16065,8 @@ type ListDocumentsInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of documents.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of documents.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14066,8 +16156,8 @@ type ListDocumentsOutput struct {
 	DocumentDetailList []*DocumentDetails `locationName:"documentDetailList" type:"list"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of documents.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of documents.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14123,8 +16213,9 @@ type ListGroupsInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the previous response was incomplete (because there is more data to retrieve),
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of groups that are mapped to users.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of groups that are mapped
+	// to users.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
 	// The timestamp identifier used for the latest PUT or DELETE action for mapping
@@ -14228,9 +16319,9 @@ type ListGroupsOutput struct {
 	// Summary information for list of groups that are mapped to users.
 	Items []*GroupSummary `locationName:"items" type:"list"`
 
-	// If the response is truncated, Amazon Q returns this token that you can use
-	// in the subsequent request to retrieve the next set of groups that are mapped
-	// to users.
+	// If the response is truncated, Amazon Q Business returns this token that you
+	// can use in the subsequent request to retrieve the next set of groups that
+	// are mapped to users.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14267,7 +16358,7 @@ func (s *ListGroupsOutput) SetNextToken(v string) *ListGroupsOutput {
 type ListIndicesInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application connected to the index.
+	// The identifier of the Amazon Q Business application connected to the index.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -14276,8 +16367,8 @@ type ListIndicesInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of Amazon Q indices.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of Amazon Q Business indices.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14345,8 +16436,8 @@ type ListIndicesOutput struct {
 	// An array of information on the items in one or more indexes.
 	Indices []*Index `locationName:"indices" type:"list"`
 
-	// If the response is truncated, Amazon Q returns this token that you can use
-	// in the subsequent request to retrieve the next set of indexes.
+	// If the response is truncated, Amazon Q Business returns this token that you
+	// can use in the subsequent request to retrieve the next set of indexes.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14383,12 +16474,12 @@ func (s *ListIndicesOutput) SetNextToken(v string) *ListIndicesOutput {
 type ListMessagesInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the Amazon Q application.
+	// The identifier for the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The identifier of the Amazon Q web experience conversation.
+	// The identifier of the Amazon Q Business web experience conversation.
 	//
 	// ConversationId is a required field
 	ConversationId *string `location:"uri" locationName:"conversationId" min:"36" type:"string" required:"true"`
@@ -14396,14 +16487,13 @@ type ListMessagesInput struct {
 	// The maximum number of messages to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// If the number of retrievers returned exceeds maxResults, Amazon Q returns
-	// a next token as a pagination token to retrieve the next set of messages.
+	// If the number of retrievers returned exceeds maxResults, Amazon Q Business
+	// returns a next token as a pagination token to retrieve the next set of messages.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
-	// The identifier of the user involved in the Amazon Q web experience conversation.
-	//
-	// UserId is a required field
-	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string" required:"true"`
+	// The identifier of the user involved in the Amazon Q Business web experience
+	// conversation.
+	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -14444,9 +16534,6 @@ func (s *ListMessagesInput) Validate() error {
 	}
 	if s.NextToken != nil && len(*s.NextToken) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
-	}
-	if s.UserId == nil {
-		invalidParams.Add(request.NewErrParamRequired("UserId"))
 	}
 	if s.UserId != nil && len(*s.UserId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("UserId", 1))
@@ -14494,8 +16581,8 @@ type ListMessagesOutput struct {
 	// An array of information on one or more messages.
 	Messages []*Message `locationName:"messages" type:"list"`
 
-	// If the response is truncated, Amazon Q returns this token, which you can
-	// use in a later request to list the next set of messages.
+	// If the response is truncated, Amazon Q Business returns this token, which
+	// you can use in a later request to list the next set of messages.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14541,8 +16628,8 @@ type ListPluginsInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of plugins.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of plugins.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14608,8 +16695,8 @@ type ListPluginsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of plugins.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of plugins.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
 	// Information about a configured plugin.
@@ -14649,7 +16736,7 @@ func (s *ListPluginsOutput) SetPlugins(v []*Plugin) *ListPluginsOutput {
 type ListRetrieversInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application using the retriever.
+	// The identifier of the Amazon Q Business application using the retriever.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -14657,8 +16744,8 @@ type ListRetrieversInput struct {
 	// The maximum number of retrievers returned.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// If the number of retrievers returned exceeds maxResults, Amazon Q returns
-	// a next token as a pagination token to retrieve the next set of retrievers.
+	// If the number of retrievers returned exceeds maxResults, Amazon Q Business
+	// returns a next token as a pagination token to retrieve the next set of retrievers.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14723,8 +16810,8 @@ func (s *ListRetrieversInput) SetNextToken(v string) *ListRetrieversInput {
 type ListRetrieversOutput struct {
 	_ struct{} `type:"structure"`
 
-	// If the response is truncated, Amazon Q returns this token, which you can
-	// use in a later request to list the next set of retrievers.
+	// If the response is truncated, Amazon Q Business returns this token, which
+	// you can use in a later request to list the next set of retrievers.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
 	// An array of summary information for one or more retrievers.
@@ -14764,8 +16851,8 @@ func (s *ListRetrieversOutput) SetRetrievers(v []*Retriever) *ListRetrieversOutp
 type ListTagsForResourceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q application or data source
-	// to get a list of tags for.
+	// The Amazon Resource Name (ARN) of the Amazon Q Business application or data
+	// source to get a list of tags for.
 	//
 	// ResourceARN is a required field
 	ResourceARN *string `location:"uri" locationName:"resourceARN" min:"1" type:"string" required:"true"`
@@ -14814,7 +16901,8 @@ func (s *ListTagsForResourceInput) SetResourceARN(v string) *ListTagsForResource
 type ListTagsForResourceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of tags associated with the Amazon Q application or data source.
+	// A list of tags associated with the Amazon Q Business application or data
+	// source.
 	Tags []*Tag `locationName:"tags" type:"list"`
 }
 
@@ -14845,17 +16933,18 @@ func (s *ListTagsForResourceOutput) SetTags(v []*Tag) *ListTagsForResourceOutput
 type ListWebExperiencesInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application linked to the listed web experiences.
+	// The identifier of the Amazon Q Business application linked to the listed
+	// web experiences.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The maximum number of Amazon Q Web Experiences to return.
+	// The maximum number of Amazon Q Business Web Experiences to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// If the maxResults response was incomplete because there is more data to retrieve,
-	// Amazon Q returns a pagination token in the response. You can use this pagination
-	// token to retrieve the next set of Amazon Q conversations.
+	// Amazon Q Business returns a pagination token in the response. You can use
+	// this pagination token to retrieve the next set of Amazon Q Business conversations.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
@@ -14920,11 +17009,11 @@ func (s *ListWebExperiencesInput) SetNextToken(v string) *ListWebExperiencesInpu
 type ListWebExperiencesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// If the response is truncated, Amazon Q returns this token, which you can
-	// use in a later request to list the next set of messages.
+	// If the response is truncated, Amazon Q Business returns this token, which
+	// you can use in a later request to list the next set of messages.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
-	// An array of summary information for one or more Amazon Q experiences.
+	// An array of summary information for one or more Amazon Q Business experiences.
 	WebExperiences []*WebExperience `locationName:"webExperiences" type:"list"`
 }
 
@@ -15076,32 +17165,32 @@ func (s *MemberUser) SetUserId(v string) *MemberUser {
 	return s
 }
 
-// A message in an Amazon Q web experience.
+// A message in an Amazon Q Business web experience.
 type Message struct {
 	_ struct{} `type:"structure"`
 
-	// An output event that Amazon Q returns to an user who wants to perform a plugin
-	// action during a non-streaming chat conversation. It contains information
+	// An output event that Amazon Q Business returns to an user who wants to perform
+	// a plugin action during a non-streaming chat conversation. It contains information
 	// about the selected action with a list of possible user input fields, some
-	// pre-populated by Amazon Q.
+	// pre-populated by Amazon Q Business.
 	ActionReview *ActionReview `locationName:"actionReview" type:"structure"`
 
-	// A file directly uploaded into an Amazon Q web experience chat.
+	// A file directly uploaded into an Amazon Q Business web experience chat.
 	Attachments []*AttachmentOutput_ `locationName:"attachments" type:"list"`
 
-	// The content of the Amazon Q web experience message.
+	// The content of the Amazon Q Business web experience message.
 	Body *string `locationName:"body" type:"string"`
 
-	// The identifier of the Amazon Q web experience message.
+	// The identifier of the Amazon Q Business web experience message.
 	MessageId *string `locationName:"messageId" min:"1" type:"string"`
 
-	// The source documents used to generate Amazon Q web experience message.
+	// The source documents used to generate Amazon Q Business web experience message.
 	SourceAttribution []*SourceAttribution `locationName:"sourceAttribution" type:"list"`
 
-	// The timestamp of the first Amazon Q web experience message.
+	// The timestamp of the first Amazon Q Business web experience message.
 	Time *time.Time `locationName:"time" type:"timestamp"`
 
-	// The type of Amazon Q message, whether HUMAN or AI generated.
+	// The type of Amazon Q Business message, whether HUMAN or AI generated.
 	Type *string `locationName:"type" type:"string" enum:"MessageType"`
 }
 
@@ -15245,11 +17334,114 @@ func (s *MessageUsefulnessFeedback) SetUsefulness(v string) *MessageUsefulnessFe
 	return s
 }
 
-// Configuration information for an Amazon Q index.
+// A metadata event for a AI-generated text output message in a Amazon Q Business
+// conversation, containing associated metadata generated.
+type MetadataEvent struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the conversation with which the generated metadata is associated.
+	ConversationId *string `locationName:"conversationId" min:"36" type:"string"`
+
+	// The final text output message generated by the system.
+	FinalTextMessage *string `locationName:"finalTextMessage" min:"1" type:"string"`
+
+	// The source documents used to generate the conversation response.
+	SourceAttributions []*SourceAttribution `locationName:"sourceAttributions" type:"list"`
+
+	// The identifier of an Amazon Q Business AI generated message within the conversation.
+	SystemMessageId *string `locationName:"systemMessageId" min:"36" type:"string"`
+
+	// The identifier of an Amazon Q Business end user text input message within
+	// the conversation.
+	UserMessageId *string `locationName:"userMessageId" min:"36" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MetadataEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MetadataEvent) GoString() string {
+	return s.String()
+}
+
+// SetConversationId sets the ConversationId field's value.
+func (s *MetadataEvent) SetConversationId(v string) *MetadataEvent {
+	s.ConversationId = &v
+	return s
+}
+
+// SetFinalTextMessage sets the FinalTextMessage field's value.
+func (s *MetadataEvent) SetFinalTextMessage(v string) *MetadataEvent {
+	s.FinalTextMessage = &v
+	return s
+}
+
+// SetSourceAttributions sets the SourceAttributions field's value.
+func (s *MetadataEvent) SetSourceAttributions(v []*SourceAttribution) *MetadataEvent {
+	s.SourceAttributions = v
+	return s
+}
+
+// SetSystemMessageId sets the SystemMessageId field's value.
+func (s *MetadataEvent) SetSystemMessageId(v string) *MetadataEvent {
+	s.SystemMessageId = &v
+	return s
+}
+
+// SetUserMessageId sets the UserMessageId field's value.
+func (s *MetadataEvent) SetUserMessageId(v string) *MetadataEvent {
+	s.UserMessageId = &v
+	return s
+}
+
+// The MetadataEvent is and event in the ChatOutputStream group of events.
+func (s *MetadataEvent) eventChatOutputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the MetadataEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *MetadataEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *MetadataEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
+// Configuration information for an Amazon Q Business index.
 type NativeIndexConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the Amazon Q index.
+	// Overrides the default boosts applied by Amazon Q Business to supported document
+	// attribute data types.
+	BoostingOverride map[string]*DocumentAttributeBoostingConfiguration `locationName:"boostingOverride" min:"1" type:"map"`
+
+	// The identifier for the Amazon Q Business index.
 	//
 	// IndexId is a required field
 	IndexId *string `locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -15276,11 +17468,24 @@ func (s NativeIndexConfiguration) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *NativeIndexConfiguration) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "NativeIndexConfiguration"}
+	if s.BoostingOverride != nil && len(s.BoostingOverride) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BoostingOverride", 1))
+	}
 	if s.IndexId == nil {
 		invalidParams.Add(request.NewErrParamRequired("IndexId"))
 	}
 	if s.IndexId != nil && len(*s.IndexId) < 36 {
 		invalidParams.Add(request.NewErrParamMinLen("IndexId", 36))
+	}
+	if s.BoostingOverride != nil {
+		for i, v := range s.BoostingOverride {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "BoostingOverride", i), err.(request.ErrInvalidParams))
+			}
+		}
 	}
 
 	if invalidParams.Len() > 0 {
@@ -15289,9 +17494,99 @@ func (s *NativeIndexConfiguration) Validate() error {
 	return nil
 }
 
+// SetBoostingOverride sets the BoostingOverride field's value.
+func (s *NativeIndexConfiguration) SetBoostingOverride(v map[string]*DocumentAttributeBoostingConfiguration) *NativeIndexConfiguration {
+	s.BoostingOverride = v
+	return s
+}
+
 // SetIndexId sets the IndexId field's value.
 func (s *NativeIndexConfiguration) SetIndexId(v string) *NativeIndexConfiguration {
 	s.IndexId = &v
+	return s
+}
+
+// Information about invoking a custom plugin without any authentication or
+// authorization requirement.
+type NoAuthConfiguration struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NoAuthConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NoAuthConfiguration) GoString() string {
+	return s.String()
+}
+
+// Provides information on boosting NUMBER type document attributes.
+//
+// For more information on how boosting document attributes work in Amazon Q
+// Business, see Boosting using document attributes (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html).
+type NumberAttributeBoostingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the duration, in seconds, of a boost applies to a NUMBER type document
+	// attribute.
+	//
+	// BoostingLevel is a required field
+	BoostingLevel *string `locationName:"boostingLevel" type:"string" required:"true" enum:"DocumentAttributeBoostingLevel"`
+
+	// Specifies how much a document attribute is boosted.
+	BoostingType *string `locationName:"boostingType" type:"string" enum:"NumberAttributeBoostingType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NumberAttributeBoostingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NumberAttributeBoostingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *NumberAttributeBoostingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "NumberAttributeBoostingConfiguration"}
+	if s.BoostingLevel == nil {
+		invalidParams.Add(request.NewErrParamRequired("BoostingLevel"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBoostingLevel sets the BoostingLevel field's value.
+func (s *NumberAttributeBoostingConfiguration) SetBoostingLevel(v string) *NumberAttributeBoostingConfiguration {
+	s.BoostingLevel = &v
+	return s
+}
+
+// SetBoostingType sets the BoostingType field's value.
+func (s *NumberAttributeBoostingConfiguration) SetBoostingType(v string) *NumberAttributeBoostingConfiguration {
+	s.BoostingType = &v
 	return s
 }
 
@@ -15300,8 +17595,8 @@ func (s *NativeIndexConfiguration) SetIndexId(v string) *NativeIndexConfiguratio
 type OAuth2ClientCredentialConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The ARN of an IAM role used by Amazon Q to access the OAuth 2.0 authentication
-	// credentials stored in a Secrets Manager secret.
+	// The ARN of an IAM role used by Amazon Q Business to access the OAuth 2.0
+	// authentication credentials stored in a Secrets Manager secret.
 	//
 	// RoleArn is a required field
 	RoleArn *string `locationName:"roleArn" type:"string" required:"true"`
@@ -15359,9 +17654,12 @@ func (s *OAuth2ClientCredentialConfiguration) SetSecretArn(v string) *OAuth2Clie
 	return s
 }
 
-// Information about an Amazon Q plugin and its configuration.
+// Information about an Amazon Q Business plugin and its configuration.
 type Plugin struct {
 	_ struct{} `type:"structure"`
+
+	// The status of the plugin.
+	BuildStatus *string `locationName:"buildStatus" type:"string" enum:"PluginBuildStatus"`
 
 	// The timestamp for when the plugin was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
@@ -15401,6 +17699,12 @@ func (s Plugin) String() string {
 // value will be replaced with "sensitive".
 func (s Plugin) GoString() string {
 	return s.String()
+}
+
+// SetBuildStatus sets the BuildStatus field's value.
+func (s *Plugin) SetBuildStatus(v string) *Plugin {
+	s.BuildStatus = &v
+	return s
 }
 
 // SetCreatedAt sets the CreatedAt field's value.
@@ -15445,13 +17749,16 @@ func (s *Plugin) SetUpdatedAt(v time.Time) *Plugin {
 	return s
 }
 
-// Authentication configuration information for an Amazon Q plugin.
+// Authentication configuration information for an Amazon Q Business plugin.
 type PluginAuthConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// Information about the basic authentication credentials used to configure
 	// a plugin.
 	BasicAuthConfiguration *BasicAuthConfiguration `locationName:"basicAuthConfiguration" type:"structure"`
+
+	// Information about invoking a custom plugin without any authentication.
+	NoAuthConfiguration *NoAuthConfiguration `locationName:"noAuthConfiguration" type:"structure"`
 
 	// Information about the OAuth 2.0 authentication credential/token used to configure
 	// a plugin.
@@ -15502,14 +17809,74 @@ func (s *PluginAuthConfiguration) SetBasicAuthConfiguration(v *BasicAuthConfigur
 	return s
 }
 
+// SetNoAuthConfiguration sets the NoAuthConfiguration field's value.
+func (s *PluginAuthConfiguration) SetNoAuthConfiguration(v *NoAuthConfiguration) *PluginAuthConfiguration {
+	s.NoAuthConfiguration = v
+	return s
+}
+
 // SetOAuth2ClientCredentialConfiguration sets the OAuth2ClientCredentialConfiguration field's value.
 func (s *PluginAuthConfiguration) SetOAuth2ClientCredentialConfiguration(v *OAuth2ClientCredentialConfiguration) *PluginAuthConfiguration {
 	s.OAuth2ClientCredentialConfiguration = v
 	return s
 }
 
+// Configuration information required to invoke chat in PLUGIN_MODE.
+//
+// For more information, see Admin controls and guardrails (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/guardrails.html),
+// Plugins (https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/plugins.html),
+// and Conversation settings (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/using-web-experience.html#chat-source-scope).
+type PluginConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the plugin you want to use.
+	//
+	// PluginId is a required field
+	PluginId *string `locationName:"pluginId" min:"36" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PluginConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PluginConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PluginConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PluginConfiguration"}
+	if s.PluginId == nil {
+		invalidParams.Add(request.NewErrParamRequired("PluginId"))
+	}
+	if s.PluginId != nil && len(*s.PluginId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("PluginId", 36))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPluginId sets the PluginId field's value.
+func (s *PluginConfiguration) SetPluginId(v string) *PluginConfiguration {
+	s.PluginId = &v
+	return s
+}
+
 // Provides user and group information used for filtering documents to use for
-// generating Amazon Q conversation responses.
+// generating Amazon Q Business conversation responses.
 type Principal struct {
 	_ struct{} `type:"structure"`
 
@@ -15731,9 +18098,7 @@ type PutFeedbackInput struct {
 	MessageUsefulness *MessageUsefulnessFeedback `locationName:"messageUsefulness" type:"structure"`
 
 	// The identifier of the user giving the feedback.
-	//
-	// UserId is a required field
-	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string" required:"true"`
+	UserId *string `location:"querystring" locationName:"userId" min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -15774,9 +18139,6 @@ func (s *PutFeedbackInput) Validate() error {
 	}
 	if s.MessageId != nil && len(*s.MessageId) < 36 {
 		invalidParams.Add(request.NewErrParamMinLen("MessageId", 36))
-	}
-	if s.UserId == nil {
-		invalidParams.Add(request.NewErrParamRequired("UserId"))
 	}
 	if s.UserId != nil && len(*s.UserId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("UserId", 1))
@@ -15869,7 +18231,7 @@ type PutGroupInput struct {
 	DataSourceId *string `locationName:"dataSourceId" min:"36" type:"string"`
 
 	// A list of users or sub groups that belong to a group. This is for generating
-	// Amazon Q chat results only from document a user has access to.
+	// Amazon Q Business chat results only from document a user has access to.
 	//
 	// GroupMembers is a required field
 	GroupMembers *GroupMembers `locationName:"groupMembers" type:"structure" required:"true"`
@@ -16016,6 +18378,54 @@ func (s PutGroupOutput) GoString() string {
 	return s.String()
 }
 
+// Configuration information about Amazon Q Apps. (preview feature)
+type QAppsConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Status information about whether end users can create and use Amazon Q Apps
+	// in the web experience.
+	//
+	// QAppsControlMode is a required field
+	QAppsControlMode *string `locationName:"qAppsControlMode" type:"string" required:"true" enum:"QAppsControlMode"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QAppsConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QAppsConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *QAppsConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "QAppsConfiguration"}
+	if s.QAppsControlMode == nil {
+		invalidParams.Add(request.NewErrParamRequired("QAppsControlMode"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetQAppsControlMode sets the QAppsControlMode field's value.
+func (s *QAppsConfiguration) SetQAppsControlMode(v string) *QAppsConfiguration {
+	s.QAppsControlMode = &v
+	return s
+}
+
 // The resource you want to use doesn’t exist. Make sure you have provided
 // the correct resource and try again.
 type ResourceNotFoundException struct {
@@ -16092,17 +18502,17 @@ func (s *ResourceNotFoundException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Summary information for the retriever used for your Amazon Q application.
+// Summary information for the retriever used for your Amazon Q Business application.
 type Retriever struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application using the retriever.
+	// The identifier of the Amazon Q Business application using the retriever.
 	ApplicationId *string `locationName:"applicationId" min:"36" type:"string"`
 
 	// The name of your retriever.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
-	// The identifier of the retriever used by your Amazon Q application.
+	// The identifier of the retriever used by your Amazon Q Business application.
 	RetrieverId *string `locationName:"retrieverId" min:"36" type:"string"`
 
 	// The status of your retriever.
@@ -16160,17 +18570,17 @@ func (s *Retriever) SetType(v string) *Retriever {
 	return s
 }
 
-// Provides information on how the retriever used for your Amazon Q application
-// is configured.
+// Provides information on how the retriever used for your Amazon Q Business
+// application is configured.
 type RetrieverConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// Provides information on how the Amazon Kendra index used as a retriever for
-	// your Amazon Q application is configured.
+	// your Amazon Q Business application is configured.
 	KendraIndexConfiguration *KendraIndexConfiguration `locationName:"kendraIndexConfiguration" type:"structure"`
 
-	// Provides information on how a Amazon Q index used as a retriever for your
-	// Amazon Q application is configured.
+	// Provides information on how a Amazon Q Business index used as a retriever
+	// for your Amazon Q Business application is configured.
 	NativeIndexConfiguration *NativeIndexConfiguration `locationName:"nativeIndexConfiguration" type:"structure"`
 }
 
@@ -16224,8 +18634,8 @@ func (s *RetrieverConfiguration) SetNativeIndexConfiguration(v *NativeIndexConfi
 	return s
 }
 
-// Guardrail rules for an Amazon Q application. Amazon Q supports only one rule
-// at a time.
+// Guardrail rules for an Amazon Q Business application. Amazon Q Business supports
+// only one rule at a time.
 type Rule struct {
 	_ struct{} `type:"structure"`
 
@@ -16238,7 +18648,7 @@ type Rule struct {
 	// The configuration information for a rule.
 	RuleConfiguration *RuleConfiguration `locationName:"ruleConfiguration" type:"structure"`
 
-	// The type fo rule.
+	// The type of rule.
 	//
 	// RuleType is a required field
 	RuleType *string `locationName:"ruleType" type:"string" required:"true" enum:"RuleType"`
@@ -16308,12 +18718,12 @@ func (s *Rule) SetRuleType(v string) *Rule {
 type RuleConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// A rule for configuring how Amazon Q responds when it encounters a a blocked
-	// topic.
+	// A rule for configuring how Amazon Q Business responds when it encounters
+	// a a blocked topic.
 	ContentBlockerRule *ContentBlockerRule `locationName:"contentBlockerRule" type:"structure"`
 
-	// Rules for retrieving content from data sources connected to a Amazon Q application
-	// for a specific topic control configuration.
+	// Rules for retrieving content from data sources connected to a Amazon Q Business
+	// application for a specific topic control configuration.
 	ContentRetrievalRule *ContentRetrievalRule `locationName:"contentRetrievalRule" type:"structure"`
 }
 
@@ -16362,8 +18772,8 @@ func (s *RuleConfiguration) SetContentRetrievalRule(v *ContentRetrievalRule) *Ru
 	return s
 }
 
-// Information required for Amazon Q to find a specific file in an Amazon S3
-// bucket.
+// Information required for Amazon Q Business to find a specific file in an
+// Amazon S3 bucket.
 type S3 struct {
 	_ struct{} `type:"structure"`
 
@@ -16431,7 +18841,7 @@ func (s *S3) SetKey(v string) *S3 {
 }
 
 // Provides the SAML 2.0 compliant identity provider (IdP) configuration information
-// Amazon Q needs to deploy a Amazon Q web experience.
+// Amazon Q Business needs to deploy a Amazon Q Business web experience.
 type SamlConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -16441,8 +18851,8 @@ type SamlConfiguration struct {
 	MetadataXML *string `locationName:"metadataXML" min:"1000" type:"string" required:"true"`
 
 	// The Amazon Resource Name (ARN) of an IAM role assumed by users when they
-	// authenticate into their Amazon Q web experience, containing the relevant
-	// Amazon Q permissions for conversing with Amazon Q.
+	// authenticate into their Amazon Q Business web experience, containing the
+	// relevant Amazon Q Business permissions for conversing with Amazon Q Business.
 	//
 	// RoleArn is a required field
 	RoleArn *string `locationName:"roleArn" type:"string" required:"true"`
@@ -16526,7 +18936,7 @@ func (s *SamlConfiguration) SetUserIdAttribute(v string) *SamlConfiguration {
 	return s
 }
 
-// You have exceeded the set limits for your Amazon Q service.
+// You have exceeded the set limits for your Amazon Q Business service.
 type ServiceQuotaExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -16601,11 +19011,45 @@ func (s *ServiceQuotaExceededException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The documents used to generate an Amazon Q web experience response.
+// Contains the relevant text excerpt from a source that was used to generate
+// a citation text segment in an Amazon Q Business chat response.
+type SnippetExcerpt struct {
+	_ struct{} `type:"structure"`
+
+	// The relevant text excerpt from a source that was used to generate a citation
+	// text segment in an Amazon Q chat response.
+	Text *string `locationName:"text" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnippetExcerpt) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SnippetExcerpt) GoString() string {
+	return s.String()
+}
+
+// SetText sets the Text field's value.
+func (s *SnippetExcerpt) SetText(v string) *SnippetExcerpt {
+	s.Text = &v
+	return s
+}
+
+// The documents used to generate an Amazon Q Business web experience response.
 type SourceAttribution struct {
 	_ struct{} `type:"structure"`
 
-	// The number attached to a citation in an Amazon Q generated response.
+	// The number attached to a citation in an Amazon Q Business generated response.
 	CitationNumber *int64 `locationName:"citationNumber" type:"integer"`
 
 	// The content extract from the document on which the generated response is
@@ -16615,14 +19059,15 @@ type SourceAttribution struct {
 	// A text extract from a source document that is used for source attribution.
 	TextMessageSegments []*TextSegment `locationName:"textMessageSegments" type:"list"`
 
-	// The title of the document which is the source for the Amazon Q generated
+	// The title of the document which is the source for the Amazon Q Business generated
 	// response.
 	Title *string `locationName:"title" min:"1" type:"string"`
 
-	// The Unix timestamp when the Amazon Q application was last updated.
+	// The Unix timestamp when the Amazon Q Business application was last updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 
-	// The URL of the document which is the source for the Amazon Q generated response.
+	// The URL of the document which is the source for the Amazon Q Business generated
+	// response.
 	Url *string `locationName:"url" min:"1" type:"string"`
 }
 
@@ -16683,7 +19128,8 @@ func (s *SourceAttribution) SetUrl(v string) *SourceAttribution {
 type StartDataSourceSyncJobInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of Amazon Q application the data source is connected to.
+	// The identifier of Amazon Q Business application the data source is connected
+	// to.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -16797,8 +19243,8 @@ func (s *StartDataSourceSyncJobOutput) SetExecutionId(v string) *StartDataSource
 type StopDataSourceSyncJobInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier of the Amazon Q application that the data source is connected
-	// to.
+	// The identifier of the Amazon Q Business application that the data source
+	// is connected to.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -16808,7 +19254,7 @@ type StopDataSourceSyncJobInput struct {
 	// DataSourceId is a required field
 	DataSourceId *string `location:"uri" locationName:"dataSourceId" min:"36" type:"string" required:"true"`
 
-	// The identifier of the index used with the Amazon Q data source connector.
+	// The identifier of the index used with the Amazon Q Business data source connector.
 	//
 	// IndexId is a required field
 	IndexId *string `location:"uri" locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -16900,6 +19346,132 @@ func (s StopDataSourceSyncJobOutput) GoString() string {
 	return s.String()
 }
 
+// Provides information on boosting STRING type document attributes.
+//
+// For STRING and STRING_LIST type document attributes to be used for boosting
+// on the console and the API, they must be enabled for search using the DocumentAttributeConfiguration
+// (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html)
+// object of the UpdateIndex (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html)
+// API. If you haven't enabled searching on these attributes, you can't boost
+// attributes of these data types on either the console or the API.
+//
+// For more information on how boosting document attributes work in Amazon Q
+// Business, see Boosting using document attributes (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html).
+type StringAttributeBoostingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies specific values of a STRING type document attribute being boosted.
+	AttributeValueBoosting map[string]*string `locationName:"attributeValueBoosting" min:"1" type:"map"`
+
+	// Specifies how much a document attribute is boosted.
+	//
+	// BoostingLevel is a required field
+	BoostingLevel *string `locationName:"boostingLevel" type:"string" required:"true" enum:"DocumentAttributeBoostingLevel"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StringAttributeBoostingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StringAttributeBoostingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StringAttributeBoostingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StringAttributeBoostingConfiguration"}
+	if s.AttributeValueBoosting != nil && len(s.AttributeValueBoosting) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AttributeValueBoosting", 1))
+	}
+	if s.BoostingLevel == nil {
+		invalidParams.Add(request.NewErrParamRequired("BoostingLevel"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAttributeValueBoosting sets the AttributeValueBoosting field's value.
+func (s *StringAttributeBoostingConfiguration) SetAttributeValueBoosting(v map[string]*string) *StringAttributeBoostingConfiguration {
+	s.AttributeValueBoosting = v
+	return s
+}
+
+// SetBoostingLevel sets the BoostingLevel field's value.
+func (s *StringAttributeBoostingConfiguration) SetBoostingLevel(v string) *StringAttributeBoostingConfiguration {
+	s.BoostingLevel = &v
+	return s
+}
+
+// Provides information on boosting STRING_LIST type document attributes.
+//
+// For STRING and STRING_LIST type document attributes to be used for boosting
+// on the console and the API, they must be enabled for search using the DocumentAttributeConfiguration
+// (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_DocumentAttributeConfiguration.html)
+// object of the UpdateIndex (https://docs.aws.amazon.com/amazonq/latest/api-reference/API_UpdateIndex.html)
+// API. If you haven't enabled searching on these attributes, you can't boost
+// attributes of these data types on either the console or the API.
+//
+// For more information on how boosting document attributes work in Amazon Q
+// Business, see Boosting using document attributes (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/metadata-boosting.html).
+type StringListAttributeBoostingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies how much a document attribute is boosted.
+	//
+	// BoostingLevel is a required field
+	BoostingLevel *string `locationName:"boostingLevel" type:"string" required:"true" enum:"DocumentAttributeBoostingLevel"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StringListAttributeBoostingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StringListAttributeBoostingConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StringListAttributeBoostingConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StringListAttributeBoostingConfiguration"}
+	if s.BoostingLevel == nil {
+		invalidParams.Add(request.NewErrParamRequired("BoostingLevel"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBoostingLevel sets the BoostingLevel field's value.
+func (s *StringListAttributeBoostingConfiguration) SetBoostingLevel(v string) *StringListAttributeBoostingConfiguration {
+	s.BoostingLevel = &v
+	return s
+}
+
 // A list of key/value pairs that identify an index, FAQ, or data source. Tag
 // keys and values can consist of Unicode letters, digits, white space, and
 // any of the following symbols: _ . : / = + - @.
@@ -16907,7 +19479,7 @@ type Tag struct {
 	_ struct{} `type:"structure"`
 
 	// The key for the tag. Keys are not case sensitive and must be unique for the
-	// Amazon Q application or data source.
+	// Amazon Q Business application or data source.
 	//
 	// Key is a required field
 	Key *string `locationName:"key" min:"1" type:"string" required:"true"`
@@ -16971,14 +19543,14 @@ func (s *Tag) SetValue(v string) *Tag {
 type TagResourceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q application or data source
-	// to tag.
+	// The Amazon Resource Name (ARN) of the Amazon Q Business application or data
+	// source to tag.
 	//
 	// ResourceARN is a required field
 	ResourceARN *string `location:"uri" locationName:"resourceARN" min:"1" type:"string" required:"true"`
 
-	// A list of tag keys to add to the Amazon Q application or data source. If
-	// a tag already exists, the existing value is replaced with the new value.
+	// A list of tag keys to add to the Amazon Q Business application or data source.
+	// If a tag already exists, the existing value is replaced with the new value.
 	//
 	// Tags is a required field
 	Tags []*Tag `locationName:"tags" type:"list" required:"true"`
@@ -17106,6 +19678,158 @@ func (s *TextDocumentStatistics) SetIndexedTextDocumentCount(v int64) *TextDocum
 	return s
 }
 
+// An input event for a end user message in an Amazon Q Business web experience.
+type TextInputEvent struct {
+	_ struct{} `type:"structure"`
+
+	// A user message in a text message input event.
+	//
+	// UserMessage is a required field
+	UserMessage *string `locationName:"userMessage" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TextInputEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TextInputEvent) GoString() string {
+	return s.String()
+}
+
+// SetUserMessage sets the UserMessage field's value.
+func (s *TextInputEvent) SetUserMessage(v string) *TextInputEvent {
+	s.UserMessage = &v
+	return s
+}
+
+// The TextInputEvent is and event in the ChatInputStream group of events.
+func (s *TextInputEvent) eventChatInputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the TextInputEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *TextInputEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *TextInputEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
+// An output event for an AI-generated response in an Amazon Q Business web
+// experience.
+type TextOutputEvent struct {
+	_ struct{} `type:"structure"`
+
+	// The identifier of the conversation with which the text output event is associated.
+	ConversationId *string `locationName:"conversationId" min:"36" type:"string"`
+
+	// An AI-generated message in a TextOutputEvent.
+	SystemMessage *string `locationName:"systemMessage" min:"1" type:"string"`
+
+	// The identifier of an AI-generated message in a TextOutputEvent.
+	SystemMessageId *string `locationName:"systemMessageId" min:"36" type:"string"`
+
+	// The identifier of an end user message in a TextOutputEvent.
+	UserMessageId *string `locationName:"userMessageId" min:"36" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TextOutputEvent) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TextOutputEvent) GoString() string {
+	return s.String()
+}
+
+// SetConversationId sets the ConversationId field's value.
+func (s *TextOutputEvent) SetConversationId(v string) *TextOutputEvent {
+	s.ConversationId = &v
+	return s
+}
+
+// SetSystemMessage sets the SystemMessage field's value.
+func (s *TextOutputEvent) SetSystemMessage(v string) *TextOutputEvent {
+	s.SystemMessage = &v
+	return s
+}
+
+// SetSystemMessageId sets the SystemMessageId field's value.
+func (s *TextOutputEvent) SetSystemMessageId(v string) *TextOutputEvent {
+	s.SystemMessageId = &v
+	return s
+}
+
+// SetUserMessageId sets the UserMessageId field's value.
+func (s *TextOutputEvent) SetUserMessageId(v string) *TextOutputEvent {
+	s.UserMessageId = &v
+	return s
+}
+
+// The TextOutputEvent is and event in the ChatOutputStream group of events.
+func (s *TextOutputEvent) eventChatOutputStream() {}
+
+// UnmarshalEvent unmarshals the EventStream Message into the TextOutputEvent value.
+// This method is only used internally within the SDK's EventStream handling.
+func (s *TextOutputEvent) UnmarshalEvent(
+	payloadUnmarshaler protocol.PayloadUnmarshaler,
+	msg eventstream.Message,
+) error {
+	if err := payloadUnmarshaler.UnmarshalPayload(
+		bytes.NewReader(msg.Payload), s,
+	); err != nil {
+		return err
+	}
+	return nil
+}
+
+// MarshalEvent marshals the type into an stream event value. This method
+// should only used internally within the SDK's EventStream handling.
+func (s *TextOutputEvent) MarshalEvent(pm protocol.PayloadMarshaler) (msg eventstream.Message, err error) {
+	msg.Headers.Set(eventstreamapi.MessageTypeHeader, eventstream.StringValue(eventstreamapi.EventMessageType))
+	var buf bytes.Buffer
+	if err = pm.MarshalPayload(&buf, s); err != nil {
+		return eventstream.Message{}, err
+	}
+	msg.Payload = buf.Bytes()
+	return msg, err
+}
+
 // Provides information about a text extract in a chat response that can be
 // attributed to a source document.
 type TextSegment struct {
@@ -17118,6 +19842,10 @@ type TextSegment struct {
 	// The zero-based location in the response string where the source attribution
 	// ends.
 	EndOffset *int64 `locationName:"endOffset" type:"integer"`
+
+	// The relevant text excerpt from a source that was used to generate a citation
+	// text segment in an Amazon Q Business chat response.
+	SnippetExcerpt *SnippetExcerpt `locationName:"snippetExcerpt" type:"structure"`
 }
 
 // String returns the string representation.
@@ -17147,6 +19875,12 @@ func (s *TextSegment) SetBeginOffset(v int64) *TextSegment {
 // SetEndOffset sets the EndOffset field's value.
 func (s *TextSegment) SetEndOffset(v int64) *TextSegment {
 	s.EndOffset = &v
+	return s
+}
+
+// SetSnippetExcerpt sets the SnippetExcerpt field's value.
+func (s *TextSegment) SetSnippetExcerpt(v *SnippetExcerpt) *TextSegment {
+	s.SnippetExcerpt = v
 	return s
 }
 
@@ -17215,11 +19949,11 @@ func (s *ThrottlingException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The topic specific controls configured for an Amazon Q application.
+// The topic specific controls configured for an Amazon Q Business application.
 type TopicConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// A description for your topic control configuration. Use this outline how
+	// A description for your topic control configuration. Use this to outline how
 	// the large language model (LLM) should use this topic control configuration.
 	Description *string `locationName:"description" type:"string"`
 
@@ -17312,14 +20046,14 @@ func (s *TopicConfiguration) SetRules(v []*Rule) *TopicConfiguration {
 type UntagResourceInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Q application, or data source
-	// to remove the tag from.
+	// The Amazon Resource Name (ARN) of the Amazon Q Business application, or data
+	// source to remove the tag from.
 	//
 	// ResourceARN is a required field
 	ResourceARN *string `location:"uri" locationName:"resourceARN" min:"1" type:"string" required:"true"`
 
-	// A list of tag keys to remove from the Amazon Q application or data source.
-	// If a tag key does not exist on the resource, it is ignored.
+	// A list of tag keys to remove from the Amazon Q Business application or data
+	// source. If a tag key does not exist on the resource, it is ignored.
 	//
 	// TagKeys is a required field
 	TagKeys []*string `location:"querystring" locationName:"tagKeys" type:"list" required:"true"`
@@ -17399,7 +20133,7 @@ func (s UntagResourceOutput) GoString() string {
 type UpdateApplicationInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application.
+	// The identifier of the Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -17407,14 +20141,21 @@ type UpdateApplicationInput struct {
 	// An option to allow end users to upload files directly during chat.
 	AttachmentsConfiguration *AttachmentsConfiguration `locationName:"attachmentsConfiguration" type:"structure"`
 
-	// A description for the Amazon Q application.
+	// A description for the Amazon Q Business application.
 	Description *string `locationName:"description" type:"string"`
 
-	// A name for the Amazon Q application.
+	// A name for the Amazon Q Business application.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
+	// The Amazon Resource Name (ARN) of the IAM Identity Center instance you are
+	// either creating for—or connecting to—your Amazon Q Business application.
+	IdentityCenterInstanceArn *string `locationName:"identityCenterInstanceArn" min:"10" type:"string"`
+
+	// An option to allow end users to create and use Amazon Q Apps in the web experience.
+	QAppsConfiguration *QAppsConfiguration `locationName:"qAppsConfiguration" type:"structure"`
+
 	// An Amazon Web Services Identity and Access Management (IAM) role that gives
-	// Amazon Q permission to access Amazon CloudWatch logs and metrics.
+	// Amazon Q Business permission to access Amazon CloudWatch logs and metrics.
 	RoleArn *string `locationName:"roleArn" type:"string"`
 }
 
@@ -17448,9 +20189,17 @@ func (s *UpdateApplicationInput) Validate() error {
 	if s.DisplayName != nil && len(*s.DisplayName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DisplayName", 1))
 	}
+	if s.IdentityCenterInstanceArn != nil && len(*s.IdentityCenterInstanceArn) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("IdentityCenterInstanceArn", 10))
+	}
 	if s.AttachmentsConfiguration != nil {
 		if err := s.AttachmentsConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("AttachmentsConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.QAppsConfiguration != nil {
+		if err := s.QAppsConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("QAppsConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -17481,6 +20230,18 @@ func (s *UpdateApplicationInput) SetDescription(v string) *UpdateApplicationInpu
 // SetDisplayName sets the DisplayName field's value.
 func (s *UpdateApplicationInput) SetDisplayName(v string) *UpdateApplicationInput {
 	s.DisplayName = &v
+	return s
+}
+
+// SetIdentityCenterInstanceArn sets the IdentityCenterInstanceArn field's value.
+func (s *UpdateApplicationInput) SetIdentityCenterInstanceArn(v string) *UpdateApplicationInput {
+	s.IdentityCenterInstanceArn = &v
+	return s
+}
+
+// SetQAppsConfiguration sets the QAppsConfiguration field's value.
+func (s *UpdateApplicationInput) SetQAppsConfiguration(v *QAppsConfiguration) *UpdateApplicationInput {
+	s.QAppsConfiguration = v
 	return s
 }
 
@@ -17523,9 +20284,12 @@ type UpdateChatControlsConfigurationInput struct {
 	// The phrases blocked from chat by your chat control configuration.
 	BlockedPhrasesConfigurationUpdate *BlockedPhrasesConfigurationUpdate `locationName:"blockedPhrasesConfigurationUpdate" type:"structure"`
 
-	// A token that you provide to identify the request to update a Amazon Q application
-	// chat configuration.
+	// A token that you provide to identify the request to update a Amazon Q Business
+	// application chat configuration.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The configuration details for CREATOR_MODE.
+	CreatorModeConfiguration *CreatorModeConfiguration `locationName:"creatorModeConfiguration" type:"structure"`
 
 	// The response scope configured for your application. This determines whether
 	// your application uses its retrieval augmented generation (RAG) system to
@@ -17569,6 +20333,11 @@ func (s *UpdateChatControlsConfigurationInput) Validate() error {
 	}
 	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.CreatorModeConfiguration != nil {
+		if err := s.CreatorModeConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("CreatorModeConfiguration", err.(request.ErrInvalidParams))
+		}
 	}
 	if s.TopicConfigurationsToCreateOrUpdate != nil {
 		for i, v := range s.TopicConfigurationsToCreateOrUpdate {
@@ -17615,6 +20384,12 @@ func (s *UpdateChatControlsConfigurationInput) SetClientToken(v string) *UpdateC
 	return s
 }
 
+// SetCreatorModeConfiguration sets the CreatorModeConfiguration field's value.
+func (s *UpdateChatControlsConfigurationInput) SetCreatorModeConfiguration(v *CreatorModeConfiguration) *UpdateChatControlsConfigurationInput {
+	s.CreatorModeConfiguration = v
+	return s
+}
+
 // SetResponseScope sets the ResponseScope field's value.
 func (s *UpdateChatControlsConfigurationInput) SetResponseScope(v string) *UpdateChatControlsConfigurationInput {
 	s.ResponseScope = &v
@@ -17658,7 +20433,8 @@ func (s UpdateChatControlsConfigurationOutput) GoString() string {
 type UpdateDataSourceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application the data source is attached to.
+	// The identifier of the Amazon Q Business application the data source is attached
+	// to.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
@@ -17835,19 +20611,19 @@ func (s UpdateDataSourceOutput) GoString() string {
 type UpdateIndexInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application connected to the index.
+	// The identifier of the Amazon Q Business application connected to the index.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The storage capacity units you want to provision for your Amazon Q index.
-	// You can add and remove capacity to fit your usage needs.
+	// The storage capacity units you want to provision for your Amazon Q Business
+	// index. You can add and remove capacity to fit your usage needs.
 	CapacityConfiguration *IndexCapacityConfiguration `locationName:"capacityConfiguration" type:"structure"`
 
-	// The description of the Amazon Q index.
+	// The description of the Amazon Q Business index.
 	Description *string `locationName:"description" type:"string"`
 
-	// The name of the Amazon Q index.
+	// The name of the Amazon Q Business index.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
 	// Configuration information for document metadata or fields. Document metadata
@@ -17856,7 +20632,7 @@ type UpdateIndexInput struct {
 	// see Understanding document attributes (https://docs.aws.amazon.com/amazonq/latest/business-use-dg/doc-attributes-types.html#doc-attributes).
 	DocumentAttributeConfigurations []*DocumentAttributeConfiguration `locationName:"documentAttributeConfigurations" min:"1" type:"list"`
 
-	// The identifier of the Amazon Q index.
+	// The identifier of the Amazon Q Business index.
 	//
 	// IndexId is a required field
 	IndexId *string `location:"uri" locationName:"indexId" min:"36" type:"string" required:"true"`
@@ -17992,6 +20768,9 @@ type UpdatePluginInput struct {
 	// The authentication configuration the plugin is using.
 	AuthConfiguration *PluginAuthConfiguration `locationName:"authConfiguration" type:"structure"`
 
+	// The configuration for a custom plugin.
+	CustomPluginConfiguration *CustomPluginConfiguration `locationName:"customPluginConfiguration" type:"structure"`
+
 	// The name of the plugin.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string"`
 
@@ -18051,6 +20830,11 @@ func (s *UpdatePluginInput) Validate() error {
 			invalidParams.AddNested("AuthConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.CustomPluginConfiguration != nil {
+		if err := s.CustomPluginConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("CustomPluginConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -18067,6 +20851,12 @@ func (s *UpdatePluginInput) SetApplicationId(v string) *UpdatePluginInput {
 // SetAuthConfiguration sets the AuthConfiguration field's value.
 func (s *UpdatePluginInput) SetAuthConfiguration(v *PluginAuthConfiguration) *UpdatePluginInput {
 	s.AuthConfiguration = v
+	return s
+}
+
+// SetCustomPluginConfiguration sets the CustomPluginConfiguration field's value.
+func (s *UpdatePluginInput) SetCustomPluginConfiguration(v *CustomPluginConfiguration) *UpdatePluginInput {
+	s.CustomPluginConfiguration = v
 	return s
 }
 
@@ -18119,13 +20909,13 @@ func (s UpdatePluginOutput) GoString() string {
 type UpdateRetrieverInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of your Amazon Q application.
+	// The identifier of your Amazon Q Business application.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// Provides information on how the retriever used for your Amazon Q application
-	// is configured.
+	// Provides information on how the retriever used for your Amazon Q Business
+	// application is configured.
 	Configuration *RetrieverConfiguration `locationName:"configuration" type:"structure"`
 
 	// The name of your retriever.
@@ -18397,30 +21187,37 @@ func (s *UpdateUserOutput) SetUserAliasesUpdated(v []*UserAlias) *UpdateUserOutp
 type UpdateWebExperienceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the Amazon Q application attached to the web experience.
+	// The identifier of the Amazon Q Business application attached to the web experience.
 	//
 	// ApplicationId is a required field
 	ApplicationId *string `location:"uri" locationName:"applicationId" min:"36" type:"string" required:"true"`
 
-	// The authentication configuration of the Amazon Q web experience.
-	AuthenticationConfiguration *WebExperienceAuthConfiguration `locationName:"authenticationConfiguration" type:"structure"`
+	// The authentication configuration of the Amazon Q Business web experience.
+	//
+	// Deprecated: Property associated with legacy SAML IdP flow. Deprecated in favor of using AWS IAM Identity Center for user management.
+	AuthenticationConfiguration *WebExperienceAuthConfiguration `locationName:"authenticationConfiguration" deprecated:"true" type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the role with permission to access the
+	// Amazon Q Business web experience and required resources.
+	RoleArn *string `locationName:"roleArn" type:"string"`
 
 	// Determines whether sample prompts are enabled in the web experience for an
 	// end user.
 	SamplePromptsControlMode *string `locationName:"samplePromptsControlMode" type:"string" enum:"WebExperienceSamplePromptsControlMode"`
 
-	// The subtitle of the Amazon Q web experience.
+	// The subtitle of the Amazon Q Business web experience.
 	Subtitle *string `locationName:"subtitle" type:"string"`
 
-	// The title of the Amazon Q web experience.
+	// The title of the Amazon Q Business web experience.
 	Title *string `locationName:"title" type:"string"`
 
-	// The identifier of the Amazon Q web experience.
+	// The identifier of the Amazon Q Business web experience.
 	//
 	// WebExperienceId is a required field
 	WebExperienceId *string `location:"uri" locationName:"webExperienceId" min:"36" type:"string" required:"true"`
 
-	// A customized welcome message for an end user in an Amazon Q web experience.
+	// A customized welcome message for an end user in an Amazon Q Business web
+	// experience.
 	WelcomeMessage *string `locationName:"welcomeMessage" type:"string"`
 }
 
@@ -18481,6 +21278,12 @@ func (s *UpdateWebExperienceInput) SetAuthenticationConfiguration(v *WebExperien
 	return s
 }
 
+// SetRoleArn sets the RoleArn field's value.
+func (s *UpdateWebExperienceInput) SetRoleArn(v string) *UpdateWebExperienceInput {
+	s.RoleArn = &v
+	return s
+}
+
 // SetSamplePromptsControlMode sets the SamplePromptsControlMode field's value.
 func (s *UpdateWebExperienceInput) SetSamplePromptsControlMode(v string) *UpdateWebExperienceInput {
 	s.SamplePromptsControlMode = &v
@@ -18533,7 +21336,7 @@ func (s UpdateWebExperienceOutput) GoString() string {
 	return s.String()
 }
 
-// Aliases attached to a user id within an Amazon Q application.
+// Aliases attached to a user id within an Amazon Q Business application.
 type UserAlias struct {
 	_ struct{} `type:"structure"`
 
@@ -18649,8 +21452,8 @@ func (s *UsersAndGroups) SetUserIds(v []*string) *UsersAndGroups {
 	return s
 }
 
-// The input doesn't meet the constraints set by the Amazon Q service. Provide
-// the correct input and try again.
+// The input doesn't meet the constraints set by the Amazon Q Business service.
+// Provide the correct input and try again.
 type ValidationException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -18723,8 +21526,8 @@ func (s *ValidationException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The input failed to meet the constraints specified by Amazon Q in a specified
-// field.
+// The input failed to meet the constraints specified by Amazon Q Business in
+// a specified field.
 type ValidationExceptionField struct {
 	_ struct{} `type:"structure"`
 
@@ -18769,24 +21572,24 @@ func (s *ValidationExceptionField) SetName(v string) *ValidationExceptionField {
 	return s
 }
 
-// Provides information for an Amazon Q web experience.
+// Provides information for an Amazon Q Business web experience.
 type WebExperience struct {
 	_ struct{} `type:"structure"`
 
-	// The Unix timestamp when the Amazon Q application was last updated.
+	// The Unix timestamp when the Amazon Q Business application was last updated.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The endpoint URLs for your Amazon Q web experience. The URLs are unique and
-	// fully hosted by Amazon Web Services.
+	// The endpoint URLs for your Amazon Q Business web experience. The URLs are
+	// unique and fully hosted by Amazon Web Services.
 	DefaultEndpoint *string `locationName:"defaultEndpoint" min:"1" type:"string"`
 
-	// The status of your Amazon Q web experience.
+	// The status of your Amazon Q Business web experience.
 	Status *string `locationName:"status" type:"string" enum:"WebExperienceStatus"`
 
-	// The Unix timestamp when your Amazon Q web experience was updated.
+	// The Unix timestamp when your Amazon Q Business web experience was updated.
 	UpdatedAt *time.Time `locationName:"updatedAt" type:"timestamp"`
 
-	// The identifier of your Amazon Q web experience.
+	// The identifier of your Amazon Q Business web experience.
 	WebExperienceId *string `locationName:"webExperienceId" min:"36" type:"string"`
 }
 
@@ -18839,12 +21642,12 @@ func (s *WebExperience) SetWebExperienceId(v string) *WebExperience {
 }
 
 // Provides the authorization configuration information needed to deploy a Amazon
-// Q web experience to end users.
+// Q Business web experience to end users.
 type WebExperienceAuthConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// Provides the SAML 2.0 compliant identity provider (IdP) configuration information
-	// Amazon Q needs to deploy a Amazon Q web experience.
+	// Amazon Q Business needs to deploy a Amazon Q Business web experience.
 	SamlConfiguration *SamlConfiguration `locationName:"samlConfiguration" type:"structure"`
 }
 
@@ -18885,6 +21688,18 @@ func (s *WebExperienceAuthConfiguration) Validate() error {
 func (s *WebExperienceAuthConfiguration) SetSamlConfiguration(v *SamlConfiguration) *WebExperienceAuthConfiguration {
 	s.SamlConfiguration = v
 	return s
+}
+
+const (
+	// APISchemaTypeOpenApiV3 is a APISchemaType enum value
+	APISchemaTypeOpenApiV3 = "OPEN_API_V3"
+)
+
+// APISchemaType_Values returns all elements of the APISchemaType enum
+func APISchemaType_Values() []string {
+	return []string{
+		APISchemaTypeOpenApiV3,
+	}
 }
 
 const (
@@ -19008,6 +21823,26 @@ func AttributeValueOperator_Values() []string {
 }
 
 const (
+	// ChatModeRetrievalMode is a ChatMode enum value
+	ChatModeRetrievalMode = "RETRIEVAL_MODE"
+
+	// ChatModeCreatorMode is a ChatMode enum value
+	ChatModeCreatorMode = "CREATOR_MODE"
+
+	// ChatModePluginMode is a ChatMode enum value
+	ChatModePluginMode = "PLUGIN_MODE"
+)
+
+// ChatMode_Values returns all elements of the ChatMode enum
+func ChatMode_Values() []string {
+	return []string{
+		ChatModeRetrievalMode,
+		ChatModeCreatorMode,
+		ChatModePluginMode,
+	}
+}
+
+const (
 	// ContentTypePdf is a ContentType enum value
 	ContentTypePdf = "PDF"
 
@@ -19060,6 +21895,22 @@ func ContentType_Values() []string {
 		ContentTypeCsv,
 		ContentTypeJson,
 		ContentTypeMd,
+	}
+}
+
+const (
+	// CreatorModeControlEnabled is a CreatorModeControl enum value
+	CreatorModeControlEnabled = "ENABLED"
+
+	// CreatorModeControlDisabled is a CreatorModeControl enum value
+	CreatorModeControlDisabled = "DISABLED"
+)
+
+// CreatorModeControl_Values returns all elements of the CreatorModeControl enum
+func CreatorModeControl_Values() []string {
+	return []string{
+		CreatorModeControlEnabled,
+		CreatorModeControlDisabled,
 	}
 }
 
@@ -19128,6 +21979,34 @@ func DataSourceSyncJobStatus_Values() []string {
 		DataSourceSyncJobStatusStopping,
 		DataSourceSyncJobStatusAborted,
 		DataSourceSyncJobStatusSyncingIndexing,
+	}
+}
+
+const (
+	// DocumentAttributeBoostingLevelNone is a DocumentAttributeBoostingLevel enum value
+	DocumentAttributeBoostingLevelNone = "NONE"
+
+	// DocumentAttributeBoostingLevelLow is a DocumentAttributeBoostingLevel enum value
+	DocumentAttributeBoostingLevelLow = "LOW"
+
+	// DocumentAttributeBoostingLevelMedium is a DocumentAttributeBoostingLevel enum value
+	DocumentAttributeBoostingLevelMedium = "MEDIUM"
+
+	// DocumentAttributeBoostingLevelHigh is a DocumentAttributeBoostingLevel enum value
+	DocumentAttributeBoostingLevelHigh = "HIGH"
+
+	// DocumentAttributeBoostingLevelVeryHigh is a DocumentAttributeBoostingLevel enum value
+	DocumentAttributeBoostingLevelVeryHigh = "VERY_HIGH"
+)
+
+// DocumentAttributeBoostingLevel_Values returns all elements of the DocumentAttributeBoostingLevel enum
+func DocumentAttributeBoostingLevel_Values() []string {
+	return []string{
+		DocumentAttributeBoostingLevelNone,
+		DocumentAttributeBoostingLevelLow,
+		DocumentAttributeBoostingLevelMedium,
+		DocumentAttributeBoostingLevelHigh,
+		DocumentAttributeBoostingLevelVeryHigh,
 	}
 }
 
@@ -19316,6 +22195,22 @@ func IndexStatus_Values() []string {
 }
 
 const (
+	// IndexTypeEnterprise is a IndexType enum value
+	IndexTypeEnterprise = "ENTERPRISE"
+
+	// IndexTypeStarter is a IndexType enum value
+	IndexTypeStarter = "STARTER"
+)
+
+// IndexType_Values returns all elements of the IndexType enum
+func IndexType_Values() []string {
+	return []string{
+		IndexTypeEnterprise,
+		IndexTypeStarter,
+	}
+}
+
+const (
 	// MemberRelationAnd is a MemberRelation enum value
 	MemberRelationAnd = "AND"
 
@@ -19403,6 +22298,18 @@ const (
 
 	// MessageUsefulnessReasonHelpful is a MessageUsefulnessReason enum value
 	MessageUsefulnessReasonHelpful = "HELPFUL"
+
+	// MessageUsefulnessReasonNotBasedOnDocuments is a MessageUsefulnessReason enum value
+	MessageUsefulnessReasonNotBasedOnDocuments = "NOT_BASED_ON_DOCUMENTS"
+
+	// MessageUsefulnessReasonNotComplete is a MessageUsefulnessReason enum value
+	MessageUsefulnessReasonNotComplete = "NOT_COMPLETE"
+
+	// MessageUsefulnessReasonNotConcise is a MessageUsefulnessReason enum value
+	MessageUsefulnessReasonNotConcise = "NOT_CONCISE"
+
+	// MessageUsefulnessReasonOther is a MessageUsefulnessReason enum value
+	MessageUsefulnessReasonOther = "OTHER"
 )
 
 // MessageUsefulnessReason_Values returns all elements of the MessageUsefulnessReason enum
@@ -19416,6 +22323,62 @@ func MessageUsefulnessReason_Values() []string {
 		MessageUsefulnessReasonComplete,
 		MessageUsefulnessReasonRelevantSources,
 		MessageUsefulnessReasonHelpful,
+		MessageUsefulnessReasonNotBasedOnDocuments,
+		MessageUsefulnessReasonNotComplete,
+		MessageUsefulnessReasonNotConcise,
+		MessageUsefulnessReasonOther,
+	}
+}
+
+const (
+	// NumberAttributeBoostingTypePrioritizeLargerValues is a NumberAttributeBoostingType enum value
+	NumberAttributeBoostingTypePrioritizeLargerValues = "PRIORITIZE_LARGER_VALUES"
+
+	// NumberAttributeBoostingTypePrioritizeSmallerValues is a NumberAttributeBoostingType enum value
+	NumberAttributeBoostingTypePrioritizeSmallerValues = "PRIORITIZE_SMALLER_VALUES"
+)
+
+// NumberAttributeBoostingType_Values returns all elements of the NumberAttributeBoostingType enum
+func NumberAttributeBoostingType_Values() []string {
+	return []string{
+		NumberAttributeBoostingTypePrioritizeLargerValues,
+		NumberAttributeBoostingTypePrioritizeSmallerValues,
+	}
+}
+
+const (
+	// PluginBuildStatusReady is a PluginBuildStatus enum value
+	PluginBuildStatusReady = "READY"
+
+	// PluginBuildStatusCreateInProgress is a PluginBuildStatus enum value
+	PluginBuildStatusCreateInProgress = "CREATE_IN_PROGRESS"
+
+	// PluginBuildStatusCreateFailed is a PluginBuildStatus enum value
+	PluginBuildStatusCreateFailed = "CREATE_FAILED"
+
+	// PluginBuildStatusUpdateInProgress is a PluginBuildStatus enum value
+	PluginBuildStatusUpdateInProgress = "UPDATE_IN_PROGRESS"
+
+	// PluginBuildStatusUpdateFailed is a PluginBuildStatus enum value
+	PluginBuildStatusUpdateFailed = "UPDATE_FAILED"
+
+	// PluginBuildStatusDeleteInProgress is a PluginBuildStatus enum value
+	PluginBuildStatusDeleteInProgress = "DELETE_IN_PROGRESS"
+
+	// PluginBuildStatusDeleteFailed is a PluginBuildStatus enum value
+	PluginBuildStatusDeleteFailed = "DELETE_FAILED"
+)
+
+// PluginBuildStatus_Values returns all elements of the PluginBuildStatus enum
+func PluginBuildStatus_Values() []string {
+	return []string{
+		PluginBuildStatusReady,
+		PluginBuildStatusCreateInProgress,
+		PluginBuildStatusCreateFailed,
+		PluginBuildStatusUpdateInProgress,
+		PluginBuildStatusUpdateFailed,
+		PluginBuildStatusDeleteInProgress,
+		PluginBuildStatusDeleteFailed,
 	}
 }
 
@@ -19447,6 +22410,9 @@ const (
 
 	// PluginTypeZendesk is a PluginType enum value
 	PluginTypeZendesk = "ZENDESK"
+
+	// PluginTypeCustom is a PluginType enum value
+	PluginTypeCustom = "CUSTOM"
 )
 
 // PluginType_Values returns all elements of the PluginType enum
@@ -19456,6 +22422,23 @@ func PluginType_Values() []string {
 		PluginTypeSalesforce,
 		PluginTypeJira,
 		PluginTypeZendesk,
+		PluginTypeCustom,
+	}
+}
+
+const (
+	// QAppsControlModeEnabled is a QAppsControlMode enum value
+	QAppsControlModeEnabled = "ENABLED"
+
+	// QAppsControlModeDisabled is a QAppsControlMode enum value
+	QAppsControlModeDisabled = "DISABLED"
+)
+
+// QAppsControlMode_Values returns all elements of the QAppsControlMode enum
+func QAppsControlMode_Values() []string {
+	return []string{
+		QAppsControlModeEnabled,
+		QAppsControlModeDisabled,
 	}
 }
 
@@ -19556,6 +22539,30 @@ func Status_Values() []string {
 	return []string{
 		StatusEnabled,
 		StatusDisabled,
+	}
+}
+
+const (
+	// StringAttributeValueBoostingLevelLow is a StringAttributeValueBoostingLevel enum value
+	StringAttributeValueBoostingLevelLow = "LOW"
+
+	// StringAttributeValueBoostingLevelMedium is a StringAttributeValueBoostingLevel enum value
+	StringAttributeValueBoostingLevelMedium = "MEDIUM"
+
+	// StringAttributeValueBoostingLevelHigh is a StringAttributeValueBoostingLevel enum value
+	StringAttributeValueBoostingLevelHigh = "HIGH"
+
+	// StringAttributeValueBoostingLevelVeryHigh is a StringAttributeValueBoostingLevel enum value
+	StringAttributeValueBoostingLevelVeryHigh = "VERY_HIGH"
+)
+
+// StringAttributeValueBoostingLevel_Values returns all elements of the StringAttributeValueBoostingLevel enum
+func StringAttributeValueBoostingLevel_Values() []string {
+	return []string{
+		StringAttributeValueBoostingLevelLow,
+		StringAttributeValueBoostingLevelMedium,
+		StringAttributeValueBoostingLevelHigh,
+		StringAttributeValueBoostingLevelVeryHigh,
 	}
 }
 

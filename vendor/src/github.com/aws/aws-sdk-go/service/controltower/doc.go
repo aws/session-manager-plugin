@@ -3,6 +3,48 @@
 // Package controltower provides the client and types for making API
 // requests to AWS Control Tower.
 //
+// Amazon Web Services Control Tower offers application programming interface
+// (API) operations that support programmatic interaction with these types of
+// resources:
+//
+//   - Controls (https://docs.aws.amazon.com/controltower/latest/userguide/controls.html)
+//     DisableControl (https://docs.aws.amazon.com/controltower/latest/APIReference/API_DisableControl.html)
+//     EnableControl (https://docs.aws.amazon.com/controltower/latest/APIReference/API_EnableControl.html)
+//     GetEnabledControl (https://docs.aws.amazon.com/controltower/latest/APIReference/API_GetEnabledControl.html)
+//     ListControlOperations (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ListControlOperations.html)
+//     ListEnabledControls (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ListEnabledControls.html)
+//     UpdateEnabledControl (https://docs.aws.amazon.com/controltower/latest/APIReference/API_UpdateEnabledControl.html)
+//
+//   - Landing zones (https://docs.aws.amazon.com/controltower/latest/userguide/lz-api-launch.html)
+//     CreateLandingZone (https://docs.aws.amazon.com/controltower/latest/APIReference/API_CreateLandingZone.html)
+//     DeleteLandingZone (https://docs.aws.amazon.com/controltower/latest/APIReference/API_DeleteLandingZone.html)
+//     GetLandingZone (https://docs.aws.amazon.com/controltower/latest/APIReference/API_GetLandingZone.html)
+//     GetLandingZoneOperation (https://docs.aws.amazon.com/controltower/latest/APIReference/API_GetLandingZoneOperation.html)
+//     ListLandingZones (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ListLandingZones.html)
+//     ResetLandingZone (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ResetLandingZone.html)
+//     UpdateLandingZone (https://docs.aws.amazon.com/controltower/latest/APIReference/API_UpdateLandingZone.html)
+//
+//   - Baselines (https://docs.aws.amazon.com/controltower/latest/userguide/types-of-baselines.html)
+//     DisableBaseline (https://docs.aws.amazon.com/controltower/latest/APIReference/API_DisableBaseline.html)
+//     EnableBaseline (https://docs.aws.amazon.com/controltower/latest/APIReference/API_EnableBaseline.html)
+//     GetBaseline (https://docs.aws.amazon.com/controltower/latest/APIReference/API_GetBaseline.html)
+//     GetBaselineOperation (https://docs.aws.amazon.com/controltower/latest/APIReference/API_GetBaselineOperation.html)
+//     GetEnabledBaseline (https://docs.aws.amazon.com/controltower/latest/APIReference/API_GetEnabledBaseline.html)
+//     ListBaselines (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ListBaselines.html)
+//     ListEnabledBaselines (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ListEnabledBaselines.html)
+//     ResetEnabledBaseline (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ResetEnabledBaseline.html)
+//     UpdateEnabledBaseline (https://docs.aws.amazon.com/controltower/latest/APIReference/API_UpdateEnabledBaseline.html)
+//
+//   - Tagging (https://docs.aws.amazon.com/controltower/latest/controlreference/tagging.html)
+//     ListTagsForResource (https://docs.aws.amazon.com/controltower/latest/APIReference/API_ListTagsForResource.html)
+//     TagResource (https://docs.aws.amazon.com/controltower/latest/APIReference/API_TagResource.html)
+//     UntagResource (https://docs.aws.amazon.com/controltower/latest/APIReference/API_UntagResource.html)
+//
+// For more information about these types of resources, see the Amazon Web Services
+// Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/what-is-control-tower.html).
+//
+// # About control APIs
+//
 // These interfaces allow you to apply the Amazon Web Services library of pre-defined
 // controls to your organizational units, programmatically. In Amazon Web Services
 // Control Tower, the terms "control" and "guardrail" are synonyms.
@@ -24,15 +66,15 @@
 //
 // The controlIdentifier is unique in each Amazon Web Services Region for each
 // control. You can find the controlIdentifier for each Region and control in
-// the Tables of control metadata (https://docs.aws.amazon.com/controltower/latest/userguide/control-metadata-tables.html)
-// in the Amazon Web Services Control Tower User Guide.
+// the Tables of control metadata (https://docs.aws.amazon.com/controltower/latest/controlreference/control-metadata-tables.html)
+// or the Control availability by Region tables (https://docs.aws.amazon.com/controltower/latest/controlreference/control-region-tables.html)
+// in the Amazon Web Services Control Tower Controls Reference Guide.
 //
 // A quick-reference list of control identifers for the Amazon Web Services
 // Control Tower legacy Strongly recommended and Elective controls is given
-// in Resource identifiers for APIs and controls (https://docs.aws.amazon.com/controltower/latest/userguide/control-identifiers.html.html)
-// in the Controls reference guide section (https://docs.aws.amazon.com/controltower/latest/userguide/control-identifiers.html)
-// of the Amazon Web Services Control Tower User Guide. Remember that Mandatory
-// controls cannot be added or removed.
+// in Resource identifiers for APIs and controls (https://docs.aws.amazon.com/controltower/latest/controlreference/control-identifiers.html.html)
+// in the Amazon Web Services Control Tower Controls Reference Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-identifiers.html).
+// Remember that Mandatory controls cannot be added or removed.
 //
 // ARN format: arn:aws:controltower:{REGION}::control/{CONTROL_NAME}
 //
@@ -51,19 +93,54 @@
 //
 // arn:${Partition}:organizations::${MasterAccountId}:ou/o-${OrganizationId}/ou-${OrganizationalUnitId}
 //
+//	About landing zone APIs
+//
+// You can configure and launch an Amazon Web Services Control Tower landing
+// zone with APIs. For an introduction and steps, see Getting started with Amazon
+// Web Services Control Tower using APIs (https://docs.aws.amazon.com/controltower/latest/userguide/getting-started-apis.html).
+//
+// For an overview of landing zone API operations, see Amazon Web Services Control
+// Tower supports landing zone APIs (https://docs.aws.amazon.com/controltower/latest/userguide/2023-all.html#landing-zone-apis).
+// The individual API operations for landing zones are detailed in this document,
+// the API reference manual (https://docs.aws.amazon.com/controltower/latest/APIReference/API_Operations.html),
+// in the "Actions" section.
+//
+// # About baseline APIs
+//
+// You can apply the AWSControlTowerBaseline baseline to an organizational unit
+// (OU) as a way to register the OU with Amazon Web Services Control Tower,
+// programmatically. For a general overview of this capability, see Amazon Web
+// Services Control Tower supports APIs for OU registration and configuration
+// with baselines (https://docs.aws.amazon.com/controltower/latest/userguide/2024-all.html#baseline-apis).
+//
+// You can call the baseline API operations to view the baselines that Amazon
+// Web Services Control Tower enables for your landing zone, on your behalf,
+// when setting up the landing zone. These baselines are read-only baselines.
+//
+// The individual API operations for baselines are detailed in this document,
+// the API reference manual (https://docs.aws.amazon.com/controltower/latest/APIReference/API_Operations.html),
+// in the "Actions" section. For usage examples, see Baseline API input and
+// output examples with CLI (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
 // Details and examples
 //
-//   - Control API input and output examples with CLI (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html)
+//   - Control API input and output examples with CLI (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html)
 //
-//   - Enable controls with CloudFormation (https://docs.aws.amazon.com/controltower/latest/userguide/enable-controls.html)
+//   - Baseline API input and output examples with CLI (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html)
 //
-//   - Control metadata tables (https://docs.aws.amazon.com/controltower/latest/userguide/control-metadata-tables.html)
+//   - Enable controls with CloudFormation (https://docs.aws.amazon.com/controltower/latest/controlreference/enable-controls.html)
 //
-//   - List of identifiers for legacy controls (https://docs.aws.amazon.com/controltower/latest/userguide/control-identifiers.html)
+//   - Launch a landing zone with CloudFormation (https://docs.aws.amazon.com/controltower/latest/userguide/lz-apis-cfn-setup.html)
 //
-//   - Controls reference guide (https://docs.aws.amazon.com/controltower/latest/userguide/controls.html)
+//   - Control metadata tables (large page) (https://docs.aws.amazon.com/controltower/latest/controlreference/control-metadata-tables.html)
 //
-//   - Controls library groupings (https://docs.aws.amazon.com/controltower/latest/userguide/controls-reference.html)
+//   - Control availability by Region tables (large page) (https://docs.aws.amazon.com/controltower/latest/controlreference/control-region-tables.html)
+//
+//   - List of identifiers for legacy controls (https://docs.aws.amazon.com/controltower/latest/controlreference/control-identifiers.html)
+//
+//   - Controls reference guide (https://docs.aws.amazon.com/controltower/latest/controlreference/controls.html)
+//
+//   - Controls library groupings (https://docs.aws.amazon.com/controltower/latest/controlreference/controls-reference.html)
 //
 //   - Creating Amazon Web Services Control Tower resources with Amazon Web
 //     Services CloudFormation (https://docs.aws.amazon.com/controltower/latest/userguide/creating-resources-with-cloudformation.html)

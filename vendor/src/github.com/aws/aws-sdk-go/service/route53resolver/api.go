@@ -86,6 +86,9 @@ func (c *Route53Resolver) AssociateFirewallRuleGroupRequest(input *AssociateFire
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -305,6 +308,9 @@ func (c *Route53Resolver) AssociateResolverQueryLogConfigRequest(input *Associat
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/AssociateResolverQueryLogConfig
 func (c *Route53Resolver) AssociateResolverQueryLogConfig(input *AssociateResolverQueryLogConfigInput) (*AssociateResolverQueryLogConfigOutput, error) {
 	req, out := c.AssociateResolverQueryLogConfigRequest(input)
@@ -498,6 +504,9 @@ func (c *Route53Resolver) CreateFirewallDomainListRequest(input *CreateFirewallD
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -595,6 +604,9 @@ func (c *Route53Resolver) CreateFirewallRuleRequest(input *CreateFirewallRuleInp
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -689,6 +701,9 @@ func (c *Route53Resolver) CreateFirewallRuleGroupRequest(input *CreateFirewallRu
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -774,6 +789,9 @@ func (c *Route53Resolver) CreateOutpostResolverRequest(input *CreateOutpostResol
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -889,6 +907,9 @@ func (c *Route53Resolver) CreateResolverEndpointRequest(input *CreateResolverEnd
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - LimitExceededException
 //     The request caused one or more limits to be exceeded.
@@ -1012,6 +1033,9 @@ func (c *Route53Resolver) CreateResolverQueryLogConfigRequest(input *CreateResol
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/CreateResolverQueryLogConfig
 func (c *Route53Resolver) CreateResolverQueryLogConfig(input *CreateResolverQueryLogConfigInput) (*CreateResolverQueryLogConfigOutput, error) {
 	req, out := c.CreateResolverQueryLogConfigRequest(input)
@@ -1115,6 +1139,9 @@ func (c *Route53Resolver) CreateResolverRuleRequest(input *CreateResolverRuleInp
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - ThrottlingException
 //     The request was throttled. Try again in a few minutes.
 //
@@ -1206,6 +1233,9 @@ func (c *Route53Resolver) DeleteFirewallDomainListRequest(input *DeleteFirewallD
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -1294,6 +1324,9 @@ func (c *Route53Resolver) DeleteFirewallRuleRequest(input *DeleteFirewallRuleInp
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -1393,6 +1426,9 @@ func (c *Route53Resolver) DeleteFirewallRuleGroupRequest(input *DeleteFirewallRu
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -1478,6 +1514,9 @@ func (c *Route53Resolver) DeleteOutpostResolverRequest(input *DeleteOutpostResol
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - ConflictException
 //     The requested state transition isn't valid. For example, you can't delete
@@ -1703,6 +1742,9 @@ func (c *Route53Resolver) DeleteResolverQueryLogConfigRequest(input *DeleteResol
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/DeleteResolverQueryLogConfig
 func (c *Route53Resolver) DeleteResolverQueryLogConfig(input *DeleteResolverQueryLogConfigInput) (*DeleteResolverQueryLogConfigOutput, error) {
 	req, out := c.DeleteResolverQueryLogConfigRequest(input)
@@ -1883,6 +1925,9 @@ func (c *Route53Resolver) DisassociateFirewallRuleGroupRequest(input *Disassocia
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - ConflictException
 //     The requested state transition isn't valid. For example, you can't delete
@@ -2099,6 +2144,9 @@ func (c *Route53Resolver) DisassociateResolverQueryLogConfigRequest(input *Disas
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/DisassociateResolverQueryLogConfig
 func (c *Route53Resolver) DisassociateResolverQueryLogConfig(input *DisassociateResolverQueryLogConfigInput) (*DisassociateResolverQueryLogConfigOutput, error) {
 	req, out := c.DisassociateResolverQueryLogConfigRequest(input)
@@ -2275,6 +2323,9 @@ func (c *Route53Resolver) GetFirewallConfigRequest(input *GetFirewallConfigInput
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -2368,6 +2419,9 @@ func (c *Route53Resolver) GetFirewallDomainListRequest(input *GetFirewallDomainL
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -2456,6 +2510,9 @@ func (c *Route53Resolver) GetFirewallRuleGroupRequest(input *GetFirewallRuleGrou
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -2548,6 +2605,9 @@ func (c *Route53Resolver) GetFirewallRuleGroupAssociationRequest(input *GetFirew
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -2644,6 +2704,9 @@ func (c *Route53Resolver) GetFirewallRuleGroupPolicyRequest(input *GetFirewallRu
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -2730,6 +2793,9 @@ func (c *Route53Resolver) GetOutpostResolverRequest(input *GetOutpostResolverInp
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -2837,6 +2903,9 @@ func (c *Route53Resolver) GetResolverConfigRequest(input *GetResolverConfigInput
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - ValidationException
 //     You have provided an invalid command. If you ran the UpdateFirewallDomains
 //     request. supported values are ADD, REMOVE, or REPLACE a domain.
@@ -2935,6 +3004,9 @@ func (c *Route53Resolver) GetResolverDnssecConfigRequest(input *GetResolverDnsse
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/GetResolverDnssecConfig
 func (c *Route53Resolver) GetResolverDnssecConfig(input *GetResolverDnssecConfigInput) (*GetResolverDnssecConfigOutput, error) {
@@ -3123,6 +3195,9 @@ func (c *Route53Resolver) GetResolverQueryLogConfigRequest(input *GetResolverQue
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/GetResolverQueryLogConfig
 func (c *Route53Resolver) GetResolverQueryLogConfig(input *GetResolverQueryLogConfigInput) (*GetResolverQueryLogConfigOutput, error) {
 	req, out := c.GetResolverQueryLogConfigRequest(input)
@@ -3220,6 +3295,9 @@ func (c *Route53Resolver) GetResolverQueryLogConfigAssociationRequest(input *Get
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/GetResolverQueryLogConfigAssociation
 func (c *Route53Resolver) GetResolverQueryLogConfigAssociation(input *GetResolverQueryLogConfigAssociationInput) (*GetResolverQueryLogConfigAssociationOutput, error) {
 	req, out := c.GetResolverQueryLogConfigAssociationRequest(input)
@@ -3313,6 +3391,9 @@ func (c *Route53Resolver) GetResolverQueryLogConfigPolicyRequest(input *GetResol
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/GetResolverQueryLogConfigPolicy
 func (c *Route53Resolver) GetResolverQueryLogConfigPolicy(input *GetResolverQueryLogConfigPolicyInput) (*GetResolverQueryLogConfigPolicyOutput, error) {
@@ -3586,6 +3667,9 @@ func (c *Route53Resolver) GetResolverRulePolicyRequest(input *GetResolverRulePol
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/GetResolverRulePolicy
 func (c *Route53Resolver) GetResolverRulePolicy(input *GetResolverRulePolicyInput) (*GetResolverRulePolicyOutput, error) {
 	req, out := c.GetResolverRulePolicyRequest(input)
@@ -3680,6 +3764,9 @@ func (c *Route53Resolver) ImportFirewallDomainsRequest(input *ImportFirewallDoma
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - ResourceNotFoundException
 //     The specified resource doesn't exist.
@@ -3791,6 +3878,9 @@ func (c *Route53Resolver) ListFirewallConfigsRequest(input *ListFirewallConfigsI
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -3943,6 +4033,9 @@ func (c *Route53Resolver) ListFirewallDomainListsRequest(input *ListFirewallDoma
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -4098,6 +4191,9 @@ func (c *Route53Resolver) ListFirewallDomainsRequest(input *ListFirewallDomainsI
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -4249,6 +4345,9 @@ func (c *Route53Resolver) ListFirewallRuleGroupAssociationsRequest(input *ListFi
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -4399,6 +4498,9 @@ func (c *Route53Resolver) ListFirewallRuleGroupsRequest(input *ListFirewallRuleG
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -4555,6 +4657,9 @@ func (c *Route53Resolver) ListFirewallRulesRequest(input *ListFirewallRulesInput
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -4698,6 +4803,9 @@ func (c *Route53Resolver) ListOutpostResolversRequest(input *ListOutpostResolver
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -4865,6 +4973,9 @@ func (c *Route53Resolver) ListResolverConfigsRequest(input *ListResolverConfigsI
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - ValidationException
 //     You have provided an invalid command. If you ran the UpdateFirewallDomains
 //     request. supported values are ADD, REMOVE, or REPLACE a domain.
@@ -5021,6 +5132,9 @@ func (c *Route53Resolver) ListResolverDnssecConfigsRequest(input *ListResolverDn
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/ListResolverDnssecConfigs
 func (c *Route53Resolver) ListResolverDnssecConfigs(input *ListResolverDnssecConfigsInput) (*ListResolverDnssecConfigsOutput, error) {
@@ -5472,6 +5586,9 @@ func (c *Route53Resolver) ListResolverQueryLogConfigAssociationsRequest(input *L
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/ListResolverQueryLogConfigAssociations
 func (c *Route53Resolver) ListResolverQueryLogConfigAssociations(input *ListResolverQueryLogConfigAssociationsInput) (*ListResolverQueryLogConfigAssociationsOutput, error) {
 	req, out := c.ListResolverQueryLogConfigAssociationsRequest(input)
@@ -5625,6 +5742,9 @@ func (c *Route53Resolver) ListResolverQueryLogConfigsRequest(input *ListResolver
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/ListResolverQueryLogConfigs
 func (c *Route53Resolver) ListResolverQueryLogConfigs(input *ListResolverQueryLogConfigsInput) (*ListResolverQueryLogConfigsOutput, error) {
@@ -6215,6 +6335,9 @@ func (c *Route53Resolver) PutFirewallRuleGroupPolicyRequest(input *PutFirewallRu
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -6319,6 +6442,9 @@ func (c *Route53Resolver) PutResolverQueryLogConfigPolicyRequest(input *PutResol
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/PutResolverQueryLogConfigPolicy
 func (c *Route53Resolver) PutResolverQueryLogConfigPolicy(input *PutResolverQueryLogConfigPolicyInput) (*PutResolverQueryLogConfigPolicyOutput, error) {
 	req, out := c.PutResolverQueryLogConfigPolicyRequest(input)
@@ -6412,6 +6538,9 @@ func (c *Route53Resolver) PutResolverRulePolicyRequest(input *PutResolverRulePol
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/PutResolverRulePolicy
 func (c *Route53Resolver) PutResolverRulePolicy(input *PutResolverRulePolicyInput) (*PutResolverRulePolicyOutput, error) {
@@ -6691,6 +6820,9 @@ func (c *Route53Resolver) UpdateFirewallConfigRequest(input *UpdateFirewallConfi
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -6780,6 +6912,9 @@ func (c *Route53Resolver) UpdateFirewallDomainsRequest(input *UpdateFirewallDoma
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - ResourceNotFoundException
 //     The specified resource doesn't exist.
@@ -6890,6 +7025,9 @@ func (c *Route53Resolver) UpdateFirewallRuleRequest(input *UpdateFirewallRuleInp
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -6989,6 +7127,9 @@ func (c *Route53Resolver) UpdateFirewallRuleGroupAssociationRequest(input *Updat
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
 //
@@ -7075,6 +7216,9 @@ func (c *Route53Resolver) UpdateOutpostResolverRequest(input *UpdateOutpostResol
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - ConflictException
 //     The requested state transition isn't valid. For example, you can't delete
@@ -7199,6 +7343,9 @@ func (c *Route53Resolver) UpdateResolverConfigRequest(input *UpdateResolverConfi
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 //   - ValidationException
 //     You have provided an invalid command. If you ran the UpdateFirewallDomains
 //     request. supported values are ADD, REMOVE, or REPLACE a domain.
@@ -7299,6 +7446,9 @@ func (c *Route53Resolver) UpdateResolverDnssecConfigRequest(input *UpdateResolve
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/UpdateResolverDnssecConfig
 func (c *Route53Resolver) UpdateResolverDnssecConfig(input *UpdateResolverDnssecConfigInput) (*UpdateResolverDnssecConfigOutput, error) {
 	req, out := c.UpdateResolverDnssecConfigRequest(input)
@@ -7389,6 +7539,9 @@ func (c *Route53Resolver) UpdateResolverEndpointRequest(input *UpdateResolverEnd
 //   - AccessDeniedException
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
+//
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
 //
 //   - InternalServiceErrorException
 //     We encountered an unknown error. Try again in a few minutes.
@@ -7499,6 +7652,9 @@ func (c *Route53Resolver) UpdateResolverRuleRequest(input *UpdateResolverRuleInp
 //     The current account doesn't have the IAM permissions required to perform
 //     the specified Resolver operation.
 //
+//     This error can also be thrown when a customer has reached the 5120 character
+//     limit for a resource policy for CloudWatch Logs.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53resolver-2018-04-01/UpdateResolverRule
 func (c *Route53Resolver) UpdateResolverRule(input *UpdateResolverRuleInput) (*UpdateResolverRuleOutput, error) {
 	req, out := c.UpdateResolverRuleRequest(input)
@@ -7523,6 +7679,9 @@ func (c *Route53Resolver) UpdateResolverRuleWithContext(ctx aws.Context, input *
 
 // The current account doesn't have the IAM permissions required to perform
 // the specified Resolver operation.
+//
+// This error can also be thrown when a customer has reached the 5120 character
+// limit for a resource policy for CloudWatch Logs.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -8429,6 +8588,18 @@ type CreateFirewallRuleInput struct {
 	// FirewallDomainListId is a required field
 	FirewallDomainListId *string `min:"1" type:"string" required:"true"`
 
+	// How you want the the rule to evaluate DNS redirection in the DNS redirection
+	// chain, such as CNAME or DNAME.
+	//
+	// Inspect_Redirection_Domain (Default) inspects all domains in the redirection
+	// chain. The individual domains in the redirection chain must be added to the
+	// domain list.
+	//
+	// Trust_Redirection_Domain inspects only the first domain in the redirection
+	// chain. You don't need to add the subsequent domains in the domain in the
+	// redirection list to the domain list.
+	FirewallDomainRedirectionAction *string `type:"string" enum:"FirewallDomainRedirectionAction"`
+
 	// The unique identifier of the firewall rule group where you want to create
 	// the rule.
 	//
@@ -8451,6 +8622,40 @@ type CreateFirewallRuleInput struct {
 	//
 	// Priority is a required field
 	Priority *int64 `type:"integer" required:"true"`
+
+	// The DNS query type you want the rule to evaluate. Allowed values are;
+	//
+	//    * A: Returns an IPv4 address.
+	//
+	//    * AAAA: Returns an Ipv6 address.
+	//
+	//    * CAA: Restricts CAs that can create SSL/TLS certifications for the domain.
+	//
+	//    * CNAME: Returns another domain name.
+	//
+	//    * DS: Record that identifies the DNSSEC signing key of a delegated zone.
+	//
+	//    * MX: Specifies mail servers.
+	//
+	//    * NAPTR: Regular-expression-based rewriting of domain names.
+	//
+	//    * NS: Authoritative name servers.
+	//
+	//    * PTR: Maps an IP address to a domain name.
+	//
+	//    * SOA: Start of authority record for the zone.
+	//
+	//    * SPF: Lists the servers authorized to send emails from a domain.
+	//
+	//    * SRV: Application specific values that identify servers.
+	//
+	//    * TXT: Verifies email senders and application-specific values.
+	//
+	//    * A query type you define by using the DNS type ID, for example 28 for
+	//    AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be
+	//    1-65334, for example, TYPE28. For more information, see List of DNS record
+	//    types (https://en.wikipedia.org/wiki/List_of_DNS_record_types).
+	Qtype *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -8501,6 +8706,9 @@ func (s *CreateFirewallRuleInput) Validate() error {
 	if s.Priority == nil {
 		invalidParams.Add(request.NewErrParamRequired("Priority"))
 	}
+	if s.Qtype != nil && len(*s.Qtype) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Qtype", 1))
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -8550,6 +8758,12 @@ func (s *CreateFirewallRuleInput) SetFirewallDomainListId(v string) *CreateFirew
 	return s
 }
 
+// SetFirewallDomainRedirectionAction sets the FirewallDomainRedirectionAction field's value.
+func (s *CreateFirewallRuleInput) SetFirewallDomainRedirectionAction(v string) *CreateFirewallRuleInput {
+	s.FirewallDomainRedirectionAction = &v
+	return s
+}
+
 // SetFirewallRuleGroupId sets the FirewallRuleGroupId field's value.
 func (s *CreateFirewallRuleInput) SetFirewallRuleGroupId(v string) *CreateFirewallRuleInput {
 	s.FirewallRuleGroupId = &v
@@ -8565,6 +8779,12 @@ func (s *CreateFirewallRuleInput) SetName(v string) *CreateFirewallRuleInput {
 // SetPriority sets the Priority field's value.
 func (s *CreateFirewallRuleInput) SetPriority(v int64) *CreateFirewallRuleInput {
 	s.Priority = &v
+	return s
+}
+
+// SetQtype sets the Qtype field's value.
+func (s *CreateFirewallRuleInput) SetQtype(v string) *CreateFirewallRuleInput {
+	s.Qtype = &v
 	return s
 }
 
@@ -8848,6 +9068,13 @@ type CreateResolverEndpointInput struct {
 	// Resolver endpoints). Inbound and outbound rules must allow TCP and UDP access.
 	// For inbound access, open port 53. For outbound access, open the port that
 	// you're using for DNS queries on your network.
+	//
+	// Some security group rules will cause your connection to be tracked. For outbound
+	// resolver endpoint, it can potentially impact the maximum queries per second
+	// from outbound endpoint to your target name server. For inbound resolver endpoint,
+	// it can bring down the overall maximum queries per second per IP address to
+	// as low as 1500. To avoid connection tracking caused by security group, see
+	// Untracked connections (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-connection-tracking.html#untracked-connectionsl).
 	//
 	// SecurityGroupIds is a required field
 	SecurityGroupIds []*string `type:"list" required:"true"`
@@ -9530,6 +9757,41 @@ type DeleteFirewallRuleInput struct {
 	//
 	// FirewallRuleGroupId is a required field
 	FirewallRuleGroupId *string `min:"1" type:"string" required:"true"`
+
+	// The DNS query type that the rule you are deleting evaluates. Allowed values
+	// are;
+	//
+	//    * A: Returns an IPv4 address.
+	//
+	//    * AAAA: Returns an Ipv6 address.
+	//
+	//    * CAA: Restricts CAs that can create SSL/TLS certifications for the domain.
+	//
+	//    * CNAME: Returns another domain name.
+	//
+	//    * DS: Record that identifies the DNSSEC signing key of a delegated zone.
+	//
+	//    * MX: Specifies mail servers.
+	//
+	//    * NAPTR: Regular-expression-based rewriting of domain names.
+	//
+	//    * NS: Authoritative name servers.
+	//
+	//    * PTR: Maps an IP address to a domain name.
+	//
+	//    * SOA: Start of authority record for the zone.
+	//
+	//    * SPF: Lists the servers authorized to send emails from a domain.
+	//
+	//    * SRV: Application specific values that identify servers.
+	//
+	//    * TXT: Verifies email senders and application-specific values.
+	//
+	//    * A query type you define by using the DNS type ID, for example 28 for
+	//    AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be
+	//    1-65334, for example, TYPE28. For more information, see List of DNS record
+	//    types (https://en.wikipedia.org/wiki/List_of_DNS_record_types).
+	Qtype *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -9565,6 +9827,9 @@ func (s *DeleteFirewallRuleInput) Validate() error {
 	if s.FirewallRuleGroupId != nil && len(*s.FirewallRuleGroupId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FirewallRuleGroupId", 1))
 	}
+	if s.Qtype != nil && len(*s.Qtype) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Qtype", 1))
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -9581,6 +9846,12 @@ func (s *DeleteFirewallRuleInput) SetFirewallDomainListId(v string) *DeleteFirew
 // SetFirewallRuleGroupId sets the FirewallRuleGroupId field's value.
 func (s *DeleteFirewallRuleInput) SetFirewallRuleGroupId(v string) *DeleteFirewallRuleInput {
 	s.FirewallRuleGroupId = &v
+	return s
+}
+
+// SetQtype sets the Qtype field's value.
+func (s *DeleteFirewallRuleInput) SetQtype(v string) *DeleteFirewallRuleInput {
+	s.Qtype = &v
 	return s
 }
 
@@ -10855,6 +11126,18 @@ type FirewallRule struct {
 	// The ID of the domain list that's used in the rule.
 	FirewallDomainListId *string `min:"1" type:"string"`
 
+	// How you want the the rule to evaluate DNS redirection in the DNS redirection
+	// chain, such as CNAME or DNAME.
+	//
+	// Inspect_Redirection_Domain (Default) inspects all domains in the redirection
+	// chain. The individual domains in the redirection chain must be added to the
+	// domain list.
+	//
+	// Trust_Redirection_Domain inspects only the first domain in the redirection
+	// chain. You don't need to add the subsequent domains in the domain in the
+	// redirection list to the domain list.
+	FirewallDomainRedirectionAction *string `type:"string" enum:"FirewallDomainRedirectionAction"`
+
 	// The unique identifier of the firewall rule group of the rule.
 	FirewallRuleGroupId *string `min:"1" type:"string"`
 
@@ -10869,6 +11152,40 @@ type FirewallRule struct {
 	// the rule group. DNS Firewall processes the rules in a rule group by order
 	// of priority, starting from the lowest setting.
 	Priority *int64 `type:"integer"`
+
+	// The DNS query type you want the rule to evaluate. Allowed values are;
+	//
+	//    * A: Returns an IPv4 address.
+	//
+	//    * AAAA: Returns an Ipv6 address.
+	//
+	//    * CAA: Restricts CAs that can create SSL/TLS certifications for the domain.
+	//
+	//    * CNAME: Returns another domain name.
+	//
+	//    * DS: Record that identifies the DNSSEC signing key of a delegated zone.
+	//
+	//    * MX: Specifies mail servers.
+	//
+	//    * NAPTR: Regular-expression-based rewriting of domain names.
+	//
+	//    * NS: Authoritative name servers.
+	//
+	//    * PTR: Maps an IP address to a domain name.
+	//
+	//    * SOA: Start of authority record for the zone.
+	//
+	//    * SPF: Lists the servers authorized to send emails from a domain.
+	//
+	//    * SRV: Application specific values that identify servers.
+	//
+	//    * TXT: Verifies email senders and application-specific values.
+	//
+	//    * A query type you define by using the DNS type ID, for example 28 for
+	//    AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be
+	//    1-65334, for example, TYPE28. For more information, see List of DNS record
+	//    types (https://en.wikipedia.org/wiki/List_of_DNS_record_types).
+	Qtype *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -10937,6 +11254,12 @@ func (s *FirewallRule) SetFirewallDomainListId(v string) *FirewallRule {
 	return s
 }
 
+// SetFirewallDomainRedirectionAction sets the FirewallDomainRedirectionAction field's value.
+func (s *FirewallRule) SetFirewallDomainRedirectionAction(v string) *FirewallRule {
+	s.FirewallDomainRedirectionAction = &v
+	return s
+}
+
 // SetFirewallRuleGroupId sets the FirewallRuleGroupId field's value.
 func (s *FirewallRule) SetFirewallRuleGroupId(v string) *FirewallRule {
 	s.FirewallRuleGroupId = &v
@@ -10958,6 +11281,12 @@ func (s *FirewallRule) SetName(v string) *FirewallRule {
 // SetPriority sets the Priority field's value.
 func (s *FirewallRule) SetPriority(v int64) *FirewallRule {
 	s.Priority = &v
+	return s
+}
+
+// SetQtype sets the Qtype field's value.
+func (s *FirewallRule) SetQtype(v string) *FirewallRule {
+	s.Qtype = &v
 	return s
 }
 
@@ -18302,6 +18631,18 @@ type UpdateFirewallRuleInput struct {
 	// FirewallDomainListId is a required field
 	FirewallDomainListId *string `min:"1" type:"string" required:"true"`
 
+	// How you want the the rule to evaluate DNS redirection in the DNS redirection
+	// chain, such as CNAME or DNAME.
+	//
+	// Inspect_Redirection_Domain (Default) inspects all domains in the redirection
+	// chain. The individual domains in the redirection chain must be added to the
+	// domain list.
+	//
+	// Trust_Redirection_Domain inspects only the first domain in the redirection
+	// chain. You don't need to add the subsequent domains in the domain in the
+	// redirection list to the domain list.
+	FirewallDomainRedirectionAction *string `type:"string" enum:"FirewallDomainRedirectionAction"`
+
 	// The unique identifier of the firewall rule group for the rule.
 	//
 	// FirewallRuleGroupId is a required field
@@ -18319,6 +18660,40 @@ type UpdateFirewallRuleInput struct {
 	// use 100, 200, and so on. You can change the priority setting for the rules
 	// in a rule group at any time.
 	Priority *int64 `type:"integer"`
+
+	// The DNS query type you want the rule to evaluate. Allowed values are;
+	//
+	//    * A: Returns an IPv4 address.
+	//
+	//    * AAAA: Returns an Ipv6 address.
+	//
+	//    * CAA: Restricts CAs that can create SSL/TLS certifications for the domain.
+	//
+	//    * CNAME: Returns another domain name.
+	//
+	//    * DS: Record that identifies the DNSSEC signing key of a delegated zone.
+	//
+	//    * MX: Specifies mail servers.
+	//
+	//    * NAPTR: Regular-expression-based rewriting of domain names.
+	//
+	//    * NS: Authoritative name servers.
+	//
+	//    * PTR: Maps an IP address to a domain name.
+	//
+	//    * SOA: Start of authority record for the zone.
+	//
+	//    * SPF: Lists the servers authorized to send emails from a domain.
+	//
+	//    * SRV: Application specific values that identify servers.
+	//
+	//    * TXT: Verifies email senders and application-specific values.
+	//
+	//    * A query type you define by using the DNS type ID, for example 28 for
+	//    AAAA. The values must be defined as TYPENUMBER, where the NUMBER can be
+	//    1-65334, for example, TYPE28. For more information, see List of DNS record
+	//    types (https://en.wikipedia.org/wiki/List_of_DNS_record_types).
+	Qtype *string `min:"1" type:"string"`
 }
 
 // String returns the string representation.
@@ -18356,6 +18731,9 @@ func (s *UpdateFirewallRuleInput) Validate() error {
 	}
 	if s.FirewallRuleGroupId != nil && len(*s.FirewallRuleGroupId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FirewallRuleGroupId", 1))
+	}
+	if s.Qtype != nil && len(*s.Qtype) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Qtype", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -18400,6 +18778,12 @@ func (s *UpdateFirewallRuleInput) SetFirewallDomainListId(v string) *UpdateFirew
 	return s
 }
 
+// SetFirewallDomainRedirectionAction sets the FirewallDomainRedirectionAction field's value.
+func (s *UpdateFirewallRuleInput) SetFirewallDomainRedirectionAction(v string) *UpdateFirewallRuleInput {
+	s.FirewallDomainRedirectionAction = &v
+	return s
+}
+
 // SetFirewallRuleGroupId sets the FirewallRuleGroupId field's value.
 func (s *UpdateFirewallRuleInput) SetFirewallRuleGroupId(v string) *UpdateFirewallRuleInput {
 	s.FirewallRuleGroupId = &v
@@ -18415,6 +18799,12 @@ func (s *UpdateFirewallRuleInput) SetName(v string) *UpdateFirewallRuleInput {
 // SetPriority sets the Priority field's value.
 func (s *UpdateFirewallRuleInput) SetPriority(v int64) *UpdateFirewallRuleInput {
 	s.Priority = &v
+	return s
+}
+
+// SetQtype sets the Qtype field's value.
+func (s *UpdateFirewallRuleInput) SetQtype(v string) *UpdateFirewallRuleInput {
+	s.Qtype = &v
 	return s
 }
 
@@ -19273,6 +19663,22 @@ func FirewallDomainListStatus_Values() []string {
 		FirewallDomainListStatusImporting,
 		FirewallDomainListStatusDeleting,
 		FirewallDomainListStatusUpdating,
+	}
+}
+
+const (
+	// FirewallDomainRedirectionActionInspectRedirectionDomain is a FirewallDomainRedirectionAction enum value
+	FirewallDomainRedirectionActionInspectRedirectionDomain = "INSPECT_REDIRECTION_DOMAIN"
+
+	// FirewallDomainRedirectionActionTrustRedirectionDomain is a FirewallDomainRedirectionAction enum value
+	FirewallDomainRedirectionActionTrustRedirectionDomain = "TRUST_REDIRECTION_DOMAIN"
+)
+
+// FirewallDomainRedirectionAction_Values returns all elements of the FirewallDomainRedirectionAction enum
+func FirewallDomainRedirectionAction_Values() []string {
+	return []string{
+		FirewallDomainRedirectionActionInspectRedirectionDomain,
+		FirewallDomainRedirectionActionTrustRedirectionDomain,
 	}
 }
 

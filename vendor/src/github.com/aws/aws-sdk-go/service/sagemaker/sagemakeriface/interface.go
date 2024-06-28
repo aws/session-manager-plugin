@@ -168,6 +168,10 @@ type SageMakerAPI interface {
 	CreateHubWithContext(aws.Context, *sagemaker.CreateHubInput, ...request.Option) (*sagemaker.CreateHubOutput, error)
 	CreateHubRequest(*sagemaker.CreateHubInput) (*request.Request, *sagemaker.CreateHubOutput)
 
+	CreateHubContentReference(*sagemaker.CreateHubContentReferenceInput) (*sagemaker.CreateHubContentReferenceOutput, error)
+	CreateHubContentReferenceWithContext(aws.Context, *sagemaker.CreateHubContentReferenceInput, ...request.Option) (*sagemaker.CreateHubContentReferenceOutput, error)
+	CreateHubContentReferenceRequest(*sagemaker.CreateHubContentReferenceInput) (*request.Request, *sagemaker.CreateHubContentReferenceOutput)
+
 	CreateHumanTaskUi(*sagemaker.CreateHumanTaskUiInput) (*sagemaker.CreateHumanTaskUiOutput, error)
 	CreateHumanTaskUiWithContext(aws.Context, *sagemaker.CreateHumanTaskUiInput, ...request.Option) (*sagemaker.CreateHumanTaskUiOutput, error)
 	CreateHumanTaskUiRequest(*sagemaker.CreateHumanTaskUiInput) (*request.Request, *sagemaker.CreateHumanTaskUiOutput)
@@ -199,6 +203,10 @@ type SageMakerAPI interface {
 	CreateLabelingJob(*sagemaker.CreateLabelingJobInput) (*sagemaker.CreateLabelingJobOutput, error)
 	CreateLabelingJobWithContext(aws.Context, *sagemaker.CreateLabelingJobInput, ...request.Option) (*sagemaker.CreateLabelingJobOutput, error)
 	CreateLabelingJobRequest(*sagemaker.CreateLabelingJobInput) (*request.Request, *sagemaker.CreateLabelingJobOutput)
+
+	CreateMlflowTrackingServer(*sagemaker.CreateMlflowTrackingServerInput) (*sagemaker.CreateMlflowTrackingServerOutput, error)
+	CreateMlflowTrackingServerWithContext(aws.Context, *sagemaker.CreateMlflowTrackingServerInput, ...request.Option) (*sagemaker.CreateMlflowTrackingServerOutput, error)
+	CreateMlflowTrackingServerRequest(*sagemaker.CreateMlflowTrackingServerInput) (*request.Request, *sagemaker.CreateMlflowTrackingServerOutput)
 
 	CreateModel(*sagemaker.CreateModelInput) (*sagemaker.CreateModelOutput, error)
 	CreateModelWithContext(aws.Context, *sagemaker.CreateModelInput, ...request.Option) (*sagemaker.CreateModelOutput, error)
@@ -251,6 +259,10 @@ type SageMakerAPI interface {
 	CreatePresignedDomainUrl(*sagemaker.CreatePresignedDomainUrlInput) (*sagemaker.CreatePresignedDomainUrlOutput, error)
 	CreatePresignedDomainUrlWithContext(aws.Context, *sagemaker.CreatePresignedDomainUrlInput, ...request.Option) (*sagemaker.CreatePresignedDomainUrlOutput, error)
 	CreatePresignedDomainUrlRequest(*sagemaker.CreatePresignedDomainUrlInput) (*request.Request, *sagemaker.CreatePresignedDomainUrlOutput)
+
+	CreatePresignedMlflowTrackingServerUrl(*sagemaker.CreatePresignedMlflowTrackingServerUrlInput) (*sagemaker.CreatePresignedMlflowTrackingServerUrlOutput, error)
+	CreatePresignedMlflowTrackingServerUrlWithContext(aws.Context, *sagemaker.CreatePresignedMlflowTrackingServerUrlInput, ...request.Option) (*sagemaker.CreatePresignedMlflowTrackingServerUrlOutput, error)
+	CreatePresignedMlflowTrackingServerUrlRequest(*sagemaker.CreatePresignedMlflowTrackingServerUrlInput) (*request.Request, *sagemaker.CreatePresignedMlflowTrackingServerUrlOutput)
 
 	CreatePresignedNotebookInstanceUrl(*sagemaker.CreatePresignedNotebookInstanceUrlInput) (*sagemaker.CreatePresignedNotebookInstanceUrlOutput, error)
 	CreatePresignedNotebookInstanceUrlWithContext(aws.Context, *sagemaker.CreatePresignedNotebookInstanceUrlInput, ...request.Option) (*sagemaker.CreatePresignedNotebookInstanceUrlOutput, error)
@@ -388,9 +400,17 @@ type SageMakerAPI interface {
 	DeleteHubContentWithContext(aws.Context, *sagemaker.DeleteHubContentInput, ...request.Option) (*sagemaker.DeleteHubContentOutput, error)
 	DeleteHubContentRequest(*sagemaker.DeleteHubContentInput) (*request.Request, *sagemaker.DeleteHubContentOutput)
 
+	DeleteHubContentReference(*sagemaker.DeleteHubContentReferenceInput) (*sagemaker.DeleteHubContentReferenceOutput, error)
+	DeleteHubContentReferenceWithContext(aws.Context, *sagemaker.DeleteHubContentReferenceInput, ...request.Option) (*sagemaker.DeleteHubContentReferenceOutput, error)
+	DeleteHubContentReferenceRequest(*sagemaker.DeleteHubContentReferenceInput) (*request.Request, *sagemaker.DeleteHubContentReferenceOutput)
+
 	DeleteHumanTaskUi(*sagemaker.DeleteHumanTaskUiInput) (*sagemaker.DeleteHumanTaskUiOutput, error)
 	DeleteHumanTaskUiWithContext(aws.Context, *sagemaker.DeleteHumanTaskUiInput, ...request.Option) (*sagemaker.DeleteHumanTaskUiOutput, error)
 	DeleteHumanTaskUiRequest(*sagemaker.DeleteHumanTaskUiInput) (*request.Request, *sagemaker.DeleteHumanTaskUiOutput)
+
+	DeleteHyperParameterTuningJob(*sagemaker.DeleteHyperParameterTuningJobInput) (*sagemaker.DeleteHyperParameterTuningJobOutput, error)
+	DeleteHyperParameterTuningJobWithContext(aws.Context, *sagemaker.DeleteHyperParameterTuningJobInput, ...request.Option) (*sagemaker.DeleteHyperParameterTuningJobOutput, error)
+	DeleteHyperParameterTuningJobRequest(*sagemaker.DeleteHyperParameterTuningJobInput) (*request.Request, *sagemaker.DeleteHyperParameterTuningJobOutput)
 
 	DeleteImage(*sagemaker.DeleteImageInput) (*sagemaker.DeleteImageOutput, error)
 	DeleteImageWithContext(aws.Context, *sagemaker.DeleteImageInput, ...request.Option) (*sagemaker.DeleteImageOutput, error)
@@ -407,6 +427,10 @@ type SageMakerAPI interface {
 	DeleteInferenceExperiment(*sagemaker.DeleteInferenceExperimentInput) (*sagemaker.DeleteInferenceExperimentOutput, error)
 	DeleteInferenceExperimentWithContext(aws.Context, *sagemaker.DeleteInferenceExperimentInput, ...request.Option) (*sagemaker.DeleteInferenceExperimentOutput, error)
 	DeleteInferenceExperimentRequest(*sagemaker.DeleteInferenceExperimentInput) (*request.Request, *sagemaker.DeleteInferenceExperimentOutput)
+
+	DeleteMlflowTrackingServer(*sagemaker.DeleteMlflowTrackingServerInput) (*sagemaker.DeleteMlflowTrackingServerOutput, error)
+	DeleteMlflowTrackingServerWithContext(aws.Context, *sagemaker.DeleteMlflowTrackingServerInput, ...request.Option) (*sagemaker.DeleteMlflowTrackingServerOutput, error)
+	DeleteMlflowTrackingServerRequest(*sagemaker.DeleteMlflowTrackingServerInput) (*request.Request, *sagemaker.DeleteMlflowTrackingServerOutput)
 
 	DeleteModel(*sagemaker.DeleteModelInput) (*sagemaker.DeleteModelOutput, error)
 	DeleteModelWithContext(aws.Context, *sagemaker.DeleteModelInput, ...request.Option) (*sagemaker.DeleteModelOutput, error)
@@ -635,6 +659,10 @@ type SageMakerAPI interface {
 	DescribeLineageGroup(*sagemaker.DescribeLineageGroupInput) (*sagemaker.DescribeLineageGroupOutput, error)
 	DescribeLineageGroupWithContext(aws.Context, *sagemaker.DescribeLineageGroupInput, ...request.Option) (*sagemaker.DescribeLineageGroupOutput, error)
 	DescribeLineageGroupRequest(*sagemaker.DescribeLineageGroupInput) (*request.Request, *sagemaker.DescribeLineageGroupOutput)
+
+	DescribeMlflowTrackingServer(*sagemaker.DescribeMlflowTrackingServerInput) (*sagemaker.DescribeMlflowTrackingServerOutput, error)
+	DescribeMlflowTrackingServerWithContext(aws.Context, *sagemaker.DescribeMlflowTrackingServerInput, ...request.Option) (*sagemaker.DescribeMlflowTrackingServerOutput, error)
+	DescribeMlflowTrackingServerRequest(*sagemaker.DescribeMlflowTrackingServerInput) (*request.Request, *sagemaker.DescribeMlflowTrackingServerOutput)
 
 	DescribeModel(*sagemaker.DescribeModelInput) (*sagemaker.DescribeModelOutput, error)
 	DescribeModelWithContext(aws.Context, *sagemaker.DescribeModelInput, ...request.Option) (*sagemaker.DescribeModelOutput, error)
@@ -1044,6 +1072,13 @@ type SageMakerAPI interface {
 	ListLineageGroupsPages(*sagemaker.ListLineageGroupsInput, func(*sagemaker.ListLineageGroupsOutput, bool) bool) error
 	ListLineageGroupsPagesWithContext(aws.Context, *sagemaker.ListLineageGroupsInput, func(*sagemaker.ListLineageGroupsOutput, bool) bool, ...request.Option) error
 
+	ListMlflowTrackingServers(*sagemaker.ListMlflowTrackingServersInput) (*sagemaker.ListMlflowTrackingServersOutput, error)
+	ListMlflowTrackingServersWithContext(aws.Context, *sagemaker.ListMlflowTrackingServersInput, ...request.Option) (*sagemaker.ListMlflowTrackingServersOutput, error)
+	ListMlflowTrackingServersRequest(*sagemaker.ListMlflowTrackingServersInput) (*request.Request, *sagemaker.ListMlflowTrackingServersOutput)
+
+	ListMlflowTrackingServersPages(*sagemaker.ListMlflowTrackingServersInput, func(*sagemaker.ListMlflowTrackingServersOutput, bool) bool) error
+	ListMlflowTrackingServersPagesWithContext(aws.Context, *sagemaker.ListMlflowTrackingServersInput, func(*sagemaker.ListMlflowTrackingServersOutput, bool) bool, ...request.Option) error
+
 	ListModelBiasJobDefinitions(*sagemaker.ListModelBiasJobDefinitionsInput) (*sagemaker.ListModelBiasJobDefinitionsOutput, error)
 	ListModelBiasJobDefinitionsWithContext(aws.Context, *sagemaker.ListModelBiasJobDefinitionsInput, ...request.Option) (*sagemaker.ListModelBiasJobDefinitionsOutput, error)
 	ListModelBiasJobDefinitionsRequest(*sagemaker.ListModelBiasJobDefinitionsInput) (*request.Request, *sagemaker.ListModelBiasJobDefinitionsOutput)
@@ -1342,6 +1377,10 @@ type SageMakerAPI interface {
 	StartInferenceExperimentWithContext(aws.Context, *sagemaker.StartInferenceExperimentInput, ...request.Option) (*sagemaker.StartInferenceExperimentOutput, error)
 	StartInferenceExperimentRequest(*sagemaker.StartInferenceExperimentInput) (*request.Request, *sagemaker.StartInferenceExperimentOutput)
 
+	StartMlflowTrackingServer(*sagemaker.StartMlflowTrackingServerInput) (*sagemaker.StartMlflowTrackingServerOutput, error)
+	StartMlflowTrackingServerWithContext(aws.Context, *sagemaker.StartMlflowTrackingServerInput, ...request.Option) (*sagemaker.StartMlflowTrackingServerOutput, error)
+	StartMlflowTrackingServerRequest(*sagemaker.StartMlflowTrackingServerInput) (*request.Request, *sagemaker.StartMlflowTrackingServerOutput)
+
 	StartMonitoringSchedule(*sagemaker.StartMonitoringScheduleInput) (*sagemaker.StartMonitoringScheduleOutput, error)
 	StartMonitoringScheduleWithContext(aws.Context, *sagemaker.StartMonitoringScheduleInput, ...request.Option) (*sagemaker.StartMonitoringScheduleOutput, error)
 	StartMonitoringScheduleRequest(*sagemaker.StartMonitoringScheduleInput) (*request.Request, *sagemaker.StartMonitoringScheduleOutput)
@@ -1386,6 +1425,10 @@ type SageMakerAPI interface {
 	StopLabelingJobWithContext(aws.Context, *sagemaker.StopLabelingJobInput, ...request.Option) (*sagemaker.StopLabelingJobOutput, error)
 	StopLabelingJobRequest(*sagemaker.StopLabelingJobInput) (*request.Request, *sagemaker.StopLabelingJobOutput)
 
+	StopMlflowTrackingServer(*sagemaker.StopMlflowTrackingServerInput) (*sagemaker.StopMlflowTrackingServerOutput, error)
+	StopMlflowTrackingServerWithContext(aws.Context, *sagemaker.StopMlflowTrackingServerInput, ...request.Option) (*sagemaker.StopMlflowTrackingServerOutput, error)
+	StopMlflowTrackingServerRequest(*sagemaker.StopMlflowTrackingServerInput) (*request.Request, *sagemaker.StopMlflowTrackingServerOutput)
+
 	StopMonitoringSchedule(*sagemaker.StopMonitoringScheduleInput) (*sagemaker.StopMonitoringScheduleOutput, error)
 	StopMonitoringScheduleWithContext(aws.Context, *sagemaker.StopMonitoringScheduleInput, ...request.Option) (*sagemaker.StopMonitoringScheduleOutput, error)
 	StopMonitoringScheduleRequest(*sagemaker.StopMonitoringScheduleInput) (*request.Request, *sagemaker.StopMonitoringScheduleOutput)
@@ -1425,6 +1468,10 @@ type SageMakerAPI interface {
 	UpdateCluster(*sagemaker.UpdateClusterInput) (*sagemaker.UpdateClusterOutput, error)
 	UpdateClusterWithContext(aws.Context, *sagemaker.UpdateClusterInput, ...request.Option) (*sagemaker.UpdateClusterOutput, error)
 	UpdateClusterRequest(*sagemaker.UpdateClusterInput) (*request.Request, *sagemaker.UpdateClusterOutput)
+
+	UpdateClusterSoftware(*sagemaker.UpdateClusterSoftwareInput) (*sagemaker.UpdateClusterSoftwareOutput, error)
+	UpdateClusterSoftwareWithContext(aws.Context, *sagemaker.UpdateClusterSoftwareInput, ...request.Option) (*sagemaker.UpdateClusterSoftwareOutput, error)
+	UpdateClusterSoftwareRequest(*sagemaker.UpdateClusterSoftwareInput) (*request.Request, *sagemaker.UpdateClusterSoftwareOutput)
 
 	UpdateCodeRepository(*sagemaker.UpdateCodeRepositoryInput) (*sagemaker.UpdateCodeRepositoryOutput, error)
 	UpdateCodeRepositoryWithContext(aws.Context, *sagemaker.UpdateCodeRepositoryInput, ...request.Option) (*sagemaker.UpdateCodeRepositoryOutput, error)
@@ -1489,6 +1536,10 @@ type SageMakerAPI interface {
 	UpdateInferenceExperiment(*sagemaker.UpdateInferenceExperimentInput) (*sagemaker.UpdateInferenceExperimentOutput, error)
 	UpdateInferenceExperimentWithContext(aws.Context, *sagemaker.UpdateInferenceExperimentInput, ...request.Option) (*sagemaker.UpdateInferenceExperimentOutput, error)
 	UpdateInferenceExperimentRequest(*sagemaker.UpdateInferenceExperimentInput) (*request.Request, *sagemaker.UpdateInferenceExperimentOutput)
+
+	UpdateMlflowTrackingServer(*sagemaker.UpdateMlflowTrackingServerInput) (*sagemaker.UpdateMlflowTrackingServerOutput, error)
+	UpdateMlflowTrackingServerWithContext(aws.Context, *sagemaker.UpdateMlflowTrackingServerInput, ...request.Option) (*sagemaker.UpdateMlflowTrackingServerOutput, error)
+	UpdateMlflowTrackingServerRequest(*sagemaker.UpdateMlflowTrackingServerInput) (*request.Request, *sagemaker.UpdateMlflowTrackingServerOutput)
 
 	UpdateModelCard(*sagemaker.UpdateModelCardInput) (*sagemaker.UpdateModelCardOutput, error)
 	UpdateModelCardWithContext(aws.Context, *sagemaker.UpdateModelCardInput, ...request.Option) (*sagemaker.UpdateModelCardOutput, error)

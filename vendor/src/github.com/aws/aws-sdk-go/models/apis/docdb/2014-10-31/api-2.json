@@ -929,6 +929,24 @@
         {"shape":"InvalidDBClusterStateFault"},
         {"shape":"InvalidDBInstanceStateFault"}
       ]
+    },
+    "SwitchoverGlobalCluster":{
+      "name":"SwitchoverGlobalCluster",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SwitchoverGlobalClusterMessage"},
+      "output":{
+        "shape":"SwitchoverGlobalClusterResult",
+        "resultWrapper":"SwitchoverGlobalClusterResult"
+      },
+      "errors":[
+        {"shape":"GlobalClusterNotFoundFault"},
+        {"shape":"InvalidGlobalClusterStateFault"},
+        {"shape":"DBClusterNotFoundFault"},
+        {"shape":"InvalidDBClusterStateFault"}
+      ]
     }
   },
   "shapes":{
@@ -1594,7 +1612,9 @@
         "PromotionTier":{"shape":"IntegerOptional"},
         "DBInstanceArn":{"shape":"String"},
         "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "CertificateDetails":{"shape":"CertificateDetails"}
+        "CertificateDetails":{"shape":"CertificateDetails"},
+        "PerformanceInsightsEnabled":{"shape":"BooleanOptional"},
+        "PerformanceInsightsKMSKeyId":{"shape":"String"}
       },
       "wrapper":true
     },
@@ -3105,6 +3125,23 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "SwitchoverGlobalClusterMessage":{
+      "type":"structure",
+      "required":[
+        "GlobalClusterIdentifier",
+        "TargetDbClusterIdentifier"
+      ],
+      "members":{
+        "GlobalClusterIdentifier":{"shape":"GlobalClusterIdentifier"},
+        "TargetDbClusterIdentifier":{"shape":"String"}
+      }
+    },
+    "SwitchoverGlobalClusterResult":{
+      "type":"structure",
+      "members":{
+        "GlobalCluster":{"shape":"GlobalCluster"}
+      }
     },
     "TStamp":{"type":"timestamp"},
     "Tag":{

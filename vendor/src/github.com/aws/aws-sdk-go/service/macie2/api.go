@@ -223,6 +223,103 @@ func (c *Macie2) BatchGetCustomDataIdentifiersWithContext(ctx aws.Context, input
 	return out, req.Send()
 }
 
+const opBatchUpdateAutomatedDiscoveryAccounts = "BatchUpdateAutomatedDiscoveryAccounts"
+
+// BatchUpdateAutomatedDiscoveryAccountsRequest generates a "aws/request.Request" representing the
+// client's request for the BatchUpdateAutomatedDiscoveryAccounts operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See BatchUpdateAutomatedDiscoveryAccounts for more information on using the BatchUpdateAutomatedDiscoveryAccounts
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the BatchUpdateAutomatedDiscoveryAccountsRequest method.
+//	req, resp := client.BatchUpdateAutomatedDiscoveryAccountsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/macie2-2020-01-01/BatchUpdateAutomatedDiscoveryAccounts
+func (c *Macie2) BatchUpdateAutomatedDiscoveryAccountsRequest(input *BatchUpdateAutomatedDiscoveryAccountsInput) (req *request.Request, output *BatchUpdateAutomatedDiscoveryAccountsOutput) {
+	op := &request.Operation{
+		Name:       opBatchUpdateAutomatedDiscoveryAccounts,
+		HTTPMethod: "PATCH",
+		HTTPPath:   "/automated-discovery/accounts",
+	}
+
+	if input == nil {
+		input = &BatchUpdateAutomatedDiscoveryAccountsInput{}
+	}
+
+	output = &BatchUpdateAutomatedDiscoveryAccountsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// BatchUpdateAutomatedDiscoveryAccounts API operation for Amazon Macie 2.
+//
+// Changes the status of automated sensitive data discovery for one or more
+// accounts.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Macie 2's
+// API operation BatchUpdateAutomatedDiscoveryAccounts for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Provides information about an error that occurred because too many requests
+//     were sent during a certain amount of time.
+//
+//   - ValidationException
+//     Provides information about an error that occurred due to a syntax error in
+//     a request.
+//
+//   - InternalServerException
+//     Provides information about an error that occurred due to an unknown internal
+//     server error, exception, or failure.
+//
+//   - ConflictException
+//     Provides information about an error that occurred due to a versioning conflict
+//     for a specified resource.
+//
+//   - AccessDeniedException
+//     Provides information about an error that occurred due to insufficient access
+//     to a specified resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/macie2-2020-01-01/BatchUpdateAutomatedDiscoveryAccounts
+func (c *Macie2) BatchUpdateAutomatedDiscoveryAccounts(input *BatchUpdateAutomatedDiscoveryAccountsInput) (*BatchUpdateAutomatedDiscoveryAccountsOutput, error) {
+	req, out := c.BatchUpdateAutomatedDiscoveryAccountsRequest(input)
+	return out, req.Send()
+}
+
+// BatchUpdateAutomatedDiscoveryAccountsWithContext is the same as BatchUpdateAutomatedDiscoveryAccounts with the addition of
+// the ability to pass a context and additional request options.
+//
+// See BatchUpdateAutomatedDiscoveryAccounts for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Macie2) BatchUpdateAutomatedDiscoveryAccountsWithContext(ctx aws.Context, input *BatchUpdateAutomatedDiscoveryAccountsInput, opts ...request.Option) (*BatchUpdateAutomatedDiscoveryAccountsOutput, error) {
+	req, out := c.BatchUpdateAutomatedDiscoveryAccountsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateAllowList = "CreateAllowList"
 
 // CreateAllowListRequest generates a "aws/request.Request" representing the
@@ -2309,7 +2406,6 @@ func (c *Macie2) DisassociateFromMasterAccountRequest(input *DisassociateFromMas
 //
 // (Deprecated) Disassociates a member account from its Amazon Macie administrator
 // account. This operation has been replaced by the DisassociateFromAdministratorAccount
-// operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2932,7 +3028,7 @@ func (c *Macie2) GetAutomatedDiscoveryConfigurationRequest(input *GetAutomatedDi
 // GetAutomatedDiscoveryConfiguration API operation for Amazon Macie 2.
 //
 // Retrieves the configuration settings and status of automated sensitive data
-// discovery for an account.
+// discovery for an organization or standalone account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4061,7 +4157,6 @@ func (c *Macie2) GetMasterAccountRequest(input *GetMasterAccountInput) (req *req
 //
 // (Deprecated) Retrieves information about the Amazon Macie administrator account
 // for an account. This operation has been replaced by the GetAdministratorAccount
-// operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5123,6 +5218,160 @@ func (c *Macie2) ListAllowListsPagesWithContext(ctx aws.Context, input *ListAllo
 	return p.Err()
 }
 
+const opListAutomatedDiscoveryAccounts = "ListAutomatedDiscoveryAccounts"
+
+// ListAutomatedDiscoveryAccountsRequest generates a "aws/request.Request" representing the
+// client's request for the ListAutomatedDiscoveryAccounts operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListAutomatedDiscoveryAccounts for more information on using the ListAutomatedDiscoveryAccounts
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListAutomatedDiscoveryAccountsRequest method.
+//	req, resp := client.ListAutomatedDiscoveryAccountsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/macie2-2020-01-01/ListAutomatedDiscoveryAccounts
+func (c *Macie2) ListAutomatedDiscoveryAccountsRequest(input *ListAutomatedDiscoveryAccountsInput) (req *request.Request, output *ListAutomatedDiscoveryAccountsOutput) {
+	op := &request.Operation{
+		Name:       opListAutomatedDiscoveryAccounts,
+		HTTPMethod: "GET",
+		HTTPPath:   "/automated-discovery/accounts",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListAutomatedDiscoveryAccountsInput{}
+	}
+
+	output = &ListAutomatedDiscoveryAccountsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListAutomatedDiscoveryAccounts API operation for Amazon Macie 2.
+//
+// Retrieves the status of automated sensitive data discovery for one or more
+// accounts.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Macie 2's
+// API operation ListAutomatedDiscoveryAccounts for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     Provides information about an error that occurred because a specified resource
+//     wasn't found.
+//
+//   - ThrottlingException
+//     Provides information about an error that occurred because too many requests
+//     were sent during a certain amount of time.
+//
+//   - ValidationException
+//     Provides information about an error that occurred due to a syntax error in
+//     a request.
+//
+//   - InternalServerException
+//     Provides information about an error that occurred due to an unknown internal
+//     server error, exception, or failure.
+//
+//   - AccessDeniedException
+//     Provides information about an error that occurred due to insufficient access
+//     to a specified resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/macie2-2020-01-01/ListAutomatedDiscoveryAccounts
+func (c *Macie2) ListAutomatedDiscoveryAccounts(input *ListAutomatedDiscoveryAccountsInput) (*ListAutomatedDiscoveryAccountsOutput, error) {
+	req, out := c.ListAutomatedDiscoveryAccountsRequest(input)
+	return out, req.Send()
+}
+
+// ListAutomatedDiscoveryAccountsWithContext is the same as ListAutomatedDiscoveryAccounts with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListAutomatedDiscoveryAccounts for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Macie2) ListAutomatedDiscoveryAccountsWithContext(ctx aws.Context, input *ListAutomatedDiscoveryAccountsInput, opts ...request.Option) (*ListAutomatedDiscoveryAccountsOutput, error) {
+	req, out := c.ListAutomatedDiscoveryAccountsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListAutomatedDiscoveryAccountsPages iterates over the pages of a ListAutomatedDiscoveryAccounts operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListAutomatedDiscoveryAccounts method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListAutomatedDiscoveryAccounts operation.
+//	pageNum := 0
+//	err := client.ListAutomatedDiscoveryAccountsPages(params,
+//	    func(page *macie2.ListAutomatedDiscoveryAccountsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Macie2) ListAutomatedDiscoveryAccountsPages(input *ListAutomatedDiscoveryAccountsInput, fn func(*ListAutomatedDiscoveryAccountsOutput, bool) bool) error {
+	return c.ListAutomatedDiscoveryAccountsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListAutomatedDiscoveryAccountsPagesWithContext same as ListAutomatedDiscoveryAccountsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Macie2) ListAutomatedDiscoveryAccountsPagesWithContext(ctx aws.Context, input *ListAutomatedDiscoveryAccountsInput, fn func(*ListAutomatedDiscoveryAccountsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListAutomatedDiscoveryAccountsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListAutomatedDiscoveryAccountsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListAutomatedDiscoveryAccountsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListClassificationJobs = "ListClassificationJobs"
 
 // ListClassificationJobsRequest generates a "aws/request.Request" representing the
@@ -5966,8 +6215,8 @@ func (c *Macie2) ListInvitationsRequest(input *ListInvitationsInput) (req *reque
 
 // ListInvitations API operation for Amazon Macie 2.
 //
-// Retrieves information about the Amazon Macie membership invitations that
-// were received by an account.
+// Retrieves information about Amazon Macie membership invitations that were
+// received by an account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6583,8 +6832,8 @@ func (c *Macie2) ListResourceProfileArtifactsRequest(input *ListResourceProfileA
 
 // ListResourceProfileArtifacts API operation for Amazon Macie 2.
 //
-// Retrieves information about objects that were selected from an S3 bucket
-// for automated sensitive data discovery.
+// Retrieves information about objects that Amazon Macie selected from an S3
+// bucket for automated sensitive data discovery.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7117,7 +7366,7 @@ func (c *Macie2) PutClassificationExportConfigurationRequest(input *PutClassific
 
 // PutClassificationExportConfiguration API operation for Amazon Macie 2.
 //
-// Creates or updates the configuration settings for storing data classification
+// Adds or updates the configuration settings for storing data classification
 // results.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -7564,7 +7813,7 @@ func (c *Macie2) TestCustomDataIdentifierRequest(input *TestCustomDataIdentifier
 
 // TestCustomDataIdentifier API operation for Amazon Macie 2.
 //
-// Tests a custom data identifier.
+// Tests criteria for a custom data identifier.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7839,7 +8088,8 @@ func (c *Macie2) UpdateAutomatedDiscoveryConfigurationRequest(input *UpdateAutom
 
 // UpdateAutomatedDiscoveryConfiguration API operation for Amazon Macie 2.
 //
-// Enables or disables automated sensitive data discovery for an account.
+// Changes the configuration settings and status of automated sensitive data
+// discovery for an organization or standalone account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9530,6 +9780,133 @@ func (s *AssumedRole) SetSessionContext(v *SessionContext) *AssumedRole {
 	return s
 }
 
+// Provides information about the status of automated sensitive data discovery
+// for an Amazon Macie account.
+type AutomatedDiscoveryAccount struct {
+	_ struct{} `type:"structure"`
+
+	AccountId *string `locationName:"accountId" type:"string"`
+
+	// The status of automated sensitive data discovery for an Amazon Macie account.
+	// Valid values are:
+	Status *string `locationName:"status" type:"string" enum:"AutomatedDiscoveryAccountStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutomatedDiscoveryAccount) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutomatedDiscoveryAccount) GoString() string {
+	return s.String()
+}
+
+// SetAccountId sets the AccountId field's value.
+func (s *AutomatedDiscoveryAccount) SetAccountId(v string) *AutomatedDiscoveryAccount {
+	s.AccountId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *AutomatedDiscoveryAccount) SetStatus(v string) *AutomatedDiscoveryAccount {
+	s.Status = &v
+	return s
+}
+
+// Changes the status of automated sensitive data discovery for an Amazon Macie
+// account.
+type AutomatedDiscoveryAccountUpdate struct {
+	_ struct{} `type:"structure"`
+
+	AccountId *string `locationName:"accountId" type:"string"`
+
+	// The status of automated sensitive data discovery for an Amazon Macie account.
+	// Valid values are:
+	Status *string `locationName:"status" type:"string" enum:"AutomatedDiscoveryAccountStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutomatedDiscoveryAccountUpdate) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutomatedDiscoveryAccountUpdate) GoString() string {
+	return s.String()
+}
+
+// SetAccountId sets the AccountId field's value.
+func (s *AutomatedDiscoveryAccountUpdate) SetAccountId(v string) *AutomatedDiscoveryAccountUpdate {
+	s.AccountId = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *AutomatedDiscoveryAccountUpdate) SetStatus(v string) *AutomatedDiscoveryAccountUpdate {
+	s.Status = &v
+	return s
+}
+
+// Provides information about a request that failed to change the status of
+// automated sensitive data discovery for an Amazon Macie account.
+type AutomatedDiscoveryAccountUpdateError struct {
+	_ struct{} `type:"structure"`
+
+	AccountId *string `locationName:"accountId" type:"string"`
+
+	// The error code that indicates why a request failed to change the status of
+	// automated sensitive data discovery for an Amazon Macie account. Possible
+	// values are:
+	ErrorCode *string `locationName:"errorCode" type:"string" enum:"AutomatedDiscoveryAccountUpdateErrorCode"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutomatedDiscoveryAccountUpdateError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AutomatedDiscoveryAccountUpdateError) GoString() string {
+	return s.String()
+}
+
+// SetAccountId sets the AccountId field's value.
+func (s *AutomatedDiscoveryAccountUpdateError) SetAccountId(v string) *AutomatedDiscoveryAccountUpdateError {
+	s.AccountId = &v
+	return s
+}
+
+// SetErrorCode sets the ErrorCode field's value.
+func (s *AutomatedDiscoveryAccountUpdateError) SetErrorCode(v string) *AutomatedDiscoveryAccountUpdateError {
+	s.ErrorCode = &v
+	return s
+}
+
 // Provides information about an Amazon Web Services account and entity that
 // performed an action on an affected resource. The action was performed using
 // the credentials for an Amazon Web Services account other than your own account.
@@ -9741,6 +10118,70 @@ func (s *BatchGetCustomDataIdentifiersOutput) SetCustomDataIdentifiers(v []*Batc
 // SetNotFoundIdentifierIds sets the NotFoundIdentifierIds field's value.
 func (s *BatchGetCustomDataIdentifiersOutput) SetNotFoundIdentifierIds(v []*string) *BatchGetCustomDataIdentifiersOutput {
 	s.NotFoundIdentifierIds = v
+	return s
+}
+
+// Changes the status of automated sensitive data discovery for one or more
+// Amazon Macie accounts.
+type BatchUpdateAutomatedDiscoveryAccountsInput struct {
+	_ struct{} `type:"structure"`
+
+	Accounts []*AutomatedDiscoveryAccountUpdate `locationName:"accounts" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchUpdateAutomatedDiscoveryAccountsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchUpdateAutomatedDiscoveryAccountsInput) GoString() string {
+	return s.String()
+}
+
+// SetAccounts sets the Accounts field's value.
+func (s *BatchUpdateAutomatedDiscoveryAccountsInput) SetAccounts(v []*AutomatedDiscoveryAccountUpdate) *BatchUpdateAutomatedDiscoveryAccountsInput {
+	s.Accounts = v
+	return s
+}
+
+// Provides the results of a request to change the status of automated sensitive
+// data discovery for one or more Amazon Macie accounts.
+type BatchUpdateAutomatedDiscoveryAccountsOutput struct {
+	_ struct{} `type:"structure"`
+
+	Errors []*AutomatedDiscoveryAccountUpdateError `locationName:"errors" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchUpdateAutomatedDiscoveryAccountsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchUpdateAutomatedDiscoveryAccountsOutput) GoString() string {
+	return s.String()
+}
+
+// SetErrors sets the Errors field's value.
+func (s *BatchUpdateAutomatedDiscoveryAccountsOutput) SetErrors(v []*AutomatedDiscoveryAccountUpdateError) *BatchUpdateAutomatedDiscoveryAccountsOutput {
+	s.Errors = v
 	return s
 }
 
@@ -10184,6 +10625,10 @@ type BucketMetadata struct {
 
 	AllowsUnencryptedObjectUploads *string `locationName:"allowsUnencryptedObjectUploads" type:"string" enum:"AllowsUnencryptedObjectUploads"`
 
+	// Specifies whether automated sensitive data discovery is currently configured
+	// to analyze objects in an S3 bucket. Possible values are:
+	AutomatedDiscoveryMonitoringStatus *string `locationName:"automatedDiscoveryMonitoringStatus" type:"string" enum:"AutomatedDiscoveryMonitoringStatus"`
+
 	BucketArn *string `locationName:"bucketArn" type:"string"`
 
 	BucketCreatedAt *time.Time `locationName:"bucketCreatedAt" type:"timestamp" timestampFormat:"iso8601"`
@@ -10195,13 +10640,13 @@ type BucketMetadata struct {
 	ClassifiableSizeInBytes *int64 `locationName:"classifiableSizeInBytes" type:"long"`
 
 	// The error code for an error that prevented Amazon Macie from retrieving and
-	// processing metadata from Amazon S3 for an S3 bucket and the bucket's objects.
+	// processing information about an S3 bucket and the bucket's objects.
 	ErrorCode *string `locationName:"errorCode" type:"string" enum:"BucketMetadataErrorCode"`
 
 	ErrorMessage *string `locationName:"errorMessage" type:"string"`
 
 	// Specifies whether any one-time or recurring classification jobs are configured
-	// to analyze data in an S3 bucket, and, if so, the details of the job that
+	// to analyze objects in an S3 bucket, and, if so, the details of the job that
 	// ran most recently.
 	JobDetails *JobDetails `locationName:"jobDetails" type:"structure"`
 
@@ -10289,6 +10734,12 @@ func (s *BucketMetadata) SetAccountId(v string) *BucketMetadata {
 // SetAllowsUnencryptedObjectUploads sets the AllowsUnencryptedObjectUploads field's value.
 func (s *BucketMetadata) SetAllowsUnencryptedObjectUploads(v string) *BucketMetadata {
 	s.AllowsUnencryptedObjectUploads = &v
+	return s
+}
+
+// SetAutomatedDiscoveryMonitoringStatus sets the AutomatedDiscoveryMonitoringStatus field's value.
+func (s *BucketMetadata) SetAutomatedDiscoveryMonitoringStatus(v string) *BucketMetadata {
+	s.AutomatedDiscoveryMonitoringStatus = &v
 	return s
 }
 
@@ -10852,7 +11303,7 @@ func (s *ClassificationDetails) SetResult(v *ClassificationResult) *Classificati
 
 // Specifies where to store data classification results, and the encryption
 // settings to use when storing results in that location. The location must
-// be an S3 bucket.
+// be an S3 general purpose bucket.
 type ClassificationExportConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -13273,8 +13724,8 @@ func (s DescribeOrganizationConfigurationInput) GoString() string {
 	return s.String()
 }
 
-// Provides information about the Amazon Macie configuration settings for an
-// organization in Organizations.
+// Provides information about the Amazon Macie configuration for an organization
+// in Organizations.
 type DescribeOrganizationConfigurationOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -13347,10 +13798,10 @@ func (s *DetectedDataDetails) SetValue(v string) *DetectedDataDetails {
 }
 
 // Provides information about a type of sensitive data that Amazon Macie found
-// in an S3 bucket while performing automated sensitive data discovery for the
-// bucket. The information also specifies the custom data identifier or managed
-// data identifier that detected the data. This information is available only
-// if automated sensitive data discovery is currently enabled for your account.
+// in an S3 bucket while performing automated sensitive data discovery for an
+// account. The information also specifies the custom or managed data identifier
+// that detected the data. This information is available only if automated sensitive
+// data discovery has been enabled for the account.
 type Detection struct {
 	_ struct{} `type:"structure"`
 
@@ -14590,11 +15041,16 @@ func (s GetAutomatedDiscoveryConfigurationInput) GoString() string {
 	return s.String()
 }
 
-// Provides information about the configuration settings for performing automated
-// sensitive data discovery for an Amazon Macie account, and the status of the
-// configuration for the account.
+// Provides information about the configuration settings and status of automated
+// sensitive data discovery for an organization in Amazon Macie or a standalone
+// Macie account.
 type GetAutomatedDiscoveryConfigurationOutput struct {
 	_ struct{} `type:"structure"`
+
+	// Specifies whether to automatically enable automated sensitive data discovery
+	// for accounts that are part of an organization in Amazon Macie. Valid values
+	// are:
+	AutoEnableOrganizationMembers *string `locationName:"autoEnableOrganizationMembers" type:"string" enum:"AutoEnableMode"`
 
 	// The unique identifier the classification scope.
 	ClassificationScopeId *string `locationName:"classificationScopeId" type:"string"`
@@ -14612,7 +15068,8 @@ type GetAutomatedDiscoveryConfigurationOutput struct {
 	SensitivityInspectionTemplateId *string `locationName:"sensitivityInspectionTemplateId" type:"string"`
 
 	// The status of the automated sensitive data discovery configuration for an
-	// Amazon Macie account. Valid values are:
+	// organization in Amazon Macie or a standalone Macie account. Valid values
+	// are:
 	Status *string `locationName:"status" type:"string" enum:"AutomatedDiscoveryStatus"`
 }
 
@@ -14632,6 +15089,12 @@ func (s GetAutomatedDiscoveryConfigurationOutput) String() string {
 // value will be replaced with "sensitive".
 func (s GetAutomatedDiscoveryConfigurationOutput) GoString() string {
 	return s.String()
+}
+
+// SetAutoEnableOrganizationMembers sets the AutoEnableOrganizationMembers field's value.
+func (s *GetAutomatedDiscoveryConfigurationOutput) SetAutoEnableOrganizationMembers(v string) *GetAutomatedDiscoveryConfigurationOutput {
+	s.AutoEnableOrganizationMembers = &v
+	return s
 }
 
 // SetClassificationScopeId sets the ClassificationScopeId field's value.
@@ -14903,7 +15366,7 @@ type GetClassificationExportConfigurationOutput struct {
 
 	// Specifies where to store data classification results, and the encryption
 	// settings to use when storing results in that location. The location must
-	// be an S3 bucket.
+	// be an S3 general purpose bucket.
 	Configuration *ClassificationExportConfiguration `locationName:"configuration" type:"structure"`
 }
 
@@ -15998,10 +16461,10 @@ func (s *GetResourceProfileInput) SetResourceArn(v string) *GetResourceProfileIn
 	return s
 }
 
-// Provides the results of a query that retrieved sensitive data discovery statistics
-// and the sensitivity score for an S3 bucket that Amazon Macie monitors and
-// analyzes for your account. This data is available only if automated sensitive
-// data discovery is currently enabled for your account.
+// Provides sensitive data discovery statistics and the sensitivity score for
+// an S3 bucket that Amazon Macie monitors and analyzes for an account. This
+// data is available only if automated sensitive data discovery has been enabled
+// for the account.
 type GetResourceProfileOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -16012,11 +16475,10 @@ type GetResourceProfileOutput struct {
 	SensitivityScoreOverridden *bool `locationName:"sensitivityScoreOverridden" type:"boolean"`
 
 	// Provides statistical data for sensitive data discovery metrics that apply
-	// to an S3 bucket that Amazon Macie monitors and analyzes for your account.
-	// The statistics capture the results of automated sensitive data discovery
-	// activities that Macie has performed for the bucket. The data is available
-	// only if automated sensitive data discovery is currently enabled for your
-	// account.
+	// to an S3 bucket that Amazon Macie monitors and analyzes for an account, if
+	// automated sensitive data discovery has been enabled for the account. The
+	// data captures the results of automated sensitive data discovery activities
+	// that Macie has performed for the bucket.
 	Statistics *ResourceStatistics `locationName:"statistics" type:"structure"`
 }
 
@@ -16368,26 +16830,24 @@ func (s *GetSensitivityInspectionTemplateInput) SetId(v string) *GetSensitivityI
 }
 
 // Provides information about the settings for the sensitivity inspection template
-// for an Amazon Macie account. Macie uses the template's settings when it performs
-// automated sensitive data discovery for the account.
+// for an Amazon Macie account.
 type GetSensitivityInspectionTemplateOutput struct {
 	_ struct{} `type:"structure"`
 
 	Description *string `locationName:"description" type:"string"`
 
 	// Specifies managed data identifiers to exclude (not use) when performing automated
-	// sensitive data discovery for an Amazon Macie account. For information about
-	// the managed data identifiers that Amazon Macie currently provides, see Using
-	// managed data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
+	// sensitive data discovery. For information about the managed data identifiers
+	// that Amazon Macie currently provides, see Using managed data identifiers
+	// (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
 	// in the Amazon Macie User Guide.
 	Excludes *SensitivityInspectionTemplateExcludes `locationName:"excludes" type:"structure"`
 
 	// Specifies the allow lists, custom data identifiers, and managed data identifiers
-	// to include (use) when performing automated sensitive data discovery for an
-	// Amazon Macie account. The configuration must specify at least one custom
-	// data identifier or managed data identifier. For information about the managed
-	// data identifiers that Amazon Macie currently provides, see Using managed
-	// data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
+	// to include (use) when performing automated sensitive data discovery. The
+	// configuration must specify at least one custom data identifier or managed
+	// data identifier. For information about the managed data identifiers that
+	// Amazon Macie currently provides, see Using managed data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
 	// in the Amazon Macie User Guide.
 	Includes *SensitivityInspectionTemplateIncludes `locationName:"includes" type:"structure"`
 
@@ -17089,7 +17549,7 @@ func (s *IpOwner) SetOrg(v string) *IpOwner {
 }
 
 // Specifies whether any one-time or recurring classification jobs are configured
-// to analyze data in an S3 bucket, and, if so, the details of the job that
+// to analyze objects in an S3 bucket, and, if so, the details of the job that
 // ran most recently.
 type JobDetails struct {
 	_ struct{} `type:"structure"`
@@ -17549,6 +18009,105 @@ func (s *ListAllowListsOutput) SetAllowLists(v []*AllowListSummary) *ListAllowLi
 
 // SetNextToken sets the NextToken field's value.
 func (s *ListAllowListsOutput) SetNextToken(v string) *ListAllowListsOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListAutomatedDiscoveryAccountsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	AccountIds []*string `location:"querystring" locationName:"accountIds" type:"list"`
+
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAutomatedDiscoveryAccountsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAutomatedDiscoveryAccountsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListAutomatedDiscoveryAccountsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListAutomatedDiscoveryAccountsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAccountIds sets the AccountIds field's value.
+func (s *ListAutomatedDiscoveryAccountsInput) SetAccountIds(v []*string) *ListAutomatedDiscoveryAccountsInput {
+	s.AccountIds = v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListAutomatedDiscoveryAccountsInput) SetMaxResults(v int64) *ListAutomatedDiscoveryAccountsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAutomatedDiscoveryAccountsInput) SetNextToken(v string) *ListAutomatedDiscoveryAccountsInput {
+	s.NextToken = &v
+	return s
+}
+
+// Provides information about the status of automated sensitive data discovery
+// for one or more Amazon Macie accounts.
+type ListAutomatedDiscoveryAccountsOutput struct {
+	_ struct{} `type:"structure"`
+
+	Items []*AutomatedDiscoveryAccount `locationName:"items" type:"list"`
+
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAutomatedDiscoveryAccountsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAutomatedDiscoveryAccountsOutput) GoString() string {
+	return s.String()
+}
+
+// SetItems sets the Items field's value.
+func (s *ListAutomatedDiscoveryAccountsOutput) SetItems(v []*AutomatedDiscoveryAccount) *ListAutomatedDiscoveryAccountsOutput {
+	s.Items = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAutomatedDiscoveryAccountsOutput) SetNextToken(v string) *ListAutomatedDiscoveryAccountsOutput {
 	s.NextToken = &v
 	return s
 }
@@ -18538,10 +19097,10 @@ func (s *ListResourceProfileArtifactsInput) SetResourceArn(v string) *ListResour
 	return s
 }
 
-// Provides the results of a request for information about the S3 objects that
-// Amazon Macie selected for analysis while performing automated sensitive data
-// discovery for an S3 bucket. This information is available only if automated
-// sensitive data discovery is currently enabled for your account.
+// Provides information about objects that Amazon Macie selected from an S3
+// bucket while performing automated sensitive data discovery for an account.
+// This information is available only if automated sensitive data discovery
+// has been enabled for the account.
 type ListResourceProfileArtifactsOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -18643,11 +19202,10 @@ func (s *ListResourceProfileDetectionsInput) SetResourceArn(v string) *ListResou
 	return s
 }
 
-// Provides the results of a request for information about the types and amount
-// of sensitive data that Amazon Macie found in an S3 bucket while performing
-// automated sensitive data discovery for the bucket. This information is available
-// only if automated sensitive data discovery is currently enabled for your
-// account.
+// Provides information about the types and amount of sensitive data that Amazon
+// Macie found in an S3 bucket while performing automated sensitive data discovery
+// for an account. This information is available only if automated sensitive
+// data discovery has been enabled for the account.
 type ListResourceProfileDetectionsOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -18738,8 +19296,7 @@ func (s *ListSensitivityInspectionTemplatesInput) SetNextToken(v string) *ListSe
 }
 
 // Provides the results of a request for information about the sensitivity inspection
-// template for an Amazon Macie account. Macie uses the template's settings
-// when it performs automated sensitive data discovery for the account.
+// template for an Amazon Macie account.
 type ListSensitivityInspectionTemplatesOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -18919,6 +19476,10 @@ type MatchingBucket struct {
 
 	AccountId *string `locationName:"accountId" type:"string"`
 
+	// Specifies whether automated sensitive data discovery is currently configured
+	// to analyze objects in an S3 bucket. Possible values are:
+	AutomatedDiscoveryMonitoringStatus *string `locationName:"automatedDiscoveryMonitoringStatus" type:"string" enum:"AutomatedDiscoveryMonitoringStatus"`
+
 	BucketName *string `locationName:"bucketName" type:"string"`
 
 	ClassifiableObjectCount *int64 `locationName:"classifiableObjectCount" type:"long"`
@@ -18926,13 +19487,13 @@ type MatchingBucket struct {
 	ClassifiableSizeInBytes *int64 `locationName:"classifiableSizeInBytes" type:"long"`
 
 	// The error code for an error that prevented Amazon Macie from retrieving and
-	// processing metadata from Amazon S3 for an S3 bucket and the bucket's objects.
+	// processing information about an S3 bucket and the bucket's objects.
 	ErrorCode *string `locationName:"errorCode" type:"string" enum:"BucketMetadataErrorCode"`
 
 	ErrorMessage *string `locationName:"errorMessage" type:"string"`
 
 	// Specifies whether any one-time or recurring classification jobs are configured
-	// to analyze data in an S3 bucket, and, if so, the details of the job that
+	// to analyze objects in an S3 bucket, and, if so, the details of the job that
 	// ran most recently.
 	JobDetails *JobDetails `locationName:"jobDetails" type:"structure"`
 
@@ -18989,6 +19550,12 @@ func (s MatchingBucket) GoString() string {
 // SetAccountId sets the AccountId field's value.
 func (s *MatchingBucket) SetAccountId(v string) *MatchingBucket {
 	s.AccountId = &v
+	return s
+}
+
+// SetAutomatedDiscoveryMonitoringStatus sets the AutomatedDiscoveryMonitoringStatus field's value.
+func (s *MatchingBucket) SetAutomatedDiscoveryMonitoringStatus(v string) *MatchingBucket {
+	s.AutomatedDiscoveryMonitoringStatus = &v
 	return s
 }
 
@@ -19544,7 +20111,7 @@ type PutClassificationExportConfigurationInput struct {
 
 	// Specifies where to store data classification results, and the encryption
 	// settings to use when storing results in that location. The location must
-	// be an S3 bucket.
+	// be an S3 general purpose bucket.
 	//
 	// Configuration is a required field
 	Configuration *ClassificationExportConfiguration `locationName:"configuration" type:"structure" required:"true"`
@@ -19599,7 +20166,7 @@ type PutClassificationExportConfigurationOutput struct {
 
 	// Specifies where to store data classification results, and the encryption
 	// settings to use when storing results in that location. The location must
-	// be an S3 bucket.
+	// be an S3 general purpose bucket.
 	Configuration *ClassificationExportConfiguration `locationName:"configuration" type:"structure"`
 }
 
@@ -19912,9 +20479,9 @@ func (s *ResourceNotFoundException) RequestID() string {
 }
 
 // Provides information about an S3 object that Amazon Macie selected for analysis
-// while performing automated sensitive data discovery for an S3 bucket, and
-// the status and results of the analysis. This information is available only
-// if automated sensitive data discovery is currently enabled for your account.
+// while performing automated sensitive data discovery for an account, and the
+// status and results of the analysis. This information is available only if
+// automated sensitive data discovery has been enabled for the account.
 type ResourceProfileArtifact struct {
 	_ struct{} `type:"structure"`
 
@@ -19964,11 +20531,10 @@ func (s *ResourceProfileArtifact) SetSensitive(v bool) *ResourceProfileArtifact 
 }
 
 // Provides statistical data for sensitive data discovery metrics that apply
-// to an S3 bucket that Amazon Macie monitors and analyzes for your account.
-// The statistics capture the results of automated sensitive data discovery
-// activities that Macie has performed for the bucket. The data is available
-// only if automated sensitive data discovery is currently enabled for your
-// account.
+// to an S3 bucket that Amazon Macie monitors and analyzes for an account, if
+// automated sensitive data discovery has been enabled for the account. The
+// data captures the results of automated sensitive data discovery activities
+// that Macie has performed for the bucket.
 type ResourceStatistics struct {
 	_ struct{} `type:"structure"`
 
@@ -21596,9 +22162,9 @@ func (s *SensitivityAggregations) SetTotalSizeInBytes(v int64) *SensitivityAggre
 }
 
 // Specifies managed data identifiers to exclude (not use) when performing automated
-// sensitive data discovery for an Amazon Macie account. For information about
-// the managed data identifiers that Amazon Macie currently provides, see Using
-// managed data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
+// sensitive data discovery. For information about the managed data identifiers
+// that Amazon Macie currently provides, see Using managed data identifiers
+// (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
 // in the Amazon Macie User Guide.
 type SensitivityInspectionTemplateExcludes struct {
 	_ struct{} `type:"structure"`
@@ -21631,11 +22197,10 @@ func (s *SensitivityInspectionTemplateExcludes) SetManagedDataIdentifierIds(v []
 }
 
 // Specifies the allow lists, custom data identifiers, and managed data identifiers
-// to include (use) when performing automated sensitive data discovery for an
-// Amazon Macie account. The configuration must specify at least one custom
-// data identifier or managed data identifier. For information about the managed
-// data identifiers that Amazon Macie currently provides, see Using managed
-// data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
+// to include (use) when performing automated sensitive data discovery. The
+// configuration must specify at least one custom data identifier or managed
+// data identifier. For information about the managed data identifiers that
+// Amazon Macie currently provides, see Using managed data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
 // in the Amazon Macie User Guide.
 type SensitivityInspectionTemplateIncludes struct {
 	_ struct{} `type:"structure"`
@@ -21684,8 +22249,7 @@ func (s *SensitivityInspectionTemplateIncludes) SetManagedDataIdentifierIds(v []
 }
 
 // Provides information about the sensitivity inspection template for an Amazon
-// Macie account. Macie uses the template's settings when it performs automated
-// sensitive data discovery for the account.
+// Macie account.
 type SensitivityInspectionTemplatesEntry struct {
 	_ struct{} `type:"structure"`
 
@@ -23137,13 +23701,23 @@ func (s *UpdateAllowListOutput) SetId(v string) *UpdateAllowListOutput {
 	return s
 }
 
-// Enables or disables automated sensitive data discovery for an Amazon Macie
+// Changes the configuration settings and status of automated sensitive data
+// discovery for an organization in Amazon Macie or a standalone Macie account.
+// To change additional settings, such as the managed data identifiers to use
+// when analyzing data, update the sensitivity inspection template and classification
+// scope for the organization's Macie administrator account or the standalone
 // account.
 type UpdateAutomatedDiscoveryConfigurationInput struct {
 	_ struct{} `type:"structure"`
 
+	// Specifies whether to automatically enable automated sensitive data discovery
+	// for accounts that are part of an organization in Amazon Macie. Valid values
+	// are:
+	AutoEnableOrganizationMembers *string `locationName:"autoEnableOrganizationMembers" type:"string" enum:"AutoEnableMode"`
+
 	// The status of the automated sensitive data discovery configuration for an
-	// Amazon Macie account. Valid values are:
+	// organization in Amazon Macie or a standalone Macie account. Valid values
+	// are:
 	//
 	// Status is a required field
 	Status *string `locationName:"status" type:"string" required:"true" enum:"AutomatedDiscoveryStatus"`
@@ -23178,6 +23752,12 @@ func (s *UpdateAutomatedDiscoveryConfigurationInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAutoEnableOrganizationMembers sets the AutoEnableOrganizationMembers field's value.
+func (s *UpdateAutomatedDiscoveryConfigurationInput) SetAutoEnableOrganizationMembers(v string) *UpdateAutomatedDiscoveryConfigurationInput {
+	s.AutoEnableOrganizationMembers = &v
+	return s
 }
 
 // SetStatus sets the Status field's value.
@@ -23298,7 +23878,7 @@ func (s UpdateClassificationJobOutput) GoString() string {
 // Specifies new classification scope settings for an Amazon Macie account.
 // Macie uses these settings when it performs automated sensitive data discovery
 // for the account. To update the settings, automated sensitive data discovery
-// must currently be enabled for the account.
+// must be enabled for the account.
 type UpdateClassificationScopeInput struct {
 	_ struct{} `type:"structure"`
 
@@ -23676,7 +24256,8 @@ func (s UpdateMemberSessionOutput) GoString() string {
 }
 
 // Specifies whether to enable Amazon Macie automatically for accounts that
-// are added to an organization in Organizations.
+// are added to an organization in Organizations, when the accounts are added
+// to the organization.
 type UpdateOrganizationConfigurationInput struct {
 	_ struct{} `type:"structure"`
 
@@ -23744,10 +24325,10 @@ func (s UpdateOrganizationConfigurationOutput) GoString() string {
 }
 
 // Updates the sensitivity scoring settings for an S3 bucket that Amazon Macie
-// monitors and analyzes for your account. The settings specify whether to exclude
-// or include occurrences of specific types of sensitive data in calculations
-// of the bucket's sensitivity score. You can update the settings only if automated
-// sensitive data discovery is currently enabled for your account.
+// monitors and analyzes for an account. The settings specify whether to exclude
+// or include occurrences of specific types of sensitive data in the bucket's
+// sensitivity score. To update the settings, automated sensitive data discovery
+// must be enabled for the account.
 type UpdateResourceProfileDetectionsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -23823,8 +24404,8 @@ func (s UpdateResourceProfileDetectionsOutput) GoString() string {
 }
 
 // Specifies a new sensitivity score for an S3 bucket that Amazon Macie monitors
-// and analyzes for your account. To update the score, automated sensitive data
-// discovery must currently be enabled for your account.
+// and analyzes for an account. To update the score, automated sensitive data
+// discovery must be enabled for the account.
 type UpdateResourceProfileInput struct {
 	_ struct{} `type:"structure"`
 
@@ -23901,11 +24482,11 @@ func (s UpdateResourceProfileOutput) GoString() string {
 
 // Specifies the access method and settings to use when retrieving occurrences
 // of sensitive data reported by findings. If your request specifies an Identity
-// and Access Management (IAM) role to assume when retrieving the sensitive
-// data, Amazon Macie verifies that the role exists and the attached policies
-// are configured correctly. If there's an issue, Macie returns an error. For
-// information about addressing the issue, see Retrieving sensitive data samples
-// with findings (https://docs.aws.amazon.com/macie/latest/user/findings-retrieve-sd.html)
+// and Access Management (IAM) role to assume, Amazon Macie verifies that the
+// role exists and the attached policies are configured correctly. If there's
+// an issue, Macie returns an error. For information about addressing the issue,
+// see Configuration options and requirements for retrieving sensitive data
+// samples (https://docs.aws.amazon.com/macie/latest/user/findings-retrieve-sd-options.html)
 // in the Amazon Macie User Guide.
 type UpdateRetrievalConfiguration struct {
 	_ struct{} `type:"structure"`
@@ -23967,12 +24548,12 @@ func (s *UpdateRetrievalConfiguration) SetRoleName(v string) *UpdateRetrievalCon
 
 // Specifies configuration settings for retrieving occurrences of sensitive
 // data reported by findings, and the status of the configuration for an Amazon
-// Macie account. If you don't specify retrievalConfiguration values for an
+// Macie account. If you don't specify retrievalConfiguration settings for an
 // existing configuration, Macie sets the access method to CALLER_CREDENTIALS.
 // If your current access method is ASSUME_ROLE, Macie also deletes the external
 // ID and role name currently specified for the configuration. To keep these
-// settings for an existing configuration, specify the current retrievalConfiguration
-// values in your request.
+// settings for an existing configuration, specify your current retrievalConfiguration
+// settings in your request.
 type UpdateRevealConfigurationInput struct {
 	_ struct{} `type:"structure"`
 
@@ -23987,11 +24568,11 @@ type UpdateRevealConfigurationInput struct {
 
 	// Specifies the access method and settings to use when retrieving occurrences
 	// of sensitive data reported by findings. If your request specifies an Identity
-	// and Access Management (IAM) role to assume when retrieving the sensitive
-	// data, Amazon Macie verifies that the role exists and the attached policies
-	// are configured correctly. If there's an issue, Macie returns an error. For
-	// information about addressing the issue, see Retrieving sensitive data samples
-	// with findings (https://docs.aws.amazon.com/macie/latest/user/findings-retrieve-sd.html)
+	// and Access Management (IAM) role to assume, Amazon Macie verifies that the
+	// role exists and the attached policies are configured correctly. If there's
+	// an issue, Macie returns an error. For information about addressing the issue,
+	// see Configuration options and requirements for retrieving sensitive data
+	// samples (https://docs.aws.amazon.com/macie/latest/user/findings-retrieve-sd-options.html)
 	// in the Amazon Macie User Guide.
 	RetrievalConfiguration *UpdateRetrievalConfiguration `locationName:"retrievalConfiguration" type:"structure"`
 }
@@ -24098,18 +24679,17 @@ func (s *UpdateRevealConfigurationOutput) SetRetrievalConfiguration(v *Retrieval
 }
 
 // Specifies settings for the sensitivity inspection template for an Amazon
-// Macie account. Macie uses the template's settings when it performs automated
-// sensitive data discovery for the account. To update the settings, automated
-// sensitive data discovery must currently be enabled for the account.
+// Macie account. To update the settings, automated sensitive data discovery
+// must be enabled for the account.
 type UpdateSensitivityInspectionTemplateInput struct {
 	_ struct{} `type:"structure"`
 
 	Description *string `locationName:"description" type:"string"`
 
 	// Specifies managed data identifiers to exclude (not use) when performing automated
-	// sensitive data discovery for an Amazon Macie account. For information about
-	// the managed data identifiers that Amazon Macie currently provides, see Using
-	// managed data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
+	// sensitive data discovery. For information about the managed data identifiers
+	// that Amazon Macie currently provides, see Using managed data identifiers
+	// (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
 	// in the Amazon Macie User Guide.
 	Excludes *SensitivityInspectionTemplateExcludes `locationName:"excludes" type:"structure"`
 
@@ -24117,11 +24697,10 @@ type UpdateSensitivityInspectionTemplateInput struct {
 	Id *string `location:"uri" locationName:"id" type:"string" required:"true"`
 
 	// Specifies the allow lists, custom data identifiers, and managed data identifiers
-	// to include (use) when performing automated sensitive data discovery for an
-	// Amazon Macie account. The configuration must specify at least one custom
-	// data identifier or managed data identifier. For information about the managed
-	// data identifiers that Amazon Macie currently provides, see Using managed
-	// data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
+	// to include (use) when performing automated sensitive data discovery. The
+	// configuration must specify at least one custom data identifier or managed
+	// data identifier. For information about the managed data identifiers that
+	// Amazon Macie currently provides, see Using managed data identifiers (https://docs.aws.amazon.com/macie/latest/user/managed-data-identifiers.html)
 	// in the Amazon Macie User Guide.
 	Includes *SensitivityInspectionTemplateIncludes `locationName:"includes" type:"structure"`
 }
@@ -24847,8 +25426,87 @@ func AllowsUnencryptedObjectUploads_Values() []string {
 	}
 }
 
+// Specifies whether to automatically enable automated sensitive data discovery
+// for accounts that are part of an organization in Amazon Macie. Valid values
+// are:
+const (
+	// AutoEnableModeAll is a AutoEnableMode enum value
+	AutoEnableModeAll = "ALL"
+
+	// AutoEnableModeNew is a AutoEnableMode enum value
+	AutoEnableModeNew = "NEW"
+
+	// AutoEnableModeNone is a AutoEnableMode enum value
+	AutoEnableModeNone = "NONE"
+)
+
+// AutoEnableMode_Values returns all elements of the AutoEnableMode enum
+func AutoEnableMode_Values() []string {
+	return []string{
+		AutoEnableModeAll,
+		AutoEnableModeNew,
+		AutoEnableModeNone,
+	}
+}
+
+// The status of automated sensitive data discovery for an Amazon Macie account.
+// Valid values are:
+const (
+	// AutomatedDiscoveryAccountStatusEnabled is a AutomatedDiscoveryAccountStatus enum value
+	AutomatedDiscoveryAccountStatusEnabled = "ENABLED"
+
+	// AutomatedDiscoveryAccountStatusDisabled is a AutomatedDiscoveryAccountStatus enum value
+	AutomatedDiscoveryAccountStatusDisabled = "DISABLED"
+)
+
+// AutomatedDiscoveryAccountStatus_Values returns all elements of the AutomatedDiscoveryAccountStatus enum
+func AutomatedDiscoveryAccountStatus_Values() []string {
+	return []string{
+		AutomatedDiscoveryAccountStatusEnabled,
+		AutomatedDiscoveryAccountStatusDisabled,
+	}
+}
+
+// The error code that indicates why a request failed to change the status of
+// automated sensitive data discovery for an Amazon Macie account. Possible
+// values are:
+const (
+	// AutomatedDiscoveryAccountUpdateErrorCodeAccountPaused is a AutomatedDiscoveryAccountUpdateErrorCode enum value
+	AutomatedDiscoveryAccountUpdateErrorCodeAccountPaused = "ACCOUNT_PAUSED"
+
+	// AutomatedDiscoveryAccountUpdateErrorCodeAccountNotFound is a AutomatedDiscoveryAccountUpdateErrorCode enum value
+	AutomatedDiscoveryAccountUpdateErrorCodeAccountNotFound = "ACCOUNT_NOT_FOUND"
+)
+
+// AutomatedDiscoveryAccountUpdateErrorCode_Values returns all elements of the AutomatedDiscoveryAccountUpdateErrorCode enum
+func AutomatedDiscoveryAccountUpdateErrorCode_Values() []string {
+	return []string{
+		AutomatedDiscoveryAccountUpdateErrorCodeAccountPaused,
+		AutomatedDiscoveryAccountUpdateErrorCodeAccountNotFound,
+	}
+}
+
+// Specifies whether automated sensitive data discovery is currently configured
+// to analyze objects in an S3 bucket. Possible values are:
+const (
+	// AutomatedDiscoveryMonitoringStatusMonitored is a AutomatedDiscoveryMonitoringStatus enum value
+	AutomatedDiscoveryMonitoringStatusMonitored = "MONITORED"
+
+	// AutomatedDiscoveryMonitoringStatusNotMonitored is a AutomatedDiscoveryMonitoringStatus enum value
+	AutomatedDiscoveryMonitoringStatusNotMonitored = "NOT_MONITORED"
+)
+
+// AutomatedDiscoveryMonitoringStatus_Values returns all elements of the AutomatedDiscoveryMonitoringStatus enum
+func AutomatedDiscoveryMonitoringStatus_Values() []string {
+	return []string{
+		AutomatedDiscoveryMonitoringStatusMonitored,
+		AutomatedDiscoveryMonitoringStatusNotMonitored,
+	}
+}
+
 // The status of the automated sensitive data discovery configuration for an
-// Amazon Macie account. Valid values are:
+// organization in Amazon Macie or a standalone Macie account. Valid values
+// are:
 const (
 	// AutomatedDiscoveryStatusEnabled is a AutomatedDiscoveryStatus enum value
 	AutomatedDiscoveryStatusEnabled = "ENABLED"
@@ -24884,7 +25542,7 @@ func AvailabilityCode_Values() []string {
 }
 
 // The error code for an error that prevented Amazon Macie from retrieving and
-// processing metadata from Amazon S3 for an S3 bucket and the bucket's objects.
+// processing information about an S3 bucket and the bucket's objects.
 const (
 	// BucketMetadataErrorCodeAccessDenied is a BucketMetadataErrorCode enum value
 	BucketMetadataErrorCodeAccessDenied = "ACCESS_DENIED"
@@ -25044,6 +25702,9 @@ const (
 
 	// EncryptionTypeUnknown is a EncryptionType enum value
 	EncryptionTypeUnknown = "UNKNOWN"
+
+	// EncryptionTypeAwsKmsDsse is a EncryptionType enum value
+	EncryptionTypeAwsKmsDsse = "aws:kms:dsse"
 )
 
 // EncryptionType_Values returns all elements of the EncryptionType enum
@@ -25053,6 +25714,7 @@ func EncryptionType_Values() []string {
 		EncryptionTypeAes256,
 		EncryptionTypeAwsKms,
 		EncryptionTypeUnknown,
+		EncryptionTypeAwsKmsDsse,
 	}
 }
 
@@ -25692,6 +26354,9 @@ const (
 
 	// SearchResourcesSimpleCriterionKeyS3BucketSharedAccess is a SearchResourcesSimpleCriterionKey enum value
 	SearchResourcesSimpleCriterionKeyS3BucketSharedAccess = "S3_BUCKET_SHARED_ACCESS"
+
+	// SearchResourcesSimpleCriterionKeyAutomatedDiscoveryMonitoringStatus is a SearchResourcesSimpleCriterionKey enum value
+	SearchResourcesSimpleCriterionKeyAutomatedDiscoveryMonitoringStatus = "AUTOMATED_DISCOVERY_MONITORING_STATUS"
 )
 
 // SearchResourcesSimpleCriterionKey_Values returns all elements of the SearchResourcesSimpleCriterionKey enum
@@ -25701,6 +26366,7 @@ func SearchResourcesSimpleCriterionKey_Values() []string {
 		SearchResourcesSimpleCriterionKeyS3BucketName,
 		SearchResourcesSimpleCriterionKeyS3BucketEffectivePermission,
 		SearchResourcesSimpleCriterionKeyS3BucketSharedAccess,
+		SearchResourcesSimpleCriterionKeyAutomatedDiscoveryMonitoringStatus,
 	}
 }
 
@@ -25913,6 +26579,9 @@ const (
 
 	// TypeAwsKms is a Type enum value
 	TypeAwsKms = "aws:kms"
+
+	// TypeAwsKmsDsse is a Type enum value
+	TypeAwsKmsDsse = "aws:kms:dsse"
 )
 
 // Type_Values returns all elements of the Type enum
@@ -25921,6 +26590,7 @@ func Type_Values() []string {
 		TypeNone,
 		TypeAes256,
 		TypeAwsKms,
+		TypeAwsKmsDsse,
 	}
 }
 

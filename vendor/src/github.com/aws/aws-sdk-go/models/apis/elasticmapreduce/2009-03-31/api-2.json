@@ -583,6 +583,17 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "SetKeepJobFlowAliveWhenNoSteps":{
+      "name":"SetKeepJobFlowAliveWhenNoSteps",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SetKeepJobFlowAliveWhenNoStepsInput"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ]
+    },
     "SetTerminationProtection":{
       "name":"SetTerminationProtection",
       "http":{
@@ -590,6 +601,17 @@
         "requestUri":"/"
       },
       "input":{"shape":"SetTerminationProtectionInput"},
+      "errors":[
+        {"shape":"InternalServerError"}
+      ]
+    },
+    "SetUnhealthyNodeReplacement":{
+      "name":"SetUnhealthyNodeReplacement",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"SetUnhealthyNodeReplacementInput"},
       "errors":[
         {"shape":"InternalServerError"}
       ]
@@ -957,6 +979,7 @@
         "ReleaseLabel":{"shape":"String"},
         "AutoTerminate":{"shape":"Boolean"},
         "TerminationProtected":{"shape":"Boolean"},
+        "UnhealthyNodeReplacement":{"shape":"BooleanObject"},
         "VisibleToAllUsers":{"shape":"Boolean"},
         "Applications":{"shape":"ApplicationList"},
         "Tags":{"shape":"TagList"},
@@ -2062,6 +2085,7 @@
         "Placement":{"shape":"PlacementType"},
         "KeepJobFlowAliveWhenNoSteps":{"shape":"Boolean"},
         "TerminationProtected":{"shape":"Boolean"},
+        "UnhealthyNodeReplacement":{"shape":"BooleanObject"},
         "HadoopVersion":{"shape":"XmlStringMaxLen256"},
         "Ec2SubnetId":{"shape":"XmlStringMaxLen256"},
         "Ec2SubnetIds":{"shape":"XmlStringMaxLen256List"},
@@ -2092,6 +2116,7 @@
         "Placement":{"shape":"PlacementType"},
         "KeepJobFlowAliveWhenNoSteps":{"shape":"Boolean"},
         "TerminationProtected":{"shape":"Boolean"},
+        "UnhealthyNodeReplacement":{"shape":"BooleanObject"},
         "HadoopVersion":{"shape":"XmlStringMaxLen256"}
       }
     },
@@ -2851,6 +2876,17 @@
       "type":"list",
       "member":{"shape":"SessionMappingSummary"}
     },
+    "SetKeepJobFlowAliveWhenNoStepsInput":{
+      "type":"structure",
+      "required":[
+        "JobFlowIds",
+        "KeepJobFlowAliveWhenNoSteps"
+      ],
+      "members":{
+        "JobFlowIds":{"shape":"XmlStringList"},
+        "KeepJobFlowAliveWhenNoSteps":{"shape":"Boolean"}
+      }
+    },
     "SetTerminationProtectionInput":{
       "type":"structure",
       "required":[
@@ -2860,6 +2896,17 @@
       "members":{
         "JobFlowIds":{"shape":"XmlStringList"},
         "TerminationProtected":{"shape":"Boolean"}
+      }
+    },
+    "SetUnhealthyNodeReplacementInput":{
+      "type":"structure",
+      "required":[
+        "JobFlowIds",
+        "UnhealthyNodeReplacement"
+      ],
+      "members":{
+        "JobFlowIds":{"shape":"XmlStringList"},
+        "UnhealthyNodeReplacement":{"shape":"BooleanObject"}
       }
     },
     "SetVisibleToAllUsersInput":{

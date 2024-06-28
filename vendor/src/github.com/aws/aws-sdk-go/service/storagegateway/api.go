@@ -3440,8 +3440,10 @@ func (c *StorageGateway) DescribeMaintenanceStartTimeRequest(input *DescribeMain
 
 // DescribeMaintenanceStartTime API operation for AWS Storage Gateway.
 //
-// Returns your gateway's weekly maintenance start time including the day and
-// time of the week. Note that values are in terms of the gateway's time zone.
+// Returns your gateway's maintenance window schedule information, with values
+// for monthly or weekly cadence, specific day and time to begin maintenance,
+// and which types of updates to apply. Time values returned are for the gateway's
+// time zone.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4252,10 +4254,17 @@ func (c *StorageGateway) DescribeTapesRequest(input *DescribeTapesInput) (req *r
 
 // DescribeTapes API operation for AWS Storage Gateway.
 //
-// Returns a description of the specified Amazon Resource Name (ARN) of virtual
-// tapes. If a TapeARN is not specified, returns a description of all virtual
-// tapes associated with the specified gateway. This operation is only supported
-// in the tape gateway type.
+// Returns a description of virtual tapes that correspond to the specified Amazon
+// Resource Names (ARNs). If TapeARN is not specified, returns a description
+// of the virtual tapes associated with the specified gateway. This operation
+// is only supported for the tape gateway type.
+//
+// The operation supports pagination. By default, the operation returns a maximum
+// of up to 100 tapes. You can optionally specify the Limit field in the body
+// to limit the number of tapes in the response. If the number of tapes returned
+// in the response is truncated, the response includes a Marker field. You can
+// use this Marker value in your subsequent request to retrieve the next set
+// of tapes.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6466,7 +6475,7 @@ func (c *StorageGateway) NotifyWhenUploadedRequest(input *NotifyWhenUploadedInpu
 // NotifyWhenUploaded API operation for AWS Storage Gateway.
 //
 // Sends you notification through CloudWatch Events when all files written to
-// your file share have been uploaded to S3. Amazon S3.
+// your file share have been uploaded to Amazon S3.
 //
 // Storage Gateway can send a notification through Amazon CloudWatch Events
 // when all files written to your file share up to that point in time have been
@@ -6572,9 +6581,9 @@ func (c *StorageGateway) RefreshCacheRequest(input *RefreshCacheInput) (req *req
 //
 // You can subscribe to be notified through an Amazon CloudWatch event when
 // your RefreshCache operation completes. For more information, see Getting
-// notified about file operations (https://docs.aws.amazon.com/storagegateway/latest/userguide/monitoring-file-gateway.html#get-notification)
-// in the Storage Gateway User Guide. This operation is Only supported for S3
-// File Gateways.
+// notified about file operations (https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification)
+// in the Amazon S3 File Gateway User Guide. This operation is Only supported
+// for S3 File Gateways.
 //
 // When this API is called, it only initiates the refresh operation. When the
 // API call completes and returns a success code, it doesn't necessarily mean
@@ -6586,8 +6595,8 @@ func (c *StorageGateway) RefreshCacheRequest(input *RefreshCacheInput) (req *req
 // Throttle limit: This API is asynchronous, so the gateway will accept no more
 // than two refreshes at any time. We recommend using the refresh-complete CloudWatch
 // event notification before issuing additional requests. For more information,
-// see Getting notified about file operations (https://docs.aws.amazon.com/storagegateway/latest/userguide/monitoring-file-gateway.html#get-notification)
-// in the Storage Gateway User Guide.
+// see Getting notified about file operations (https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification)
+// in the Amazon S3 File Gateway User Guide.
 //
 //   - Wait at least 60 seconds between consecutive RefreshCache API requests.
 //
@@ -6598,8 +6607,8 @@ func (c *StorageGateway) RefreshCacheRequest(input *RefreshCacheInput) (req *req
 // The S3 bucket name does not need to be included when entering the list of
 // folders in the FolderList parameter.
 //
-// For more information, see Getting notified about file operations (https://docs.aws.amazon.com/storagegateway/latest/userguide/monitoring-file-gateway.html#get-notification)
-// in the Storage Gateway User Guide.
+// For more information, see Getting notified about file operations (https://docs.aws.amazon.com/filegateway/latest/files3/monitoring-file-gateway.html#get-notification)
+// in the Amazon S3 File Gateway User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7222,8 +7231,11 @@ func (c *StorageGateway) ShutdownGatewayRequest(input *ShutdownGatewayInput) (re
 
 // ShutdownGateway API operation for AWS Storage Gateway.
 //
-// Shuts down a gateway. To specify which gateway to shut down, use the Amazon
-// Resource Name (ARN) of the gateway in the body of your request.
+// Shuts down a Tape Gateway or Volume Gateway. To specify which gateway to
+// shut down, use the Amazon Resource Name (ARN) of the gateway in the body
+// of your request.
+//
+// This API action cannot be used to shut down S3 File Gateway or FSx File Gateway.
 //
 // The operation shuts down the gateway service component running in the gateway's
 // virtual machine (VM) and not the host VM.
@@ -7960,9 +7972,9 @@ func (c *StorageGateway) UpdateGatewayInformationRequest(input *UpdateGatewayInf
 
 // UpdateGatewayInformation API operation for AWS Storage Gateway.
 //
-// Updates a gateway's metadata, which includes the gateway's name and time
-// zone. To specify which gateway to update, use the Amazon Resource Name (ARN)
-// of the gateway in your request.
+// Updates a gateway's metadata, which includes the gateway's name, time zone,
+// and metadata cache size. To specify which gateway to update, use the Amazon
+// Resource Name (ARN) of the gateway in your request.
 //
 // For gateways activated after September 2, 2015, the gateway's ARN contains
 // the gateway ID rather than the gateway name. However, changing the name of
@@ -8148,9 +8160,20 @@ func (c *StorageGateway) UpdateMaintenanceStartTimeRequest(input *UpdateMaintena
 
 // UpdateMaintenanceStartTime API operation for AWS Storage Gateway.
 //
-// Updates a gateway's weekly maintenance start time information, including
-// day and time of the week. The maintenance time is the time in your gateway's
-// time zone.
+// Updates a gateway's maintenance window schedule, with settings for monthly
+// or weekly cadence, specific day and time to begin maintenance, and which
+// types of updates to apply. Time configuration uses the gateway's time zone.
+// You can pass values for a complete maintenance schedule, or update policy,
+// or both. Previous values will persist for whichever setting you choose not
+// to modify. If an incomplete or invalid maintenance schedule is passed, the
+// entire request will be rejected with an error and no changes will occur.
+//
+// A complete maintenance schedule must include values for both MinuteOfHour
+// and HourOfDay, and either DayOfMonth or DayOfWeek.
+//
+// We recommend keeping maintenance updates turned on, except in specific use
+// cases where the brief disruptions caused by updating the gateway could critically
+// impact your deployment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8603,12 +8626,14 @@ func (c *StorageGateway) UpdateSMBSecurityStrategyRequest(input *UpdateSMBSecuri
 
 // UpdateSMBSecurityStrategy API operation for AWS Storage Gateway.
 //
-// Updates the SMB security strategy on a file gateway. This action is only
-// supported in file gateways.
+// Updates the SMB security strategy level for an Amazon S3 file gateway. This
+// action is only supported for Amazon S3 file gateways.
 //
-// This API is called Security level in the User Guide.
+// For information about configuring this setting using the Amazon Web Services
+// console, see Setting a security level for your gateway (https://docs.aws.amazon.com/filegateway/latest/files3/security-strategy.html)
+// in the Amazon S3 File Gateway User Guide.
 //
-// A higher security level can affect performance of the gateway.
+// A higher security strategy level can affect performance of the gateway.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8882,10 +8907,11 @@ type ActivateGatewayInput struct {
 	GatewayRegion *string `min:"1" type:"string" required:"true"`
 
 	// A value that indicates the time zone you want to set for the gateway. The
-	// time zone is of the format "GMT-hr:mm" or "GMT+hr:mm". For example, GMT-4:00
-	// indicates the time is 4 hours behind GMT. GMT+2:00 indicates the time is
-	// 2 hours ahead of GMT. The time zone is used, for example, for scheduling
-	// snapshots and your gateway's maintenance schedule.
+	// time zone is of the format "GMT", "GMT-hr:mm", or "GMT+hr:mm". For example,
+	// GMT indicates Greenwich Mean Time without any offset. GMT-4:00 indicates
+	// the time is 4 hours behind GMT. GMT+2:00 indicates the time is 2 hours ahead
+	// of GMT. The time zone is used, for example, for scheduling snapshots and
+	// your gateway's maintenance schedule.
 	//
 	// GatewayTimezone is a required field
 	GatewayTimezone *string `min:"3" type:"string" required:"true"`
@@ -8894,7 +8920,7 @@ type ActivateGatewayInput struct {
 	// is critical to all later functions of the gateway and cannot be changed after
 	// activation. The default value is CACHED.
 	//
-	// Valid Values: STORED | CACHED | VTL | VTL_SNOW | FILE_S3 | FILE_FSX_SMB
+	// Valid Values: STORED | CACHED | VTL | FILE_S3 | FILE_FSX_SMB
 	GatewayType *string `min:"2" type:"string"`
 
 	// The value that indicates the type of medium changer to use for tape gateway.
@@ -14781,6 +14807,8 @@ type DescribeGatewayInformationOutput struct {
 	GatewayType *string `min:"2" type:"string"`
 
 	// The type of hardware or software platform on which the gateway is running.
+	//
+	// Tape Gateway is no longer available on Snow Family devices.
 	HostEnvironment *string `type:"string" enum:"HostEnvironment"`
 
 	// A unique identifier for the specific instance of the host platform running
@@ -15022,6 +15050,8 @@ func (s *DescribeMaintenanceStartTimeInput) SetGatewayARN(v string) *DescribeMai
 
 // A JSON object containing the following fields:
 //
+//   - DescribeMaintenanceStartTimeOutput$SoftwareUpdatePreferences
+//
 //   - DescribeMaintenanceStartTimeOutput$DayOfMonth
 //
 //   - DescribeMaintenanceStartTimeOutput$DayOfWeek
@@ -15036,7 +15066,8 @@ type DescribeMaintenanceStartTimeOutput struct {
 
 	// The day of the month component of the maintenance start time represented
 	// as an ordinal number from 1 to 28, where 1 represents the first day of the
-	// month and 28 represents the last day of the month.
+	// month. It is not possible to set the maintenance schedule to start on days
+	// 29 through 31.
 	DayOfMonth *int64 `min:"1" type:"integer"`
 
 	// An ordinal number between 0 and 6 that represents the day of the week, where
@@ -15057,6 +15088,15 @@ type DescribeMaintenanceStartTimeOutput struct {
 	// mm is the minute (0 to 59). The minute of the hour is in the time zone of
 	// the gateway.
 	MinuteOfHour *int64 `type:"integer"`
+
+	// A set of variables indicating the software update preferences for the gateway.
+	//
+	// Includes AutomaticUpdatePolicy field with the following inputs:
+	//
+	// ALL_VERSIONS - Enables regular gateway maintenance updates.
+	//
+	// EMERGENCY_VERSIONS_ONLY - Disables regular gateway maintenance updates.
+	SoftwareUpdatePreferences *SoftwareUpdatePreferences `type:"structure"`
 
 	// A value that indicates the time zone that is set for the gateway. The start
 	// time and day of week specified should be in the time zone of the gateway.
@@ -15108,6 +15148,12 @@ func (s *DescribeMaintenanceStartTimeOutput) SetHourOfDay(v int64) *DescribeMain
 // SetMinuteOfHour sets the MinuteOfHour field's value.
 func (s *DescribeMaintenanceStartTimeOutput) SetMinuteOfHour(v int64) *DescribeMaintenanceStartTimeOutput {
 	s.MinuteOfHour = &v
+	return s
+}
+
+// SetSoftwareUpdatePreferences sets the SoftwareUpdatePreferences field's value.
+func (s *DescribeMaintenanceStartTimeOutput) SetSoftwareUpdatePreferences(v *SoftwareUpdatePreferences) *DescribeMaintenanceStartTimeOutput {
+	s.SoftwareUpdatePreferences = v
 	return s
 }
 
@@ -15381,20 +15427,27 @@ type DescribeSMBSettingsOutput struct {
 
 	// The type of security strategy that was specified for file gateway.
 	//
-	//    * ClientSpecified: If you use this option, requests are established based
-	//    on what is negotiated by the client. This option is recommended when you
-	//    want to maximize compatibility across different clients in your environment.
-	//    Only supported for S3 File Gateways.
+	//    * ClientSpecified: If you choose this option, requests are established
+	//    based on what is negotiated by the client. This option is recommended
+	//    when you want to maximize compatibility across different clients in your
+	//    environment. Supported only for S3 File Gateway.
 	//
-	//    * MandatorySigning: If you use this option, file gateway only allows connections
-	//    from SMBv2 or SMBv3 clients that have signing enabled. This option works
-	//    with SMB clients on Microsoft Windows Vista, Windows Server 2008 or newer.
+	//    * MandatorySigning: If you choose this option, File Gateway only allows
+	//    connections from SMBv2 or SMBv3 clients that have signing turned on. This
+	//    option works with SMB clients on Microsoft Windows Vista, Windows Server
+	//    2008, or later.
 	//
-	//    * MandatoryEncryption: If you use this option, file gateway only allows
-	//    connections from SMBv3 clients that have encryption enabled. This option
-	//    is highly recommended for environments that handle sensitive data. This
-	//    option works with SMB clients on Microsoft Windows 8, Windows Server 2012
-	//    or newer.
+	//    * MandatoryEncryption: If you choose this option, File Gateway only allows
+	//    connections from SMBv3 clients that have encryption turned on. Both 256-bit
+	//    and 128-bit algorithms are allowed. This option is recommended for environments
+	//    that handle sensitive data. It works with SMB clients on Microsoft Windows
+	//    8, Windows Server 2012, or later.
+	//
+	//    * MandatoryEncryptionNoAes128: If you choose this option, File Gateway
+	//    only allows connections from SMBv3 clients that use 256-bit AES encryption
+	//    algorithms. 128-bit algorithms are not allowed. This option is recommended
+	//    for environments that handle sensitive data. It works with SMB clients
+	//    on Microsoft Windows 8, Windows Server 2012, or later.
 	SMBSecurityStrategy *string `type:"string" enum:"SMBSecurityStrategy"`
 }
 
@@ -17274,6 +17327,10 @@ func (s *FileSystemAssociationSummary) SetGatewayARN(v string) *FileSystemAssoci
 type GatewayInfo struct {
 	_ struct{} `type:"structure"`
 
+	// Date after which this gateway will not receive software updates for new features
+	// and bug fixes.
+	DeprecationDate *string `min:"1" type:"string"`
+
 	// The ID of the Amazon EC2 instance that was used to launch the gateway.
 	Ec2InstanceId *string `type:"string"`
 
@@ -17301,12 +17358,17 @@ type GatewayInfo struct {
 	GatewayType *string `min:"2" type:"string"`
 
 	// The type of hardware or software platform on which the gateway is running.
+	//
+	// Tape Gateway is no longer available on Snow Family devices.
 	HostEnvironment *string `type:"string" enum:"HostEnvironment"`
 
 	// A unique identifier for the specific instance of the host platform running
 	// the gateway. This value is only available for certain host environments,
 	// and its format depends on the host environment type.
 	HostEnvironmentId *string `min:"1" type:"string"`
+
+	// The version number of the software running on the gateway appliance.
+	SoftwareVersion *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -17325,6 +17387,12 @@ func (s GatewayInfo) String() string {
 // value will be replaced with "sensitive".
 func (s GatewayInfo) GoString() string {
 	return s.String()
+}
+
+// SetDeprecationDate sets the DeprecationDate field's value.
+func (s *GatewayInfo) SetDeprecationDate(v string) *GatewayInfo {
+	s.DeprecationDate = &v
+	return s
 }
 
 // SetEc2InstanceId sets the Ec2InstanceId field's value.
@@ -17378,6 +17446,12 @@ func (s *GatewayInfo) SetHostEnvironment(v string) *GatewayInfo {
 // SetHostEnvironmentId sets the HostEnvironmentId field's value.
 func (s *GatewayInfo) SetHostEnvironmentId(v string) *GatewayInfo {
 	s.HostEnvironmentId = &v
+	return s
+}
+
+// SetSoftwareVersion sets the SoftwareVersion field's value.
+func (s *GatewayInfo) SetSoftwareVersion(v string) *GatewayInfo {
+	s.SoftwareVersion = &v
 	return s
 }
 
@@ -19593,6 +19667,9 @@ type RefreshCacheInput struct {
 	// default is ["/"]. The default refreshes objects and folders at the root of
 	// the Amazon S3 bucket. If Recursive is set to true, the entire S3 bucket that
 	// the file share has access to is refreshed.
+	//
+	// Do not include / when specifying folder names. For example, you would specify
+	// samplefolder rather than samplefolder/.
 	FolderList []*string `min:"1" type:"list"`
 
 	// A value that specifies whether to recursively refresh folders in the cache.
@@ -20885,6 +20962,42 @@ func (s ShutdownGatewayOutput) GoString() string {
 // SetGatewayARN sets the GatewayARN field's value.
 func (s *ShutdownGatewayOutput) SetGatewayARN(v string) *ShutdownGatewayOutput {
 	s.GatewayARN = &v
+	return s
+}
+
+// A set of variables indicating the software update preferences for the gateway.
+type SoftwareUpdatePreferences struct {
+	_ struct{} `type:"structure"`
+
+	// Indicates the automatic update policy for a gateway.
+	//
+	// ALL_VERSIONS - Enables regular gateway maintenance updates.
+	//
+	// EMERGENCY_VERSIONS_ONLY - Disables regular gateway maintenance updates.
+	AutomaticUpdatePolicy *string `type:"string" enum:"AutomaticUpdatePolicy"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SoftwareUpdatePreferences) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SoftwareUpdatePreferences) GoString() string {
+	return s.String()
+}
+
+// SetAutomaticUpdatePolicy sets the AutomaticUpdatePolicy field's value.
+func (s *SoftwareUpdatePreferences) SetAutomaticUpdatePolicy(v string) *SoftwareUpdatePreferences {
+	s.AutomaticUpdatePolicy = &v
 	return s
 }
 
@@ -22417,7 +22530,10 @@ type UpdateGatewayInformationInput struct {
 	// GatewayARN is a required field
 	GatewayARN *string `min:"50" type:"string" required:"true"`
 
-	// Specifies the size of the gateway's metadata cache.
+	// Specifies the size of the gateway's metadata cache. This setting impacts
+	// gateway performance and hardware recommendations. For more information, see
+	// Performance guidance for gateways with multiple file shares (https://docs.aws.amazon.com/filegateway/latest/files3/performance-multiple-file-shares.html)
+	// in the Amazon S3 File Gateway User Guide.
 	GatewayCapacity *string `type:"string" enum:"GatewayCapacity"`
 
 	// The name you configured for your gateway.
@@ -22628,6 +22744,8 @@ func (s *UpdateGatewaySoftwareNowOutput) SetGatewayARN(v string) *UpdateGatewayS
 
 // A JSON object containing the following fields:
 //
+//   - UpdateMaintenanceStartTimeInput$SoftwareUpdatePreferences
+//
 //   - UpdateMaintenanceStartTimeInput$DayOfMonth
 //
 //   - UpdateMaintenanceStartTimeInput$DayOfWeek
@@ -22640,11 +22758,13 @@ type UpdateMaintenanceStartTimeInput struct {
 
 	// The day of the month component of the maintenance start time represented
 	// as an ordinal number from 1 to 28, where 1 represents the first day of the
-	// month and 28 represents the last day of the month.
+	// month. It is not possible to set the maintenance schedule to start on days
+	// 29 through 31.
 	DayOfMonth *int64 `min:"1" type:"integer"`
 
 	// The day of the week component of the maintenance start time week represented
-	// as an ordinal number from 0 to 6, where 0 represents Sunday and 6 Saturday.
+	// as an ordinal number from 0 to 6, where 0 represents Sunday and 6 represents
+	// Saturday.
 	DayOfWeek *int64 `type:"integer"`
 
 	// The Amazon Resource Name (ARN) of the gateway. Use the ListGateways operation
@@ -22656,16 +22776,21 @@ type UpdateMaintenanceStartTimeInput struct {
 	// The hour component of the maintenance start time represented as hh, where
 	// hh is the hour (00 to 23). The hour of the day is in the time zone of the
 	// gateway.
-	//
-	// HourOfDay is a required field
-	HourOfDay *int64 `type:"integer" required:"true"`
+	HourOfDay *int64 `type:"integer"`
 
 	// The minute component of the maintenance start time represented as mm, where
 	// mm is the minute (00 to 59). The minute of the hour is in the time zone of
 	// the gateway.
+	MinuteOfHour *int64 `type:"integer"`
+
+	// A set of variables indicating the software update preferences for the gateway.
 	//
-	// MinuteOfHour is a required field
-	MinuteOfHour *int64 `type:"integer" required:"true"`
+	// Includes AutomaticUpdatePolicy field with the following inputs:
+	//
+	// ALL_VERSIONS - Enables regular gateway maintenance updates.
+	//
+	// EMERGENCY_VERSIONS_ONLY - Disables regular gateway maintenance updates.
+	SoftwareUpdatePreferences *SoftwareUpdatePreferences `type:"structure"`
 }
 
 // String returns the string representation.
@@ -22697,12 +22822,6 @@ func (s *UpdateMaintenanceStartTimeInput) Validate() error {
 	}
 	if s.GatewayARN != nil && len(*s.GatewayARN) < 50 {
 		invalidParams.Add(request.NewErrParamMinLen("GatewayARN", 50))
-	}
-	if s.HourOfDay == nil {
-		invalidParams.Add(request.NewErrParamRequired("HourOfDay"))
-	}
-	if s.MinuteOfHour == nil {
-		invalidParams.Add(request.NewErrParamRequired("MinuteOfHour"))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -22738,6 +22857,12 @@ func (s *UpdateMaintenanceStartTimeInput) SetHourOfDay(v int64) *UpdateMaintenan
 // SetMinuteOfHour sets the MinuteOfHour field's value.
 func (s *UpdateMaintenanceStartTimeInput) SetMinuteOfHour(v int64) *UpdateMaintenanceStartTimeInput {
 	s.MinuteOfHour = &v
+	return s
+}
+
+// SetSoftwareUpdatePreferences sets the SoftwareUpdatePreferences field's value.
+func (s *UpdateMaintenanceStartTimeInput) SetSoftwareUpdatePreferences(v *SoftwareUpdatePreferences) *UpdateMaintenanceStartTimeInput {
+	s.SoftwareUpdatePreferences = v
 	return s
 }
 
@@ -23593,19 +23718,25 @@ type UpdateSMBSecurityStrategyInput struct {
 
 	// Specifies the type of security strategy.
 	//
-	// ClientSpecified: if you use this option, requests are established based on
-	// what is negotiated by the client. This option is recommended when you want
-	// to maximize compatibility across different clients in your environment. Supported
-	// only in S3 File Gateway.
+	// ClientSpecified: If you choose this option, requests are established based
+	// on what is negotiated by the client. This option is recommended when you
+	// want to maximize compatibility across different clients in your environment.
+	// Supported only for S3 File Gateway.
 	//
-	// MandatorySigning: if you use this option, file gateway only allows connections
+	// MandatorySigning: If you choose this option, File Gateway only allows connections
 	// from SMBv2 or SMBv3 clients that have signing enabled. This option works
 	// with SMB clients on Microsoft Windows Vista, Windows Server 2008 or newer.
 	//
-	// MandatoryEncryption: if you use this option, file gateway only allows connections
-	// from SMBv3 clients that have encryption enabled. This option is highly recommended
-	// for environments that handle sensitive data. This option works with SMB clients
-	// on Microsoft Windows 8, Windows Server 2012 or newer.
+	// MandatoryEncryption: If you choose this option, File Gateway only allows
+	// connections from SMBv3 clients that have encryption enabled. This option
+	// is recommended for environments that handle sensitive data. This option works
+	// with SMB clients on Microsoft Windows 8, Windows Server 2012 or newer.
+	//
+	// MandatoryEncryptionNoAes128: If you choose this option, File Gateway only
+	// allows connections from SMBv3 clients that use 256-bit AES encryption algorithms.
+	// 128-bit algorithms are not allowed. This option is recommended for environments
+	// that handle sensitive data. It works with SMB clients on Microsoft Windows
+	// 8, Windows Server 2012, or later.
 	//
 	// SMBSecurityStrategy is a required field
 	SMBSecurityStrategy *string `type:"string" required:"true" enum:"SMBSecurityStrategy"`
@@ -24296,6 +24427,22 @@ func ActiveDirectoryStatus_Values() []string {
 }
 
 const (
+	// AutomaticUpdatePolicyAllVersions is a AutomaticUpdatePolicy enum value
+	AutomaticUpdatePolicyAllVersions = "ALL_VERSIONS"
+
+	// AutomaticUpdatePolicyEmergencyVersionsOnly is a AutomaticUpdatePolicy enum value
+	AutomaticUpdatePolicyEmergencyVersionsOnly = "EMERGENCY_VERSIONS_ONLY"
+)
+
+// AutomaticUpdatePolicy_Values returns all elements of the AutomaticUpdatePolicy enum
+func AutomaticUpdatePolicy_Values() []string {
+	return []string{
+		AutomaticUpdatePolicyAllVersions,
+		AutomaticUpdatePolicyEmergencyVersionsOnly,
+	}
+}
+
+const (
 	// AvailabilityMonitorTestStatusComplete is a AvailabilityMonitorTestStatus enum value
 	AvailabilityMonitorTestStatusComplete = "COMPLETE"
 
@@ -24740,6 +24887,9 @@ const (
 
 	// SMBSecurityStrategyMandatoryEncryption is a SMBSecurityStrategy enum value
 	SMBSecurityStrategyMandatoryEncryption = "MandatoryEncryption"
+
+	// SMBSecurityStrategyMandatoryEncryptionNoAes128 is a SMBSecurityStrategy enum value
+	SMBSecurityStrategyMandatoryEncryptionNoAes128 = "MandatoryEncryptionNoAes128"
 )
 
 // SMBSecurityStrategy_Values returns all elements of the SMBSecurityStrategy enum
@@ -24748,6 +24898,7 @@ func SMBSecurityStrategy_Values() []string {
 		SMBSecurityStrategyClientSpecified,
 		SMBSecurityStrategyMandatorySigning,
 		SMBSecurityStrategyMandatoryEncryption,
+		SMBSecurityStrategyMandatoryEncryptionNoAes128,
 	}
 }
 

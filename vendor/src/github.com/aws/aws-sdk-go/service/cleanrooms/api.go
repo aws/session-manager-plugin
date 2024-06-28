@@ -196,6 +196,97 @@ func (c *CleanRooms) BatchGetSchemaWithContext(ctx aws.Context, input *BatchGetS
 	return out, req.Send()
 }
 
+const opBatchGetSchemaAnalysisRule = "BatchGetSchemaAnalysisRule"
+
+// BatchGetSchemaAnalysisRuleRequest generates a "aws/request.Request" representing the
+// client's request for the BatchGetSchemaAnalysisRule operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See BatchGetSchemaAnalysisRule for more information on using the BatchGetSchemaAnalysisRule
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the BatchGetSchemaAnalysisRuleRequest method.
+//	req, resp := client.BatchGetSchemaAnalysisRuleRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/BatchGetSchemaAnalysisRule
+func (c *CleanRooms) BatchGetSchemaAnalysisRuleRequest(input *BatchGetSchemaAnalysisRuleInput) (req *request.Request, output *BatchGetSchemaAnalysisRuleOutput) {
+	op := &request.Operation{
+		Name:       opBatchGetSchemaAnalysisRule,
+		HTTPMethod: "POST",
+		HTTPPath:   "/collaborations/{collaborationIdentifier}/batch-schema-analysis-rule",
+	}
+
+	if input == nil {
+		input = &BatchGetSchemaAnalysisRuleInput{}
+	}
+
+	output = &BatchGetSchemaAnalysisRuleOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// BatchGetSchemaAnalysisRule API operation for AWS Clean Rooms Service.
+//
+// Retrieves multiple analysis rule schemas.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Clean Rooms Service's
+// API operation BatchGetSchemaAnalysisRule for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     Request references a resource which does not exist.
+//
+//   - InternalServerException
+//     Unexpected error during processing of request.
+//
+//   - ValidationException
+//     The input fails to satisfy the specified constraints.
+//
+//   - ThrottlingException
+//     Request was denied due to request throttling.
+//
+//   - AccessDeniedException
+//     Caller does not have sufficient access to perform this action.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/cleanrooms-2022-02-17/BatchGetSchemaAnalysisRule
+func (c *CleanRooms) BatchGetSchemaAnalysisRule(input *BatchGetSchemaAnalysisRuleInput) (*BatchGetSchemaAnalysisRuleOutput, error) {
+	req, out := c.BatchGetSchemaAnalysisRuleRequest(input)
+	return out, req.Send()
+}
+
+// BatchGetSchemaAnalysisRuleWithContext is the same as BatchGetSchemaAnalysisRule with the addition of
+// the ability to pass a context and additional request options.
+//
+// See BatchGetSchemaAnalysisRule for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CleanRooms) BatchGetSchemaAnalysisRuleWithContext(ctx aws.Context, input *BatchGetSchemaAnalysisRuleInput, opts ...request.Option) (*BatchGetSchemaAnalysisRuleOutput, error) {
+	req, out := c.BatchGetSchemaAnalysisRuleRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateAnalysisTemplate = "CreateAnalysisTemplate"
 
 // CreateAnalysisTemplateRequest generates a "aws/request.Request" representing the
@@ -7107,13 +7198,14 @@ func (s *AnalysisRuleAggregation) SetScalarFunctions(v []*string) *AnalysisRuleA
 type AnalysisRuleCustom struct {
 	_ struct{} `type:"structure"`
 
-	// The analysis templates that are allowed by the custom analysis rule.
+	// The ARN of the analysis templates that are allowed by the custom analysis
+	// rule.
 	//
 	// AllowedAnalyses is a required field
 	AllowedAnalyses []*string `locationName:"allowedAnalyses" type:"list" required:"true"`
 
-	// The Amazon Web Services accounts that are allowed to query by the custom
-	// analysis rule. Required when allowedAnalyses is ANY_QUERY.
+	// The IDs of the Amazon Web Services accounts that are allowed to query by
+	// the custom analysis rule. Required when allowedAnalyses is ANY_QUERY.
 	AllowedAnalysisProviders []*string `locationName:"allowedAnalysisProviders" type:"list"`
 
 	// The differential privacy configuration.
@@ -7469,6 +7561,9 @@ type AnalysisTemplate struct {
 	//
 	// UpdateTime is a required field
 	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" required:"true"`
+
+	// Information about the validations performed on the analysis template.
+	Validations []*AnalysisTemplateValidationStatusDetail `locationName:"validations" type:"list"`
 }
 
 // String returns the string representation.
@@ -7570,6 +7665,12 @@ func (s *AnalysisTemplate) SetSource(v *AnalysisSource) *AnalysisTemplate {
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *AnalysisTemplate) SetUpdateTime(v time.Time) *AnalysisTemplate {
 	s.UpdateTime = &v
+	return s
+}
+
+// SetValidations sets the Validations field's value.
+func (s *AnalysisTemplate) SetValidations(v []*AnalysisTemplateValidationStatusDetail) *AnalysisTemplate {
+	s.Validations = v
 	return s
 }
 
@@ -7702,6 +7803,103 @@ func (s *AnalysisTemplateSummary) SetName(v string) *AnalysisTemplateSummary {
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *AnalysisTemplateSummary) SetUpdateTime(v time.Time) *AnalysisTemplateSummary {
 	s.UpdateTime = &v
+	return s
+}
+
+// The status details of the analysis template validation. Clean Rooms Differential
+// Privacy uses a general-purpose query structure to support complex SQL queries
+// and validates whether an analysis template fits that general-purpose query
+// structure. Validation is performed when analysis templates are created and
+// fetched. Because analysis templates are immutable by design, we recommend
+// that you create analysis templates after you associate the configured tables
+// with their analysis rule to your collaboration.
+//
+// For more information, see https://docs.aws.amazon.com/clean-rooms/latest/userguide/analysis-rules-custom.html#custom-diff-privacy
+// (https://docs.aws.amazon.com/clean-rooms/latest/userguide/analysis-rules-custom.html#custom-diff-privacy).
+type AnalysisTemplateValidationStatusDetail struct {
+	_ struct{} `type:"structure"`
+
+	// The reasons for the validation results.
+	Reasons []*AnalysisTemplateValidationStatusReason `locationName:"reasons" type:"list"`
+
+	// The status of the validation.
+	//
+	// Status is a required field
+	Status *string `locationName:"status" type:"string" required:"true" enum:"AnalysisTemplateValidationStatus"`
+
+	// The type of validation that was performed.
+	//
+	// Type is a required field
+	Type *string `locationName:"type" type:"string" required:"true" enum:"AnalysisTemplateValidationType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnalysisTemplateValidationStatusDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnalysisTemplateValidationStatusDetail) GoString() string {
+	return s.String()
+}
+
+// SetReasons sets the Reasons field's value.
+func (s *AnalysisTemplateValidationStatusDetail) SetReasons(v []*AnalysisTemplateValidationStatusReason) *AnalysisTemplateValidationStatusDetail {
+	s.Reasons = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *AnalysisTemplateValidationStatusDetail) SetStatus(v string) *AnalysisTemplateValidationStatusDetail {
+	s.Status = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *AnalysisTemplateValidationStatusDetail) SetType(v string) *AnalysisTemplateValidationStatusDetail {
+	s.Type = &v
+	return s
+}
+
+// The reasons for the validation results.
+type AnalysisTemplateValidationStatusReason struct {
+	_ struct{} `type:"structure"`
+
+	// The validation message.
+	//
+	// Message is a required field
+	Message *string `locationName:"message" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnalysisTemplateValidationStatusReason) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AnalysisTemplateValidationStatusReason) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *AnalysisTemplateValidationStatusReason) SetMessage(v string) *AnalysisTemplateValidationStatusReason {
+	s.Message = &v
 	return s
 }
 
@@ -7876,6 +8074,195 @@ func (s *BatchGetCollaborationAnalysisTemplateOutput) SetErrors(v []*BatchGetCol
 	return s
 }
 
+// An error that describes why a schema could not be fetched.
+type BatchGetSchemaAnalysisRuleError struct {
+	_ struct{} `type:"structure"`
+
+	// An error code for the error.
+	//
+	// Code is a required field
+	Code *string `locationName:"code" type:"string" required:"true"`
+
+	// A description of why the call failed.
+	//
+	// Message is a required field
+	Message *string `locationName:"message" type:"string" required:"true"`
+
+	// An error name for the error.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" type:"string" required:"true"`
+
+	// The analysis rule type.
+	//
+	// Type is a required field
+	Type *string `locationName:"type" type:"string" required:"true" enum:"AnalysisRuleType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetSchemaAnalysisRuleError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetSchemaAnalysisRuleError) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *BatchGetSchemaAnalysisRuleError) SetCode(v string) *BatchGetSchemaAnalysisRuleError {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *BatchGetSchemaAnalysisRuleError) SetMessage(v string) *BatchGetSchemaAnalysisRuleError {
+	s.Message = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *BatchGetSchemaAnalysisRuleError) SetName(v string) *BatchGetSchemaAnalysisRuleError {
+	s.Name = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *BatchGetSchemaAnalysisRuleError) SetType(v string) *BatchGetSchemaAnalysisRuleError {
+	s.Type = &v
+	return s
+}
+
+type BatchGetSchemaAnalysisRuleInput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the collaboration that contains the schema analysis
+	// rule.
+	//
+	// CollaborationIdentifier is a required field
+	CollaborationIdentifier *string `location:"uri" locationName:"collaborationIdentifier" min:"36" type:"string" required:"true"`
+
+	// The information that's necessary to retrieve a schema analysis rule.
+	//
+	// SchemaAnalysisRuleRequests is a required field
+	SchemaAnalysisRuleRequests []*SchemaAnalysisRuleRequest `locationName:"schemaAnalysisRuleRequests" min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetSchemaAnalysisRuleInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetSchemaAnalysisRuleInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BatchGetSchemaAnalysisRuleInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BatchGetSchemaAnalysisRuleInput"}
+	if s.CollaborationIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("CollaborationIdentifier"))
+	}
+	if s.CollaborationIdentifier != nil && len(*s.CollaborationIdentifier) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("CollaborationIdentifier", 36))
+	}
+	if s.SchemaAnalysisRuleRequests == nil {
+		invalidParams.Add(request.NewErrParamRequired("SchemaAnalysisRuleRequests"))
+	}
+	if s.SchemaAnalysisRuleRequests != nil && len(s.SchemaAnalysisRuleRequests) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SchemaAnalysisRuleRequests", 1))
+	}
+	if s.SchemaAnalysisRuleRequests != nil {
+		for i, v := range s.SchemaAnalysisRuleRequests {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "SchemaAnalysisRuleRequests", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCollaborationIdentifier sets the CollaborationIdentifier field's value.
+func (s *BatchGetSchemaAnalysisRuleInput) SetCollaborationIdentifier(v string) *BatchGetSchemaAnalysisRuleInput {
+	s.CollaborationIdentifier = &v
+	return s
+}
+
+// SetSchemaAnalysisRuleRequests sets the SchemaAnalysisRuleRequests field's value.
+func (s *BatchGetSchemaAnalysisRuleInput) SetSchemaAnalysisRuleRequests(v []*SchemaAnalysisRuleRequest) *BatchGetSchemaAnalysisRuleInput {
+	s.SchemaAnalysisRuleRequests = v
+	return s
+}
+
+type BatchGetSchemaAnalysisRuleOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The retrieved list of analysis rules.
+	//
+	// AnalysisRules is a required field
+	AnalysisRules []*AnalysisRule `locationName:"analysisRules" type:"list" required:"true"`
+
+	// Error reasons for schemas that could not be retrieved. One error is returned
+	// for every schema that could not be retrieved.
+	//
+	// Errors is a required field
+	Errors []*BatchGetSchemaAnalysisRuleError `locationName:"errors" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetSchemaAnalysisRuleOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetSchemaAnalysisRuleOutput) GoString() string {
+	return s.String()
+}
+
+// SetAnalysisRules sets the AnalysisRules field's value.
+func (s *BatchGetSchemaAnalysisRuleOutput) SetAnalysisRules(v []*AnalysisRule) *BatchGetSchemaAnalysisRuleOutput {
+	s.AnalysisRules = v
+	return s
+}
+
+// SetErrors sets the Errors field's value.
+func (s *BatchGetSchemaAnalysisRuleOutput) SetErrors(v []*BatchGetSchemaAnalysisRuleError) *BatchGetSchemaAnalysisRuleOutput {
+	s.Errors = v
+	return s
+}
+
 // An error describing why a schema could not be fetched.
 type BatchGetSchemaError struct {
 	_ struct{} `type:"structure"`
@@ -7941,7 +8328,7 @@ type BatchGetSchemaInput struct {
 	// CollaborationIdentifier is a required field
 	CollaborationIdentifier *string `location:"uri" locationName:"collaborationIdentifier" min:"36" type:"string" required:"true"`
 
-	// The names for the schema objects to retrieve.>
+	// The names for the schema objects to retrieve.
 	//
 	// Names is a required field
 	Names []*string `locationName:"names" min:"1" type:"list" required:"true"`
@@ -8276,6 +8663,9 @@ type CollaborationAnalysisTemplate struct {
 	//
 	// UpdateTime is a required field
 	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" required:"true"`
+
+	// The validations that were performed.
+	Validations []*AnalysisTemplateValidationStatusDetail `locationName:"validations" type:"list"`
 }
 
 // String returns the string representation.
@@ -8371,6 +8761,12 @@ func (s *CollaborationAnalysisTemplate) SetSource(v *AnalysisSource) *Collaborat
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *CollaborationAnalysisTemplate) SetUpdateTime(v time.Time) *CollaborationAnalysisTemplate {
 	s.UpdateTime = &v
+	return s
+}
+
+// SetValidations sets the Validations field's value.
+func (s *CollaborationAnalysisTemplate) SetValidations(v []*AnalysisTemplateValidationStatusDetail) *CollaborationAnalysisTemplate {
+	s.Validations = v
 	return s
 }
 
@@ -18976,6 +19372,11 @@ type Schema struct {
 	// PartitionKeys is a required field
 	PartitionKeys []*Column `locationName:"partitionKeys" type:"list" required:"true"`
 
+	// Details about the status of the schema. Currently, only one entry is present.
+	//
+	// SchemaStatusDetails is a required field
+	SchemaStatusDetails []*SchemaStatusDetail `locationName:"schemaStatusDetails" type:"list" required:"true"`
+
 	// The type of schema. The only valid value is currently `TABLE`.
 	//
 	// Type is a required field
@@ -19065,6 +19466,12 @@ func (s *Schema) SetPartitionKeys(v []*Column) *Schema {
 	return s
 }
 
+// SetSchemaStatusDetails sets the SchemaStatusDetails field's value.
+func (s *Schema) SetSchemaStatusDetails(v []*SchemaStatusDetail) *Schema {
+	s.SchemaStatusDetails = v
+	return s
+}
+
 // SetType sets the Type field's value.
 func (s *Schema) SetType(v string) *Schema {
 	s.Type = &v
@@ -19074,6 +19481,179 @@ func (s *Schema) SetType(v string) *Schema {
 // SetUpdateTime sets the UpdateTime field's value.
 func (s *Schema) SetUpdateTime(v time.Time) *Schema {
 	s.UpdateTime = &v
+	return s
+}
+
+// Defines the information that's necessary to retrieve an analysis rule schema.
+// Schema analysis rules are uniquely identiﬁed by a combination of the schema
+// name and the analysis rule type for a given collaboration.
+type SchemaAnalysisRuleRequest struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the analysis rule schema that you are requesting.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" type:"string" required:"true"`
+
+	// The type of analysis rule schema that you are requesting.
+	//
+	// Type is a required field
+	Type *string `locationName:"type" type:"string" required:"true" enum:"AnalysisRuleType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaAnalysisRuleRequest) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaAnalysisRuleRequest) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SchemaAnalysisRuleRequest) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SchemaAnalysisRuleRequest"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Type == nil {
+		invalidParams.Add(request.NewErrParamRequired("Type"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetName sets the Name field's value.
+func (s *SchemaAnalysisRuleRequest) SetName(v string) *SchemaAnalysisRuleRequest {
+	s.Name = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *SchemaAnalysisRuleRequest) SetType(v string) *SchemaAnalysisRuleRequest {
+	s.Type = &v
+	return s
+}
+
+// Information about the schema status.
+//
+// A status of READY means that based on the schema analysis rule, queries of
+// the given analysis rule type are properly configured to run queries on this
+// schema.
+type SchemaStatusDetail struct {
+	_ struct{} `type:"structure"`
+
+	// The analysis rule type for which the schema status has been evaluated.
+	AnalysisRuleType *string `locationName:"analysisRuleType" type:"string" enum:"AnalysisRuleType"`
+
+	// The configuration details of the schema analysis rule for the given type.
+	Configurations []*string `locationName:"configurations" type:"list" enum:"SchemaConfiguration"`
+
+	// The reasons why the schema status is set to its current state.
+	Reasons []*SchemaStatusReason `locationName:"reasons" type:"list"`
+
+	// The status of the schema.
+	//
+	// Status is a required field
+	Status *string `locationName:"status" type:"string" required:"true" enum:"SchemaStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaStatusDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaStatusDetail) GoString() string {
+	return s.String()
+}
+
+// SetAnalysisRuleType sets the AnalysisRuleType field's value.
+func (s *SchemaStatusDetail) SetAnalysisRuleType(v string) *SchemaStatusDetail {
+	s.AnalysisRuleType = &v
+	return s
+}
+
+// SetConfigurations sets the Configurations field's value.
+func (s *SchemaStatusDetail) SetConfigurations(v []*string) *SchemaStatusDetail {
+	s.Configurations = v
+	return s
+}
+
+// SetReasons sets the Reasons field's value.
+func (s *SchemaStatusDetail) SetReasons(v []*SchemaStatusReason) *SchemaStatusDetail {
+	s.Reasons = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *SchemaStatusDetail) SetStatus(v string) *SchemaStatusDetail {
+	s.Status = &v
+	return s
+}
+
+// A reason why the schema status is set to its current value.
+type SchemaStatusReason struct {
+	_ struct{} `type:"structure"`
+
+	// The schema status reason code.
+	//
+	// Code is a required field
+	Code *string `locationName:"code" type:"string" required:"true" enum:"SchemaStatusReasonCode"`
+
+	// An explanation of the schema status reason code.
+	//
+	// Message is a required field
+	Message *string `locationName:"message" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaStatusReason) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SchemaStatusReason) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *SchemaStatusReason) SetCode(v string) *SchemaStatusReason {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *SchemaStatusReason) SetMessage(v string) *SchemaStatusReason {
+	s.Message = &v
 	return s
 }
 
@@ -20931,6 +21511,38 @@ func AnalysisRuleType_Values() []string {
 }
 
 const (
+	// AnalysisTemplateValidationStatusValid is a AnalysisTemplateValidationStatus enum value
+	AnalysisTemplateValidationStatusValid = "VALID"
+
+	// AnalysisTemplateValidationStatusInvalid is a AnalysisTemplateValidationStatus enum value
+	AnalysisTemplateValidationStatusInvalid = "INVALID"
+
+	// AnalysisTemplateValidationStatusUnableToValidate is a AnalysisTemplateValidationStatus enum value
+	AnalysisTemplateValidationStatusUnableToValidate = "UNABLE_TO_VALIDATE"
+)
+
+// AnalysisTemplateValidationStatus_Values returns all elements of the AnalysisTemplateValidationStatus enum
+func AnalysisTemplateValidationStatus_Values() []string {
+	return []string{
+		AnalysisTemplateValidationStatusValid,
+		AnalysisTemplateValidationStatusInvalid,
+		AnalysisTemplateValidationStatusUnableToValidate,
+	}
+}
+
+const (
+	// AnalysisTemplateValidationTypeDifferentialPrivacy is a AnalysisTemplateValidationType enum value
+	AnalysisTemplateValidationTypeDifferentialPrivacy = "DIFFERENTIAL_PRIVACY"
+)
+
+// AnalysisTemplateValidationType_Values returns all elements of the AnalysisTemplateValidationType enum
+func AnalysisTemplateValidationType_Values() []string {
+	return []string{
+		AnalysisTemplateValidationTypeDifferentialPrivacy,
+	}
+}
+
+const (
 	// CollaborationQueryLogStatusEnabled is a CollaborationQueryLogStatus enum value
 	CollaborationQueryLogStatusEnabled = "ENABLED"
 
@@ -21319,17 +21931,35 @@ func ResultFormat_Values() []string {
 }
 
 const (
-	// ScalarFunctionsTrunc is a ScalarFunctions enum value
-	ScalarFunctionsTrunc = "TRUNC"
-
 	// ScalarFunctionsAbs is a ScalarFunctions enum value
 	ScalarFunctionsAbs = "ABS"
+
+	// ScalarFunctionsCast is a ScalarFunctions enum value
+	ScalarFunctionsCast = "CAST"
 
 	// ScalarFunctionsCeiling is a ScalarFunctions enum value
 	ScalarFunctionsCeiling = "CEILING"
 
+	// ScalarFunctionsCoalesce is a ScalarFunctions enum value
+	ScalarFunctionsCoalesce = "COALESCE"
+
+	// ScalarFunctionsConvert is a ScalarFunctions enum value
+	ScalarFunctionsConvert = "CONVERT"
+
+	// ScalarFunctionsCurrentDate is a ScalarFunctions enum value
+	ScalarFunctionsCurrentDate = "CURRENT_DATE"
+
+	// ScalarFunctionsDateadd is a ScalarFunctions enum value
+	ScalarFunctionsDateadd = "DATEADD"
+
+	// ScalarFunctionsExtract is a ScalarFunctions enum value
+	ScalarFunctionsExtract = "EXTRACT"
+
 	// ScalarFunctionsFloor is a ScalarFunctions enum value
 	ScalarFunctionsFloor = "FLOOR"
+
+	// ScalarFunctionsGetdate is a ScalarFunctions enum value
+	ScalarFunctionsGetdate = "GETDATE"
 
 	// ScalarFunctionsLn is a ScalarFunctions enum value
 	ScalarFunctionsLn = "LN"
@@ -21337,44 +21967,122 @@ const (
 	// ScalarFunctionsLog is a ScalarFunctions enum value
 	ScalarFunctionsLog = "LOG"
 
-	// ScalarFunctionsRound is a ScalarFunctions enum value
-	ScalarFunctionsRound = "ROUND"
-
-	// ScalarFunctionsSqrt is a ScalarFunctions enum value
-	ScalarFunctionsSqrt = "SQRT"
-
-	// ScalarFunctionsCast is a ScalarFunctions enum value
-	ScalarFunctionsCast = "CAST"
-
 	// ScalarFunctionsLower is a ScalarFunctions enum value
 	ScalarFunctionsLower = "LOWER"
+
+	// ScalarFunctionsRound is a ScalarFunctions enum value
+	ScalarFunctionsRound = "ROUND"
 
 	// ScalarFunctionsRtrim is a ScalarFunctions enum value
 	ScalarFunctionsRtrim = "RTRIM"
 
+	// ScalarFunctionsSqrt is a ScalarFunctions enum value
+	ScalarFunctionsSqrt = "SQRT"
+
+	// ScalarFunctionsSubstring is a ScalarFunctions enum value
+	ScalarFunctionsSubstring = "SUBSTRING"
+
+	// ScalarFunctionsToChar is a ScalarFunctions enum value
+	ScalarFunctionsToChar = "TO_CHAR"
+
+	// ScalarFunctionsToDate is a ScalarFunctions enum value
+	ScalarFunctionsToDate = "TO_DATE"
+
+	// ScalarFunctionsToNumber is a ScalarFunctions enum value
+	ScalarFunctionsToNumber = "TO_NUMBER"
+
+	// ScalarFunctionsToTimestamp is a ScalarFunctions enum value
+	ScalarFunctionsToTimestamp = "TO_TIMESTAMP"
+
+	// ScalarFunctionsTrim is a ScalarFunctions enum value
+	ScalarFunctionsTrim = "TRIM"
+
+	// ScalarFunctionsTrunc is a ScalarFunctions enum value
+	ScalarFunctionsTrunc = "TRUNC"
+
 	// ScalarFunctionsUpper is a ScalarFunctions enum value
 	ScalarFunctionsUpper = "UPPER"
-
-	// ScalarFunctionsCoalesce is a ScalarFunctions enum value
-	ScalarFunctionsCoalesce = "COALESCE"
 )
 
 // ScalarFunctions_Values returns all elements of the ScalarFunctions enum
 func ScalarFunctions_Values() []string {
 	return []string{
-		ScalarFunctionsTrunc,
 		ScalarFunctionsAbs,
+		ScalarFunctionsCast,
 		ScalarFunctionsCeiling,
+		ScalarFunctionsCoalesce,
+		ScalarFunctionsConvert,
+		ScalarFunctionsCurrentDate,
+		ScalarFunctionsDateadd,
+		ScalarFunctionsExtract,
 		ScalarFunctionsFloor,
+		ScalarFunctionsGetdate,
 		ScalarFunctionsLn,
 		ScalarFunctionsLog,
-		ScalarFunctionsRound,
-		ScalarFunctionsSqrt,
-		ScalarFunctionsCast,
 		ScalarFunctionsLower,
+		ScalarFunctionsRound,
 		ScalarFunctionsRtrim,
+		ScalarFunctionsSqrt,
+		ScalarFunctionsSubstring,
+		ScalarFunctionsToChar,
+		ScalarFunctionsToDate,
+		ScalarFunctionsToNumber,
+		ScalarFunctionsToTimestamp,
+		ScalarFunctionsTrim,
+		ScalarFunctionsTrunc,
 		ScalarFunctionsUpper,
-		ScalarFunctionsCoalesce,
+	}
+}
+
+const (
+	// SchemaConfigurationDifferentialPrivacy is a SchemaConfiguration enum value
+	SchemaConfigurationDifferentialPrivacy = "DIFFERENTIAL_PRIVACY"
+)
+
+// SchemaConfiguration_Values returns all elements of the SchemaConfiguration enum
+func SchemaConfiguration_Values() []string {
+	return []string{
+		SchemaConfigurationDifferentialPrivacy,
+	}
+}
+
+const (
+	// SchemaStatusReady is a SchemaStatus enum value
+	SchemaStatusReady = "READY"
+
+	// SchemaStatusNotReady is a SchemaStatus enum value
+	SchemaStatusNotReady = "NOT_READY"
+)
+
+// SchemaStatus_Values returns all elements of the SchemaStatus enum
+func SchemaStatus_Values() []string {
+	return []string{
+		SchemaStatusReady,
+		SchemaStatusNotReady,
+	}
+}
+
+const (
+	// SchemaStatusReasonCodeAnalysisRuleMissing is a SchemaStatusReasonCode enum value
+	SchemaStatusReasonCodeAnalysisRuleMissing = "ANALYSIS_RULE_MISSING"
+
+	// SchemaStatusReasonCodeAnalysisTemplatesNotConfigured is a SchemaStatusReasonCode enum value
+	SchemaStatusReasonCodeAnalysisTemplatesNotConfigured = "ANALYSIS_TEMPLATES_NOT_CONFIGURED"
+
+	// SchemaStatusReasonCodeAnalysisProvidersNotConfigured is a SchemaStatusReasonCode enum value
+	SchemaStatusReasonCodeAnalysisProvidersNotConfigured = "ANALYSIS_PROVIDERS_NOT_CONFIGURED"
+
+	// SchemaStatusReasonCodeDifferentialPrivacyPolicyNotConfigured is a SchemaStatusReasonCode enum value
+	SchemaStatusReasonCodeDifferentialPrivacyPolicyNotConfigured = "DIFFERENTIAL_PRIVACY_POLICY_NOT_CONFIGURED"
+)
+
+// SchemaStatusReasonCode_Values returns all elements of the SchemaStatusReasonCode enum
+func SchemaStatusReasonCode_Values() []string {
+	return []string{
+		SchemaStatusReasonCodeAnalysisRuleMissing,
+		SchemaStatusReasonCodeAnalysisTemplatesNotConfigured,
+		SchemaStatusReasonCodeAnalysisProvidersNotConfigured,
+		SchemaStatusReasonCodeDifferentialPrivacyPolicyNotConfigured,
 	}
 }
 

@@ -4,11 +4,13 @@
     "apiVersion":"2012-12-01",
     "endpointPrefix":"redshift",
     "protocol":"query",
+    "protocols":["query"],
     "serviceFullName":"Amazon Redshift",
     "serviceId":"Redshift",
     "signatureVersion":"v4",
     "uid":"redshift-2012-12-01",
-    "xmlNamespace":"http://redshift.amazonaws.com/doc/2012-12-01/"
+    "xmlNamespace":"http://redshift.amazonaws.com/doc/2012-12-01/",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "AcceptReservedNodeExchange":{
@@ -1658,6 +1660,22 @@
       "errors":[
         {"shape":"ResourceNotFoundFault"},
         {"shape":"InvalidPolicyFault"},
+        {"shape":"UnsupportedOperationFault"}
+      ]
+    },
+    "ListRecommendations":{
+      "name":"ListRecommendations",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"ListRecommendationsMessage"},
+      "output":{
+        "shape":"ListRecommendationsResult",
+        "resultWrapper":"ListRecommendationsResult"
+      },
+      "errors":[
+        {"shape":"ClusterNotFoundFault"},
         {"shape":"UnsupportedOperationFault"}
       ]
     },
@@ -5003,6 +5021,14 @@
       "min":1,
       "pattern":"^[a-zA-Z0-9_+.#@$-]+$"
     },
+    "ImpactRankingType":{
+      "type":"string",
+      "enum":[
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
     "ImportTablesCompleted":{
       "type":"list",
       "member":{"shape":"String"}
@@ -5492,6 +5518,22 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ListRecommendationsMessage":{
+      "type":"structure",
+      "members":{
+        "ClusterIdentifier":{"shape":"String"},
+        "NamespaceArn":{"shape":"String"},
+        "MaxRecords":{"shape":"IntegerOptional"},
+        "Marker":{"shape":"String"}
+      }
+    },
+    "ListRecommendationsResult":{
+      "type":"structure",
+      "members":{
+        "Recommendations":{"shape":"RecommendationList"},
+        "Marker":{"shape":"String"}
+      }
     },
     "LogDestinationType":{
       "type":"string",
@@ -6153,6 +6195,53 @@
         "Cluster":{"shape":"Cluster"}
       }
     },
+    "Recommendation":{
+      "type":"structure",
+      "members":{
+        "Id":{"shape":"String"},
+        "ClusterIdentifier":{"shape":"String"},
+        "NamespaceArn":{"shape":"String"},
+        "CreatedAt":{"shape":"TStamp"},
+        "RecommendationType":{"shape":"String"},
+        "Title":{"shape":"String"},
+        "Description":{"shape":"String"},
+        "Observation":{"shape":"String"},
+        "ImpactRanking":{"shape":"ImpactRankingType"},
+        "RecommendationText":{"shape":"String"},
+        "RecommendedActions":{"shape":"RecommendedActionList"},
+        "ReferenceLinks":{"shape":"ReferenceLinkList"}
+      }
+    },
+    "RecommendationList":{
+      "type":"list",
+      "member":{
+        "shape":"Recommendation",
+        "locationName":"Recommendation"
+      }
+    },
+    "RecommendedAction":{
+      "type":"structure",
+      "members":{
+        "Text":{"shape":"String"},
+        "Database":{"shape":"String"},
+        "Command":{"shape":"String"},
+        "Type":{"shape":"RecommendedActionType"}
+      }
+    },
+    "RecommendedActionList":{
+      "type":"list",
+      "member":{
+        "shape":"RecommendedAction",
+        "locationName":"RecommendedAction"
+      }
+    },
+    "RecommendedActionType":{
+      "type":"string",
+      "enum":[
+        "SQL",
+        "CLI"
+      ]
+    },
     "RecurringCharge":{
       "type":"structure",
       "members":{
@@ -6226,6 +6315,20 @@
         "senderFault":true
       },
       "exception":true
+    },
+    "ReferenceLink":{
+      "type":"structure",
+      "members":{
+        "Text":{"shape":"String"},
+        "Link":{"shape":"String"}
+      }
+    },
+    "ReferenceLinkList":{
+      "type":"list",
+      "member":{
+        "shape":"ReferenceLink",
+        "locationName":"ReferenceLink"
+      }
     },
     "RejectDataShareMessage":{
       "type":"structure",
@@ -6946,7 +7049,8 @@
         "ManualSnapshotRemainingDays":{"shape":"IntegerOptional"},
         "SnapshotRetentionStartTime":{"shape":"TStamp"},
         "MasterPasswordSecretArn":{"shape":"String"},
-        "MasterPasswordSecretKmsKeyId":{"shape":"String"}
+        "MasterPasswordSecretKmsKeyId":{"shape":"String"},
+        "SnapshotArn":{"shape":"String"}
       },
       "wrapper":true
     },

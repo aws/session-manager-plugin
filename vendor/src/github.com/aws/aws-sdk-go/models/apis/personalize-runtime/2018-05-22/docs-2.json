@@ -169,8 +169,8 @@
     "MetadataColumns": {
       "base": null,
       "refs": {
-        "GetPersonalizedRankingRequest$metadataColumns": "<p>If you enabled metadata in recommendations when you created or updated the campaign, specify metadata columns from your Items dataset to include in the personalized ranking. The map key is <code>ITEMS</code> and the value is a list of column names from your Items dataset. The maximum number of columns you can provide is 10.</p> <p> For information about enabling metadata for a campaign, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/create-campaign-return-metadata.html\">Enabling metadata in recommendations for a campaign</a>. </p>",
-        "GetRecommendationsRequest$metadataColumns": "<p>If you enabled metadata in recommendations when you created or updated the campaign or recommender, specify the metadata columns from your Items dataset to include in item recommendations. The map key is <code>ITEMS</code> and the value is a list of column names from your Items dataset. The maximum number of columns you can provide is 10.</p> <p> For information about enabling metadata for a campaign, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/create-campaign-return-metadata.html\">Enabling metadata in recommendations for a campaign</a>. For information about enabling metadata for a recommender, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/create-recommender-return-metadata.html\">Enabling metadata in recommendations for a recommender</a>. </p>"
+        "GetPersonalizedRankingRequest$metadataColumns": "<p>If you enabled metadata in recommendations when you created or updated the campaign, specify metadata columns from your Items dataset to include in the personalized ranking. The map key is <code>ITEMS</code> and the value is a list of column names from your Items dataset. The maximum number of columns you can provide is 10.</p> <p> For information about enabling metadata for a campaign, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/campaigns.html#create-campaign-return-metadata\">Enabling metadata in recommendations for a campaign</a>. </p>",
+        "GetRecommendationsRequest$metadataColumns": "<p>If you enabled metadata in recommendations when you created or updated the campaign or recommender, specify the metadata columns from your Items dataset to include in item recommendations. The map key is <code>ITEMS</code> and the value is a list of column names from your Items dataset. The maximum number of columns you can provide is 10.</p> <p> For information about enabling metadata for a campaign, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/campaigns.html#create-campaign-return-metadata\">Enabling metadata in recommendations for a campaign</a>. For information about enabling metadata for a recommender, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/creating-recommenders.html#create-recommender-return-metadata\">Enabling metadata in recommendations for a recommender</a>. </p>"
       }
     },
     "Name": {
@@ -215,6 +215,18 @@
       "base": null,
       "refs": {
         "GetRecommendationsRequest$promotions": "<p>The promotions to apply to the recommendation request. A promotion defines additional business rules that apply to a configurable subset of recommended items.</p>"
+      }
+    },
+    "Reason": {
+      "base": null,
+      "refs": {
+        "ReasonList$member": null
+      }
+    },
+    "ReasonList": {
+      "base": null,
+      "refs": {
+        "PredictedItem$reason": "<p>If you use User-Personalization-v2, a list of reasons for why the item was included in recommendations. Possible reasons include the following:</p> <ul> <li> <p>Promoted item - Indicates the item was included as part of a promotion that you applied in your recommendation request.</p> </li> <li> <p>Exploration - Indicates the item was included with exploration. With exploration, recommendations include items with less interactions data or relevance for the user. For more information about exploration, see <a href=\"https://docs.aws.amazon.com/personalize/latest/dg/use-case-recipe-features.html#about-exploration\">Exploration</a>.</p> </li> <li> <p> Popular item - Indicates the item was included as a placeholder popular item. If you use a filter, depending on how many recommendations the filter removes, Amazon Personalize might add placeholder items to meet the <code>numResults</code> for your recommendation request. These items are popular items, based on interactions data, that satisfy your filter criteria. They don't have a relevance score for the user. </p> </li> </ul>"
       }
     },
     "RecommendationID": {

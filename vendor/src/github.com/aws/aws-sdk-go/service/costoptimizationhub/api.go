@@ -1170,6 +1170,38 @@ func (s *ComputeSavingsPlansConfiguration) SetTerm(v string) *ComputeSavingsPlan
 	return s
 }
 
+// The DB instance configuration used for recommendations.
+type DbInstanceConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The DB instance class of the DB instance.
+	DbInstanceClass *string `locationName:"dbInstanceClass" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DbInstanceConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DbInstanceConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetDbInstanceClass sets the DbInstanceClass field's value.
+func (s *DbInstanceConfiguration) SetDbInstanceClass(v string) *DbInstanceConfiguration {
+	s.DbInstanceClass = &v
+	return s
+}
+
 // Describes the Amazon Elastic Block Store volume configuration of the current
 // and recommended resource configuration for a recommendation.
 type EbsVolume struct {
@@ -2333,7 +2365,8 @@ type GetRecommendationOutput struct {
 	// The type of resource.
 	CurrentResourceType *string `locationName:"currentResourceType" type:"string" enum:"ResourceType"`
 
-	// The estimated monthly cost of the recommendation.
+	// The estimated monthly cost of the current resource. For Reserved Instances
+	// and Savings Plans, it refers to the cost for eligible usage.
 	EstimatedMonthlyCost *float64 `locationName:"estimatedMonthlyCost" type:"double"`
 
 	// The estimated monthly savings amount for the recommendation.
@@ -2718,7 +2751,7 @@ func (s *LambdaFunctionConfiguration) SetCompute(v *ComputeConfiguration) *Lambd
 type ListEnrollmentStatusesInput struct {
 	_ struct{} `type:"structure"`
 
-	// The enrollment status of a specific account ID in the organization.
+	// The account ID of a member account in the organization.
 	AccountId *string `locationName:"accountId" type:"string"`
 
 	// Indicates whether to return the enrollment status for the organization.
@@ -2776,7 +2809,12 @@ func (s *ListEnrollmentStatusesInput) SetNextToken(v string) *ListEnrollmentStat
 type ListEnrollmentStatusesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The account enrollment statuses.
+	// The enrollment status of all member accounts in the organization if the account
+	// is the management account.
+	IncludeMemberAccounts *bool `locationName:"includeMemberAccounts" type:"boolean"`
+
+	// The enrollment status of a specific account ID, including creation and last
+	// updated timestamps.
 	Items []*AccountEnrollmentStatus `locationName:"items" type:"list"`
 
 	// The token to retrieve the next set of results.
@@ -2799,6 +2837,12 @@ func (s ListEnrollmentStatusesOutput) String() string {
 // value will be replaced with "sensitive".
 func (s ListEnrollmentStatusesOutput) GoString() string {
 	return s.String()
+}
+
+// SetIncludeMemberAccounts sets the IncludeMemberAccounts field's value.
+func (s *ListEnrollmentStatusesOutput) SetIncludeMemberAccounts(v bool) *ListEnrollmentStatusesOutput {
+	s.IncludeMemberAccounts = &v
+	return s
 }
 
 // SetItems sets the Items field's value.
@@ -3296,6 +3340,180 @@ func (s *OrderBy) SetOrder(v string) *OrderBy {
 	return s
 }
 
+// Contains the details of an Amazon RDS DB instance.
+type RdsDbInstance struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon RDS DB instance configuration used for recommendations.
+	Configuration *RdsDbInstanceConfiguration `locationName:"configuration" type:"structure"`
+
+	// Cost impact of the resource recommendation.
+	CostCalculation *ResourceCostCalculation `locationName:"costCalculation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstance) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstance) GoString() string {
+	return s.String()
+}
+
+// SetConfiguration sets the Configuration field's value.
+func (s *RdsDbInstance) SetConfiguration(v *RdsDbInstanceConfiguration) *RdsDbInstance {
+	s.Configuration = v
+	return s
+}
+
+// SetCostCalculation sets the CostCalculation field's value.
+func (s *RdsDbInstance) SetCostCalculation(v *ResourceCostCalculation) *RdsDbInstance {
+	s.CostCalculation = v
+	return s
+}
+
+// The Amazon RDS DB instance configuration used for recommendations.
+type RdsDbInstanceConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Details about the instance configuration.
+	Instance *DbInstanceConfiguration `locationName:"instance" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstanceConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstanceConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetInstance sets the Instance field's value.
+func (s *RdsDbInstanceConfiguration) SetInstance(v *DbInstanceConfiguration) *RdsDbInstanceConfiguration {
+	s.Instance = v
+	return s
+}
+
+// Contains the details of an Amazon RDS DB instance storage.
+type RdsDbInstanceStorage struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon RDS DB instance storage configuration used for recommendations.
+	Configuration *RdsDbInstanceStorageConfiguration `locationName:"configuration" type:"structure"`
+
+	// Cost impact of the resource recommendation.
+	CostCalculation *ResourceCostCalculation `locationName:"costCalculation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstanceStorage) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstanceStorage) GoString() string {
+	return s.String()
+}
+
+// SetConfiguration sets the Configuration field's value.
+func (s *RdsDbInstanceStorage) SetConfiguration(v *RdsDbInstanceStorageConfiguration) *RdsDbInstanceStorage {
+	s.Configuration = v
+	return s
+}
+
+// SetCostCalculation sets the CostCalculation field's value.
+func (s *RdsDbInstanceStorage) SetCostCalculation(v *ResourceCostCalculation) *RdsDbInstanceStorage {
+	s.CostCalculation = v
+	return s
+}
+
+// The Amazon RDS DB instance storage configuration used for recommendations.
+type RdsDbInstanceStorageConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The new amount of storage in GB to allocate for the DB instance.
+	AllocatedStorageInGb *float64 `locationName:"allocatedStorageInGb" type:"double"`
+
+	// The amount of Provisioned IOPS (input/output operations per second) to be
+	// initially allocated for the DB instance.
+	Iops *float64 `locationName:"iops" type:"double"`
+
+	// The storage throughput for the DB instance.
+	StorageThroughput *float64 `locationName:"storageThroughput" type:"double"`
+
+	// The storage type to associate with the DB instance.
+	StorageType *string `locationName:"storageType" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstanceStorageConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDbInstanceStorageConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetAllocatedStorageInGb sets the AllocatedStorageInGb field's value.
+func (s *RdsDbInstanceStorageConfiguration) SetAllocatedStorageInGb(v float64) *RdsDbInstanceStorageConfiguration {
+	s.AllocatedStorageInGb = &v
+	return s
+}
+
+// SetIops sets the Iops field's value.
+func (s *RdsDbInstanceStorageConfiguration) SetIops(v float64) *RdsDbInstanceStorageConfiguration {
+	s.Iops = &v
+	return s
+}
+
+// SetStorageThroughput sets the StorageThroughput field's value.
+func (s *RdsDbInstanceStorageConfiguration) SetStorageThroughput(v float64) *RdsDbInstanceStorageConfiguration {
+	s.StorageThroughput = &v
+	return s
+}
+
+// SetStorageType sets the StorageType field's value.
+func (s *RdsDbInstanceStorageConfiguration) SetStorageType(v string) *RdsDbInstanceStorageConfiguration {
+	s.StorageType = &v
+	return s
+}
+
 // The RDS reserved instances recommendation details.
 type RdsReservedInstances struct {
 	_ struct{} `type:"structure"`
@@ -3534,7 +3752,8 @@ type Recommendation struct {
 	// The current resource type.
 	CurrentResourceType *string `locationName:"currentResourceType" type:"string"`
 
-	// The estimated monthly cost for the recommendation.
+	// The estimated monthly cost of the current resource. For Reserved Instances
+	// and Savings Plans, it refers to the cost for eligible usage.
 	EstimatedMonthlyCost *float64 `locationName:"estimatedMonthlyCost" type:"double"`
 
 	// The estimated monthly savings amount for the recommendation.
@@ -4130,6 +4349,12 @@ type ResourceDetails struct {
 	// The OpenSearch reserved instances recommendation details.
 	OpenSearchReservedInstances *OpenSearchReservedInstances `locationName:"openSearchReservedInstances" type:"structure"`
 
+	// The DB instance recommendation details.
+	RdsDbInstance *RdsDbInstance `locationName:"rdsDbInstance" type:"structure"`
+
+	// The DB instance storage recommendation details.
+	RdsDbInstanceStorage *RdsDbInstanceStorage `locationName:"rdsDbInstanceStorage" type:"structure"`
+
 	// The RDS reserved instances recommendation details.
 	RdsReservedInstances *RdsReservedInstances `locationName:"rdsReservedInstances" type:"structure"`
 
@@ -4215,6 +4440,18 @@ func (s *ResourceDetails) SetLambdaFunction(v *LambdaFunction) *ResourceDetails 
 // SetOpenSearchReservedInstances sets the OpenSearchReservedInstances field's value.
 func (s *ResourceDetails) SetOpenSearchReservedInstances(v *OpenSearchReservedInstances) *ResourceDetails {
 	s.OpenSearchReservedInstances = v
+	return s
+}
+
+// SetRdsDbInstance sets the RdsDbInstance field's value.
+func (s *ResourceDetails) SetRdsDbInstance(v *RdsDbInstance) *ResourceDetails {
+	s.RdsDbInstance = v
+	return s
+}
+
+// SetRdsDbInstanceStorage sets the RdsDbInstanceStorage field's value.
+func (s *ResourceDetails) SetRdsDbInstanceStorage(v *RdsDbInstanceStorage) *ResourceDetails {
+	s.RdsDbInstanceStorage = v
 	return s
 }
 
@@ -5203,6 +5440,12 @@ const (
 
 	// ResourceTypeElastiCacheReservedInstances is a ResourceType enum value
 	ResourceTypeElastiCacheReservedInstances = "ElastiCacheReservedInstances"
+
+	// ResourceTypeRdsDbInstanceStorage is a ResourceType enum value
+	ResourceTypeRdsDbInstanceStorage = "RdsDbInstanceStorage"
+
+	// ResourceTypeRdsDbInstance is a ResourceType enum value
+	ResourceTypeRdsDbInstance = "RdsDbInstance"
 )
 
 // ResourceType_Values returns all elements of the ResourceType enum
@@ -5221,6 +5464,8 @@ func ResourceType_Values() []string {
 		ResourceTypeOpenSearchReservedInstances,
 		ResourceTypeRedshiftReservedInstances,
 		ResourceTypeElastiCacheReservedInstances,
+		ResourceTypeRdsDbInstanceStorage,
+		ResourceTypeRdsDbInstance,
 	}
 }
 

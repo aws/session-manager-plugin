@@ -2358,6 +2358,10 @@ func (c *CognitoIdentityProvider) AdminResetUserPasswordRequest(input *AdminRese
 // Resets the specified user's password in a user pool as an administrator.
 // Works on any user.
 //
+// To use this API operation, your user pool must have self-service account
+// recovery configured. Use AdminSetUserPassword (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminSetUserPassword.html)
+// if you manage passwords as an administrator.
+//
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
 // you can send SMS messages to US phone numbers. If you use SMS text messages
@@ -3614,7 +3618,7 @@ func (c *CognitoIdentityProvider) AssociateSoftwareTokenRequest(input *Associate
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3719,11 +3723,14 @@ func (c *CognitoIdentityProvider) ChangePasswordRequest(input *ChangePasswordInp
 //
 // Changes the password for a specified user in a user pool.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3839,13 +3846,17 @@ func (c *CognitoIdentityProvider) ConfirmDeviceRequest(input *ConfirmDeviceInput
 // ConfirmDevice API operation for Amazon Cognito Identity Provider.
 //
 // Confirms tracking of the device. This API call is the call that begins device
-// tracking.
+// tracking. For more information about device authentication, see Working with
+// user devices in your user pool (https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
+//
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
 //
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3974,7 +3985,7 @@ func (c *CognitoIdentityProvider) ConfirmForgotPasswordRequest(input *ConfirmFor
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4129,7 +4140,7 @@ func (c *CognitoIdentityProvider) ConfirmSignUpRequest(input *ConfirmSignUpInput
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4377,7 +4388,8 @@ func (c *CognitoIdentityProvider) CreateIdentityProviderRequest(input *CreateIde
 
 // CreateIdentityProvider API operation for Amazon Cognito Identity Provider.
 //
-// Creates an IdP for a user pool.
+// Adds a configuration and trust relationship between a third-party identity
+// provider (IdP) and a user pool.
 //
 // Amazon Cognito evaluates Identity and Access Management (IAM) policies in
 // requests for this API operation. For this operation, you must use IAM credentials
@@ -5378,11 +5390,14 @@ func (c *CognitoIdentityProvider) DeleteUserRequest(input *DeleteUserInput) (req
 //
 // Allows a user to delete their own user profile.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5493,11 +5508,14 @@ func (c *CognitoIdentityProvider) DeleteUserAttributesRequest(input *DeleteUserA
 //
 // Deletes the attributes for a user.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6578,13 +6596,17 @@ func (c *CognitoIdentityProvider) ForgetDeviceRequest(input *ForgetDeviceInput) 
 
 // ForgetDevice API operation for Amazon Cognito Identity Provider.
 //
-// Forgets the specified device.
+// Forgets the specified device. For more information about device authentication,
+// see Working with user devices in your user pool (https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
+//
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
 //
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -6707,11 +6729,15 @@ func (c *CognitoIdentityProvider) ForgotPasswordRequest(input *ForgotPasswordInp
 // returns InvalidParameterException. If your app client has a client secret
 // and you don't provide a SECRET_HASH parameter, this API returns NotAuthorizedException.
 //
+// To use this API operation, your user pool must have self-service account
+// recovery configured. Use AdminSetUserPassword (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_AdminSetUserPassword.html)
+// if you manage passwords as an administrator.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
@@ -6959,13 +6985,17 @@ func (c *CognitoIdentityProvider) GetDeviceRequest(input *GetDeviceInput) (req *
 
 // GetDevice API operation for Amazon Cognito Identity Provider.
 //
-// Gets the device.
+// Gets the device. For more information about device authentication, see Working
+// with user devices in your user pool (https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
+//
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
 //
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7552,11 +7582,14 @@ func (c *CognitoIdentityProvider) GetUserRequest(input *GetUserInput) (req *requ
 //
 // Gets the user attributes and metadata for a user.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -7668,11 +7701,14 @@ func (c *CognitoIdentityProvider) GetUserAttributeVerificationCodeRequest(input 
 // name. Sends a message to a user with a code that they must return in a VerifyUserAttribute
 // request.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
@@ -7947,11 +7983,14 @@ func (c *CognitoIdentityProvider) GlobalSignOutRequest(input *GlobalSignOutInput
 //
 // Other requests might be valid until your user's token expires.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8064,7 +8103,7 @@ func (c *CognitoIdentityProvider) InitiateAuthRequest(input *InitiateAuthInput) 
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
@@ -8216,13 +8255,17 @@ func (c *CognitoIdentityProvider) ListDevicesRequest(input *ListDevicesInput) (r
 // ListDevices API operation for Amazon Cognito Identity Provider.
 //
 // Lists the sign-in devices that Amazon Cognito has registered to the current
-// user.
+// user. For more information about device authentication, see Working with
+// user devices in your user pool (https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
+//
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
 //
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9675,7 +9718,7 @@ func (c *CognitoIdentityProvider) ResendConfirmationCodeRequest(input *ResendCon
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
@@ -9842,7 +9885,7 @@ func (c *CognitoIdentityProvider) RespondToAuthChallengeRequest(input *RespondTo
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
@@ -10028,7 +10071,7 @@ func (c *CognitoIdentityProvider) RevokeTokenRequest(input *RevokeTokenInput) (r
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -10451,11 +10494,14 @@ func (c *CognitoIdentityProvider) SetUserMFAPreferenceRequest(input *SetUserMFAP
 // based on the assessed risk level of sign-in attempts, deactivate MFA for
 // users and turn on Adaptive Authentication for the user pool.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -10595,6 +10641,9 @@ func (c *CognitoIdentityProvider) SetUserPoolMfaConfigRequest(input *SetUserPool
 //     This exception is thrown when the user has made too many requests for a given
 //     operation.
 //
+//   - ConcurrentModificationException
+//     This exception is thrown if two or more modifications are happening concurrently.
+//
 //   - ResourceNotFoundException
 //     This exception is thrown when the Amazon Cognito service can't find the requested
 //     resource.
@@ -10687,11 +10736,14 @@ func (c *CognitoIdentityProvider) SetUserSettingsRequest(input *SetUserSettingsI
 // token MFA. To configure either type of MFA, use SetUserMFAPreference (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_SetUserMFAPreference.html)
 // instead.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -10802,7 +10854,7 @@ func (c *CognitoIdentityProvider) SignUpRequest(input *SignUpInput) (req *reques
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
@@ -10867,6 +10919,10 @@ func (c *CognitoIdentityProvider) SignUpRequest(input *SignUpInput) (req *reques
 //
 //   - InternalErrorException
 //     This exception is thrown when Amazon Cognito encounters an internal error.
+//
+//   - LimitExceededException
+//     This exception is thrown when a user exceeds the limit for a requested Amazon
+//     Web Services resource.
 //
 //   - InvalidSmsRoleAccessPolicyException
 //     This exception is returned when the role provided for SMS configuration doesn't
@@ -11366,7 +11422,7 @@ func (c *CognitoIdentityProvider) UpdateAuthEventFeedbackRequest(input *UpdateAu
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -11468,13 +11524,17 @@ func (c *CognitoIdentityProvider) UpdateDeviceStatusRequest(input *UpdateDeviceS
 
 // UpdateDeviceStatus API operation for Amazon Cognito Identity Provider.
 //
-// Updates the device status.
+// Updates the device status. For more information about device authentication,
+// see Working with user devices in your user pool (https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-device-tracking.html).
+//
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
 //
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -11914,11 +11974,14 @@ func (c *CognitoIdentityProvider) UpdateUserAttributesRequest(input *UpdateUserA
 // in your API request with a blank value. Custom attribute values in this request
 // must include the custom: prefix.
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // This action might generate an SMS text message. Starting June 1, 2021, US
 // telecom carriers require you to register an origination phone number before
@@ -12502,7 +12565,7 @@ func (c *CognitoIdentityProvider) VerifySoftwareTokenRequest(input *VerifySoftwa
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -12636,11 +12699,14 @@ func (c *CognitoIdentityProvider) VerifyUserAttributeRequest(input *VerifyUserAt
 // pending value. For more information, see UserAttributeUpdateSettingsType
 // (https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserAttributeUpdateSettingsType.html).
 //
+// Authorize this action with a signed-in user's access token. It must include
+// the scope aws.cognito.signin.user.admin.
+//
 // Amazon Cognito doesn't evaluate Identity and Access Management (IAM) policies
 // in requests for this API operation. For this operation, you can't use IAM
 // credentials to authorize requests, and you can't grant IAM permissions in
 // policies. For more information about authorization models in Amazon Cognito,
-// see Using the Amazon Cognito native and OIDC APIs (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
+// see Using the Amazon Cognito user pools API and user pool endpoints (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pools-API-operations.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -13106,8 +13172,9 @@ type AdminAddUserToGroupInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminAddUserToGroupInput's
@@ -13244,8 +13311,9 @@ type AdminConfirmSignUpInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminConfirmSignUpInput's
@@ -13724,8 +13792,9 @@ type AdminDeleteUserAttributesInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminDeleteUserAttributesInput's
@@ -13831,8 +13900,9 @@ type AdminDeleteUserInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminDeleteUserInput's
@@ -14014,8 +14084,9 @@ type AdminDisableUserInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminDisableUserInput's
@@ -14112,8 +14183,9 @@ type AdminEnableUserInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminEnableUserInput's
@@ -14215,8 +14287,9 @@ type AdminForgetDeviceInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminForgetDeviceInput's
@@ -14328,8 +14401,9 @@ type AdminGetDeviceInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminGetDeviceInput's
@@ -14449,8 +14523,9 @@ type AdminGetUserInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminGetUserInput's
@@ -14535,8 +14610,9 @@ type AdminGetUserOutput struct {
 	// The date the user was created.
 	UserCreateDate *time.Time `type:"timestamp"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	UserLastModifiedDate *time.Time `type:"timestamp"`
 
 	// The MFA options that are activated for the user. The possible values in this
@@ -15176,8 +15252,9 @@ type AdminListDevicesInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminListDevicesInput's
@@ -15315,8 +15392,9 @@ type AdminListGroupsForUserInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminListGroupsForUserInput's
@@ -15451,8 +15529,9 @@ type AdminListUserAuthEventsInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminListUserAuthEventsInput's
@@ -15585,8 +15664,9 @@ type AdminRemoveUserFromGroupInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminRemoveUserFromGroupInput's
@@ -15724,8 +15804,9 @@ type AdminResetUserPasswordInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminResetUserPasswordInput's
@@ -16169,8 +16250,9 @@ type AdminSetUserMFAPreferenceInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminSetUserMFAPreferenceInput's
@@ -16288,8 +16370,9 @@ type AdminSetUserPasswordInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminSetUserPasswordInput's
@@ -16406,8 +16489,9 @@ type AdminSetUserSettingsInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminSetUserSettingsInput's
@@ -16535,8 +16619,9 @@ type AdminUpdateAuthEventFeedbackInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminUpdateAuthEventFeedbackInput's
@@ -16660,8 +16745,9 @@ type AdminUpdateDeviceStatusInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminUpdateDeviceStatusInput's
@@ -16827,8 +16913,9 @@ type AdminUpdateUserAttributesInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminUpdateUserAttributesInput's
@@ -16950,8 +17037,9 @@ type AdminUserGlobalSignOutInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by AdminUserGlobalSignOutInput's
@@ -17424,8 +17512,9 @@ type AuthEventType struct {
 	// The challenge responses.
 	ChallengeResponses []*ChallengeResponseType `type:"list"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// The user context data captured at the time of an event request. This value
@@ -18374,8 +18463,9 @@ type ConfirmForgotPasswordInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ConfirmForgotPasswordInput's
@@ -18589,8 +18679,9 @@ type ConfirmSignUpInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ConfirmSignUpInput's
@@ -18971,22 +19062,100 @@ type CreateIdentityProviderInput struct {
 	// A list of IdP identifiers.
 	IdpIdentifiers []*string `type:"list"`
 
-	// The IdP details. The following list describes the provider detail keys for
-	// each IdP type.
+	// The scopes, URLs, and identifiers for your external identity provider. The
+	// following examples describe the provider detail keys for each IdP type. These
+	// values and their schema are subject to change. Social IdP authorize_scopes
+	// values must match the values listed here.
 	//
-	//    * For Google and Login with Amazon: client_id client_secret authorize_scopes
+	// OpenID Connect (OIDC)
 	//
-	//    * For Facebook: client_id client_secret authorize_scopes api_version
+	// Amazon Cognito accepts the following elements when it can't discover endpoint
+	// URLs from oidc_issuer: attributes_url, authorize_url, jwks_uri, token_url.
 	//
-	//    * For Sign in with Apple: client_id team_id key_id private_key authorize_scopes
+	// Create or update request: "ProviderDetails": { "attributes_request_method":
+	// "GET", "attributes_url": "https://auth.example.com/userInfo", "authorize_scopes":
+	// "openid profile email", "authorize_url": "https://auth.example.com/authorize",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "jwks_uri": "https://auth.example.com/.well-known/jwks.json", "oidc_issuer":
+	// "https://auth.example.com", "token_url": "https://example.com/token" }
 	//
-	//    * For OpenID Connect (OIDC) providers: client_id client_secret attributes_request_method
-	//    oidc_issuer authorize_scopes The following keys are only present if Amazon
-	//    Cognito didn't discover them at the oidc_issuer URL. authorize_url token_url
-	//    attributes_url jwks_uri Amazon Cognito sets the value of the following
-	//    keys automatically. They are read-only. attributes_url_add_attributes
+	// Describe response: "ProviderDetails": { "attributes_request_method": "GET",
+	// "attributes_url": "https://auth.example.com/userInfo", "attributes_url_add_attributes":
+	// "false", "authorize_scopes": "openid profile email", "authorize_url": "https://auth.example.com/authorize",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "jwks_uri": "https://auth.example.com/.well-known/jwks.json", "oidc_issuer":
+	// "https://auth.example.com", "token_url": "https://example.com/token" }
 	//
-	//    * For SAML providers: MetadataFile or MetadataURL IDPSignout optional
+	// SAML
+	//
+	// Create or update request with Metadata URL: "ProviderDetails": { "IDPInit":
+	// "true", "IDPSignout": "true", "EncryptedResponses" : "true", "MetadataURL":
+	// "https://auth.example.com/sso/saml/metadata", "RequestSigningAlgorithm":
+	// "rsa-sha256" }
+	//
+	// Create or update request with Metadata file: "ProviderDetails": { "IDPInit":
+	// "true", "IDPSignout": "true", "EncryptedResponses" : "true", "MetadataFile":
+	// "[metadata XML]", "RequestSigningAlgorithm": "rsa-sha256" }
+	//
+	// The value of MetadataFile must be the plaintext metadata document with all
+	// quote (") characters escaped by backslashes.
+	//
+	// Describe response: "ProviderDetails": { "IDPInit": "true", "IDPSignout":
+	// "true", "EncryptedResponses" : "true", "ActiveEncryptionCertificate": "[certificate]",
+	// "MetadataURL": "https://auth.example.com/sso/saml/metadata", "RequestSigningAlgorithm":
+	// "rsa-sha256", "SLORedirectBindingURI": "https://auth.example.com/slo/saml",
+	// "SSORedirectBindingURI": "https://auth.example.com/sso/saml" }
+	//
+	// LoginWithAmazon
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "profile
+	// postal_code", "client_id": "amzn1.application-oa2-client.1example23456789",
+	// "client_secret": "provider-app-client-secret"
+	//
+	// Describe response: "ProviderDetails": { "attributes_url": "https://api.amazon.com/user/profile",
+	// "attributes_url_add_attributes": "false", "authorize_scopes": "profile postal_code",
+	// "authorize_url": "https://www.amazon.com/ap/oa", "client_id": "amzn1.application-oa2-client.1example23456789",
+	// "client_secret": "provider-app-client-secret", "token_request_method": "POST",
+	// "token_url": "https://api.amazon.com/auth/o2/token" }
+	//
+	// Google
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "email
+	// profile openid", "client_id": "1example23456789.apps.googleusercontent.com",
+	// "client_secret": "provider-app-client-secret" }
+	//
+	// Describe response: "ProviderDetails": { "attributes_url": "https://people.googleapis.com/v1/people/me?personFields=",
+	// "attributes_url_add_attributes": "true", "authorize_scopes": "email profile
+	// openid", "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth",
+	// "client_id": "1example23456789.apps.googleusercontent.com", "client_secret":
+	// "provider-app-client-secret", "oidc_issuer": "https://accounts.google.com",
+	// "token_request_method": "POST", "token_url": "https://www.googleapis.com/oauth2/v4/token"
+	// }
+	//
+	// SignInWithApple
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "email
+	// name", "client_id": "com.example.cognito", "private_key": "1EXAMPLE", "key_id":
+	// "2EXAMPLE", "team_id": "3EXAMPLE" }
+	//
+	// Describe response: "ProviderDetails": { "attributes_url_add_attributes":
+	// "false", "authorize_scopes": "email name", "authorize_url": "https://appleid.apple.com/auth/authorize",
+	// "client_id": "com.example.cognito", "key_id": "1EXAMPLE", "oidc_issuer":
+	// "https://appleid.apple.com", "team_id": "2EXAMPLE", "token_request_method":
+	// "POST", "token_url": "https://appleid.apple.com/auth/token" }
+	//
+	// Facebook
+	//
+	// Create or update request: "ProviderDetails": { "api_version": "v17.0", "authorize_scopes":
+	// "public_profile, email", "client_id": "1example23456789", "client_secret":
+	// "provider-app-client-secret" }
+	//
+	// Describe response: "ProviderDetails": { "api_version": "v17.0", "attributes_url":
+	// "https://graph.facebook.com/v17.0/me?fields=", "attributes_url_add_attributes":
+	// "true", "authorize_scopes": "public_profile, email", "authorize_url": "https://www.facebook.com/v17.0/dialog/oauth",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "token_request_method": "GET", "token_url": "https://graph.facebook.com/v17.0/oauth/access_token"
+	// }
 	//
 	// ProviderDetails is a required field
 	ProviderDetails map[string]*string `type:"map" required:"true"`
@@ -19125,8 +19294,12 @@ func (s *CreateIdentityProviderOutput) SetIdentityProvider(v *IdentityProviderTy
 type CreateResourceServerInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique resource server identifier for the resource server. This could be
-	// an HTTPS endpoint where the resource server is located, such as https://my-weather-api.example.com.
+	// A unique resource server identifier for the resource server. The identifier
+	// can be an API friendly name like solar-system-data. You can also set an API
+	// URL like https://solar-system-data-api.example.com as your identifier.
+	//
+	// Amazon Cognito represents scopes in the access token in the format $resource-server-identifier/$scope.
+	// Longer scope-identifier strings increase the size of your access tokens.
 	//
 	// Identifier is a required field
 	Identifier *string `min:"1" type:"string" required:"true"`
@@ -19394,7 +19567,9 @@ type CreateUserPoolClientInput struct {
 	// access tokens are valid for one hour.
 	AccessTokenValidity *int64 `min:"1" type:"integer"`
 
-	// The allowed OAuth flows.
+	// The OAuth grant types that you want your app client to generate. To create
+	// an app client that generates client credentials grants, you must add client_credentials
+	// as the only allowed OAuth flow.
 	//
 	// code
 	//
@@ -19477,7 +19652,8 @@ type CreateUserPoolClientInput struct {
 	// ClientName is a required field
 	ClientName *string `min:"1" type:"string" required:"true"`
 
-	// The default redirect URI. Must be in the CallbackURLs list.
+	// The default redirect URI. In app clients with one assigned IdP, replaces
+	// redirect_uri in authentication requests. Must be in the CallbackURLs list.
 	//
 	// A redirect URI must:
 	//
@@ -19487,7 +19663,7 @@ type CreateUserPoolClientInput struct {
 	//
 	//    * Not include a fragment component.
 	//
-	// See OAuth 2.0 - Redirection Endpoint (https://tools.ietf.org/html/rfc6749#section-3.1.2).
+	// For more information, see Default redirect URI (https://docs.aws.amazon.com/cognito/latest/developerguide/user-pool-settings-client-apps.html#cognito-user-pools-app-idp-settings-about).
 	//
 	// Amazon Cognito requires HTTPS over HTTP except for http://localhost for testing
 	// purposes only.
@@ -19970,7 +20146,9 @@ type CreateUserPoolDomainOutput struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon CloudFront endpoint that you use as the target of the alias that
-	// you set up with your Domain Name Service (DNS) provider.
+	// you set up with your Domain Name Service (DNS) provider. Amazon Cognito returns
+	// this value if you set a custom domain with CustomDomainConfig. If you set
+	// an Amazon Cognito prefix domain, this operation returns a blank response.
 	CloudFrontDomain *string `min:"1" type:"string"`
 }
 
@@ -21384,7 +21562,12 @@ func (s *DescribeIdentityProviderOutput) SetIdentityProvider(v *IdentityProvider
 type DescribeResourceServerInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the resource server
+	// A unique resource server identifier for the resource server. The identifier
+	// can be an API friendly name like solar-system-data. You can also set an API
+	// URL like https://solar-system-data-api.example.com as your identifier.
+	//
+	// Amazon Cognito represents scopes in the access token in the format $resource-server-identifier/$scope.
+	// Longer scope-identifier strings increase the size of your access tokens.
 	//
 	// Identifier is a required field
 	Identifier *string `min:"1" type:"string" required:"true"`
@@ -22076,8 +22259,9 @@ type DeviceType struct {
 	// The date when the device was last authenticated.
 	DeviceLastAuthenticatedDate *time.Time `type:"timestamp"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	DeviceLastModifiedDate *time.Time `type:"timestamp"`
 }
 
@@ -22987,8 +23171,9 @@ type ForgotPasswordInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ForgotPasswordInput's
@@ -24283,8 +24468,9 @@ func (s *GroupExistsException) RequestID() string {
 type GroupType struct {
 	_ struct{} `type:"structure"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// A string containing the description of the group.
@@ -24293,8 +24479,9 @@ type GroupType struct {
 	// The name of the group.
 	GroupName *string `min:"1" type:"string"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
 	// A non-negative integer value that specifies the precedence of this group
@@ -24429,35 +24616,113 @@ type IdentityProviderType struct {
 	// A mapping of IdP attributes to standard and custom user pool attributes.
 	AttributeMapping map[string]*string `type:"map"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// A list of IdP identifiers.
 	IdpIdentifiers []*string `type:"list"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
-	// The IdP details. The following list describes the provider detail keys for
-	// each IdP type.
+	// The scopes, URLs, and identifiers for your external identity provider. The
+	// following examples describe the provider detail keys for each IdP type. These
+	// values and their schema are subject to change. Social IdP authorize_scopes
+	// values must match the values listed here.
 	//
-	//    * For Google and Login with Amazon: client_id client_secret authorize_scopes
+	// OpenID Connect (OIDC)
 	//
-	//    * For Facebook: client_id client_secret authorize_scopes api_version
+	// Amazon Cognito accepts the following elements when it can't discover endpoint
+	// URLs from oidc_issuer: attributes_url, authorize_url, jwks_uri, token_url.
 	//
-	//    * For Sign in with Apple: client_id team_id key_id private_key You can
-	//    submit a private_key when you add or update an IdP. Describe operations
-	//    don't return the private key. authorize_scopes
+	// Create or update request: "ProviderDetails": { "attributes_request_method":
+	// "GET", "attributes_url": "https://auth.example.com/userInfo", "authorize_scopes":
+	// "openid profile email", "authorize_url": "https://auth.example.com/authorize",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "jwks_uri": "https://auth.example.com/.well-known/jwks.json", "oidc_issuer":
+	// "https://auth.example.com", "token_url": "https://example.com/token" }
 	//
-	//    * For OIDC providers: client_id client_secret attributes_request_method
-	//    oidc_issuer authorize_scopes The following keys are only present if Amazon
-	//    Cognito didn't discover them at the oidc_issuer URL. authorize_url token_url
-	//    attributes_url jwks_uri Amazon Cognito sets the value of the following
-	//    keys automatically. They are read-only. attributes_url_add_attributes
+	// Describe response: "ProviderDetails": { "attributes_request_method": "GET",
+	// "attributes_url": "https://auth.example.com/userInfo", "attributes_url_add_attributes":
+	// "false", "authorize_scopes": "openid profile email", "authorize_url": "https://auth.example.com/authorize",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "jwks_uri": "https://auth.example.com/.well-known/jwks.json", "oidc_issuer":
+	// "https://auth.example.com", "token_url": "https://example.com/token" }
 	//
-	//    * For SAML providers: MetadataFile or MetadataURL IDPSignout optional
+	// SAML
+	//
+	// Create or update request with Metadata URL: "ProviderDetails": { "IDPInit":
+	// "true", "IDPSignout": "true", "EncryptedResponses" : "true", "MetadataURL":
+	// "https://auth.example.com/sso/saml/metadata", "RequestSigningAlgorithm":
+	// "rsa-sha256" }
+	//
+	// Create or update request with Metadata file: "ProviderDetails": { "IDPInit":
+	// "true", "IDPSignout": "true", "EncryptedResponses" : "true", "MetadataFile":
+	// "[metadata XML]", "RequestSigningAlgorithm": "rsa-sha256" }
+	//
+	// The value of MetadataFile must be the plaintext metadata document with all
+	// quote (") characters escaped by backslashes.
+	//
+	// Describe response: "ProviderDetails": { "IDPInit": "true", "IDPSignout":
+	// "true", "EncryptedResponses" : "true", "ActiveEncryptionCertificate": "[certificate]",
+	// "MetadataURL": "https://auth.example.com/sso/saml/metadata", "RequestSigningAlgorithm":
+	// "rsa-sha256", "SLORedirectBindingURI": "https://auth.example.com/slo/saml",
+	// "SSORedirectBindingURI": "https://auth.example.com/sso/saml" }
+	//
+	// LoginWithAmazon
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "profile
+	// postal_code", "client_id": "amzn1.application-oa2-client.1example23456789",
+	// "client_secret": "provider-app-client-secret"
+	//
+	// Describe response: "ProviderDetails": { "attributes_url": "https://api.amazon.com/user/profile",
+	// "attributes_url_add_attributes": "false", "authorize_scopes": "profile postal_code",
+	// "authorize_url": "https://www.amazon.com/ap/oa", "client_id": "amzn1.application-oa2-client.1example23456789",
+	// "client_secret": "provider-app-client-secret", "token_request_method": "POST",
+	// "token_url": "https://api.amazon.com/auth/o2/token" }
+	//
+	// Google
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "email
+	// profile openid", "client_id": "1example23456789.apps.googleusercontent.com",
+	// "client_secret": "provider-app-client-secret" }
+	//
+	// Describe response: "ProviderDetails": { "attributes_url": "https://people.googleapis.com/v1/people/me?personFields=",
+	// "attributes_url_add_attributes": "true", "authorize_scopes": "email profile
+	// openid", "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth",
+	// "client_id": "1example23456789.apps.googleusercontent.com", "client_secret":
+	// "provider-app-client-secret", "oidc_issuer": "https://accounts.google.com",
+	// "token_request_method": "POST", "token_url": "https://www.googleapis.com/oauth2/v4/token"
+	// }
+	//
+	// SignInWithApple
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "email
+	// name", "client_id": "com.example.cognito", "private_key": "1EXAMPLE", "key_id":
+	// "2EXAMPLE", "team_id": "3EXAMPLE" }
+	//
+	// Describe response: "ProviderDetails": { "attributes_url_add_attributes":
+	// "false", "authorize_scopes": "email name", "authorize_url": "https://appleid.apple.com/auth/authorize",
+	// "client_id": "com.example.cognito", "key_id": "1EXAMPLE", "oidc_issuer":
+	// "https://appleid.apple.com", "team_id": "2EXAMPLE", "token_request_method":
+	// "POST", "token_url": "https://appleid.apple.com/auth/token" }
+	//
+	// Facebook
+	//
+	// Create or update request: "ProviderDetails": { "api_version": "v17.0", "authorize_scopes":
+	// "public_profile, email", "client_id": "1example23456789", "client_secret":
+	// "provider-app-client-secret" }
+	//
+	// Describe response: "ProviderDetails": { "api_version": "v17.0", "attributes_url":
+	// "https://graph.facebook.com/v17.0/me?fields=", "attributes_url_add_attributes":
+	// "true", "authorize_scopes": "public_profile, email", "authorize_url": "https://www.facebook.com/v17.0/dialog/oauth",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "token_request_method": "GET", "token_url": "https://graph.facebook.com/v17.0/oauth/access_token"
+	// }
 	ProviderDetails map[string]*string `type:"map"`
 
 	// The IdP name.
@@ -27594,7 +27859,9 @@ func (s *NotifyEmailType) SetTextBody(v string) *NotifyEmailType {
 type NumberAttributeConstraintsType struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum value of an attribute that is of the number data type.
+	// The maximum length of a number attribute value. Must be a number less than
+	// or equal to 2^1023, represented as a string with a length of 131072 characters
+	// or fewer.
 	MaxValue *string `type:"string"`
 
 	// The minimum value of an attribute that is of the number data type.
@@ -27938,8 +28205,9 @@ func (s *PreconditionNotMetException) RequestID() string {
 type ProviderDescription struct {
 	_ struct{} `type:"structure"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// The date the provider was last modified.
@@ -28190,8 +28458,9 @@ type ResendConfirmationCodeInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ResendConfirmationCodeInput's
@@ -28452,7 +28721,12 @@ func (s *ResourceServerScopeType) SetScopeName(v string) *ResourceServerScopeTyp
 type ResourceServerType struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the resource server.
+	// A unique resource server identifier for the resource server. The identifier
+	// can be an API friendly name like solar-system-data. You can also set an API
+	// URL like https://solar-system-data-api.example.com as your identifier.
+	//
+	// Amazon Cognito represents scopes in the access token in the format $resource-server-identifier/$scope.
+	// Longer scope-identifier strings increase the size of your access tokens.
 	Identifier *string `min:"1" type:"string"`
 
 	// The name of the resource server.
@@ -28942,8 +29216,9 @@ type RiskConfigurationType struct {
 	// and the EventAction.
 	CompromisedCredentialsRiskConfiguration *CompromisedCredentialsRiskConfigurationType `type:"structure"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
 	// The configuration to override the risk decision.
@@ -30794,7 +31069,9 @@ func (s *StopUserImportJobOutput) SetUserImportJob(v *UserImportJobType) *StopUs
 type StringAttributeConstraintsType struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum length.
+	// The maximum length of a string attribute value. Must be a number less than
+	// or equal to 2^1023, represented as a string with a length of 131072 characters
+	// or fewer.
 	MaxLength *string `type:"string"`
 
 	// The minimum length.
@@ -31127,15 +31404,17 @@ type UICustomizationType struct {
 	// String and GoString methods.
 	ClientId *string `min:"1" type:"string" sensitive:"true"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// The logo image for the UI customization.
 	ImageUrl *string `type:"string"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
 	// The user pool ID for the user pool.
@@ -31710,8 +31989,9 @@ type UpdateAuthEventFeedbackInput struct {
 
 	// The username of the user that you want to query or modify. The value of this
 	// parameter is typically your user's username, but it can be any of their alias
-	// attributes. If username isn't an alias attribute in your user pool, you can
-	// also use their sub in this request.
+	// attributes. If username isn't an alias attribute in your user pool, this
+	// value must be the sub of a local user or the username of a user from a third-party
+	// IdP.
 	//
 	// Username is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by UpdateAuthEventFeedbackInput's
@@ -32064,7 +32344,100 @@ type UpdateIdentityProviderInput struct {
 	// A list of IdP identifiers.
 	IdpIdentifiers []*string `type:"list"`
 
-	// The IdP details to be updated, such as MetadataURL and MetadataFile.
+	// The scopes, URLs, and identifiers for your external identity provider. The
+	// following examples describe the provider detail keys for each IdP type. These
+	// values and their schema are subject to change. Social IdP authorize_scopes
+	// values must match the values listed here.
+	//
+	// OpenID Connect (OIDC)
+	//
+	// Amazon Cognito accepts the following elements when it can't discover endpoint
+	// URLs from oidc_issuer: attributes_url, authorize_url, jwks_uri, token_url.
+	//
+	// Create or update request: "ProviderDetails": { "attributes_request_method":
+	// "GET", "attributes_url": "https://auth.example.com/userInfo", "authorize_scopes":
+	// "openid profile email", "authorize_url": "https://auth.example.com/authorize",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "jwks_uri": "https://auth.example.com/.well-known/jwks.json", "oidc_issuer":
+	// "https://auth.example.com", "token_url": "https://example.com/token" }
+	//
+	// Describe response: "ProviderDetails": { "attributes_request_method": "GET",
+	// "attributes_url": "https://auth.example.com/userInfo", "attributes_url_add_attributes":
+	// "false", "authorize_scopes": "openid profile email", "authorize_url": "https://auth.example.com/authorize",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "jwks_uri": "https://auth.example.com/.well-known/jwks.json", "oidc_issuer":
+	// "https://auth.example.com", "token_url": "https://example.com/token" }
+	//
+	// SAML
+	//
+	// Create or update request with Metadata URL: "ProviderDetails": { "IDPInit":
+	// "true", "IDPSignout": "true", "EncryptedResponses" : "true", "MetadataURL":
+	// "https://auth.example.com/sso/saml/metadata", "RequestSigningAlgorithm":
+	// "rsa-sha256" }
+	//
+	// Create or update request with Metadata file: "ProviderDetails": { "IDPInit":
+	// "true", "IDPSignout": "true", "EncryptedResponses" : "true", "MetadataFile":
+	// "[metadata XML]", "RequestSigningAlgorithm": "rsa-sha256" }
+	//
+	// The value of MetadataFile must be the plaintext metadata document with all
+	// quote (") characters escaped by backslashes.
+	//
+	// Describe response: "ProviderDetails": { "IDPInit": "true", "IDPSignout":
+	// "true", "EncryptedResponses" : "true", "ActiveEncryptionCertificate": "[certificate]",
+	// "MetadataURL": "https://auth.example.com/sso/saml/metadata", "RequestSigningAlgorithm":
+	// "rsa-sha256", "SLORedirectBindingURI": "https://auth.example.com/slo/saml",
+	// "SSORedirectBindingURI": "https://auth.example.com/sso/saml" }
+	//
+	// LoginWithAmazon
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "profile
+	// postal_code", "client_id": "amzn1.application-oa2-client.1example23456789",
+	// "client_secret": "provider-app-client-secret"
+	//
+	// Describe response: "ProviderDetails": { "attributes_url": "https://api.amazon.com/user/profile",
+	// "attributes_url_add_attributes": "false", "authorize_scopes": "profile postal_code",
+	// "authorize_url": "https://www.amazon.com/ap/oa", "client_id": "amzn1.application-oa2-client.1example23456789",
+	// "client_secret": "provider-app-client-secret", "token_request_method": "POST",
+	// "token_url": "https://api.amazon.com/auth/o2/token" }
+	//
+	// Google
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "email
+	// profile openid", "client_id": "1example23456789.apps.googleusercontent.com",
+	// "client_secret": "provider-app-client-secret" }
+	//
+	// Describe response: "ProviderDetails": { "attributes_url": "https://people.googleapis.com/v1/people/me?personFields=",
+	// "attributes_url_add_attributes": "true", "authorize_scopes": "email profile
+	// openid", "authorize_url": "https://accounts.google.com/o/oauth2/v2/auth",
+	// "client_id": "1example23456789.apps.googleusercontent.com", "client_secret":
+	// "provider-app-client-secret", "oidc_issuer": "https://accounts.google.com",
+	// "token_request_method": "POST", "token_url": "https://www.googleapis.com/oauth2/v4/token"
+	// }
+	//
+	// SignInWithApple
+	//
+	// Create or update request: "ProviderDetails": { "authorize_scopes": "email
+	// name", "client_id": "com.example.cognito", "private_key": "1EXAMPLE", "key_id":
+	// "2EXAMPLE", "team_id": "3EXAMPLE" }
+	//
+	// Describe response: "ProviderDetails": { "attributes_url_add_attributes":
+	// "false", "authorize_scopes": "email name", "authorize_url": "https://appleid.apple.com/auth/authorize",
+	// "client_id": "com.example.cognito", "key_id": "1EXAMPLE", "oidc_issuer":
+	// "https://appleid.apple.com", "team_id": "2EXAMPLE", "token_request_method":
+	// "POST", "token_url": "https://appleid.apple.com/auth/token" }
+	//
+	// Facebook
+	//
+	// Create or update request: "ProviderDetails": { "api_version": "v17.0", "authorize_scopes":
+	// "public_profile, email", "client_id": "1example23456789", "client_secret":
+	// "provider-app-client-secret" }
+	//
+	// Describe response: "ProviderDetails": { "api_version": "v17.0", "attributes_url":
+	// "https://graph.facebook.com/v17.0/me?fields=", "attributes_url_add_attributes":
+	// "true", "authorize_scopes": "public_profile, email", "authorize_url": "https://www.facebook.com/v17.0/dialog/oauth",
+	// "client_id": "1example23456789", "client_secret": "provider-app-client-secret",
+	// "token_request_method": "GET", "token_url": "https://graph.facebook.com/v17.0/oauth/access_token"
+	// }
 	ProviderDetails map[string]*string `type:"map"`
 
 	// The IdP name.
@@ -32184,7 +32557,12 @@ func (s *UpdateIdentityProviderOutput) SetIdentityProvider(v *IdentityProviderTy
 type UpdateResourceServerInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the resource server.
+	// A unique resource server identifier for the resource server. The identifier
+	// can be an API friendly name like solar-system-data. You can also set an API
+	// URL like https://solar-system-data-api.example.com as your identifier.
+	//
+	// Amazon Cognito represents scopes in the access token in the format $resource-server-identifier/$scope.
+	// Longer scope-identifier strings increase the size of your access tokens.
 	//
 	// Identifier is a required field
 	Identifier *string `min:"1" type:"string" required:"true"`
@@ -33616,8 +33994,9 @@ type UserImportJobType struct {
 	// The message returned when the user import job is completed.
 	CompletionMessage *string `min:"1" type:"string"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// The number of users that couldn't be imported.
@@ -34243,8 +34622,9 @@ type UserPoolClientType struct {
 	// String and GoString methods.
 	ClientSecret *string `min:"1" type:"string" sensitive:"true"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// The default redirect URI. Must be in the CallbackURLs list.
@@ -34336,8 +34716,9 @@ type UserPoolClientType struct {
 	// ID tokens are valid for one hour.
 	IdTokenValidity *int64 `min:"1" type:"integer"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
 	// A list of allowed logout URLs for the IdPs.
@@ -34601,8 +34982,9 @@ func (s *UserPoolClientType) SetWriteAttributes(v []*string) *UserPoolClientType
 type UserPoolDescriptionType struct {
 	_ struct{} `type:"structure"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// The ID in a user pool description.
@@ -34611,8 +34993,9 @@ type UserPoolDescriptionType struct {
 	// The Lambda configuration information in a user pool description.
 	LambdaConfig *LambdaConfigType `type:"structure"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
 	// The name in a user pool description.
@@ -34814,8 +35197,9 @@ type UserPoolType struct {
 	// The attributes that are auto-verified in a user pool.
 	AutoVerifiedAttributes []*string `type:"list" enum:"VerifiedAttributeType"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was created.
+	// The date and time when the item was created. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	CreationDate *time.Time `type:"timestamp"`
 
 	// A custom domain name that you provide to Amazon Cognito. This parameter applies
@@ -34870,8 +35254,9 @@ type UserPoolType struct {
 	// The Lambda triggers associated with the user pool.
 	LambdaConfig *LambdaConfigType `type:"structure"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	LastModifiedDate *time.Time `type:"timestamp"`
 
 	// Can be one of the following values:
@@ -35207,8 +35592,9 @@ type UserType struct {
 	// The creation date of the user.
 	UserCreateDate *time.Time `type:"timestamp"`
 
-	// The date and time, in ISO 8601 (https://www.iso.org/iso-8601-date-and-time-format.html)
-	// format, when the item was modified.
+	// The date and time when the item was modified. Amazon Cognito returns this
+	// timestamp in UNIX epoch time format. Your SDK might render the output in
+	// a human-readable format like ISO 8601 or a Java Date object.
 	UserLastModifiedDate *time.Time `type:"timestamp"`
 
 	// The user status. This can be one of the following:
@@ -36580,6 +36966,9 @@ const (
 
 	// UserStatusTypeForceChangePassword is a UserStatusType enum value
 	UserStatusTypeForceChangePassword = "FORCE_CHANGE_PASSWORD"
+
+	// UserStatusTypeExternalProvider is a UserStatusType enum value
+	UserStatusTypeExternalProvider = "EXTERNAL_PROVIDER"
 )
 
 // UserStatusType_Values returns all elements of the UserStatusType enum
@@ -36592,6 +36981,7 @@ func UserStatusType_Values() []string {
 		UserStatusTypeUnknown,
 		UserStatusTypeResetRequired,
 		UserStatusTypeForceChangePassword,
+		UserStatusTypeExternalProvider,
 	}
 }
 

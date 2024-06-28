@@ -11081,6 +11081,146 @@ func (c *Redshift) GetResourcePolicyWithContext(ctx aws.Context, input *GetResou
 	return out, req.Send()
 }
 
+const opListRecommendations = "ListRecommendations"
+
+// ListRecommendationsRequest generates a "aws/request.Request" representing the
+// client's request for the ListRecommendations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListRecommendations for more information on using the ListRecommendations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListRecommendationsRequest method.
+//	req, resp := client.ListRecommendationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ListRecommendations
+func (c *Redshift) ListRecommendationsRequest(input *ListRecommendationsInput) (req *request.Request, output *ListRecommendationsOutput) {
+	op := &request.Operation{
+		Name:       opListRecommendations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListRecommendationsInput{}
+	}
+
+	output = &ListRecommendationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListRecommendations API operation for Amazon Redshift.
+//
+// List the Amazon Redshift Advisor recommendations for one or multiple Amazon
+// Redshift clusters in an Amazon Web Services account.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Redshift's
+// API operation ListRecommendations for usage and error information.
+//
+// Returned Error Codes:
+//
+//   - ErrCodeClusterNotFoundFault "ClusterNotFound"
+//     The ClusterIdentifier parameter does not refer to an existing cluster.
+//
+//   - ErrCodeUnsupportedOperationFault "UnsupportedOperation"
+//     The requested operation isn't supported.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/redshift-2012-12-01/ListRecommendations
+func (c *Redshift) ListRecommendations(input *ListRecommendationsInput) (*ListRecommendationsOutput, error) {
+	req, out := c.ListRecommendationsRequest(input)
+	return out, req.Send()
+}
+
+// ListRecommendationsWithContext is the same as ListRecommendations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListRecommendations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) ListRecommendationsWithContext(ctx aws.Context, input *ListRecommendationsInput, opts ...request.Option) (*ListRecommendationsOutput, error) {
+	req, out := c.ListRecommendationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListRecommendationsPages iterates over the pages of a ListRecommendations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListRecommendations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListRecommendations operation.
+//	pageNum := 0
+//	err := client.ListRecommendationsPages(params,
+//	    func(page *redshift.ListRecommendationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Redshift) ListRecommendationsPages(input *ListRecommendationsInput, fn func(*ListRecommendationsOutput, bool) bool) error {
+	return c.ListRecommendationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListRecommendationsPagesWithContext same as ListRecommendationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Redshift) ListRecommendationsPagesWithContext(ctx aws.Context, input *ListRecommendationsInput, fn func(*ListRecommendationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListRecommendationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListRecommendationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListRecommendationsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opModifyAquaConfiguration = "ModifyAquaConfiguration"
 
 // ModifyAquaConfigurationRequest generates a "aws/request.Request" representing the
@@ -13370,9 +13510,8 @@ func (c *Redshift) ResizeClusterRequest(input *ResizeClusterInput) (req *request
 //
 // Elastic resize operations have the following restrictions:
 //
-//   - You can only resize clusters of the following types: dc1.large (if your
-//     cluster is in a VPC) dc1.8xlarge (if your cluster is in a VPC) dc2.large
-//     dc2.8xlarge ds2.xlarge ds2.8xlarge ra3.xlplus ra3.4xlarge ra3.16xlarge
+//   - You can only resize clusters of the following types: dc2.large dc2.8xlarge
+//     ra3.xlplus ra3.4xlarge ra3.16xlarge
 //
 //   - The type of nodes that you add must match the node type for the cluster.
 //
@@ -14686,16 +14825,15 @@ type AssociateDataShareConsumerInput struct {
 	// account.
 	AssociateEntireAccount *bool `type:"boolean"`
 
-	// The Amazon Resource Name (ARN) of the consumer that is associated with the
-	// datashare.
+	// The Amazon Resource Name (ARN) of the consumer namespace associated with
+	// the datashare.
 	ConsumerArn *string `type:"string"`
 
 	// From a datashare consumer account, associates a datashare with all existing
 	// and future namespaces in the specified Amazon Web Services Region.
 	ConsumerRegion *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use
-	// with the account or the namespace.
+	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use.
 	//
 	// DataShareArn is a required field
 	DataShareArn *string `type:"string" required:"true"`
@@ -14769,10 +14907,7 @@ type AssociateDataShareConsumerOutput struct {
 	// accessible cluster.
 	AllowPubliclyAccessibleConsumers *bool `type:"boolean"`
 
-	// An Amazon Resource Name (ARN) that references the datashare that is owned
-	// by a specific namespace of the producer cluster. A datashare ARN is in the
-	// arn:aws:redshift:{region}:{account-id}:{datashare}:{namespace-guid}/{datashare-name}
-	// format.
+	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use.
 	DataShareArn *string `type:"string"`
 
 	// A value that specifies when the datashare has an association between producer
@@ -14782,7 +14917,7 @@ type AssociateDataShareConsumerOutput struct {
 	// The identifier of a datashare to show its managing entity.
 	ManagedBy *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the producer.
+	// The Amazon Resource Name (ARN) of the producer namespace.
 	ProducerArn *string `type:"string"`
 }
 
@@ -15080,8 +15215,8 @@ type AuthorizeDataShareInput struct {
 	// ConsumerIdentifier is a required field
 	ConsumerIdentifier *string `type:"string" required:"true"`
 
-	// The Amazon Resource Name (ARN) of the datashare that producers are to authorize
-	// sharing for.
+	// The Amazon Resource Name (ARN) of the datashare namespace that producers
+	// are to authorize sharing for.
 	//
 	// DataShareArn is a required field
 	DataShareArn *string `type:"string" required:"true"`
@@ -15146,10 +15281,7 @@ type AuthorizeDataShareOutput struct {
 	// accessible cluster.
 	AllowPubliclyAccessibleConsumers *bool `type:"boolean"`
 
-	// An Amazon Resource Name (ARN) that references the datashare that is owned
-	// by a specific namespace of the producer cluster. A datashare ARN is in the
-	// arn:aws:redshift:{region}:{account-id}:{datashare}:{namespace-guid}/{datashare-name}
-	// format.
+	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use.
 	DataShareArn *string `type:"string"`
 
 	// A value that specifies when the datashare has an association between producer
@@ -15159,7 +15291,7 @@ type AuthorizeDataShareOutput struct {
 	// The identifier of a datashare to show its managing entity.
 	ManagedBy *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the producer.
+	// The Amazon Resource Name (ARN) of the producer namespace.
 	ProducerArn *string `type:"string"`
 }
 
@@ -15395,9 +15527,14 @@ type AuthorizeSnapshotAccessInput struct {
 	// The Amazon Resource Name (ARN) of the snapshot to authorize access to.
 	SnapshotArn *string `type:"string"`
 
-	// The identifier of the cluster the snapshot was created from. This parameter
-	// is required if your IAM user has a policy containing a snapshot resource
-	// element that specifies anything other than * for the cluster name.
+	// The identifier of the cluster the snapshot was created from.
+	//
+	//    * If the snapshot to access doesn't exist and the associated IAM policy
+	//    doesn't allow access to all (*) snapshots - This parameter is required.
+	//    Otherwise, permissions aren't available to check if the snapshot exists.
+	//
+	//    * If the snapshot to access exists - This parameter isn't required. Redshift
+	//    can retrieve the cluster identifier and use it to validate snapshot authorization.
 	SnapshotClusterIdentifier *string `type:"string"`
 
 	// The identifier of the snapshot the account is authorized to restore.
@@ -17994,8 +18131,7 @@ type CreateClusterInput struct {
 	// types, go to Working with Clusters (https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#how-many-nodes)
 	// in the Amazon Redshift Cluster Management Guide.
 	//
-	// Valid Values: ds2.xlarge | ds2.8xlarge | dc1.large | dc1.8xlarge | dc2.large
-	// | dc2.8xlarge | ra3.xlplus | ra3.4xlarge | ra3.16xlarge
+	// Valid Values: dc2.large | dc2.8xlarge | ra3.xlplus | ra3.4xlarge | ra3.16xlarge
 	//
 	// NodeType is a required field
 	NodeType *string `type:"string" required:"true"`
@@ -18024,7 +18160,13 @@ type CreateClusterInput struct {
 	//
 	// Default: 5439
 	//
-	// Valid Values: 1150-65535
+	// Valid Values:
+	//
+	//    * For clusters with ra3 nodes - Select a port within the ranges 5431-5455
+	//    or 8191-8215. (If you have an existing cluster with ra3 nodes, it isn't
+	//    required that you change the port to these ranges.)
+	//
+	//    * For clusters with dc2 nodes - Select a port within the range 1150-65535.
 	Port *int64 `type:"integer"`
 
 	// The weekly time range (in UTC) during which automated cluster maintenance
@@ -19995,7 +20137,7 @@ type CreateScheduledActionOutput struct {
 
 	// A JSON format string of the Amazon Redshift API operation with input parameters.
 	//
-	// "{\"ResizeCluster\":{\"NodeType\":\"ds2.8xlarge\",\"ClusterIdentifier\":\"my-test-cluster\",\"NumberOfNodes\":3}}".
+	// "{\"ResizeCluster\":{\"NodeType\":\"ra3.4xlarge\",\"ClusterIdentifier\":\"my-test-cluster\",\"NumberOfNodes\":3}}".
 	TargetAction *ScheduledActionType `type:"structure"`
 }
 
@@ -20672,10 +20814,7 @@ type DataShare struct {
 	// accessible cluster.
 	AllowPubliclyAccessibleConsumers *bool `type:"boolean"`
 
-	// An Amazon Resource Name (ARN) that references the datashare that is owned
-	// by a specific namespace of the producer cluster. A datashare ARN is in the
-	// arn:aws:redshift:{region}:{account-id}:{datashare}:{namespace-guid}/{datashare-name}
-	// format.
+	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use.
 	DataShareArn *string `type:"string"`
 
 	// A value that specifies when the datashare has an association between producer
@@ -20685,7 +20824,7 @@ type DataShare struct {
 	// The identifier of a datashare to show its managing entity.
 	ManagedBy *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the producer.
+	// The Amazon Resource Name (ARN) of the producer namespace.
 	ProducerArn *string `type:"string"`
 }
 
@@ -20914,7 +21053,8 @@ type DeauthorizeDataShareInput struct {
 	// ConsumerIdentifier is a required field
 	ConsumerIdentifier *string `type:"string" required:"true"`
 
-	// The Amazon Resource Name (ARN) of the datashare to remove authorization from.
+	// The namespace Amazon Resource Name (ARN) of the datashare to remove authorization
+	// from.
 	//
 	// DataShareArn is a required field
 	DataShareArn *string `type:"string" required:"true"`
@@ -20973,10 +21113,7 @@ type DeauthorizeDataShareOutput struct {
 	// accessible cluster.
 	AllowPubliclyAccessibleConsumers *bool `type:"boolean"`
 
-	// An Amazon Resource Name (ARN) that references the datashare that is owned
-	// by a specific namespace of the producer cluster. A datashare ARN is in the
-	// arn:aws:redshift:{region}:{account-id}:{datashare}:{namespace-guid}/{datashare-name}
-	// format.
+	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use.
 	DataShareArn *string `type:"string"`
 
 	// A value that specifies when the datashare has an association between producer
@@ -20986,7 +21123,7 @@ type DeauthorizeDataShareOutput struct {
 	// The identifier of a datashare to show its managing entity.
 	ManagedBy *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the producer.
+	// The Amazon Resource Name (ARN) of the producer namespace.
 	ProducerArn *string `type:"string"`
 }
 
@@ -24310,8 +24447,8 @@ func (s *DescribeCustomDomainAssociationsOutput) SetMarker(v string) *DescribeCu
 type DescribeDataSharesForConsumerInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the consumer that returns in the list of
-	// datashares.
+	// The Amazon Resource Name (ARN) of the consumer namespace that returns in
+	// the list of datashares.
 	ConsumerArn *string `type:"string"`
 
 	// An optional parameter that specifies the starting point to return a set of
@@ -24438,8 +24575,8 @@ type DescribeDataSharesForProducerInput struct {
 	// set of records by retrying the command with the returned marker value.
 	MaxRecords *int64 `type:"integer"`
 
-	// The Amazon Resource Name (ARN) of the producer that returns in the list of
-	// datashares.
+	// The Amazon Resource Name (ARN) of the producer namespace that returns in
+	// the list of datashares.
 	ProducerArn *string `type:"string"`
 
 	// An identifier giving the status of a datashare in the producer. If this field
@@ -24538,7 +24675,7 @@ func (s *DescribeDataSharesForProducerOutput) SetMarker(v string) *DescribeDataS
 type DescribeDataSharesInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier of the datashare to describe details of.
+	// The Amazon resource name (ARN) of the datashare to describe details of.
 	DataShareArn *string `type:"string"`
 
 	// An optional parameter that specifies the starting point to return a set of
@@ -27924,8 +28061,8 @@ func (s *DisableSnapshotCopyOutput) SetCluster(v *Cluster) *DisableSnapshotCopyO
 type DisassociateDataShareConsumerInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the consumer that association for the datashare
-	// is removed from.
+	// The Amazon Resource Name (ARN) of the consumer namespace that association
+	// for the datashare is removed from.
 	ConsumerArn *string `type:"string"`
 
 	// From a datashare consumer account, removes association of a datashare from
@@ -28005,10 +28142,7 @@ type DisassociateDataShareConsumerOutput struct {
 	// accessible cluster.
 	AllowPubliclyAccessibleConsumers *bool `type:"boolean"`
 
-	// An Amazon Resource Name (ARN) that references the datashare that is owned
-	// by a specific namespace of the producer cluster. A datashare ARN is in the
-	// arn:aws:redshift:{region}:{account-id}:{datashare}:{namespace-guid}/{datashare-name}
-	// format.
+	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use.
 	DataShareArn *string `type:"string"`
 
 	// A value that specifies when the datashare has an association between producer
@@ -28018,7 +28152,7 @@ type DisassociateDataShareConsumerOutput struct {
 	// The identifier of a datashare to show its managing entity.
 	ManagedBy *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the producer.
+	// The Amazon Resource Name (ARN) of the producer namespace.
 	ProducerArn *string `type:"string"`
 }
 
@@ -30209,6 +30343,121 @@ func (s *LakeFormationScopeUnion) SetLakeFormationQuery(v *LakeFormationQuery) *
 	return s
 }
 
+type ListRecommendationsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the Amazon Redshift cluster for which the list of
+	// Advisor recommendations is returned. If the neither the cluster identifier
+	// and the cluster namespace ARN parameters are specified, then recommendations
+	// for all clusters in the account are returned.
+	ClusterIdentifier *string `type:"string"`
+
+	// A value that indicates the starting point for the next set of response records
+	// in a subsequent request. If a value is returned in a response, you can retrieve
+	// the next set of records by providing this returned marker value in the Marker
+	// parameter and retrying the command. If the Marker field is empty, all response
+	// records have been retrieved for the request.
+	Marker *string `type:"string"`
+
+	// The maximum number of response records to return in each call. If the number
+	// of remaining response records exceeds the specified MaxRecords value, a value
+	// is returned in a marker field of the response. You can retrieve the next
+	// set of records by retrying the command with the returned marker value.
+	MaxRecords *int64 `type:"integer"`
+
+	// The Amazon Redshift cluster namespace Amazon Resource Name (ARN) for which
+	// the list of Advisor recommendations is returned. If the neither the cluster
+	// identifier and the cluster namespace ARN parameters are specified, then recommendations
+	// for all clusters in the account are returned.
+	NamespaceArn *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRecommendationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRecommendationsInput) GoString() string {
+	return s.String()
+}
+
+// SetClusterIdentifier sets the ClusterIdentifier field's value.
+func (s *ListRecommendationsInput) SetClusterIdentifier(v string) *ListRecommendationsInput {
+	s.ClusterIdentifier = &v
+	return s
+}
+
+// SetMarker sets the Marker field's value.
+func (s *ListRecommendationsInput) SetMarker(v string) *ListRecommendationsInput {
+	s.Marker = &v
+	return s
+}
+
+// SetMaxRecords sets the MaxRecords field's value.
+func (s *ListRecommendationsInput) SetMaxRecords(v int64) *ListRecommendationsInput {
+	s.MaxRecords = &v
+	return s
+}
+
+// SetNamespaceArn sets the NamespaceArn field's value.
+func (s *ListRecommendationsInput) SetNamespaceArn(v string) *ListRecommendationsInput {
+	s.NamespaceArn = &v
+	return s
+}
+
+type ListRecommendationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A value that indicates the starting point for the next set of response records
+	// in a subsequent request. If a value is returned in a response, you can retrieve
+	// the next set of records by providing this returned marker value in the Marker
+	// parameter and retrying the command. If the Marker field is empty, all response
+	// records have been retrieved for the request.
+	Marker *string `type:"string"`
+
+	// The Advisor recommendations for action on the Amazon Redshift cluster.
+	Recommendations []*Recommendation `locationNameList:"Recommendation" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRecommendationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRecommendationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetMarker sets the Marker field's value.
+func (s *ListRecommendationsOutput) SetMarker(v string) *ListRecommendationsOutput {
+	s.Marker = &v
+	return s
+}
+
+// SetRecommendations sets the Recommendations field's value.
+func (s *ListRecommendationsOutput) SetRecommendations(v []*Recommendation) *ListRecommendationsOutput {
+	s.Recommendations = v
+	return s
+}
+
 // Describes the status of logging for a cluster.
 type LoggingStatus struct {
 	_ struct{} `type:"structure"`
@@ -30966,8 +31215,7 @@ type ModifyClusterInput struct {
 	// Amazon Redshift (https://docs.aws.amazon.com/redshift/latest/mgmt/rs-resize-tutorial.html)
 	// in the Amazon Redshift Cluster Management Guide.
 	//
-	// Valid Values: ds2.xlarge | ds2.8xlarge | dc1.large | dc1.8xlarge | dc2.large
-	// | dc2.8xlarge | ra3.xlplus | ra3.4xlarge | ra3.16xlarge
+	// Valid Values: dc2.large | dc2.8xlarge | ra3.xlplus | ra3.4xlarge | ra3.16xlarge
 	NodeType *string `type:"string"`
 
 	// The new number of nodes of the cluster. If you specify a new number of nodes,
@@ -30981,6 +31229,14 @@ type ModifyClusterInput struct {
 	NumberOfNodes *int64 `type:"integer"`
 
 	// The option to change the port of an Amazon Redshift cluster.
+	//
+	// Valid Values:
+	//
+	//    * For clusters with ra3 nodes - Select a port within the ranges 5431-5455
+	//    or 8191-8215. (If you have an existing cluster with ra3 nodes, it isn't
+	//    required that you change the port to these ranges.)
+	//
+	//    * For clusters with dc2 nodes - Select a port within the range 1150-65535.
 	Port *int64 `type:"integer"`
 
 	// The weekly time range (in UTC) during which system maintenance can occur,
@@ -32508,7 +32764,7 @@ type ModifyScheduledActionOutput struct {
 
 	// A JSON format string of the Amazon Redshift API operation with input parameters.
 	//
-	// "{\"ResizeCluster\":{\"NodeType\":\"ds2.8xlarge\",\"ClusterIdentifier\":\"my-test-cluster\",\"NumberOfNodes\":3}}".
+	// "{\"ResizeCluster\":{\"NodeType\":\"ra3.4xlarge\",\"ClusterIdentifier\":\"my-test-cluster\",\"NumberOfNodes\":3}}".
 	TargetAction *ScheduledActionType `type:"structure"`
 }
 
@@ -33106,7 +33362,7 @@ type NodeConfigurationOption struct {
 	// The category of the node configuration recommendation.
 	Mode *string `type:"string" enum:"Mode"`
 
-	// The node type, such as, "ds2.8xlarge".
+	// The node type, such as, "ra3.4xlarge".
 	NodeType *string `type:"string"`
 
 	// The number of nodes.
@@ -33981,6 +34237,199 @@ func (s *RebootClusterOutput) SetCluster(v *Cluster) *RebootClusterOutput {
 	return s
 }
 
+// An Amazon Redshift Advisor recommended action on the Amazon Redshift cluster.
+type Recommendation struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifier of the cluster for which the recommendation is returned.
+	ClusterIdentifier *string `type:"string"`
+
+	// The date and time (UTC) that the recommendation was created.
+	CreatedAt *time.Time `type:"timestamp"`
+
+	// The description of the recommendation.
+	Description *string `type:"string"`
+
+	// A unique identifier of the Advisor recommendation.
+	Id *string `type:"string"`
+
+	// The scale of the impact that the Advisor recommendation has to the performance
+	// and cost of the cluster.
+	ImpactRanking *string `type:"string" enum:"ImpactRankingType"`
+
+	// The Amazon Redshift cluster namespace ARN for which the recommendations is
+	// returned.
+	NamespaceArn *string `type:"string"`
+
+	// The description of what was observed about your cluster.
+	Observation *string `type:"string"`
+
+	// The description of the recommendation.
+	RecommendationText *string `type:"string"`
+
+	// The type of Advisor recommendation.
+	RecommendationType *string `type:"string"`
+
+	// List of Amazon Redshift recommended actions.
+	RecommendedActions []*RecommendedAction `locationNameList:"RecommendedAction" type:"list"`
+
+	// List of helpful links for more information about the Advisor recommendation.
+	ReferenceLinks []*ReferenceLink `locationNameList:"ReferenceLink" type:"list"`
+
+	// The title of the recommendation.
+	Title *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Recommendation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Recommendation) GoString() string {
+	return s.String()
+}
+
+// SetClusterIdentifier sets the ClusterIdentifier field's value.
+func (s *Recommendation) SetClusterIdentifier(v string) *Recommendation {
+	s.ClusterIdentifier = &v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *Recommendation) SetCreatedAt(v time.Time) *Recommendation {
+	s.CreatedAt = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *Recommendation) SetDescription(v string) *Recommendation {
+	s.Description = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *Recommendation) SetId(v string) *Recommendation {
+	s.Id = &v
+	return s
+}
+
+// SetImpactRanking sets the ImpactRanking field's value.
+func (s *Recommendation) SetImpactRanking(v string) *Recommendation {
+	s.ImpactRanking = &v
+	return s
+}
+
+// SetNamespaceArn sets the NamespaceArn field's value.
+func (s *Recommendation) SetNamespaceArn(v string) *Recommendation {
+	s.NamespaceArn = &v
+	return s
+}
+
+// SetObservation sets the Observation field's value.
+func (s *Recommendation) SetObservation(v string) *Recommendation {
+	s.Observation = &v
+	return s
+}
+
+// SetRecommendationText sets the RecommendationText field's value.
+func (s *Recommendation) SetRecommendationText(v string) *Recommendation {
+	s.RecommendationText = &v
+	return s
+}
+
+// SetRecommendationType sets the RecommendationType field's value.
+func (s *Recommendation) SetRecommendationType(v string) *Recommendation {
+	s.RecommendationType = &v
+	return s
+}
+
+// SetRecommendedActions sets the RecommendedActions field's value.
+func (s *Recommendation) SetRecommendedActions(v []*RecommendedAction) *Recommendation {
+	s.RecommendedActions = v
+	return s
+}
+
+// SetReferenceLinks sets the ReferenceLinks field's value.
+func (s *Recommendation) SetReferenceLinks(v []*ReferenceLink) *Recommendation {
+	s.ReferenceLinks = v
+	return s
+}
+
+// SetTitle sets the Title field's value.
+func (s *Recommendation) SetTitle(v string) *Recommendation {
+	s.Title = &v
+	return s
+}
+
+// The recommended action from the Amazon Redshift Advisor recommendation.
+type RecommendedAction struct {
+	_ struct{} `type:"structure"`
+
+	// The command to run.
+	Command *string `type:"string"`
+
+	// The database name to perform the action on. Only applicable if the type of
+	// command is SQL.
+	Database *string `type:"string"`
+
+	// The specific instruction about the command.
+	Text *string `type:"string"`
+
+	// The type of command.
+	Type *string `type:"string" enum:"RecommendedActionType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecommendedAction) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RecommendedAction) GoString() string {
+	return s.String()
+}
+
+// SetCommand sets the Command field's value.
+func (s *RecommendedAction) SetCommand(v string) *RecommendedAction {
+	s.Command = &v
+	return s
+}
+
+// SetDatabase sets the Database field's value.
+func (s *RecommendedAction) SetDatabase(v string) *RecommendedAction {
+	s.Database = &v
+	return s
+}
+
+// SetText sets the Text field's value.
+func (s *RecommendedAction) SetText(v string) *RecommendedAction {
+	s.Text = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *RecommendedAction) SetType(v string) *RecommendedAction {
+	s.Type = &v
+	return s
+}
+
 // Describes a recurring charge.
 type RecurringCharge struct {
 	_ struct{} `type:"structure"`
@@ -34140,6 +34589,48 @@ func (s *RedshiftIdcApplication) SetServiceIntegrations(v []*ServiceIntegrations
 	return s
 }
 
+// A link to an Amazon Redshift Advisor reference for more information about
+// a recommendation.
+type ReferenceLink struct {
+	_ struct{} `type:"structure"`
+
+	// The URL address to find more information.
+	Link *string `type:"string"`
+
+	// The hyperlink text that describes the link to more information.
+	Text *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ReferenceLink) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ReferenceLink) GoString() string {
+	return s.String()
+}
+
+// SetLink sets the Link field's value.
+func (s *ReferenceLink) SetLink(v string) *ReferenceLink {
+	s.Link = &v
+	return s
+}
+
+// SetText sets the Text field's value.
+func (s *ReferenceLink) SetText(v string) *ReferenceLink {
+	s.Text = &v
+	return s
+}
+
 type RejectDataShareInput struct {
 	_ struct{} `type:"structure"`
 
@@ -34193,10 +34684,7 @@ type RejectDataShareOutput struct {
 	// accessible cluster.
 	AllowPubliclyAccessibleConsumers *bool `type:"boolean"`
 
-	// An Amazon Resource Name (ARN) that references the datashare that is owned
-	// by a specific namespace of the producer cluster. A datashare ARN is in the
-	// arn:aws:redshift:{region}:{account-id}:{datashare}:{namespace-guid}/{datashare-name}
-	// format.
+	// The Amazon Resource Name (ARN) of the datashare that the consumer is to use.
 	DataShareArn *string `type:"string"`
 
 	// A value that specifies when the datashare has an association between producer
@@ -34206,7 +34694,7 @@ type RejectDataShareOutput struct {
 	// The identifier of a datashare to show its managing entity.
 	ManagedBy *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the producer.
+	// The Amazon Resource Name (ARN) of the producer namespace.
 	ProducerArn *string `type:"string"`
 }
 
@@ -34485,7 +34973,7 @@ type ReservedNodeExchangeStatus struct {
 	// The identifier of the source reserved node.
 	SourceReservedNodeId *string `type:"string"`
 
-	// The source reserved-node type, for example ds2.xlarge.
+	// The source reserved-node type, for example ra3.4xlarge.
 	SourceReservedNodeType *string `type:"string"`
 
 	// The status of the reserved-node exchange request. Statuses include in-progress
@@ -35248,16 +35736,10 @@ type RestoreFromClusterSnapshotInput struct {
 
 	// The node type that the restored cluster will be provisioned with.
 	//
-	// Default: The node type of the cluster from which the snapshot was taken.
-	// You can modify this if you are using any DS node type. In that case, you
-	// can choose to restore into another DS node type of the same size. For example,
-	// you can restore ds1.8xlarge into ds2.8xlarge, or ds1.xlarge into ds2.xlarge.
 	// If you have a DC instance type, you must restore into that same instance
-	// type and size. In other words, you can only restore a dc1.large instance
-	// type into another dc1.large instance type or dc2.large instance type. You
-	// can't restore dc1.8xlarge to dc2.8xlarge. First restore to a dc1.8xlarge
-	// cluster, then resize to a dc2.8large cluster. For more information about
-	// node types, see About Clusters and Nodes (https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#rs-about-clusters-and-nodes)
+	// type and size. In other words, you can only restore a dc2.large node type
+	// into another dc2 type. For more information about node types, see About Clusters
+	// and Nodes (https://docs.aws.amazon.com/redshift/latest/mgmt/working-with-clusters.html#rs-about-clusters-and-nodes)
 	// in the Amazon Redshift Cluster Management Guide.
 	NodeType *string `type:"string"`
 
@@ -35272,7 +35754,8 @@ type RestoreFromClusterSnapshotInput struct {
 	//
 	// Default: The same port as the original cluster.
 	//
-	// Constraints: Must be between 1115 and 65535.
+	// Valid values: For clusters with DC2 nodes, must be within the range 1150-65535.
+	// For clusters with ra3 nodes, must be within the ranges 5431-5455 or 8191-8215.
 	Port *int64 `type:"integer"`
 
 	// The weekly time range (in UTC) during which automated cluster maintenance
@@ -35619,25 +36102,25 @@ type RestoreStatus struct {
 
 	// The number of megabytes per second being transferred from the backup storage.
 	// Returns the average rate for a completed backup. This field is only updated
-	// when you restore to DC2 and DS2 node types.
+	// when you restore to DC2 node types.
 	CurrentRestoreRateInMegaBytesPerSecond *float64 `type:"double"`
 
 	// The amount of time an in-progress restore has been running, or the amount
 	// of time it took a completed restore to finish. This field is only updated
-	// when you restore to DC2 and DS2 node types.
+	// when you restore to DC2 node types.
 	ElapsedTimeInSeconds *int64 `type:"long"`
 
 	// The estimate of the time remaining before the restore will complete. Returns
 	// 0 for a completed restore. This field is only updated when you restore to
-	// DC2 and DS2 node types.
+	// DC2 node types.
 	EstimatedTimeToCompletionInSeconds *int64 `type:"long"`
 
 	// The number of megabytes that have been transferred from snapshot storage.
-	// This field is only updated when you restore to DC2 and DS2 node types.
+	// This field is only updated when you restore to DC2 node types.
 	ProgressInMegaBytes *int64 `type:"long"`
 
 	// The size of the set of snapshot data used to restore the cluster. This field
-	// is only updated when you restore to DC2 and DS2 node types.
+	// is only updated when you restore to DC2 node types.
 	SnapshotSizeInMegaBytes *int64 `type:"long"`
 
 	// The status of the restore action. Returns starting, restoring, completed,
@@ -36566,7 +37049,7 @@ type ScheduledAction struct {
 
 	// A JSON format string of the Amazon Redshift API operation with input parameters.
 	//
-	// "{\"ResizeCluster\":{\"NodeType\":\"ds2.8xlarge\",\"ClusterIdentifier\":\"my-test-cluster\",\"NumberOfNodes\":3}}".
+	// "{\"ResizeCluster\":{\"NodeType\":\"ra3.4xlarge\",\"ClusterIdentifier\":\"my-test-cluster\",\"NumberOfNodes\":3}}".
 	TargetAction *ScheduledActionType `type:"structure"`
 }
 
@@ -36983,6 +37466,9 @@ type Snapshot struct {
 	// The list of node types that this cluster snapshot is able to restore into.
 	RestorableNodeTypes []*string `locationNameList:"NodeType" type:"list"`
 
+	// The Amazon Resource Name (ARN) of the snapshot.
+	SnapshotArn *string `type:"string"`
+
 	// The time (in UTC format) when Amazon Redshift began the snapshot. A snapshot
 	// contains a copy of the cluster data as of this exact time.
 	SnapshotCreateTime *time.Time `type:"timestamp"`
@@ -37200,6 +37686,12 @@ func (s *Snapshot) SetPort(v int64) *Snapshot {
 // SetRestorableNodeTypes sets the RestorableNodeTypes field's value.
 func (s *Snapshot) SetRestorableNodeTypes(v []*string) *Snapshot {
 	s.RestorableNodeTypes = v
+	return s
+}
+
+// SetSnapshotArn sets the SnapshotArn field's value.
+func (s *Snapshot) SetSnapshotArn(v string) *Snapshot {
+	s.SnapshotArn = &v
 	return s
 }
 
@@ -38455,6 +38947,26 @@ func DataShareStatusForProducer_Values() []string {
 }
 
 const (
+	// ImpactRankingTypeHigh is a ImpactRankingType enum value
+	ImpactRankingTypeHigh = "HIGH"
+
+	// ImpactRankingTypeMedium is a ImpactRankingType enum value
+	ImpactRankingTypeMedium = "MEDIUM"
+
+	// ImpactRankingTypeLow is a ImpactRankingType enum value
+	ImpactRankingTypeLow = "LOW"
+)
+
+// ImpactRankingType_Values returns all elements of the ImpactRankingType enum
+func ImpactRankingType_Values() []string {
+	return []string{
+		ImpactRankingTypeHigh,
+		ImpactRankingTypeMedium,
+		ImpactRankingTypeLow,
+	}
+}
+
+const (
 	// LogDestinationTypeS3 is a LogDestinationType enum value
 	LogDestinationTypeS3 = "s3"
 
@@ -38583,6 +39095,22 @@ func PartnerIntegrationStatus_Values() []string {
 		PartnerIntegrationStatusInactive,
 		PartnerIntegrationStatusRuntimeFailure,
 		PartnerIntegrationStatusConnectionFailure,
+	}
+}
+
+const (
+	// RecommendedActionTypeSql is a RecommendedActionType enum value
+	RecommendedActionTypeSql = "SQL"
+
+	// RecommendedActionTypeCli is a RecommendedActionType enum value
+	RecommendedActionTypeCli = "CLI"
+)
+
+// RecommendedActionType_Values returns all elements of the RecommendedActionType enum
+func RecommendedActionType_Values() []string {
+	return []string{
+		RecommendedActionTypeSql,
+		RecommendedActionTypeCli,
 	}
 }
 

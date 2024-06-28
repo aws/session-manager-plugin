@@ -697,6 +697,104 @@ func (c *LexModelsV2) CreateBotLocaleWithContext(ctx aws.Context, input *CreateB
 	return out, req.Send()
 }
 
+const opCreateBotReplica = "CreateBotReplica"
+
+// CreateBotReplicaRequest generates a "aws/request.Request" representing the
+// client's request for the CreateBotReplica operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateBotReplica for more information on using the CreateBotReplica
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateBotReplicaRequest method.
+//	req, resp := client.CreateBotReplicaRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateBotReplica
+func (c *LexModelsV2) CreateBotReplicaRequest(input *CreateBotReplicaInput) (req *request.Request, output *CreateBotReplicaOutput) {
+	op := &request.Operation{
+		Name:       opCreateBotReplica,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/bots/{botId}/replicas/",
+	}
+
+	if input == nil {
+		input = &CreateBotReplicaInput{}
+	}
+
+	output = &CreateBotReplicaOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateBotReplica API operation for Amazon Lex Model Building V2.
+//
+// Action to create a replication of the source bot in the secondary region.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation CreateBotReplica for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - PreconditionFailedException
+//     Your request couldn't be completed because one or more request fields aren't
+//     valid. Check the fields in your request and try again.
+//
+//   - ConflictException
+//     The action that you tried to perform couldn't be completed because the resource
+//     is in a conflicting state. For example, deleting a bot that is in the CREATING
+//     state. Try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/CreateBotReplica
+func (c *LexModelsV2) CreateBotReplica(input *CreateBotReplicaInput) (*CreateBotReplicaOutput, error) {
+	req, out := c.CreateBotReplicaRequest(input)
+	return out, req.Send()
+}
+
+// CreateBotReplicaWithContext is the same as CreateBotReplica with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateBotReplica for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) CreateBotReplicaWithContext(ctx aws.Context, input *CreateBotReplicaInput, opts ...request.Option) (*CreateBotReplicaOutput, error) {
+	req, out := c.CreateBotReplicaRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateBotVersion = "CreateBotVersion"
 
 // CreateBotVersionRequest generates a "aws/request.Request" representing the
@@ -1933,6 +2031,104 @@ func (c *LexModelsV2) DeleteBotLocale(input *DeleteBotLocaleInput) (*DeleteBotLo
 // for more information on using Contexts.
 func (c *LexModelsV2) DeleteBotLocaleWithContext(ctx aws.Context, input *DeleteBotLocaleInput, opts ...request.Option) (*DeleteBotLocaleOutput, error) {
 	req, out := c.DeleteBotLocaleRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteBotReplica = "DeleteBotReplica"
+
+// DeleteBotReplicaRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteBotReplica operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteBotReplica for more information on using the DeleteBotReplica
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteBotReplicaRequest method.
+//	req, resp := client.DeleteBotReplicaRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DeleteBotReplica
+func (c *LexModelsV2) DeleteBotReplicaRequest(input *DeleteBotReplicaInput) (req *request.Request, output *DeleteBotReplicaOutput) {
+	op := &request.Operation{
+		Name:       opDeleteBotReplica,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/bots/{botId}/replicas/{replicaRegion}/",
+	}
+
+	if input == nil {
+		input = &DeleteBotReplicaInput{}
+	}
+
+	output = &DeleteBotReplicaOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteBotReplica API operation for Amazon Lex Model Building V2.
+//
+// The action to delete the replicated bot in the secondary region.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation DeleteBotReplica for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - PreconditionFailedException
+//     Your request couldn't be completed because one or more request fields aren't
+//     valid. Check the fields in your request and try again.
+//
+//   - ConflictException
+//     The action that you tried to perform couldn't be completed because the resource
+//     is in a conflicting state. For example, deleting a bot that is in the CREATING
+//     state. Try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DeleteBotReplica
+func (c *LexModelsV2) DeleteBotReplica(input *DeleteBotReplicaInput) (*DeleteBotReplicaOutput, error) {
+	req, out := c.DeleteBotReplicaRequest(input)
+	return out, req.Send()
+}
+
+// DeleteBotReplicaWithContext is the same as DeleteBotReplica with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteBotReplica for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) DeleteBotReplicaWithContext(ctx aws.Context, input *DeleteBotReplicaInput, opts ...request.Option) (*DeleteBotReplicaOutput, error) {
+	req, out := c.DeleteBotReplicaRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -3373,6 +3569,99 @@ func (c *LexModelsV2) DescribeBotRecommendation(input *DescribeBotRecommendation
 // for more information on using Contexts.
 func (c *LexModelsV2) DescribeBotRecommendationWithContext(ctx aws.Context, input *DescribeBotRecommendationInput, opts ...request.Option) (*DescribeBotRecommendationOutput, error) {
 	req, out := c.DescribeBotRecommendationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDescribeBotReplica = "DescribeBotReplica"
+
+// DescribeBotReplicaRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeBotReplica operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeBotReplica for more information on using the DescribeBotReplica
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeBotReplicaRequest method.
+//	req, resp := client.DescribeBotReplicaRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DescribeBotReplica
+func (c *LexModelsV2) DescribeBotReplicaRequest(input *DescribeBotReplicaInput) (req *request.Request, output *DescribeBotReplicaOutput) {
+	op := &request.Operation{
+		Name:       opDescribeBotReplica,
+		HTTPMethod: "GET",
+		HTTPPath:   "/bots/{botId}/replicas/{replicaRegion}/",
+	}
+
+	if input == nil {
+		input = &DescribeBotReplicaInput{}
+	}
+
+	output = &DescribeBotReplicaOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeBotReplica API operation for Amazon Lex Model Building V2.
+//
+// Monitors the bot replication status through the UI console.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation DescribeBotReplica for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - ResourceNotFoundException
+//     You asked to describe a resource that doesn't exist. Check the resource that
+//     you are requesting and try again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/DescribeBotReplica
+func (c *LexModelsV2) DescribeBotReplica(input *DescribeBotReplicaInput) (*DescribeBotReplicaOutput, error) {
+	req, out := c.DescribeBotReplicaRequest(input)
+	return out, req.Send()
+}
+
+// DescribeBotReplicaWithContext is the same as DescribeBotReplica with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeBotReplica for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) DescribeBotReplicaWithContext(ctx aws.Context, input *DescribeBotReplicaInput, opts ...request.Option) (*DescribeBotReplicaOutput, error) {
+	req, out := c.DescribeBotReplicaRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -4941,6 +5230,152 @@ func (c *LexModelsV2) ListAggregatedUtterancesPagesWithContext(ctx aws.Context, 
 	return p.Err()
 }
 
+const opListBotAliasReplicas = "ListBotAliasReplicas"
+
+// ListBotAliasReplicasRequest generates a "aws/request.Request" representing the
+// client's request for the ListBotAliasReplicas operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListBotAliasReplicas for more information on using the ListBotAliasReplicas
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListBotAliasReplicasRequest method.
+//	req, resp := client.ListBotAliasReplicasRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotAliasReplicas
+func (c *LexModelsV2) ListBotAliasReplicasRequest(input *ListBotAliasReplicasInput) (req *request.Request, output *ListBotAliasReplicasOutput) {
+	op := &request.Operation{
+		Name:       opListBotAliasReplicas,
+		HTTPMethod: "POST",
+		HTTPPath:   "/bots/{botId}/replicas/{replicaRegion}/botaliases/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListBotAliasReplicasInput{}
+	}
+
+	output = &ListBotAliasReplicasOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListBotAliasReplicas API operation for Amazon Lex Model Building V2.
+//
+// The action to list the replicated bots created from the source bot alias.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation ListBotAliasReplicas for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotAliasReplicas
+func (c *LexModelsV2) ListBotAliasReplicas(input *ListBotAliasReplicasInput) (*ListBotAliasReplicasOutput, error) {
+	req, out := c.ListBotAliasReplicasRequest(input)
+	return out, req.Send()
+}
+
+// ListBotAliasReplicasWithContext is the same as ListBotAliasReplicas with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListBotAliasReplicas for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) ListBotAliasReplicasWithContext(ctx aws.Context, input *ListBotAliasReplicasInput, opts ...request.Option) (*ListBotAliasReplicasOutput, error) {
+	req, out := c.ListBotAliasReplicasRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListBotAliasReplicasPages iterates over the pages of a ListBotAliasReplicas operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListBotAliasReplicas method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListBotAliasReplicas operation.
+//	pageNum := 0
+//	err := client.ListBotAliasReplicasPages(params,
+//	    func(page *lexmodelsv2.ListBotAliasReplicasOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *LexModelsV2) ListBotAliasReplicasPages(input *ListBotAliasReplicasInput, fn func(*ListBotAliasReplicasOutput, bool) bool) error {
+	return c.ListBotAliasReplicasPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListBotAliasReplicasPagesWithContext same as ListBotAliasReplicasPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) ListBotAliasReplicasPagesWithContext(ctx aws.Context, input *ListBotAliasReplicasInput, fn func(*ListBotAliasReplicasOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListBotAliasReplicasInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListBotAliasReplicasRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListBotAliasReplicasOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListBotAliases = "ListBotAliases"
 
 // ListBotAliasesRequest generates a "aws/request.Request" representing the
@@ -5380,6 +5815,95 @@ func (c *LexModelsV2) ListBotRecommendationsPagesWithContext(ctx aws.Context, in
 	return p.Err()
 }
 
+const opListBotReplicas = "ListBotReplicas"
+
+// ListBotReplicasRequest generates a "aws/request.Request" representing the
+// client's request for the ListBotReplicas operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListBotReplicas for more information on using the ListBotReplicas
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListBotReplicasRequest method.
+//	req, resp := client.ListBotReplicasRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotReplicas
+func (c *LexModelsV2) ListBotReplicasRequest(input *ListBotReplicasInput) (req *request.Request, output *ListBotReplicasOutput) {
+	op := &request.Operation{
+		Name:       opListBotReplicas,
+		HTTPMethod: "POST",
+		HTTPPath:   "/bots/{botId}/replicas/",
+	}
+
+	if input == nil {
+		input = &ListBotReplicasInput{}
+	}
+
+	output = &ListBotReplicasOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListBotReplicas API operation for Amazon Lex Model Building V2.
+//
+// The action to list the replicated bots.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation ListBotReplicas for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotReplicas
+func (c *LexModelsV2) ListBotReplicas(input *ListBotReplicasInput) (*ListBotReplicasOutput, error) {
+	req, out := c.ListBotReplicasRequest(input)
+	return out, req.Send()
+}
+
+// ListBotReplicasWithContext is the same as ListBotReplicas with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListBotReplicas for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) ListBotReplicasWithContext(ctx aws.Context, input *ListBotReplicasInput, opts ...request.Option) (*ListBotReplicasOutput, error) {
+	req, out := c.ListBotReplicasRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opListBotResourceGenerations = "ListBotResourceGenerations"
 
 // ListBotResourceGenerationsRequest generates a "aws/request.Request" representing the
@@ -5520,6 +6044,153 @@ func (c *LexModelsV2) ListBotResourceGenerationsPagesWithContext(ctx aws.Context
 
 	for p.Next() {
 		if !fn(p.Page().(*ListBotResourceGenerationsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListBotVersionReplicas = "ListBotVersionReplicas"
+
+// ListBotVersionReplicasRequest generates a "aws/request.Request" representing the
+// client's request for the ListBotVersionReplicas operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListBotVersionReplicas for more information on using the ListBotVersionReplicas
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListBotVersionReplicasRequest method.
+//	req, resp := client.ListBotVersionReplicasRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotVersionReplicas
+func (c *LexModelsV2) ListBotVersionReplicasRequest(input *ListBotVersionReplicasInput) (req *request.Request, output *ListBotVersionReplicasOutput) {
+	op := &request.Operation{
+		Name:       opListBotVersionReplicas,
+		HTTPMethod: "POST",
+		HTTPPath:   "/bots/{botId}/replicas/{replicaRegion}/botversions/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListBotVersionReplicasInput{}
+	}
+
+	output = &ListBotVersionReplicasOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListBotVersionReplicas API operation for Amazon Lex Model Building V2.
+//
+// Contains information about all the versions replication statuses applicable
+// for Global Resiliency.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon Lex Model Building V2's
+// API operation ListBotVersionReplicas for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ThrottlingException
+//     Your request rate is too high. Reduce the frequency of requests.
+//
+//   - ServiceQuotaExceededException
+//     You have reached a quota for your bot.
+//
+//   - ValidationException
+//     One of the input parameters in your request isn't valid. Check the parameters
+//     and try your request again.
+//
+//   - InternalServerException
+//     The service encountered an unexpected condition. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/models.lex.v2-2020-08-07/ListBotVersionReplicas
+func (c *LexModelsV2) ListBotVersionReplicas(input *ListBotVersionReplicasInput) (*ListBotVersionReplicasOutput, error) {
+	req, out := c.ListBotVersionReplicasRequest(input)
+	return out, req.Send()
+}
+
+// ListBotVersionReplicasWithContext is the same as ListBotVersionReplicas with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListBotVersionReplicas for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) ListBotVersionReplicasWithContext(ctx aws.Context, input *ListBotVersionReplicasInput, opts ...request.Option) (*ListBotVersionReplicasOutput, error) {
+	req, out := c.ListBotVersionReplicasRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListBotVersionReplicasPages iterates over the pages of a ListBotVersionReplicas operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListBotVersionReplicas method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListBotVersionReplicas operation.
+//	pageNum := 0
+//	err := client.ListBotVersionReplicasPages(params,
+//	    func(page *lexmodelsv2.ListBotVersionReplicasOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *LexModelsV2) ListBotVersionReplicasPages(input *ListBotVersionReplicasInput, fn func(*ListBotVersionReplicasOutput, bool) bool) error {
+	return c.ListBotVersionReplicasPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListBotVersionReplicasPagesWithContext same as ListBotVersionReplicasPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LexModelsV2) ListBotVersionReplicasPagesWithContext(ctx aws.Context, input *ListBotVersionReplicasInput, fn func(*ListBotVersionReplicasOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListBotVersionReplicasInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListBotVersionReplicasRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListBotVersionReplicasOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -14500,6 +15171,56 @@ func (s *BatchUpdateCustomVocabularyItemOutput) SetResources(v []*CustomVocabula
 	return s
 }
 
+// Contains details about the configuration of a Amazon Bedrock knowledge base.
+type BedrockKnowledgeStoreConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the knowledge base used.
+	//
+	// BedrockKnowledgeBaseArn is a required field
+	BedrockKnowledgeBaseArn *string `locationName:"bedrockKnowledgeBaseArn" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BedrockKnowledgeStoreConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BedrockKnowledgeStoreConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BedrockKnowledgeStoreConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BedrockKnowledgeStoreConfiguration"}
+	if s.BedrockKnowledgeBaseArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("BedrockKnowledgeBaseArn"))
+	}
+	if s.BedrockKnowledgeBaseArn != nil && len(*s.BedrockKnowledgeBaseArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BedrockKnowledgeBaseArn", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBedrockKnowledgeBaseArn sets the BedrockKnowledgeBaseArn field's value.
+func (s *BedrockKnowledgeStoreConfiguration) SetBedrockKnowledgeBaseArn(v string) *BedrockKnowledgeStoreConfiguration {
+	s.BedrockKnowledgeBaseArn = &v
+	return s
+}
+
 // Contains information about the Amazon Bedrock model used to interpret the
 // prompt used in descriptive bot building.
 type BedrockModelSpecification struct {
@@ -14659,6 +15380,84 @@ func (s *BotAliasLocaleSettings) SetCodeHookSpecification(v *CodeHookSpecificati
 // SetEnabled sets the Enabled field's value.
 func (s *BotAliasLocaleSettings) SetEnabled(v bool) *BotAliasLocaleSettings {
 	s.Enabled = &v
+	return s
+}
+
+// Contains information about all the aliases replication statuses applicable
+// for global resiliency.
+type BotAliasReplicaSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The bot alias ID for all the alias bot replications.
+	BotAliasId *string `locationName:"botAliasId" min:"10" type:"string"`
+
+	// The replication statuses for all the alias bot replications.
+	BotAliasReplicationStatus *string `locationName:"botAliasReplicationStatus" type:"string" enum:"BotAliasReplicationStatus"`
+
+	// The bot version for all the alias bot replications.
+	BotVersion *string `locationName:"botVersion" min:"1" type:"string"`
+
+	// The creation time and date for all the alias bot replications.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The reasons for failure for the aliases bot replications.
+	FailureReasons []*string `locationName:"failureReasons" type:"list"`
+
+	// The last time and date updated for all the alias bot replications.
+	LastUpdatedDateTime *time.Time `locationName:"lastUpdatedDateTime" type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotAliasReplicaSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotAliasReplicaSummary) GoString() string {
+	return s.String()
+}
+
+// SetBotAliasId sets the BotAliasId field's value.
+func (s *BotAliasReplicaSummary) SetBotAliasId(v string) *BotAliasReplicaSummary {
+	s.BotAliasId = &v
+	return s
+}
+
+// SetBotAliasReplicationStatus sets the BotAliasReplicationStatus field's value.
+func (s *BotAliasReplicaSummary) SetBotAliasReplicationStatus(v string) *BotAliasReplicaSummary {
+	s.BotAliasReplicationStatus = &v
+	return s
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *BotAliasReplicaSummary) SetBotVersion(v string) *BotAliasReplicaSummary {
+	s.BotVersion = &v
+	return s
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *BotAliasReplicaSummary) SetCreationDateTime(v time.Time) *BotAliasReplicaSummary {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetFailureReasons sets the FailureReasons field's value.
+func (s *BotAliasReplicaSummary) SetFailureReasons(v []*string) *BotAliasReplicaSummary {
+	s.FailureReasons = v
+	return s
+}
+
+// SetLastUpdatedDateTime sets the LastUpdatedDateTime field's value.
+func (s *BotAliasReplicaSummary) SetLastUpdatedDateTime(v time.Time) *BotAliasReplicaSummary {
+	s.LastUpdatedDateTime = &v
 	return s
 }
 
@@ -15861,6 +16660,66 @@ func (s *BotRecommendationSummary) SetLastUpdatedDateTime(v time.Time) *BotRecom
 	return s
 }
 
+// Contains summary information about all the replication statuses applicable
+// for global resiliency.
+type BotReplicaSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The operation status for the replicated bot applicable.
+	BotReplicaStatus *string `locationName:"botReplicaStatus" type:"string" enum:"BotReplicaStatus"`
+
+	// The creation time and date for the replicated bots.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The reasons for the failure for the replicated bot.
+	FailureReasons []*string `locationName:"failureReasons" type:"list"`
+
+	// The replica region used in the replication statuses summary.
+	ReplicaRegion *string `locationName:"replicaRegion" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotReplicaSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotReplicaSummary) GoString() string {
+	return s.String()
+}
+
+// SetBotReplicaStatus sets the BotReplicaStatus field's value.
+func (s *BotReplicaSummary) SetBotReplicaStatus(v string) *BotReplicaSummary {
+	s.BotReplicaStatus = &v
+	return s
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *BotReplicaSummary) SetCreationDateTime(v time.Time) *BotReplicaSummary {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetFailureReasons sets the FailureReasons field's value.
+func (s *BotReplicaSummary) SetFailureReasons(v []*string) *BotReplicaSummary {
+	s.FailureReasons = v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *BotReplicaSummary) SetReplicaRegion(v string) *BotReplicaSummary {
+	s.ReplicaRegion = &v
+	return s
+}
+
 // Specifies attributes for sorting a list of bots.
 type BotSortBy struct {
 	_ struct{} `type:"structure"`
@@ -16059,6 +16918,129 @@ func (s *BotVersionLocaleDetails) Validate() error {
 // SetSourceBotVersion sets the SourceBotVersion field's value.
 func (s *BotVersionLocaleDetails) SetSourceBotVersion(v string) *BotVersionLocaleDetails {
 	s.SourceBotVersion = &v
+	return s
+}
+
+// The sort category for the version replicated bots.
+type BotVersionReplicaSortBy struct {
+	_ struct{} `type:"structure"`
+
+	// The attribute of the sort category for the version replicated bots.
+	//
+	// Attribute is a required field
+	Attribute *string `locationName:"attribute" type:"string" required:"true" enum:"BotVersionReplicaSortAttribute"`
+
+	// The order of the sort category for the version replicated bots.
+	//
+	// Order is a required field
+	Order *string `locationName:"order" type:"string" required:"true" enum:"SortOrder"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotVersionReplicaSortBy) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotVersionReplicaSortBy) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BotVersionReplicaSortBy) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BotVersionReplicaSortBy"}
+	if s.Attribute == nil {
+		invalidParams.Add(request.NewErrParamRequired("Attribute"))
+	}
+	if s.Order == nil {
+		invalidParams.Add(request.NewErrParamRequired("Order"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAttribute sets the Attribute field's value.
+func (s *BotVersionReplicaSortBy) SetAttribute(v string) *BotVersionReplicaSortBy {
+	s.Attribute = &v
+	return s
+}
+
+// SetOrder sets the Order field's value.
+func (s *BotVersionReplicaSortBy) SetOrder(v string) *BotVersionReplicaSortBy {
+	s.Order = &v
+	return s
+}
+
+// Contains summary information for all the version replication statuses applicable
+// for Global resiliency.
+type BotVersionReplicaSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The bot version for the summary information for all the version replication
+	// statuses.
+	BotVersion *string `locationName:"botVersion" min:"1" type:"string"`
+
+	// The version replication status for all the replicated bots.
+	BotVersionReplicationStatus *string `locationName:"botVersionReplicationStatus" type:"string" enum:"BotVersionReplicationStatus"`
+
+	// The creation date and time of the replication status for all the replicated
+	// bots.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The reasons for replication failure for all the replicated bots.
+	FailureReasons []*string `locationName:"failureReasons" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotVersionReplicaSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BotVersionReplicaSummary) GoString() string {
+	return s.String()
+}
+
+// SetBotVersion sets the BotVersion field's value.
+func (s *BotVersionReplicaSummary) SetBotVersion(v string) *BotVersionReplicaSummary {
+	s.BotVersion = &v
+	return s
+}
+
+// SetBotVersionReplicationStatus sets the BotVersionReplicationStatus field's value.
+func (s *BotVersionReplicaSummary) SetBotVersionReplicationStatus(v string) *BotVersionReplicaSummary {
+	s.BotVersionReplicationStatus = &v
+	return s
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *BotVersionReplicaSummary) SetCreationDateTime(v time.Time) *BotVersionReplicaSummary {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetFailureReasons sets the FailureReasons field's value.
+func (s *BotVersionReplicaSummary) SetFailureReasons(v []*string) *BotVersionReplicaSummary {
+	s.FailureReasons = v
 	return s
 }
 
@@ -18599,6 +19581,141 @@ func (s *CreateBotOutput) SetTestBotAliasTags(v map[string]*string) *CreateBotOu
 	return s
 }
 
+type CreateBotReplicaInput struct {
+	_ struct{} `type:"structure"`
+
+	// The request for the unique bot ID of the source bot to be replicated in the
+	// secondary region.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The request for the secondary region that will be used in the replication
+	// of the source bot.
+	//
+	// ReplicaRegion is a required field
+	ReplicaRegion *string `locationName:"replicaRegion" min:"2" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateBotReplicaInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateBotReplicaInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateBotReplicaInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateBotReplicaInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.ReplicaRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("ReplicaRegion"))
+	}
+	if s.ReplicaRegion != nil && len(*s.ReplicaRegion) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("ReplicaRegion", 2))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *CreateBotReplicaInput) SetBotId(v string) *CreateBotReplicaInput {
+	s.BotId = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *CreateBotReplicaInput) SetReplicaRegion(v string) *CreateBotReplicaInput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+type CreateBotReplicaOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique bot ID of the replicated bot generated.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The operational status of the replicated bot generated.
+	BotReplicaStatus *string `locationName:"botReplicaStatus" type:"string" enum:"BotReplicaStatus"`
+
+	// The creation date and time of the replicated bot generated.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The region of the replicated bot generated.
+	ReplicaRegion *string `locationName:"replicaRegion" min:"2" type:"string"`
+
+	// The source region for the source bot used for the replicated bot generated.
+	SourceRegion *string `locationName:"sourceRegion" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateBotReplicaOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateBotReplicaOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *CreateBotReplicaOutput) SetBotId(v string) *CreateBotReplicaOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotReplicaStatus sets the BotReplicaStatus field's value.
+func (s *CreateBotReplicaOutput) SetBotReplicaStatus(v string) *CreateBotReplicaOutput {
+	s.BotReplicaStatus = &v
+	return s
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *CreateBotReplicaOutput) SetCreationDateTime(v time.Time) *CreateBotReplicaOutput {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *CreateBotReplicaOutput) SetReplicaRegion(v string) *CreateBotReplicaOutput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+// SetSourceRegion sets the SourceRegion field's value.
+func (s *CreateBotReplicaOutput) SetSourceRegion(v string) *CreateBotReplicaOutput {
+	s.SourceRegion = &v
+	return s
+}
+
 type CreateBotVersionInput struct {
 	_ struct{} `type:"structure"`
 
@@ -19021,6 +20138,11 @@ type CreateIntentInput struct {
 	// A unique identifier for the built-in intent to base this intent on.
 	ParentIntentSignature *string `locationName:"parentIntentSignature" type:"string"`
 
+	// Specifies the configuration of the built-in Amazon.QnAIntent. The AMAZON.QnAIntent
+	// intent is called when Amazon Lex can't determine another intent to invoke.
+	// If you specify this field, you can't specify the kendraConfiguration field.
+	QnAIntentConfiguration *QnAIntentConfiguration `locationName:"qnAIntentConfiguration" type:"structure"`
+
 	// An array of strings that a user might say to signal the intent. For example,
 	// "I want a pizza", or "I want a {PizzaSize} pizza".
 	//
@@ -19124,6 +20246,11 @@ func (s *CreateIntentInput) Validate() error {
 			}
 		}
 	}
+	if s.QnAIntentConfiguration != nil {
+		if err := s.QnAIntentConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("QnAIntentConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.SampleUtterances != nil {
 		for i, v := range s.SampleUtterances {
 			if v == nil {
@@ -19225,6 +20352,12 @@ func (s *CreateIntentInput) SetParentIntentSignature(v string) *CreateIntentInpu
 	return s
 }
 
+// SetQnAIntentConfiguration sets the QnAIntentConfiguration field's value.
+func (s *CreateIntentInput) SetQnAIntentConfiguration(v *QnAIntentConfiguration) *CreateIntentInput {
+	s.QnAIntentConfiguration = v
+	return s
+}
+
 // SetSampleUtterances sets the SampleUtterances field's value.
 func (s *CreateIntentInput) SetSampleUtterances(v []*SampleUtterance) *CreateIntentInput {
 	s.SampleUtterances = v
@@ -19282,6 +20415,9 @@ type CreateIntentOutput struct {
 
 	// The signature of the parent intent specified for the intent.
 	ParentIntentSignature *string `locationName:"parentIntentSignature" type:"string"`
+
+	// Details about the the configuration of the built-in Amazon.QnAIntent.
+	QnAIntentConfiguration *QnAIntentConfiguration `locationName:"qnAIntentConfiguration" type:"structure"`
 
 	// The sample utterances specified for the intent.
 	SampleUtterances []*SampleUtterance `locationName:"sampleUtterances" type:"list"`
@@ -19398,6 +20534,12 @@ func (s *CreateIntentOutput) SetOutputContexts(v []*OutputContext) *CreateIntent
 // SetParentIntentSignature sets the ParentIntentSignature field's value.
 func (s *CreateIntentOutput) SetParentIntentSignature(v string) *CreateIntentOutput {
 	s.ParentIntentSignature = &v
+	return s
+}
+
+// SetQnAIntentConfiguration sets the QnAIntentConfiguration field's value.
+func (s *CreateIntentOutput) SetQnAIntentConfiguration(v *QnAIntentConfiguration) *CreateIntentOutput {
+	s.QnAIntentConfiguration = v
 	return s
 }
 
@@ -21124,6 +22266,89 @@ func (s *DataPrivacy) SetChildDirected(v bool) *DataPrivacy {
 	return s
 }
 
+// Contains details about the configuration of the knowledge store used for
+// the AMAZON.QnAIntent. You must have already created the knowledge store and
+// indexed the documents within it.
+type DataSourceConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Contains details about the configuration of the Amazon Bedrock knowledge
+	// base used for the AMAZON.QnAIntent. To set up a knowledge base, follow the
+	// steps at Building a knowledge base (https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html).
+	BedrockKnowledgeStoreConfiguration *BedrockKnowledgeStoreConfiguration `locationName:"bedrockKnowledgeStoreConfiguration" type:"structure"`
+
+	// Contains details about the configuration of the Amazon Kendra index used
+	// for the AMAZON.QnAIntent. To create a Amazon Kendra index, follow the steps
+	// at Creating an index (https://docs.aws.amazon.com/kendra/latest/dg/create-index.html).
+	KendraConfiguration *QnAKendraConfiguration `locationName:"kendraConfiguration" type:"structure"`
+
+	// Contains details about the configuration of the Amazon OpenSearch Service
+	// database used for the AMAZON.QnAIntent. To create a domain, follow the steps
+	// at Creating and managing Amazon OpenSearch Service domains (https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html).
+	OpensearchConfiguration *OpensearchConfiguration `locationName:"opensearchConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DataSourceConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DataSourceConfiguration"}
+	if s.BedrockKnowledgeStoreConfiguration != nil {
+		if err := s.BedrockKnowledgeStoreConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("BedrockKnowledgeStoreConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.KendraConfiguration != nil {
+		if err := s.KendraConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("KendraConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OpensearchConfiguration != nil {
+		if err := s.OpensearchConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("OpensearchConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBedrockKnowledgeStoreConfiguration sets the BedrockKnowledgeStoreConfiguration field's value.
+func (s *DataSourceConfiguration) SetBedrockKnowledgeStoreConfiguration(v *BedrockKnowledgeStoreConfiguration) *DataSourceConfiguration {
+	s.BedrockKnowledgeStoreConfiguration = v
+	return s
+}
+
+// SetKendraConfiguration sets the KendraConfiguration field's value.
+func (s *DataSourceConfiguration) SetKendraConfiguration(v *QnAKendraConfiguration) *DataSourceConfiguration {
+	s.KendraConfiguration = v
+	return s
+}
+
+// SetOpensearchConfiguration sets the OpensearchConfiguration field's value.
+func (s *DataSourceConfiguration) SetOpensearchConfiguration(v *OpensearchConfiguration) *DataSourceConfiguration {
+	s.OpensearchConfiguration = v
+	return s
+}
+
 // The object used for specifying the data range that the customer wants Amazon
 // Lex to read through in the input transcripts.
 type DateRangeFilter struct {
@@ -21624,6 +22849,121 @@ func (s *DeleteBotOutput) SetBotId(v string) *DeleteBotOutput {
 // SetBotStatus sets the BotStatus field's value.
 func (s *DeleteBotOutput) SetBotStatus(v string) *DeleteBotOutput {
 	s.BotStatus = &v
+	return s
+}
+
+type DeleteBotReplicaInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The unique ID of the replicated bot to be deleted from the secondary region
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The secondary region of the replicated bot that will be deleted.
+	//
+	// ReplicaRegion is a required field
+	ReplicaRegion *string `location:"uri" locationName:"replicaRegion" min:"2" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteBotReplicaInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteBotReplicaInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteBotReplicaInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteBotReplicaInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.ReplicaRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("ReplicaRegion"))
+	}
+	if s.ReplicaRegion != nil && len(*s.ReplicaRegion) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("ReplicaRegion", 2))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *DeleteBotReplicaInput) SetBotId(v string) *DeleteBotReplicaInput {
+	s.BotId = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *DeleteBotReplicaInput) SetReplicaRegion(v string) *DeleteBotReplicaInput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+type DeleteBotReplicaOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique bot ID of the replicated bot generated.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The operational status of the replicated bot generated.
+	BotReplicaStatus *string `locationName:"botReplicaStatus" type:"string" enum:"BotReplicaStatus"`
+
+	// The region of the replicated bot generated.
+	ReplicaRegion *string `locationName:"replicaRegion" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteBotReplicaOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteBotReplicaOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *DeleteBotReplicaOutput) SetBotId(v string) *DeleteBotReplicaOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotReplicaStatus sets the BotReplicaStatus field's value.
+func (s *DeleteBotReplicaOutput) SetBotReplicaStatus(v string) *DeleteBotReplicaOutput {
+	s.BotReplicaStatus = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *DeleteBotReplicaOutput) SetReplicaRegion(v string) *DeleteBotReplicaOutput {
+	s.ReplicaRegion = &v
 	return s
 }
 
@@ -23774,6 +25114,148 @@ func (s *DescribeBotRecommendationOutput) SetTranscriptSourceSetting(v *Transcri
 	return s
 }
 
+type DescribeBotReplicaInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The request for the unique bot ID of the replicated bot being monitored.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The request for the region of the replicated bot being monitored.
+	//
+	// ReplicaRegion is a required field
+	ReplicaRegion *string `location:"uri" locationName:"replicaRegion" min:"2" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotReplicaInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotReplicaInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeBotReplicaInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeBotReplicaInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.ReplicaRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("ReplicaRegion"))
+	}
+	if s.ReplicaRegion != nil && len(*s.ReplicaRegion) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("ReplicaRegion", 2))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *DescribeBotReplicaInput) SetBotId(v string) *DescribeBotReplicaInput {
+	s.BotId = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *DescribeBotReplicaInput) SetReplicaRegion(v string) *DescribeBotReplicaInput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+type DescribeBotReplicaOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique bot ID of the replicated bot being monitored.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The operational status of the replicated bot being monitored.
+	BotReplicaStatus *string `locationName:"botReplicaStatus" type:"string" enum:"BotReplicaStatus"`
+
+	// The creation date and time of the replicated bot being monitored.
+	CreationDateTime *time.Time `locationName:"creationDateTime" type:"timestamp"`
+
+	// The failure reasons the bot being monitored failed to replicate.
+	FailureReasons []*string `locationName:"failureReasons" type:"list"`
+
+	// The region of the replicated bot being monitored.
+	ReplicaRegion *string `locationName:"replicaRegion" min:"2" type:"string"`
+
+	// The source region of the replicated bot being monitored.
+	SourceRegion *string `locationName:"sourceRegion" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotReplicaOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeBotReplicaOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *DescribeBotReplicaOutput) SetBotId(v string) *DescribeBotReplicaOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotReplicaStatus sets the BotReplicaStatus field's value.
+func (s *DescribeBotReplicaOutput) SetBotReplicaStatus(v string) *DescribeBotReplicaOutput {
+	s.BotReplicaStatus = &v
+	return s
+}
+
+// SetCreationDateTime sets the CreationDateTime field's value.
+func (s *DescribeBotReplicaOutput) SetCreationDateTime(v time.Time) *DescribeBotReplicaOutput {
+	s.CreationDateTime = &v
+	return s
+}
+
+// SetFailureReasons sets the FailureReasons field's value.
+func (s *DescribeBotReplicaOutput) SetFailureReasons(v []*string) *DescribeBotReplicaOutput {
+	s.FailureReasons = v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *DescribeBotReplicaOutput) SetReplicaRegion(v string) *DescribeBotReplicaOutput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+// SetSourceRegion sets the SourceRegion field's value.
+func (s *DescribeBotReplicaOutput) SetSourceRegion(v string) *DescribeBotReplicaOutput {
+	s.SourceRegion = &v
+	return s
+}
+
 type DescribeBotResourceGenerationInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -24829,6 +26311,9 @@ type DescribeIntentOutput struct {
 	// any.
 	ParentIntentSignature *string `locationName:"parentIntentSignature" type:"string"`
 
+	// Details about the configuration of the built-in Amazon.QnAIntent.
+	QnAIntentConfiguration *QnAIntentConfiguration `locationName:"qnAIntentConfiguration" type:"structure"`
+
 	// User utterances that trigger this intent.
 	SampleUtterances []*SampleUtterance `locationName:"sampleUtterances" type:"list"`
 
@@ -24954,6 +26439,12 @@ func (s *DescribeIntentOutput) SetOutputContexts(v []*OutputContext) *DescribeIn
 // SetParentIntentSignature sets the ParentIntentSignature field's value.
 func (s *DescribeIntentOutput) SetParentIntentSignature(v string) *DescribeIntentOutput {
 	s.ParentIntentSignature = &v
+	return s
+}
+
+// SetQnAIntentConfiguration sets the QnAIntentConfiguration field's value.
+func (s *DescribeIntentOutput) SetQnAIntentConfiguration(v *QnAIntentConfiguration) *DescribeIntentOutput {
+	s.QnAIntentConfiguration = v
 	return s
 }
 
@@ -26715,6 +28206,69 @@ func (s *EncryptionSetting) SetBotLocaleExportPassword(v string) *EncryptionSett
 // SetKmsKeyArn sets the KmsKeyArn field's value.
 func (s *EncryptionSetting) SetKmsKeyArn(v string) *EncryptionSetting {
 	s.KmsKeyArn = &v
+	return s
+}
+
+// Contains the names of the fields used for an exact response to the user.
+type ExactResponseFields struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the field that contains the answer to the query made to the OpenSearch
+	// Service database.
+	//
+	// AnswerField is a required field
+	AnswerField *string `locationName:"answerField" type:"string" required:"true"`
+
+	// The name of the field that contains the query made to the OpenSearch Service
+	// database.
+	//
+	// QuestionField is a required field
+	QuestionField *string `locationName:"questionField" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExactResponseFields) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ExactResponseFields) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ExactResponseFields) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ExactResponseFields"}
+	if s.AnswerField == nil {
+		invalidParams.Add(request.NewErrParamRequired("AnswerField"))
+	}
+	if s.QuestionField == nil {
+		invalidParams.Add(request.NewErrParamRequired("QuestionField"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAnswerField sets the AnswerField field's value.
+func (s *ExactResponseFields) SetAnswerField(v string) *ExactResponseFields {
+	s.AnswerField = &v
+	return s
+}
+
+// SetQuestionField sets the QuestionField field's value.
+func (s *ExactResponseFields) SetQuestionField(v string) *ExactResponseFields {
+	s.QuestionField = &v
 	return s
 }
 
@@ -30240,6 +31794,165 @@ func (s *ListAggregatedUtterancesOutput) SetNextToken(v string) *ListAggregatedU
 	return s
 }
 
+type ListBotAliasReplicasInput struct {
+	_ struct{} `type:"structure"`
+
+	// The request for the unique bot ID of the replicated bot created from the
+	// source bot alias.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The request for maximum results to list the replicated bots created from
+	// the source bot alias.
+	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
+
+	// The request for the next token for the replicated bot created from the source
+	// bot alias.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The request for the secondary region of the replicated bot created from the
+	// source bot alias.
+	//
+	// ReplicaRegion is a required field
+	ReplicaRegion *string `location:"uri" locationName:"replicaRegion" min:"2" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotAliasReplicasInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotAliasReplicasInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListBotAliasReplicasInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListBotAliasReplicasInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.ReplicaRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("ReplicaRegion"))
+	}
+	if s.ReplicaRegion != nil && len(*s.ReplicaRegion) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("ReplicaRegion", 2))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotAliasReplicasInput) SetBotId(v string) *ListBotAliasReplicasInput {
+	s.BotId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListBotAliasReplicasInput) SetMaxResults(v int64) *ListBotAliasReplicasInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBotAliasReplicasInput) SetNextToken(v string) *ListBotAliasReplicasInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *ListBotAliasReplicasInput) SetReplicaRegion(v string) *ListBotAliasReplicasInput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+type ListBotAliasReplicasOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The summary information of the replicated bot created from the source bot
+	// alias.
+	BotAliasReplicaSummaries []*BotAliasReplicaSummary `locationName:"botAliasReplicaSummaries" type:"list"`
+
+	// The unique bot ID of the replicated bot created from the source bot alias.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The next token for the replicated bots created from the source bot alias.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The secondary region of the replicated bot created from the source bot alias.
+	ReplicaRegion *string `locationName:"replicaRegion" min:"2" type:"string"`
+
+	// The source region of the replicated bot created from the source bot alias.
+	SourceRegion *string `locationName:"sourceRegion" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotAliasReplicasOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotAliasReplicasOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotAliasReplicaSummaries sets the BotAliasReplicaSummaries field's value.
+func (s *ListBotAliasReplicasOutput) SetBotAliasReplicaSummaries(v []*BotAliasReplicaSummary) *ListBotAliasReplicasOutput {
+	s.BotAliasReplicaSummaries = v
+	return s
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotAliasReplicasOutput) SetBotId(v string) *ListBotAliasReplicasOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBotAliasReplicasOutput) SetNextToken(v string) *ListBotAliasReplicasOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *ListBotAliasReplicasOutput) SetReplicaRegion(v string) *ListBotAliasReplicasOutput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+// SetSourceRegion sets the SourceRegion field's value.
+func (s *ListBotAliasReplicasOutput) SetSourceRegion(v string) *ListBotAliasReplicasOutput {
+	s.SourceRegion = &v
+	return s
+}
+
 type ListBotAliasesInput struct {
 	_ struct{} `type:"structure"`
 
@@ -30744,6 +32457,104 @@ func (s *ListBotRecommendationsOutput) SetNextToken(v string) *ListBotRecommenda
 	return s
 }
 
+type ListBotReplicasInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The request for the unique bot IDs in the list of replicated bots.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotReplicasInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotReplicasInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListBotReplicasInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListBotReplicasInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotReplicasInput) SetBotId(v string) *ListBotReplicasInput {
+	s.BotId = &v
+	return s
+}
+
+type ListBotReplicasOutput struct {
+	_ struct{} `type:"structure"`
+
+	// the unique bot IDs in the list of replicated bots.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The summary details for the replicated bots.
+	BotReplicaSummaries []*BotReplicaSummary `locationName:"botReplicaSummaries" type:"list"`
+
+	// The source region of the source bots in the list of replicated bots.
+	SourceRegion *string `locationName:"sourceRegion" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotReplicasOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotReplicasOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotReplicasOutput) SetBotId(v string) *ListBotReplicasOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotReplicaSummaries sets the BotReplicaSummaries field's value.
+func (s *ListBotReplicasOutput) SetBotReplicaSummaries(v []*BotReplicaSummary) *ListBotReplicasOutput {
+	s.BotReplicaSummaries = v
+	return s
+}
+
+// SetSourceRegion sets the SourceRegion field's value.
+func (s *ListBotReplicasOutput) SetSourceRegion(v string) *ListBotReplicasOutput {
+	s.SourceRegion = &v
+	return s
+}
+
 type ListBotResourceGenerationsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -30932,6 +32743,175 @@ func (s *ListBotResourceGenerationsOutput) SetLocaleId(v string) *ListBotResourc
 // SetNextToken sets the NextToken field's value.
 func (s *ListBotResourceGenerationsOutput) SetNextToken(v string) *ListBotResourceGenerationsOutput {
 	s.NextToken = &v
+	return s
+}
+
+type ListBotVersionReplicasInput struct {
+	_ struct{} `type:"structure"`
+
+	// The request for the unique ID in the list of replicated bots.
+	//
+	// BotId is a required field
+	BotId *string `location:"uri" locationName:"botId" min:"10" type:"string" required:"true"`
+
+	// The maximum results given in the list of replicated bots.
+	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
+
+	// The next token given in the list of replicated bots.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The request for the region used in the list of replicated bots.
+	//
+	// ReplicaRegion is a required field
+	ReplicaRegion *string `location:"uri" locationName:"replicaRegion" min:"2" type:"string" required:"true"`
+
+	// The requested sort category for the list of replicated bots.
+	SortBy *BotVersionReplicaSortBy `locationName:"sortBy" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotVersionReplicasInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotVersionReplicasInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListBotVersionReplicasInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListBotVersionReplicasInput"}
+	if s.BotId == nil {
+		invalidParams.Add(request.NewErrParamRequired("BotId"))
+	}
+	if s.BotId != nil && len(*s.BotId) < 10 {
+		invalidParams.Add(request.NewErrParamMinLen("BotId", 10))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.ReplicaRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("ReplicaRegion"))
+	}
+	if s.ReplicaRegion != nil && len(*s.ReplicaRegion) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("ReplicaRegion", 2))
+	}
+	if s.SortBy != nil {
+		if err := s.SortBy.Validate(); err != nil {
+			invalidParams.AddNested("SortBy", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotVersionReplicasInput) SetBotId(v string) *ListBotVersionReplicasInput {
+	s.BotId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListBotVersionReplicasInput) SetMaxResults(v int64) *ListBotVersionReplicasInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBotVersionReplicasInput) SetNextToken(v string) *ListBotVersionReplicasInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *ListBotVersionReplicasInput) SetReplicaRegion(v string) *ListBotVersionReplicasInput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+// SetSortBy sets the SortBy field's value.
+func (s *ListBotVersionReplicasInput) SetSortBy(v *BotVersionReplicaSortBy) *ListBotVersionReplicasInput {
+	s.SortBy = v
+	return s
+}
+
+type ListBotVersionReplicasOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique ID of the bots in the list of replicated bots.
+	BotId *string `locationName:"botId" min:"10" type:"string"`
+
+	// The information summary used for the replicated bots in the list of replicated
+	// bots.
+	BotVersionReplicaSummaries []*BotVersionReplicaSummary `locationName:"botVersionReplicaSummaries" type:"list"`
+
+	// The next token used for the replicated bots in the list of replicated bots.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The region used for the replicated bots in the list of replicated bots.
+	ReplicaRegion *string `locationName:"replicaRegion" min:"2" type:"string"`
+
+	// The source region used for the bots in the list of replicated bots.
+	SourceRegion *string `locationName:"sourceRegion" min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotVersionReplicasOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBotVersionReplicasOutput) GoString() string {
+	return s.String()
+}
+
+// SetBotId sets the BotId field's value.
+func (s *ListBotVersionReplicasOutput) SetBotId(v string) *ListBotVersionReplicasOutput {
+	s.BotId = &v
+	return s
+}
+
+// SetBotVersionReplicaSummaries sets the BotVersionReplicaSummaries field's value.
+func (s *ListBotVersionReplicasOutput) SetBotVersionReplicaSummaries(v []*BotVersionReplicaSummary) *ListBotVersionReplicasOutput {
+	s.BotVersionReplicaSummaries = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBotVersionReplicasOutput) SetNextToken(v string) *ListBotVersionReplicasOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetReplicaRegion sets the ReplicaRegion field's value.
+func (s *ListBotVersionReplicasOutput) SetReplicaRegion(v string) *ListBotVersionReplicasOutput {
+	s.ReplicaRegion = &v
+	return s
+}
+
+// SetSourceRegion sets the SourceRegion field's value.
+func (s *ListBotVersionReplicasOutput) SetSourceRegion(v string) *ListBotVersionReplicasOutput {
+	s.SourceRegion = &v
 	return s
 }
 
@@ -35556,6 +37536,108 @@ func (s *ObfuscationSetting) SetObfuscationSettingType(v string) *ObfuscationSet
 	return s
 }
 
+// Contains details about the configuration of the Amazon OpenSearch Service
+// database used for the AMAZON.QnAIntent.
+type OpensearchConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The endpoint of the Amazon OpenSearch Service domain.
+	//
+	// DomainEndpoint is a required field
+	DomainEndpoint *string `locationName:"domainEndpoint" type:"string" required:"true"`
+
+	// Specifies whether to return an exact response or to return an answer generated
+	// by the model using the fields you specify from the database.
+	ExactResponse *bool `locationName:"exactResponse" type:"boolean"`
+
+	// Contains the names of the fields used for an exact response to the user.
+	ExactResponseFields *ExactResponseFields `locationName:"exactResponseFields" type:"structure"`
+
+	// Contains a list of fields from the Amazon OpenSearch Service that the model
+	// can use to generate the answer to the query.
+	IncludeFields []*string `locationName:"includeFields" min:"1" type:"list"`
+
+	// The name of the Amazon OpenSearch Service index.
+	//
+	// IndexName is a required field
+	IndexName *string `locationName:"indexName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OpensearchConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OpensearchConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *OpensearchConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "OpensearchConfiguration"}
+	if s.DomainEndpoint == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainEndpoint"))
+	}
+	if s.IncludeFields != nil && len(s.IncludeFields) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("IncludeFields", 1))
+	}
+	if s.IndexName == nil {
+		invalidParams.Add(request.NewErrParamRequired("IndexName"))
+	}
+	if s.IndexName != nil && len(*s.IndexName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("IndexName", 1))
+	}
+	if s.ExactResponseFields != nil {
+		if err := s.ExactResponseFields.Validate(); err != nil {
+			invalidParams.AddNested("ExactResponseFields", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainEndpoint sets the DomainEndpoint field's value.
+func (s *OpensearchConfiguration) SetDomainEndpoint(v string) *OpensearchConfiguration {
+	s.DomainEndpoint = &v
+	return s
+}
+
+// SetExactResponse sets the ExactResponse field's value.
+func (s *OpensearchConfiguration) SetExactResponse(v bool) *OpensearchConfiguration {
+	s.ExactResponse = &v
+	return s
+}
+
+// SetExactResponseFields sets the ExactResponseFields field's value.
+func (s *OpensearchConfiguration) SetExactResponseFields(v *ExactResponseFields) *OpensearchConfiguration {
+	s.ExactResponseFields = v
+	return s
+}
+
+// SetIncludeFields sets the IncludeFields field's value.
+func (s *OpensearchConfiguration) SetIncludeFields(v []*string) *OpensearchConfiguration {
+	s.IncludeFields = v
+	return s
+}
+
+// SetIndexName sets the IndexName field's value.
+func (s *OpensearchConfiguration) SetIndexName(v string) *OpensearchConfiguration {
+	s.IndexName = &v
+	return s
+}
+
 // Describes a session context that is activated when an intent is fulfilled.
 type OutputContext struct {
 	_ struct{} `type:"structure"`
@@ -36551,6 +38633,156 @@ func (s *PromptSpecification) SetMessageSelectionStrategy(v string) *PromptSpeci
 // SetPromptAttemptsSpecification sets the PromptAttemptsSpecification field's value.
 func (s *PromptSpecification) SetPromptAttemptsSpecification(v map[string]*PromptAttemptSpecification) *PromptSpecification {
 	s.PromptAttemptsSpecification = v
+	return s
+}
+
+// Details about the the configuration of the built-in Amazon.QnAIntent.
+type QnAIntentConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Contains information about the Amazon Bedrock model used to interpret the
+	// prompt used in descriptive bot building.
+	BedrockModelConfiguration *BedrockModelSpecification `locationName:"bedrockModelConfiguration" type:"structure"`
+
+	// Contains details about the configuration of the data source used for the
+	// AMAZON.QnAIntent.
+	DataSourceConfiguration *DataSourceConfiguration `locationName:"dataSourceConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QnAIntentConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QnAIntentConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *QnAIntentConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "QnAIntentConfiguration"}
+	if s.BedrockModelConfiguration != nil {
+		if err := s.BedrockModelConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("BedrockModelConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.DataSourceConfiguration != nil {
+		if err := s.DataSourceConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("DataSourceConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBedrockModelConfiguration sets the BedrockModelConfiguration field's value.
+func (s *QnAIntentConfiguration) SetBedrockModelConfiguration(v *BedrockModelSpecification) *QnAIntentConfiguration {
+	s.BedrockModelConfiguration = v
+	return s
+}
+
+// SetDataSourceConfiguration sets the DataSourceConfiguration field's value.
+func (s *QnAIntentConfiguration) SetDataSourceConfiguration(v *DataSourceConfiguration) *QnAIntentConfiguration {
+	s.DataSourceConfiguration = v
+	return s
+}
+
+// Contains details about the configuration of the Amazon Kendra index used
+// for the AMAZON.QnAIntent.
+type QnAKendraConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies whether to return an exact response from the Amazon Kendra index
+	// or to let the Amazon Bedrock model you select generate a response based on
+	// the results. To use this feature, you must first add FAQ questions to your
+	// index by following the steps at Adding frequently asked questions (FAQs)
+	// to an index (https://docs.aws.amazon.com/kendra/latest/dg/in-creating-faq.html).
+	ExactResponse *bool `locationName:"exactResponse" type:"boolean"`
+
+	// The ARN of the Amazon Kendra index to use.
+	//
+	// KendraIndex is a required field
+	KendraIndex *string `locationName:"kendraIndex" min:"32" type:"string" required:"true"`
+
+	// Contains the Amazon Kendra filter string to use if enabled. For more information
+	// on the Amazon Kendra search filter JSON format, see Using document attributes
+	// to filter search results (https://docs.aws.amazon.com/kendra/latest/dg/filtering.html#search-filtering).
+	QueryFilterString *string `locationName:"queryFilterString" min:"1" type:"string"`
+
+	// Specifies whether to enable an Amazon Kendra filter string or not.
+	QueryFilterStringEnabled *bool `locationName:"queryFilterStringEnabled" type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QnAKendraConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QnAKendraConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *QnAKendraConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "QnAKendraConfiguration"}
+	if s.KendraIndex == nil {
+		invalidParams.Add(request.NewErrParamRequired("KendraIndex"))
+	}
+	if s.KendraIndex != nil && len(*s.KendraIndex) < 32 {
+		invalidParams.Add(request.NewErrParamMinLen("KendraIndex", 32))
+	}
+	if s.QueryFilterString != nil && len(*s.QueryFilterString) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("QueryFilterString", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetExactResponse sets the ExactResponse field's value.
+func (s *QnAKendraConfiguration) SetExactResponse(v bool) *QnAKendraConfiguration {
+	s.ExactResponse = &v
+	return s
+}
+
+// SetKendraIndex sets the KendraIndex field's value.
+func (s *QnAKendraConfiguration) SetKendraIndex(v string) *QnAKendraConfiguration {
+	s.KendraIndex = &v
+	return s
+}
+
+// SetQueryFilterString sets the QueryFilterString field's value.
+func (s *QnAKendraConfiguration) SetQueryFilterString(v string) *QnAKendraConfiguration {
+	s.QueryFilterString = &v
+	return s
+}
+
+// SetQueryFilterStringEnabled sets the QueryFilterStringEnabled field's value.
+func (s *QnAKendraConfiguration) SetQueryFilterStringEnabled(v bool) *QnAKendraConfiguration {
+	s.QueryFilterStringEnabled = &v
 	return s
 }
 
@@ -44274,6 +46506,11 @@ type UpdateIntentInput struct {
 	// The signature of the new built-in intent to use as the parent of this intent.
 	ParentIntentSignature *string `locationName:"parentIntentSignature" type:"string"`
 
+	// Specifies the configuration of the built-in Amazon.QnAIntent. The AMAZON.QnAIntent
+	// intent is called when Amazon Lex can't determine another intent to invoke.
+	// If you specify this field, you can't specify the kendraConfiguration field.
+	QnAIntentConfiguration *QnAIntentConfiguration `locationName:"qnAIntentConfiguration" type:"structure"`
+
 	// New utterances used to invoke the intent.
 	SampleUtterances []*SampleUtterance `locationName:"sampleUtterances" type:"list"`
 
@@ -44380,6 +46617,11 @@ func (s *UpdateIntentInput) Validate() error {
 			if err := v.Validate(); err != nil {
 				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "OutputContexts", i), err.(request.ErrInvalidParams))
 			}
+		}
+	}
+	if s.QnAIntentConfiguration != nil {
+		if err := s.QnAIntentConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("QnAIntentConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.SampleUtterances != nil {
@@ -44499,6 +46741,12 @@ func (s *UpdateIntentInput) SetParentIntentSignature(v string) *UpdateIntentInpu
 	return s
 }
 
+// SetQnAIntentConfiguration sets the QnAIntentConfiguration field's value.
+func (s *UpdateIntentInput) SetQnAIntentConfiguration(v *QnAIntentConfiguration) *UpdateIntentInput {
+	s.QnAIntentConfiguration = v
+	return s
+}
+
 // SetSampleUtterances sets the SampleUtterances field's value.
 func (s *UpdateIntentInput) SetSampleUtterances(v []*SampleUtterance) *UpdateIntentInput {
 	s.SampleUtterances = v
@@ -44570,6 +46818,9 @@ type UpdateIntentOutput struct {
 
 	// The updated built-in intent that is the parent of this intent.
 	ParentIntentSignature *string `locationName:"parentIntentSignature" type:"string"`
+
+	// Details about the configuration of the built-in Amazon.QnAIntent.
+	QnAIntentConfiguration *QnAIntentConfiguration `locationName:"qnAIntentConfiguration" type:"structure"`
 
 	// The updated list of sample utterances for the intent.
 	SampleUtterances []*SampleUtterance `locationName:"sampleUtterances" type:"list"`
@@ -44696,6 +46947,12 @@ func (s *UpdateIntentOutput) SetOutputContexts(v []*OutputContext) *UpdateIntent
 // SetParentIntentSignature sets the ParentIntentSignature field's value.
 func (s *UpdateIntentOutput) SetParentIntentSignature(v string) *UpdateIntentOutput {
 	s.ParentIntentSignature = &v
+	return s
+}
+
+// SetQnAIntentConfiguration sets the QnAIntentConfiguration field's value.
+func (s *UpdateIntentOutput) SetQnAIntentConfiguration(v *QnAIntentConfiguration) *UpdateIntentOutput {
+	s.QnAIntentConfiguration = v
 	return s
 }
 
@@ -47569,6 +49826,36 @@ func AudioRecognitionStrategy_Values() []string {
 	}
 }
 
+// The status of the operation to replicate the bot alias. Values: Creating,
+// Updating, Available, Deleting, Failed.
+const (
+	// BotAliasReplicationStatusCreating is a BotAliasReplicationStatus enum value
+	BotAliasReplicationStatusCreating = "Creating"
+
+	// BotAliasReplicationStatusUpdating is a BotAliasReplicationStatus enum value
+	BotAliasReplicationStatusUpdating = "Updating"
+
+	// BotAliasReplicationStatusAvailable is a BotAliasReplicationStatus enum value
+	BotAliasReplicationStatusAvailable = "Available"
+
+	// BotAliasReplicationStatusDeleting is a BotAliasReplicationStatus enum value
+	BotAliasReplicationStatusDeleting = "Deleting"
+
+	// BotAliasReplicationStatusFailed is a BotAliasReplicationStatus enum value
+	BotAliasReplicationStatusFailed = "Failed"
+)
+
+// BotAliasReplicationStatus_Values returns all elements of the BotAliasReplicationStatus enum
+func BotAliasReplicationStatus_Values() []string {
+	return []string{
+		BotAliasReplicationStatusCreating,
+		BotAliasReplicationStatusUpdating,
+		BotAliasReplicationStatusAvailable,
+		BotAliasReplicationStatusDeleting,
+		BotAliasReplicationStatusFailed,
+	}
+}
+
 const (
 	// BotAliasStatusCreating is a BotAliasStatus enum value
 	BotAliasStatusCreating = "Creating"
@@ -47757,6 +50044,32 @@ func BotRecommendationStatus_Values() []string {
 	}
 }
 
+// The status of the operation to replicate the bot. Values: Enabling, Enabled,
+// Deleting, Failed.
+const (
+	// BotReplicaStatusEnabling is a BotReplicaStatus enum value
+	BotReplicaStatusEnabling = "Enabling"
+
+	// BotReplicaStatusEnabled is a BotReplicaStatus enum value
+	BotReplicaStatusEnabled = "Enabled"
+
+	// BotReplicaStatusDeleting is a BotReplicaStatus enum value
+	BotReplicaStatusDeleting = "Deleting"
+
+	// BotReplicaStatusFailed is a BotReplicaStatus enum value
+	BotReplicaStatusFailed = "Failed"
+)
+
+// BotReplicaStatus_Values returns all elements of the BotReplicaStatus enum
+func BotReplicaStatus_Values() []string {
+	return []string{
+		BotReplicaStatusEnabling,
+		BotReplicaStatusEnabled,
+		BotReplicaStatusDeleting,
+		BotReplicaStatusFailed,
+	}
+}
+
 const (
 	// BotSortAttributeBotName is a BotSortAttribute enum value
 	BotSortAttributeBotName = "BotName"
@@ -47822,6 +50135,44 @@ func BotType_Values() []string {
 	return []string{
 		BotTypeBot,
 		BotTypeBotNetwork,
+	}
+}
+
+const (
+	// BotVersionReplicaSortAttributeBotVersion is a BotVersionReplicaSortAttribute enum value
+	BotVersionReplicaSortAttributeBotVersion = "BotVersion"
+)
+
+// BotVersionReplicaSortAttribute_Values returns all elements of the BotVersionReplicaSortAttribute enum
+func BotVersionReplicaSortAttribute_Values() []string {
+	return []string{
+		BotVersionReplicaSortAttributeBotVersion,
+	}
+}
+
+// The status of the operation to replicate the bot version. Values: Creating,
+// Available, Deleting, Failed.
+const (
+	// BotVersionReplicationStatusCreating is a BotVersionReplicationStatus enum value
+	BotVersionReplicationStatusCreating = "Creating"
+
+	// BotVersionReplicationStatusAvailable is a BotVersionReplicationStatus enum value
+	BotVersionReplicationStatusAvailable = "Available"
+
+	// BotVersionReplicationStatusDeleting is a BotVersionReplicationStatus enum value
+	BotVersionReplicationStatusDeleting = "Deleting"
+
+	// BotVersionReplicationStatusFailed is a BotVersionReplicationStatus enum value
+	BotVersionReplicationStatusFailed = "Failed"
+)
+
+// BotVersionReplicationStatus_Values returns all elements of the BotVersionReplicationStatus enum
+func BotVersionReplicationStatus_Values() []string {
+	return []string{
+		BotVersionReplicationStatusCreating,
+		BotVersionReplicationStatusAvailable,
+		BotVersionReplicationStatusDeleting,
+		BotVersionReplicationStatusFailed,
 	}
 }
 

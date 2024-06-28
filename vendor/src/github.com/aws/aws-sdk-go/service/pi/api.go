@@ -643,7 +643,8 @@ func (c *PI) GetResourceMetricsRequest(input *GetResourceMetricsInput) (req *req
 //
 // Retrieve Performance Insights metrics for a set of data sources over a time
 // period. You can provide specific dimension groups and dimensions, and provide
-// aggregation and filtering criteria for each group.
+// filtering criteria for each group. You must specify an aggregate function
+// for each metric.
 //
 // Each response element returns a maximum of 500 bytes. For larger elements,
 // such as SQL statements, only the first 500 bytes are returned.
@@ -3142,7 +3143,10 @@ type GetResourceMetricsInput struct {
 	MaxResults *int64 `type:"integer"`
 
 	// An array of one or more queries to perform. Each query must specify a Performance
-	// Insights metric, and can optionally specify aggregation and filtering criteria.
+	// Insights metric and specify an aggregate function, and you can provide filtering
+	// criteria. You must append the aggregate function to the metric. For example,
+	// to find the average for the metric db.load you must use db.load.avg. Valid
+	// values for aggregate functions include .avg, .min, .max, and .sum.
 	//
 	// MetricQueries is a required field
 	MetricQueries []*MetricQuery `min:"1" type:"list" required:"true"`
@@ -3652,6 +3656,15 @@ func (s *InvalidArgumentException) RequestID() string {
 type ListAvailableResourceDimensionsInput struct {
 	_ struct{} `type:"structure"`
 
+	// The actions to discover the dimensions you are authorized to access. If you
+	// specify multiple actions, then the response will contain the dimensions common
+	// for all the actions.
+	//
+	// When you don't specify this request parameter or provide an empty list, the
+	// response contains all the available dimensions for the target database engine
+	// whether or not you are authorized to access them.
+	AuthorizedActions []*string `type:"list" enum:"FineGrainedAction"`
+
 	// An immutable identifier for a data source that is unique within an Amazon
 	// Web Services Region. Performance Insights gathers metrics from this data
 	// source. To use an Amazon RDS DB instance as a data source, specify its DbiResourceId
@@ -3723,6 +3736,12 @@ func (s *ListAvailableResourceDimensionsInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAuthorizedActions sets the AuthorizedActions field's value.
+func (s *ListAvailableResourceDimensionsInput) SetAuthorizedActions(v []*string) *ListAvailableResourceDimensionsInput {
+	s.AuthorizedActions = v
+	return s
 }
 
 // SetIdentifier sets the Identifier field's value.
@@ -4278,11 +4297,14 @@ func (s *MetricKeyDataPoints) SetKey(v *ResponseResourceMetricKey) *MetricKeyDat
 	return s
 }
 
-// A single query to be processed. You must provide the metric to query. If
-// no other parameters are specified, Performance Insights returns all data
-// points for the specified metric. Optionally, you can request that the data
-// points be aggregated by dimension group (GroupBy), and return only those
-// data points that match your criteria (Filter).
+// A single query to be processed. You must provide the metric to query and
+// append an aggregate function to the metric. For example, to find the average
+// for the metric db.load you must use db.load.avg. Valid values for aggregate
+// functions include .avg, .min, .max, and .sum. If no other parameters are
+// specified, Performance Insights returns all data points for the specified
+// metric. Optionally, you can request that the data points be aggregated by
+// dimension group (GroupBy), and return only those data points that match your
+// criteria (Filter).
 type MetricQuery struct {
 	_ struct{} `type:"structure"`
 
@@ -4314,6 +4336,10 @@ type MetricQuery struct {
 	//    * The counter metrics listed in Performance Insights operating system
 	//    counters (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_PerfInsights_Counters.html#USER_PerfInsights_Counters.OS)
 	//    in the Amazon Aurora User Guide.
+	//
+	//    * The counter metrics listed in Performance Insights operating system
+	//    counters (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights_Counters.html#USER_PerfInsights_Counters.OS)
+	//    in the Amazon RDS User Guide.
 	//
 	// If the number of active sessions is less than an internal Performance Insights
 	// threshold, db.load.avg and db.sampledload.avg are the same value. If the
@@ -4657,6 +4683,10 @@ type ResponseResourceMetricKey struct {
 	//    * The counter metrics listed in Performance Insights operating system
 	//    counters (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/USER_PerfInsights_Counters.html#USER_PerfInsights_Counters.OS)
 	//    in the Amazon Aurora User Guide.
+	//
+	//    * The counter metrics listed in Performance Insights operating system
+	//    counters (https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_PerfInsights_Counters.html#USER_PerfInsights_Counters.OS)
+	//    in the Amazon RDS User Guide.
 	//
 	// If the number of active sessions is less than an internal Performance Insights
 	// threshold, db.load.avg and db.sampledload.avg are the same value. If the
@@ -5082,6 +5112,26 @@ func FeatureStatus_Values() []string {
 		FeatureStatusEnabledPendingReboot,
 		FeatureStatusDisabledPendingReboot,
 		FeatureStatusUnknown,
+	}
+}
+
+const (
+	// FineGrainedActionDescribeDimensionKeys is a FineGrainedAction enum value
+	FineGrainedActionDescribeDimensionKeys = "DescribeDimensionKeys"
+
+	// FineGrainedActionGetDimensionKeyDetails is a FineGrainedAction enum value
+	FineGrainedActionGetDimensionKeyDetails = "GetDimensionKeyDetails"
+
+	// FineGrainedActionGetResourceMetrics is a FineGrainedAction enum value
+	FineGrainedActionGetResourceMetrics = "GetResourceMetrics"
+)
+
+// FineGrainedAction_Values returns all elements of the FineGrainedAction enum
+func FineGrainedAction_Values() []string {
+	return []string{
+		FineGrainedActionDescribeDimensionKeys,
+		FineGrainedActionGetDimensionKeyDetails,
+		FineGrainedActionGetResourceMetrics,
 	}
 }
 

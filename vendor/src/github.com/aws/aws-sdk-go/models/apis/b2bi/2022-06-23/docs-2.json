@@ -23,7 +23,7 @@
     "StartTransformerJob": "<p>Runs a job, using a transformer, to parse input EDI (electronic data interchange) file into the output structures used by Amazon Web Services B2BI Data Interchange.</p> <p>If you only want to transform EDI (electronic data interchange) documents, you don't need to create profiles, partnerships or capabilities. Just create and configure a transformer, and then run the <code>StartTransformerJob</code> API to process your files.</p>",
     "TagResource": "<p>Attaches a key-value pair to a resource, as identified by its Amazon Resource Name (ARN). Resources are capability, partnership, profile, transformers and other entities.</p> <p>There is no response returned from this call.</p>",
     "TestMapping": "<p>Maps the input file according to the provided template file. The API call downloads the file contents from the Amazon S3 location, and passes the contents in as a string, to the <code>inputFileContent</code> parameter.</p>",
-    "TestParsing": "<p>Parses the input EDI (electronic data interchange) file.</p>",
+    "TestParsing": "<p>Parses the input EDI (electronic data interchange) file. The input file has a file size limit of 250 KB.</p>",
     "UntagResource": "<p>Detaches a key-value pair from the specified resource, as identified by its Amazon Resource Name (ARN). Resources are capability, partnership, profile, transformers and other entities.</p>",
     "UpdateCapability": "<p>Updates some of the parameters for a capability, based on the specified parameters. A trading capability contains the information required to transform incoming EDI documents into JSON or XML outputs.</p>",
     "UpdatePartnership": "<p>Updates some of the parameters for a partnership between a customer and trading partner. A partnership represents the connection between you and your trading partner. It ties together a profile and one or more trading capabilities.</p>",
@@ -416,13 +416,13 @@
     "MappingTemplate": {
       "base": null,
       "refs": {
-        "CreateTransformerRequest$mappingTemplate": "<p>Specifies the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>",
-        "CreateTransformerResponse$mappingTemplate": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>",
-        "GetTransformerResponse$mappingTemplate": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>",
-        "TestMappingRequest$mappingTemplate": "<p>Specifies the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>",
-        "TransformerSummary$mappingTemplate": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>",
-        "UpdateTransformerRequest$mappingTemplate": "<p>Specifies the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>",
-        "UpdateTransformerResponse$mappingTemplate": "<p>Returns the name of the mapping template for the transformer. This template is used to convert the input document into the correct set of objects.</p>"
+        "CreateTransformerRequest$mappingTemplate": "<p>Specifies the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>",
+        "CreateTransformerResponse$mappingTemplate": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>",
+        "GetTransformerResponse$mappingTemplate": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>",
+        "TestMappingRequest$mappingTemplate": "<p>Specifies the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>",
+        "TransformerSummary$mappingTemplate": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>",
+        "UpdateTransformerRequest$mappingTemplate": "<p>Specifies the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>",
+        "UpdateTransformerResponse$mappingTemplate": "<p>Returns the mapping template for the transformer. This template is used to map the parsed EDI file using JSONata or XSLT.</p>"
       }
     },
     "MaxResults": {
@@ -850,7 +850,7 @@
     "X12Version": {
       "base": null,
       "refs": {
-        "X12Details$version": "<p>Returns the version to use for the specified X12 transaction set. Supported versions are <code>4010</code>, <code>4030</code>, and <code>5010</code>.</p>"
+        "X12Details$version": "<p>Returns the version to use for the specified X12 transaction set. <pre><code> &lt;/p&gt; </code></pre>"
       }
     }
   }

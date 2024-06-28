@@ -4204,7 +4204,7 @@ func (c *ConfigService) DescribeOrganizationConfigRulesRequest(input *DescribeOr
 // rule names. It is only applicable, when you request all the organization
 // Config rules.
 //
-// # For accounts within an organzation
+// # For accounts within an organization
 //
 // If you deploy an organizational rule or conformance pack in an organization
 // administrator account, and then establish a delegated administrator and deploy
@@ -4574,7 +4574,7 @@ func (c *ConfigService) DescribeOrganizationConformancePacksRequest(input *Descr
 // packs names. They are only applicable, when you request all the organization
 // conformance packs.
 //
-// # For accounts within an organzation
+// # For accounts within an organization
 //
 // If you deploy an organizational rule or conformance pack in an organization
 // administrator account, and then establish a delegated administrator and deploy
@@ -9046,8 +9046,8 @@ func (c *ConfigService) PutConfigRuleRequest(input *PutConfigRuleInput) (req *re
 //
 //   - MaxNumberOfConfigRulesExceededException
 //     Failed to add the Config rule because the account already contains the maximum
-//     number of 150 rules. Consider deleting any deactivated rules before you add
-//     new rules.
+//     number of 1000 rules. Consider deleting any deactivated rules before you
+//     add new rules.
 //
 //   - ResourceInUseException
 //     You see this exception in the following cases:
@@ -10306,12 +10306,16 @@ func (c *ConfigService) PutRemediationConfigurationsRequest(input *PutRemediatio
 // add a remediation configuration. The target (SSM document) must exist and
 // have permissions to use the target.
 //
+// # Be aware of backward incompatible changes
+//
 // If you make backward incompatible changes to the SSM document, you must call
 // this again to ensure the remediations can run.
 //
 // This API does not support adding remediation configurations for service-linked
 // Config Rules such as Organization Config rules, the rules deployed by conformance
 // packs, and rules deployed by Amazon Web Services Security Hub.
+//
+// # Required fields
 //
 // For manual remediation configuration, you need to provide a value for automationAssumeRole
 // or use a value in the assumeRolefield to remediate your resources. The SSM
@@ -10320,6 +10324,20 @@ func (c *ConfigService) PutRemediationConfigurationsRequest(input *PutRemediatio
 // However, for automatic remediation configuration, the only valid assumeRole
 // field value is AutomationAssumeRole and you need to provide a value for AutomationAssumeRole
 // to remediate your resources.
+//
+// # Auto remediation can be initiated even for compliant resources
+//
+// If you enable auto remediation for a specific Config rule using the PutRemediationConfigurations
+// (https://docs.aws.amazon.com/config/latest/APIReference/emAPI_PutRemediationConfigurations.html)
+// API or the Config console, it initiates the remediation process for all non-compliant
+// resources for that specific rule. The auto remediation process relies on
+// the compliance data snapshot which is captured on a periodic basis. Any non-compliant
+// resource that is updated between the snapshot schedule will continue to be
+// remediated based on the last known compliance data snapshot.
+//
+// This means that in some cases auto remediation can be initiated even for
+// compliant resources, since the bootstrap processor uses a database that can
+// have stale evaluation results based on the last known compliance data snapshot.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -10421,9 +10439,13 @@ func (c *ConfigService) PutRemediationExceptionsRequest(input *PutRemediationExc
 // for auto-remediation. This API adds a new exception or updates an existing
 // exception for a specified resource with a specified Config rule.
 //
+// # Exceptions block auto remediation
+//
 // Config generates a remediation exception when a problem occurs running a
 // remediation action for a specified resource. Remediation exceptions blocks
 // auto-remediation until the exception is cleared.
+//
+// # Manual remediation is recommended when placing an exception
 //
 // When placing an exception on an Amazon Web Services resource, it is recommended
 // that remediation is set as manual remediation until the given Config rule
@@ -10434,12 +10456,28 @@ func (c *ConfigService) PutRemediationExceptionsRequest(input *PutRemediationExc
 // NON_COMPLIANT evaluation result can delete resources before the exception
 // is applied.
 //
+// # Exceptions can only be performed on non-compliant resources
+//
 // Placing an exception can only be performed on resources that are NON_COMPLIANT.
 // If you use this API for COMPLIANT resources or resources that are NOT_APPLICABLE,
 // a remediation exception will not be generated. For more information on the
 // conditions that initiate the possible Config evaluation results, see Concepts
 // | Config Rules (https://docs.aws.amazon.com/config/latest/developerguide/config-concepts.html#aws-config-rules)
 // in the Config Developer Guide.
+//
+// # Auto remediation can be initiated even for compliant resources
+//
+// If you enable auto remediation for a specific Config rule using the PutRemediationConfigurations
+// (https://docs.aws.amazon.com/config/latest/APIReference/emAPI_PutRemediationConfigurations.html)
+// API or the Config console, it initiates the remediation process for all non-compliant
+// resources for that specific rule. The auto remediation process relies on
+// the compliance data snapshot which is captured on a periodic basis. Any non-compliant
+// resource that is updated between the snapshot schedule will continue to be
+// remediated based on the last known compliance data snapshot.
+//
+// This means that in some cases auto remediation can be initiated even for
+// compliant resources, since the bootstrap processor uses a database that can
+// have stale evaluation results based on the last known compliance data snapshot.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -12751,6 +12789,14 @@ type BaseConfigurationItem struct {
 	ConfigurationItemCaptureTime *time.Time `locationName:"configurationItemCaptureTime" type:"timestamp"`
 
 	// The time when configuration changes for the resource were delivered.
+	//
+	// This field is optional and is not guaranteed to be present in a configuration
+	// item (CI). If you are using daily recording, this field will be populated.
+	// However, if you are using continuous recording, this field will be omitted
+	// since the delivery time is instantaneous as the CI is available right away.
+	// For more information on daily recording and continuous recording, see Recording
+	// Frequency (https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-recording-frequency)
+	// in the Config Developer Guide.
 	ConfigurationItemDeliveryTime *time.Time `locationName:"configurationItemDeliveryTime" type:"timestamp"`
 
 	// The configuration item status. Valid values include:
@@ -14278,6 +14324,14 @@ type ConfigurationItem struct {
 	ConfigurationItemCaptureTime *time.Time `locationName:"configurationItemCaptureTime" type:"timestamp"`
 
 	// The time when configuration changes for the resource were delivered.
+	//
+	// This field is optional and is not guaranteed to be present in a configuration
+	// item (CI). If you are using daily recording, this field will be populated.
+	// However, if you are using continuous recording, this field will be omitted
+	// since the delivery time is instantaneous as the CI is available right away.
+	// For more information on daily recording and continuous recording, see Recording
+	// Frequency (https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-recording-frequency)
+	// in the Config Developer Guide.
 	ConfigurationItemDeliveryTime *time.Time `locationName:"configurationItemDeliveryTime" type:"timestamp"`
 
 	// Unique MD5 hash that represents the configuration item's state.
@@ -14525,8 +14579,9 @@ type ConfigurationRecorder struct {
 	//    * Continuous recording allows you to record configuration changes continuously
 	//    whenever a change occurs.
 	//
-	//    * Daily recording allows you record configuration data once every 24 hours,
-	//    only if a change has occurred.
+	//    * Daily recording allows you to receive a configuration item (CI) representing
+	//    the most recent state of your resources over the last 24-hour period,
+	//    only if it’s different from the previous CI recorded.
 	//
 	// Firewall Manager depends on continuous recording to monitor your resources.
 	// If you are using Firewall Manager, it is recommended that you set the recording
@@ -17562,7 +17617,7 @@ type DescribeConfigRuleEvaluationStatusInput struct {
 	// The number of rule evaluation results that you want returned.
 	//
 	// This parameter is required if the rule limit for your account is more than
-	// the default of 150 rules.
+	// the default of 1000 rules.
 	//
 	// For information about requesting a rule limit increase, see Config Limits
 	// (http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_config)
@@ -19942,6 +19997,8 @@ func (s *EvaluationStatus) SetStatus(v string) *EvaluationStatus {
 //   - Asia Pacific (Hyderabad)
 //
 //   - Asia Pacific (Melbourne)
+//
+//   - Canada West (Calgary)
 //
 //   - Europe (Spain)
 //
@@ -24579,8 +24636,8 @@ func (s *MaxActiveResourcesExceededException) RequestID() string {
 }
 
 // Failed to add the Config rule because the account already contains the maximum
-// number of 150 rules. Consider deleting any deactivated rules before you add
-// new rules.
+// number of 1000 rules. Consider deleting any deactivated rules before you
+// add new rules.
 type MaxNumberOfConfigRulesExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -29640,6 +29697,8 @@ type RecordingGroup struct {
 	//
 	//    * Asia Pacific (Melbourne)
 	//
+	//    * Canada West (Calgary)
+	//
 	//    * Europe (Spain)
 	//
 	//    * Europe (Zurich)
@@ -29652,8 +29711,8 @@ type RecordingGroup struct {
 	//
 	// The AWS::RDS::GlobalCluster resource type will be recorded in all supported
 	// Config Regions where the configuration recorder is enabled, even if includeGlobalResourceTypes
-	// is not set to true. The includeGlobalResourceTypes option is a bundle which
-	// only applies to IAM users, groups, roles, and customer managed policies.
+	// is setfalse. The includeGlobalResourceTypes option is a bundle which only
+	// applies to IAM users, groups, roles, and customer managed policies.
 	//
 	// If you do not want to record AWS::RDS::GlobalCluster in all enabled Regions,
 	// use one of the following recording strategies:
@@ -29665,6 +29724,26 @@ type RecordingGroup struct {
 	//
 	// For more information, see Selecting Which Resources are Recorded (https://docs.aws.amazon.com/config/latest/developerguide/select-resources.html#select-resources-all)
 	// in the Config developer guide.
+	//
+	// includeGlobalResourceTypes and the exclusion recording strategy
+	//
+	// The includeGlobalResourceTypes field has no impact on the EXCLUSION_BY_RESOURCE_TYPES
+	// recording strategy. This means that the global IAM resource types (IAM users,
+	// groups, roles, and customer managed policies) will not be automatically added
+	// as exclusions for exclusionByResourceTypes when includeGlobalResourceTypes
+	// is set to false.
+	//
+	// The includeGlobalResourceTypes field should only be used to modify the AllSupported
+	// field, as the default for the AllSupported field is to record configuration
+	// changes for all supported resource types excluding the global IAM resource
+	// types. To include the global IAM resource types when AllSupported is set
+	// to true, make sure to set includeGlobalResourceTypes to true.
+	//
+	// To exclude the global IAM resource types for the EXCLUSION_BY_RESOURCE_TYPES
+	// recording strategy, you need to manually add them to the resourceTypes field
+	// of exclusionByResourceTypes.
+	//
+	// Required and optional fields
 	//
 	// Before you set this field to true, set the allSupported field of RecordingGroup
 	// (https://docs.aws.amazon.com/config/latest/APIReference/API_RecordingGroup.html)
@@ -29747,6 +29826,8 @@ type RecordingGroup struct {
 	//    * Asia Pacific (Hyderabad)
 	//
 	//    * Asia Pacific (Melbourne)
+	//
+	//    * Canada West (Calgary)
 	//
 	//    * Europe (Spain)
 	//
@@ -29842,8 +29923,9 @@ func (s *RecordingGroup) SetResourceTypes(v []*string) *RecordingGroup {
 //   - Continuous recording allows you to record configuration changes continuously
 //     whenever a change occurs.
 //
-//   - Daily recording allows you record configuration data once every 24 hours,
-//     only if a change has occurred.
+//   - Daily recording allows you to receive a configuration item (CI) representing
+//     the most recent state of your resources over the last 24-hour period,
+//     only if it’s different from the previous CI recorded.
 //
 // Firewall Manager depends on continuous recording to monitor your resources.
 // If you are using Firewall Manager, it is recommended that you set the recording
@@ -29943,8 +30025,9 @@ type RecordingModeOverride struct {
 	//    * Continuous recording allows you to record configuration changes continuously
 	//    whenever a change occurs.
 	//
-	//    * Daily recording allows you record configuration data once every 24 hours,
-	//    only if a change has occurred.
+	//    * Daily recording allows you to receive a configuration item (CI) representing
+	//    the most recent state of your resources over the last 24-hour period,
+	//    only if it’s different from the previous CI recorded.
 	//
 	// Firewall Manager depends on continuous recording to monitor your resources.
 	// If you are using Firewall Manager, it is recommended that you set the recording
@@ -30091,6 +30174,8 @@ type RecordingStrategy struct {
 	//
 	//    * Asia Pacific (Melbourne)
 	//
+	//    * Canada West (Calgary)
+	//
 	//    * Europe (Spain)
 	//
 	//    * Europe (Zurich)
@@ -30221,12 +30306,15 @@ type RemediationConfiguration struct {
 	// The type of a resource.
 	ResourceType *string `type:"string"`
 
-	// Maximum time in seconds that Config runs auto-remediation. If you do not
-	// select a number, the default is 60 seconds.
+	// Time window to determine whether or not to add a remediation exception to
+	// prevent infinite remediation attempts. If MaximumAutomaticAttempts remediation
+	// attempts have been made under RetryAttemptSeconds, a remediation exception
+	// will be added to the resource. If you do not select a number, the default
+	// is 60 seconds.
 	//
 	// For example, if you specify RetryAttemptSeconds as 50 seconds and MaximumAutomaticAttempts
 	// as 5, Config will run auto-remediations 5 times within 50 seconds before
-	// throwing an exception.
+	// adding a remediation exception to the resource.
 	RetryAttemptSeconds *int64 `min:"1" type:"long"`
 
 	// Target ID is the name of the SSM document.
@@ -31118,8 +31206,10 @@ type ResourceEvaluationFilters struct {
 	// Stack.
 	EvaluationContextIdentifier *string `min:"1" type:"string"`
 
-	// Filters all resource evaluations results based on an evaluation mode. the
-	// valid value for this API is Proactive.
+	// Filters all resource evaluations results based on an evaluation mode.
+	//
+	// Currently, DECTECTIVE is not supported as a valid value. Ignore other documentation
+	// stating otherwise.
 	EvaluationMode *string `type:"string" enum:"EvaluationMode"`
 
 	// Returns a TimeWindow object.
@@ -33224,9 +33314,7 @@ type TemplateSSMDocumentDetails struct {
 
 	// The name or Amazon Resource Name (ARN) of the SSM document to use to create
 	// a conformance pack. If you use the document name, Config checks only your
-	// account and Amazon Web Services Region for the SSM document. If you want
-	// to use an SSM document from another Region or account, you must provide the
-	// ARN.
+	// account and Amazon Web Services Region for the SSM document.
 	//
 	// DocumentName is a required field
 	DocumentName *string `type:"string" required:"true"`
@@ -35421,6 +35509,60 @@ const (
 
 	// ResourceTypeAwsResourceExplorer2Index is a ResourceType enum value
 	ResourceTypeAwsResourceExplorer2Index = "AWS::ResourceExplorer2::Index"
+
+	// ResourceTypeAwsAppStreamFleet is a ResourceType enum value
+	ResourceTypeAwsAppStreamFleet = "AWS::AppStream::Fleet"
+
+	// ResourceTypeAwsCognitoUserPool is a ResourceType enum value
+	ResourceTypeAwsCognitoUserPool = "AWS::Cognito::UserPool"
+
+	// ResourceTypeAwsCognitoUserPoolClient is a ResourceType enum value
+	ResourceTypeAwsCognitoUserPoolClient = "AWS::Cognito::UserPoolClient"
+
+	// ResourceTypeAwsCognitoUserPoolGroup is a ResourceType enum value
+	ResourceTypeAwsCognitoUserPoolGroup = "AWS::Cognito::UserPoolGroup"
+
+	// ResourceTypeAwsEc2NetworkInsightsAccessScope is a ResourceType enum value
+	ResourceTypeAwsEc2NetworkInsightsAccessScope = "AWS::EC2::NetworkInsightsAccessScope"
+
+	// ResourceTypeAwsEc2NetworkInsightsAnalysis is a ResourceType enum value
+	ResourceTypeAwsEc2NetworkInsightsAnalysis = "AWS::EC2::NetworkInsightsAnalysis"
+
+	// ResourceTypeAwsGrafanaWorkspace is a ResourceType enum value
+	ResourceTypeAwsGrafanaWorkspace = "AWS::Grafana::Workspace"
+
+	// ResourceTypeAwsGroundStationDataflowEndpointGroup is a ResourceType enum value
+	ResourceTypeAwsGroundStationDataflowEndpointGroup = "AWS::GroundStation::DataflowEndpointGroup"
+
+	// ResourceTypeAwsImageBuilderImageRecipe is a ResourceType enum value
+	ResourceTypeAwsImageBuilderImageRecipe = "AWS::ImageBuilder::ImageRecipe"
+
+	// ResourceTypeAwsKmsAlias is a ResourceType enum value
+	ResourceTypeAwsKmsAlias = "AWS::KMS::Alias"
+
+	// ResourceTypeAwsM2Environment is a ResourceType enum value
+	ResourceTypeAwsM2Environment = "AWS::M2::Environment"
+
+	// ResourceTypeAwsQuickSightDataSource is a ResourceType enum value
+	ResourceTypeAwsQuickSightDataSource = "AWS::QuickSight::DataSource"
+
+	// ResourceTypeAwsQuickSightTemplate is a ResourceType enum value
+	ResourceTypeAwsQuickSightTemplate = "AWS::QuickSight::Template"
+
+	// ResourceTypeAwsQuickSightTheme is a ResourceType enum value
+	ResourceTypeAwsQuickSightTheme = "AWS::QuickSight::Theme"
+
+	// ResourceTypeAwsRdsOptionGroup is a ResourceType enum value
+	ResourceTypeAwsRdsOptionGroup = "AWS::RDS::OptionGroup"
+
+	// ResourceTypeAwsRedshiftEndpointAccess is a ResourceType enum value
+	ResourceTypeAwsRedshiftEndpointAccess = "AWS::Redshift::EndpointAccess"
+
+	// ResourceTypeAwsRoute53resolverFirewallRuleGroup is a ResourceType enum value
+	ResourceTypeAwsRoute53resolverFirewallRuleGroup = "AWS::Route53Resolver::FirewallRuleGroup"
+
+	// ResourceTypeAwsSsmDocument is a ResourceType enum value
+	ResourceTypeAwsSsmDocument = "AWS::SSM::Document"
 )
 
 // ResourceType_Values returns all elements of the ResourceType enum
@@ -35815,6 +35957,24 @@ func ResourceType_Values() []string {
 		ResourceTypeAwsLambdaCodeSigningConfig,
 		ResourceTypeAwsNetworkManagerConnectPeer,
 		ResourceTypeAwsResourceExplorer2Index,
+		ResourceTypeAwsAppStreamFleet,
+		ResourceTypeAwsCognitoUserPool,
+		ResourceTypeAwsCognitoUserPoolClient,
+		ResourceTypeAwsCognitoUserPoolGroup,
+		ResourceTypeAwsEc2NetworkInsightsAccessScope,
+		ResourceTypeAwsEc2NetworkInsightsAnalysis,
+		ResourceTypeAwsGrafanaWorkspace,
+		ResourceTypeAwsGroundStationDataflowEndpointGroup,
+		ResourceTypeAwsImageBuilderImageRecipe,
+		ResourceTypeAwsKmsAlias,
+		ResourceTypeAwsM2Environment,
+		ResourceTypeAwsQuickSightDataSource,
+		ResourceTypeAwsQuickSightTemplate,
+		ResourceTypeAwsQuickSightTheme,
+		ResourceTypeAwsRdsOptionGroup,
+		ResourceTypeAwsRedshiftEndpointAccess,
+		ResourceTypeAwsRoute53resolverFirewallRuleGroup,
+		ResourceTypeAwsSsmDocument,
 	}
 }
 

@@ -1099,6 +1099,52 @@ func ExampleKMS_DeleteImportedKeyMaterial_shared00() {
 	fmt.Println(result)
 }
 
+// To derive a shared secret
+// The following example derives a shared secret using a key agreement algorithm.
+func ExampleKMS_DeriveSharedSecret_shared00() {
+	svc := kms.New(session.New())
+	input := &kms.DeriveSharedSecretInput{
+		KeyAgreementAlgorithm: aws.String("ECDH"),
+		KeyId:                 aws.String("1234abcd-12ab-34cd-56ef-1234567890ab"),
+		PublicKey:             []byte("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvH3Yj0wbkLEpUl95Cv1cJVjsVNSjwGq3tCLnzXfhVwVvmzGN8pYj3U8nKwgouaHbBWNJYjP5VutbbkKS4Kv4GojwZBJyHN17kmxo8yTjRmjR15SKIQ8cqRA2uaERMLnpztIXdZp232PQPbWGxDyXYJ0aJ5EFSag"),
+	}
+
+	result, err := svc.DeriveSharedSecret(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case kms.ErrCodeNotFoundException:
+				fmt.Println(kms.ErrCodeNotFoundException, aerr.Error())
+			case kms.ErrCodeDisabledException:
+				fmt.Println(kms.ErrCodeDisabledException, aerr.Error())
+			case kms.ErrCodeKeyUnavailableException:
+				fmt.Println(kms.ErrCodeKeyUnavailableException, aerr.Error())
+			case kms.ErrCodeDependencyTimeoutException:
+				fmt.Println(kms.ErrCodeDependencyTimeoutException, aerr.Error())
+			case kms.ErrCodeInvalidGrantTokenException:
+				fmt.Println(kms.ErrCodeInvalidGrantTokenException, aerr.Error())
+			case kms.ErrCodeInvalidKeyUsageException:
+				fmt.Println(kms.ErrCodeInvalidKeyUsageException, aerr.Error())
+			case kms.ErrCodeInternalException:
+				fmt.Println(kms.ErrCodeInternalException, aerr.Error())
+			case kms.ErrCodeInvalidStateException:
+				fmt.Println(kms.ErrCodeInvalidStateException, aerr.Error())
+			case kms.ErrCodeDryRunOperationException:
+				fmt.Println(kms.ErrCodeDryRunOperationException, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		return
+	}
+
+	fmt.Println(result)
+}
+
 // To get detailed information about custom key stores in the account and Region
 // This example gets detailed information about all AWS KMS custom key stores in an
 // AWS account and Region. To get all key stores, do not enter a custom key store name
@@ -1599,12 +1645,13 @@ func ExampleKMS_EnableKey_shared00() {
 }
 
 // To enable automatic rotation of key material
-// The following example enables automatic annual rotation of the key material for the
-// specified KMS key.
+// The following example enables automatic rotation with a rotation period of 365 days
+// for the specified KMS key.
 func ExampleKMS_EnableKeyRotation_shared00() {
 	svc := kms.New(session.New())
 	input := &kms.EnableKeyRotationInput{
-		KeyId: aws.String("1234abcd-12ab-34cd-56ef-1234567890ab"),
+		KeyId:                aws.String("1234abcd-12ab-34cd-56ef-1234567890ab"),
+		RotationPeriodInDays: aws.Int64(365),
 	}
 
 	result, err := svc.EnableKeyRotation(input)
@@ -2195,8 +2242,9 @@ func ExampleKMS_GetKeyPolicy_shared00() {
 }
 
 // To retrieve the rotation status for a KMS key
-// The following example retrieves the status of automatic annual rotation of the key
-// material for the specified KMS key.
+// The following example retrieves detailed information about the rotation status for
+// a KMS key, including whether automatic key rotation is enabled for the specified
+// KMS key, the rotation period, and the next scheduled rotation date.
 func ExampleKMS_GetKeyRotationStatus_shared00() {
 	svc := kms.New(session.New())
 	input := &kms.GetKeyRotationStatusInput{
@@ -2663,6 +2711,45 @@ func ExampleKMS_ListKeyPolicies_shared00() {
 	fmt.Println(result)
 }
 
+// To retrieve information about all completed key material rotations
+// The following example returns information about all completed key material rotations
+// for the specified KMS key.
+func ExampleKMS_ListKeyRotations_shared00() {
+	svc := kms.New(session.New())
+	input := &kms.ListKeyRotationsInput{
+		KeyId: aws.String("1234abcd-12ab-34cd-56ef-1234567890ab"),
+	}
+
+	result, err := svc.ListKeyRotations(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case kms.ErrCodeNotFoundException:
+				fmt.Println(kms.ErrCodeNotFoundException, aerr.Error())
+			case kms.ErrCodeInvalidArnException:
+				fmt.Println(kms.ErrCodeInvalidArnException, aerr.Error())
+			case kms.ErrCodeInvalidMarkerException:
+				fmt.Println(kms.ErrCodeInvalidMarkerException, aerr.Error())
+			case kms.ErrCodeInternalException:
+				fmt.Println(kms.ErrCodeInternalException, aerr.Error())
+			case kms.ErrCodeInvalidStateException:
+				fmt.Println(kms.ErrCodeInvalidStateException, aerr.Error())
+			case kms.ErrCodeUnsupportedOperationException:
+				fmt.Println(kms.ErrCodeUnsupportedOperationException, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		return
+	}
+
+	fmt.Println(result)
+}
+
 // To list KMS keys
 // The following example lists KMS keys.
 func ExampleKMS_ListKeys_shared00() {
@@ -2975,6 +3062,51 @@ func ExampleKMS_RevokeGrant_shared00() {
 				fmt.Println(kms.ErrCodeInvalidStateException, aerr.Error())
 			case kms.ErrCodeDryRunOperationException:
 				fmt.Println(kms.ErrCodeDryRunOperationException, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		return
+	}
+
+	fmt.Println(result)
+}
+
+// To perform on-demand rotation of key material
+// The following example immediately initiates rotation of the key material for the
+// specified KMS key.
+func ExampleKMS_RotateKeyOnDemand_shared00() {
+	svc := kms.New(session.New())
+	input := &kms.RotateKeyOnDemandInput{
+		KeyId: aws.String("1234abcd-12ab-34cd-56ef-1234567890ab"),
+	}
+
+	result, err := svc.RotateKeyOnDemand(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case kms.ErrCodeNotFoundException:
+				fmt.Println(kms.ErrCodeNotFoundException, aerr.Error())
+			case kms.ErrCodeDisabledException:
+				fmt.Println(kms.ErrCodeDisabledException, aerr.Error())
+			case kms.ErrCodeInvalidArnException:
+				fmt.Println(kms.ErrCodeInvalidArnException, aerr.Error())
+			case kms.ErrCodeDependencyTimeoutException:
+				fmt.Println(kms.ErrCodeDependencyTimeoutException, aerr.Error())
+			case kms.ErrCodeInternalException:
+				fmt.Println(kms.ErrCodeInternalException, aerr.Error())
+			case kms.ErrCodeInvalidStateException:
+				fmt.Println(kms.ErrCodeInvalidStateException, aerr.Error())
+			case kms.ErrCodeUnsupportedOperationException:
+				fmt.Println(kms.ErrCodeUnsupportedOperationException, aerr.Error())
+			case kms.ErrCodeLimitExceededException:
+				fmt.Println(kms.ErrCodeLimitExceededException, aerr.Error())
+			case kms.ErrCodeConflictException:
+				fmt.Println(kms.ErrCodeConflictException, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}

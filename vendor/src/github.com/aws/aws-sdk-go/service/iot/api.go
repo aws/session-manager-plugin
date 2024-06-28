@@ -9189,8 +9189,11 @@ func (c *IoT) DescribeEndpointRequest(input *DescribeEndpointInput) (req *reques
 
 // DescribeEndpoint API operation for AWS IoT.
 //
-// Returns a unique endpoint specific to the Amazon Web Services account making
-// the call.
+// Returns or creates a unique endpoint specific to the Amazon Web Services
+// account making the call.
+//
+// The first time DescribeEndpoint is called, an endpoint is created. All subsequent
+// calls to DescribeEndpoint return the same endpoint.
 //
 // Requires permission to access the DescribeEndpoint (https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions)
 // action.
@@ -12810,6 +12813,10 @@ func (c *IoT) GetRegistrationCodeRequest(input *GetRegistrationCodeInput) (req *
 // GetRegistrationCode API operation for AWS IoT.
 //
 // Gets a registration code used to register a CA certificate with IoT.
+//
+// IoT will create a registration code as part of this API call if the registration
+// code doesn't exist or has been deleted. If you already have a registration
+// code, this API call will return the same registration code.
 //
 // Requires permission to access the GetRegistrationCode (https://docs.aws.amazon.com/service-authorization/latest/reference/list_awsiot.html#awsiot-actions-as-permissions)
 // action.
@@ -25785,6 +25792,9 @@ func (c *IoT) UpdatePackageRequest(input *UpdatePackageInput) (req *request.Requ
 //   - ThrottlingException
 //     The rate exceeds the limit.
 //
+//   - ConflictException
+//     A resource with the same name already exists.
+//
 //   - InternalServerException
 //     Internal error from the service that indicates an unexpected error or that
 //     the service is unavailable.
@@ -25875,6 +25885,9 @@ func (c *IoT) UpdatePackageConfigurationRequest(input *UpdatePackageConfiguratio
 //   - ThrottlingException
 //     The rate exceeds the limit.
 //
+//   - ConflictException
+//     A resource with the same name already exists.
+//
 //   - InternalServerException
 //     Internal error from the service that indicates an unexpected error or that
 //     the service is unavailable.
@@ -25961,6 +25974,9 @@ func (c *IoT) UpdatePackageVersionRequest(input *UpdatePackageVersionInput) (req
 //
 //   - ThrottlingException
 //     The rate exceeds the limit.
+//
+//   - ConflictException
+//     A resource with the same name already exists.
 //
 //   - InternalServerException
 //     Internal error from the service that indicates an unexpected error or that
@@ -28275,7 +28291,8 @@ type AssociateTargetsWithJobInput struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `location:"querystring" locationName:"namespaceId" type:"string"`
 
 	// A list of thing group ARNs that define the targets of the job.
@@ -33701,6 +33718,9 @@ type CreateDomainConfigurationInput struct {
 	// is not required for Amazon Web Services-managed domains.
 	ServerCertificateArns []*string `locationName:"serverCertificateArns" type:"list"`
 
+	// The server certificate configuration.
+	ServerCertificateConfig *ServerCertificateConfig `locationName:"serverCertificateConfig" type:"structure"`
+
 	// The type of service delivered by the endpoint.
 	//
 	// Amazon Web Services IoT Core currently supports only the DATA service type.
@@ -33800,6 +33820,12 @@ func (s *CreateDomainConfigurationInput) SetDomainName(v string) *CreateDomainCo
 // SetServerCertificateArns sets the ServerCertificateArns field's value.
 func (s *CreateDomainConfigurationInput) SetServerCertificateArns(v []*string) *CreateDomainConfigurationInput {
 	s.ServerCertificateArns = v
+	return s
+}
+
+// SetServerCertificateConfig sets the ServerCertificateConfig field's value.
+func (s *CreateDomainConfigurationInput) SetServerCertificateConfig(v *ServerCertificateConfig) *CreateDomainConfigurationInput {
+	s.ServerCertificateConfig = v
 	return s
 }
 
@@ -34296,7 +34322,9 @@ type CreateJobInput struct {
 	Description *string `locationName:"description" type:"string"`
 
 	// The package version Amazon Resource Names (ARNs) that are installed on the
-	// device when the job successfully completes.
+	// device when the job successfully completes. The package version must be in
+	// either the Published or Deprecated state when the job deploys. For more information,
+	// see Package version lifecycle (https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle).
 	//
 	// Note:The following Length Constraints relates to a single ARN. Up to 25 package
 	// version ARNs are allowed.
@@ -34345,7 +34373,8 @@ type CreateJobInput struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `locationName:"namespaceId" type:"string"`
 
 	// Configuration information for pre-signed S3 URLs.
@@ -34626,7 +34655,9 @@ type CreateJobTemplateInput struct {
 	Description *string `locationName:"description" type:"string" required:"true"`
 
 	// The package version Amazon Resource Names (ARNs) that are installed on the
-	// device when the job successfully completes.
+	// device when the job successfully completes. The package version must be in
+	// either the Published or Deprecated state when the job deploys. For more information,
+	// see Package version lifecycle (https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle).
 	//
 	// Note:The following Length Constraints relates to a single ARN. Up to 25 package
 	// version ARNs are allowed.
@@ -38840,7 +38871,8 @@ type DeleteJobExecutionInput struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `location:"querystring" locationName:"namespaceId" type:"string"`
 
 	// The name of the thing whose job execution will be deleted.
@@ -38974,7 +39006,8 @@ type DeleteJobInput struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `location:"querystring" locationName:"namespaceId" type:"string"`
 }
 
@@ -42246,6 +42279,9 @@ type DescribeDomainConfigurationOutput struct {
 	// The date and time the domain configuration's status was last changed.
 	LastStatusChangeDate *time.Time `locationName:"lastStatusChangeDate" type:"timestamp"`
 
+	// The server certificate configuration.
+	ServerCertificateConfig *ServerCertificateConfig `locationName:"serverCertificateConfig" type:"structure"`
+
 	// A list containing summary information about the server certificate included
 	// in the domain configuration.
 	ServerCertificates []*ServerCertificateSummary `locationName:"serverCertificates" type:"list"`
@@ -42314,6 +42350,12 @@ func (s *DescribeDomainConfigurationOutput) SetDomainType(v string) *DescribeDom
 // SetLastStatusChangeDate sets the LastStatusChangeDate field's value.
 func (s *DescribeDomainConfigurationOutput) SetLastStatusChangeDate(v time.Time) *DescribeDomainConfigurationOutput {
 	s.LastStatusChangeDate = &v
+	return s
+}
+
+// SetServerCertificateConfig sets the ServerCertificateConfig field's value.
+func (s *DescribeDomainConfigurationOutput) SetServerCertificateConfig(v *ServerCertificateConfig) *DescribeDomainConfigurationOutput {
+	s.ServerCertificateConfig = v
 	return s
 }
 
@@ -43044,7 +43086,9 @@ type DescribeJobTemplateOutput struct {
 	Description *string `locationName:"description" type:"string"`
 
 	// The package version Amazon Resource Names (ARNs) that are installed on the
-	// device when the job successfully completes.
+	// device when the job successfully completes. The package version must be in
+	// either the Published or Deprecated state when the job deploys. For more information,
+	// see Package version lifecycle (https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle).
 	//
 	// Note:The following Length Constraints relates to a single ARN. Up to 25 package
 	// version ARNs are allowed.
@@ -50123,7 +50167,11 @@ type Job struct {
 	Description *string `locationName:"description" type:"string"`
 
 	// The package version Amazon Resource Names (ARNs) that are installed on the
-	// device when the job successfully completes.
+	// device when the job successfully completes. The package version must be in
+	// either the Published or Deprecated state when the job deploys. For more information,
+	// see Package version lifecycle (https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle).The
+	// package version must be in either the Published or Deprecated state when
+	// the job deploys. For more information, see Package version lifecycle (https://docs.aws.amazon.com/iot/latest/developerguide/preparing-to-use-software-package-catalog.html#package-version-lifecycle).
 	//
 	// Note:The following Length Constraints relates to a single ARN. Up to 25 package
 	// version ARNs are allowed.
@@ -50176,7 +50224,8 @@ type Job struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `locationName:"namespaceId" type:"string"`
 
 	// Configuration for pre-signed S3 URLs.
@@ -54061,7 +54110,8 @@ type ListJobExecutionsForThingInput struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `location:"querystring" locationName:"namespaceId" type:"string"`
 
 	// The token to retrieve the next set of results.
@@ -54302,7 +54352,8 @@ type ListJobsInput struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `location:"querystring" locationName:"namespaceId" type:"string"`
 
 	// The token to retrieve the next set of results.
@@ -63611,8 +63662,10 @@ type SearchIndexInput struct {
 	// The search index name.
 	IndexName *string `locationName:"indexName" min:"1" type:"string"`
 
-	// The maximum number of results to return per page at one time. The response
-	// might contain fewer results but will never contain more.
+	// The maximum number of results to return per page at one time. This maximum
+	// number cannot exceed 100. The response might contain fewer results but will
+	// never contain more. You can use nextToken (https://docs.aws.amazon.com/iot/latest/apireference/API_SearchIndex.html#iot-SearchIndex-request-nextToken)
+	// to retrieve the next set of results until nextToken returns NULL.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// The token used to get the next set of results, or null if there are no additional
@@ -63866,6 +63919,43 @@ func (s *SecurityProfileTargetMapping) SetSecurityProfileIdentifier(v *SecurityP
 // SetTarget sets the Target field's value.
 func (s *SecurityProfileTargetMapping) SetTarget(v *SecurityProfileTarget) *SecurityProfileTargetMapping {
 	s.Target = v
+	return s
+}
+
+// The server certificate configuration.
+type ServerCertificateConfig struct {
+	_ struct{} `type:"structure"`
+
+	// A Boolean value that indicates whether Online Certificate Status Protocol
+	// (OCSP) server certificate check is enabled or not.
+	//
+	// For more information, see Configuring OCSP server-certificate stapling in
+	// domain configuration (https://docs.aws.amazon.com/iot/latest/developerguide/iot-custom-domain-ocsp-config.html)
+	// from Amazon Web Services IoT Core Developer Guide.
+	EnableOCSPCheck *bool `locationName:"enableOCSPCheck" type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServerCertificateConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServerCertificateConfig) GoString() string {
+	return s.String()
+}
+
+// SetEnableOCSPCheck sets the EnableOCSPCheck field's value.
+func (s *ServerCertificateConfig) SetEnableOCSPCheck(v bool) *ServerCertificateConfig {
+	s.EnableOCSPCheck = &v
 	return s
 }
 
@@ -70075,6 +70165,9 @@ type UpdateDomainConfigurationInput struct {
 	// Removes the authorization configuration from a domain.
 	RemoveAuthorizerConfig *bool `locationName:"removeAuthorizerConfig" type:"boolean"`
 
+	// The server certificate configuration.
+	ServerCertificateConfig *ServerCertificateConfig `locationName:"serverCertificateConfig" type:"structure"`
+
 	// An object that specifies the TLS configuration for a domain.
 	TlsConfig *TlsConfig `locationName:"tlsConfig" type:"structure"`
 }
@@ -70139,6 +70232,12 @@ func (s *UpdateDomainConfigurationInput) SetDomainConfigurationStatus(v string) 
 // SetRemoveAuthorizerConfig sets the RemoveAuthorizerConfig field's value.
 func (s *UpdateDomainConfigurationInput) SetRemoveAuthorizerConfig(v bool) *UpdateDomainConfigurationInput {
 	s.RemoveAuthorizerConfig = &v
+	return s
+}
+
+// SetServerCertificateConfig sets the ServerCertificateConfig field's value.
+func (s *UpdateDomainConfigurationInput) SetServerCertificateConfig(v *ServerCertificateConfig) *UpdateDomainConfigurationInput {
+	s.ServerCertificateConfig = v
 	return s
 }
 
@@ -70668,7 +70767,8 @@ type UpdateJobInput struct {
 	//
 	// $aws/things/THING_NAME/jobs/JOB_ID/notify-namespace-NAMESPACE_ID/
 	//
-	// The namespaceId feature is in public preview.
+	// The namespaceId feature is only supported by IoT Greengrass at this time.
+	// For more information, see Setting up IoT Greengrass core devices. (https://docs.aws.amazon.com/greengrass/v2/developerguide/setting-up.html)
 	NamespaceId *string `location:"querystring" locationName:"namespaceId" type:"string"`
 
 	// Configuration information for pre-signed S3 URLs.
@@ -74584,12 +74684,6 @@ const (
 
 	// LogTargetTypePrincipalId is a LogTargetType enum value
 	LogTargetTypePrincipalId = "PRINCIPAL_ID"
-
-	// LogTargetTypeEventType is a LogTargetType enum value
-	LogTargetTypeEventType = "EVENT_TYPE"
-
-	// LogTargetTypeDeviceDefender is a LogTargetType enum value
-	LogTargetTypeDeviceDefender = "DEVICE_DEFENDER"
 )
 
 // LogTargetType_Values returns all elements of the LogTargetType enum
@@ -74600,8 +74694,6 @@ func LogTargetType_Values() []string {
 		LogTargetTypeClientId,
 		LogTargetTypeSourceIp,
 		LogTargetTypePrincipalId,
-		LogTargetTypeEventType,
-		LogTargetTypeDeviceDefender,
 	}
 }
 

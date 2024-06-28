@@ -128,6 +128,10 @@ type ConnectAPI interface {
 	BatchDisassociateAnalyticsDataSetWithContext(aws.Context, *connect.BatchDisassociateAnalyticsDataSetInput, ...request.Option) (*connect.BatchDisassociateAnalyticsDataSetOutput, error)
 	BatchDisassociateAnalyticsDataSetRequest(*connect.BatchDisassociateAnalyticsDataSetInput) (*request.Request, *connect.BatchDisassociateAnalyticsDataSetOutput)
 
+	BatchGetAttachedFileMetadata(*connect.BatchGetAttachedFileMetadataInput) (*connect.BatchGetAttachedFileMetadataOutput, error)
+	BatchGetAttachedFileMetadataWithContext(aws.Context, *connect.BatchGetAttachedFileMetadataInput, ...request.Option) (*connect.BatchGetAttachedFileMetadataOutput, error)
+	BatchGetAttachedFileMetadataRequest(*connect.BatchGetAttachedFileMetadataInput) (*request.Request, *connect.BatchGetAttachedFileMetadataOutput)
+
 	BatchGetFlowAssociation(*connect.BatchGetFlowAssociationInput) (*connect.BatchGetFlowAssociationOutput, error)
 	BatchGetFlowAssociationWithContext(aws.Context, *connect.BatchGetFlowAssociationInput, ...request.Option) (*connect.BatchGetFlowAssociationOutput, error)
 	BatchGetFlowAssociationRequest(*connect.BatchGetFlowAssociationInput) (*request.Request, *connect.BatchGetFlowAssociationOutput)
@@ -139,6 +143,10 @@ type ConnectAPI interface {
 	ClaimPhoneNumber(*connect.ClaimPhoneNumberInput) (*connect.ClaimPhoneNumberOutput, error)
 	ClaimPhoneNumberWithContext(aws.Context, *connect.ClaimPhoneNumberInput, ...request.Option) (*connect.ClaimPhoneNumberOutput, error)
 	ClaimPhoneNumberRequest(*connect.ClaimPhoneNumberInput) (*request.Request, *connect.ClaimPhoneNumberOutput)
+
+	CompleteAttachedFileUpload(*connect.CompleteAttachedFileUploadInput) (*connect.CompleteAttachedFileUploadOutput, error)
+	CompleteAttachedFileUploadWithContext(aws.Context, *connect.CompleteAttachedFileUploadInput, ...request.Option) (*connect.CompleteAttachedFileUploadOutput, error)
+	CompleteAttachedFileUploadRequest(*connect.CompleteAttachedFileUploadInput) (*request.Request, *connect.CompleteAttachedFileUploadOutput)
 
 	CreateAgentStatus(*connect.CreateAgentStatusInput) (*connect.CreateAgentStatusOutput, error)
 	CreateAgentStatusWithContext(aws.Context, *connect.CreateAgentStatusInput, ...request.Option) (*connect.CreateAgentStatusOutput, error)
@@ -239,6 +247,10 @@ type ConnectAPI interface {
 	DeactivateEvaluationForm(*connect.DeactivateEvaluationFormInput) (*connect.DeactivateEvaluationFormOutput, error)
 	DeactivateEvaluationFormWithContext(aws.Context, *connect.DeactivateEvaluationFormInput, ...request.Option) (*connect.DeactivateEvaluationFormOutput, error)
 	DeactivateEvaluationFormRequest(*connect.DeactivateEvaluationFormInput) (*request.Request, *connect.DeactivateEvaluationFormOutput)
+
+	DeleteAttachedFile(*connect.DeleteAttachedFileInput) (*connect.DeleteAttachedFileOutput, error)
+	DeleteAttachedFileWithContext(aws.Context, *connect.DeleteAttachedFileInput, ...request.Option) (*connect.DeleteAttachedFileOutput, error)
+	DeleteAttachedFileRequest(*connect.DeleteAttachedFileInput) (*request.Request, *connect.DeleteAttachedFileOutput)
 
 	DeleteContactEvaluation(*connect.DeleteContactEvaluationInput) (*connect.DeleteContactEvaluationOutput, error)
 	DeleteContactEvaluationWithContext(aws.Context, *connect.DeleteContactEvaluationInput, ...request.Option) (*connect.DeleteContactEvaluationOutput, error)
@@ -479,6 +491,10 @@ type ConnectAPI interface {
 	DismissUserContact(*connect.DismissUserContactInput) (*connect.DismissUserContactOutput, error)
 	DismissUserContactWithContext(aws.Context, *connect.DismissUserContactInput, ...request.Option) (*connect.DismissUserContactOutput, error)
 	DismissUserContactRequest(*connect.DismissUserContactInput) (*request.Request, *connect.DismissUserContactOutput)
+
+	GetAttachedFile(*connect.GetAttachedFileInput) (*connect.GetAttachedFileOutput, error)
+	GetAttachedFileWithContext(aws.Context, *connect.GetAttachedFileInput, ...request.Option) (*connect.GetAttachedFileOutput, error)
+	GetAttachedFileRequest(*connect.GetAttachedFileInput) (*request.Request, *connect.GetAttachedFileOutput)
 
 	GetContactAttributes(*connect.GetContactAttributesInput) (*connect.GetContactAttributesOutput, error)
 	GetContactAttributesWithContext(aws.Context, *connect.GetContactAttributesInput, ...request.Option) (*connect.GetContactAttributesOutput, error)
@@ -873,6 +889,20 @@ type ConnectAPI interface {
 	SearchAvailablePhoneNumbersPages(*connect.SearchAvailablePhoneNumbersInput, func(*connect.SearchAvailablePhoneNumbersOutput, bool) bool) error
 	SearchAvailablePhoneNumbersPagesWithContext(aws.Context, *connect.SearchAvailablePhoneNumbersInput, func(*connect.SearchAvailablePhoneNumbersOutput, bool) bool, ...request.Option) error
 
+	SearchContactFlowModules(*connect.SearchContactFlowModulesInput) (*connect.SearchContactFlowModulesOutput, error)
+	SearchContactFlowModulesWithContext(aws.Context, *connect.SearchContactFlowModulesInput, ...request.Option) (*connect.SearchContactFlowModulesOutput, error)
+	SearchContactFlowModulesRequest(*connect.SearchContactFlowModulesInput) (*request.Request, *connect.SearchContactFlowModulesOutput)
+
+	SearchContactFlowModulesPages(*connect.SearchContactFlowModulesInput, func(*connect.SearchContactFlowModulesOutput, bool) bool) error
+	SearchContactFlowModulesPagesWithContext(aws.Context, *connect.SearchContactFlowModulesInput, func(*connect.SearchContactFlowModulesOutput, bool) bool, ...request.Option) error
+
+	SearchContactFlows(*connect.SearchContactFlowsInput) (*connect.SearchContactFlowsOutput, error)
+	SearchContactFlowsWithContext(aws.Context, *connect.SearchContactFlowsInput, ...request.Option) (*connect.SearchContactFlowsOutput, error)
+	SearchContactFlowsRequest(*connect.SearchContactFlowsInput) (*request.Request, *connect.SearchContactFlowsOutput)
+
+	SearchContactFlowsPages(*connect.SearchContactFlowsInput, func(*connect.SearchContactFlowsOutput, bool) bool) error
+	SearchContactFlowsPagesWithContext(aws.Context, *connect.SearchContactFlowsInput, func(*connect.SearchContactFlowsOutput, bool) bool, ...request.Option) error
+
 	SearchContacts(*connect.SearchContactsInput) (*connect.SearchContactsOutput, error)
 	SearchContactsWithContext(aws.Context, *connect.SearchContactsInput, ...request.Option) (*connect.SearchContactsOutput, error)
 	SearchContactsRequest(*connect.SearchContactsInput) (*request.Request, *connect.SearchContactsOutput)
@@ -953,6 +983,10 @@ type ConnectAPI interface {
 	SendChatIntegrationEvent(*connect.SendChatIntegrationEventInput) (*connect.SendChatIntegrationEventOutput, error)
 	SendChatIntegrationEventWithContext(aws.Context, *connect.SendChatIntegrationEventInput, ...request.Option) (*connect.SendChatIntegrationEventOutput, error)
 	SendChatIntegrationEventRequest(*connect.SendChatIntegrationEventInput) (*request.Request, *connect.SendChatIntegrationEventOutput)
+
+	StartAttachedFileUpload(*connect.StartAttachedFileUploadInput) (*connect.StartAttachedFileUploadOutput, error)
+	StartAttachedFileUploadWithContext(aws.Context, *connect.StartAttachedFileUploadInput, ...request.Option) (*connect.StartAttachedFileUploadOutput, error)
+	StartAttachedFileUploadRequest(*connect.StartAttachedFileUploadInput) (*request.Request, *connect.StartAttachedFileUploadOutput)
 
 	StartChatContact(*connect.StartChatContactInput) (*connect.StartChatContactOutput, error)
 	StartChatContactWithContext(aws.Context, *connect.StartChatContactInput, ...request.Option) (*connect.StartChatContactOutput, error)

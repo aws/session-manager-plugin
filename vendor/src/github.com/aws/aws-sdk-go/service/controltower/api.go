@@ -110,6 +110,109 @@ func (c *ControlTower) DeleteLandingZoneWithContext(ctx aws.Context, input *Dele
 	return out, req.Send()
 }
 
+const opDisableBaseline = "DisableBaseline"
+
+// DisableBaselineRequest generates a "aws/request.Request" representing the
+// client's request for the DisableBaseline operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisableBaseline for more information on using the DisableBaseline
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DisableBaselineRequest method.
+//	req, resp := client.DisableBaselineRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/DisableBaseline
+func (c *ControlTower) DisableBaselineRequest(input *DisableBaselineInput) (req *request.Request, output *DisableBaselineOutput) {
+	op := &request.Operation{
+		Name:       opDisableBaseline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/disable-baseline",
+	}
+
+	if input == nil {
+		input = &DisableBaselineInput{}
+	}
+
+	output = &DisableBaselineOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DisableBaseline API operation for AWS Control Tower.
+//
+// Disable an EnabledBaseline resource on the specified Target. This API starts
+// an asynchronous operation to remove all resources deployed as part of the
+// baseline enablement. The resource will vary depending on the enabled baseline.
+// For usage examples, see the Amazon Web Services Control Tower User Guide
+// (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation DisableBaseline for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - ConflictException
+//     Updating or deleting the resource can cause an inconsistent state.
+//
+//   - ServiceQuotaExceededException
+//     The request would cause a service quota to be exceeded. The limit is 10 concurrent
+//     operations.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/DisableBaseline
+func (c *ControlTower) DisableBaseline(input *DisableBaselineInput) (*DisableBaselineOutput, error) {
+	req, out := c.DisableBaselineRequest(input)
+	return out, req.Send()
+}
+
+// DisableBaselineWithContext is the same as DisableBaseline with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DisableBaseline for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) DisableBaselineWithContext(ctx aws.Context, input *DisableBaselineInput, opts ...request.Option) (*DisableBaselineOutput, error) {
+	req, out := c.DisableBaselineRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDisableControl = "DisableControl"
 
 // DisableControlRequest generates a "aws/request.Request" representing the
@@ -156,8 +259,7 @@ func (c *ControlTower) DisableControlRequest(input *DisableControlInput) (req *r
 // This API call turns off a control. It starts an asynchronous operation that
 // deletes Amazon Web Services resources on the specified organizational unit
 // and the accounts it contains. The resources will vary according to the control
-// that you specify. For usage examples, see the Amazon Web Services Control
-// Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// that you specify. For usage examples, see the Controls Reference Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -213,6 +315,107 @@ func (c *ControlTower) DisableControlWithContext(ctx aws.Context, input *Disable
 	return out, req.Send()
 }
 
+const opEnableBaseline = "EnableBaseline"
+
+// EnableBaselineRequest generates a "aws/request.Request" representing the
+// client's request for the EnableBaseline operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See EnableBaseline for more information on using the EnableBaseline
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the EnableBaselineRequest method.
+//	req, resp := client.EnableBaselineRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/EnableBaseline
+func (c *ControlTower) EnableBaselineRequest(input *EnableBaselineInput) (req *request.Request, output *EnableBaselineOutput) {
+	op := &request.Operation{
+		Name:       opEnableBaseline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/enable-baseline",
+	}
+
+	if input == nil {
+		input = &EnableBaselineInput{}
+	}
+
+	output = &EnableBaselineOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// EnableBaseline API operation for AWS Control Tower.
+//
+// Enable (apply) a Baseline to a Target. This API starts an asynchronous operation
+// to deploy resources specified by the Baseline to the specified Target. For
+// usage examples, see the Amazon Web Services Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation EnableBaseline for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - ConflictException
+//     Updating or deleting the resource can cause an inconsistent state.
+//
+//   - ServiceQuotaExceededException
+//     The request would cause a service quota to be exceeded. The limit is 10 concurrent
+//     operations.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/EnableBaseline
+func (c *ControlTower) EnableBaseline(input *EnableBaselineInput) (*EnableBaselineOutput, error) {
+	req, out := c.EnableBaselineRequest(input)
+	return out, req.Send()
+}
+
+// EnableBaselineWithContext is the same as EnableBaseline with the addition of
+// the ability to pass a context and additional request options.
+//
+// See EnableBaseline for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) EnableBaselineWithContext(ctx aws.Context, input *EnableBaselineInput, opts ...request.Option) (*EnableBaselineOutput, error) {
+	req, out := c.EnableBaselineRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opEnableControl = "EnableControl"
 
 // EnableControlRequest generates a "aws/request.Request" representing the
@@ -259,8 +462,8 @@ func (c *ControlTower) EnableControlRequest(input *EnableControlInput) (req *req
 // This API call activates a control. It starts an asynchronous operation that
 // creates Amazon Web Services resources on the specified organizational unit
 // and the accounts it contains. The resources created will vary according to
-// the control that you specify. For usage examples, see the Amazon Web Services
-// Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// the control that you specify. For usage examples, see the Controls Reference
+// Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -316,6 +519,196 @@ func (c *ControlTower) EnableControlWithContext(ctx aws.Context, input *EnableCo
 	return out, req.Send()
 }
 
+const opGetBaseline = "GetBaseline"
+
+// GetBaselineRequest generates a "aws/request.Request" representing the
+// client's request for the GetBaseline operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetBaseline for more information on using the GetBaseline
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetBaselineRequest method.
+//	req, resp := client.GetBaselineRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/GetBaseline
+func (c *ControlTower) GetBaselineRequest(input *GetBaselineInput) (req *request.Request, output *GetBaselineOutput) {
+	op := &request.Operation{
+		Name:       opGetBaseline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/get-baseline",
+	}
+
+	if input == nil {
+		input = &GetBaselineInput{}
+	}
+
+	output = &GetBaselineOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetBaseline API operation for AWS Control Tower.
+//
+// Retrieve details about an existing Baseline resource by specifying its identifier.
+// For usage examples, see the Amazon Web Services Control Tower User Guide
+// (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation GetBaseline for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/GetBaseline
+func (c *ControlTower) GetBaseline(input *GetBaselineInput) (*GetBaselineOutput, error) {
+	req, out := c.GetBaselineRequest(input)
+	return out, req.Send()
+}
+
+// GetBaselineWithContext is the same as GetBaseline with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetBaseline for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) GetBaselineWithContext(ctx aws.Context, input *GetBaselineInput, opts ...request.Option) (*GetBaselineOutput, error) {
+	req, out := c.GetBaselineRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetBaselineOperation = "GetBaselineOperation"
+
+// GetBaselineOperationRequest generates a "aws/request.Request" representing the
+// client's request for the GetBaselineOperation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetBaselineOperation for more information on using the GetBaselineOperation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetBaselineOperationRequest method.
+//	req, resp := client.GetBaselineOperationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/GetBaselineOperation
+func (c *ControlTower) GetBaselineOperationRequest(input *GetBaselineOperationInput) (req *request.Request, output *GetBaselineOperationOutput) {
+	op := &request.Operation{
+		Name:       opGetBaselineOperation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/get-baseline-operation",
+	}
+
+	if input == nil {
+		input = &GetBaselineOperationInput{}
+	}
+
+	output = &GetBaselineOperationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetBaselineOperation API operation for AWS Control Tower.
+//
+// Returns the details of an asynchronous baseline operation, as initiated by
+// any of these APIs: EnableBaseline, DisableBaseline, UpdateEnabledBaseline,
+// ResetEnabledBaseline. A status message is displayed in case of operation
+// failure. For usage examples, see the Amazon Web Services Control Tower User
+// Guide (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation GetBaselineOperation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/GetBaselineOperation
+func (c *ControlTower) GetBaselineOperation(input *GetBaselineOperationInput) (*GetBaselineOperationOutput, error) {
+	req, out := c.GetBaselineOperationRequest(input)
+	return out, req.Send()
+}
+
+// GetBaselineOperationWithContext is the same as GetBaselineOperation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetBaselineOperation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) GetBaselineOperationWithContext(ctx aws.Context, input *GetBaselineOperationInput, opts ...request.Option) (*GetBaselineOperationOutput, error) {
+	req, out := c.GetBaselineOperationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetControlOperation = "GetControlOperation"
 
 // GetControlOperationRequest generates a "aws/request.Request" representing the
@@ -361,8 +754,7 @@ func (c *ControlTower) GetControlOperationRequest(input *GetControlOperationInpu
 //
 // Returns the status of a particular EnableControl or DisableControl operation.
 // Displays a message in case of error. Details for an operation are available
-// for 90 days. For usage examples, see the Amazon Web Services Control Tower
-// User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// for 90 days. For usage examples, see the Controls Reference Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -411,6 +803,98 @@ func (c *ControlTower) GetControlOperationWithContext(ctx aws.Context, input *Ge
 	return out, req.Send()
 }
 
+const opGetEnabledBaseline = "GetEnabledBaseline"
+
+// GetEnabledBaselineRequest generates a "aws/request.Request" representing the
+// client's request for the GetEnabledBaseline operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetEnabledBaseline for more information on using the GetEnabledBaseline
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetEnabledBaselineRequest method.
+//	req, resp := client.GetEnabledBaselineRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/GetEnabledBaseline
+func (c *ControlTower) GetEnabledBaselineRequest(input *GetEnabledBaselineInput) (req *request.Request, output *GetEnabledBaselineOutput) {
+	op := &request.Operation{
+		Name:       opGetEnabledBaseline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/get-enabled-baseline",
+	}
+
+	if input == nil {
+		input = &GetEnabledBaselineInput{}
+	}
+
+	output = &GetEnabledBaselineOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetEnabledBaseline API operation for AWS Control Tower.
+//
+// Retrieve details of an EnabledBaseline resource by specifying its identifier.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation GetEnabledBaseline for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/GetEnabledBaseline
+func (c *ControlTower) GetEnabledBaseline(input *GetEnabledBaselineInput) (*GetEnabledBaselineOutput, error) {
+	req, out := c.GetEnabledBaselineRequest(input)
+	return out, req.Send()
+}
+
+// GetEnabledBaselineWithContext is the same as GetEnabledBaseline with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetEnabledBaseline for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) GetEnabledBaselineWithContext(ctx aws.Context, input *GetEnabledBaselineInput, opts ...request.Option) (*GetEnabledBaselineOutput, error) {
+	req, out := c.GetEnabledBaselineRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetEnabledControl = "GetEnabledControl"
 
 // GetEnabledControlRequest generates a "aws/request.Request" representing the
@@ -454,8 +938,8 @@ func (c *ControlTower) GetEnabledControlRequest(input *GetEnabledControlInput) (
 
 // GetEnabledControl API operation for AWS Control Tower.
 //
-// Retrieves details about an enabled control. For usage examples, see the Amazon
-// Web Services Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// Retrieves details about an enabled control. For usage examples, see the Controls
+// Reference Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -548,7 +1032,7 @@ func (c *ControlTower) GetLandingZoneOperationRequest(input *GetLandingZoneOpera
 // GetLandingZoneOperation API operation for AWS Control Tower.
 //
 // Returns the status of the specified landing zone operation. Details for an
-// operation are available for 60 days.
+// operation are available for 90 days.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -595,6 +1079,449 @@ func (c *ControlTower) GetLandingZoneOperationWithContext(ctx aws.Context, input
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+const opListBaselines = "ListBaselines"
+
+// ListBaselinesRequest generates a "aws/request.Request" representing the
+// client's request for the ListBaselines operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListBaselines for more information on using the ListBaselines
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListBaselinesRequest method.
+//	req, resp := client.ListBaselinesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListBaselines
+func (c *ControlTower) ListBaselinesRequest(input *ListBaselinesInput) (req *request.Request, output *ListBaselinesOutput) {
+	op := &request.Operation{
+		Name:       opListBaselines,
+		HTTPMethod: "POST",
+		HTTPPath:   "/list-baselines",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListBaselinesInput{}
+	}
+
+	output = &ListBaselinesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListBaselines API operation for AWS Control Tower.
+//
+// Returns a summary list of all available baselines. For usage examples, see
+// the Amazon Web Services Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation ListBaselines for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListBaselines
+func (c *ControlTower) ListBaselines(input *ListBaselinesInput) (*ListBaselinesOutput, error) {
+	req, out := c.ListBaselinesRequest(input)
+	return out, req.Send()
+}
+
+// ListBaselinesWithContext is the same as ListBaselines with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListBaselines for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListBaselinesWithContext(ctx aws.Context, input *ListBaselinesInput, opts ...request.Option) (*ListBaselinesOutput, error) {
+	req, out := c.ListBaselinesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListBaselinesPages iterates over the pages of a ListBaselines operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListBaselines method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListBaselines operation.
+//	pageNum := 0
+//	err := client.ListBaselinesPages(params,
+//	    func(page *controltower.ListBaselinesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *ControlTower) ListBaselinesPages(input *ListBaselinesInput, fn func(*ListBaselinesOutput, bool) bool) error {
+	return c.ListBaselinesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListBaselinesPagesWithContext same as ListBaselinesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListBaselinesPagesWithContext(ctx aws.Context, input *ListBaselinesInput, fn func(*ListBaselinesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListBaselinesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListBaselinesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListBaselinesOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListControlOperations = "ListControlOperations"
+
+// ListControlOperationsRequest generates a "aws/request.Request" representing the
+// client's request for the ListControlOperations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListControlOperations for more information on using the ListControlOperations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListControlOperationsRequest method.
+//	req, resp := client.ListControlOperationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListControlOperations
+func (c *ControlTower) ListControlOperationsRequest(input *ListControlOperationsInput) (req *request.Request, output *ListControlOperationsOutput) {
+	op := &request.Operation{
+		Name:       opListControlOperations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/list-control-operations",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListControlOperationsInput{}
+	}
+
+	output = &ListControlOperationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListControlOperations API operation for AWS Control Tower.
+//
+// Provides a list of operations in progress or queued. For usage examples,
+// see ListControlOperation examples (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html#list-control-operations-api-examples).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation ListControlOperations for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListControlOperations
+func (c *ControlTower) ListControlOperations(input *ListControlOperationsInput) (*ListControlOperationsOutput, error) {
+	req, out := c.ListControlOperationsRequest(input)
+	return out, req.Send()
+}
+
+// ListControlOperationsWithContext is the same as ListControlOperations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListControlOperations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListControlOperationsWithContext(ctx aws.Context, input *ListControlOperationsInput, opts ...request.Option) (*ListControlOperationsOutput, error) {
+	req, out := c.ListControlOperationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListControlOperationsPages iterates over the pages of a ListControlOperations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListControlOperations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListControlOperations operation.
+//	pageNum := 0
+//	err := client.ListControlOperationsPages(params,
+//	    func(page *controltower.ListControlOperationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *ControlTower) ListControlOperationsPages(input *ListControlOperationsInput, fn func(*ListControlOperationsOutput, bool) bool) error {
+	return c.ListControlOperationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListControlOperationsPagesWithContext same as ListControlOperationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListControlOperationsPagesWithContext(ctx aws.Context, input *ListControlOperationsInput, fn func(*ListControlOperationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListControlOperationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListControlOperationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListControlOperationsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListEnabledBaselines = "ListEnabledBaselines"
+
+// ListEnabledBaselinesRequest generates a "aws/request.Request" representing the
+// client's request for the ListEnabledBaselines operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListEnabledBaselines for more information on using the ListEnabledBaselines
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListEnabledBaselinesRequest method.
+//	req, resp := client.ListEnabledBaselinesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListEnabledBaselines
+func (c *ControlTower) ListEnabledBaselinesRequest(input *ListEnabledBaselinesInput) (req *request.Request, output *ListEnabledBaselinesOutput) {
+	op := &request.Operation{
+		Name:       opListEnabledBaselines,
+		HTTPMethod: "POST",
+		HTTPPath:   "/list-enabled-baselines",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListEnabledBaselinesInput{}
+	}
+
+	output = &ListEnabledBaselinesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListEnabledBaselines API operation for AWS Control Tower.
+//
+// Returns a list of summaries describing EnabledBaseline resources. You can
+// filter the list by the corresponding Baseline or Target of the EnabledBaseline
+// resources. For usage examples, see the Amazon Web Services Control Tower
+// User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation ListEnabledBaselines for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListEnabledBaselines
+func (c *ControlTower) ListEnabledBaselines(input *ListEnabledBaselinesInput) (*ListEnabledBaselinesOutput, error) {
+	req, out := c.ListEnabledBaselinesRequest(input)
+	return out, req.Send()
+}
+
+// ListEnabledBaselinesWithContext is the same as ListEnabledBaselines with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListEnabledBaselines for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListEnabledBaselinesWithContext(ctx aws.Context, input *ListEnabledBaselinesInput, opts ...request.Option) (*ListEnabledBaselinesOutput, error) {
+	req, out := c.ListEnabledBaselinesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListEnabledBaselinesPages iterates over the pages of a ListEnabledBaselines operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListEnabledBaselines method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListEnabledBaselines operation.
+//	pageNum := 0
+//	err := client.ListEnabledBaselinesPages(params,
+//	    func(page *controltower.ListEnabledBaselinesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *ControlTower) ListEnabledBaselinesPages(input *ListEnabledBaselinesInput, fn func(*ListEnabledBaselinesOutput, bool) bool) error {
+	return c.ListEnabledBaselinesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListEnabledBaselinesPagesWithContext same as ListEnabledBaselinesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListEnabledBaselinesPagesWithContext(ctx aws.Context, input *ListEnabledBaselinesInput, fn func(*ListEnabledBaselinesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListEnabledBaselinesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListEnabledBaselinesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListEnabledBaselinesOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opListEnabledControls = "ListEnabledControls"
@@ -648,7 +1575,7 @@ func (c *ControlTower) ListEnabledControlsRequest(input *ListEnabledControlsInpu
 //
 // Lists the controls enabled by Amazon Web Services Control Tower on the specified
 // organizational unit and the accounts it contains. For usage examples, see
-// the Amazon Web Services Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// the Controls Reference Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -741,6 +1668,153 @@ func (c *ControlTower) ListEnabledControlsPagesWithContext(ctx aws.Context, inpu
 
 	for p.Next() {
 		if !fn(p.Page().(*ListEnabledControlsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListLandingZoneOperations = "ListLandingZoneOperations"
+
+// ListLandingZoneOperationsRequest generates a "aws/request.Request" representing the
+// client's request for the ListLandingZoneOperations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListLandingZoneOperations for more information on using the ListLandingZoneOperations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListLandingZoneOperationsRequest method.
+//	req, resp := client.ListLandingZoneOperationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListLandingZoneOperations
+func (c *ControlTower) ListLandingZoneOperationsRequest(input *ListLandingZoneOperationsInput) (req *request.Request, output *ListLandingZoneOperationsOutput) {
+	op := &request.Operation{
+		Name:       opListLandingZoneOperations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/list-landingzone-operations",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListLandingZoneOperationsInput{}
+	}
+
+	output = &ListLandingZoneOperationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListLandingZoneOperations API operation for AWS Control Tower.
+//
+// Lists all landing zone operations from the past 90 days. Results are sorted
+// by time, with the most recent operation first.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation ListLandingZoneOperations for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ListLandingZoneOperations
+func (c *ControlTower) ListLandingZoneOperations(input *ListLandingZoneOperationsInput) (*ListLandingZoneOperationsOutput, error) {
+	req, out := c.ListLandingZoneOperationsRequest(input)
+	return out, req.Send()
+}
+
+// ListLandingZoneOperationsWithContext is the same as ListLandingZoneOperations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListLandingZoneOperations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListLandingZoneOperationsWithContext(ctx aws.Context, input *ListLandingZoneOperationsInput, opts ...request.Option) (*ListLandingZoneOperationsOutput, error) {
+	req, out := c.ListLandingZoneOperationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListLandingZoneOperationsPages iterates over the pages of a ListLandingZoneOperations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListLandingZoneOperations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListLandingZoneOperations operation.
+//	pageNum := 0
+//	err := client.ListLandingZoneOperationsPages(params,
+//	    func(page *controltower.ListLandingZoneOperationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *ControlTower) ListLandingZoneOperationsPages(input *ListLandingZoneOperationsInput, fn func(*ListLandingZoneOperationsOutput, bool) bool) error {
+	return c.ListLandingZoneOperationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListLandingZoneOperationsPagesWithContext same as ListLandingZoneOperationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ListLandingZoneOperationsPagesWithContext(ctx aws.Context, input *ListLandingZoneOperationsInput, fn func(*ListLandingZoneOperationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListLandingZoneOperationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListLandingZoneOperationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListLandingZoneOperationsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -942,7 +2016,7 @@ func (c *ControlTower) ListTagsForResourceRequest(input *ListTagsForResourceInpu
 // ListTagsForResource API operation for AWS Control Tower.
 //
 // Returns a list of tags associated with the resource. For usage examples,
-// see the Amazon Web Services Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// see the Controls Reference Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -980,6 +2054,108 @@ func (c *ControlTower) ListTagsForResource(input *ListTagsForResourceInput) (*Li
 // for more information on using Contexts.
 func (c *ControlTower) ListTagsForResourceWithContext(ctx aws.Context, input *ListTagsForResourceInput, opts ...request.Option) (*ListTagsForResourceOutput, error) {
 	req, out := c.ListTagsForResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opResetEnabledBaseline = "ResetEnabledBaseline"
+
+// ResetEnabledBaselineRequest generates a "aws/request.Request" representing the
+// client's request for the ResetEnabledBaseline operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ResetEnabledBaseline for more information on using the ResetEnabledBaseline
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ResetEnabledBaselineRequest method.
+//	req, resp := client.ResetEnabledBaselineRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ResetEnabledBaseline
+func (c *ControlTower) ResetEnabledBaselineRequest(input *ResetEnabledBaselineInput) (req *request.Request, output *ResetEnabledBaselineOutput) {
+	op := &request.Operation{
+		Name:       opResetEnabledBaseline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/reset-enabled-baseline",
+	}
+
+	if input == nil {
+		input = &ResetEnabledBaselineInput{}
+	}
+
+	output = &ResetEnabledBaselineOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ResetEnabledBaseline API operation for AWS Control Tower.
+//
+// Re-enables an EnabledBaseline resource. For example, this API can re-apply
+// the existing Baseline after a new member account is moved to the target OU.
+// For usage examples, see the Amazon Web Services Control Tower User Guide
+// (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation ResetEnabledBaseline for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - ConflictException
+//     Updating or deleting the resource can cause an inconsistent state.
+//
+//   - ServiceQuotaExceededException
+//     The request would cause a service quota to be exceeded. The limit is 10 concurrent
+//     operations.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/ResetEnabledBaseline
+func (c *ControlTower) ResetEnabledBaseline(input *ResetEnabledBaselineInput) (*ResetEnabledBaselineOutput, error) {
+	req, out := c.ResetEnabledBaselineRequest(input)
+	return out, req.Send()
+}
+
+// ResetEnabledBaselineWithContext is the same as ResetEnabledBaseline with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ResetEnabledBaseline for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) ResetEnabledBaselineWithContext(ctx aws.Context, input *ResetEnabledBaselineInput, opts ...request.Option) (*ResetEnabledBaselineOutput, error) {
+	req, out := c.ResetEnabledBaselineRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1029,8 +2205,11 @@ func (c *ControlTower) ResetLandingZoneRequest(input *ResetLandingZoneInput) (re
 // ResetLandingZone API operation for AWS Control Tower.
 //
 // This API call resets a landing zone. It starts an asynchronous operation
-// that resets the landing zone to the parameters specified in its original
-// configuration.
+// that resets the landing zone to the parameters specified in the original
+// configuration, which you specified in the manifest file. Nothing in the manifest
+// file's original landing zone configuration is changed during the reset process,
+// by default. This API is not the same as a rollback of a landing zone version,
+// which is not a supported operation.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1126,8 +2305,8 @@ func (c *ControlTower) TagResourceRequest(input *TagResourceInput) (req *request
 
 // TagResource API operation for AWS Control Tower.
 //
-// Applies tags to a resource. For usage examples, see the Amazon Web Services
-// Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// Applies tags to a resource. For usage examples, see the Controls Reference
+// Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1214,8 +2393,8 @@ func (c *ControlTower) UntagResourceRequest(input *UntagResourceInput) (req *req
 
 // UntagResource API operation for AWS Control Tower.
 //
-// Removes tags from a resource. For usage examples, see the Amazon Web Services
-// Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/control-api-examples-short.html).
+// Removes tags from a resource. For usage examples, see the Controls Reference
+// Guide (https://docs.aws.amazon.com/controltower/latest/controlreference/control-api-examples-short.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1253,6 +2432,106 @@ func (c *ControlTower) UntagResource(input *UntagResourceInput) (*UntagResourceO
 // for more information on using Contexts.
 func (c *ControlTower) UntagResourceWithContext(ctx aws.Context, input *UntagResourceInput, opts ...request.Option) (*UntagResourceOutput, error) {
 	req, out := c.UntagResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateEnabledBaseline = "UpdateEnabledBaseline"
+
+// UpdateEnabledBaselineRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateEnabledBaseline operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateEnabledBaseline for more information on using the UpdateEnabledBaseline
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateEnabledBaselineRequest method.
+//	req, resp := client.UpdateEnabledBaselineRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/UpdateEnabledBaseline
+func (c *ControlTower) UpdateEnabledBaselineRequest(input *UpdateEnabledBaselineInput) (req *request.Request, output *UpdateEnabledBaselineOutput) {
+	op := &request.Operation{
+		Name:       opUpdateEnabledBaseline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/update-enabled-baseline",
+	}
+
+	if input == nil {
+		input = &UpdateEnabledBaselineInput{}
+	}
+
+	output = &UpdateEnabledBaselineOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateEnabledBaseline API operation for AWS Control Tower.
+//
+// Updates an EnabledBaseline resource's applied parameters or version. For
+// usage examples, see the Amazon Web Services Control Tower User Guide (https://docs.aws.amazon.com/controltower/latest/userguide/baseline-api-examples.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Control Tower's
+// API operation UpdateEnabledBaseline for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The input does not satisfy the constraints specified by an Amazon Web Services
+//     service.
+//
+//   - ConflictException
+//     Updating or deleting the resource can cause an inconsistent state.
+//
+//   - ServiceQuotaExceededException
+//     The request would cause a service quota to be exceeded. The limit is 10 concurrent
+//     operations.
+//
+//   - InternalServerException
+//     An unexpected error occurred during processing of a request.
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ResourceNotFoundException
+//     The request references a resource that does not exist.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/controltower-2018-05-10/UpdateEnabledBaseline
+func (c *ControlTower) UpdateEnabledBaseline(input *UpdateEnabledBaselineInput) (*UpdateEnabledBaselineOutput, error) {
+	req, out := c.UpdateEnabledBaselineRequest(input)
+	return out, req.Send()
+}
+
+// UpdateEnabledBaselineWithContext is the same as UpdateEnabledBaseline with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateEnabledBaseline for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *ControlTower) UpdateEnabledBaselineWithContext(ctx aws.Context, input *UpdateEnabledBaselineInput, opts ...request.Option) (*UpdateEnabledBaselineOutput, error) {
+	req, out := c.UpdateEnabledBaselineRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -1320,6 +2599,140 @@ func (s *AccessDeniedException) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *AccessDeniedException) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+// An object of shape BaselineOperation, returning details about the specified
+// Baseline operation ID.
+type BaselineOperation struct {
+	_ struct{} `type:"structure"`
+
+	// The end time of the operation (if applicable), in ISO 8601 format.
+	EndTime *time.Time `locationName:"endTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The identifier of the specified operation.
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string"`
+
+	// An enumerated type (enum) with possible values of ENABLE_BASELINE, DISABLE_BASELINE,
+	// UPDATE_ENABLED_BASELINE, or RESET_ENABLED_BASELINE.
+	OperationType *string `locationName:"operationType" type:"string" enum:"BaselineOperationType"`
+
+	// The start time of the operation, in ISO 8601 format.
+	StartTime *time.Time `locationName:"startTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// An enumerated type (enum) with possible values of SUCCEEDED, FAILED, or IN_PROGRESS.
+	Status *string `locationName:"status" type:"string" enum:"BaselineOperationStatus"`
+
+	// A status message that gives more information about the operation's status,
+	// if applicable.
+	StatusMessage *string `locationName:"statusMessage" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BaselineOperation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BaselineOperation) GoString() string {
+	return s.String()
+}
+
+// SetEndTime sets the EndTime field's value.
+func (s *BaselineOperation) SetEndTime(v time.Time) *BaselineOperation {
+	s.EndTime = &v
+	return s
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *BaselineOperation) SetOperationIdentifier(v string) *BaselineOperation {
+	s.OperationIdentifier = &v
+	return s
+}
+
+// SetOperationType sets the OperationType field's value.
+func (s *BaselineOperation) SetOperationType(v string) *BaselineOperation {
+	s.OperationType = &v
+	return s
+}
+
+// SetStartTime sets the StartTime field's value.
+func (s *BaselineOperation) SetStartTime(v time.Time) *BaselineOperation {
+	s.StartTime = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *BaselineOperation) SetStatus(v string) *BaselineOperation {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *BaselineOperation) SetStatusMessage(v string) *BaselineOperation {
+	s.StatusMessage = &v
+	return s
+}
+
+// Returns a summary of information about a Baseline object.
+type BaselineSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The full ARN of a Baseline.
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" type:"string" required:"true"`
+
+	// A summary description of a Baseline.
+	Description *string `locationName:"description" type:"string"`
+
+	// The human-readable name of a Baseline.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BaselineSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BaselineSummary) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *BaselineSummary) SetArn(v string) *BaselineSummary {
+	s.Arn = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *BaselineSummary) SetDescription(v string) *BaselineSummary {
+	s.Description = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *BaselineSummary) SetName(v string) *BaselineSummary {
+	s.Name = &v
+	return s
 }
 
 // Updating or deleting the resource can cause an inconsistent state.
@@ -1390,8 +2803,17 @@ func (s *ConflictException) RequestID() string {
 type ControlOperation struct {
 	_ struct{} `type:"structure"`
 
+	// The controlIdentifier of the control for the operation.
+	ControlIdentifier *string `locationName:"controlIdentifier" min:"20" type:"string"`
+
+	// The controlIdentifier of the enabled control.
+	EnabledControlIdentifier *string `locationName:"enabledControlIdentifier" min:"20" type:"string"`
+
 	// The time that the operation finished.
 	EndTime *time.Time `locationName:"endTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The identifier of the specified operation.
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string"`
 
 	// One of ENABLE_CONTROL or DISABLE_CONTROL.
 	OperationType *string `locationName:"operationType" type:"string" enum:"ControlOperationType"`
@@ -1405,6 +2827,9 @@ type ControlOperation struct {
 	// If the operation result is FAILED, this string contains a message explaining
 	// why the operation failed.
 	StatusMessage *string `locationName:"statusMessage" type:"string"`
+
+	// The target upon which the control operation is working.
+	TargetIdentifier *string `locationName:"targetIdentifier" min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -1425,9 +2850,27 @@ func (s ControlOperation) GoString() string {
 	return s.String()
 }
 
+// SetControlIdentifier sets the ControlIdentifier field's value.
+func (s *ControlOperation) SetControlIdentifier(v string) *ControlOperation {
+	s.ControlIdentifier = &v
+	return s
+}
+
+// SetEnabledControlIdentifier sets the EnabledControlIdentifier field's value.
+func (s *ControlOperation) SetEnabledControlIdentifier(v string) *ControlOperation {
+	s.EnabledControlIdentifier = &v
+	return s
+}
+
 // SetEndTime sets the EndTime field's value.
 func (s *ControlOperation) SetEndTime(v time.Time) *ControlOperation {
 	s.EndTime = &v
+	return s
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *ControlOperation) SetOperationIdentifier(v string) *ControlOperation {
+	s.OperationIdentifier = &v
 	return s
 }
 
@@ -1452,6 +2895,210 @@ func (s *ControlOperation) SetStatus(v string) *ControlOperation {
 // SetStatusMessage sets the StatusMessage field's value.
 func (s *ControlOperation) SetStatusMessage(v string) *ControlOperation {
 	s.StatusMessage = &v
+	return s
+}
+
+// SetTargetIdentifier sets the TargetIdentifier field's value.
+func (s *ControlOperation) SetTargetIdentifier(v string) *ControlOperation {
+	s.TargetIdentifier = &v
+	return s
+}
+
+// A filter object that lets you call ListControlOperations with a specific
+// filter.
+type ControlOperationFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The set of controlIdentifier returned by the filter.
+	ControlIdentifiers []*string `locationName:"controlIdentifiers" min:"1" type:"list"`
+
+	// The set of ControlOperation objects returned by the filter.
+	ControlOperationTypes []*string `locationName:"controlOperationTypes" min:"1" type:"list" enum:"ControlOperationType"`
+
+	// The set controlIdentifier of enabled controls selected by the filter.
+	EnabledControlIdentifiers []*string `locationName:"enabledControlIdentifiers" min:"1" type:"list"`
+
+	// Lists the status of control operations.
+	Statuses []*string `locationName:"statuses" min:"1" type:"list" enum:"ControlOperationStatus"`
+
+	// The set of targetIdentifier objects returned by the filter.
+	TargetIdentifiers []*string `locationName:"targetIdentifiers" min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlOperationFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlOperationFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ControlOperationFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ControlOperationFilter"}
+	if s.ControlIdentifiers != nil && len(s.ControlIdentifiers) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlIdentifiers", 1))
+	}
+	if s.ControlOperationTypes != nil && len(s.ControlOperationTypes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlOperationTypes", 1))
+	}
+	if s.EnabledControlIdentifiers != nil && len(s.EnabledControlIdentifiers) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EnabledControlIdentifiers", 1))
+	}
+	if s.Statuses != nil && len(s.Statuses) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Statuses", 1))
+	}
+	if s.TargetIdentifiers != nil && len(s.TargetIdentifiers) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TargetIdentifiers", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetControlIdentifiers sets the ControlIdentifiers field's value.
+func (s *ControlOperationFilter) SetControlIdentifiers(v []*string) *ControlOperationFilter {
+	s.ControlIdentifiers = v
+	return s
+}
+
+// SetControlOperationTypes sets the ControlOperationTypes field's value.
+func (s *ControlOperationFilter) SetControlOperationTypes(v []*string) *ControlOperationFilter {
+	s.ControlOperationTypes = v
+	return s
+}
+
+// SetEnabledControlIdentifiers sets the EnabledControlIdentifiers field's value.
+func (s *ControlOperationFilter) SetEnabledControlIdentifiers(v []*string) *ControlOperationFilter {
+	s.EnabledControlIdentifiers = v
+	return s
+}
+
+// SetStatuses sets the Statuses field's value.
+func (s *ControlOperationFilter) SetStatuses(v []*string) *ControlOperationFilter {
+	s.Statuses = v
+	return s
+}
+
+// SetTargetIdentifiers sets the TargetIdentifiers field's value.
+func (s *ControlOperationFilter) SetTargetIdentifiers(v []*string) *ControlOperationFilter {
+	s.TargetIdentifiers = v
+	return s
+}
+
+// A summary of information about the specified control operation.
+type ControlOperationSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The controlIdentifier of a control.
+	ControlIdentifier *string `locationName:"controlIdentifier" min:"20" type:"string"`
+
+	// The controlIdentifier of an enabled control.
+	EnabledControlIdentifier *string `locationName:"enabledControlIdentifier" min:"20" type:"string"`
+
+	// The time at which the control operation was completed.
+	EndTime *time.Time `locationName:"endTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The unique identifier of a control operation.
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string"`
+
+	// The type of operation.
+	OperationType *string `locationName:"operationType" type:"string" enum:"ControlOperationType"`
+
+	// The time at which a control operation began.
+	StartTime *time.Time `locationName:"startTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The status of the specified control operation.
+	Status *string `locationName:"status" type:"string" enum:"ControlOperationStatus"`
+
+	// A speficic message displayed as part of the control status.
+	StatusMessage *string `locationName:"statusMessage" type:"string"`
+
+	// The unique identifier of the target of a control operation.
+	TargetIdentifier *string `locationName:"targetIdentifier" min:"20" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlOperationSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlOperationSummary) GoString() string {
+	return s.String()
+}
+
+// SetControlIdentifier sets the ControlIdentifier field's value.
+func (s *ControlOperationSummary) SetControlIdentifier(v string) *ControlOperationSummary {
+	s.ControlIdentifier = &v
+	return s
+}
+
+// SetEnabledControlIdentifier sets the EnabledControlIdentifier field's value.
+func (s *ControlOperationSummary) SetEnabledControlIdentifier(v string) *ControlOperationSummary {
+	s.EnabledControlIdentifier = &v
+	return s
+}
+
+// SetEndTime sets the EndTime field's value.
+func (s *ControlOperationSummary) SetEndTime(v time.Time) *ControlOperationSummary {
+	s.EndTime = &v
+	return s
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *ControlOperationSummary) SetOperationIdentifier(v string) *ControlOperationSummary {
+	s.OperationIdentifier = &v
+	return s
+}
+
+// SetOperationType sets the OperationType field's value.
+func (s *ControlOperationSummary) SetOperationType(v string) *ControlOperationSummary {
+	s.OperationType = &v
+	return s
+}
+
+// SetStartTime sets the StartTime field's value.
+func (s *ControlOperationSummary) SetStartTime(v time.Time) *ControlOperationSummary {
+	s.StartTime = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *ControlOperationSummary) SetStatus(v string) *ControlOperationSummary {
+	s.Status = &v
+	return s
+}
+
+// SetStatusMessage sets the StatusMessage field's value.
+func (s *ControlOperationSummary) SetStatusMessage(v string) *ControlOperationSummary {
+	s.StatusMessage = &v
+	return s
+}
+
+// SetTargetIdentifier sets the TargetIdentifier field's value.
+func (s *ControlOperationSummary) SetTargetIdentifier(v string) *ControlOperationSummary {
+	s.TargetIdentifier = &v
 	return s
 }
 
@@ -1536,12 +3183,96 @@ func (s *DeleteLandingZoneOutput) SetOperationIdentifier(v string) *DeleteLandin
 	return s
 }
 
+type DisableBaselineInput struct {
+	_ struct{} `type:"structure"`
+
+	// Identifier of the EnabledBaseline resource to be deactivated, in ARN format.
+	//
+	// EnabledBaselineIdentifier is a required field
+	EnabledBaselineIdentifier *string `locationName:"enabledBaselineIdentifier" min:"20" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisableBaselineInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisableBaselineInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DisableBaselineInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DisableBaselineInput"}
+	if s.EnabledBaselineIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnabledBaselineIdentifier"))
+	}
+	if s.EnabledBaselineIdentifier != nil && len(*s.EnabledBaselineIdentifier) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("EnabledBaselineIdentifier", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnabledBaselineIdentifier sets the EnabledBaselineIdentifier field's value.
+func (s *DisableBaselineInput) SetEnabledBaselineIdentifier(v string) *DisableBaselineInput {
+	s.EnabledBaselineIdentifier = &v
+	return s
+}
+
+type DisableBaselineOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID (in UUID format) of the asynchronous DisableBaseline operation. This
+	// operationIdentifier is used to track status through calls to the GetBaselineOperation
+	// API.
+	//
+	// OperationIdentifier is a required field
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisableBaselineOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisableBaselineOutput) GoString() string {
+	return s.String()
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *DisableBaselineOutput) SetOperationIdentifier(v string) *DisableBaselineOutput {
+	s.OperationIdentifier = &v
+	return s
+}
+
 type DisableControlInput struct {
 	_ struct{} `type:"structure"`
 
 	// The ARN of the control. Only Strongly recommended and Elective controls are
-	// permitted, with the exception of the landing zone Region deny control. For
-	// information on how to find the controlIdentifier, see the overview page (https://docs.aws.amazon.com/controltower/latest/APIReference/Welcome.html).
+	// permitted, with the exception of the Region deny control. For information
+	// on how to find the controlIdentifier, see the overview page (https://docs.aws.amazon.com/controltower/latest/APIReference/Welcome.html).
 	//
 	// ControlIdentifier is a required field
 	ControlIdentifier *string `locationName:"controlIdentifier" min:"20" type:"string" required:"true"`
@@ -1690,12 +3421,151 @@ func (s *DriftStatusSummary) SetDriftStatus(v string) *DriftStatusSummary {
 	return s
 }
 
+type EnableBaselineInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the baseline to be enabled.
+	//
+	// BaselineIdentifier is a required field
+	BaselineIdentifier *string `locationName:"baselineIdentifier" min:"20" type:"string" required:"true"`
+
+	// The specific version to be enabled of the specified baseline.
+	//
+	// BaselineVersion is a required field
+	BaselineVersion *string `locationName:"baselineVersion" min:"1" type:"string" required:"true"`
+
+	// Tags associated with input to EnableBaseline.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+
+	// The ARN of the target on which the baseline will be enabled. Only OUs are
+	// supported as targets.
+	//
+	// TargetIdentifier is a required field
+	TargetIdentifier *string `locationName:"targetIdentifier" min:"20" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnableBaselineInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnableBaselineInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EnableBaselineInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EnableBaselineInput"}
+	if s.BaselineIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("BaselineIdentifier"))
+	}
+	if s.BaselineIdentifier != nil && len(*s.BaselineIdentifier) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("BaselineIdentifier", 20))
+	}
+	if s.BaselineVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("BaselineVersion"))
+	}
+	if s.BaselineVersion != nil && len(*s.BaselineVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BaselineVersion", 1))
+	}
+	if s.TargetIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("TargetIdentifier"))
+	}
+	if s.TargetIdentifier != nil && len(*s.TargetIdentifier) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("TargetIdentifier", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBaselineIdentifier sets the BaselineIdentifier field's value.
+func (s *EnableBaselineInput) SetBaselineIdentifier(v string) *EnableBaselineInput {
+	s.BaselineIdentifier = &v
+	return s
+}
+
+// SetBaselineVersion sets the BaselineVersion field's value.
+func (s *EnableBaselineInput) SetBaselineVersion(v string) *EnableBaselineInput {
+	s.BaselineVersion = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *EnableBaselineInput) SetTags(v map[string]*string) *EnableBaselineInput {
+	s.Tags = v
+	return s
+}
+
+// SetTargetIdentifier sets the TargetIdentifier field's value.
+func (s *EnableBaselineInput) SetTargetIdentifier(v string) *EnableBaselineInput {
+	s.TargetIdentifier = &v
+	return s
+}
+
+type EnableBaselineOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the EnabledBaseline resource.
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" min:"20" type:"string" required:"true"`
+
+	// The ID (in UUID format) of the asynchronous EnableBaseline operation. This
+	// operationIdentifier is used to track status through calls to the GetBaselineOperation
+	// API.
+	//
+	// OperationIdentifier is a required field
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnableBaselineOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnableBaselineOutput) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *EnableBaselineOutput) SetArn(v string) *EnableBaselineOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *EnableBaselineOutput) SetOperationIdentifier(v string) *EnableBaselineOutput {
+	s.OperationIdentifier = &v
+	return s
+}
+
 type EnableControlInput struct {
 	_ struct{} `type:"structure"`
 
 	// The ARN of the control. Only Strongly recommended and Elective controls are
-	// permitted, with the exception of the landing zone Region deny control. For
-	// information on how to find the controlIdentifier, see the overview page (https://docs.aws.amazon.com/controltower/latest/APIReference/Welcome.html).
+	// permitted, with the exception of the Region deny control. For information
+	// on how to find the controlIdentifier, see the overview page (https://docs.aws.amazon.com/controltower/latest/APIReference/Welcome.html).
 	//
 	// ControlIdentifier is a required field
 	ControlIdentifier *string `locationName:"controlIdentifier" min:"20" type:"string" required:"true"`
@@ -1811,6 +3681,217 @@ func (s *EnableControlOutput) SetOperationIdentifier(v string) *EnableControlOut
 	return s
 }
 
+// Details of the EnabledBaseline resource.
+type EnabledBaselineDetails struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the EnabledBaseline resource.
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" min:"20" type:"string" required:"true"`
+
+	// The specific Baseline enabled as part of the EnabledBaseline resource.
+	//
+	// BaselineIdentifier is a required field
+	BaselineIdentifier *string `locationName:"baselineIdentifier" type:"string" required:"true"`
+
+	// The enabled version of the Baseline.
+	BaselineVersion *string `locationName:"baselineVersion" type:"string"`
+
+	// The deployment summary of an EnabledControl or EnabledBaseline resource.
+	//
+	// StatusSummary is a required field
+	StatusSummary *EnablementStatusSummary `locationName:"statusSummary" type:"structure" required:"true"`
+
+	// The target on which to enable the Baseline.
+	//
+	// TargetIdentifier is a required field
+	TargetIdentifier *string `locationName:"targetIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledBaselineDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledBaselineDetails) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *EnabledBaselineDetails) SetArn(v string) *EnabledBaselineDetails {
+	s.Arn = &v
+	return s
+}
+
+// SetBaselineIdentifier sets the BaselineIdentifier field's value.
+func (s *EnabledBaselineDetails) SetBaselineIdentifier(v string) *EnabledBaselineDetails {
+	s.BaselineIdentifier = &v
+	return s
+}
+
+// SetBaselineVersion sets the BaselineVersion field's value.
+func (s *EnabledBaselineDetails) SetBaselineVersion(v string) *EnabledBaselineDetails {
+	s.BaselineVersion = &v
+	return s
+}
+
+// SetStatusSummary sets the StatusSummary field's value.
+func (s *EnabledBaselineDetails) SetStatusSummary(v *EnablementStatusSummary) *EnabledBaselineDetails {
+	s.StatusSummary = v
+	return s
+}
+
+// SetTargetIdentifier sets the TargetIdentifier field's value.
+func (s *EnabledBaselineDetails) SetTargetIdentifier(v string) *EnabledBaselineDetails {
+	s.TargetIdentifier = &v
+	return s
+}
+
+// A filter applied on the ListEnabledBaseline operation. Allowed filters are
+// baselineIdentifiers and targetIdentifiers. The filter can be applied for
+// either, or both.
+type EnabledBaselineFilter struct {
+	_ struct{} `type:"structure"`
+
+	// Identifiers for the Baseline objects returned as part of the filter operation.
+	BaselineIdentifiers []*string `locationName:"baselineIdentifiers" min:"1" type:"list"`
+
+	// Identifiers for the targets of the Baseline filter operation.
+	TargetIdentifiers []*string `locationName:"targetIdentifiers" min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledBaselineFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledBaselineFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EnabledBaselineFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EnabledBaselineFilter"}
+	if s.BaselineIdentifiers != nil && len(s.BaselineIdentifiers) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BaselineIdentifiers", 1))
+	}
+	if s.TargetIdentifiers != nil && len(s.TargetIdentifiers) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TargetIdentifiers", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBaselineIdentifiers sets the BaselineIdentifiers field's value.
+func (s *EnabledBaselineFilter) SetBaselineIdentifiers(v []*string) *EnabledBaselineFilter {
+	s.BaselineIdentifiers = v
+	return s
+}
+
+// SetTargetIdentifiers sets the TargetIdentifiers field's value.
+func (s *EnabledBaselineFilter) SetTargetIdentifiers(v []*string) *EnabledBaselineFilter {
+	s.TargetIdentifiers = v
+	return s
+}
+
+// Returns a summary of information about an EnabledBaseline object.
+type EnabledBaselineSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the EnabledBaseline resource
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" min:"20" type:"string" required:"true"`
+
+	// The specific baseline that is enabled as part of the EnabledBaseline resource.
+	//
+	// BaselineIdentifier is a required field
+	BaselineIdentifier *string `locationName:"baselineIdentifier" type:"string" required:"true"`
+
+	// The enabled version of the baseline.
+	BaselineVersion *string `locationName:"baselineVersion" type:"string"`
+
+	// The deployment summary of an EnabledControl or EnabledBaseline resource.
+	//
+	// StatusSummary is a required field
+	StatusSummary *EnablementStatusSummary `locationName:"statusSummary" type:"structure" required:"true"`
+
+	// The target upon which the baseline is enabled.
+	//
+	// TargetIdentifier is a required field
+	TargetIdentifier *string `locationName:"targetIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledBaselineSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledBaselineSummary) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *EnabledBaselineSummary) SetArn(v string) *EnabledBaselineSummary {
+	s.Arn = &v
+	return s
+}
+
+// SetBaselineIdentifier sets the BaselineIdentifier field's value.
+func (s *EnabledBaselineSummary) SetBaselineIdentifier(v string) *EnabledBaselineSummary {
+	s.BaselineIdentifier = &v
+	return s
+}
+
+// SetBaselineVersion sets the BaselineVersion field's value.
+func (s *EnabledBaselineSummary) SetBaselineVersion(v string) *EnabledBaselineSummary {
+	s.BaselineVersion = &v
+	return s
+}
+
+// SetStatusSummary sets the StatusSummary field's value.
+func (s *EnabledBaselineSummary) SetStatusSummary(v *EnablementStatusSummary) *EnabledBaselineSummary {
+	s.StatusSummary = v
+	return s
+}
+
+// SetTargetIdentifier sets the TargetIdentifier field's value.
+func (s *EnabledBaselineSummary) SetTargetIdentifier(v string) *EnabledBaselineSummary {
+	s.TargetIdentifier = &v
+	return s
+}
+
 // Information about the enabled control.
 type EnabledControlDetails struct {
 	_ struct{} `type:"structure"`
@@ -1890,6 +3971,77 @@ func (s *EnabledControlDetails) SetTargetRegions(v []*Region) *EnabledControlDet
 	return s
 }
 
+// A structure that returns a set of control identifiers, the control status
+// for each control in the set, and the drift status for each control in the
+// set.
+type EnabledControlFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The set of controlIdentifier returned by the filter.
+	ControlIdentifiers []*string `locationName:"controlIdentifiers" min:"1" type:"list"`
+
+	// A list of DriftStatus items.
+	DriftStatuses []*string `locationName:"driftStatuses" min:"1" type:"list" enum:"DriftStatus"`
+
+	// A list of EnablementStatus items.
+	Statuses []*string `locationName:"statuses" min:"1" type:"list" enum:"EnablementStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledControlFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnabledControlFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EnabledControlFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EnabledControlFilter"}
+	if s.ControlIdentifiers != nil && len(s.ControlIdentifiers) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlIdentifiers", 1))
+	}
+	if s.DriftStatuses != nil && len(s.DriftStatuses) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DriftStatuses", 1))
+	}
+	if s.Statuses != nil && len(s.Statuses) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Statuses", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetControlIdentifiers sets the ControlIdentifiers field's value.
+func (s *EnabledControlFilter) SetControlIdentifiers(v []*string) *EnabledControlFilter {
+	s.ControlIdentifiers = v
+	return s
+}
+
+// SetDriftStatuses sets the DriftStatuses field's value.
+func (s *EnabledControlFilter) SetDriftStatuses(v []*string) *EnabledControlFilter {
+	s.DriftStatuses = v
+	return s
+}
+
+// SetStatuses sets the Statuses field's value.
+func (s *EnabledControlFilter) SetStatuses(v []*string) *EnabledControlFilter {
+	s.Statuses = v
+	return s
+}
+
 // Returns a summary of information about an enabled control.
 type EnabledControlSummary struct {
 	_ struct{} `type:"structure"`
@@ -1958,22 +4110,25 @@ func (s *EnabledControlSummary) SetTargetIdentifier(v string) *EnabledControlSum
 	return s
 }
 
-// The deployment summary of the enabled control.
+// The deployment summary of an EnabledControl or EnabledBaseline resource.
 type EnablementStatusSummary struct {
 	_ struct{} `type:"structure"`
 
-	// The last operation identifier for the enabled control.
+	// The last operation identifier for the enabled resource.
 	LastOperationIdentifier *string `locationName:"lastOperationIdentifier" min:"36" type:"string"`
 
-	// The deployment status of the enabled control.
+	// The deployment status of the enabled resource.
 	//
 	// Valid values:
 	//
-	//    * SUCCEEDED: The enabledControl configuration was deployed successfully.
+	//    * SUCCEEDED: The EnabledControl or EnabledBaseline configuration was deployed
+	//    successfully.
 	//
-	//    * UNDER_CHANGE: The enabledControl configuration is changing.
+	//    * UNDER_CHANGE: The EnabledControl or EnabledBaseline configuration is
+	//    changing.
 	//
-	//    * FAILED: The enabledControl configuration failed to deploy.
+	//    * FAILED: The EnabledControl or EnabledBaseline configuration failed to
+	//    deploy.
 	Status *string `locationName:"status" type:"string" enum:"EnablementStatus"`
 }
 
@@ -2004,6 +4159,189 @@ func (s *EnablementStatusSummary) SetLastOperationIdentifier(v string) *Enableme
 // SetStatus sets the Status field's value.
 func (s *EnablementStatusSummary) SetStatus(v string) *EnablementStatusSummary {
 	s.Status = &v
+	return s
+}
+
+type GetBaselineInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the Baseline resource to be retrieved.
+	//
+	// BaselineIdentifier is a required field
+	BaselineIdentifier *string `locationName:"baselineIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetBaselineInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetBaselineInput"}
+	if s.BaselineIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("BaselineIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBaselineIdentifier sets the BaselineIdentifier field's value.
+func (s *GetBaselineInput) SetBaselineIdentifier(v string) *GetBaselineInput {
+	s.BaselineIdentifier = &v
+	return s
+}
+
+type GetBaselineOperationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The operation ID returned from mutating asynchronous APIs (Enable, Disable,
+	// Update, Reset).
+	//
+	// OperationIdentifier is a required field
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineOperationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineOperationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetBaselineOperationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetBaselineOperationInput"}
+	if s.OperationIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("OperationIdentifier"))
+	}
+	if s.OperationIdentifier != nil && len(*s.OperationIdentifier) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("OperationIdentifier", 36))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *GetBaselineOperationInput) SetOperationIdentifier(v string) *GetBaselineOperationInput {
+	s.OperationIdentifier = &v
+	return s
+}
+
+type GetBaselineOperationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A baselineOperation object that shows information about the specified operation
+	// ID.
+	//
+	// BaselineOperation is a required field
+	BaselineOperation *BaselineOperation `locationName:"baselineOperation" type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineOperationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineOperationOutput) GoString() string {
+	return s.String()
+}
+
+// SetBaselineOperation sets the BaselineOperation field's value.
+func (s *GetBaselineOperationOutput) SetBaselineOperation(v *BaselineOperation) *GetBaselineOperationOutput {
+	s.BaselineOperation = v
+	return s
+}
+
+type GetBaselineOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The baseline ARN.
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" type:"string" required:"true"`
+
+	// A description of the baseline.
+	Description *string `locationName:"description" type:"string"`
+
+	// A user-friendly name for the baseline.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetBaselineOutput) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *GetBaselineOutput) SetArn(v string) *GetBaselineOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *GetBaselineOutput) SetDescription(v string) *GetBaselineOutput {
+	s.Description = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *GetBaselineOutput) SetName(v string) *GetBaselineOutput {
+	s.Name = &v
 	return s
 }
 
@@ -2087,6 +4425,86 @@ func (s GetControlOperationOutput) GoString() string {
 // SetControlOperation sets the ControlOperation field's value.
 func (s *GetControlOperationOutput) SetControlOperation(v *ControlOperation) *GetControlOperationOutput {
 	s.ControlOperation = v
+	return s
+}
+
+type GetEnabledBaselineInput struct {
+	_ struct{} `type:"structure"`
+
+	// Identifier of the EnabledBaseline resource to be retrieved, in ARN format.
+	//
+	// EnabledBaselineIdentifier is a required field
+	EnabledBaselineIdentifier *string `locationName:"enabledBaselineIdentifier" min:"20" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEnabledBaselineInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEnabledBaselineInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetEnabledBaselineInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetEnabledBaselineInput"}
+	if s.EnabledBaselineIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnabledBaselineIdentifier"))
+	}
+	if s.EnabledBaselineIdentifier != nil && len(*s.EnabledBaselineIdentifier) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("EnabledBaselineIdentifier", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnabledBaselineIdentifier sets the EnabledBaselineIdentifier field's value.
+func (s *GetEnabledBaselineInput) SetEnabledBaselineIdentifier(v string) *GetEnabledBaselineInput {
+	s.EnabledBaselineIdentifier = &v
+	return s
+}
+
+type GetEnabledBaselineOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Details of the EnabledBaseline resource.
+	EnabledBaselineDetails *EnabledBaselineDetails `locationName:"enabledBaselineDetails" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEnabledBaselineOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEnabledBaselineOutput) GoString() string {
+	return s.String()
+}
+
+// SetEnabledBaselineDetails sets the EnabledBaselineDetails field's value.
+func (s *GetEnabledBaselineOutput) SetEnabledBaselineDetails(v *EnabledBaselineDetails) *GetEnabledBaselineOutput {
+	s.EnabledBaselineDetails = v
 	return s
 }
 
@@ -2325,6 +4743,9 @@ type LandingZoneOperationDetail struct {
 	// The landing zone operation end time.
 	EndTime *time.Time `locationName:"endTime" type:"timestamp" timestampFormat:"iso8601"`
 
+	// The operationIdentifier of the landing zone operation.
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string"`
+
 	// The landing zone operation type.
 	//
 	// Valid values:
@@ -2379,6 +4800,12 @@ func (s *LandingZoneOperationDetail) SetEndTime(v time.Time) *LandingZoneOperati
 	return s
 }
 
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *LandingZoneOperationDetail) SetOperationIdentifier(v string) *LandingZoneOperationDetail {
+	s.OperationIdentifier = &v
+	return s
+}
+
 // SetOperationType sets the OperationType field's value.
 func (s *LandingZoneOperationDetail) SetOperationType(v string) *LandingZoneOperationDetail {
 	s.OperationType = &v
@@ -2400,6 +4827,114 @@ func (s *LandingZoneOperationDetail) SetStatus(v string) *LandingZoneOperationDe
 // SetStatusMessage sets the StatusMessage field's value.
 func (s *LandingZoneOperationDetail) SetStatusMessage(v string) *LandingZoneOperationDetail {
 	s.StatusMessage = &v
+	return s
+}
+
+// A filter object that lets you call ListLandingZoneOperations with a specific
+// filter.
+type LandingZoneOperationFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The statuses of the set of landing zone operations selected by the filter.
+	Statuses []*string `locationName:"statuses" min:"1" type:"list" enum:"LandingZoneOperationStatus"`
+
+	// The set of landing zone operation types selected by the filter.
+	Types []*string `locationName:"types" min:"1" type:"list" enum:"LandingZoneOperationType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LandingZoneOperationFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LandingZoneOperationFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LandingZoneOperationFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LandingZoneOperationFilter"}
+	if s.Statuses != nil && len(s.Statuses) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Statuses", 1))
+	}
+	if s.Types != nil && len(s.Types) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Types", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetStatuses sets the Statuses field's value.
+func (s *LandingZoneOperationFilter) SetStatuses(v []*string) *LandingZoneOperationFilter {
+	s.Statuses = v
+	return s
+}
+
+// SetTypes sets the Types field's value.
+func (s *LandingZoneOperationFilter) SetTypes(v []*string) *LandingZoneOperationFilter {
+	s.Types = v
+	return s
+}
+
+// Returns a summary of information about a landing zone operation.
+type LandingZoneOperationSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The operationIdentifier of the landing zone operation.
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string"`
+
+	// The type of the landing zone operation.
+	OperationType *string `locationName:"operationType" type:"string" enum:"LandingZoneOperationType"`
+
+	// The status of the landing zone operation.
+	Status *string `locationName:"status" type:"string" enum:"LandingZoneOperationStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LandingZoneOperationSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LandingZoneOperationSummary) GoString() string {
+	return s.String()
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *LandingZoneOperationSummary) SetOperationIdentifier(v string) *LandingZoneOperationSummary {
+	s.OperationIdentifier = &v
+	return s
+}
+
+// SetOperationType sets the OperationType field's value.
+func (s *LandingZoneOperationSummary) SetOperationType(v string) *LandingZoneOperationSummary {
+	s.OperationType = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *LandingZoneOperationSummary) SetStatus(v string) *LandingZoneOperationSummary {
+	s.Status = &v
 	return s
 }
 
@@ -2435,8 +4970,328 @@ func (s *LandingZoneSummary) SetArn(v string) *LandingZoneSummary {
 	return s
 }
 
+type ListBaselinesInput struct {
+	_ struct{} `type:"structure"`
+
+	// The maximum number of results to be shown.
+	MaxResults *int64 `locationName:"maxResults" min:"4" type:"integer"`
+
+	// A pagination token.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBaselinesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBaselinesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListBaselinesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListBaselinesInput"}
+	if s.MaxResults != nil && *s.MaxResults < 4 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 4))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListBaselinesInput) SetMaxResults(v int64) *ListBaselinesInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBaselinesInput) SetNextToken(v string) *ListBaselinesInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListBaselinesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of Baseline object details.
+	//
+	// Baselines is a required field
+	Baselines []*BaselineSummary `locationName:"baselines" type:"list" required:"true"`
+
+	// A pagination token.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBaselinesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListBaselinesOutput) GoString() string {
+	return s.String()
+}
+
+// SetBaselines sets the Baselines field's value.
+func (s *ListBaselinesOutput) SetBaselines(v []*BaselineSummary) *ListBaselinesOutput {
+	s.Baselines = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListBaselinesOutput) SetNextToken(v string) *ListBaselinesOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlOperationsInput struct {
+	_ struct{} `type:"structure"`
+
+	// An input filter for the ListControlOperations API that lets you select the
+	// types of control operations to view.
+	Filter *ControlOperationFilter `locationName:"filter" type:"structure"`
+
+	// The maximum number of results to be shown.
+	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
+
+	// A pagination token.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlOperationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlOperationsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListControlOperationsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListControlOperationsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilter sets the Filter field's value.
+func (s *ListControlOperationsInput) SetFilter(v *ControlOperationFilter) *ListControlOperationsInput {
+	s.Filter = v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListControlOperationsInput) SetMaxResults(v int64) *ListControlOperationsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlOperationsInput) SetNextToken(v string) *ListControlOperationsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlOperationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Returns a list of output from control operations.
+	//
+	// ControlOperations is a required field
+	ControlOperations []*ControlOperationSummary `locationName:"controlOperations" type:"list" required:"true"`
+
+	// A pagination token.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlOperationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlOperationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetControlOperations sets the ControlOperations field's value.
+func (s *ListControlOperationsOutput) SetControlOperations(v []*ControlOperationSummary) *ListControlOperationsOutput {
+	s.ControlOperations = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlOperationsOutput) SetNextToken(v string) *ListControlOperationsOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListEnabledBaselinesInput struct {
+	_ struct{} `type:"structure"`
+
+	// A filter applied on the ListEnabledBaseline operation. Allowed filters are
+	// baselineIdentifiers and targetIdentifiers. The filter can be applied for
+	// either, or both.
+	Filter *EnabledBaselineFilter `locationName:"filter" type:"structure"`
+
+	// The maximum number of results to be shown.
+	MaxResults *int64 `locationName:"maxResults" min:"5" type:"integer"`
+
+	// A pagination token.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListEnabledBaselinesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListEnabledBaselinesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListEnabledBaselinesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListEnabledBaselinesInput"}
+	if s.MaxResults != nil && *s.MaxResults < 5 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 5))
+	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilter sets the Filter field's value.
+func (s *ListEnabledBaselinesInput) SetFilter(v *EnabledBaselineFilter) *ListEnabledBaselinesInput {
+	s.Filter = v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListEnabledBaselinesInput) SetMaxResults(v int64) *ListEnabledBaselinesInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListEnabledBaselinesInput) SetNextToken(v string) *ListEnabledBaselinesInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListEnabledBaselinesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Retuens a list of summaries of EnabledBaseline resources.
+	//
+	// EnabledBaselines is a required field
+	EnabledBaselines []*EnabledBaselineSummary `locationName:"enabledBaselines" type:"list" required:"true"`
+
+	// A pagination token.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListEnabledBaselinesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListEnabledBaselinesOutput) GoString() string {
+	return s.String()
+}
+
+// SetEnabledBaselines sets the EnabledBaselines field's value.
+func (s *ListEnabledBaselinesOutput) SetEnabledBaselines(v []*EnabledBaselineSummary) *ListEnabledBaselinesOutput {
+	s.EnabledBaselines = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListEnabledBaselinesOutput) SetNextToken(v string) *ListEnabledBaselinesOutput {
+	s.NextToken = &v
+	return s
+}
+
 type ListEnabledControlsInput struct {
 	_ struct{} `type:"structure"`
+
+	// An input filter for the ListEnabledControls API that lets you select the
+	// types of control operations to view.
+	Filter *EnabledControlFilter `locationName:"filter" type:"structure"`
 
 	// How many results to return per API call.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
@@ -2446,9 +5301,7 @@ type ListEnabledControlsInput struct {
 
 	// The ARN of the organizational unit. For information on how to find the targetIdentifier,
 	// see the overview page (https://docs.aws.amazon.com/controltower/latest/APIReference/Welcome.html).
-	//
-	// TargetIdentifier is a required field
-	TargetIdentifier *string `locationName:"targetIdentifier" min:"20" type:"string" required:"true"`
+	TargetIdentifier *string `locationName:"targetIdentifier" min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -2475,17 +5328,25 @@ func (s *ListEnabledControlsInput) Validate() error {
 	if s.MaxResults != nil && *s.MaxResults < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
 	}
-	if s.TargetIdentifier == nil {
-		invalidParams.Add(request.NewErrParamRequired("TargetIdentifier"))
-	}
 	if s.TargetIdentifier != nil && len(*s.TargetIdentifier) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("TargetIdentifier", 20))
+	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
 	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetFilter sets the Filter field's value.
+func (s *ListEnabledControlsInput) SetFilter(v *EnabledControlFilter) *ListEnabledControlsInput {
+	s.Filter = v
+	return s
 }
 
 // SetMaxResults sets the MaxResults field's value.
@@ -2546,6 +5407,117 @@ func (s *ListEnabledControlsOutput) SetEnabledControls(v []*EnabledControlSummar
 
 // SetNextToken sets the NextToken field's value.
 func (s *ListEnabledControlsOutput) SetNextToken(v string) *ListEnabledControlsOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListLandingZoneOperationsInput struct {
+	_ struct{} `type:"structure"`
+
+	// An input filter for the ListLandingZoneOperations API that lets you select
+	// the types of landing zone operations to view.
+	Filter *LandingZoneOperationFilter `locationName:"filter" type:"structure"`
+
+	// How many results to return per API call.
+	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
+
+	// The token to continue the list from a previous API call with the same parameters.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListLandingZoneOperationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListLandingZoneOperationsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListLandingZoneOperationsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListLandingZoneOperationsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFilter sets the Filter field's value.
+func (s *ListLandingZoneOperationsInput) SetFilter(v *LandingZoneOperationFilter) *ListLandingZoneOperationsInput {
+	s.Filter = v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListLandingZoneOperationsInput) SetMaxResults(v int64) *ListLandingZoneOperationsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListLandingZoneOperationsInput) SetNextToken(v string) *ListLandingZoneOperationsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListLandingZoneOperationsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Lists landing zone operations.
+	//
+	// LandingZoneOperations is a required field
+	LandingZoneOperations []*LandingZoneOperationSummary `locationName:"landingZoneOperations" type:"list" required:"true"`
+
+	// Retrieves the next page of results. If the string is empty, the response
+	// is the end of the results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListLandingZoneOperationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListLandingZoneOperationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetLandingZoneOperations sets the LandingZoneOperations field's value.
+func (s *ListLandingZoneOperationsOutput) SetLandingZoneOperations(v []*LandingZoneOperationSummary) *ListLandingZoneOperationsOutput {
+	s.LandingZoneOperations = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListLandingZoneOperationsOutput) SetNextToken(v string) *ListLandingZoneOperationsOutput {
 	s.NextToken = &v
 	return s
 }
@@ -2762,6 +5734,91 @@ func (s Region) GoString() string {
 // SetName sets the Name field's value.
 func (s *Region) SetName(v string) *Region {
 	s.Name = &v
+	return s
+}
+
+type ResetEnabledBaselineInput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the ID of the EnabledBaseline resource to be re-enabled, in ARN
+	// format.
+	//
+	// EnabledBaselineIdentifier is a required field
+	EnabledBaselineIdentifier *string `locationName:"enabledBaselineIdentifier" min:"20" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResetEnabledBaselineInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResetEnabledBaselineInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ResetEnabledBaselineInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ResetEnabledBaselineInput"}
+	if s.EnabledBaselineIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnabledBaselineIdentifier"))
+	}
+	if s.EnabledBaselineIdentifier != nil && len(*s.EnabledBaselineIdentifier) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("EnabledBaselineIdentifier", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnabledBaselineIdentifier sets the EnabledBaselineIdentifier field's value.
+func (s *ResetEnabledBaselineInput) SetEnabledBaselineIdentifier(v string) *ResetEnabledBaselineInput {
+	s.EnabledBaselineIdentifier = &v
+	return s
+}
+
+type ResetEnabledBaselineOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID (in UUID format) of the asynchronous ResetEnabledBaseline operation.
+	// This operationIdentifier is used to track status through calls to the GetBaselineOperation
+	// API.
+	//
+	// OperationIdentifier is a required field
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResetEnabledBaselineOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResetEnabledBaselineOutput) GoString() string {
+	return s.String()
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *ResetEnabledBaselineOutput) SetOperationIdentifier(v string) *ResetEnabledBaselineOutput {
+	s.OperationIdentifier = &v
 	return s
 }
 
@@ -3070,7 +6127,7 @@ type ThrottlingException struct {
 	// The ID of the service quota that was exceeded.
 	QuotaCode *string `locationName:"quotaCode" type:"string"`
 
-	// The number of seconds to wait before retrying.
+	// The number of seconds the caller should wait before retrying.
 	RetryAfterSeconds *int64 `location:"header" locationName:"Retry-After" type:"integer"`
 
 	// The ID of the service that is associated with the error.
@@ -3218,6 +6275,108 @@ func (s UntagResourceOutput) GoString() string {
 	return s.String()
 }
 
+type UpdateEnabledBaselineInput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the new Baseline version, to which the EnabledBaseline should be
+	// updated.
+	//
+	// BaselineVersion is a required field
+	BaselineVersion *string `locationName:"baselineVersion" min:"1" type:"string" required:"true"`
+
+	// Specifies the EnabledBaseline resource to be updated.
+	//
+	// EnabledBaselineIdentifier is a required field
+	EnabledBaselineIdentifier *string `locationName:"enabledBaselineIdentifier" min:"20" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateEnabledBaselineInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateEnabledBaselineInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateEnabledBaselineInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateEnabledBaselineInput"}
+	if s.BaselineVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("BaselineVersion"))
+	}
+	if s.BaselineVersion != nil && len(*s.BaselineVersion) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("BaselineVersion", 1))
+	}
+	if s.EnabledBaselineIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnabledBaselineIdentifier"))
+	}
+	if s.EnabledBaselineIdentifier != nil && len(*s.EnabledBaselineIdentifier) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("EnabledBaselineIdentifier", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBaselineVersion sets the BaselineVersion field's value.
+func (s *UpdateEnabledBaselineInput) SetBaselineVersion(v string) *UpdateEnabledBaselineInput {
+	s.BaselineVersion = &v
+	return s
+}
+
+// SetEnabledBaselineIdentifier sets the EnabledBaselineIdentifier field's value.
+func (s *UpdateEnabledBaselineInput) SetEnabledBaselineIdentifier(v string) *UpdateEnabledBaselineInput {
+	s.EnabledBaselineIdentifier = &v
+	return s
+}
+
+type UpdateEnabledBaselineOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID (in UUID format) of the asynchronous UpdateEnabledBaseline operation.
+	// This operationIdentifier is used to track status through calls to the GetBaselineOperation
+	// API.
+	//
+	// OperationIdentifier is a required field
+	OperationIdentifier *string `locationName:"operationIdentifier" min:"36" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateEnabledBaselineOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateEnabledBaselineOutput) GoString() string {
+	return s.String()
+}
+
+// SetOperationIdentifier sets the OperationIdentifier field's value.
+func (s *UpdateEnabledBaselineOutput) SetOperationIdentifier(v string) *UpdateEnabledBaselineOutput {
+	s.OperationIdentifier = &v
+	return s
+}
+
 // The input does not satisfy the constraints specified by an Amazon Web Services
 // service.
 type ValidationException struct {
@@ -3281,6 +6440,50 @@ func (s *ValidationException) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *ValidationException) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+const (
+	// BaselineOperationStatusSucceeded is a BaselineOperationStatus enum value
+	BaselineOperationStatusSucceeded = "SUCCEEDED"
+
+	// BaselineOperationStatusFailed is a BaselineOperationStatus enum value
+	BaselineOperationStatusFailed = "FAILED"
+
+	// BaselineOperationStatusInProgress is a BaselineOperationStatus enum value
+	BaselineOperationStatusInProgress = "IN_PROGRESS"
+)
+
+// BaselineOperationStatus_Values returns all elements of the BaselineOperationStatus enum
+func BaselineOperationStatus_Values() []string {
+	return []string{
+		BaselineOperationStatusSucceeded,
+		BaselineOperationStatusFailed,
+		BaselineOperationStatusInProgress,
+	}
+}
+
+const (
+	// BaselineOperationTypeEnableBaseline is a BaselineOperationType enum value
+	BaselineOperationTypeEnableBaseline = "ENABLE_BASELINE"
+
+	// BaselineOperationTypeDisableBaseline is a BaselineOperationType enum value
+	BaselineOperationTypeDisableBaseline = "DISABLE_BASELINE"
+
+	// BaselineOperationTypeUpdateEnabledBaseline is a BaselineOperationType enum value
+	BaselineOperationTypeUpdateEnabledBaseline = "UPDATE_ENABLED_BASELINE"
+
+	// BaselineOperationTypeResetEnabledBaseline is a BaselineOperationType enum value
+	BaselineOperationTypeResetEnabledBaseline = "RESET_ENABLED_BASELINE"
+)
+
+// BaselineOperationType_Values returns all elements of the BaselineOperationType enum
+func BaselineOperationType_Values() []string {
+	return []string{
+		BaselineOperationTypeEnableBaseline,
+		BaselineOperationTypeDisableBaseline,
+		BaselineOperationTypeUpdateEnabledBaseline,
+		BaselineOperationTypeResetEnabledBaseline,
+	}
 }
 
 const (

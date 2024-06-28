@@ -3734,7 +3734,7 @@
     "CompleteReadSetUploadPartListItem": {
       "members": {
         "checksum": {
-          "shape": "String"
+          "shape": "CompleteReadSetUploadPartListItemChecksumString"
         },
         "partNumber": {
           "shape": "CompleteReadSetUploadPartListItemPartNumberInteger"
@@ -3749,6 +3749,12 @@
         "checksum"
       ],
       "type": "structure"
+    },
+    "CompleteReadSetUploadPartListItemChecksumString": {
+      "max": 100,
+      "min": 1,
+      "pattern": "[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+",
+      "type": "string"
     },
     "CompleteReadSetUploadPartListItemPartNumberInteger": {
       "box": true,
@@ -4122,6 +4128,9 @@
         "description": {
           "shape": "SequenceStoreDescription"
         },
+        "eTagAlgorithmFamily": {
+          "shape": "ETagAlgorithmFamily"
+        },
         "fallbackLocation": {
           "shape": "S3Destination"
         },
@@ -4150,6 +4159,9 @@
         },
         "description": {
           "shape": "SequenceStoreDescription"
+        },
+        "eTagAlgorithmFamily": {
+          "shape": "ETagAlgorithmFamily"
         },
         "fallbackLocation": {
           "shape": "S3Destination"
@@ -4556,7 +4568,21 @@
       "enum": [
         "FASTQ_MD5up",
         "BAM_MD5up",
-        "CRAM_MD5up"
+        "CRAM_MD5up",
+        "FASTQ_SHA256up",
+        "BAM_SHA256up",
+        "CRAM_SHA256up",
+        "FASTQ_SHA512up",
+        "BAM_SHA512up",
+        "CRAM_SHA512up"
+      ],
+      "type": "string"
+    },
+    "ETagAlgorithmFamily": {
+      "enum": [
+        "MD5up",
+        "SHA256up",
+        "SHA512up"
       ],
       "type": "string"
     },
@@ -4682,6 +4708,9 @@
         "partSize": {
           "shape": "FileInformationPartSizeLong"
         },
+        "s3Access": {
+          "shape": "ReadSetS3Access"
+        },
         "totalParts": {
           "shape": "FileInformationTotalPartsInteger"
         }
@@ -4722,6 +4751,9 @@
         },
         "status": {
           "shape": "StatusList"
+        },
+        "type": {
+          "shape": "TypeList"
         }
       },
       "type": "structure"
@@ -5652,6 +5684,9 @@
         "storageCapacity": {
           "shape": "GetRunResponseStorageCapacityInteger"
         },
+        "storageType": {
+          "shape": "StorageType"
+        },
         "tags": {
           "shape": "TagMap"
         },
@@ -5660,6 +5695,9 @@
         },
         "workflowId": {
           "shape": "WorkflowId"
+        },
+        "workflowOwnerId": {
+          "shape": "WorkflowOwnerId"
         },
         "workflowType": {
           "shape": "WorkflowType"
@@ -5781,6 +5819,9 @@
         "description": {
           "shape": "SequenceStoreDescription"
         },
+        "eTagAlgorithmFamily": {
+          "shape": "ETagAlgorithmFamily"
+        },
         "fallbackLocation": {
           "shape": "S3Destination"
         },
@@ -5789,6 +5830,9 @@
         },
         "name": {
           "shape": "SequenceStoreName"
+        },
+        "s3Access": {
+          "shape": "SequenceStoreS3Access"
         },
         "sseConfig": {
           "shape": "SseConfig"
@@ -5968,6 +6012,11 @@
           "location": "querystring",
           "locationName": "type",
           "shape": "WorkflowType"
+        },
+        "workflowOwnerId": {
+          "location": "querystring",
+          "locationName": "workflowOwnerId",
+          "shape": "WorkflowOwnerId"
         }
       },
       "required": [
@@ -7645,6 +7694,14 @@
       "streaming": true,
       "type": "blob"
     },
+    "ReadSetS3Access": {
+      "members": {
+        "s3Uri": {
+          "shape": "S3Uri"
+        }
+      },
+      "type": "structure"
+    },
     "ReadSetStatus": {
       "enum": [
         "ARCHIVED",
@@ -8169,6 +8226,9 @@
         "storageCapacity": {
           "shape": "RunListItemStorageCapacityInteger"
         },
+        "storageType": {
+          "shape": "StorageType"
+        },
         "workflowId": {
           "shape": "WorkflowId"
         }
@@ -8307,6 +8367,12 @@
       "pattern": "[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+",
       "type": "string"
     },
+    "S3AccessPointArn": {
+      "max": 1024,
+      "min": 1,
+      "pattern": "arn:[^:]*:s3:[^:]*:[^:]*:accesspoint/.*",
+      "type": "string"
+    },
     "S3Destination": {
       "pattern": "s3://([a-z0-9][a-z0-9-.]{1,61}[a-z0-9])/?((.{1,1024})/)?",
       "type": "string"
@@ -8392,6 +8458,9 @@
         "description": {
           "shape": "SequenceStoreDescription"
         },
+        "eTagAlgorithmFamily": {
+          "shape": "ETagAlgorithmFamily"
+        },
         "fallbackLocation": {
           "shape": "S3Destination"
         },
@@ -8444,6 +8513,17 @@
       "pattern": "[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+",
       "type": "string"
     },
+    "SequenceStoreS3Access": {
+      "members": {
+        "s3AccessPointArn": {
+          "shape": "S3AccessPointArn"
+        },
+        "s3Uri": {
+          "shape": "S3Uri"
+        }
+      },
+      "type": "structure"
+    },
     "ServiceQuotaExceededException": {
       "error": {
         "httpStatusCode": 402,
@@ -8474,6 +8554,9 @@
         "resourceArn": {
           "shape": "String"
         },
+        "resourceId": {
+          "shape": "String"
+        },
         "shareId": {
           "shape": "String"
         },
@@ -8502,6 +8585,14 @@
       "max": 256,
       "min": 1,
       "pattern": "[a-zA-Z0-9_-]+",
+      "type": "string"
+    },
+    "ShareResourceType": {
+      "enum": [
+        "VARIANT_STORE",
+        "ANNOTATION_STORE",
+        "WORKFLOW"
+      ],
       "type": "string"
     },
     "ShareStatus": {
@@ -8926,11 +9017,17 @@
         "storageCapacity": {
           "shape": "StartRunRequestStorageCapacityInteger"
         },
+        "storageType": {
+          "shape": "StorageType"
+        },
         "tags": {
           "shape": "TagMap"
         },
         "workflowId": {
           "shape": "WorkflowId"
+        },
+        "workflowOwnerId": {
+          "shape": "WorkflowOwnerId"
         },
         "workflowType": {
           "shape": "WorkflowType"
@@ -9014,14 +9111,25 @@
       "type": "structure"
     },
     "StatusList": {
+      "max": 10,
       "member": {
         "shape": "ShareStatus"
       },
+      "min": 1,
       "type": "list"
     },
     "StatusMessage": {
       "max": 1000,
       "min": 0,
+      "type": "string"
+    },
+    "StorageType": {
+      "enum": [
+        "STATIC",
+        "DYNAMIC"
+      ],
+      "max": 64,
+      "min": 1,
       "type": "string"
     },
     "StoreFormat": {
@@ -9311,6 +9419,14 @@
       "max": 5000,
       "member": {
         "shape": "SchemaItem"
+      },
+      "min": 1,
+      "type": "list"
+    },
+    "TypeList": {
+      "max": 10,
+      "member": {
+        "shape": "ShareResourceType"
       },
       "min": 1,
       "type": "list"
@@ -9993,6 +10109,10 @@
       "max": 128,
       "min": 1,
       "pattern": "[\\p{L}||\\p{M}||\\p{Z}||\\p{S}||\\p{N}||\\p{P}]+",
+      "type": "string"
+    },
+    "WorkflowOwnerId": {
+      "pattern": "[0-9]{12}",
       "type": "string"
     },
     "WorkflowParameter": {

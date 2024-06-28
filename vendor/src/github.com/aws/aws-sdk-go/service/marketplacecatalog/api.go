@@ -55,7 +55,9 @@ func (c *MarketplaceCatalog) BatchDescribeEntitiesRequest(input *BatchDescribeEn
 
 // BatchDescribeEntities API operation for AWS Marketplace Catalog Service.
 //
-// Returns metadata and content for multiple entities.
+// Returns metadata and content for multiple entities. This is the Batch version
+// of the DescribeEntity API and uses the same IAM permission action as DescribeEntity
+// API.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1589,7 +1591,8 @@ func (s *AmiProductEntityIdFilter) SetValueList(v []*string) *AmiProductEntityId
 }
 
 // Object containing all the filter fields for AMI products. Client can add
-// a maximum of 8 filters in a single ListEntities request.
+// only one wildcard filter and a maximum of 8 filters in a single ListEntities
+// request.
 type AmiProductFilters struct {
 	_ struct{} `type:"structure"`
 
@@ -2563,7 +2566,8 @@ func (s *ContainerProductEntityIdFilter) SetValueList(v []*string) *ContainerPro
 }
 
 // Object containing all the filter fields for container products. Client can
-// add a maximum of 8 filters in a single ListEntities request.
+// add only one wildcard filter and a maximum of 8 filters in a single ListEntities
+// request.
 type ContainerProductFilters struct {
 	_ struct{} `type:"structure"`
 
@@ -2992,7 +2996,8 @@ func (s *DataProductEntityIdFilter) SetValueList(v []*string) *DataProductEntity
 }
 
 // Object containing all the filter fields for data products. Client can add
-// a maximum of 8 filters in a single ListEntities request.
+// only one wildcard filter and a maximum of 8 filters in a single ListEntities
+// request.
 type DataProductFilters struct {
 	_ struct{} `type:"structure"`
 
@@ -3545,6 +3550,10 @@ type DescribeChangeSetOutput struct {
 	// related to any of the changes in the request.
 	FailureDescription *string `min:"1" type:"string"`
 
+	// The optional intent provided in the StartChangeSet request. If you do not
+	// provide an intent, APPLY is set by default.
+	Intent *string `type:"string" enum:"Intent"`
+
 	// The date and time, in ISO 8601 format (2018-02-27T13:45:22Z), the request
 	// started.
 	StartTime *string `min:"20" type:"string"`
@@ -3610,6 +3619,12 @@ func (s *DescribeChangeSetOutput) SetFailureCode(v string) *DescribeChangeSetOut
 // SetFailureDescription sets the FailureDescription field's value.
 func (s *DescribeChangeSetOutput) SetFailureDescription(v string) *DescribeChangeSetOutput {
 	s.FailureDescription = &v
+	return s
+}
+
+// SetIntent sets the Intent field's value.
+func (s *DescribeChangeSetOutput) SetIntent(v string) *DescribeChangeSetOutput {
+	s.Intent = &v
 	return s
 }
 
@@ -5199,7 +5214,9 @@ func (s *OfferEntityIdFilter) SetValueList(v []*string) *OfferEntityIdFilter {
 	return s
 }
 
-// A filter for offers entity.
+// Object containing all the filter fields for offers entity. Client can add
+// only one wildcard filter and a maximum of 8 filters in a single ListEntities
+// request.
 type OfferFilters struct {
 	_ struct{} `type:"structure"`
 
@@ -5223,6 +5240,12 @@ type OfferFilters struct {
 
 	// Allows filtering on the ReleaseDate of an offer.
 	ReleaseDate *OfferReleaseDateFilter `type:"structure"`
+
+	// Allows filtering on the ResaleAuthorizationId of an offer.
+	//
+	// Not all offers have a ResaleAuthorizationId. The response will only include
+	// offers for which you have permissions.
+	ResaleAuthorizationId *OfferResaleAuthorizationIdFilter `type:"structure"`
 
 	// Allows filtering on the State of an offer.
 	State *OfferStateFilter `type:"structure"`
@@ -5287,6 +5310,11 @@ func (s *OfferFilters) Validate() error {
 			invalidParams.AddNested("ReleaseDate", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ResaleAuthorizationId != nil {
+		if err := s.ResaleAuthorizationId.Validate(); err != nil {
+			invalidParams.AddNested("ResaleAuthorizationId", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.State != nil {
 		if err := s.State.Validate(); err != nil {
 			invalidParams.AddNested("State", err.(request.ErrInvalidParams))
@@ -5343,6 +5371,12 @@ func (s *OfferFilters) SetProductId(v *OfferProductIdFilter) *OfferFilters {
 // SetReleaseDate sets the ReleaseDate field's value.
 func (s *OfferFilters) SetReleaseDate(v *OfferReleaseDateFilter) *OfferFilters {
 	s.ReleaseDate = v
+	return s
+}
+
+// SetResaleAuthorizationId sets the ResaleAuthorizationId field's value.
+func (s *OfferFilters) SetResaleAuthorizationId(v *OfferResaleAuthorizationIdFilter) *OfferFilters {
+	s.ResaleAuthorizationId = v
 	return s
 }
 
@@ -5668,6 +5702,54 @@ func (s *OfferReleaseDateFilterDateRange) SetBeforeValue(v string) *OfferRelease
 	return s
 }
 
+// Allows filtering on the ResaleAuthorizationId of an offer.
+//
+// Not all offers have a ResaleAuthorizationId. The response will only include
+// offers for which you have permissions.
+type OfferResaleAuthorizationIdFilter struct {
+	_ struct{} `type:"structure"`
+
+	// Allows filtering on the ResaleAuthorizationId of an offer with list input.
+	ValueList []*string `min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OfferResaleAuthorizationIdFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OfferResaleAuthorizationIdFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *OfferResaleAuthorizationIdFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "OfferResaleAuthorizationIdFilter"}
+	if s.ValueList != nil && len(s.ValueList) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ValueList", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetValueList sets the ValueList field's value.
+func (s *OfferResaleAuthorizationIdFilter) SetValueList(v []*string) *OfferResaleAuthorizationIdFilter {
+	s.ValueList = v
+	return s
+}
+
 // Allows to sort offers.
 type OfferSort struct {
 	_ struct{} `type:"structure"`
@@ -5773,6 +5855,9 @@ type OfferSummary struct {
 	// The release date of the offer.
 	ReleaseDate *string `min:"20" type:"string"`
 
+	// The ResaleAuthorizationId of the offer.
+	ResaleAuthorizationId *string `min:"1" type:"string"`
+
 	// The status of the offer.
 	State *string `type:"string" enum:"OfferStateString"`
 
@@ -5825,6 +5910,12 @@ func (s *OfferSummary) SetProductId(v string) *OfferSummary {
 // SetReleaseDate sets the ReleaseDate field's value.
 func (s *OfferSummary) SetReleaseDate(v string) *OfferSummary {
 	s.ReleaseDate = &v
+	return s
+}
+
+// SetResaleAuthorizationId sets the ResaleAuthorizationId field's value.
+func (s *OfferSummary) SetResaleAuthorizationId(v string) *OfferSummary {
+	s.ResaleAuthorizationId = &v
 	return s
 }
 
@@ -6259,7 +6350,9 @@ func (s *ResaleAuthorizationEntityIdFilter) SetValueList(v []*string) *ResaleAut
 	return s
 }
 
-// A filter for ResaleAuthorization entity.
+// Object containing all the filter fields for resale authorization entity.
+// Client can add only one wildcard filter and a maximum of 8 filters in a single
+// ListEntities request.
 type ResaleAuthorizationFilters struct {
 	_ struct{} `type:"structure"`
 
@@ -7485,7 +7578,8 @@ func (s *SaaSProductEntityIdFilter) SetValueList(v []*string) *SaaSProductEntity
 }
 
 // Object containing all the filter fields for SaaS products. Client can add
-// a maximum of 8 filters in a single ListEntities request.
+// only one wildcard filter and a maximum of 8 filters in a single ListEntities
+// request.
 type SaaSProductFilters struct {
 	_ struct{} `type:"structure"`
 
@@ -8012,6 +8106,12 @@ type StartChangeSetInput struct {
 
 	// A unique token to identify the request to ensure idempotency.
 	ClientRequestToken *string `min:"1" type:"string" idempotencyToken:"true"`
+
+	// The intent related to the request. The default is APPLY. To test your request
+	// before applying changes to your entities, use VALIDATE. This feature is currently
+	// available for adding versions to single-AMI products. For more information,
+	// see Add a new version (https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/ami-products.html#ami-add-version).
+	Intent *string `type:"string" enum:"Intent"`
 }
 
 // String returns the string representation.
@@ -8110,6 +8210,12 @@ func (s *StartChangeSetInput) SetChangeSetTags(v []*Tag) *StartChangeSetInput {
 // SetClientRequestToken sets the ClientRequestToken field's value.
 func (s *StartChangeSetInput) SetClientRequestToken(v string) *StartChangeSetInput {
 	s.ClientRequestToken = &v
+	return s
+}
+
+// SetIntent sets the Intent field's value.
+func (s *StartChangeSetInput) SetIntent(v string) *StartChangeSetInput {
+	s.Intent = &v
 	return s
 }
 
@@ -8732,6 +8838,22 @@ func FailureCode_Values() []string {
 }
 
 const (
+	// IntentValidate is a Intent enum value
+	IntentValidate = "VALIDATE"
+
+	// IntentApply is a Intent enum value
+	IntentApply = "APPLY"
+)
+
+// Intent_Values returns all elements of the Intent enum
+func Intent_Values() []string {
+	return []string{
+		IntentValidate,
+		IntentApply,
+	}
+}
+
+const (
 	// OfferSortByEntityId is a OfferSortBy enum value
 	OfferSortByEntityId = "EntityId"
 
@@ -8740,6 +8862,9 @@ const (
 
 	// OfferSortByProductId is a OfferSortBy enum value
 	OfferSortByProductId = "ProductId"
+
+	// OfferSortByResaleAuthorizationId is a OfferSortBy enum value
+	OfferSortByResaleAuthorizationId = "ResaleAuthorizationId"
 
 	// OfferSortByReleaseDate is a OfferSortBy enum value
 	OfferSortByReleaseDate = "ReleaseDate"
@@ -8766,6 +8891,7 @@ func OfferSortBy_Values() []string {
 		OfferSortByEntityId,
 		OfferSortByName,
 		OfferSortByProductId,
+		OfferSortByResaleAuthorizationId,
 		OfferSortByReleaseDate,
 		OfferSortByAvailabilityEndDate,
 		OfferSortByBuyerAccounts,

@@ -318,11 +318,23 @@ func (c *GuardDuty) CreateDetectorRequest(input *CreateDetectorInput) (req *requ
 
 // CreateDetector API operation for Amazon GuardDuty.
 //
-// Creates a single Amazon GuardDuty detector. A detector is a resource that
-// represents the GuardDuty service. To start using GuardDuty, you must create
-// a detector in each Region where you enable the service. You can have only
-// one detector per account per Region. All data sources are enabled in a new
-// detector by default.
+// Creates a single GuardDuty detector. A detector is a resource that represents
+// the GuardDuty service. To start using GuardDuty, you must create a detector
+// in each Region where you enable the service. You can have only one detector
+// per account per Region. All data sources are enabled in a new detector by
+// default.
+//
+//   - When you don't specify any features, with an exception to RUNTIME_MONITORING,
+//     all the optional features are enabled by default.
+//
+//   - When you specify some of the features, any feature that is not specified
+//     in the API call gets enabled by default, with an exception to RUNTIME_MONITORING.
+//
+// Specifying both EKS Runtime Monitoring (EKS_RUNTIME_MONITORING) and Runtime
+// Monitoring (RUNTIME_MONITORING) will cause an error. You can add only one
+// of these two features because Runtime Monitoring already includes the threat
+// detection for Amazon EKS resources. For more information, see Runtime Monitoring
+// (https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html).
 //
 // There might be regional differences because some data sources might not be
 // available in all the Amazon Web Services Regions where GuardDuty is presently
@@ -535,6 +547,98 @@ func (c *GuardDuty) CreateIPSetWithContext(ctx aws.Context, input *CreateIPSetIn
 	return out, req.Send()
 }
 
+const opCreateMalwareProtectionPlan = "CreateMalwareProtectionPlan"
+
+// CreateMalwareProtectionPlanRequest generates a "aws/request.Request" representing the
+// client's request for the CreateMalwareProtectionPlan operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateMalwareProtectionPlan for more information on using the CreateMalwareProtectionPlan
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateMalwareProtectionPlanRequest method.
+//	req, resp := client.CreateMalwareProtectionPlanRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/CreateMalwareProtectionPlan
+func (c *GuardDuty) CreateMalwareProtectionPlanRequest(input *CreateMalwareProtectionPlanInput) (req *request.Request, output *CreateMalwareProtectionPlanOutput) {
+	op := &request.Operation{
+		Name:       opCreateMalwareProtectionPlan,
+		HTTPMethod: "POST",
+		HTTPPath:   "/malware-protection-plan",
+	}
+
+	if input == nil {
+		input = &CreateMalwareProtectionPlanInput{}
+	}
+
+	output = &CreateMalwareProtectionPlanOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateMalwareProtectionPlan API operation for Amazon GuardDuty.
+//
+// Creates a new Malware Protection plan for the protected resource.
+//
+// When you create a Malware Protection plan, the Amazon Web Services service
+// terms for GuardDuty Malware Protection apply. For more information, see Amazon
+// Web Services service terms for GuardDuty Malware Protection (http://aws.amazon.com/service-terms/#87._Amazon_GuardDuty).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon GuardDuty's
+// API operation CreateMalwareProtectionPlan for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     A bad request exception object.
+//
+//   - AccessDeniedException
+//     An access denied exception object.
+//
+//   - ConflictException
+//     A request conflict exception object.
+//
+//   - InternalServerErrorException
+//     An internal server error exception object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/CreateMalwareProtectionPlan
+func (c *GuardDuty) CreateMalwareProtectionPlan(input *CreateMalwareProtectionPlanInput) (*CreateMalwareProtectionPlanOutput, error) {
+	req, out := c.CreateMalwareProtectionPlanRequest(input)
+	return out, req.Send()
+}
+
+// CreateMalwareProtectionPlanWithContext is the same as CreateMalwareProtectionPlan with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateMalwareProtectionPlan for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GuardDuty) CreateMalwareProtectionPlanWithContext(ctx aws.Context, input *CreateMalwareProtectionPlanInput, opts ...request.Option) (*CreateMalwareProtectionPlanOutput, error) {
+	req, out := c.CreateMalwareProtectionPlanRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateMembers = "CreateMembers"
 
 // CreateMembersRequest generates a "aws/request.Request" representing the
@@ -594,17 +698,19 @@ func (c *GuardDuty) CreateMembersRequest(input *CreateMembersInput) (req *reques
 // For more information about the existing auto-enable settings for your organization,
 // see DescribeOrganizationConfiguration (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DescribeOrganizationConfiguration.html).
 //
-// If you are adding accounts by invitation, before using InviteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html),
-// use CreateMembers after GuardDuty has been enabled in potential member accounts.
-//
-// If you disassociate a member from a GuardDuty delegated administrator, the
-// member account details obtained from this API, including the associated email
-// addresses, will be retained. This is done so that the delegated administrator
-// can invoke the InviteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html)
+// If you disassociate a member account that was added by invitation, the member
+// account details obtained from this API, including the associated email addresses,
+// will be retained. This is done so that the delegated administrator can invoke
+// the InviteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html)
 // API without the need to invoke the CreateMembers API again. To remove the
 // details associated with a member account, the delegated administrator must
 // invoke the DeleteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html)
 // API.
+//
+// When the member accounts added through Organizations are later disassociated,
+// you (administrator) can't invite them by calling the InviteMembers API. You
+// can create an association with these member accounts again only by calling
+// the CreateMembers API.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1306,6 +1412,97 @@ func (c *GuardDuty) DeleteInvitations(input *DeleteInvitationsInput) (*DeleteInv
 // for more information on using Contexts.
 func (c *GuardDuty) DeleteInvitationsWithContext(ctx aws.Context, input *DeleteInvitationsInput, opts ...request.Option) (*DeleteInvitationsOutput, error) {
 	req, out := c.DeleteInvitationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteMalwareProtectionPlan = "DeleteMalwareProtectionPlan"
+
+// DeleteMalwareProtectionPlanRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteMalwareProtectionPlan operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteMalwareProtectionPlan for more information on using the DeleteMalwareProtectionPlan
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteMalwareProtectionPlanRequest method.
+//	req, resp := client.DeleteMalwareProtectionPlanRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/DeleteMalwareProtectionPlan
+func (c *GuardDuty) DeleteMalwareProtectionPlanRequest(input *DeleteMalwareProtectionPlanInput) (req *request.Request, output *DeleteMalwareProtectionPlanOutput) {
+	op := &request.Operation{
+		Name:       opDeleteMalwareProtectionPlan,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/malware-protection-plan/{malwareProtectionPlanId}",
+	}
+
+	if input == nil {
+		input = &DeleteMalwareProtectionPlanInput{}
+	}
+
+	output = &DeleteMalwareProtectionPlanOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteMalwareProtectionPlan API operation for Amazon GuardDuty.
+//
+// Deletes the Malware Protection plan ID associated with the Malware Protection
+// plan resource. Use this API only when you no longer want to protect the resource
+// associated with this Malware Protection plan ID.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon GuardDuty's
+// API operation DeleteMalwareProtectionPlan for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     A bad request exception object.
+//
+//   - AccessDeniedException
+//     An access denied exception object.
+//
+//   - InternalServerErrorException
+//     An internal server error exception object.
+//
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/DeleteMalwareProtectionPlan
+func (c *GuardDuty) DeleteMalwareProtectionPlan(input *DeleteMalwareProtectionPlanInput) (*DeleteMalwareProtectionPlanOutput, error) {
+	req, out := c.DeleteMalwareProtectionPlanRequest(input)
+	return out, req.Send()
+}
+
+// DeleteMalwareProtectionPlanWithContext is the same as DeleteMalwareProtectionPlan with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteMalwareProtectionPlan for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GuardDuty) DeleteMalwareProtectionPlanWithContext(ctx aws.Context, input *DeleteMalwareProtectionPlanInput, opts ...request.Option) (*DeleteMalwareProtectionPlanOutput, error) {
+	req, out := c.DeleteMalwareProtectionPlanRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -2278,6 +2475,20 @@ func (c *GuardDuty) DisassociateMembersRequest(input *DisassociateMembersInput) 
 // to ALL, you'll receive an error if you attempt to disassociate a member account
 // before removing them from your organization.
 //
+// If you disassociate a member account that was added by invitation, the member
+// account details obtained from this API, including the associated email addresses,
+// will be retained. This is done so that the delegated administrator can invoke
+// the InviteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html)
+// API without the need to invoke the CreateMembers API again. To remove the
+// details associated with a member account, the delegated administrator must
+// invoke the DeleteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html)
+// API.
+//
+// When the member accounts added through Organizations are later disassociated,
+// you (administrator) can't invite them by calling the InviteMembers API. You
+// can create an association with these member accounts again only by calling
+// the CreateMembers API.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -2866,6 +3077,10 @@ func (c *GuardDuty) GetFindingsStatisticsRequest(input *GetFindingsStatisticsInp
 //
 // Lists Amazon GuardDuty findings statistics for the specified detector ID.
 //
+// There might be regional differences because some flags might not be available
+// in all the Regions where GuardDuty is currently supported. For more information,
+// see Regions and endpoints (https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html).
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -3063,6 +3278,95 @@ func (c *GuardDuty) GetInvitationsCount(input *GetInvitationsCountInput) (*GetIn
 // for more information on using Contexts.
 func (c *GuardDuty) GetInvitationsCountWithContext(ctx aws.Context, input *GetInvitationsCountInput, opts ...request.Option) (*GetInvitationsCountOutput, error) {
 	req, out := c.GetInvitationsCountRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetMalwareProtectionPlan = "GetMalwareProtectionPlan"
+
+// GetMalwareProtectionPlanRequest generates a "aws/request.Request" representing the
+// client's request for the GetMalwareProtectionPlan operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetMalwareProtectionPlan for more information on using the GetMalwareProtectionPlan
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetMalwareProtectionPlanRequest method.
+//	req, resp := client.GetMalwareProtectionPlanRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/GetMalwareProtectionPlan
+func (c *GuardDuty) GetMalwareProtectionPlanRequest(input *GetMalwareProtectionPlanInput) (req *request.Request, output *GetMalwareProtectionPlanOutput) {
+	op := &request.Operation{
+		Name:       opGetMalwareProtectionPlan,
+		HTTPMethod: "GET",
+		HTTPPath:   "/malware-protection-plan/{malwareProtectionPlanId}",
+	}
+
+	if input == nil {
+		input = &GetMalwareProtectionPlanInput{}
+	}
+
+	output = &GetMalwareProtectionPlanOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetMalwareProtectionPlan API operation for Amazon GuardDuty.
+//
+// Retrieves the Malware Protection plan details associated with a Malware Protection
+// plan ID.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon GuardDuty's
+// API operation GetMalwareProtectionPlan for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     A bad request exception object.
+//
+//   - AccessDeniedException
+//     An access denied exception object.
+//
+//   - InternalServerErrorException
+//     An internal server error exception object.
+//
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/GetMalwareProtectionPlan
+func (c *GuardDuty) GetMalwareProtectionPlan(input *GetMalwareProtectionPlanInput) (*GetMalwareProtectionPlanOutput, error) {
+	req, out := c.GetMalwareProtectionPlanRequest(input)
+	return out, req.Send()
+}
+
+// GetMalwareProtectionPlanWithContext is the same as GetMalwareProtectionPlan with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetMalwareProtectionPlan for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GuardDuty) GetMalwareProtectionPlanWithContext(ctx aws.Context, input *GetMalwareProtectionPlanInput, opts ...request.Option) (*GetMalwareProtectionPlanOutput, error) {
+	req, out := c.GetMalwareProtectionPlanRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -3458,12 +3762,12 @@ func (c *GuardDuty) GetOrganizationStatisticsRequest(input *GetOrganizationStati
 
 // GetOrganizationStatistics API operation for Amazon GuardDuty.
 //
-// Retrieves how many active member accounts in your Amazon Web Services organization
-// have each feature enabled within GuardDuty. Only a delegated GuardDuty administrator
-// of an organization can run this API.
+// Retrieves how many active member accounts have each feature enabled within
+// GuardDuty. Only a delegated GuardDuty administrator of an organization can
+// run this API.
 //
-// When you create a new Amazon Web Services organization, it might take up
-// to 24 hours to generate the statistics for the entire organization.
+// When you create a new organization, it might take up to 24 hours to generate
+// the statistics for the entire organization.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3877,6 +4181,20 @@ func (c *GuardDuty) InviteMembersRequest(input *InviteMembersInput) (req *reques
 // (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_CreateMembers.html)
 // again. To remove the details associated with a member account, you must also
 // invoke DeleteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html).
+//
+// If you disassociate a member account that was added by invitation, the member
+// account details obtained from this API, including the associated email addresses,
+// will be retained. This is done so that the delegated administrator can invoke
+// the InviteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_InviteMembers.html)
+// API without the need to invoke the CreateMembers API again. To remove the
+// details associated with a member account, the delegated administrator must
+// invoke the DeleteMembers (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DeleteMembers.html)
+// API.
+//
+// When the member accounts added through Organizations are later disassociated,
+// you (administrator) can't invite them by calling the InviteMembers API. You
+// can create an association with these member accounts again only by calling
+// the CreateMembers API.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4386,7 +4704,11 @@ func (c *GuardDuty) ListFindingsRequest(input *ListFindingsInput) (req *request.
 
 // ListFindings API operation for Amazon GuardDuty.
 //
-// Lists Amazon GuardDuty findings for the specified detector ID.
+// Lists GuardDuty findings for the specified detector ID.
+//
+// There might be regional differences because some flags might not be available
+// in all the Regions where GuardDuty is currently supported. For more information,
+// see Regions and endpoints (https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4755,6 +5077,92 @@ func (c *GuardDuty) ListInvitationsPagesWithContext(ctx aws.Context, input *List
 	}
 
 	return p.Err()
+}
+
+const opListMalwareProtectionPlans = "ListMalwareProtectionPlans"
+
+// ListMalwareProtectionPlansRequest generates a "aws/request.Request" representing the
+// client's request for the ListMalwareProtectionPlans operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListMalwareProtectionPlans for more information on using the ListMalwareProtectionPlans
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListMalwareProtectionPlansRequest method.
+//	req, resp := client.ListMalwareProtectionPlansRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/ListMalwareProtectionPlans
+func (c *GuardDuty) ListMalwareProtectionPlansRequest(input *ListMalwareProtectionPlansInput) (req *request.Request, output *ListMalwareProtectionPlansOutput) {
+	op := &request.Operation{
+		Name:       opListMalwareProtectionPlans,
+		HTTPMethod: "GET",
+		HTTPPath:   "/malware-protection-plan",
+	}
+
+	if input == nil {
+		input = &ListMalwareProtectionPlansInput{}
+	}
+
+	output = &ListMalwareProtectionPlansOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListMalwareProtectionPlans API operation for Amazon GuardDuty.
+//
+// Lists the Malware Protection plan IDs associated with the protected resources
+// in your Amazon Web Services account.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon GuardDuty's
+// API operation ListMalwareProtectionPlans for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     A bad request exception object.
+//
+//   - AccessDeniedException
+//     An access denied exception object.
+//
+//   - InternalServerErrorException
+//     An internal server error exception object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/ListMalwareProtectionPlans
+func (c *GuardDuty) ListMalwareProtectionPlans(input *ListMalwareProtectionPlansInput) (*ListMalwareProtectionPlansOutput, error) {
+	req, out := c.ListMalwareProtectionPlansRequest(input)
+	return out, req.Send()
+}
+
+// ListMalwareProtectionPlansWithContext is the same as ListMalwareProtectionPlans with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListMalwareProtectionPlans for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GuardDuty) ListMalwareProtectionPlansWithContext(ctx aws.Context, input *ListMalwareProtectionPlansInput, opts ...request.Option) (*ListMalwareProtectionPlansOutput, error) {
+	req, out := c.ListMalwareProtectionPlansRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
 }
 
 const opListMembers = "ListMembers"
@@ -5452,6 +5860,9 @@ func (c *GuardDuty) StartMalwareScanRequest(input *StartMalwareScanInput) (req *
 // Service-linked role (https://docs.aws.amazon.com/guardduty/latest/ug/slr-permissions-malware-protection.html)
 // in the corresponding account.
 //
+// When the malware scan starts, you can use the associated scan ID to track
+// the status of the scan. For more information, see DescribeMalwareScans (https://docs.aws.amazon.com/guardduty/latest/APIReference/API_DescribeMalwareScans.html).
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -5963,7 +6374,13 @@ func (c *GuardDuty) UpdateDetectorRequest(input *UpdateDetectorInput) (req *requ
 
 // UpdateDetector API operation for Amazon GuardDuty.
 //
-// Updates the Amazon GuardDuty detector specified by the detectorId.
+// Updates the GuardDuty detector specified by the detector ID.
+//
+// Specifying both EKS Runtime Monitoring (EKS_RUNTIME_MONITORING) and Runtime
+// Monitoring (RUNTIME_MONITORING) will cause an error. You can add only one
+// of these two features because Runtime Monitoring already includes the threat
+// detection for Amazon EKS resources. For more information, see Runtime Monitoring
+// (https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html).
 //
 // There might be regional differences because some data sources might not be
 // available in all the Amazon Web Services Regions where GuardDuty is presently
@@ -6254,6 +6671,95 @@ func (c *GuardDuty) UpdateIPSetWithContext(ctx aws.Context, input *UpdateIPSetIn
 	return out, req.Send()
 }
 
+const opUpdateMalwareProtectionPlan = "UpdateMalwareProtectionPlan"
+
+// UpdateMalwareProtectionPlanRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateMalwareProtectionPlan operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateMalwareProtectionPlan for more information on using the UpdateMalwareProtectionPlan
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateMalwareProtectionPlanRequest method.
+//	req, resp := client.UpdateMalwareProtectionPlanRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/UpdateMalwareProtectionPlan
+func (c *GuardDuty) UpdateMalwareProtectionPlanRequest(input *UpdateMalwareProtectionPlanInput) (req *request.Request, output *UpdateMalwareProtectionPlanOutput) {
+	op := &request.Operation{
+		Name:       opUpdateMalwareProtectionPlan,
+		HTTPMethod: "PATCH",
+		HTTPPath:   "/malware-protection-plan/{malwareProtectionPlanId}",
+	}
+
+	if input == nil {
+		input = &UpdateMalwareProtectionPlanInput{}
+	}
+
+	output = &UpdateMalwareProtectionPlanOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// UpdateMalwareProtectionPlan API operation for Amazon GuardDuty.
+//
+// Updates an existing Malware Protection plan resource.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon GuardDuty's
+// API operation UpdateMalwareProtectionPlan for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     A bad request exception object.
+//
+//   - AccessDeniedException
+//     An access denied exception object.
+//
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
+//
+//   - InternalServerErrorException
+//     An internal server error exception object.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/guardduty-2017-11-28/UpdateMalwareProtectionPlan
+func (c *GuardDuty) UpdateMalwareProtectionPlan(input *UpdateMalwareProtectionPlanInput) (*UpdateMalwareProtectionPlanOutput, error) {
+	req, out := c.UpdateMalwareProtectionPlanRequest(input)
+	return out, req.Send()
+}
+
+// UpdateMalwareProtectionPlanWithContext is the same as UpdateMalwareProtectionPlan with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateMalwareProtectionPlan for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GuardDuty) UpdateMalwareProtectionPlanWithContext(ctx aws.Context, input *UpdateMalwareProtectionPlanInput, opts ...request.Option) (*UpdateMalwareProtectionPlanOutput, error) {
+	req, out := c.UpdateMalwareProtectionPlanRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateMalwareScanSettings = "UpdateMalwareScanSettings"
 
 // UpdateMalwareScanSettingsRequest generates a "aws/request.Request" representing the
@@ -6386,6 +6892,12 @@ func (c *GuardDuty) UpdateMemberDetectorsRequest(input *UpdateMemberDetectorsInp
 //
 // Contains information on member accounts to be updated.
 //
+// Specifying both EKS Runtime Monitoring (EKS_RUNTIME_MONITORING) and Runtime
+// Monitoring (RUNTIME_MONITORING) will cause an error. You can add only one
+// of these two features because Runtime Monitoring already includes the threat
+// detection for Amazon EKS resources. For more information, see Runtime Monitoring
+// (https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html).
+//
 // There might be regional differences because some data sources might not be
 // available in all the Amazon Web Services Regions where GuardDuty is presently
 // supported. For more information, see Regions and endpoints (https://docs.aws.amazon.com/guardduty/latest/ug/guardduty_regions.html).
@@ -6474,6 +6986,12 @@ func (c *GuardDuty) UpdateOrganizationConfigurationRequest(input *UpdateOrganiza
 // Configures the delegated administrator account with the provided values.
 // You must provide a value for either autoEnableOrganizationMembers or autoEnable,
 // but not both.
+//
+// Specifying both EKS Runtime Monitoring (EKS_RUNTIME_MONITORING) and Runtime
+// Monitoring (RUNTIME_MONITORING) will cause an error. You can add only one
+// of these two features because Runtime Monitoring already includes the threat
+// detection for Amazon EKS resources. For more information, see Runtime Monitoring
+// (https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html).
 //
 // There might be regional differences because some data sources might not be
 // available in all the Amazon Web Services Regions where GuardDuty is presently
@@ -7067,8 +7585,12 @@ type AccountDetail struct {
 
 	// The email address of the member account.
 	//
+	// Email is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AccountDetail's
+	// String and GoString methods.
+	//
 	// Email is a required field
-	Email *string `locationName:"email" min:"1" type:"string" required:"true"`
+	Email *string `locationName:"email" min:"1" type:"string" required:"true" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -8499,11 +9021,6 @@ func (s *Country) SetCountryName(v string) *Country {
 	return s
 }
 
-// This API is also used when you use GuardDuty Runtime Monitoring for your
-// Amazon EC2 instances (currently in preview release) and is subject to change.
-// The use of this API is subject to Section 2 of the Amazon Web Services Service
-// Terms (http://aws.amazon.com/service-terms/) ("Betas and Previews").
-//
 // Contains information about the Amazon EC2 instance runtime coverage details.
 type CoverageEc2InstanceDetails struct {
 	_ struct{} `type:"structure"`
@@ -8919,12 +9436,6 @@ func (s *CoverageResource) SetUpdatedAt(v time.Time) *CoverageResource {
 type CoverageResourceDetails struct {
 	_ struct{} `type:"structure"`
 
-	//
-	// This API is also used when you use GuardDuty Runtime Monitoring for your
-	// Amazon EC2 instances (currently in preview release) and is subject to change.
-	// The use of this API is subject to Section 2 of the Amazon Web Services Service
-	// Terms (http://aws.amazon.com/service-terms/) ("Betas and Previews").
-	//
 	// Information about the Amazon EC2 instance assessed for runtime coverage.
 	Ec2InstanceDetails *CoverageEc2InstanceDetails `locationName:"ec2InstanceDetails" type:"structure"`
 
@@ -9316,6 +9827,8 @@ type CreateFilterInput struct {
 	//
 	//    * service.action.awsApiCallAction.remoteIpDetails.ipAddressV4
 	//
+	//    * service.action.awsApiCallAction.remoteIpDetails.ipAddressV6
+	//
 	//    * service.action.awsApiCallAction.remoteIpDetails.organization.asn
 	//
 	//    * service.action.awsApiCallAction.remoteIpDetails.organization.asnOrg
@@ -9340,6 +9853,8 @@ type CreateFilterInput struct {
 	//
 	//    * service.action.networkConnectionAction.remoteIpDetails.ipAddressV4
 	//
+	//    * service.action.networkConnectionAction.remoteIpDetails.ipAddressV6
+	//
 	//    * service.action.networkConnectionAction.remoteIpDetails.organization.asn
 	//
 	//    * service.action.networkConnectionAction.remoteIpDetails.organization.asnOrg
@@ -9350,6 +9865,8 @@ type CreateFilterInput struct {
 	//
 	//    * service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV4
 	//
+	//    * service.action.kubernetesApiCallAction.remoteIpDetails.ipAddressV6
+	//
 	//    * service.action.kubernetesApiCallAction.namespace
 	//
 	//    * service.action.kubernetesApiCallAction.remoteIpDetails.organization.asn
@@ -9359,6 +9876,8 @@ type CreateFilterInput struct {
 	//    * service.action.kubernetesApiCallAction.statusCode
 	//
 	//    * service.action.networkConnectionAction.localIpDetails.ipAddressV4
+	//
+	//    * service.action.networkConnectionAction.localIpDetails.ipAddressV6
 	//
 	//    * service.action.networkConnectionAction.protocol
 	//
@@ -9748,6 +10267,130 @@ func (s *CreateIPSetOutput) SetIpSetId(v string) *CreateIPSetOutput {
 	return s
 }
 
+type CreateMalwareProtectionPlanInput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about whether the tags will be added to the S3 object after scanning.
+	Actions *MalwareProtectionPlanActions `locationName:"actions" type:"structure"`
+
+	// The idempotency token for the create request.
+	ClientToken *string `locationName:"clientToken" type:"string" idempotencyToken:"true"`
+
+	// Information about the protected resource that is associated with the created
+	// Malware Protection plan. Presently, S3Bucket is the only supported protected
+	// resource.
+	//
+	// ProtectedResource is a required field
+	ProtectedResource *CreateProtectedResource `locationName:"protectedResource" type:"structure" required:"true"`
+
+	// IAM role with permissions required to scan and add tags to the associated
+	// protected resource.
+	//
+	// Role is a required field
+	Role *string `locationName:"role" type:"string" required:"true"`
+
+	// Tags added to the Malware Protection plan resource.
+	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMalwareProtectionPlanInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMalwareProtectionPlanInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateMalwareProtectionPlanInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateMalwareProtectionPlanInput"}
+	if s.ProtectedResource == nil {
+		invalidParams.Add(request.NewErrParamRequired("ProtectedResource"))
+	}
+	if s.Role == nil {
+		invalidParams.Add(request.NewErrParamRequired("Role"))
+	}
+	if s.Tags != nil && len(s.Tags) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetActions sets the Actions field's value.
+func (s *CreateMalwareProtectionPlanInput) SetActions(v *MalwareProtectionPlanActions) *CreateMalwareProtectionPlanInput {
+	s.Actions = v
+	return s
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *CreateMalwareProtectionPlanInput) SetClientToken(v string) *CreateMalwareProtectionPlanInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetProtectedResource sets the ProtectedResource field's value.
+func (s *CreateMalwareProtectionPlanInput) SetProtectedResource(v *CreateProtectedResource) *CreateMalwareProtectionPlanInput {
+	s.ProtectedResource = v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *CreateMalwareProtectionPlanInput) SetRole(v string) *CreateMalwareProtectionPlanInput {
+	s.Role = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateMalwareProtectionPlanInput) SetTags(v map[string]*string) *CreateMalwareProtectionPlanInput {
+	s.Tags = v
+	return s
+}
+
+type CreateMalwareProtectionPlanOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A unique identifier associated with the Malware Protection plan resource.
+	MalwareProtectionPlanId *string `locationName:"malwareProtectionPlanId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMalwareProtectionPlanOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateMalwareProtectionPlanOutput) GoString() string {
+	return s.String()
+}
+
+// SetMalwareProtectionPlanId sets the MalwareProtectionPlanId field's value.
+func (s *CreateMalwareProtectionPlanOutput) SetMalwareProtectionPlanId(v string) *CreateMalwareProtectionPlanOutput {
+	s.MalwareProtectionPlanId = &v
+	return s
+}
+
 type CreateMembersInput struct {
 	_ struct{} `type:"structure"`
 
@@ -9857,6 +10500,40 @@ func (s CreateMembersOutput) GoString() string {
 // SetUnprocessedAccounts sets the UnprocessedAccounts field's value.
 func (s *CreateMembersOutput) SetUnprocessedAccounts(v []*UnprocessedAccount) *CreateMembersOutput {
 	s.UnprocessedAccounts = v
+	return s
+}
+
+// Information about the protected resource that is associated with the created
+// Malware Protection plan. Presently, S3Bucket is the only supported protected
+// resource.
+type CreateProtectedResource struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the protected S3 bucket resource.
+	S3Bucket *CreateS3BucketResource `locationName:"s3Bucket" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateProtectedResource) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateProtectedResource) GoString() string {
+	return s.String()
+}
+
+// SetS3Bucket sets the S3Bucket field's value.
+func (s *CreateProtectedResource) SetS3Bucket(v *CreateS3BucketResource) *CreateProtectedResource {
+	s.S3Bucket = v
 	return s
 }
 
@@ -9981,6 +10658,48 @@ func (s CreatePublishingDestinationOutput) GoString() string {
 // SetDestinationId sets the DestinationId field's value.
 func (s *CreatePublishingDestinationOutput) SetDestinationId(v string) *CreatePublishingDestinationOutput {
 	s.DestinationId = &v
+	return s
+}
+
+// Information about the protected S3 bucket resource.
+type CreateS3BucketResource struct {
+	_ struct{} `type:"structure"`
+
+	// Name of the S3 bucket.
+	BucketName *string `locationName:"bucketName" type:"string"`
+
+	// Information about the specified object prefixes. The S3 object will be scanned
+	// only if it belongs to any of the specified object prefixes.
+	ObjectPrefixes []*string `locationName:"objectPrefixes" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateS3BucketResource) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateS3BucketResource) GoString() string {
+	return s.String()
+}
+
+// SetBucketName sets the BucketName field's value.
+func (s *CreateS3BucketResource) SetBucketName(v string) *CreateS3BucketResource {
+	s.BucketName = &v
+	return s
+}
+
+// SetObjectPrefixes sets the ObjectPrefixes field's value.
+func (s *CreateS3BucketResource) SetObjectPrefixes(v []*string) *CreateS3BucketResource {
+	s.ObjectPrefixes = v
 	return s
 }
 
@@ -10999,6 +11718,77 @@ func (s *DeleteInvitationsOutput) SetUnprocessedAccounts(v []*UnprocessedAccount
 	return s
 }
 
+type DeleteMalwareProtectionPlanInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A unique identifier associated with Malware Protection plan resource.
+	//
+	// MalwareProtectionPlanId is a required field
+	MalwareProtectionPlanId *string `location:"uri" locationName:"malwareProtectionPlanId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMalwareProtectionPlanInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMalwareProtectionPlanInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteMalwareProtectionPlanInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteMalwareProtectionPlanInput"}
+	if s.MalwareProtectionPlanId == nil {
+		invalidParams.Add(request.NewErrParamRequired("MalwareProtectionPlanId"))
+	}
+	if s.MalwareProtectionPlanId != nil && len(*s.MalwareProtectionPlanId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MalwareProtectionPlanId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMalwareProtectionPlanId sets the MalwareProtectionPlanId field's value.
+func (s *DeleteMalwareProtectionPlanInput) SetMalwareProtectionPlanId(v string) *DeleteMalwareProtectionPlanInput {
+	s.MalwareProtectionPlanId = &v
+	return s
+}
+
+type DeleteMalwareProtectionPlanOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMalwareProtectionPlanOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteMalwareProtectionPlanOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteMembersInput struct {
 	_ struct{} `type:"structure"`
 
@@ -11505,20 +12295,26 @@ type DescribeOrganizationConfigurationOutput struct {
 	// Deprecated: This field is deprecated, use AutoEnableOrganizationMembers instead
 	AutoEnable *bool `locationName:"autoEnable" deprecated:"true" type:"boolean"`
 
-	// Indicates the auto-enablement configuration of GuardDuty for the member accounts
-	// in the organization.
+	// Indicates the auto-enablement configuration of GuardDuty or any of the corresponding
+	// protection plans for the member accounts in the organization.
 	//
 	//    * NEW: Indicates that when a new account joins the organization, they
-	//    will have GuardDuty enabled automatically.
+	//    will have GuardDuty or any of the corresponding protection plans enabled
+	//    automatically.
 	//
 	//    * ALL: Indicates that all accounts in the organization have GuardDuty
-	//    enabled automatically. This includes NEW accounts that join the organization
-	//    and accounts that may have been suspended or removed from the organization
-	//    in GuardDuty.
+	//    and any of the corresponding protection plans enabled automatically. This
+	//    includes NEW accounts that join the organization and accounts that may
+	//    have been suspended or removed from the organization in GuardDuty.
 	//
-	//    * NONE: Indicates that GuardDuty will not be automatically enabled for
-	//    any account in the organization. The administrator must manage GuardDuty
-	//    for each account in the organization individually.
+	//    * NONE: Indicates that GuardDuty or any of the corresponding protection
+	//    plans will not be automatically enabled for any account in the organization.
+	//    The administrator must manage GuardDuty for each account in the organization
+	//    individually. When you update the auto-enable setting from ALL or NEW
+	//    to NONE, this action doesn't disable the corresponding option for your
+	//    existing accounts. This configuration will apply to the new accounts that
+	//    join the organization. After you update the auto-enable settings, no new
+	//    account will have the corresponding option as enabled.
 	AutoEnableOrganizationMembers *string `locationName:"autoEnableOrganizationMembers" type:"string" enum:"AutoEnableMembers"`
 
 	// Describes which data sources are enabled automatically for member accounts.
@@ -11970,6 +12766,12 @@ func (s *DetectorAdditionalConfigurationResult) SetUpdatedAt(v time.Time) *Detec
 }
 
 // Contains information about a GuardDuty feature.
+//
+// Specifying both EKS Runtime Monitoring (EKS_RUNTIME_MONITORING) and Runtime
+// Monitoring (RUNTIME_MONITORING) will cause an error. You can add only one
+// of these two features because Runtime Monitoring already includes the threat
+// detection for Amazon EKS resources. For more information, see Runtime Monitoring
+// (https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html).
 type DetectorFeatureConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -12020,6 +12822,12 @@ func (s *DetectorFeatureConfiguration) SetStatus(v string) *DetectorFeatureConfi
 }
 
 // Contains information about a GuardDuty feature.
+//
+// Specifying both EKS Runtime Monitoring (EKS_RUNTIME_MONITORING) and Runtime
+// Monitoring (RUNTIME_MONITORING) will cause an error. You can add only one
+// of these two features because Runtime Monitoring already includes the threat
+// detection for Amazon EKS resources. For more information, see Runtime Monitoring
+// (https://docs.aws.amazon.com/guardduty/latest/ug/runtime-monitoring.html).
 type DetectorFeatureConfigurationResult struct {
 	_ struct{} `type:"structure"`
 
@@ -12403,8 +13211,9 @@ type DnsRequestAction struct {
 	// The domain information for the DNS query.
 	Domain *string `locationName:"domain" type:"string"`
 
-	// The second and top level domain involved in the activity that prompted GuardDuty
-	// to generate this finding.
+	// The second and top level domain involved in the activity that potentially
+	// prompted GuardDuty to generate this finding. For a list of top-level and
+	// second-level domains, see public suffix list (https://publicsuffix.org/).
 	DomainWithSuffix *string `locationName:"domainWithSuffix" type:"string"`
 
 	// The network connection protocol observed in the activity that prompted GuardDuty
@@ -14526,6 +15335,153 @@ func (s *GetInvitationsCountOutput) SetInvitationsCount(v int64) *GetInvitations
 	return s
 }
 
+type GetMalwareProtectionPlanInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A unique identifier associated with Malware Protection plan resource.
+	//
+	// MalwareProtectionPlanId is a required field
+	MalwareProtectionPlanId *string `location:"uri" locationName:"malwareProtectionPlanId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMalwareProtectionPlanInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMalwareProtectionPlanInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetMalwareProtectionPlanInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetMalwareProtectionPlanInput"}
+	if s.MalwareProtectionPlanId == nil {
+		invalidParams.Add(request.NewErrParamRequired("MalwareProtectionPlanId"))
+	}
+	if s.MalwareProtectionPlanId != nil && len(*s.MalwareProtectionPlanId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MalwareProtectionPlanId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMalwareProtectionPlanId sets the MalwareProtectionPlanId field's value.
+func (s *GetMalwareProtectionPlanInput) SetMalwareProtectionPlanId(v string) *GetMalwareProtectionPlanInput {
+	s.MalwareProtectionPlanId = &v
+	return s
+}
+
+type GetMalwareProtectionPlanOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about whether the tags will be added to the S3 object after scanning.
+	Actions *MalwareProtectionPlanActions `locationName:"actions" type:"structure"`
+
+	// Amazon Resource Name (ARN) of the protected resource.
+	Arn *string `locationName:"arn" type:"string"`
+
+	// The timestamp when the Malware Protection plan resource was created.
+	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
+
+	// Information about the protected resource that is associated with the created
+	// Malware Protection plan. Presently, S3Bucket is the only supported protected
+	// resource.
+	ProtectedResource *CreateProtectedResource `locationName:"protectedResource" type:"structure"`
+
+	// IAM role that includes the permissions required to scan and add tags to the
+	// associated protected resource.
+	Role *string `locationName:"role" type:"string"`
+
+	// Malware Protection plan status.
+	Status *string `locationName:"status" type:"string" enum:"MalwareProtectionPlanStatus"`
+
+	// Information about the issue code and message associated to the status of
+	// your Malware Protection plan.
+	StatusReasons []*MalwareProtectionPlanStatusReason `locationName:"statusReasons" type:"list"`
+
+	// Tags added to the Malware Protection plan resource.
+	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMalwareProtectionPlanOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetMalwareProtectionPlanOutput) GoString() string {
+	return s.String()
+}
+
+// SetActions sets the Actions field's value.
+func (s *GetMalwareProtectionPlanOutput) SetActions(v *MalwareProtectionPlanActions) *GetMalwareProtectionPlanOutput {
+	s.Actions = v
+	return s
+}
+
+// SetArn sets the Arn field's value.
+func (s *GetMalwareProtectionPlanOutput) SetArn(v string) *GetMalwareProtectionPlanOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *GetMalwareProtectionPlanOutput) SetCreatedAt(v time.Time) *GetMalwareProtectionPlanOutput {
+	s.CreatedAt = &v
+	return s
+}
+
+// SetProtectedResource sets the ProtectedResource field's value.
+func (s *GetMalwareProtectionPlanOutput) SetProtectedResource(v *CreateProtectedResource) *GetMalwareProtectionPlanOutput {
+	s.ProtectedResource = v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *GetMalwareProtectionPlanOutput) SetRole(v string) *GetMalwareProtectionPlanOutput {
+	s.Role = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetMalwareProtectionPlanOutput) SetStatus(v string) *GetMalwareProtectionPlanOutput {
+	s.Status = &v
+	return s
+}
+
+// SetStatusReasons sets the StatusReasons field's value.
+func (s *GetMalwareProtectionPlanOutput) SetStatusReasons(v []*MalwareProtectionPlanStatusReason) *GetMalwareProtectionPlanOutput {
+	s.StatusReasons = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *GetMalwareProtectionPlanOutput) SetTags(v map[string]*string) *GetMalwareProtectionPlanOutput {
+	s.Tags = v
+	return s
+}
+
 type GetMalwareScanSettingsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -15933,6 +16889,47 @@ func (s InviteMembersOutput) GoString() string {
 // SetUnprocessedAccounts sets the UnprocessedAccounts field's value.
 func (s *InviteMembersOutput) SetUnprocessedAccounts(v []*UnprocessedAccount) *InviteMembersOutput {
 	s.UnprocessedAccounts = v
+	return s
+}
+
+// Information about the nested item path and hash of the protected resource.
+type ItemPath struct {
+	_ struct{} `type:"structure"`
+
+	// The hash value of the infected resource.
+	Hash *string `locationName:"hash" type:"string"`
+
+	// The nested item path where the infected file was found.
+	NestedItemPath *string `locationName:"nestedItemPath" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ItemPath) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ItemPath) GoString() string {
+	return s.String()
+}
+
+// SetHash sets the Hash field's value.
+func (s *ItemPath) SetHash(v string) *ItemPath {
+	s.Hash = &v
+	return s
+}
+
+// SetNestedItemPath sets the NestedItemPath field's value.
+func (s *ItemPath) SetNestedItemPath(v string) *ItemPath {
+	s.NestedItemPath = &v
 	return s
 }
 
@@ -17681,6 +18678,83 @@ func (s *ListInvitationsOutput) SetNextToken(v string) *ListInvitationsOutput {
 	return s
 }
 
+type ListMalwareProtectionPlansInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// You can use this parameter when paginating results. Set the value of this
+	// parameter to null on your first call to the list action. For subsequent calls
+	// to the action, fill nextToken in the request with the value of NextToken
+	// from the previous response to continue listing data.
+	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMalwareProtectionPlansInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMalwareProtectionPlansInput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListMalwareProtectionPlansInput) SetNextToken(v string) *ListMalwareProtectionPlansInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListMalwareProtectionPlansOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of unique identifiers associated with each Malware Protection plan.
+	MalwareProtectionPlans []*MalwareProtectionPlanSummary `locationName:"malwareProtectionPlans" type:"list"`
+
+	// You can use this parameter when paginating results. Set the value of this
+	// parameter to null on your first call to the list action. For subsequent calls
+	// to the action, fill nextToken in the request with the value of NextToken
+	// from the previous response to continue listing data.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMalwareProtectionPlansOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListMalwareProtectionPlansOutput) GoString() string {
+	return s.String()
+}
+
+// SetMalwareProtectionPlans sets the MalwareProtectionPlans field's value.
+func (s *ListMalwareProtectionPlansOutput) SetMalwareProtectionPlans(v []*MalwareProtectionPlanSummary) *ListMalwareProtectionPlansOutput {
+	s.MalwareProtectionPlans = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListMalwareProtectionPlansOutput) SetNextToken(v string) *ListMalwareProtectionPlansOutput {
+	s.NextToken = &v
+	return s
+}
+
 type ListMembersInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
@@ -18229,7 +19303,18 @@ type LocalIpDetails struct {
 	_ struct{} `type:"structure"`
 
 	// The IPv4 local address of the connection.
-	IpAddressV4 *string `locationName:"ipAddressV4" type:"string"`
+	//
+	// IpAddressV4 is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by LocalIpDetails's
+	// String and GoString methods.
+	IpAddressV4 *string `locationName:"ipAddressV4" type:"string" sensitive:"true"`
+
+	// The IPv6 local address of the connection.
+	//
+	// IpAddressV6 is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by LocalIpDetails's
+	// String and GoString methods.
+	IpAddressV6 *string `locationName:"ipAddressV6" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -18253,6 +19338,12 @@ func (s LocalIpDetails) GoString() string {
 // SetIpAddressV4 sets the IpAddressV4 field's value.
 func (s *LocalIpDetails) SetIpAddressV4(v string) *LocalIpDetails {
 	s.IpAddressV4 = &v
+	return s
+}
+
+// SetIpAddressV6 sets the IpAddressV6 field's value.
+func (s *LocalIpDetails) SetIpAddressV6(v string) *LocalIpDetails {
+	s.IpAddressV6 = &v
 	return s
 }
 
@@ -18467,6 +19558,180 @@ func (s *MalwareProtectionDataSourceFreeTrial) SetScanEc2InstanceWithFindings(v 
 	return s
 }
 
+// Information about whether the tags will be added to the S3 object after scanning.
+type MalwareProtectionPlanActions struct {
+	_ struct{} `type:"structure"`
+
+	// Indicates whether the scanned S3 object will have tags about the scan result.
+	Tagging *MalwareProtectionPlanTaggingAction `locationName:"tagging" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanActions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanActions) GoString() string {
+	return s.String()
+}
+
+// SetTagging sets the Tagging field's value.
+func (s *MalwareProtectionPlanActions) SetTagging(v *MalwareProtectionPlanTaggingAction) *MalwareProtectionPlanActions {
+	s.Tagging = v
+	return s
+}
+
+// Information about the issue code and message associated to the status of
+// your Malware Protection plan.
+type MalwareProtectionPlanStatusReason struct {
+	_ struct{} `type:"structure"`
+
+	// Issue code.
+	Code *string `locationName:"code" type:"string"`
+
+	// Issue message that specifies the reason. For information about potential
+	// troubleshooting steps, see Troubleshooting Malware Protection for S3 status
+	// issues (https://docs.aws.amazon.com/guardduty/latest/ug/troubleshoot-s3-malware-protection-status-errors.html)
+	// in the GuardDuty User Guide.
+	Message *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanStatusReason) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanStatusReason) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *MalwareProtectionPlanStatusReason) SetCode(v string) *MalwareProtectionPlanStatusReason {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *MalwareProtectionPlanStatusReason) SetMessage(v string) *MalwareProtectionPlanStatusReason {
+	s.Message = &v
+	return s
+}
+
+// Information about the Malware Protection plan resource.
+type MalwareProtectionPlanSummary struct {
+	_ struct{} `type:"structure"`
+
+	// A unique identifier associated with Malware Protection plan.
+	MalwareProtectionPlanId *string `locationName:"malwareProtectionPlanId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanSummary) GoString() string {
+	return s.String()
+}
+
+// SetMalwareProtectionPlanId sets the MalwareProtectionPlanId field's value.
+func (s *MalwareProtectionPlanSummary) SetMalwareProtectionPlanId(v string) *MalwareProtectionPlanSummary {
+	s.MalwareProtectionPlanId = &v
+	return s
+}
+
+// Information about adding tags to the scanned S3 object after the scan result.
+type MalwareProtectionPlanTaggingAction struct {
+	_ struct{} `type:"structure"`
+
+	// Indicates whether or not the tags will added.
+	Status *string `locationName:"status" type:"string" enum:"MalwareProtectionPlanTaggingActionStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanTaggingAction) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareProtectionPlanTaggingAction) GoString() string {
+	return s.String()
+}
+
+// SetStatus sets the Status field's value.
+func (s *MalwareProtectionPlanTaggingAction) SetStatus(v string) *MalwareProtectionPlanTaggingAction {
+	s.Status = &v
+	return s
+}
+
+// Information about the malware scan that generated a GuardDuty finding.
+type MalwareScanDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the detected threats associated with the generated GuardDuty
+	// finding.
+	Threats []*Threat `locationName:"threats" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareScanDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MalwareScanDetails) GoString() string {
+	return s.String()
+}
+
+// SetThreats sets the Threats field's value.
+func (s *MalwareScanDetails) SetThreats(v []*Threat) *MalwareScanDetails {
+	s.Threats = v
+	return s
+}
+
 // Contains information about the administrator account and invitation.
 type Master struct {
 	_ struct{} `type:"structure"`
@@ -18543,8 +19808,12 @@ type Member struct {
 
 	// The email address of the member account.
 	//
+	// Email is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Member's
+	// String and GoString methods.
+	//
 	// Email is a required field
-	Email *string `locationName:"email" min:"1" type:"string" required:"true"`
+	Email *string `locationName:"email" min:"1" type:"string" required:"true" sensitive:"true"`
 
 	// The timestamp when the invitation was sent.
 	InvitedAt *string `locationName:"invitedAt" type:"string"`
@@ -18990,7 +20259,11 @@ type NetworkInterface struct {
 	PrivateDnsName *string `locationName:"privateDnsName" type:"string"`
 
 	// The private IP address of the EC2 instance.
-	PrivateIpAddress *string `locationName:"privateIpAddress" type:"string"`
+	//
+	// PrivateIpAddress is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by NetworkInterface's
+	// String and GoString methods.
+	PrivateIpAddress *string `locationName:"privateIpAddress" type:"string" sensitive:"true"`
 
 	// Other private IP address information of the EC2 instance.
 	PrivateIpAddresses []*PrivateIpAddressDetails `locationName:"privateIpAddresses" type:"list"`
@@ -20392,7 +21665,11 @@ type PrivateIpAddressDetails struct {
 	PrivateDnsName *string `locationName:"privateDnsName" type:"string"`
 
 	// The private IP address of the EC2 instance.
-	PrivateIpAddress *string `locationName:"privateIpAddress" type:"string"`
+	//
+	// PrivateIpAddress is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by PrivateIpAddressDetails's
+	// String and GoString methods.
+	PrivateIpAddress *string `locationName:"privateIpAddress" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -20900,7 +22177,18 @@ type RemoteIpDetails struct {
 	GeoLocation *GeoLocation `locationName:"geoLocation" type:"structure"`
 
 	// The IPv4 remote address of the connection.
-	IpAddressV4 *string `locationName:"ipAddressV4" type:"string"`
+	//
+	// IpAddressV4 is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by RemoteIpDetails's
+	// String and GoString methods.
+	IpAddressV4 *string `locationName:"ipAddressV4" type:"string" sensitive:"true"`
+
+	// The IPv6 remote address of the connection.
+	//
+	// IpAddressV6 is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by RemoteIpDetails's
+	// String and GoString methods.
+	IpAddressV6 *string `locationName:"ipAddressV6" type:"string" sensitive:"true"`
 
 	// The ISP organization information of the remote IP address.
 	Organization *Organization `locationName:"organization" type:"structure"`
@@ -20945,6 +22233,12 @@ func (s *RemoteIpDetails) SetGeoLocation(v *GeoLocation) *RemoteIpDetails {
 // SetIpAddressV4 sets the IpAddressV4 field's value.
 func (s *RemoteIpDetails) SetIpAddressV4(v string) *RemoteIpDetails {
 	s.IpAddressV4 = &v
+	return s
+}
+
+// SetIpAddressV6 sets the IpAddressV6 field's value.
+func (s *RemoteIpDetails) SetIpAddressV6(v string) *RemoteIpDetails {
+	s.IpAddressV6 = &v
 	return s
 }
 
@@ -21135,7 +22429,7 @@ func (s *Resource) SetS3BucketDetails(v []*S3BucketDetail) *Resource {
 type ResourceDetails struct {
 	_ struct{} `type:"structure"`
 
-	// InstanceArn that was scanned in the scan entry.
+	// Instance ARN that was scanned in the scan entry.
 	InstanceArn *string `locationName:"instanceArn" type:"string"`
 }
 
@@ -21163,6 +22457,74 @@ func (s *ResourceDetails) SetInstanceArn(v string) *ResourceDetails {
 	return s
 }
 
+// The requested resource can't be found.
+type ResourceNotFoundException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	// The error message.
+	Message_ *string `locationName:"message" type:"string"`
+
+	// The error type.
+	Type *string `locationName:"__type" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResourceNotFoundException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ResourceNotFoundException) GoString() string {
+	return s.String()
+}
+
+func newErrorResourceNotFoundException(v protocol.ResponseMetadata) error {
+	return &ResourceNotFoundException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ResourceNotFoundException) Code() string {
+	return "ResourceNotFoundException"
+}
+
+// Message returns the exception's message.
+func (s *ResourceNotFoundException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ResourceNotFoundException) OrigErr() error {
+	return nil
+}
+
+func (s *ResourceNotFoundException) Error() string {
+	return fmt.Sprintf("%s: %s\n%s", s.Code(), s.Message(), s.String())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ResourceNotFoundException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ResourceNotFoundException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // Additional information about the suspicious activity.
 type RuntimeContext struct {
 	_ struct{} `type:"structure"`
@@ -21170,6 +22532,9 @@ type RuntimeContext struct {
 	// Represents the communication protocol associated with the address. For example,
 	// the address family AF_INET is used for IP version of 4 protocol.
 	AddressFamily *string `locationName:"addressFamily" type:"string"`
+
+	// Example of the command line involved in the suspicious activity.
+	CommandLineExample *string `locationName:"commandLineExample" type:"string"`
 
 	// Represents the type of mounted fileSystem.
 	FileSystemType *string `locationName:"fileSystemType" type:"string"`
@@ -21224,6 +22589,9 @@ type RuntimeContext struct {
 	// The path to the script that was executed.
 	ScriptPath *string `locationName:"scriptPath" type:"string"`
 
+	// Name of the security service that has been potentially disabled.
+	ServiceName *string `locationName:"serviceName" type:"string"`
+
 	// The path to the modified shell history file.
 	ShellHistoryFilePath *string `locationName:"shellHistoryFilePath" type:"string"`
 
@@ -21233,6 +22601,16 @@ type RuntimeContext struct {
 	// Information about the process that had its memory overwritten by the current
 	// process.
 	TargetProcess *ProcessDetails `locationName:"targetProcess" type:"structure"`
+
+	// The suspicious file path for which the threat intelligence details were found.
+	ThreatFilePath *string `locationName:"threatFilePath" type:"string"`
+
+	// Category that the tool belongs to. Some of the examples are Backdoor Tool,
+	// Pentest Tool, Network Scanner, and Network Sniffer.
+	ToolCategory *string `locationName:"toolCategory" type:"string"`
+
+	// Name of the potentially suspicious tool.
+	ToolName *string `locationName:"toolName" type:"string"`
 }
 
 // String returns the string representation.
@@ -21256,6 +22634,12 @@ func (s RuntimeContext) GoString() string {
 // SetAddressFamily sets the AddressFamily field's value.
 func (s *RuntimeContext) SetAddressFamily(v string) *RuntimeContext {
 	s.AddressFamily = &v
+	return s
+}
+
+// SetCommandLineExample sets the CommandLineExample field's value.
+func (s *RuntimeContext) SetCommandLineExample(v string) *RuntimeContext {
+	s.CommandLineExample = &v
 	return s
 }
 
@@ -21355,6 +22739,12 @@ func (s *RuntimeContext) SetScriptPath(v string) *RuntimeContext {
 	return s
 }
 
+// SetServiceName sets the ServiceName field's value.
+func (s *RuntimeContext) SetServiceName(v string) *RuntimeContext {
+	s.ServiceName = &v
+	return s
+}
+
 // SetShellHistoryFilePath sets the ShellHistoryFilePath field's value.
 func (s *RuntimeContext) SetShellHistoryFilePath(v string) *RuntimeContext {
 	s.ShellHistoryFilePath = &v
@@ -21370,6 +22760,24 @@ func (s *RuntimeContext) SetSocketPath(v string) *RuntimeContext {
 // SetTargetProcess sets the TargetProcess field's value.
 func (s *RuntimeContext) SetTargetProcess(v *ProcessDetails) *RuntimeContext {
 	s.TargetProcess = v
+	return s
+}
+
+// SetThreatFilePath sets the ThreatFilePath field's value.
+func (s *RuntimeContext) SetThreatFilePath(v string) *RuntimeContext {
+	s.ThreatFilePath = &v
+	return s
+}
+
+// SetToolCategory sets the ToolCategory field's value.
+func (s *RuntimeContext) SetToolCategory(v string) *RuntimeContext {
+	s.ToolCategory = &v
+	return s
+}
+
+// SetToolName sets the ToolName field's value.
+func (s *RuntimeContext) SetToolName(v string) *RuntimeContext {
+	s.ToolName = &v
 	return s
 }
 
@@ -21437,6 +22845,9 @@ type S3BucketDetail struct {
 	// Describes the public access policies that apply to the S3 bucket.
 	PublicAccess *PublicAccess `locationName:"publicAccess" type:"structure"`
 
+	// Information about the S3 object that was scanned.
+	S3ObjectDetails []*S3ObjectDetail `locationName:"s3ObjectDetails" type:"list"`
+
 	// All tags attached to the S3 bucket
 	Tags []*Tag `locationName:"tags" type:"list"`
 
@@ -21495,6 +22906,12 @@ func (s *S3BucketDetail) SetOwner(v *Owner) *S3BucketDetail {
 // SetPublicAccess sets the PublicAccess field's value.
 func (s *S3BucketDetail) SetPublicAccess(v *PublicAccess) *S3BucketDetail {
 	s.PublicAccess = v
+	return s
+}
+
+// SetS3ObjectDetails sets the S3ObjectDetails field's value.
+func (s *S3BucketDetail) SetS3ObjectDetails(v []*S3ObjectDetail) *S3BucketDetail {
+	s.S3ObjectDetails = v
 	return s
 }
 
@@ -21589,6 +23006,75 @@ func (s S3LogsConfigurationResult) GoString() string {
 // SetStatus sets the Status field's value.
 func (s *S3LogsConfigurationResult) SetStatus(v string) *S3LogsConfigurationResult {
 	s.Status = &v
+	return s
+}
+
+// Information about the S3 object that was scanned
+type S3ObjectDetail struct {
+	_ struct{} `type:"structure"`
+
+	// The entity tag is a hash of the S3 object. The ETag reflects changes only
+	// to the contents of an object, and not its metadata.
+	ETag *string `locationName:"eTag" type:"string"`
+
+	// Hash of the threat detected in this finding.
+	Hash *string `locationName:"hash" type:"string"`
+
+	// Key of the S3 object.
+	Key *string `locationName:"key" type:"string"`
+
+	// Amazon Resource Name (ARN) of the S3 object.
+	ObjectArn *string `locationName:"objectArn" type:"string"`
+
+	// Version ID of the object.
+	VersionId *string `locationName:"versionId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3ObjectDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3ObjectDetail) GoString() string {
+	return s.String()
+}
+
+// SetETag sets the ETag field's value.
+func (s *S3ObjectDetail) SetETag(v string) *S3ObjectDetail {
+	s.ETag = &v
+	return s
+}
+
+// SetHash sets the Hash field's value.
+func (s *S3ObjectDetail) SetHash(v string) *S3ObjectDetail {
+	s.Hash = &v
+	return s
+}
+
+// SetKey sets the Key field's value.
+func (s *S3ObjectDetail) SetKey(v string) *S3ObjectDetail {
+	s.Key = &v
+	return s
+}
+
+// SetObjectArn sets the ObjectArn field's value.
+func (s *S3ObjectDetail) SetObjectArn(v string) *S3ObjectDetail {
+	s.ObjectArn = &v
+	return s
+}
+
+// SetVersionId sets the VersionId field's value.
+func (s *S3ObjectDetail) SetVersionId(v string) *S3ObjectDetail {
+	s.VersionId = &v
 	return s
 }
 
@@ -22009,7 +23495,7 @@ type ScanFilePath struct {
 	// The hash value of the infected file.
 	Hash *string `locationName:"hash" type:"string"`
 
-	// EBS volume Arn details of the infected file.
+	// EBS volume ARN details of the infected file.
 	VolumeArn *string `locationName:"volumeArn" type:"string"`
 }
 
@@ -22393,6 +23879,9 @@ type Service struct {
 	// The name of the feature that generated a finding.
 	FeatureName *string `locationName:"featureName" type:"string"`
 
+	// Returns details from the malware scan that generated a GuardDuty finding.
+	MalwareScanDetails *MalwareScanDetails `locationName:"malwareScanDetails" type:"structure"`
+
 	// The resource role information for this finding.
 	ResourceRole *string `locationName:"resourceRole" type:"string"`
 
@@ -22489,6 +23978,12 @@ func (s *Service) SetEvidence(v *Evidence) *Service {
 // SetFeatureName sets the FeatureName field's value.
 func (s *Service) SetFeatureName(v string) *Service {
 	s.FeatureName = &v
+	return s
+}
+
+// SetMalwareScanDetails sets the MalwareScanDetails field's value.
+func (s *Service) SetMalwareScanDetails(v *MalwareScanDetails) *Service {
+	s.MalwareScanDetails = v
 	return s
 }
 
@@ -23010,6 +24505,56 @@ func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
 
+// Information about the detected threats associated with the generated finding.
+type Threat struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the nested item path and hash of the protected resource.
+	ItemPaths []*ItemPath `locationName:"itemPaths" type:"list"`
+
+	// Name of the detected threat that caused GuardDuty to generate this finding.
+	Name *string `locationName:"name" type:"string"`
+
+	// Source of the threat that generated this finding.
+	Source *string `locationName:"source" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Threat) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Threat) GoString() string {
+	return s.String()
+}
+
+// SetItemPaths sets the ItemPaths field's value.
+func (s *Threat) SetItemPaths(v []*ItemPath) *Threat {
+	s.ItemPaths = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *Threat) SetName(v string) *Threat {
+	s.Name = &v
+	return s
+}
+
+// SetSource sets the Source field's value.
+func (s *Threat) SetSource(v string) *Threat {
+	s.Source = &v
+	return s
+}
+
 // Contains details about identified threats organized by threat name.
 type ThreatDetectedByName struct {
 	_ struct{} `type:"structure"`
@@ -23076,6 +24621,9 @@ func (s *ThreatDetectedByName) SetUniqueThreatNameCount(v int64) *ThreatDetected
 type ThreatIntelligenceDetail struct {
 	_ struct{} `type:"structure"`
 
+	// SHA256 of the file that generated the finding.
+	ThreatFileSha256 *string `locationName:"threatFileSha256" type:"string"`
+
 	// The name of the threat intelligence list that triggered the finding.
 	ThreatListName *string `locationName:"threatListName" type:"string"`
 
@@ -23100,6 +24648,12 @@ func (s ThreatIntelligenceDetail) String() string {
 // value will be replaced with "sensitive".
 func (s ThreatIntelligenceDetail) GoString() string {
 	return s.String()
+}
+
+// SetThreatFileSha256 sets the ThreatFileSha256 field's value.
+func (s *ThreatIntelligenceDetail) SetThreatFileSha256(v string) *ThreatIntelligenceDetail {
+	s.ThreatFileSha256 = &v
+	return s
 }
 
 // SetThreatListName sets the ThreatListName field's value.
@@ -23975,6 +25529,107 @@ func (s UpdateIPSetOutput) GoString() string {
 	return s.String()
 }
 
+type UpdateMalwareProtectionPlanInput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about whether the tags will be added to the S3 object after scanning.
+	Actions *MalwareProtectionPlanActions `locationName:"actions" type:"structure"`
+
+	// A unique identifier associated with the Malware Protection plan.
+	//
+	// MalwareProtectionPlanId is a required field
+	MalwareProtectionPlanId *string `location:"uri" locationName:"malwareProtectionPlanId" type:"string" required:"true"`
+
+	// Information about the protected resource that is associated with the created
+	// Malware Protection plan. Presently, S3Bucket is the only supported protected
+	// resource.
+	ProtectedResource *UpdateProtectedResource `locationName:"protectedResource" type:"structure"`
+
+	// IAM role with permissions required to scan and add tags to the associated
+	// protected resource.
+	Role *string `locationName:"role" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateMalwareProtectionPlanInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateMalwareProtectionPlanInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateMalwareProtectionPlanInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateMalwareProtectionPlanInput"}
+	if s.MalwareProtectionPlanId == nil {
+		invalidParams.Add(request.NewErrParamRequired("MalwareProtectionPlanId"))
+	}
+	if s.MalwareProtectionPlanId != nil && len(*s.MalwareProtectionPlanId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MalwareProtectionPlanId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetActions sets the Actions field's value.
+func (s *UpdateMalwareProtectionPlanInput) SetActions(v *MalwareProtectionPlanActions) *UpdateMalwareProtectionPlanInput {
+	s.Actions = v
+	return s
+}
+
+// SetMalwareProtectionPlanId sets the MalwareProtectionPlanId field's value.
+func (s *UpdateMalwareProtectionPlanInput) SetMalwareProtectionPlanId(v string) *UpdateMalwareProtectionPlanInput {
+	s.MalwareProtectionPlanId = &v
+	return s
+}
+
+// SetProtectedResource sets the ProtectedResource field's value.
+func (s *UpdateMalwareProtectionPlanInput) SetProtectedResource(v *UpdateProtectedResource) *UpdateMalwareProtectionPlanInput {
+	s.ProtectedResource = v
+	return s
+}
+
+// SetRole sets the Role field's value.
+func (s *UpdateMalwareProtectionPlanInput) SetRole(v string) *UpdateMalwareProtectionPlanInput {
+	s.Role = &v
+	return s
+}
+
+type UpdateMalwareProtectionPlanOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateMalwareProtectionPlanOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateMalwareProtectionPlanOutput) GoString() string {
+	return s.String()
+}
+
 type UpdateMalwareScanSettingsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -24226,7 +25881,12 @@ type UpdateOrganizationConfigurationInput struct {
 	//
 	//    * NONE: Indicates that GuardDuty will not be automatically enabled for
 	//    any account in the organization. The administrator must manage GuardDuty
-	//    for each account in the organization individually.
+	//    for each account in the organization individually. When you update the
+	//    auto-enable setting from ALL or NEW to NONE, this action doesn't disable
+	//    the corresponding option for your existing accounts. This configuration
+	//    will apply to the new accounts that join the organization. After you update
+	//    the auto-enable settings, no new account will have the corresponding option
+	//    as enabled.
 	AutoEnableOrganizationMembers *string `locationName:"autoEnableOrganizationMembers" type:"string" enum:"AutoEnableMembers"`
 
 	// Describes which data sources will be updated.
@@ -24334,6 +25994,40 @@ func (s UpdateOrganizationConfigurationOutput) GoString() string {
 	return s.String()
 }
 
+// Information about the protected resource that is associated with the created
+// Malware Protection plan. Presently, S3Bucket is the only supported protected
+// resource.
+type UpdateProtectedResource struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the protected S3 bucket resource.
+	S3Bucket *UpdateS3BucketResource `locationName:"s3Bucket" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateProtectedResource) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateProtectedResource) GoString() string {
+	return s.String()
+}
+
+// SetS3Bucket sets the S3Bucket field's value.
+func (s *UpdateProtectedResource) SetS3Bucket(v *UpdateS3BucketResource) *UpdateProtectedResource {
+	s.S3Bucket = v
+	return s
+}
+
 type UpdatePublishingDestinationInput struct {
 	_ struct{} `type:"structure"`
 
@@ -24430,6 +26124,39 @@ func (s UpdatePublishingDestinationOutput) String() string {
 // value will be replaced with "sensitive".
 func (s UpdatePublishingDestinationOutput) GoString() string {
 	return s.String()
+}
+
+// Information about the protected S3 bucket resource.
+type UpdateS3BucketResource struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the specified object prefixes. The S3 object will be scanned
+	// only if it belongs to any of the specified object prefixes.
+	ObjectPrefixes []*string `locationName:"objectPrefixes" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateS3BucketResource) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateS3BucketResource) GoString() string {
+	return s.String()
+}
+
+// SetObjectPrefixes sets the ObjectPrefixes field's value.
+func (s *UpdateS3BucketResource) SetObjectPrefixes(v []*string) *UpdateS3BucketResource {
+	s.ObjectPrefixes = v
+	return s
 }
 
 type UpdateThreatIntelSetInput struct {
@@ -25014,13 +26741,13 @@ type VolumeDetail struct {
 	// EBS volume encryption type.
 	EncryptionType *string `locationName:"encryptionType" type:"string"`
 
-	// KMS key Arn used to encrypt the EBS volume.
+	// KMS key ARN used to encrypt the EBS volume.
 	KmsKeyArn *string `locationName:"kmsKeyArn" type:"string"`
 
-	// Snapshot Arn of the EBS volume.
+	// Snapshot ARN of the EBS volume.
 	SnapshotArn *string `locationName:"snapshotArn" type:"string"`
 
-	// EBS volume Arn information.
+	// EBS volume ARN information.
 	VolumeArn *string `locationName:"volumeArn" type:"string"`
 
 	// EBS volume size in GB.
@@ -25564,6 +27291,9 @@ const (
 
 	// FeatureAdditionalConfigurationEcsFargateAgentManagement is a FeatureAdditionalConfiguration enum value
 	FeatureAdditionalConfigurationEcsFargateAgentManagement = "ECS_FARGATE_AGENT_MANAGEMENT"
+
+	// FeatureAdditionalConfigurationEc2AgentManagement is a FeatureAdditionalConfiguration enum value
+	FeatureAdditionalConfigurationEc2AgentManagement = "EC2_AGENT_MANAGEMENT"
 )
 
 // FeatureAdditionalConfiguration_Values returns all elements of the FeatureAdditionalConfiguration enum
@@ -25571,6 +27301,7 @@ func FeatureAdditionalConfiguration_Values() []string {
 	return []string{
 		FeatureAdditionalConfigurationEksAddonManagement,
 		FeatureAdditionalConfigurationEcsFargateAgentManagement,
+		FeatureAdditionalConfigurationEc2AgentManagement,
 	}
 }
 
@@ -25775,6 +27506,42 @@ func IpSetStatus_Values() []string {
 }
 
 const (
+	// MalwareProtectionPlanStatusActive is a MalwareProtectionPlanStatus enum value
+	MalwareProtectionPlanStatusActive = "ACTIVE"
+
+	// MalwareProtectionPlanStatusWarning is a MalwareProtectionPlanStatus enum value
+	MalwareProtectionPlanStatusWarning = "WARNING"
+
+	// MalwareProtectionPlanStatusError is a MalwareProtectionPlanStatus enum value
+	MalwareProtectionPlanStatusError = "ERROR"
+)
+
+// MalwareProtectionPlanStatus_Values returns all elements of the MalwareProtectionPlanStatus enum
+func MalwareProtectionPlanStatus_Values() []string {
+	return []string{
+		MalwareProtectionPlanStatusActive,
+		MalwareProtectionPlanStatusWarning,
+		MalwareProtectionPlanStatusError,
+	}
+}
+
+const (
+	// MalwareProtectionPlanTaggingActionStatusEnabled is a MalwareProtectionPlanTaggingActionStatus enum value
+	MalwareProtectionPlanTaggingActionStatusEnabled = "ENABLED"
+
+	// MalwareProtectionPlanTaggingActionStatusDisabled is a MalwareProtectionPlanTaggingActionStatus enum value
+	MalwareProtectionPlanTaggingActionStatusDisabled = "DISABLED"
+)
+
+// MalwareProtectionPlanTaggingActionStatus_Values returns all elements of the MalwareProtectionPlanTaggingActionStatus enum
+func MalwareProtectionPlanTaggingActionStatus_Values() []string {
+	return []string{
+		MalwareProtectionPlanTaggingActionStatusEnabled,
+		MalwareProtectionPlanTaggingActionStatusDisabled,
+	}
+}
+
+const (
 	// ManagementTypeAutoManaged is a ManagementType enum value
 	ManagementTypeAutoManaged = "AUTO_MANAGED"
 
@@ -25852,6 +27619,9 @@ const (
 
 	// OrgFeatureAdditionalConfigurationEcsFargateAgentManagement is a OrgFeatureAdditionalConfiguration enum value
 	OrgFeatureAdditionalConfigurationEcsFargateAgentManagement = "ECS_FARGATE_AGENT_MANAGEMENT"
+
+	// OrgFeatureAdditionalConfigurationEc2AgentManagement is a OrgFeatureAdditionalConfiguration enum value
+	OrgFeatureAdditionalConfigurationEc2AgentManagement = "EC2_AGENT_MANAGEMENT"
 )
 
 // OrgFeatureAdditionalConfiguration_Values returns all elements of the OrgFeatureAdditionalConfiguration enum
@@ -25859,6 +27629,7 @@ func OrgFeatureAdditionalConfiguration_Values() []string {
 	return []string{
 		OrgFeatureAdditionalConfigurationEksAddonManagement,
 		OrgFeatureAdditionalConfigurationEcsFargateAgentManagement,
+		OrgFeatureAdditionalConfigurationEc2AgentManagement,
 	}
 }
 
@@ -26133,6 +27904,12 @@ const (
 
 	// UsageFeatureEc2RuntimeMonitoring is a UsageFeature enum value
 	UsageFeatureEc2RuntimeMonitoring = "EC2_RUNTIME_MONITORING"
+
+	// UsageFeatureRdsDbiProtectionProvisioned is a UsageFeature enum value
+	UsageFeatureRdsDbiProtectionProvisioned = "RDS_DBI_PROTECTION_PROVISIONED"
+
+	// UsageFeatureRdsDbiProtectionServerless is a UsageFeature enum value
+	UsageFeatureRdsDbiProtectionServerless = "RDS_DBI_PROTECTION_SERVERLESS"
 )
 
 // UsageFeature_Values returns all elements of the UsageFeature enum
@@ -26149,6 +27926,8 @@ func UsageFeature_Values() []string {
 		UsageFeatureEksRuntimeMonitoring,
 		UsageFeatureFargateRuntimeMonitoring,
 		UsageFeatureEc2RuntimeMonitoring,
+		UsageFeatureRdsDbiProtectionProvisioned,
+		UsageFeatureRdsDbiProtectionServerless,
 	}
 }
 

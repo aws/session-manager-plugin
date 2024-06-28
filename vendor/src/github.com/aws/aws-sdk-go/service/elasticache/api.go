@@ -1366,8 +1366,8 @@ func (c *ElastiCache) CreateReplicationGroupRequest(input *CreateReplicationGrou
 // This API can be used to create a standalone regional replication group or
 // a secondary replication group associated with a Global datastore.
 //
-// A Redis (cluster mode disabled) replication group is a collection of clusters,
-// where one of the clusters is a read/write primary and the others are read-only
+// A Redis (cluster mode disabled) replication group is a collection of nodes,
+// where one of the nodes is a read/write primary and the others are read-only
 // replicas. Writes to the primary are asynchronously propagated to the replicas.
 //
 // A Redis cluster-mode enabled cluster is comprised of from 1 to 90 shards
@@ -8433,7 +8433,7 @@ func (c *ElastiCache) TestFailoverRequest(input *TestFailoverInput) (req *reques
 
 // TestFailover API operation for Amazon ElastiCache.
 //
-// Represents the input of a TestFailover operation which test automatic failover
+// Represents the input of a TestFailover operation which tests automatic failover
 // on a specified node group (called shard in the console) in a replication
 // group (called cluster in the console).
 //
@@ -8446,7 +8446,7 @@ func (c *ElastiCache) TestFailoverRequest(input *TestFailoverInput) (req *reques
 // Note the following
 //
 //   - A customer can use this operation to test automatic failover on up to
-//     5 shards (called node groups in the ElastiCache API and Amazon CLI) in
+//     15 shards (called node groups in the ElastiCache API and Amazon CLI) in
 //     any rolling 24-hour period.
 //
 //   - If calling this operation on shards in different clusters (called replication
@@ -10456,11 +10456,6 @@ func (s *CacheUsageLimits) Validate() error {
 			invalidParams.AddNested("DataStorage", err.(request.ErrInvalidParams))
 		}
 	}
-	if s.ECPUPerSecond != nil {
-		if err := s.ECPUPerSecond.Validate(); err != nil {
-			invalidParams.AddNested("ECPUPerSecond", err.(request.ErrInvalidParams))
-		}
-	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -12188,11 +12183,6 @@ type CreateReplicationGroupInput struct {
 
 	// Specifies the weekly time range during which maintenance on the cluster is
 	// performed. It is specified as a range in the format ddd:hh24:mi-ddd:hh24:mi
-	// (24H Clock UTC). The minimum maintenance window is a 60 minute period. Valid
-	// values for ddd are:
-	//
-	// Specifies the weekly time range during which maintenance on the cluster is
-	// performed. It is specified as a range in the format ddd:hh24:mi-ddd:hh24:mi
 	// (24H Clock UTC). The minimum maintenance window is a 60 minute period.
 	//
 	// Valid values for ddd are:
@@ -13561,9 +13551,10 @@ type DataStorage struct {
 	_ struct{} `type:"structure"`
 
 	// The upper limit for data storage the cache is set to use.
-	//
-	// Maximum is a required field
-	Maximum *int64 `type:"integer" required:"true"`
+	Maximum *int64 `type:"integer"`
+
+	// The lower limit for data storage the cache is set to use.
+	Minimum *int64 `type:"integer"`
 
 	// The unit that the storage is measured in, in GB.
 	//
@@ -13592,9 +13583,6 @@ func (s DataStorage) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *DataStorage) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "DataStorage"}
-	if s.Maximum == nil {
-		invalidParams.Add(request.NewErrParamRequired("Maximum"))
-	}
 	if s.Unit == nil {
 		invalidParams.Add(request.NewErrParamRequired("Unit"))
 	}
@@ -13608,6 +13596,12 @@ func (s *DataStorage) Validate() error {
 // SetMaximum sets the Maximum field's value.
 func (s *DataStorage) SetMaximum(v int64) *DataStorage {
 	s.Maximum = &v
+	return s
+}
+
+// SetMinimum sets the Minimum field's value.
+func (s *DataStorage) SetMinimum(v int64) *DataStorage {
+	s.Minimum = &v
 	return s
 }
 
@@ -17200,8 +17194,7 @@ type DescribeUserGroupsOutput struct {
 
 	// An optional marker returned from a prior request. Use this marker for pagination
 	// of results from this operation. If this parameter is specified, the response
-	// includes only records beyond the marker, up to the value specified by MaxRecords.
-	// >
+	// includes only records beyond the marker, up to the value specified by MaxRecords.>
 	Marker *string `type:"string"`
 
 	// Returns a list of user groups.
@@ -17587,9 +17580,11 @@ type ECPUPerSecond struct {
 
 	// The configuration for the maximum number of ECPUs the cache can consume per
 	// second.
-	//
-	// Maximum is a required field
-	Maximum *int64 `type:"integer" required:"true"`
+	Maximum *int64 `type:"integer"`
+
+	// The configuration for the minimum number of ECPUs the cache should be able
+	// consume per second.
+	Minimum *int64 `type:"integer"`
 }
 
 // String returns the string representation.
@@ -17610,27 +17605,20 @@ func (s ECPUPerSecond) GoString() string {
 	return s.String()
 }
 
-// Validate inspects the fields of the type to determine if they are valid.
-func (s *ECPUPerSecond) Validate() error {
-	invalidParams := request.ErrInvalidParams{Context: "ECPUPerSecond"}
-	if s.Maximum == nil {
-		invalidParams.Add(request.NewErrParamRequired("Maximum"))
-	}
-
-	if invalidParams.Len() > 0 {
-		return invalidParams
-	}
-	return nil
-}
-
 // SetMaximum sets the Maximum field's value.
 func (s *ECPUPerSecond) SetMaximum(v int64) *ECPUPerSecond {
 	s.Maximum = &v
 	return s
 }
 
+// SetMinimum sets the Minimum field's value.
+func (s *ECPUPerSecond) SetMinimum(v int64) *ECPUPerSecond {
+	s.Minimum = &v
+	return s
+}
+
 // Represents the information required for client programs to connect to a cache
-// node.
+// node. This value is read-only.
 type Endpoint struct {
 	_ struct{} `type:"structure"`
 
@@ -19018,9 +19006,11 @@ type ModifyCacheClusterInput struct {
 	// Specifies the strategy to use to update the AUTH token. This parameter must
 	// be specified with the auth-token parameter. Possible values:
 	//
-	//    * Rotate
+	//    * ROTATE - default, if no update strategy is provided
 	//
-	//    * Set
+	//    * SET - allowed only after ROTATE
+	//
+	//    * DELETE - allowed only when transitioning to RBAC
 	//
 	// For more information, see Authenticating Users with Redis AUTH (http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/auth.html)
 	AuthTokenUpdateStrategy *string `type:"string" enum:"AuthTokenUpdateStrategyType"`
@@ -19757,9 +19747,11 @@ type ModifyReplicationGroupInput struct {
 	// Specifies the strategy to use to update the AUTH token. This parameter must
 	// be specified with the auth-token parameter. Possible values:
 	//
-	//    * Rotate
+	//    * ROTATE - default, if no update strategy is provided
 	//
-	//    * Set
+	//    * SET - allowed only after ROTATE
+	//
+	//    * DELETE - allowed only when transitioning to RBAC
 	//
 	// For more information, see Authenticating Users with Redis AUTH (http://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/auth.html)
 	AuthTokenUpdateStrategy *string `type:"string" enum:"AuthTokenUpdateStrategyType"`
@@ -20897,7 +20889,8 @@ type NodeGroup struct {
 	// The endpoint of the primary node in this node group (shard).
 	PrimaryEndpoint *Endpoint `type:"structure"`
 
-	// The endpoint of the replica nodes in this node group (shard).
+	// The endpoint of the replica nodes in this node group (shard). This value
+	// is read-only.
 	ReaderEndpoint *Endpoint `type:"structure"`
 
 	// The keyspace for this node group (shard).
@@ -23455,7 +23448,7 @@ type ServerlessCache struct {
 	Description *string `type:"string"`
 
 	// Represents the information required for client programs to connect to a cache
-	// node.
+	// node. This value is read-only.
 	Endpoint *Endpoint `type:"structure"`
 
 	// The engine the serverless cache is compatible with.
@@ -23473,7 +23466,7 @@ type ServerlessCache struct {
 	MajorEngineVersion *string `type:"string"`
 
 	// Represents the information required for client programs to connect to a cache
-	// node.
+	// node. This value is read-only.
 	ReaderEndpoint *Endpoint `type:"structure"`
 
 	// The IDs of the EC2 security groups associated with the serverless cache.
@@ -23490,10 +23483,10 @@ type ServerlessCache struct {
 	// AVAILABLE, DELETING, CREATE-FAILED and MODIFYING.
 	Status *string `type:"string"`
 
-	// If no subnet IDs are given and your VPC is in SFO, then ElastiCache will
-	// select 2 default subnets across AZs in your VPC. For all other Regions, if
-	// no subnet IDs are given then ElastiCache will select 3 default subnets across
-	// AZs in your default VPC.
+	// If no subnet IDs are given and your VPC is in us-west-1, then ElastiCache
+	// will select 2 default subnets across AZs in your VPC. For all other Regions,
+	// if no subnet IDs are given then ElastiCache will select 3 default subnets
+	// across AZs in your default VPC.
 	SubnetIds []*string `locationNameList:"SubnetId" type:"list"`
 
 	// The identifier of the user group associated with the serverless cache. Available
@@ -24596,7 +24589,7 @@ type TestFailoverInput struct {
 
 	// The name of the node group (called shard in the console) in this replication
 	// group on which automatic failover is to be tested. You may test automatic
-	// failover on up to 5 node groups in any rolling 24-hour period.
+	// failover on up to 15 node groups in any rolling 24-hour period.
 	//
 	// NodeGroupId is a required field
 	NodeGroupId *string `min:"1" type:"string" required:"true"`

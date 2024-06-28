@@ -108,6 +108,8 @@ const (
 
 	// ErrCodeFederationSourceRetryableException for service response error code
 	// "FederationSourceRetryableException".
+	//
+	// A federation source failed, but the operation may be retried.
 	ErrCodeFederationSourceRetryableException = "FederationSourceRetryableException"
 
 	// ErrCodeIdempotentParameterMismatchException for service response error code
@@ -163,6 +165,12 @@ const (
 	//
 	// There is no applicable schedule.
 	ErrCodeNoScheduleException = "NoScheduleException"
+
+	// ErrCodeOperationNotSupportedException for service response error code
+	// "OperationNotSupportedException".
+	//
+	// The operation is not available in the region.
+	ErrCodeOperationNotSupportedException = "OperationNotSupportedException"
 
 	// ErrCodeOperationTimeoutException for service response error code
 	// "OperationTimeoutException".
@@ -246,6 +254,7 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"InvalidStateException":                   newErrorInvalidStateException,
 	"MLTransformNotReadyException":            newErrorMLTransformNotReadyException,
 	"NoScheduleException":                     newErrorNoScheduleException,
+	"OperationNotSupportedException":          newErrorOperationNotSupportedException,
 	"OperationTimeoutException":               newErrorOperationTimeoutException,
 	"PermissionTypeMismatchException":         newErrorPermissionTypeMismatchException,
 	"ResourceNotReadyException":               newErrorResourceNotReadyException,

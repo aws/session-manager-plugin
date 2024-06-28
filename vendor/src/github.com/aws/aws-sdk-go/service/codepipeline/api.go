@@ -1774,6 +1774,10 @@ func (c *CodePipeline) ListPipelineExecutionsRequest(input *ListPipelineExecutio
 //
 // Gets a summary of the most recent executions for a pipeline.
 //
+// When applying the filter for pipeline executions that have succeeded in the
+// stage, the operation returns all executions in the current pipeline version
+// beginning on February 1, 2024.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -3307,6 +3311,108 @@ func (c *CodePipeline) RetryStageExecutionWithContext(ctx aws.Context, input *Re
 	return out, req.Send()
 }
 
+const opRollbackStage = "RollbackStage"
+
+// RollbackStageRequest generates a "aws/request.Request" representing the
+// client's request for the RollbackStage operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See RollbackStage for more information on using the RollbackStage
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the RollbackStageRequest method.
+//	req, resp := client.RollbackStageRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/RollbackStage
+func (c *CodePipeline) RollbackStageRequest(input *RollbackStageInput) (req *request.Request, output *RollbackStageOutput) {
+	op := &request.Operation{
+		Name:       opRollbackStage,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &RollbackStageInput{}
+	}
+
+	output = &RollbackStageOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// RollbackStage API operation for AWS CodePipeline.
+//
+// Rolls back a stage execution.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodePipeline's
+// API operation RollbackStage for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The validation was specified in an invalid format.
+//
+//   - ConflictException
+//     Your request cannot be handled because the pipeline is busy handling ongoing
+//     activities. Try again later.
+//
+//   - PipelineNotFoundException
+//     The pipeline was specified in an invalid format or cannot be found.
+//
+//   - PipelineExecutionNotFoundException
+//     The pipeline execution was specified in an invalid format or cannot be found,
+//     or an execution ID does not belong to the specified pipeline.
+//
+//   - PipelineExecutionOutdatedException
+//     The specified pipeline execution is outdated and cannot be used as a target
+//     pipeline execution for rollback.
+//
+//   - StageNotFoundException
+//     The stage was specified in an invalid format or cannot be found.
+//
+//   - UnableToRollbackStageException
+//     Unable to roll back the stage. The cause might be if the pipeline version
+//     has changed since the target pipeline execution was deployed, the stage is
+//     currently running, or an incorrect target pipeline execution ID was provided.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/RollbackStage
+func (c *CodePipeline) RollbackStage(input *RollbackStageInput) (*RollbackStageOutput, error) {
+	req, out := c.RollbackStageRequest(input)
+	return out, req.Send()
+}
+
+// RollbackStageWithContext is the same as RollbackStage with the addition of
+// the ability to pass a context and additional request options.
+//
+// See RollbackStage for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodePipeline) RollbackStageWithContext(ctx aws.Context, input *RollbackStageInput, opts ...request.Option) (*RollbackStageOutput, error) {
+	req, out := c.RollbackStageRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartPipelineExecution = "StartPipelineExecution"
 
 // StartPipelineExecutionRequest generates a "aws/request.Request" representing the
@@ -3371,6 +3477,9 @@ func (c *CodePipeline) StartPipelineExecutionRequest(input *StartPipelineExecuti
 //
 //   - PipelineNotFoundException
 //     The pipeline was specified in an invalid format or cannot be found.
+//
+//   - ConcurrentPipelineExecutionsLimitExceededException
+//     The pipeline has reached the limit for concurrent pipeline executions.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/codepipeline-2015-07-09/StartPipelineExecution
 func (c *CodePipeline) StartPipelineExecution(input *StartPipelineExecutionInput) (*StartPipelineExecutionOutput, error) {
@@ -4420,6 +4529,11 @@ type ActionDeclaration struct {
 
 	// The order in which actions are run.
 	RunOrder *int64 `locationName:"runOrder" min:"1" type:"integer"`
+
+	// A timeout duration in minutes that can be applied against the ActionType’s
+	// default timeout value specified in Quotas for CodePipeline (https://docs.aws.amazon.com/codepipeline/latest/userguide/limits.html).
+	// This attribute is available only to the manual approval ActionType.
+	TimeoutInMinutes *int64 `locationName:"timeoutInMinutes" min:"5" type:"integer"`
 }
 
 // String returns the string representation.
@@ -4460,6 +4574,9 @@ func (s *ActionDeclaration) Validate() error {
 	}
 	if s.RunOrder != nil && *s.RunOrder < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("RunOrder", 1))
+	}
+	if s.TimeoutInMinutes != nil && *s.TimeoutInMinutes < 5 {
+		invalidParams.Add(request.NewErrParamMinValue("TimeoutInMinutes", 5))
 	}
 	if s.ActionTypeId != nil {
 		if err := s.ActionTypeId.Validate(); err != nil {
@@ -4544,6 +4661,12 @@ func (s *ActionDeclaration) SetRoleArn(v string) *ActionDeclaration {
 // SetRunOrder sets the RunOrder field's value.
 func (s *ActionDeclaration) SetRunOrder(v int64) *ActionDeclaration {
 	s.RunOrder = &v
+	return s
+}
+
+// SetTimeoutInMinutes sets the TimeoutInMinutes field's value.
+func (s *ActionDeclaration) SetTimeoutInMinutes(v int64) *ActionDeclaration {
+	s.TimeoutInMinutes = &v
 	return s
 }
 
@@ -4705,6 +4828,9 @@ type ActionExecutionDetail struct {
 	// The status of the action execution. Status categories are InProgress, Succeeded,
 	// and Failed.
 	Status *string `locationName:"status" type:"string" enum:"ActionExecutionStatus"`
+
+	// The ARN of the user who changed the pipeline execution details.
+	UpdatedBy *string `locationName:"updatedBy" type:"string"`
 }
 
 // String returns the string representation.
@@ -4785,9 +4911,21 @@ func (s *ActionExecutionDetail) SetStatus(v string) *ActionExecutionDetail {
 	return s
 }
 
+// SetUpdatedBy sets the UpdatedBy field's value.
+func (s *ActionExecutionDetail) SetUpdatedBy(v string) *ActionExecutionDetail {
+	s.UpdatedBy = &v
+	return s
+}
+
 // Filter values for the action execution.
 type ActionExecutionFilter struct {
 	_ struct{} `type:"structure"`
+
+	// The latest execution in the pipeline.
+	//
+	// Filtering on the latest execution is available for executions run on or after
+	// February 08, 2024.
+	LatestInPipelineExecution *LatestInPipelineExecutionFilter `locationName:"latestInPipelineExecution" type:"structure"`
 
 	// The pipeline execution ID used to filter action execution history.
 	PipelineExecutionId *string `locationName:"pipelineExecutionId" type:"string"`
@@ -4809,6 +4947,27 @@ func (s ActionExecutionFilter) String() string {
 // value will be replaced with "sensitive".
 func (s ActionExecutionFilter) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ActionExecutionFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ActionExecutionFilter"}
+	if s.LatestInPipelineExecution != nil {
+		if err := s.LatestInPipelineExecution.Validate(); err != nil {
+			invalidParams.AddNested("LatestInPipelineExecution", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLatestInPipelineExecution sets the LatestInPipelineExecution field's value.
+func (s *ActionExecutionFilter) SetLatestInPipelineExecution(v *LatestInPipelineExecutionFilter) *ActionExecutionFilter {
+	s.LatestInPipelineExecution = v
+	return s
 }
 
 // SetPipelineExecutionId sets the PipelineExecutionId field's value.
@@ -4962,6 +5121,9 @@ func (s *ActionExecutionOutput) SetOutputVariables(v map[string]*string) *Action
 type ActionExecutionResult struct {
 	_ struct{} `type:"structure"`
 
+	// Represents information about an error in CodePipeline.
+	ErrorDetails *ErrorDetails `locationName:"errorDetails" type:"structure"`
+
 	// The action provider's external ID for the action execution.
 	ExternalExecutionId *string `locationName:"externalExecutionId" type:"string"`
 
@@ -4989,6 +5151,12 @@ func (s ActionExecutionResult) String() string {
 // value will be replaced with "sensitive".
 func (s ActionExecutionResult) GoString() string {
 	return s.String()
+}
+
+// SetErrorDetails sets the ErrorDetails field's value.
+func (s *ActionExecutionResult) SetErrorDetails(v *ErrorDetails) *ActionExecutionResult {
+	s.ErrorDetails = v
+	return s
 }
 
 // SetExternalExecutionId sets the ExternalExecutionId field's value.
@@ -6904,6 +7072,70 @@ func (s *ConcurrentModificationException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The pipeline has reached the limit for concurrent pipeline executions.
+type ConcurrentPipelineExecutionsLimitExceededException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConcurrentPipelineExecutionsLimitExceededException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConcurrentPipelineExecutionsLimitExceededException) GoString() string {
+	return s.String()
+}
+
+func newErrorConcurrentPipelineExecutionsLimitExceededException(v protocol.ResponseMetadata) error {
+	return &ConcurrentPipelineExecutionsLimitExceededException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ConcurrentPipelineExecutionsLimitExceededException) Code() string {
+	return "ConcurrentPipelineExecutionsLimitExceededException"
+}
+
+// Message returns the exception's message.
+func (s *ConcurrentPipelineExecutionsLimitExceededException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ConcurrentPipelineExecutionsLimitExceededException) OrigErr() error {
+	return nil
+}
+
+func (s *ConcurrentPipelineExecutionsLimitExceededException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ConcurrentPipelineExecutionsLimitExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ConcurrentPipelineExecutionsLimitExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // Your request cannot be handled because the pipeline is busy handling ongoing
 // activities. Try again later.
 type ConflictException struct {
@@ -8296,6 +8528,40 @@ func (s *ExecutorConfiguration) SetLambdaExecutorConfiguration(v *LambdaExecutor
 	return s
 }
 
+// The configuration that specifies the result, such as rollback, to occur upon
+// stage failure.
+type FailureConditions struct {
+	_ struct{} `type:"structure"`
+
+	// The specified result for when the failure conditions are met, such as rolling
+	// back the stage.
+	Result *string `locationName:"result" type:"string" enum:"Result"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailureConditions) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FailureConditions) GoString() string {
+	return s.String()
+}
+
+// SetResult sets the Result field's value.
+func (s *FailureConditions) SetResult(v string) *FailureConditions {
+	s.Result = &v
+	return s
+}
+
 // Represents information about failure details.
 type FailureDetails struct {
 	_ struct{} `type:"structure"`
@@ -9018,23 +9284,79 @@ func (s *GetThirdPartyJobDetailsOutput) SetJobDetails(v *ThirdPartyJobDetails) *
 	return s
 }
 
+// The Git repository branches specified as filter criteria to start the pipeline.
+type GitBranchFilterCriteria struct {
+	_ struct{} `type:"structure"`
+
+	// The list of patterns of Git branches that, when a commit is pushed, are to
+	// be excluded from starting the pipeline.
+	Excludes []*string `locationName:"excludes" min:"1" type:"list"`
+
+	// The list of patterns of Git branches that, when a commit is pushed, are to
+	// be included as criteria that starts the pipeline.
+	Includes []*string `locationName:"includes" min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GitBranchFilterCriteria) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GitBranchFilterCriteria) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GitBranchFilterCriteria) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GitBranchFilterCriteria"}
+	if s.Excludes != nil && len(s.Excludes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Excludes", 1))
+	}
+	if s.Includes != nil && len(s.Includes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Includes", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetExcludes sets the Excludes field's value.
+func (s *GitBranchFilterCriteria) SetExcludes(v []*string) *GitBranchFilterCriteria {
+	s.Excludes = v
+	return s
+}
+
+// SetIncludes sets the Includes field's value.
+func (s *GitBranchFilterCriteria) SetIncludes(v []*string) *GitBranchFilterCriteria {
+	s.Includes = v
+	return s
+}
+
 // A type of trigger configuration for Git-based source actions.
 //
 // You can specify the Git configuration trigger type for all third-party Git-based
 // source actions that are supported by the CodeStarSourceConnection action
 // type.
-//
-// V2 type pipelines, along with triggers on Git tags and pipeline-level variables,
-// are not currently supported for CloudFormation and CDK resources in CodePipeline.
-// For more information about V2 type pipelines, see Pipeline types (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html)
-// in the CodePipeline User Guide.
 type GitConfiguration struct {
 	_ struct{} `type:"structure"`
 
+	// The field where the repository event that will start the pipeline is specified
+	// as pull requests.
+	PullRequest []*GitPullRequestFilter `locationName:"pullRequest" min:"1" type:"list"`
+
 	// The field where the repository event that will start the pipeline, such as
 	// pushing Git tags, is specified with details.
-	//
-	// Git tags is the only supported event type.
 	Push []*GitPushFilter `locationName:"push" min:"1" type:"list"`
 
 	// The name of the pipeline source action where the trigger configuration, such
@@ -9068,6 +9390,9 @@ func (s GitConfiguration) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *GitConfiguration) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "GitConfiguration"}
+	if s.PullRequest != nil && len(s.PullRequest) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("PullRequest", 1))
+	}
 	if s.Push != nil && len(s.Push) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Push", 1))
 	}
@@ -9076,6 +9401,16 @@ func (s *GitConfiguration) Validate() error {
 	}
 	if s.SourceActionName != nil && len(*s.SourceActionName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("SourceActionName", 1))
+	}
+	if s.PullRequest != nil {
+		for i, v := range s.PullRequest {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "PullRequest", i), err.(request.ErrInvalidParams))
+			}
+		}
 	}
 	if s.Push != nil {
 		for i, v := range s.Push {
@@ -9094,6 +9429,12 @@ func (s *GitConfiguration) Validate() error {
 	return nil
 }
 
+// SetPullRequest sets the PullRequest field's value.
+func (s *GitConfiguration) SetPullRequest(v []*GitPullRequestFilter) *GitConfiguration {
+	s.PullRequest = v
+	return s
+}
+
 // SetPush sets the Push field's value.
 func (s *GitConfiguration) SetPush(v []*GitPushFilter) *GitConfiguration {
 	s.Push = v
@@ -9106,11 +9447,153 @@ func (s *GitConfiguration) SetSourceActionName(v string) *GitConfiguration {
 	return s
 }
 
+// The Git repository file paths specified as filter criteria to start the pipeline.
+type GitFilePathFilterCriteria struct {
+	_ struct{} `type:"structure"`
+
+	// The list of patterns of Git repository file paths that, when a commit is
+	// pushed, are to be excluded from starting the pipeline.
+	Excludes []*string `locationName:"excludes" min:"1" type:"list"`
+
+	// The list of patterns of Git repository file paths that, when a commit is
+	// pushed, are to be included as criteria that starts the pipeline.
+	Includes []*string `locationName:"includes" min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GitFilePathFilterCriteria) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GitFilePathFilterCriteria) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GitFilePathFilterCriteria) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GitFilePathFilterCriteria"}
+	if s.Excludes != nil && len(s.Excludes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Excludes", 1))
+	}
+	if s.Includes != nil && len(s.Includes) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Includes", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetExcludes sets the Excludes field's value.
+func (s *GitFilePathFilterCriteria) SetExcludes(v []*string) *GitFilePathFilterCriteria {
+	s.Excludes = v
+	return s
+}
+
+// SetIncludes sets the Includes field's value.
+func (s *GitFilePathFilterCriteria) SetIncludes(v []*string) *GitFilePathFilterCriteria {
+	s.Includes = v
+	return s
+}
+
+// The event criteria for the pull request trigger configuration, such as the
+// lists of branches or file paths to include and exclude.
+type GitPullRequestFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The field that specifies to filter on branches for the pull request trigger
+	// configuration.
+	Branches *GitBranchFilterCriteria `locationName:"branches" type:"structure"`
+
+	// The field that specifies which pull request events to filter on (opened,
+	// updated, closed) for the trigger configuration.
+	Events []*string `locationName:"events" min:"1" type:"list" enum:"GitPullRequestEventType"`
+
+	// The field that specifies to filter on file paths for the pull request trigger
+	// configuration.
+	FilePaths *GitFilePathFilterCriteria `locationName:"filePaths" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GitPullRequestFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GitPullRequestFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GitPullRequestFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GitPullRequestFilter"}
+	if s.Events != nil && len(s.Events) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Events", 1))
+	}
+	if s.Branches != nil {
+		if err := s.Branches.Validate(); err != nil {
+			invalidParams.AddNested("Branches", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.FilePaths != nil {
+		if err := s.FilePaths.Validate(); err != nil {
+			invalidParams.AddNested("FilePaths", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBranches sets the Branches field's value.
+func (s *GitPullRequestFilter) SetBranches(v *GitBranchFilterCriteria) *GitPullRequestFilter {
+	s.Branches = v
+	return s
+}
+
+// SetEvents sets the Events field's value.
+func (s *GitPullRequestFilter) SetEvents(v []*string) *GitPullRequestFilter {
+	s.Events = v
+	return s
+}
+
+// SetFilePaths sets the FilePaths field's value.
+func (s *GitPullRequestFilter) SetFilePaths(v *GitFilePathFilterCriteria) *GitPullRequestFilter {
+	s.FilePaths = v
+	return s
+}
+
 // The event criteria that specify when a specified repository event will start
 // the pipeline for the specified trigger configuration, such as the lists of
 // Git tags to include and exclude.
 type GitPushFilter struct {
 	_ struct{} `type:"structure"`
+
+	// The field that specifies to filter on branches for the push trigger configuration.
+	Branches *GitBranchFilterCriteria `locationName:"branches" type:"structure"`
+
+	// The field that specifies to filter on file paths for the push trigger configuration.
+	FilePaths *GitFilePathFilterCriteria `locationName:"filePaths" type:"structure"`
 
 	// The field that contains the details for the Git tags trigger configuration.
 	Tags *GitTagFilterCriteria `locationName:"tags" type:"structure"`
@@ -9137,6 +9620,16 @@ func (s GitPushFilter) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *GitPushFilter) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "GitPushFilter"}
+	if s.Branches != nil {
+		if err := s.Branches.Validate(); err != nil {
+			invalidParams.AddNested("Branches", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.FilePaths != nil {
+		if err := s.FilePaths.Validate(); err != nil {
+			invalidParams.AddNested("FilePaths", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.Tags != nil {
 		if err := s.Tags.Validate(); err != nil {
 			invalidParams.AddNested("Tags", err.(request.ErrInvalidParams))
@@ -9147,6 +9640,18 @@ func (s *GitPushFilter) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetBranches sets the Branches field's value.
+func (s *GitPushFilter) SetBranches(v *GitBranchFilterCriteria) *GitPushFilter {
+	s.Branches = v
+	return s
+}
+
+// SetFilePaths sets the FilePaths field's value.
+func (s *GitPushFilter) SetFilePaths(v *GitFilePathFilterCriteria) *GitPushFilter {
+	s.FilePaths = v
+	return s
 }
 
 // SetTags sets the Tags field's value.
@@ -10568,6 +11073,75 @@ func (s *LambdaExecutorConfiguration) SetLambdaFunctionArn(v string) *LambdaExec
 	return s
 }
 
+// The field that specifies to filter on the latest execution in the pipeline.
+//
+// Filtering on the latest execution is available for executions run on or after
+// February 08, 2024.
+type LatestInPipelineExecutionFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The execution ID for the latest execution in the pipeline.
+	//
+	// PipelineExecutionId is a required field
+	PipelineExecutionId *string `locationName:"pipelineExecutionId" type:"string" required:"true"`
+
+	// The start time to filter on for the latest execution in the pipeline. Valid
+	// options:
+	//
+	//    * All
+	//
+	//    * Latest
+	//
+	// StartTimeRange is a required field
+	StartTimeRange *string `locationName:"startTimeRange" type:"string" required:"true" enum:"StartTimeRange"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LatestInPipelineExecutionFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LatestInPipelineExecutionFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LatestInPipelineExecutionFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LatestInPipelineExecutionFilter"}
+	if s.PipelineExecutionId == nil {
+		invalidParams.Add(request.NewErrParamRequired("PipelineExecutionId"))
+	}
+	if s.StartTimeRange == nil {
+		invalidParams.Add(request.NewErrParamRequired("StartTimeRange"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPipelineExecutionId sets the PipelineExecutionId field's value.
+func (s *LatestInPipelineExecutionFilter) SetPipelineExecutionId(v string) *LatestInPipelineExecutionFilter {
+	s.PipelineExecutionId = &v
+	return s
+}
+
+// SetStartTimeRange sets the StartTimeRange field's value.
+func (s *LatestInPipelineExecutionFilter) SetStartTimeRange(v string) *LatestInPipelineExecutionFilter {
+	s.StartTimeRange = &v
+	return s
+}
+
 // The number of pipelines associated with the Amazon Web Services account has
 // exceeded the limit allowed for the account.
 type LimitExceededException struct {
@@ -10643,9 +11217,6 @@ type ListActionExecutionsInput struct {
 	// remaining results, make another call with the returned nextToken value. Action
 	// execution history is retained for up to 12 months, based on action execution
 	// start times. Default value is 100.
-	//
-	// Detailed execution history is available for executions run on or after February
-	// 21, 2019.
 	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
 
 	// The token that was returned from the previous ListActionExecutions call,
@@ -10690,6 +11261,11 @@ func (s *ListActionExecutionsInput) Validate() error {
 	}
 	if s.PipelineName != nil && len(*s.PipelineName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("PipelineName", 1))
+	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
 	}
 
 	if invalidParams.Len() > 0 {
@@ -10880,6 +11456,9 @@ func (s *ListActionTypesOutput) SetNextToken(v string) *ListActionTypesOutput {
 type ListPipelineExecutionsInput struct {
 	_ struct{} `type:"structure"`
 
+	// The pipeline execution to filter on.
+	Filter *PipelineExecutionFilter `locationName:"filter" type:"structure"`
+
 	// The maximum number of results to return in a single call. To retrieve the
 	// remaining results, make another call with the returned nextToken value. Pipeline
 	// history is limited to the most recent 12 months, based on pipeline execution
@@ -10929,11 +11508,22 @@ func (s *ListPipelineExecutionsInput) Validate() error {
 	if s.PipelineName != nil && len(*s.PipelineName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("PipelineName", 1))
 	}
+	if s.Filter != nil {
+		if err := s.Filter.Validate(); err != nil {
+			invalidParams.AddNested("Filter", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetFilter sets the Filter field's value.
+func (s *ListPipelineExecutionsInput) SetFilter(v *PipelineExecutionFilter) *ListPipelineExecutionsInput {
+	s.Filter = v
+	return s
 }
 
 // SetMaxResults sets the MaxResults field's value.
@@ -11693,6 +12283,10 @@ type PipelineDeclaration struct {
 	// you must use artifactStores.
 	ArtifactStores map[string]*ArtifactStore `locationName:"artifactStores" type:"map"`
 
+	// The method that the pipeline will use to handle multiple executions. The
+	// default mode is SUPERSEDED.
+	ExecutionMode *string `locationName:"executionMode" type:"string" enum:"ExecutionMode"`
+
 	// The name of the pipeline.
 	//
 	// Name is a required field
@@ -11712,15 +12306,10 @@ type PipelineDeclaration struct {
 	// when creating or updating a pipeline will result in the pipeline having the
 	// V2 type of pipeline and the associated costs.
 	//
-	// For information about pricing for CodePipeline, see Pricing (https://aws.amazon.com/codepipeline/pricing/).
+	// For information about pricing for CodePipeline, see Pricing (http://aws.amazon.com/codepipeline/pricing/).
 	//
 	// For information about which type of pipeline to choose, see What type of
 	// pipeline is right for me? (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types-planning.html).
-	//
-	// V2 type pipelines, along with triggers on Git tags and pipeline-level variables,
-	// are not currently supported for CloudFormation and CDK resources in CodePipeline.
-	// For more information about V2 type pipelines, see Pipeline types (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html)
-	// in the CodePipeline User Guide.
 	PipelineType *string `locationName:"pipelineType" type:"string" enum:"PipelineType"`
 
 	// The Amazon Resource Name (ARN) for CodePipeline to use to either perform
@@ -11852,6 +12441,12 @@ func (s *PipelineDeclaration) SetArtifactStores(v map[string]*ArtifactStore) *Pi
 	return s
 }
 
+// SetExecutionMode sets the ExecutionMode field's value.
+func (s *PipelineDeclaration) SetExecutionMode(v string) *PipelineDeclaration {
+	s.ExecutionMode = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *PipelineDeclaration) SetName(v string) *PipelineDeclaration {
 	s.Name = &v
@@ -11901,6 +12496,13 @@ type PipelineExecution struct {
 	// A list of ArtifactRevision objects included in a pipeline execution.
 	ArtifactRevisions []*ArtifactRevision `locationName:"artifactRevisions" type:"list"`
 
+	// The method that the pipeline will use to handle multiple executions. The
+	// default mode is SUPERSEDED.
+	ExecutionMode *string `locationName:"executionMode" type:"string" enum:"ExecutionMode"`
+
+	// The type of the pipeline execution.
+	ExecutionType *string `locationName:"executionType" type:"string" enum:"ExecutionType"`
+
 	// The ID of the pipeline execution.
 	PipelineExecutionId *string `locationName:"pipelineExecutionId" type:"string"`
 
@@ -11909,6 +12511,9 @@ type PipelineExecution struct {
 
 	// The version number of the pipeline with the specified pipeline execution.
 	PipelineVersion *int64 `locationName:"pipelineVersion" min:"1" type:"integer"`
+
+	// The metadata about the execution pertaining to stage rollback.
+	RollbackMetadata *PipelineRollbackMetadata `locationName:"rollbackMetadata" type:"structure"`
 
 	// The status of the pipeline execution.
 	//
@@ -11969,6 +12574,18 @@ func (s *PipelineExecution) SetArtifactRevisions(v []*ArtifactRevision) *Pipelin
 	return s
 }
 
+// SetExecutionMode sets the ExecutionMode field's value.
+func (s *PipelineExecution) SetExecutionMode(v string) *PipelineExecution {
+	s.ExecutionMode = &v
+	return s
+}
+
+// SetExecutionType sets the ExecutionType field's value.
+func (s *PipelineExecution) SetExecutionType(v string) *PipelineExecution {
+	s.ExecutionType = &v
+	return s
+}
+
 // SetPipelineExecutionId sets the PipelineExecutionId field's value.
 func (s *PipelineExecution) SetPipelineExecutionId(v string) *PipelineExecution {
 	s.PipelineExecutionId = &v
@@ -11984,6 +12601,12 @@ func (s *PipelineExecution) SetPipelineName(v string) *PipelineExecution {
 // SetPipelineVersion sets the PipelineVersion field's value.
 func (s *PipelineExecution) SetPipelineVersion(v int64) *PipelineExecution {
 	s.PipelineVersion = &v
+	return s
+}
+
+// SetRollbackMetadata sets the RollbackMetadata field's value.
+func (s *PipelineExecution) SetRollbackMetadata(v *PipelineRollbackMetadata) *PipelineExecution {
+	s.RollbackMetadata = v
 	return s
 }
 
@@ -12008,6 +12631,54 @@ func (s *PipelineExecution) SetTrigger(v *ExecutionTrigger) *PipelineExecution {
 // SetVariables sets the Variables field's value.
 func (s *PipelineExecution) SetVariables(v []*ResolvedPipelineVariable) *PipelineExecution {
 	s.Variables = v
+	return s
+}
+
+// The pipeline execution to filter on.
+type PipelineExecutionFilter struct {
+	_ struct{} `type:"structure"`
+
+	// Filter for pipeline executions where the stage was successful in the current
+	// pipeline version.
+	SucceededInStage *SucceededInStageFilter `locationName:"succeededInStage" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineExecutionFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineExecutionFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PipelineExecutionFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PipelineExecutionFilter"}
+	if s.SucceededInStage != nil {
+		if err := s.SucceededInStage.Validate(); err != nil {
+			invalidParams.AddNested("SucceededInStage", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetSucceededInStage sets the SucceededInStage field's value.
+func (s *PipelineExecutionFilter) SetSucceededInStage(v *SucceededInStageFilter) *PipelineExecutionFilter {
+	s.SucceededInStage = v
 	return s
 }
 
@@ -12141,9 +12812,81 @@ func (s *PipelineExecutionNotStoppableException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The specified pipeline execution is outdated and cannot be used as a target
+// pipeline execution for rollback.
+type PipelineExecutionOutdatedException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineExecutionOutdatedException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineExecutionOutdatedException) GoString() string {
+	return s.String()
+}
+
+func newErrorPipelineExecutionOutdatedException(v protocol.ResponseMetadata) error {
+	return &PipelineExecutionOutdatedException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *PipelineExecutionOutdatedException) Code() string {
+	return "PipelineExecutionOutdatedException"
+}
+
+// Message returns the exception's message.
+func (s *PipelineExecutionOutdatedException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *PipelineExecutionOutdatedException) OrigErr() error {
+	return nil
+}
+
+func (s *PipelineExecutionOutdatedException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *PipelineExecutionOutdatedException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *PipelineExecutionOutdatedException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // Summary information about a pipeline execution.
 type PipelineExecutionSummary struct {
 	_ struct{} `type:"structure"`
+
+	// The method that the pipeline will use to handle multiple executions. The
+	// default mode is SUPERSEDED.
+	ExecutionMode *string `locationName:"executionMode" type:"string" enum:"ExecutionMode"`
+
+	// Type of the pipeline execution.
+	ExecutionType *string `locationName:"executionType" type:"string" enum:"ExecutionType"`
 
 	// The date and time of the last change to the pipeline execution, in timestamp
 	// format.
@@ -12151,6 +12894,9 @@ type PipelineExecutionSummary struct {
 
 	// The ID of the pipeline execution.
 	PipelineExecutionId *string `locationName:"pipelineExecutionId" type:"string"`
+
+	// The metadata for the stage execution to be rolled back.
+	RollbackMetadata *PipelineRollbackMetadata `locationName:"rollbackMetadata" type:"structure"`
 
 	// A list of the source artifact revisions that initiated a pipeline execution.
 	SourceRevisions []*SourceRevision `locationName:"sourceRevisions" type:"list"`
@@ -12180,6 +12926,9 @@ type PipelineExecutionSummary struct {
 	//    * Failed: The pipeline execution was not completed successfully.
 	Status *string `locationName:"status" type:"string" enum:"PipelineExecutionStatus"`
 
+	// Status summary for the pipeline.
+	StatusSummary *string `locationName:"statusSummary" type:"string"`
+
 	// The interaction that stopped a pipeline execution.
 	StopTrigger *StopExecutionTrigger `locationName:"stopTrigger" type:"structure"`
 
@@ -12206,6 +12955,18 @@ func (s PipelineExecutionSummary) GoString() string {
 	return s.String()
 }
 
+// SetExecutionMode sets the ExecutionMode field's value.
+func (s *PipelineExecutionSummary) SetExecutionMode(v string) *PipelineExecutionSummary {
+	s.ExecutionMode = &v
+	return s
+}
+
+// SetExecutionType sets the ExecutionType field's value.
+func (s *PipelineExecutionSummary) SetExecutionType(v string) *PipelineExecutionSummary {
+	s.ExecutionType = &v
+	return s
+}
+
 // SetLastUpdateTime sets the LastUpdateTime field's value.
 func (s *PipelineExecutionSummary) SetLastUpdateTime(v time.Time) *PipelineExecutionSummary {
 	s.LastUpdateTime = &v
@@ -12215,6 +12976,12 @@ func (s *PipelineExecutionSummary) SetLastUpdateTime(v time.Time) *PipelineExecu
 // SetPipelineExecutionId sets the PipelineExecutionId field's value.
 func (s *PipelineExecutionSummary) SetPipelineExecutionId(v string) *PipelineExecutionSummary {
 	s.PipelineExecutionId = &v
+	return s
+}
+
+// SetRollbackMetadata sets the RollbackMetadata field's value.
+func (s *PipelineExecutionSummary) SetRollbackMetadata(v *PipelineRollbackMetadata) *PipelineExecutionSummary {
+	s.RollbackMetadata = v
 	return s
 }
 
@@ -12233,6 +13000,12 @@ func (s *PipelineExecutionSummary) SetStartTime(v time.Time) *PipelineExecutionS
 // SetStatus sets the Status field's value.
 func (s *PipelineExecutionSummary) SetStatus(v string) *PipelineExecutionSummary {
 	s.Status = &v
+	return s
+}
+
+// SetStatusSummary sets the StatusSummary field's value.
+func (s *PipelineExecutionSummary) SetStatusSummary(v string) *PipelineExecutionSummary {
+	s.StatusSummary = &v
 	return s
 }
 
@@ -12441,12 +13214,48 @@ func (s *PipelineNotFoundException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The metadata for the stage execution to be rolled back.
+type PipelineRollbackMetadata struct {
+	_ struct{} `type:"structure"`
+
+	// The pipeline execution ID to which the stage will be rolled back.
+	RollbackTargetPipelineExecutionId *string `locationName:"rollbackTargetPipelineExecutionId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineRollbackMetadata) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PipelineRollbackMetadata) GoString() string {
+	return s.String()
+}
+
+// SetRollbackTargetPipelineExecutionId sets the RollbackTargetPipelineExecutionId field's value.
+func (s *PipelineRollbackMetadata) SetRollbackTargetPipelineExecutionId(v string) *PipelineRollbackMetadata {
+	s.RollbackTargetPipelineExecutionId = &v
+	return s
+}
+
 // Returns a summary of a pipeline.
 type PipelineSummary struct {
 	_ struct{} `type:"structure"`
 
 	// The date and time the pipeline was created, in timestamp format.
 	Created *time.Time `locationName:"created" type:"timestamp"`
+
+	// The method that the pipeline will use to handle multiple executions. The
+	// default mode is SUPERSEDED.
+	ExecutionMode *string `locationName:"executionMode" type:"string" enum:"ExecutionMode"`
 
 	// The name of the pipeline.
 	Name *string `locationName:"name" min:"1" type:"string"`
@@ -12465,15 +13274,10 @@ type PipelineSummary struct {
 	// when creating or updating a pipeline will result in the pipeline having the
 	// V2 type of pipeline and the associated costs.
 	//
-	// For information about pricing for CodePipeline, see Pricing (https://aws.amazon.com/codepipeline/pricing/).
+	// For information about pricing for CodePipeline, see Pricing (http://aws.amazon.com/codepipeline/pricing/).
 	//
 	// For information about which type of pipeline to choose, see What type of
 	// pipeline is right for me? (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types-planning.html).
-	//
-	// V2 type pipelines, along with triggers on Git tags and pipeline-level variables,
-	// are not currently supported for CloudFormation and CDK resources in CodePipeline.
-	// For more information about V2 type pipelines, see Pipeline types (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html)
-	// in the CodePipeline User Guide.
 	PipelineType *string `locationName:"pipelineType" type:"string" enum:"PipelineType"`
 
 	// The date and time of the last update to the pipeline, in timestamp format.
@@ -12504,6 +13308,12 @@ func (s PipelineSummary) GoString() string {
 // SetCreated sets the Created field's value.
 func (s *PipelineSummary) SetCreated(v time.Time) *PipelineSummary {
 	s.Created = &v
+	return s
+}
+
+// SetExecutionMode sets the ExecutionMode field's value.
+func (s *PipelineSummary) SetExecutionMode(v string) *PipelineSummary {
+	s.ExecutionMode = &v
 	return s
 }
 
@@ -12539,11 +13349,6 @@ func (s *PipelineSummary) SetVersion(v int64) *PipelineSummary {
 //
 // When a trigger configuration is specified, default change detection for repository
 // and branch commits is disabled.
-//
-// V2 type pipelines, along with triggers on Git tags and pipeline-level variables,
-// are not currently supported for CloudFormation and CDK resources in CodePipeline.
-// For more information about V2 type pipelines, see Pipeline types (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html)
-// in the CodePipeline User Guide.
 type PipelineTriggerDeclaration struct {
 	_ struct{} `type:"structure"`
 
@@ -12612,11 +13417,6 @@ func (s *PipelineTriggerDeclaration) SetProviderType(v string) *PipelineTriggerD
 }
 
 // A pipeline-level variable used for a pipeline execution.
-//
-// V2 type pipelines, along with triggers on Git tags and pipeline-level variables,
-// are not currently supported for CloudFormation and CDK resources in CodePipeline.
-// For more information about V2 type pipelines, see Pipeline types (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html)
-// in the CodePipeline User Guide.
 type PipelineVariable struct {
 	_ struct{} `type:"structure"`
 
@@ -12684,11 +13484,6 @@ func (s *PipelineVariable) SetValue(v string) *PipelineVariable {
 }
 
 // A variable declared at the pipeline level.
-//
-// V2 type pipelines, along with triggers on Git tags and pipeline-level variables,
-// are not currently supported for CloudFormation and CDK resources in CodePipeline.
-// For more information about V2 type pipelines, see Pipeline types (https://docs.aws.amazon.com/codepipeline/latest/userguide/pipeline-types.html)
-// in the CodePipeline User Guide.
 type PipelineVariableDeclaration struct {
 	_ struct{} `type:"structure"`
 
@@ -14257,6 +15052,120 @@ func (s *RetryStageExecutionOutput) SetPipelineExecutionId(v string) *RetryStage
 	return s
 }
 
+type RollbackStageInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the pipeline for which the stage will be rolled back.
+	//
+	// PipelineName is a required field
+	PipelineName *string `locationName:"pipelineName" min:"1" type:"string" required:"true"`
+
+	// The name of the stage in the pipeline to be rolled back.
+	//
+	// StageName is a required field
+	StageName *string `locationName:"stageName" min:"1" type:"string" required:"true"`
+
+	// The pipeline execution ID for the stage to be rolled back to.
+	//
+	// TargetPipelineExecutionId is a required field
+	TargetPipelineExecutionId *string `locationName:"targetPipelineExecutionId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RollbackStageInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RollbackStageInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RollbackStageInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RollbackStageInput"}
+	if s.PipelineName == nil {
+		invalidParams.Add(request.NewErrParamRequired("PipelineName"))
+	}
+	if s.PipelineName != nil && len(*s.PipelineName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("PipelineName", 1))
+	}
+	if s.StageName == nil {
+		invalidParams.Add(request.NewErrParamRequired("StageName"))
+	}
+	if s.StageName != nil && len(*s.StageName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("StageName", 1))
+	}
+	if s.TargetPipelineExecutionId == nil {
+		invalidParams.Add(request.NewErrParamRequired("TargetPipelineExecutionId"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetPipelineName sets the PipelineName field's value.
+func (s *RollbackStageInput) SetPipelineName(v string) *RollbackStageInput {
+	s.PipelineName = &v
+	return s
+}
+
+// SetStageName sets the StageName field's value.
+func (s *RollbackStageInput) SetStageName(v string) *RollbackStageInput {
+	s.StageName = &v
+	return s
+}
+
+// SetTargetPipelineExecutionId sets the TargetPipelineExecutionId field's value.
+func (s *RollbackStageInput) SetTargetPipelineExecutionId(v string) *RollbackStageInput {
+	s.TargetPipelineExecutionId = &v
+	return s
+}
+
+type RollbackStageOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The execution ID of the pipeline execution for the stage that has been rolled
+	// back.
+	//
+	// PipelineExecutionId is a required field
+	PipelineExecutionId *string `locationName:"pipelineExecutionId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RollbackStageOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RollbackStageOutput) GoString() string {
+	return s.String()
+}
+
+// SetPipelineExecutionId sets the PipelineExecutionId field's value.
+func (s *RollbackStageOutput) SetPipelineExecutionId(v string) *RollbackStageOutput {
+	s.PipelineExecutionId = &v
+	return s
+}
+
 // The location of the S3 bucket that contains a revision.
 type S3ArtifactLocation struct {
 	_ struct{} `type:"structure"`
@@ -14415,6 +15324,10 @@ func (s *SourceRevision) SetRevisionUrl(v string) *SourceRevision {
 // pipeline execution that's being started. A source revision is the version
 // with all the changes to your application code, or source artifact, for the
 // pipeline execution.
+//
+// For the S3_OBJECT_VERSION_ID and S3_OBJECT_KEY types of source revisions,
+// either of the types can be used independently, or they can be used together
+// to override the source with a specific ObjectKey and VersionID.
 type SourceRevisionOverride struct {
 	_ struct{} `type:"structure"`
 
@@ -14545,6 +15458,11 @@ type StageDeclaration struct {
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
+
+	// The method to use when a stage has not completed successfully. For example,
+	// configuring this field for rollback will roll back a failed stage automatically
+	// to the last successful pipeline execution in the stage.
+	OnFailure *FailureConditions `locationName:"onFailure" type:"structure"`
 }
 
 // String returns the string representation.
@@ -14622,6 +15540,12 @@ func (s *StageDeclaration) SetName(v string) *StageDeclaration {
 	return s
 }
 
+// SetOnFailure sets the OnFailure field's value.
+func (s *StageDeclaration) SetOnFailure(v *FailureConditions) *StageDeclaration {
+	s.OnFailure = v
+	return s
+}
+
 // Represents information about the run of a stage.
 type StageExecution struct {
 	_ struct{} `type:"structure"`
@@ -14639,6 +15563,10 @@ type StageExecution struct {
 	//
 	// Status is a required field
 	Status *string `locationName:"status" type:"string" required:"true" enum:"StageExecutionStatus"`
+
+	// The type of pipeline execution for the stage, such as a rollback pipeline
+	// execution.
+	Type *string `locationName:"type" type:"string" enum:"ExecutionType"`
 }
 
 // String returns the string representation.
@@ -14668,6 +15596,12 @@ func (s *StageExecution) SetPipelineExecutionId(v string) *StageExecution {
 // SetStatus sets the Status field's value.
 func (s *StageExecution) SetStatus(v string) *StageExecution {
 	s.Status = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *StageExecution) SetType(v string) *StageExecution {
+	s.Type = &v
 	return s
 }
 
@@ -14810,6 +15744,9 @@ type StageState struct {
 	// Represents information about the run of a stage.
 	InboundExecution *StageExecution `locationName:"inboundExecution" type:"structure"`
 
+	// The inbound executions for a stage.
+	InboundExecutions []*StageExecution `locationName:"inboundExecutions" type:"list"`
+
 	// The state of the inbound transition, which is either enabled or disabled.
 	InboundTransitionState *TransitionState `locationName:"inboundTransitionState" type:"structure"`
 
@@ -14848,6 +15785,12 @@ func (s *StageState) SetActionStates(v []*ActionState) *StageState {
 // SetInboundExecution sets the InboundExecution field's value.
 func (s *StageState) SetInboundExecution(v *StageExecution) *StageState {
 	s.InboundExecution = v
+	return s
+}
+
+// SetInboundExecutions sets the InboundExecutions field's value.
+func (s *StageState) SetInboundExecutions(v []*StageExecution) *StageState {
+	s.InboundExecutions = v
 	return s
 }
 
@@ -15154,6 +16097,53 @@ func (s StopPipelineExecutionOutput) GoString() string {
 // SetPipelineExecutionId sets the PipelineExecutionId field's value.
 func (s *StopPipelineExecutionOutput) SetPipelineExecutionId(v string) *StopPipelineExecutionOutput {
 	s.PipelineExecutionId = &v
+	return s
+}
+
+// Filter for pipeline executions that have successfully completed the stage
+// in the current pipeline version.
+type SucceededInStageFilter struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the stage for filtering for pipeline executions where the stage
+	// was successful in the current pipeline version.
+	StageName *string `locationName:"stageName" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SucceededInStageFilter) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SucceededInStageFilter) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SucceededInStageFilter) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SucceededInStageFilter"}
+	if s.StageName != nil && len(*s.StageName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("StageName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetStageName sets the StageName field's value.
+func (s *SucceededInStageFilter) SetStageName(v string) *SucceededInStageFilter {
+	s.StageName = &v
 	return s
 }
 
@@ -15644,6 +16634,72 @@ func (s *TransitionState) SetLastChangedAt(v time.Time) *TransitionState {
 func (s *TransitionState) SetLastChangedBy(v string) *TransitionState {
 	s.LastChangedBy = &v
 	return s
+}
+
+// Unable to roll back the stage. The cause might be if the pipeline version
+// has changed since the target pipeline execution was deployed, the stage is
+// currently running, or an incorrect target pipeline execution ID was provided.
+type UnableToRollbackStageException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UnableToRollbackStageException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UnableToRollbackStageException) GoString() string {
+	return s.String()
+}
+
+func newErrorUnableToRollbackStageException(v protocol.ResponseMetadata) error {
+	return &UnableToRollbackStageException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *UnableToRollbackStageException) Code() string {
+	return "UnableToRollbackStageException"
+}
+
+// Message returns the exception's message.
+func (s *UnableToRollbackStageException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *UnableToRollbackStageException) OrigErr() error {
+	return nil
+}
+
+func (s *UnableToRollbackStageException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *UnableToRollbackStageException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *UnableToRollbackStageException) RequestID() string {
+	return s.RespMetadata.RequestID
 }
 
 type UntagResourceInput struct {
@@ -16466,6 +17522,42 @@ func EncryptionKeyType_Values() []string {
 }
 
 const (
+	// ExecutionModeQueued is a ExecutionMode enum value
+	ExecutionModeQueued = "QUEUED"
+
+	// ExecutionModeSuperseded is a ExecutionMode enum value
+	ExecutionModeSuperseded = "SUPERSEDED"
+
+	// ExecutionModeParallel is a ExecutionMode enum value
+	ExecutionModeParallel = "PARALLEL"
+)
+
+// ExecutionMode_Values returns all elements of the ExecutionMode enum
+func ExecutionMode_Values() []string {
+	return []string{
+		ExecutionModeQueued,
+		ExecutionModeSuperseded,
+		ExecutionModeParallel,
+	}
+}
+
+const (
+	// ExecutionTypeStandard is a ExecutionType enum value
+	ExecutionTypeStandard = "STANDARD"
+
+	// ExecutionTypeRollback is a ExecutionType enum value
+	ExecutionTypeRollback = "ROLLBACK"
+)
+
+// ExecutionType_Values returns all elements of the ExecutionType enum
+func ExecutionType_Values() []string {
+	return []string{
+		ExecutionTypeStandard,
+		ExecutionTypeRollback,
+	}
+}
+
+const (
 	// ExecutorTypeJobWorker is a ExecutorType enum value
 	ExecutorTypeJobWorker = "JobWorker"
 
@@ -16510,6 +17602,26 @@ func FailureType_Values() []string {
 		FailureTypeRevisionOutOfSync,
 		FailureTypeRevisionUnavailable,
 		FailureTypeSystemUnavailable,
+	}
+}
+
+const (
+	// GitPullRequestEventTypeOpen is a GitPullRequestEventType enum value
+	GitPullRequestEventTypeOpen = "OPEN"
+
+	// GitPullRequestEventTypeUpdated is a GitPullRequestEventType enum value
+	GitPullRequestEventTypeUpdated = "UPDATED"
+
+	// GitPullRequestEventTypeClosed is a GitPullRequestEventType enum value
+	GitPullRequestEventTypeClosed = "CLOSED"
+)
+
+// GitPullRequestEventType_Values returns all elements of the GitPullRequestEventType enum
+func GitPullRequestEventType_Values() []string {
+	return []string{
+		GitPullRequestEventTypeOpen,
+		GitPullRequestEventTypeUpdated,
+		GitPullRequestEventTypeClosed,
 	}
 }
 
@@ -16614,6 +17726,18 @@ func PipelineType_Values() []string {
 }
 
 const (
+	// ResultRollback is a Result enum value
+	ResultRollback = "ROLLBACK"
+)
+
+// Result_Values returns all elements of the Result enum
+func Result_Values() []string {
+	return []string{
+		ResultRollback,
+	}
+}
+
+const (
 	// SourceRevisionTypeCommitId is a SourceRevisionType enum value
 	SourceRevisionTypeCommitId = "COMMIT_ID"
 
@@ -16622,6 +17746,9 @@ const (
 
 	// SourceRevisionTypeS3ObjectVersionId is a SourceRevisionType enum value
 	SourceRevisionTypeS3ObjectVersionId = "S3_OBJECT_VERSION_ID"
+
+	// SourceRevisionTypeS3ObjectKey is a SourceRevisionType enum value
+	SourceRevisionTypeS3ObjectKey = "S3_OBJECT_KEY"
 )
 
 // SourceRevisionType_Values returns all elements of the SourceRevisionType enum
@@ -16630,6 +17757,7 @@ func SourceRevisionType_Values() []string {
 		SourceRevisionTypeCommitId,
 		SourceRevisionTypeImageDigest,
 		SourceRevisionTypeS3ObjectVersionId,
+		SourceRevisionTypeS3ObjectKey,
 	}
 }
 
@@ -16698,6 +17826,22 @@ func StageTransitionType_Values() []string {
 }
 
 const (
+	// StartTimeRangeLatest is a StartTimeRange enum value
+	StartTimeRangeLatest = "Latest"
+
+	// StartTimeRangeAll is a StartTimeRange enum value
+	StartTimeRangeAll = "All"
+)
+
+// StartTimeRange_Values returns all elements of the StartTimeRange enum
+func StartTimeRange_Values() []string {
+	return []string{
+		StartTimeRangeLatest,
+		StartTimeRangeAll,
+	}
+}
+
+const (
 	// TriggerTypeCreatePipeline is a TriggerType enum value
 	TriggerTypeCreatePipeline = "CreatePipeline"
 
@@ -16718,6 +17862,12 @@ const (
 
 	// TriggerTypeWebhookV2 is a TriggerType enum value
 	TriggerTypeWebhookV2 = "WebhookV2"
+
+	// TriggerTypeManualRollback is a TriggerType enum value
+	TriggerTypeManualRollback = "ManualRollback"
+
+	// TriggerTypeAutomatedRollback is a TriggerType enum value
+	TriggerTypeAutomatedRollback = "AutomatedRollback"
 )
 
 // TriggerType_Values returns all elements of the TriggerType enum
@@ -16730,6 +17880,8 @@ func TriggerType_Values() []string {
 		TriggerTypeCloudWatchEvent,
 		TriggerTypePutActionRevision,
 		TriggerTypeWebhookV2,
+		TriggerTypeManualRollback,
+		TriggerTypeAutomatedRollback,
 	}
 }
 

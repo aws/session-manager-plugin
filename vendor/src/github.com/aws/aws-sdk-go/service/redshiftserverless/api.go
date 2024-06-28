@@ -5676,10 +5676,10 @@ type ConfigParameter struct {
 	_ struct{} `type:"structure"`
 
 	// The key of the parameter. The options are auto_mv, datestyle, enable_case_sensitive_identifier,
-	// enable_user_activity_logging, query_group, search_path, and query monitoring
-	// metrics that let you define performance boundaries. For more information
-	// about query monitoring rules and available metrics, see Query monitoring
-	// metrics for Amazon Redshift Serverless (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
+	// enable_user_activity_logging, query_group, search_path, require_ssl, use_fips_ssl,
+	// and query monitoring metrics that let you define performance boundaries.
+	// For more information about query monitoring rules and available metrics,
+	// see Query monitoring metrics for Amazon Redshift Serverless (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
 	ParameterKey *string `locationName:"parameterKey" type:"string"`
 
 	// The value of the parameter to set.
@@ -6412,15 +6412,16 @@ type CreateScheduledActionInput struct {
 	// RoleArn is a required field
 	RoleArn *string `locationName:"roleArn" type:"string" required:"true"`
 
-	// The schedule for a one-time (at format) or recurring (cron format) scheduled
-	// action. Schedule invocations must be separated by at least one hour.
+	// The schedule for a one-time (at timestamp format) or recurring (cron format)
+	// scheduled action. Schedule invocations must be separated by at least one
+	// hour. Times are in UTC.
 	//
-	// Format of at expressions is "at(yyyy-mm-ddThh:mm:ss)". For example, "at(2016-03-04T17:27:00)".
+	//    * Format of at timestamp is yyyy-mm-ddThh:mm:ss. For example, 2016-03-04T17:27:00.
 	//
-	// Format of cron expressions is "cron(Minutes Hours Day-of-month Month Day-of-week
-	// Year)". For example, "cron(0 10 ? * MON *)". For more information, see Cron
-	// Expressions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
-	// in the Amazon CloudWatch Events User Guide.
+	//    * Format of cron expression is (Minutes Hours Day-of-month Month Day-of-week
+	//    Year). For example, "(0 10 ? * MON *)". For more information, see Cron
+	//    Expressions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
+	//    in the Amazon CloudWatch Events User Guide.
 	//
 	// Schedule is a required field
 	Schedule *Schedule `locationName:"schedule" type:"structure" required:"true"`
@@ -7063,10 +7064,10 @@ type CreateWorkgroupInput struct {
 
 	// An array of parameters to set for advanced control over a database. The options
 	// are auto_mv, datestyle, enable_case_sensitive_identifier, enable_user_activity_logging,
-	// query_group, search_path, and query monitoring metrics that let you define
-	// performance boundaries. For more information about query monitoring rules
-	// and available metrics, see Query monitoring metrics for Amazon Redshift Serverless
-	// (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
+	// query_group, search_path, require_ssl, use_fips_ssl, and query monitoring
+	// metrics that let you define performance boundaries. For more information
+	// about query monitoring rules and available metrics, see Query monitoring
+	// metrics for Amazon Redshift Serverless (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
 	ConfigParameters []*ConfigParameter `locationName:"configParameters" type:"list"`
 
 	// The value that specifies whether to turn on enhanced virtual private cloud
@@ -9907,8 +9908,8 @@ type ListScheduledActionsOutput struct {
 	// using the returned token to retrieve the next page.
 	NextToken *string `locationName:"nextToken" min:"8" type:"string"`
 
-	// All of the returned scheduled action objects.
-	ScheduledActions []*string `locationName:"scheduledActions" type:"list"`
+	// All of the returned scheduled action association objects.
+	ScheduledActions []*ScheduledActionAssociation `locationName:"scheduledActions" type:"list"`
 }
 
 // String returns the string representation.
@@ -9936,7 +9937,7 @@ func (s *ListScheduledActionsOutput) SetNextToken(v string) *ListScheduledAction
 }
 
 // SetScheduledActions sets the ScheduledActions field's value.
-func (s *ListScheduledActionsOutput) SetScheduledActions(v []*string) *ListScheduledActionsOutput {
+func (s *ListScheduledActionsOutput) SetScheduledActions(v []*ScheduledActionAssociation) *ListScheduledActionsOutput {
 	s.ScheduledActions = v
 	return s
 }
@@ -11795,16 +11796,16 @@ type Schedule struct {
 	_ struct{} `type:"structure"`
 
 	// The timestamp of when Amazon Redshift Serverless should run the scheduled
-	// action. Format of at expressions is "at(yyyy-mm-ddThh:mm:ss)". For example,
-	// "at(2016-03-04T17:27:00)".
+	// action. Timestamp is in UTC. Format of at expression is yyyy-mm-ddThh:mm:ss.
+	// For example, 2016-03-04T17:27:00.
 	At *time.Time `locationName:"at" type:"timestamp"`
 
 	// The cron expression to use to schedule a recurring scheduled action. Schedule
-	// invocations must be separated by at least one hour.
+	// invocations must be separated by at least one hour. Times are in UTC.
 	//
-	// Format of cron expressions is "cron(Minutes Hours Day-of-month Month Day-of-week
-	// Year)". For example, "cron(0 10 ? * MON *)". For more information, see Cron
-	// Expressions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
+	// Format of cron expressions is (Minutes Hours Day-of-month Month Day-of-week
+	// Year). For example, "(0 10 ? * MON *)". For more information, see Cron Expressions
+	// (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
 	// in the Amazon CloudWatch Events User Guide.
 	Cron *string `locationName:"cron" type:"string"`
 }
@@ -11839,6 +11840,47 @@ func (s *Schedule) SetCron(v string) *Schedule {
 	return s
 }
 
+// Contains names of objects associated with a scheduled action.
+type ScheduledActionAssociation struct {
+	_ struct{} `type:"structure"`
+
+	// Name of associated Amazon Redshift Serverless namespace.
+	NamespaceName *string `locationName:"namespaceName" min:"3" type:"string"`
+
+	// Name of associated scheduled action.
+	ScheduledActionName *string `locationName:"scheduledActionName" min:"3" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScheduledActionAssociation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScheduledActionAssociation) GoString() string {
+	return s.String()
+}
+
+// SetNamespaceName sets the NamespaceName field's value.
+func (s *ScheduledActionAssociation) SetNamespaceName(v string) *ScheduledActionAssociation {
+	s.NamespaceName = &v
+	return s
+}
+
+// SetScheduledActionName sets the ScheduledActionName field's value.
+func (s *ScheduledActionAssociation) SetScheduledActionName(v string) *ScheduledActionAssociation {
+	s.ScheduledActionName = &v
+	return s
+}
+
 // The returned scheduled action object.
 type ScheduledActionResponse struct {
 	_ struct{} `type:"structure"`
@@ -11863,15 +11905,16 @@ type ScheduledActionResponse struct {
 	// in the Amazon Redshift Cluster Management Guide
 	RoleArn *string `locationName:"roleArn" type:"string"`
 
-	// The schedule for a one-time (at format) or recurring (cron format) scheduled
-	// action. Schedule invocations must be separated by at least one hour.
+	// The schedule for a one-time (at timestamp format) or recurring (cron format)
+	// scheduled action. Schedule invocations must be separated by at least one
+	// hour. Times are in UTC.
 	//
-	// Format of at expressions is "at(yyyy-mm-ddThh:mm:ss)". For example, "at(2016-03-04T17:27:00)".
+	//    * Format of at timestamp is yyyy-mm-ddThh:mm:ss. For example, 2016-03-04T17:27:00.
 	//
-	// Format of cron expressions is "cron(Minutes Hours Day-of-month Month Day-of-week
-	// Year)". For example, "cron(0 10 ? * MON *)". For more information, see Cron
-	// Expressions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
-	// in the Amazon CloudWatch Events User Guide.
+	//    * Format of cron expression is (Minutes Hours Day-of-month Month Day-of-week
+	//    Year). For example, "(0 10 ? * MON *)". For more information, see Cron
+	//    Expressions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
+	//    in the Amazon CloudWatch Events User Guide.
 	Schedule *Schedule `locationName:"schedule" type:"structure"`
 
 	// The description of the scheduled action.
@@ -13377,15 +13420,16 @@ type UpdateScheduledActionInput struct {
 	// in the Amazon Redshift Cluster Management Guide
 	RoleArn *string `locationName:"roleArn" type:"string"`
 
-	// The schedule for a one-time (at format) or recurring (cron format) scheduled
-	// action. Schedule invocations must be separated by at least one hour.
+	// The schedule for a one-time (at timestamp format) or recurring (cron format)
+	// scheduled action. Schedule invocations must be separated by at least one
+	// hour. Times are in UTC.
 	//
-	// Format of at expressions is "at(yyyy-mm-ddThh:mm:ss)". For example, "at(2016-03-04T17:27:00)".
+	//    * Format of at timestamp is yyyy-mm-ddThh:mm:ss. For example, 2016-03-04T17:27:00.
 	//
-	// Format of cron expressions is "cron(Minutes Hours Day-of-month Month Day-of-week
-	// Year)". For example, "cron(0 10 ? * MON *)". For more information, see Cron
-	// Expressions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
-	// in the Amazon CloudWatch Events User Guide.
+	//    * Format of cron expression is (Minutes Hours Day-of-month Month Day-of-week
+	//    Year). For example, "(0 10 ? * MON *)". For more information, see Cron
+	//    Expressions (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#CronExpressions)
+	//    in the Amazon CloudWatch Events User Guide.
 	Schedule *Schedule `locationName:"schedule" type:"structure"`
 
 	// The descripion of the scheduled action to update to.
@@ -13806,10 +13850,10 @@ type UpdateWorkgroupInput struct {
 
 	// An array of parameters to set for advanced control over a database. The options
 	// are auto_mv, datestyle, enable_case_sensitive_identifier, enable_user_activity_logging,
-	// query_group, search_path, and query monitoring metrics that let you define
-	// performance boundaries. For more information about query monitoring rules
-	// and available metrics, see Query monitoring metrics for Amazon Redshift Serverless
-	// (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
+	// query_group, search_path, require_ssl, use_fips_ssl, and query monitoring
+	// metrics that let you define performance boundaries. For more information
+	// about query monitoring rules and available metrics, see Query monitoring
+	// metrics for Amazon Redshift Serverless (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
 	ConfigParameters []*ConfigParameter `locationName:"configParameters" type:"list"`
 
 	// The value that specifies whether to turn on enhanced virtual private cloud
@@ -14221,10 +14265,10 @@ type Workgroup struct {
 
 	// An array of parameters to set for advanced control over a database. The options
 	// are auto_mv, datestyle, enable_case_sensitive_identifier, enable_user_activity_logging,
-	// query_group, search_path, and query monitoring metrics that let you define
-	// performance boundaries. For more information about query monitoring rules
-	// and available metrics, see Query monitoring metrics for Amazon Redshift Serverless
-	// (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
+	// query_group, search_path, require_ssl, use_fips_ssl, and query monitoring
+	// metrics that let you define performance boundaries. For more information
+	// about query monitoring rules and available metrics, see Query monitoring
+	// metrics for Amazon Redshift Serverless (https://docs.aws.amazon.com/redshift/latest/dg/cm-c-wlm-query-monitoring-rules.html#cm-c-wlm-query-monitoring-metrics-serverless).
 	ConfigParameters []*ConfigParameter `locationName:"configParameters" type:"list"`
 
 	// The creation date of the workgroup.
@@ -14269,7 +14313,7 @@ type Workgroup struct {
 	Port *int64 `locationName:"port" type:"integer"`
 
 	// A value that specifies whether the workgroup can be accessible from a public
-	// network
+	// network.
 	PubliclyAccessible *bool `locationName:"publiclyAccessible" type:"boolean"`
 
 	// An array of security group IDs to associate with the workgroup.

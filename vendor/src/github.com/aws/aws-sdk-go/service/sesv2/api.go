@@ -337,9 +337,8 @@ func (c *SESV2) CreateConfigurationSetEventDestinationRequest(input *CreateConfi
 // Create an event destination. Events include message sends, deliveries, opens,
 // clicks, bounces, and complaints. Event destinations are places that you can
 // send information about these events to. For example, you can send event data
-// to Amazon SNS to receive notifications when you receive bounces or complaints,
-// or you can use Amazon Kinesis Data Firehose to stream data to Amazon S3 for
-// long-term storage.
+// to Amazon EventBridge and associate a rule to send the event to the specified
+// target.
 //
 // A single configuration set can include more than one event destination.
 //
@@ -1512,9 +1511,8 @@ func (c *SESV2) DeleteConfigurationSetEventDestinationRequest(input *DeleteConfi
 //
 // Events include message sends, deliveries, opens, clicks, bounces, and complaints.
 // Event destinations are places that you can send information about these events
-// to. For example, you can send event data to Amazon SNS to receive notifications
-// when you receive bounces or complaints, or you can use Amazon Kinesis Data
-// Firehose to stream data to Amazon S3 for long-term storage.
+// to. For example, you can send event data to Amazon EventBridge and associate
+// a rule to send the event to the specified target.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2583,9 +2581,8 @@ func (c *SESV2) GetConfigurationSetEventDestinationsRequest(input *GetConfigurat
 //
 // Events include message sends, deliveries, opens, clicks, bounces, and complaints.
 // Event destinations are places that you can send information about these events
-// to. For example, you can send event data to Amazon SNS to receive notifications
-// when you receive bounces or complaints, or you can use Amazon Kinesis Data
-// Firehose to stream data to Amazon S3 for long-term storage.
+// to. For example, you can send event data to Amazon EventBridge and associate
+// a rule to send the event to the specified target.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4488,8 +4485,8 @@ const opListContacts = "ListContacts"
 func (c *SESV2) ListContactsRequest(input *ListContactsInput) (req *request.Request, output *ListContactsOutput) {
 	op := &request.Operation{
 		Name:       opListContacts,
-		HTTPMethod: "GET",
-		HTTPPath:   "/v2/email/contact-lists/{ContactListName}/contacts",
+		HTTPMethod: "POST",
+		HTTPPath:   "/v2/email/contact-lists/{ContactListName}/contacts/list",
 		Paginator: &request.Paginator{
 			InputTokens:     []string{"NextToken"},
 			OutputTokens:    []string{"NextToken"},
@@ -5629,8 +5626,8 @@ const opListImportJobs = "ListImportJobs"
 func (c *SESV2) ListImportJobsRequest(input *ListImportJobsInput) (req *request.Request, output *ListImportJobsOutput) {
 	op := &request.Operation{
 		Name:       opListImportJobs,
-		HTTPMethod: "GET",
-		HTTPPath:   "/v2/email/import-jobs",
+		HTTPMethod: "POST",
+		HTTPPath:   "/v2/email/import-jobs/list",
 		Paginator: &request.Paginator{
 			InputTokens:     []string{"NextToken"},
 			OutputTokens:    []string{"NextToken"},
@@ -8616,9 +8613,8 @@ func (c *SESV2) UpdateConfigurationSetEventDestinationRequest(input *UpdateConfi
 //
 // Events include message sends, deliveries, opens, clicks, bounces, and complaints.
 // Event destinations are places that you can send information about these events
-// to. For example, you can send event data to Amazon SNS to receive notifications
-// when you receive bounces or complaints, or you can use Amazon Kinesis Data
-// Firehose to stream data to Amazon S3 for long-term storage.
+// to. For example, you can send event data to Amazon EventBridge and associate
+// a rule to send the event to the specified target.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -8704,9 +8700,11 @@ func (c *SESV2) UpdateContactRequest(input *UpdateContactInput) (req *request.Re
 
 // UpdateContact API operation for Amazon Simple Email Service.
 //
-// Updates a contact's preferences for a list. It is not necessary to specify
-// all existing topic preferences in the TopicPreferences object, just the ones
-// that need updating.
+// Updates a contact's preferences for a list.
+//
+// You must specify all existing topic preferences in the TopicPreferences object,
+// not just the ones that need updating; otherwise, all your existing preferences
+// will be removed.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -9912,6 +9910,22 @@ type BulkEmailEntry struct {
 	// The ReplacementEmailContent associated with a BulkEmailEntry.
 	ReplacementEmailContent *ReplacementEmailContent `type:"structure"`
 
+	// The list of message headers associated with the BulkEmailEntry data type.
+	//
+	//    * Headers Not Present in BulkEmailEntry: If a header is specified in Template
+	//    (https://docs.aws.amazon.com/ses/latest/APIReference-V2/API_Template.html)
+	//    but not in BulkEmailEntry, the header from Template will be added to the
+	//    outgoing email.
+	//
+	//    * Headers Present in BulkEmailEntry: If a header is specified in BulkEmailEntry,
+	//    it takes precedence over any header of the same name specified in Template
+	//    (https://docs.aws.amazon.com/ses/latest/APIReference-V2/API_Template.html):
+	//    If the header is also defined within Template, the value from BulkEmailEntry
+	//    will replace the header's value in the email. If the header is not defined
+	//    within Template, it will simply be added to the email as specified in
+	//    BulkEmailEntry.
+	ReplacementHeaders []*MessageHeader `type:"list"`
+
 	// A list of tags, in the form of name/value pairs, to apply to an email that
 	// you send using the SendBulkTemplatedEmail operation. Tags correspond to characteristics
 	// of the email that you define, so that you can publish email sending events.
@@ -9942,6 +9956,16 @@ func (s *BulkEmailEntry) Validate() error {
 	if s.Destination == nil {
 		invalidParams.Add(request.NewErrParamRequired("Destination"))
 	}
+	if s.ReplacementHeaders != nil {
+		for i, v := range s.ReplacementHeaders {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ReplacementHeaders", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.ReplacementTags != nil {
 		for i, v := range s.ReplacementTags {
 			if v == nil {
@@ -9968,6 +9992,12 @@ func (s *BulkEmailEntry) SetDestination(v *Destination) *BulkEmailEntry {
 // SetReplacementEmailContent sets the ReplacementEmailContent field's value.
 func (s *BulkEmailEntry) SetReplacementEmailContent(v *ReplacementEmailContent) *BulkEmailEntry {
 	s.ReplacementEmailContent = v
+	return s
+}
+
+// SetReplacementHeaders sets the ReplacementHeaders field's value.
+func (s *BulkEmailEntry) SetReplacementHeaders(v []*MessageHeader) *BulkEmailEntry {
+	s.ReplacementHeaders = v
 	return s
 }
 
@@ -14263,6 +14293,56 @@ func (s *EmailTemplateMetadata) SetTemplateName(v string) *EmailTemplateMetadata
 	return s
 }
 
+// An object that defines an Amazon EventBridge destination for email events.
+// You can use Amazon EventBridge to send notifications when certain email events
+// occur.
+type EventBridgeDestination struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the Amazon EventBridge bus to publish email
+	// events to. Only the default bus is supported.
+	//
+	// EventBusArn is a required field
+	EventBusArn *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EventBridgeDestination) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EventBridgeDestination) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EventBridgeDestination) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EventBridgeDestination"}
+	if s.EventBusArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("EventBusArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEventBusArn sets the EventBusArn field's value.
+func (s *EventBridgeDestination) SetEventBusArn(v string) *EventBridgeDestination {
+	s.EventBusArn = &v
+	return s
+}
+
 // In the Amazon SES API v2, events include message sends, deliveries, opens,
 // clicks, bounces, complaints and delivery delays. Event destinations are places
 // that you can send information about these events to. For example, you can
@@ -14283,6 +14363,11 @@ type EventDestination struct {
 	// If false, the event destination is disabled. When the event destination is
 	// disabled, events aren't sent to the specified destinations.
 	Enabled *bool `type:"boolean"`
+
+	// An object that defines an Amazon EventBridge destination for email events.
+	// You can use Amazon EventBridge to send notifications when certain email events
+	// occur.
+	EventBridgeDestination *EventBridgeDestination `type:"structure"`
 
 	// An object that defines an Amazon Kinesis Data Firehose destination for email
 	// events. You can use Amazon Kinesis Data Firehose to stream data to other
@@ -14346,7 +14431,7 @@ type EventDestination struct {
 	PinpointDestination *PinpointDestination `type:"structure"`
 
 	// An object that defines an Amazon SNS destination for email events. You can
-	// use Amazon SNS to send notification when certain email events occur.
+	// use Amazon SNS to send notifications when certain email events occur.
 	SnsDestination *SnsDestination `type:"structure"`
 }
 
@@ -14377,6 +14462,12 @@ func (s *EventDestination) SetCloudWatchDestination(v *CloudWatchDestination) *E
 // SetEnabled sets the Enabled field's value.
 func (s *EventDestination) SetEnabled(v bool) *EventDestination {
 	s.Enabled = &v
+	return s
+}
+
+// SetEventBridgeDestination sets the EventBridgeDestination field's value.
+func (s *EventDestination) SetEventBridgeDestination(v *EventBridgeDestination) *EventDestination {
+	s.EventBridgeDestination = v
 	return s
 }
 
@@ -14429,6 +14520,11 @@ type EventDestinationDefinition struct {
 	// disabled, events aren't sent to the specified destinations.
 	Enabled *bool `type:"boolean"`
 
+	// An object that defines an Amazon EventBridge destination for email events.
+	// You can use Amazon EventBridge to send notifications when certain email events
+	// occur.
+	EventBridgeDestination *EventBridgeDestination `type:"structure"`
+
 	// An object that defines an Amazon Kinesis Data Firehose destination for email
 	// events. You can use Amazon Kinesis Data Firehose to stream data to other
 	// services, such as Amazon S3 and Amazon Redshift.
@@ -14446,7 +14542,7 @@ type EventDestinationDefinition struct {
 	PinpointDestination *PinpointDestination `type:"structure"`
 
 	// An object that defines an Amazon SNS destination for email events. You can
-	// use Amazon SNS to send notification when certain email events occur.
+	// use Amazon SNS to send notifications when certain email events occur.
 	SnsDestination *SnsDestination `type:"structure"`
 }
 
@@ -14476,6 +14572,11 @@ func (s *EventDestinationDefinition) Validate() error {
 			invalidParams.AddNested("CloudWatchDestination", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.EventBridgeDestination != nil {
+		if err := s.EventBridgeDestination.Validate(); err != nil {
+			invalidParams.AddNested("EventBridgeDestination", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.KinesisFirehoseDestination != nil {
 		if err := s.KinesisFirehoseDestination.Validate(); err != nil {
 			invalidParams.AddNested("KinesisFirehoseDestination", err.(request.ErrInvalidParams))
@@ -14502,6 +14603,12 @@ func (s *EventDestinationDefinition) SetCloudWatchDestination(v *CloudWatchDesti
 // SetEnabled sets the Enabled field's value.
 func (s *EventDestinationDefinition) SetEnabled(v bool) *EventDestinationDefinition {
 	s.Enabled = &v
+	return s
+}
+
+// SetEventBridgeDestination sets the EventBridgeDestination field's value.
+func (s *EventDestinationDefinition) SetEventBridgeDestination(v *EventBridgeDestination) *EventDestinationDefinition {
+	s.EventBridgeDestination = v
 	return s
 }
 
@@ -14991,10 +15098,7 @@ type GetAccountOutput struct {
 	// Amazon Web Services Region.
 	//
 	// If the value is false, then your account is in the sandbox. When your account
-	// is in the sandbox, you can only send email to verified identities. Additionally,
-	// the maximum number of emails you can send in a 24-hour period (your sending
-	// quota) is 200, and the maximum number of emails you can send per second (your
-	// maximum sending rate) is 1.
+	// is in the sandbox, you can only send email to verified identities.
 	//
 	// If the value is true, then your account has production access. When your
 	// account has production access, you can send email to any address. The sending
@@ -18467,14 +18571,14 @@ type ListContactsInput struct {
 	// to be listed. Use the token provided in the Response to use in the subsequent
 	// call to ListContacts with the same parameters to retrieve the next page of
 	// contacts.
-	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
+	NextToken *string `type:"string"`
 
 	// The number of contacts that may be returned at once, which is dependent on
 	// if there are more or less contacts than the value of the PageSize. Use this
 	// parameter to paginate results. If additional contacts exist beyond the specified
 	// limit, the NextToken element is sent in the response. Use the NextToken value
 	// in subsequent requests to retrieve additional contacts.
-	PageSize *int64 `location:"querystring" locationName:"PageSize" type:"integer"`
+	PageSize *int64 `type:"integer"`
 }
 
 // String returns the string representation.
@@ -19314,13 +19418,13 @@ type ListImportJobsInput struct {
 	// A string token indicating that there might be additional import jobs available
 	// to be listed. Copy this token to a subsequent call to ListImportJobs with
 	// the same parameters to retrieve the next page of import jobs.
-	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
+	NextToken *string `type:"string"`
 
 	// Maximum number of import jobs to return at once. Use this parameter to paginate
 	// results. If additional import jobs exist beyond the specified limit, the
 	// NextToken element is sent in the response. Use the NextToken value in subsequent
 	// requests to retrieve additional addresses.
-	PageSize *int64 `location:"querystring" locationName:"PageSize" type:"integer"`
+	PageSize *int64 `type:"integer"`
 }
 
 // String returns the string representation.
@@ -19924,6 +20028,9 @@ type Message struct {
 	// Body is a required field
 	Body *Body `type:"structure" required:"true"`
 
+	// The list of message headers that will be added to the email message.
+	Headers []*MessageHeader `type:"list"`
+
 	// The subject line of the email. The subject line can only contain 7-bit ASCII
 	// characters. However, you can specify non-ASCII characters in the subject
 	// line by using encoded-word syntax, as described in RFC 2047 (https://tools.ietf.org/html/rfc2047).
@@ -19964,6 +20071,16 @@ func (s *Message) Validate() error {
 			invalidParams.AddNested("Body", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.Headers != nil {
+		for i, v := range s.Headers {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Headers", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.Subject != nil {
 		if err := s.Subject.Validate(); err != nil {
 			invalidParams.AddNested("Subject", err.(request.ErrInvalidParams))
@@ -19982,9 +20099,93 @@ func (s *Message) SetBody(v *Body) *Message {
 	return s
 }
 
+// SetHeaders sets the Headers field's value.
+func (s *Message) SetHeaders(v []*MessageHeader) *Message {
+	s.Headers = v
+	return s
+}
+
 // SetSubject sets the Subject field's value.
 func (s *Message) SetSubject(v *Content) *Message {
 	s.Subject = v
+	return s
+}
+
+// Contains the name and value of a message header that you add to an email.
+type MessageHeader struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the message header. The message header name has to meet the following
+	// criteria:
+	//
+	//    * Can contain any printable ASCII character (33 - 126) except for colon
+	//    (:).
+	//
+	//    * Can contain no more than 126 characters.
+	//
+	// Name is a required field
+	Name *string `min:"1" type:"string" required:"true"`
+
+	// The value of the message header. The message header value has to meet the
+	// following criteria:
+	//
+	//    * Can contain any printable ASCII character.
+	//
+	//    * Can contain no more than 870 characters.
+	//
+	// Value is a required field
+	Value *string `min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MessageHeader) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s MessageHeader) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *MessageHeader) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "MessageHeader"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.Value == nil {
+		invalidParams.Add(request.NewErrParamRequired("Value"))
+	}
+	if s.Value != nil && len(*s.Value) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Value", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetName sets the Name field's value.
+func (s *MessageHeader) SetName(v string) *MessageHeader {
+	s.Name = &v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *MessageHeader) SetValue(v string) *MessageHeader {
+	s.Value = &v
 	return s
 }
 
@@ -20842,10 +21043,7 @@ type PutAccountDetailsInput struct {
 	// current Amazon Web Services Region.
 	//
 	// If the value is false, then your account is in the sandbox. When your account
-	// is in the sandbox, you can only send email to verified identities. Additionally,
-	// the maximum number of emails you can send in a 24-hour period (your sending
-	// quota) is 200, and the maximum number of emails you can send per second (your
-	// maximum sending rate) is 1.
+	// is in the sandbox, you can only send email to verified identities.
 	//
 	// If the value is true, then your account has production access. When your
 	// account has production access, you can send email to any address. The sending
@@ -23395,7 +23593,7 @@ type SendEmailInput struct {
 	ConfigurationSetName *string `type:"string"`
 
 	// An object that contains the body of the message. You can send either a Simple
-	// message Raw message or a template Message.
+	// message, Raw message, or a Templated message.
 	//
 	// Content is a required field
 	Content *EmailContent `type:"structure" required:"true"`
@@ -23573,10 +23771,10 @@ type SendEmailOutput struct {
 	// A unique identifier for the message that is generated when the message is
 	// accepted.
 	//
-	// It's possible for Amazon SES to accept a message without sending it. This
-	// can happen when the message that you're trying to send has an attachment
-	// contains a virus, or when you send a templated email that contains invalid
-	// personalization content, for example.
+	// It's possible for Amazon SES to accept a message without sending it. For
+	// example, this can happen when the message that you're trying to send has
+	// an attachment that contains a virus, or when you send a templated email that
+	// contains invalid personalization content.
 	MessageId *string `type:"string"`
 }
 
@@ -23760,7 +23958,7 @@ func (s *SendingPausedException) RequestID() string {
 }
 
 // An object that defines an Amazon SNS destination for email events. You can
-// use Amazon SNS to send notification when certain email events occur.
+// use Amazon SNS to send notifications when certain email events occur.
 type SnsDestination struct {
 	_ struct{} `type:"structure"`
 
@@ -24312,6 +24510,9 @@ func (s TagResourceOutput) GoString() string {
 type Template struct {
 	_ struct{} `type:"structure"`
 
+	// The list of message headers that will be added to the email message.
+	Headers []*MessageHeader `type:"list"`
+
 	// The Amazon Resource Name (ARN) of the template.
 	TemplateArn *string `type:"string"`
 
@@ -24350,11 +24551,27 @@ func (s *Template) Validate() error {
 	if s.TemplateName != nil && len(*s.TemplateName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("TemplateName", 1))
 	}
+	if s.Headers != nil {
+		for i, v := range s.Headers {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Headers", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetHeaders sets the Headers field's value.
+func (s *Template) SetHeaders(v []*MessageHeader) *Template {
+	s.Headers = v
+	return s
 }
 
 // SetTemplateArn sets the TemplateArn field's value.

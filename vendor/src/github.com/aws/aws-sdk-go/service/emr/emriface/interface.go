@@ -284,9 +284,17 @@ type EMRAPI interface {
 	RunJobFlowWithContext(aws.Context, *emr.RunJobFlowInput, ...request.Option) (*emr.RunJobFlowOutput, error)
 	RunJobFlowRequest(*emr.RunJobFlowInput) (*request.Request, *emr.RunJobFlowOutput)
 
+	SetKeepJobFlowAliveWhenNoSteps(*emr.SetKeepJobFlowAliveWhenNoStepsInput) (*emr.SetKeepJobFlowAliveWhenNoStepsOutput, error)
+	SetKeepJobFlowAliveWhenNoStepsWithContext(aws.Context, *emr.SetKeepJobFlowAliveWhenNoStepsInput, ...request.Option) (*emr.SetKeepJobFlowAliveWhenNoStepsOutput, error)
+	SetKeepJobFlowAliveWhenNoStepsRequest(*emr.SetKeepJobFlowAliveWhenNoStepsInput) (*request.Request, *emr.SetKeepJobFlowAliveWhenNoStepsOutput)
+
 	SetTerminationProtection(*emr.SetTerminationProtectionInput) (*emr.SetTerminationProtectionOutput, error)
 	SetTerminationProtectionWithContext(aws.Context, *emr.SetTerminationProtectionInput, ...request.Option) (*emr.SetTerminationProtectionOutput, error)
 	SetTerminationProtectionRequest(*emr.SetTerminationProtectionInput) (*request.Request, *emr.SetTerminationProtectionOutput)
+
+	SetUnhealthyNodeReplacement(*emr.SetUnhealthyNodeReplacementInput) (*emr.SetUnhealthyNodeReplacementOutput, error)
+	SetUnhealthyNodeReplacementWithContext(aws.Context, *emr.SetUnhealthyNodeReplacementInput, ...request.Option) (*emr.SetUnhealthyNodeReplacementOutput, error)
+	SetUnhealthyNodeReplacementRequest(*emr.SetUnhealthyNodeReplacementInput) (*request.Request, *emr.SetUnhealthyNodeReplacementOutput)
 
 	SetVisibleToAllUsers(*emr.SetVisibleToAllUsersInput) (*emr.SetVisibleToAllUsersOutput, error)
 	SetVisibleToAllUsersWithContext(aws.Context, *emr.SetVisibleToAllUsersInput, ...request.Option) (*emr.SetVisibleToAllUsersOutput, error)

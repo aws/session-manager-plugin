@@ -621,7 +621,7 @@ func (c *EKS) CreateClusterRequest(input *CreateClusterInput) (req *request.Requ
 // In most cases, it takes several minutes to create a cluster. After you create
 // an Amazon EKS cluster, you must configure your Kubernetes tooling to communicate
 // with the API server and launch nodes into your cluster. For more information,
-// see Managing Cluster Authentication (https://docs.aws.amazon.com/eks/latest/userguide/managing-auth.html)
+// see Allowing users to access your cluster (https://docs.aws.amazon.com/eks/latest/userguide/cluster-auth.html)
 // and Launching Amazon EKS nodes (https://docs.aws.amazon.com/eks/latest/userguide/launch-workers.html)
 // in the Amazon EKS User Guide.
 //
@@ -965,8 +965,8 @@ func (c *EKS) CreateNodegroupRequest(input *CreateNodegroupInput) (req *request.
 // Kubernetes version for the cluster. All node groups are created with the
 // latest AMI release version for the respective minor Kubernetes version of
 // the cluster, unless you deploy a custom AMI using a launch template. For
-// more information about using launch templates, see Launch template support
-// (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html).
+// more information about using launch templates, see Customizing managed nodes
+// with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html).
 //
 // An Amazon EKS managed node group is an Amazon EC2 Auto Scaling group and
 // associated Amazon EC2 instances that are managed by Amazon Web Services for
@@ -6746,6 +6746,14 @@ type Addon struct {
 	// The owner of the add-on.
 	Owner *string `locationName:"owner" type:"string"`
 
+	// An array of Pod Identity Assocations owned by the Addon. Each EKS Pod Identity
+	// association maps a role to a service account in a namespace in the cluster.
+	//
+	// For more information, see Attach an IAM Role to an Amazon EKS add-on using
+	// Pod Identity (https://docs.aws.amazon.com/eks/latest/userguide/add-ons-iam.html)
+	// in the EKS User Guide.
+	PodIdentityAssociations []*string `locationName:"podIdentityAssociations" type:"list"`
+
 	// The publisher of the add-on.
 	Publisher *string `locationName:"publisher" type:"string"`
 
@@ -6837,6 +6845,12 @@ func (s *Addon) SetModifiedAt(v time.Time) *Addon {
 // SetOwner sets the Owner field's value.
 func (s *Addon) SetOwner(v string) *Addon {
 	s.Owner = &v
+	return s
+}
+
+// SetPodIdentityAssociations sets the PodIdentityAssociations field's value.
+func (s *Addon) SetPodIdentityAssociations(v []*string) *Addon {
+	s.PodIdentityAssociations = v
 	return s
 }
 
@@ -7024,6 +7038,115 @@ func (s *AddonIssue) SetResourceIds(v []*string) *AddonIssue {
 	return s
 }
 
+// A type of Pod Identity Association owned by an Amazon EKS Add-on.
+//
+// Each EKS Pod Identity Association maps a role to a service account in a namespace
+// in the cluster.
+//
+// For more information, see Attach an IAM Role to an Amazon EKS add-on using
+// Pod Identity (https://docs.aws.amazon.com/eks/latest/userguide/add-ons-iam.html)
+// in the EKS User Guide.
+type AddonPodIdentityAssociations struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of an IAM Role.
+	//
+	// RoleArn is a required field
+	RoleArn *string `locationName:"roleArn" type:"string" required:"true"`
+
+	// The name of a Kubernetes Service Account.
+	//
+	// ServiceAccount is a required field
+	ServiceAccount *string `locationName:"serviceAccount" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddonPodIdentityAssociations) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddonPodIdentityAssociations) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AddonPodIdentityAssociations) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AddonPodIdentityAssociations"}
+	if s.RoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
+	}
+	if s.ServiceAccount == nil {
+		invalidParams.Add(request.NewErrParamRequired("ServiceAccount"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *AddonPodIdentityAssociations) SetRoleArn(v string) *AddonPodIdentityAssociations {
+	s.RoleArn = &v
+	return s
+}
+
+// SetServiceAccount sets the ServiceAccount field's value.
+func (s *AddonPodIdentityAssociations) SetServiceAccount(v string) *AddonPodIdentityAssociations {
+	s.ServiceAccount = &v
+	return s
+}
+
+// Information about how to configure IAM for an Addon.
+type AddonPodIdentityConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// A suggested IAM Policy for the addon.
+	RecommendedManagedPolicies []*string `locationName:"recommendedManagedPolicies" type:"list"`
+
+	// The Kubernetes Service Account name used by the addon.
+	ServiceAccount *string `locationName:"serviceAccount" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddonPodIdentityConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AddonPodIdentityConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetRecommendedManagedPolicies sets the RecommendedManagedPolicies field's value.
+func (s *AddonPodIdentityConfiguration) SetRecommendedManagedPolicies(v []*string) *AddonPodIdentityConfiguration {
+	s.RecommendedManagedPolicies = v
+	return s
+}
+
+// SetServiceAccount sets the ServiceAccount field's value.
+func (s *AddonPodIdentityConfiguration) SetServiceAccount(v string) *AddonPodIdentityConfiguration {
+	s.ServiceAccount = &v
+	return s
+}
+
 // Information about an add-on version.
 type AddonVersionInfo struct {
 	_ struct{} `type:"structure"`
@@ -7039,6 +7162,10 @@ type AddonVersionInfo struct {
 
 	// Whether the add-on requires configuration.
 	RequiresConfiguration *bool `locationName:"requiresConfiguration" type:"boolean"`
+
+	// Indicates if the Addon requires IAM Permissions to operate, such as networking
+	// permissions.
+	RequiresIamPermissions *bool `locationName:"requiresIamPermissions" type:"boolean"`
 }
 
 // String returns the string representation.
@@ -7080,6 +7207,12 @@ func (s *AddonVersionInfo) SetCompatibilities(v []*Compatibility) *AddonVersionI
 // SetRequiresConfiguration sets the RequiresConfiguration field's value.
 func (s *AddonVersionInfo) SetRequiresConfiguration(v bool) *AddonVersionInfo {
 	s.RequiresConfiguration = &v
+	return s
+}
+
+// SetRequiresIamPermissions sets the RequiresIamPermissions field's value.
+func (s *AddonVersionInfo) SetRequiresIamPermissions(v bool) *AddonVersionInfo {
+	s.RequiresIamPermissions = &v
 	return s
 }
 
@@ -7821,9 +7954,7 @@ type Cluster struct {
 	// The endpoint for your Kubernetes API server.
 	Endpoint *string `locationName:"endpoint" type:"string"`
 
-	// An object representing the health of your local Amazon EKS cluster on an
-	// Amazon Web Services Outpost. This object isn't available for clusters on
-	// the Amazon Web Services cloud.
+	// An object representing the health of your Amazon EKS cluster.
 	Health *ClusterHealth `locationName:"health" type:"structure"`
 
 	// The ID of your local Amazon EKS cluster on an Amazon Web Services Outpost.
@@ -8024,14 +8155,11 @@ func (s *Cluster) SetVersion(v string) *Cluster {
 	return s
 }
 
-// An object representing the health of your local Amazon EKS cluster on an
-// Amazon Web Services Outpost. You can't use this API with an Amazon EKS cluster
-// on the Amazon Web Services cloud.
+// An object representing the health of your Amazon EKS cluster.
 type ClusterHealth struct {
 	_ struct{} `type:"structure"`
 
-	// An object representing the health issues of your local Amazon EKS cluster
-	// on an Amazon Web Services Outpost.
+	// An object representing the health issues of your Amazon EKS cluster.
 	Issues []*ClusterIssue `locationName:"issues" type:"list"`
 }
 
@@ -8059,9 +8187,7 @@ func (s *ClusterHealth) SetIssues(v []*ClusterIssue) *ClusterHealth {
 	return s
 }
 
-// An issue with your local Amazon EKS cluster on an Amazon Web Services Outpost.
-// You can't use this API with an Amazon EKS cluster on the Amazon Web Services
-// cloud.
+// An issue with your Amazon EKS cluster.
 type ClusterIssue struct {
 	_ struct{} `type:"structure"`
 
@@ -8630,6 +8756,14 @@ type CreateAddonInput struct {
 	// that you provide are validated against the schema returned by DescribeAddonConfiguration.
 	ConfigurationValues *string `locationName:"configurationValues" type:"string"`
 
+	// An array of Pod Identity Assocations to be created. Each EKS Pod Identity
+	// association maps a Kubernetes service account to an IAM Role.
+	//
+	// For more information, see Attach an IAM Role to an Amazon EKS add-on using
+	// Pod Identity (https://docs.aws.amazon.com/eks/latest/userguide/add-ons-iam.html)
+	// in the EKS User Guide.
+	PodIdentityAssociations []*AddonPodIdentityAssociations `locationName:"podIdentityAssociations" type:"list"`
+
 	// How to resolve field value conflicts for an Amazon EKS add-on. Conflicts
 	// are handled based on the value you choose:
 	//
@@ -8708,6 +8842,16 @@ func (s *CreateAddonInput) Validate() error {
 	if s.Tags != nil && len(s.Tags) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Tags", 1))
 	}
+	if s.PodIdentityAssociations != nil {
+		for i, v := range s.PodIdentityAssociations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "PodIdentityAssociations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -8742,6 +8886,12 @@ func (s *CreateAddonInput) SetClusterName(v string) *CreateAddonInput {
 // SetConfigurationValues sets the ConfigurationValues field's value.
 func (s *CreateAddonInput) SetConfigurationValues(v string) *CreateAddonInput {
 	s.ConfigurationValues = &v
+	return s
+}
+
+// SetPodIdentityAssociations sets the PodIdentityAssociations field's value.
+func (s *CreateAddonInput) SetPodIdentityAssociations(v []*AddonPodIdentityAssociations) *CreateAddonInput {
+	s.PodIdentityAssociations = v
 	return s
 }
 
@@ -8800,6 +8950,15 @@ type CreateClusterInput struct {
 
 	// The access configuration for the cluster.
 	AccessConfig *CreateAccessConfigRequest `locationName:"accessConfig" type:"structure"`
+
+	// If you set this value to False when creating a cluster, the default networking
+	// add-ons will not be installed.
+	//
+	// The default networking addons include vpc-cni, coredns, and kube-proxy.
+	//
+	// Use this option when you plan to install third-party alternative add-ons
+	// or self-manage the default networking add-ons.
+	BootstrapSelfManagedAddons *bool `locationName:"bootstrapSelfManagedAddons" type:"boolean"`
 
 	// A unique, case-sensitive identifier that you provide to ensure the idempotency
 	// of the request.
@@ -8918,6 +9077,12 @@ func (s *CreateClusterInput) Validate() error {
 // SetAccessConfig sets the AccessConfig field's value.
 func (s *CreateClusterInput) SetAccessConfig(v *CreateAccessConfigRequest) *CreateClusterInput {
 	s.AccessConfig = v
+	return s
+}
+
+// SetBootstrapSelfManagedAddons sets the BootstrapSelfManagedAddons field's value.
+func (s *CreateClusterInput) SetBootstrapSelfManagedAddons(v bool) *CreateClusterInput {
+	s.BootstrapSelfManagedAddons = &v
 	return s
 }
 
@@ -9336,7 +9501,7 @@ type CreateNodegroupInput struct {
 	// group deployment will fail. If your launch template uses a Windows custom
 	// AMI, then add eks:kube-proxy-windows to your Windows nodes rolearn in the
 	// aws-auth ConfigMap. For more information about using launch templates with
-	// Amazon EKS, see Launch template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// Amazon EKS, see Customizing managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	AmiType *string `locationName:"amiType" type:"string" enum:"AMITypes"`
 
@@ -9356,7 +9521,8 @@ type CreateNodegroupInput struct {
 	// disk size is 20 GiB for Linux and Bottlerocket. The default disk size is
 	// 50 GiB for Windows. If you specify launchTemplate, then don't specify diskSize,
 	// or the node group deployment will fail. For more information about using
-	// launch templates with Amazon EKS, see Launch template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// launch templates with Amazon EKS, see Customizing managed nodes with launch
+	// templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	DiskSize *int64 `locationName:"diskSize" type:"integer"`
 
@@ -9370,7 +9536,7 @@ type CreateNodegroupInput struct {
 	// then t3.medium is used, by default. If you specify Spot for capacityType,
 	// then we recommend specifying multiple values for instanceTypes. For more
 	// information, see Managed node group capacity types (https://docs.aws.amazon.com/eks/latest/userguide/managed-node-groups.html#managed-node-group-capacity-types)
-	// and Launch template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// and Customizing managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	InstanceTypes []*string `locationName:"instanceTypes" type:"list"`
 
@@ -9378,9 +9544,11 @@ type CreateNodegroupInput struct {
 	// created.
 	Labels map[string]*string `locationName:"labels" type:"map"`
 
-	// An object representing a node group's launch template specification. If specified,
-	// then do not specify instanceTypes, diskSize, or remoteAccess and make sure
-	// that the launch template meets the requirements in launchTemplateSpecification.
+	// An object representing a node group's launch template specification. When
+	// using this object, don't directly specify instanceTypes, diskSize, or remoteAccess.
+	// Make sure that the launch template meets the requirements in launchTemplateSpecification.
+	// Also refer to Customizing managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// in the Amazon EKS User Guide.
 	LaunchTemplate *LaunchTemplateSpecification `locationName:"launchTemplate" type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the IAM role to associate with your node
@@ -9393,8 +9561,8 @@ type CreateNodegroupInput struct {
 	// in the Amazon EKS User Guide . If you specify launchTemplate, then don't
 	// specify IamInstanceProfile (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_IamInstanceProfile.html)
 	// in your launch template, or the node group deployment will fail. For more
-	// information about using launch templates with Amazon EKS, see Launch template
-	// support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// information about using launch templates with Amazon EKS, see Customizing
+	// managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	//
 	// NodeRole is a required field
@@ -9416,16 +9584,16 @@ type CreateNodegroupInput struct {
 	//
 	// If you specify launchTemplate, and your launch template uses a custom AMI,
 	// then don't specify releaseVersion, or the node group deployment will fail.
-	// For more information about using launch templates with Amazon EKS, see Launch
-	// template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// For more information about using launch templates with Amazon EKS, see Customizing
+	// managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	ReleaseVersion *string `locationName:"releaseVersion" type:"string"`
 
 	// The remote access configuration to use with your node group. For Linux, the
 	// protocol is SSH. For Windows, the protocol is RDP. If you specify launchTemplate,
 	// then don't specify remoteAccess, or the node group deployment will fail.
-	// For more information about using launch templates with Amazon EKS, see Launch
-	// template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// For more information about using launch templates with Amazon EKS, see Customizing
+	// managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	RemoteAccess *RemoteAccessConfig `locationName:"remoteAccess" type:"structure"`
 
@@ -9436,8 +9604,8 @@ type CreateNodegroupInput struct {
 	// The subnets to use for the Auto Scaling group that is created for your node
 	// group. If you specify launchTemplate, then don't specify SubnetId (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateNetworkInterface.html)
 	// in your launch template, or the node group deployment will fail. For more
-	// information about using launch templates with Amazon EKS, see Launch template
-	// support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// information about using launch templates with Amazon EKS, see Customizing
+	// managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	//
 	// Subnets is a required field
@@ -9459,8 +9627,8 @@ type CreateNodegroupInput struct {
 	// version of the cluster is used, and this is the only accepted specified value.
 	// If you specify launchTemplate, and your launch template uses a custom AMI,
 	// then don't specify version, or the node group deployment will fail. For more
-	// information about using launch templates with Amazon EKS, see Launch template
-	// support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// information about using launch templates with Amazon EKS, see Customizing
+	// managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	Version *string `locationName:"version" type:"string"`
 }
@@ -10819,6 +10987,10 @@ type DescribeAddonConfigurationOutput struct {
 	// A JSON schema that's used to validate the configuration values you provide
 	// when an add-on is created or updated.
 	ConfigurationSchema *string `locationName:"configurationSchema" type:"string"`
+
+	// The Kubernetes service account name used by the addon, and any suggested
+	// IAM policies. Use this information to create an IAM Role for the Addon.
+	PodIdentityConfiguration []*AddonPodIdentityConfiguration `locationName:"podIdentityConfiguration" type:"list"`
 }
 
 // String returns the string representation.
@@ -10854,6 +11026,12 @@ func (s *DescribeAddonConfigurationOutput) SetAddonVersion(v string) *DescribeAd
 // SetConfigurationSchema sets the ConfigurationSchema field's value.
 func (s *DescribeAddonConfigurationOutput) SetConfigurationSchema(v string) *DescribeAddonConfigurationOutput {
 	s.ConfigurationSchema = &v
+	return s
+}
+
+// SetPodIdentityConfiguration sets the PodIdentityConfiguration field's value.
+func (s *DescribeAddonConfigurationOutput) SetPodIdentityConfiguration(v []*AddonPodIdentityConfiguration) *DescribeAddonConfigurationOutput {
+	s.PodIdentityConfiguration = v
 	return s
 }
 
@@ -12406,6 +12584,10 @@ type FargateProfile struct {
 	// The name of the Fargate profile.
 	FargateProfileName *string `locationName:"fargateProfileName" type:"string"`
 
+	// The health status of the Fargate profile. If there are issues with your Fargate
+	// profile's health, they are listed here.
+	Health *FargateProfileHealth `locationName:"health" type:"structure"`
+
 	// The Amazon Resource Name (ARN) of the Pod execution role to use for any Pod
 	// that matches the selectors in the Fargate profile. For more information,
 	// see Pod execution role (https://docs.aws.amazon.com/eks/latest/userguide/pod-execution-role.html)
@@ -12469,6 +12651,12 @@ func (s *FargateProfile) SetFargateProfileName(v string) *FargateProfile {
 	return s
 }
 
+// SetHealth sets the Health field's value.
+func (s *FargateProfile) SetHealth(v *FargateProfileHealth) *FargateProfile {
+	s.Health = v
+	return s
+}
+
 // SetPodExecutionRoleArn sets the PodExecutionRoleArn field's value.
 func (s *FargateProfile) SetPodExecutionRoleArn(v string) *FargateProfile {
 	s.PodExecutionRoleArn = &v
@@ -12496,6 +12684,89 @@ func (s *FargateProfile) SetSubnets(v []*string) *FargateProfile {
 // SetTags sets the Tags field's value.
 func (s *FargateProfile) SetTags(v map[string]*string) *FargateProfile {
 	s.Tags = v
+	return s
+}
+
+// The health status of the Fargate profile. If there are issues with your Fargate
+// profile's health, they are listed here.
+type FargateProfileHealth struct {
+	_ struct{} `type:"structure"`
+
+	// Any issues that are associated with the Fargate profile.
+	Issues []*FargateProfileIssue `locationName:"issues" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FargateProfileHealth) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FargateProfileHealth) GoString() string {
+	return s.String()
+}
+
+// SetIssues sets the Issues field's value.
+func (s *FargateProfileHealth) SetIssues(v []*FargateProfileIssue) *FargateProfileHealth {
+	s.Issues = v
+	return s
+}
+
+// An issue that is associated with the Fargate profile.
+type FargateProfileIssue struct {
+	_ struct{} `type:"structure"`
+
+	// A brief description of the error.
+	Code *string `locationName:"code" type:"string" enum:"FargateProfileIssueCode"`
+
+	// The error message associated with the issue.
+	Message *string `locationName:"message" type:"string"`
+
+	// The Amazon Web Services resources that are affected by this issue.
+	ResourceIds []*string `locationName:"resourceIds" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FargateProfileIssue) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FargateProfileIssue) GoString() string {
+	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *FargateProfileIssue) SetCode(v string) *FargateProfileIssue {
+	s.Code = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *FargateProfileIssue) SetMessage(v string) *FargateProfileIssue {
+	s.Message = &v
+	return s
+}
+
+// SetResourceIds sets the ResourceIds field's value.
+func (s *FargateProfileIssue) SetResourceIds(v []*string) *FargateProfileIssue {
+	s.ResourceIds = v
 	return s
 }
 
@@ -13494,7 +13765,8 @@ func (s *KubernetesNetworkConfigResponse) SetServiceIpv6Cidr(v string) *Kubernet
 // or the node group deployment or update will fail. For more information about
 // launch templates, see CreateLaunchTemplate (https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateLaunchTemplate.html)
 // in the Amazon EC2 API Reference. For more information about using launch
-// templates with Amazon EKS, see Launch template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+// templates with Amazon EKS, see Customizing managed nodes with launch templates
+// (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 // in the Amazon EKS User Guide.
 //
 // You must specify either the launch template ID or the launch template name
@@ -16392,6 +16664,9 @@ type PodIdentityAssociation struct {
 	// in this namespace.
 	Namespace *string `locationName:"namespace" type:"string"`
 
+	// If defined, the Pod Identity Association is owned by an Amazon EKS Addon.
+	OwnerArn *string `locationName:"ownerArn" type:"string"`
+
 	// The Amazon Resource Name (ARN) of the IAM role to associate with the service
 	// account. The EKS Pod Identity agent manages credentials to assume this role
 	// for applications in the containers in the pods that use this service account.
@@ -16484,6 +16759,12 @@ func (s *PodIdentityAssociation) SetNamespace(v string) *PodIdentityAssociation 
 	return s
 }
 
+// SetOwnerArn sets the OwnerArn field's value.
+func (s *PodIdentityAssociation) SetOwnerArn(v string) *PodIdentityAssociation {
+	s.OwnerArn = &v
+	return s
+}
+
 // SetRoleArn sets the RoleArn field's value.
 func (s *PodIdentityAssociation) SetRoleArn(v string) *PodIdentityAssociation {
 	s.RoleArn = &v
@@ -16531,6 +16812,9 @@ type PodIdentityAssociationSummary struct {
 	// in this namespace.
 	Namespace *string `locationName:"namespace" type:"string"`
 
+	// If defined, the Pod Identity Association is owned by an Amazon EKS Addon.
+	OwnerArn *string `locationName:"ownerArn" type:"string"`
+
 	// The name of the Kubernetes service account inside the cluster to associate
 	// the IAM credentials with.
 	ServiceAccount *string `locationName:"serviceAccount" type:"string"`
@@ -16575,6 +16859,12 @@ func (s *PodIdentityAssociationSummary) SetClusterName(v string) *PodIdentityAss
 // SetNamespace sets the Namespace field's value.
 func (s *PodIdentityAssociationSummary) SetNamespace(v string) *PodIdentityAssociationSummary {
 	s.Namespace = &v
+	return s
+}
+
+// SetOwnerArn sets the OwnerArn field's value.
+func (s *PodIdentityAssociationSummary) SetOwnerArn(v string) *PodIdentityAssociationSummary {
+	s.OwnerArn = &v
 	return s
 }
 
@@ -17841,6 +18131,16 @@ type UpdateAddonInput struct {
 	// that you provide are validated against the schema returned by DescribeAddonConfiguration.
 	ConfigurationValues *string `locationName:"configurationValues" type:"string"`
 
+	// An array of Pod Identity Assocations to be updated. Each EKS Pod Identity
+	// association maps a Kubernetes service account to an IAM Role. If this value
+	// is left blank, no change. If an empty array is provided, existing Pod Identity
+	// Assocations owned by the Addon are deleted.
+	//
+	// For more information, see Attach an IAM Role to an Amazon EKS add-on using
+	// Pod Identity (https://docs.aws.amazon.com/eks/latest/userguide/add-ons-iam.html)
+	// in the EKS User Guide.
+	PodIdentityAssociations []*AddonPodIdentityAssociations `locationName:"podIdentityAssociations" type:"list"`
+
 	// How to resolve field value conflicts for an Amazon EKS add-on if you've changed
 	// a value from the Amazon EKS default value. Conflicts are handled based on
 	// the option you choose:
@@ -17905,6 +18205,16 @@ func (s *UpdateAddonInput) Validate() error {
 	if s.ServiceAccountRoleArn != nil && len(*s.ServiceAccountRoleArn) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ServiceAccountRoleArn", 1))
 	}
+	if s.PodIdentityAssociations != nil {
+		for i, v := range s.PodIdentityAssociations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "PodIdentityAssociations", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -17939,6 +18249,12 @@ func (s *UpdateAddonInput) SetClusterName(v string) *UpdateAddonInput {
 // SetConfigurationValues sets the ConfigurationValues field's value.
 func (s *UpdateAddonInput) SetConfigurationValues(v string) *UpdateAddonInput {
 	s.ConfigurationValues = &v
+	return s
+}
+
+// SetPodIdentityAssociations sets the PodIdentityAssociations field's value.
+func (s *UpdateAddonInput) SetPodIdentityAssociations(v []*AddonPodIdentityAssociations) *UpdateAddonInput {
+	s.PodIdentityAssociations = v
 	return s
 }
 
@@ -18557,8 +18873,8 @@ type UpdateNodegroupVersionInput struct {
 	//
 	// If you specify launchTemplate, and your launch template uses a custom AMI,
 	// then don't specify releaseVersion, or the node group update will fail. For
-	// more information about using launch templates with Amazon EKS, see Launch
-	// template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// more information about using launch templates with Amazon EKS, see Customizing
+	// managed nodes with launch templates (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	ReleaseVersion *string `locationName:"releaseVersion" type:"string"`
 
@@ -18568,7 +18884,8 @@ type UpdateNodegroupVersionInput struct {
 	// AMI version of the cluster's Kubernetes version. If you specify launchTemplate,
 	// and your launch template uses a custom AMI, then don't specify version, or
 	// the node group update will fail. For more information about using launch
-	// templates with Amazon EKS, see Launch template support (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
+	// templates with Amazon EKS, see Customizing managed nodes with launch templates
+	// (https://docs.aws.amazon.com/eks/latest/userguide/launch-templates.html)
 	// in the Amazon EKS User Guide.
 	Version *string `locationName:"version" type:"string"`
 }
@@ -19147,6 +19464,12 @@ const (
 
 	// AMITypesWindowsFull2022X8664 is a AMITypes enum value
 	AMITypesWindowsFull2022X8664 = "WINDOWS_FULL_2022_x86_64"
+
+	// AMITypesAl2023X8664Standard is a AMITypes enum value
+	AMITypesAl2023X8664Standard = "AL2023_x86_64_STANDARD"
+
+	// AMITypesAl2023Arm64Standard is a AMITypes enum value
+	AMITypesAl2023Arm64Standard = "AL2023_ARM_64_STANDARD"
 )
 
 // AMITypes_Values returns all elements of the AMITypes enum
@@ -19164,6 +19487,8 @@ func AMITypes_Values() []string {
 		AMITypesWindowsFull2019X8664,
 		AMITypesWindowsCore2022X8664,
 		AMITypesWindowsFull2022X8664,
+		AMITypesAl2023X8664Standard,
+		AMITypesAl2023Arm64Standard,
 	}
 }
 
@@ -19207,6 +19532,12 @@ const (
 
 	// AddonIssueCodeK8sResourceNotFound is a AddonIssueCode enum value
 	AddonIssueCodeK8sResourceNotFound = "K8sResourceNotFound"
+
+	// AddonIssueCodeAddonSubscriptionNeeded is a AddonIssueCode enum value
+	AddonIssueCodeAddonSubscriptionNeeded = "AddonSubscriptionNeeded"
+
+	// AddonIssueCodeAddonPermissionFailure is a AddonIssueCode enum value
+	AddonIssueCodeAddonPermissionFailure = "AddonPermissionFailure"
 )
 
 // AddonIssueCode_Values returns all elements of the AddonIssueCode enum
@@ -19220,6 +19551,8 @@ func AddonIssueCode_Values() []string {
 		AddonIssueCodeAdmissionRequestDenied,
 		AddonIssueCodeUnsupportedAddonModification,
 		AddonIssueCodeK8sResourceNotFound,
+		AddonIssueCodeAddonSubscriptionNeeded,
+		AddonIssueCodeAddonPermissionFailure,
 	}
 }
 
@@ -19624,6 +19957,30 @@ func ErrorCode_Values() []string {
 }
 
 const (
+	// FargateProfileIssueCodePodExecutionRoleAlreadyInUse is a FargateProfileIssueCode enum value
+	FargateProfileIssueCodePodExecutionRoleAlreadyInUse = "PodExecutionRoleAlreadyInUse"
+
+	// FargateProfileIssueCodeAccessDenied is a FargateProfileIssueCode enum value
+	FargateProfileIssueCodeAccessDenied = "AccessDenied"
+
+	// FargateProfileIssueCodeClusterUnreachable is a FargateProfileIssueCode enum value
+	FargateProfileIssueCodeClusterUnreachable = "ClusterUnreachable"
+
+	// FargateProfileIssueCodeInternalFailure is a FargateProfileIssueCode enum value
+	FargateProfileIssueCodeInternalFailure = "InternalFailure"
+)
+
+// FargateProfileIssueCode_Values returns all elements of the FargateProfileIssueCode enum
+func FargateProfileIssueCode_Values() []string {
+	return []string{
+		FargateProfileIssueCodePodExecutionRoleAlreadyInUse,
+		FargateProfileIssueCodeAccessDenied,
+		FargateProfileIssueCodeClusterUnreachable,
+		FargateProfileIssueCodeInternalFailure,
+	}
+}
+
+const (
 	// FargateProfileStatusCreating is a FargateProfileStatus enum value
 	FargateProfileStatusCreating = "CREATING"
 
@@ -19818,6 +20175,12 @@ const (
 
 	// NodegroupIssueCodeAutoScalingGroupInstanceRefreshActive is a NodegroupIssueCode enum value
 	NodegroupIssueCodeAutoScalingGroupInstanceRefreshActive = "AutoScalingGroupInstanceRefreshActive"
+
+	// NodegroupIssueCodeKubernetesLabelInvalid is a NodegroupIssueCode enum value
+	NodegroupIssueCodeKubernetesLabelInvalid = "KubernetesLabelInvalid"
+
+	// NodegroupIssueCodeEc2launchTemplateVersionMaxLimitExceeded is a NodegroupIssueCode enum value
+	NodegroupIssueCodeEc2launchTemplateVersionMaxLimitExceeded = "Ec2LaunchTemplateVersionMaxLimitExceeded"
 )
 
 // NodegroupIssueCode_Values returns all elements of the NodegroupIssueCode enum
@@ -19856,6 +20219,8 @@ func NodegroupIssueCode_Values() []string {
 		NodegroupIssueCodeLimitExceeded,
 		NodegroupIssueCodeUnknown,
 		NodegroupIssueCodeAutoScalingGroupInstanceRefreshActive,
+		NodegroupIssueCodeKubernetesLabelInvalid,
+		NodegroupIssueCodeEc2launchTemplateVersionMaxLimitExceeded,
 	}
 }
 
@@ -20016,6 +20381,9 @@ const (
 
 	// UpdateParamTypeAuthenticationMode is a UpdateParamType enum value
 	UpdateParamTypeAuthenticationMode = "AuthenticationMode"
+
+	// UpdateParamTypePodIdentityAssociations is a UpdateParamType enum value
+	UpdateParamTypePodIdentityAssociations = "PodIdentityAssociations"
 )
 
 // UpdateParamType_Values returns all elements of the UpdateParamType enum
@@ -20048,6 +20416,7 @@ func UpdateParamType_Values() []string {
 		UpdateParamTypeSecurityGroups,
 		UpdateParamTypeSubnets,
 		UpdateParamTypeAuthenticationMode,
+		UpdateParamTypePodIdentityAssociations,
 	}
 }
 

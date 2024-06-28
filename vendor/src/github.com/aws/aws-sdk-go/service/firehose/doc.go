@@ -3,10 +3,12 @@
 // Package firehose provides the client and types for making API
 // requests to Amazon Kinesis Firehose.
 //
-// Amazon Kinesis Data Firehose is a fully managed service that delivers real-time
-// streaming data to destinations such as Amazon Simple Storage Service (Amazon
-// S3), Amazon OpenSearch Service, Amazon Redshift, Splunk, and various other
-// supportd destinations.
+// Amazon Data Firehose was previously known as Amazon Kinesis Data Firehose.
+//
+// Amazon Data Firehose is a fully managed service that delivers real-time streaming
+// data to destinations such as Amazon Simple Storage Service (Amazon S3), Amazon
+// OpenSearch Service, Amazon Redshift, Splunk, and various other supported
+// destinations.
 //
 // See https://docs.aws.amazon.com/goto/WebAPI/firehose-2015-08-04 for more information on this service.
 //

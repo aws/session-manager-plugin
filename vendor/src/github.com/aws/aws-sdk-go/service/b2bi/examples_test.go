@@ -618,6 +618,14 @@ func ExampleB2bi_ListCapabilities_shared00() {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
+			case b2bi.ErrCodeAccessDeniedException:
+				fmt.Println(b2bi.ErrCodeAccessDeniedException, aerr.Error())
+			case b2bi.ErrCodeValidationException:
+				fmt.Println(b2bi.ErrCodeValidationException, aerr.Error())
+			case b2bi.ErrCodeThrottlingException:
+				fmt.Println(b2bi.ErrCodeThrottlingException, aerr.Error())
+			case b2bi.ErrCodeInternalServerException:
+				fmt.Println(b2bi.ErrCodeInternalServerException, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -685,6 +693,14 @@ func ExampleB2bi_ListProfiles_shared00() {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
+			case b2bi.ErrCodeAccessDeniedException:
+				fmt.Println(b2bi.ErrCodeAccessDeniedException, aerr.Error())
+			case b2bi.ErrCodeValidationException:
+				fmt.Println(b2bi.ErrCodeValidationException, aerr.Error())
+			case b2bi.ErrCodeThrottlingException:
+				fmt.Println(b2bi.ErrCodeThrottlingException, aerr.Error())
+			case b2bi.ErrCodeInternalServerException:
+				fmt.Println(b2bi.ErrCodeInternalServerException, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -716,6 +732,8 @@ func ExampleB2bi_ListTagsForResource_shared00() {
 				fmt.Println(b2bi.ErrCodeValidationException, aerr.Error())
 			case b2bi.ErrCodeResourceNotFoundException:
 				fmt.Println(b2bi.ErrCodeResourceNotFoundException, aerr.Error())
+			case b2bi.ErrCodeInternalServerException:
+				fmt.Println(b2bi.ErrCodeInternalServerException, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -744,6 +762,14 @@ func ExampleB2bi_ListTransformers_shared00() {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
+			case b2bi.ErrCodeAccessDeniedException:
+				fmt.Println(b2bi.ErrCodeAccessDeniedException, aerr.Error())
+			case b2bi.ErrCodeValidationException:
+				fmt.Println(b2bi.ErrCodeValidationException, aerr.Error())
+			case b2bi.ErrCodeThrottlingException:
+				fmt.Println(b2bi.ErrCodeThrottlingException, aerr.Error())
+			case b2bi.ErrCodeInternalServerException:
+				fmt.Println(b2bi.ErrCodeInternalServerException, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -780,6 +806,8 @@ func ExampleB2bi_StartTransformerJob_shared00() {
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok {
 			switch aerr.Code() {
+			case b2bi.ErrCodeConflictException:
+				fmt.Println(b2bi.ErrCodeConflictException, aerr.Error())
 			case b2bi.ErrCodeAccessDeniedException:
 				fmt.Println(b2bi.ErrCodeAccessDeniedException, aerr.Error())
 			case b2bi.ErrCodeValidationException:
@@ -829,6 +857,8 @@ func ExampleB2bi_TagResource_shared00() {
 				fmt.Println(b2bi.ErrCodeThrottlingException, aerr.Error())
 			case b2bi.ErrCodeResourceNotFoundException:
 				fmt.Println(b2bi.ErrCodeResourceNotFoundException, aerr.Error())
+			case b2bi.ErrCodeInternalServerException:
+				fmt.Println(b2bi.ErrCodeInternalServerException, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -949,6 +979,8 @@ func ExampleB2bi_UntagResource_shared00() {
 				fmt.Println(b2bi.ErrCodeValidationException, aerr.Error())
 			case b2bi.ErrCodeResourceNotFoundException:
 				fmt.Println(b2bi.ErrCodeResourceNotFoundException, aerr.Error())
+			case b2bi.ErrCodeInternalServerException:
+				fmt.Println(b2bi.ErrCodeInternalServerException, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}

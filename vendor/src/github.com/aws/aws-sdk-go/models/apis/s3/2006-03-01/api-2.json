@@ -6,6 +6,7 @@
     "endpointPrefix":"s3",
     "globalEndpoint":"s3.amazonaws.com",
     "protocol":"rest-xml",
+    "protocols":["rest-xml"],
     "serviceAbbreviation":"Amazon S3",
     "serviceFullName":"Amazon Simple Storage Service",
     "serviceId":"S3",
@@ -2035,6 +2036,7 @@
         },
         "CopySource":{
           "shape":"CopySource",
+          "contextParam":{"name":"CopySource"},
           "location":"header",
           "locationName":"x-amz-copy-source"
         },
@@ -2085,6 +2087,7 @@
         },
         "Key":{
           "shape":"ObjectKey",
+          "contextParam":{"name":"Key"},
           "location":"uri",
           "locationName":"Key"
         },
@@ -3978,7 +3981,10 @@
     "GetObjectLegalHoldOutput":{
       "type":"structure",
       "members":{
-        "LegalHold":{"shape":"ObjectLockLegalHold"}
+        "LegalHold":{
+          "shape":"ObjectLockLegalHold",
+          "locationName":"LegalHold"
+        }
       },
       "payload":"LegalHold"
     },
@@ -4349,7 +4355,10 @@
     "GetObjectRetentionOutput":{
       "type":"structure",
       "members":{
-        "Retention":{"shape":"ObjectLockRetention"}
+        "Retention":{
+          "shape":"ObjectLockRetention",
+          "locationName":"Retention"
+        }
       },
       "payload":"Retention"
     },

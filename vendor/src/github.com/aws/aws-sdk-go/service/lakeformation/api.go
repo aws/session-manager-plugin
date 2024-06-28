@@ -2000,6 +2000,91 @@ func (c *LakeFormation) GetDataCellsFilterWithContext(ctx aws.Context, input *Ge
 	return out, req.Send()
 }
 
+const opGetDataLakePrincipal = "GetDataLakePrincipal"
+
+// GetDataLakePrincipalRequest generates a "aws/request.Request" representing the
+// client's request for the GetDataLakePrincipal operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetDataLakePrincipal for more information on using the GetDataLakePrincipal
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetDataLakePrincipalRequest method.
+//	req, resp := client.GetDataLakePrincipalRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/GetDataLakePrincipal
+func (c *LakeFormation) GetDataLakePrincipalRequest(input *GetDataLakePrincipalInput) (req *request.Request, output *GetDataLakePrincipalOutput) {
+	op := &request.Operation{
+		Name:       opGetDataLakePrincipal,
+		HTTPMethod: "POST",
+		HTTPPath:   "/GetDataLakePrincipal",
+	}
+
+	if input == nil {
+		input = &GetDataLakePrincipalInput{}
+	}
+
+	output = &GetDataLakePrincipalOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetDataLakePrincipal API operation for AWS Lake Formation.
+//
+// Returns the identity of the invoking principal.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Lake Formation's
+// API operation GetDataLakePrincipal for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServiceException
+//     An internal service error occurred.
+//
+//   - OperationTimeoutException
+//     The operation timed out.
+//
+//   - AccessDeniedException
+//     Access to a resource was denied.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/lakeformation-2017-03-31/GetDataLakePrincipal
+func (c *LakeFormation) GetDataLakePrincipal(input *GetDataLakePrincipalInput) (*GetDataLakePrincipalOutput, error) {
+	req, out := c.GetDataLakePrincipalRequest(input)
+	return out, req.Send()
+}
+
+// GetDataLakePrincipalWithContext is the same as GetDataLakePrincipal with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetDataLakePrincipal for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *LakeFormation) GetDataLakePrincipalWithContext(ctx aws.Context, input *GetDataLakePrincipalInput, opts ...request.Option) (*GetDataLakePrincipalOutput, error) {
+	req, out := c.GetDataLakePrincipalRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetDataLakeSettings = "GetDataLakeSettings"
 
 // GetDataLakeSettingsRequest generates a "aws/request.Request" representing the
@@ -7178,7 +7263,7 @@ type CreateLakeFormationIdentityCenterConfigurationInput struct {
 	CatalogId *string `min:"1" type:"string"`
 
 	// A list of the account IDs of Amazon Web Services accounts of third-party
-	// applications that are allowed to to access data managed by Lake Formation.
+	// applications that are allowed to access data managed by Lake Formation.
 	ExternalFiltering *ExternalFilteringConfiguration `type:"structure"`
 
 	// The ARN of the IAM Identity Center instance for which the operation will
@@ -7186,6 +7271,16 @@ type CreateLakeFormationIdentityCenterConfigurationInput struct {
 	// and Amazon Web Services Service Namespaces in the Amazon Web Services General
 	// Reference.
 	InstanceArn *string `type:"string"`
+
+	// A list of Amazon Web Services account IDs and/or Amazon Web Services organization/organizational
+	// unit ARNs that are allowed to access data managed by Lake Formation.
+	//
+	// If the ShareRecipients list includes valid values, a resource share is created
+	// with the principals you want to have access to the resources.
+	//
+	// If the ShareRecipients value is null or the list is empty, no resource share
+	// is created.
+	ShareRecipients []*DataLakePrincipal `type:"list"`
 }
 
 // String returns the string representation.
@@ -7217,6 +7312,16 @@ func (s *CreateLakeFormationIdentityCenterConfigurationInput) Validate() error {
 			invalidParams.AddNested("ExternalFiltering", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ShareRecipients != nil {
+		for i, v := range s.ShareRecipients {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ShareRecipients", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -7242,10 +7347,17 @@ func (s *CreateLakeFormationIdentityCenterConfigurationInput) SetInstanceArn(v s
 	return s
 }
 
+// SetShareRecipients sets the ShareRecipients field's value.
+func (s *CreateLakeFormationIdentityCenterConfigurationInput) SetShareRecipients(v []*DataLakePrincipal) *CreateLakeFormationIdentityCenterConfigurationInput {
+	s.ShareRecipients = v
+	return s
+}
+
 type CreateLakeFormationIdentityCenterConfigurationOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the integrated application.
+	// The Amazon Resource Name (ARN) of the Lake Formation application integrated
+	// with IAM Identity Center.
 	ApplicationArn *string `type:"string"`
 }
 
@@ -8674,7 +8786,8 @@ func (s *DescribeLakeFormationIdentityCenterConfigurationInput) SetCatalogId(v s
 type DescribeLakeFormationIdentityCenterConfigurationOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the integrated application.
+	// The Amazon Resource Name (ARN) of the Lake Formation application integrated
+	// with IAM Identity Center.
 	ApplicationArn *string `type:"string"`
 
 	// The identifier for the Data Catalog. By default, the account ID. The Data
@@ -8688,6 +8801,19 @@ type DescribeLakeFormationIdentityCenterConfigurationOutput struct {
 
 	// The Amazon Resource Name (ARN) of the connection.
 	InstanceArn *string `type:"string"`
+
+	// The Amazon Resource Name (ARN) of the RAM share.
+	ResourceShare *string `type:"string"`
+
+	// A list of Amazon Web Services account IDs or Amazon Web Services organization/organizational
+	// unit ARNs that are allowed to access data managed by Lake Formation.
+	//
+	// If the ShareRecipients list includes valid values, a resource share is created
+	// with the principals you want to have access to the resources as the ShareRecipients.
+	//
+	// If the ShareRecipients value is null or the list is empty, no resource share
+	// is created.
+	ShareRecipients []*DataLakePrincipal `type:"list"`
 }
 
 // String returns the string representation.
@@ -8729,6 +8855,18 @@ func (s *DescribeLakeFormationIdentityCenterConfigurationOutput) SetExternalFilt
 // SetInstanceArn sets the InstanceArn field's value.
 func (s *DescribeLakeFormationIdentityCenterConfigurationOutput) SetInstanceArn(v string) *DescribeLakeFormationIdentityCenterConfigurationOutput {
 	s.InstanceArn = &v
+	return s
+}
+
+// SetResourceShare sets the ResourceShare field's value.
+func (s *DescribeLakeFormationIdentityCenterConfigurationOutput) SetResourceShare(v string) *DescribeLakeFormationIdentityCenterConfigurationOutput {
+	s.ResourceShare = &v
+	return s
+}
+
+// SetShareRecipients sets the ShareRecipients field's value.
+func (s *DescribeLakeFormationIdentityCenterConfigurationOutput) SetShareRecipients(v []*DataLakePrincipal) *DescribeLakeFormationIdentityCenterConfigurationOutput {
+	s.ShareRecipients = v
 	return s
 }
 
@@ -9455,6 +9593,59 @@ func (s GetDataCellsFilterOutput) GoString() string {
 // SetDataCellsFilter sets the DataCellsFilter field's value.
 func (s *GetDataCellsFilterOutput) SetDataCellsFilter(v *DataCellsFilter) *GetDataCellsFilterOutput {
 	s.DataCellsFilter = v
+	return s
+}
+
+type GetDataLakePrincipalInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataLakePrincipalInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataLakePrincipalInput) GoString() string {
+	return s.String()
+}
+
+type GetDataLakePrincipalOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A unique identifier of the invoking principal.
+	Identity *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataLakePrincipalOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataLakePrincipalOutput) GoString() string {
+	return s.String()
+}
+
+// SetIdentity sets the Identity field's value.
+func (s *GetDataLakePrincipalOutput) SetIdentity(v string) *GetDataLakePrincipalOutput {
+	s.Identity = &v
 	return s
 }
 
@@ -10466,6 +10657,14 @@ type GetTemporaryGlueTableCredentialsInput struct {
 	// permissions on the requested resource(s).
 	Permissions []*string `type:"list" enum:"Permission"`
 
+	// A structure used as a protocol between query engines and Lake Formation or
+	// Glue. Contains both a Lake Formation generated authorization identifier and
+	// information from the request's authorization context.
+	QuerySessionContext *QuerySessionContext `type:"structure"`
+
+	// The Amazon S3 path for the table.
+	S3Path *string `type:"string"`
+
 	// A list of supported permission types for the table. Valid values are COLUMN_PERMISSION
 	// and CELL_FILTER_PERMISSION.
 	SupportedPermissionTypes []*string `min:"1" type:"list" enum:"PermissionType"`
@@ -10507,6 +10706,11 @@ func (s *GetTemporaryGlueTableCredentialsInput) Validate() error {
 	if s.TableArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("TableArn"))
 	}
+	if s.QuerySessionContext != nil {
+		if err := s.QuerySessionContext.Validate(); err != nil {
+			invalidParams.AddNested("QuerySessionContext", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -10529,6 +10733,18 @@ func (s *GetTemporaryGlueTableCredentialsInput) SetDurationSeconds(v int64) *Get
 // SetPermissions sets the Permissions field's value.
 func (s *GetTemporaryGlueTableCredentialsInput) SetPermissions(v []*string) *GetTemporaryGlueTableCredentialsInput {
 	s.Permissions = v
+	return s
+}
+
+// SetQuerySessionContext sets the QuerySessionContext field's value.
+func (s *GetTemporaryGlueTableCredentialsInput) SetQuerySessionContext(v *QuerySessionContext) *GetTemporaryGlueTableCredentialsInput {
+	s.QuerySessionContext = v
+	return s
+}
+
+// SetS3Path sets the S3Path field's value.
+func (s *GetTemporaryGlueTableCredentialsInput) SetS3Path(v string) *GetTemporaryGlueTableCredentialsInput {
+	s.S3Path = &v
 	return s
 }
 
@@ -10558,6 +10774,9 @@ type GetTemporaryGlueTableCredentialsOutput struct {
 
 	// The session token for the temporary credentials.
 	SessionToken *string `type:"string"`
+
+	// The Amazon S3 path for the temporary credentials.
+	VendedS3Path []*string `type:"list"`
 }
 
 // String returns the string representation.
@@ -10599,6 +10818,12 @@ func (s *GetTemporaryGlueTableCredentialsOutput) SetSecretAccessKey(v string) *G
 // SetSessionToken sets the SessionToken field's value.
 func (s *GetTemporaryGlueTableCredentialsOutput) SetSessionToken(v string) *GetTemporaryGlueTableCredentialsOutput {
 	s.SessionToken = &v
+	return s
+}
+
+// SetVendedS3Path sets the VendedS3Path field's value.
+func (s *GetTemporaryGlueTableCredentialsOutput) SetVendedS3Path(v []*string) *GetTemporaryGlueTableCredentialsOutput {
+	s.VendedS3Path = v
 	return s
 }
 
@@ -13108,6 +13333,93 @@ func (s *QueryPlanningContext) SetTransactionId(v string) *QueryPlanningContext 
 	return s
 }
 
+// A structure used as a protocol between query engines and Lake Formation or
+// Glue. Contains both a Lake Formation generated authorization identifier and
+// information from the request's authorization context.
+type QuerySessionContext struct {
+	_ struct{} `type:"structure"`
+
+	// An opaque string-string map passed by the query engine.
+	AdditionalContext map[string]*string `type:"map"`
+
+	// An identifier string for the consumer cluster.
+	ClusterId *string `type:"string"`
+
+	// A cryptographically generated query identifier generated by Glue or Lake
+	// Formation.
+	QueryAuthorizationId *string `min:"1" type:"string"`
+
+	// A unique identifier generated by the query engine for the query.
+	QueryId *string `min:"1" type:"string"`
+
+	// A timestamp provided by the query engine for when the query started.
+	QueryStartTime *time.Time `type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QuerySessionContext) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s QuerySessionContext) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *QuerySessionContext) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "QuerySessionContext"}
+	if s.QueryAuthorizationId != nil && len(*s.QueryAuthorizationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("QueryAuthorizationId", 1))
+	}
+	if s.QueryId != nil && len(*s.QueryId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("QueryId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAdditionalContext sets the AdditionalContext field's value.
+func (s *QuerySessionContext) SetAdditionalContext(v map[string]*string) *QuerySessionContext {
+	s.AdditionalContext = v
+	return s
+}
+
+// SetClusterId sets the ClusterId field's value.
+func (s *QuerySessionContext) SetClusterId(v string) *QuerySessionContext {
+	s.ClusterId = &v
+	return s
+}
+
+// SetQueryAuthorizationId sets the QueryAuthorizationId field's value.
+func (s *QuerySessionContext) SetQueryAuthorizationId(v string) *QuerySessionContext {
+	s.QueryAuthorizationId = &v
+	return s
+}
+
+// SetQueryId sets the QueryId field's value.
+func (s *QuerySessionContext) SetQueryId(v string) *QuerySessionContext {
+	s.QueryId = &v
+	return s
+}
+
+// SetQueryStartTime sets the QueryStartTime field's value.
+func (s *QuerySessionContext) SetQueryStartTime(v time.Time) *QuerySessionContext {
+	s.QueryStartTime = &v
+	return s
+}
+
 type RegisterResourceInput struct {
 	_ struct{} `type:"structure"`
 
@@ -15332,6 +15644,19 @@ type UpdateLakeFormationIdentityCenterConfigurationInput struct {
 	// A list of the account IDs of Amazon Web Services accounts of third-party
 	// applications that are allowed to access data managed by Lake Formation.
 	ExternalFiltering *ExternalFilteringConfiguration `type:"structure"`
+
+	// A list of Amazon Web Services account IDs or Amazon Web Services organization/organizational
+	// unit ARNs that are allowed to access to access data managed by Lake Formation.
+	//
+	// If the ShareRecipients list includes valid values, then the resource share
+	// is updated with the principals you want to have access to the resources.
+	//
+	// If the ShareRecipients value is null, both the list of share recipients and
+	// the resource share remain unchanged.
+	//
+	// If the ShareRecipients value is an empty list, then the existing share recipients
+	// list will be cleared, and the resource share will be deleted.
+	ShareRecipients []*DataLakePrincipal `type:"list"`
 }
 
 // String returns the string representation.
@@ -15363,6 +15688,16 @@ func (s *UpdateLakeFormationIdentityCenterConfigurationInput) Validate() error {
 			invalidParams.AddNested("ExternalFiltering", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ShareRecipients != nil {
+		for i, v := range s.ShareRecipients {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ShareRecipients", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -15385,6 +15720,12 @@ func (s *UpdateLakeFormationIdentityCenterConfigurationInput) SetCatalogId(v str
 // SetExternalFiltering sets the ExternalFiltering field's value.
 func (s *UpdateLakeFormationIdentityCenterConfigurationInput) SetExternalFiltering(v *ExternalFilteringConfiguration) *UpdateLakeFormationIdentityCenterConfigurationInput {
 	s.ExternalFiltering = v
+	return s
+}
+
+// SetShareRecipients sets the ShareRecipients field's value.
+func (s *UpdateLakeFormationIdentityCenterConfigurationInput) SetShareRecipients(v []*DataLakePrincipal) *UpdateLakeFormationIdentityCenterConfigurationInput {
+	s.ShareRecipients = v
 	return s
 }
 

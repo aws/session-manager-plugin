@@ -976,6 +976,119 @@ func (c *WAFV2) CreateWebACLWithContext(ctx aws.Context, input *CreateWebACLInpu
 	return out, req.Send()
 }
 
+const opDeleteAPIKey = "DeleteAPIKey"
+
+// DeleteAPIKeyRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteAPIKey operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteAPIKey for more information on using the DeleteAPIKey
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteAPIKeyRequest method.
+//	req, resp := client.DeleteAPIKeyRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/DeleteAPIKey
+func (c *WAFV2) DeleteAPIKeyRequest(input *DeleteAPIKeyInput) (req *request.Request, output *DeleteAPIKeyOutput) {
+	op := &request.Operation{
+		Name:       opDeleteAPIKey,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteAPIKeyInput{}
+	}
+
+	output = &DeleteAPIKeyOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteAPIKey API operation for AWS WAFV2.
+//
+// Deletes the specified API key.
+//
+// After you delete a key, it can take up to 24 hours for WAF to disallow use
+// of the key in all regions.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS WAFV2's
+// API operation DeleteAPIKey for usage and error information.
+//
+// Returned Error Types:
+//
+//   - WAFInternalErrorException
+//     Your request is valid, but WAF couldn’t perform the operation because of
+//     a system problem. Retry your request.
+//
+//   - WAFNonexistentItemException
+//     WAF couldn’t perform the operation because your resource doesn't exist.
+//     If you've just created a resource that you're using in this operation, you
+//     might just need to wait a few minutes. It can take from a few seconds to
+//     a number of minutes for changes to propagate.
+//
+//   - WAFOptimisticLockException
+//     WAF couldn’t save your changes because you tried to update or delete a
+//     resource that has changed since you last retrieved it. Get the resource again,
+//     make any changes you need to make to the new copy, and retry your operation.
+//
+//   - WAFInvalidParameterException
+//     The operation failed because WAF didn't recognize a parameter in the request.
+//     For example:
+//
+//   - You specified a parameter name or value that isn't valid.
+//
+//   - Your nested statement isn't valid. You might have tried to nest a statement
+//     that can’t be nested.
+//
+//   - You tried to update a WebACL with a DefaultAction that isn't among the
+//     types available at DefaultAction.
+//
+//   - Your request references an ARN that is malformed, or corresponds to
+//     a resource with which a web ACL can't be associated.
+//
+//   - WAFInvalidOperationException
+//     The operation isn't valid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/DeleteAPIKey
+func (c *WAFV2) DeleteAPIKey(input *DeleteAPIKeyInput) (*DeleteAPIKeyOutput, error) {
+	req, out := c.DeleteAPIKeyRequest(input)
+	return out, req.Send()
+}
+
+// DeleteAPIKeyWithContext is the same as DeleteAPIKey with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteAPIKey for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *WAFV2) DeleteAPIKeyWithContext(ctx aws.Context, input *DeleteAPIKeyInput, opts ...request.Option) (*DeleteAPIKeyOutput, error) {
+	req, out := c.DeleteAPIKeyRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteFirewallManagerRuleGroups = "DeleteFirewallManagerRuleGroups"
 
 // DeleteFirewallManagerRuleGroupsRequest generates a "aws/request.Request" representing the
@@ -1866,6 +1979,21 @@ func (c *WAFV2) DescribeAllManagedProductsRequest(input *DescribeAllManagedProdu
 //     Your request is valid, but WAF couldn’t perform the operation because of
 //     a system problem. Retry your request.
 //
+//   - WAFInvalidParameterException
+//     The operation failed because WAF didn't recognize a parameter in the request.
+//     For example:
+//
+//   - You specified a parameter name or value that isn't valid.
+//
+//   - Your nested statement isn't valid. You might have tried to nest a statement
+//     that can’t be nested.
+//
+//   - You tried to update a WebACL with a DefaultAction that isn't among the
+//     types available at DefaultAction.
+//
+//   - Your request references an ARN that is malformed, or corresponds to
+//     a resource with which a web ACL can't be associated.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/wafv2-2019-07-29/DescribeAllManagedProducts
 func (c *WAFV2) DescribeAllManagedProducts(input *DescribeAllManagedProductsInput) (*DescribeAllManagedProductsOutput, error) {
 	req, out := c.DescribeAllManagedProductsRequest(input)
@@ -2397,6 +2525,12 @@ func (c *WAFV2) GetDecryptedAPIKeyRequest(input *GetDecryptedAPIKeyInput) (req *
 //   - WAFInternalErrorException
 //     Your request is valid, but WAF couldn’t perform the operation because of
 //     a system problem. Retry your request.
+//
+//   - WAFNonexistentItemException
+//     WAF couldn’t perform the operation because your resource doesn't exist.
+//     If you've just created a resource that you're using in this operation, you
+//     might just need to wait a few minutes. It can take from a few seconds to
+//     a number of minutes for changes to propagate.
 //
 //   - WAFInvalidParameterException
 //     The operation failed because WAF didn't recognize a parameter in the request.
@@ -7163,22 +7297,32 @@ func (s AssociateWebACLOutput) GoString() string {
 // and protected resources.
 //
 // Use this to customize the maximum size of the request body that your protected
-// CloudFront distributions forward to WAF for inspection. The default is 16
-// KB (16,384 bytes).
+// resources forward to WAF for inspection. You can customize this setting for
+// CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources.
+// The default setting is 16 KB (16,384 bytes).
 //
 // You are charged additional fees when your protected resources forward body
 // sizes that are larger than the default. For more information, see WAF Pricing
 // (http://aws.amazon.com/waf/pricing/).
+//
+// For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192
+// bytes).
 type AssociationConfig struct {
 	_ struct{} `type:"structure"`
 
-	// Customizes the maximum size of the request body that your protected CloudFront
-	// distributions forward to WAF for inspection. The default size is 16 KB (16,384
-	// bytes).
+	// Customizes the maximum size of the request body that your protected CloudFront,
+	// API Gateway, Amazon Cognito, App Runner, and Verified Access resources forward
+	// to WAF for inspection. The default size is 16 KB (16,384 bytes). You can
+	// change the setting for any of the available resource types.
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
 	// (http://aws.amazon.com/waf/pricing/).
+	//
+	// Example JSON: { "API_GATEWAY": "KB_48", "APP_RUNNER_SERVICE": "KB_32" }
+	//
+	// For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192
+	// bytes).
 	RequestBody map[string]*RequestBodyAssociatedResourceTypeConfig `type:"map"`
 }
 
@@ -7289,16 +7433,20 @@ func (s *BlockAction) SetCustomResponse(v *CustomResponse) *BlockAction {
 type Body struct {
 	_ struct{} `type:"structure"`
 
-	// What WAF should do if the body is larger than WAF can inspect. WAF does not
-	// support inspecting the entire contents of the web request body if the body
-	// exceeds the limit for the resource type. If the body is larger than the limit,
-	// the underlying host service only forwards the contents that are below the
-	// limit to WAF for inspection.
+	// What WAF should do if the body is larger than WAF can inspect.
 	//
-	// The default limit is 8 KB (8,192 bytes) for regional resources and 16 KB
-	// (16,384 bytes) for CloudFront distributions. For CloudFront distributions,
-	// you can increase the limit in the web ACL AssociationConfig, for additional
-	// processing fees.
+	// WAF does not support inspecting the entire contents of the web request body
+	// if the body exceeds the limit for the resource type. When a web request body
+	// is larger than the limit, the underlying host service only forwards the contents
+	// that are within the limit to WAF for inspection.
+	//
+	//    * For Application Load Balancer and AppSync, the limit is fixed at 8 KB
+	//    (8,192 bytes).
+	//
+	//    * For CloudFront, API Gateway, Amazon Cognito, App Runner, and Verified
+	//    Access, the default limit is 16 KB (16,384 bytes), and you can increase
+	//    the limit for each resource type in the web ACL AssociationConfig, for
+	//    additional processing fees.
 	//
 	// The options for oversize handling are the following:
 	//
@@ -7409,14 +7557,16 @@ type ByteMatchStatement struct {
 	//    * UriPath: The value that you want WAF to search for in the URI path,
 	//    for example, /images/daily-ad.jpg.
 	//
-	//    * JA3Fingerprint: Match against the request's JA3 fingerprint. The JA3
-	//    fingerprint is a 32-character hash derived from the TLS Client Hello of
-	//    an incoming request. This fingerprint serves as a unique identifier for
-	//    the client's TLS configuration. You can use this choice only with a string
-	//    match ByteMatchStatement with the PositionalConstraint set to EXACTLY.
-	//    You can obtain the JA3 fingerprint for client requests from the web ACL
-	//    logs. If WAF is able to calculate the fingerprint, it includes it in the
-	//    logs. For information about the logging fields, see Log fields (https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html)
+	//    * JA3Fingerprint: Available for use with Amazon CloudFront distributions
+	//    and Application Load Balancers. Match against the request's JA3 fingerprint.
+	//    The JA3 fingerprint is a 32-character hash derived from the TLS Client
+	//    Hello of an incoming request. This fingerprint serves as a unique identifier
+	//    for the client's TLS configuration. You can use this choice only with
+	//    a string match ByteMatchStatement with the PositionalConstraint set to
+	//    EXACTLY. You can obtain the JA3 fingerprint for client requests from the
+	//    web ACL logs. If WAF is able to calculate the fingerprint, it includes
+	//    it in the logs. For information about the logging fields, see Log fields
+	//    (https://docs.aws.amazon.com/waf/latest/developerguide/logging-fields.html)
 	//    in the WAF Developer Guide.
 	//
 	//    * HeaderOrder: The list of header names to match for. WAF creates a string
@@ -8339,7 +8489,7 @@ type CreateAPIKeyInput struct {
 	//
 	// Example JSON: "TokenDomains": ["abc.com", "store.abc.com"]
 	//
-	// Public suffixes aren't allowed. For example, you can't use usa.gov or co.uk
+	// Public suffixes aren't allowed. For example, you can't use gov.au or co.uk
 	// as token domains.
 	//
 	// TokenDomains is a required field
@@ -9052,12 +9202,16 @@ type CreateWebACLInput struct {
 	// and protected resources.
 	//
 	// Use this to customize the maximum size of the request body that your protected
-	// CloudFront distributions forward to WAF for inspection. The default is 16
-	// KB (16,384 bytes).
+	// resources forward to WAF for inspection. You can customize this setting for
+	// CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources.
+	// The default setting is 16 KB (16,384 bytes).
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
 	// (http://aws.amazon.com/waf/pricing/).
+	//
+	// For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192
+	// bytes).
 	AssociationConfig *AssociationConfig `type:"structure"`
 
 	// Specifies how WAF should handle CAPTCHA evaluations for rules that don't
@@ -9133,7 +9287,7 @@ type CreateWebACLInput struct {
 	//
 	// Example JSON: "TokenDomains": { "mywebsite.com", "myotherwebsite.com" }
 	//
-	// Public suffixes aren't allowed. For example, you can't use usa.gov or co.uk
+	// Public suffixes aren't allowed. For example, you can't use gov.au or co.uk
 	// as token domains.
 	TokenDomains []*string `type:"list"`
 
@@ -9738,6 +9892,103 @@ func (s *DefaultAction) SetBlock(v *BlockAction) *DefaultAction {
 	return s
 }
 
+type DeleteAPIKeyInput struct {
+	_ struct{} `type:"structure"`
+
+	// The encrypted API key that you want to delete.
+	//
+	// APIKey is a required field
+	APIKey *string `min:"1" type:"string" required:"true"`
+
+	// Specifies whether this is for an Amazon CloudFront distribution or for a
+	// regional application. A regional application can be an Application Load Balancer
+	// (ALB), an Amazon API Gateway REST API, an AppSync GraphQL API, an Amazon
+	// Cognito user pool, an App Runner service, or an Amazon Web Services Verified
+	// Access instance.
+	//
+	// To work with CloudFront, you must also specify the Region US East (N. Virginia)
+	// as follows:
+	//
+	//    * CLI - Specify the Region when you use the CloudFront scope: --scope=CLOUDFRONT
+	//    --region=us-east-1.
+	//
+	//    * API and SDKs - For all calls, use the Region endpoint us-east-1.
+	//
+	// Scope is a required field
+	Scope *string `type:"string" required:"true" enum:"Scope"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAPIKeyInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAPIKeyInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteAPIKeyInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteAPIKeyInput"}
+	if s.APIKey == nil {
+		invalidParams.Add(request.NewErrParamRequired("APIKey"))
+	}
+	if s.APIKey != nil && len(*s.APIKey) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("APIKey", 1))
+	}
+	if s.Scope == nil {
+		invalidParams.Add(request.NewErrParamRequired("Scope"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAPIKey sets the APIKey field's value.
+func (s *DeleteAPIKeyInput) SetAPIKey(v string) *DeleteAPIKeyInput {
+	s.APIKey = &v
+	return s
+}
+
+// SetScope sets the Scope field's value.
+func (s *DeleteAPIKeyInput) SetScope(v string) *DeleteAPIKeyInput {
+	s.Scope = &v
+	return s
+}
+
+type DeleteAPIKeyOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAPIKeyOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAPIKeyOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteFirewallManagerRuleGroupsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -9992,6 +10243,24 @@ func (s DeleteIPSetOutput) GoString() string {
 type DeleteLoggingConfigurationInput struct {
 	_ struct{} `type:"structure"`
 
+	// The owner of the logging configuration, which must be set to CUSTOMER for
+	// the configurations that you manage.
+	//
+	// The log scope SECURITY_LAKE indicates a configuration that is managed through
+	// Amazon Security Lake. You can use Security Lake to collect log and event
+	// data from various sources for normalization, analysis, and management. For
+	// information, see Collecting data from Amazon Web Services services (https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html)
+	// in the Amazon Security Lake user guide.
+	//
+	// Default: CUSTOMER
+	LogScope *string `type:"string" enum:"LogScope"`
+
+	// Used to distinguish between various logging options. Currently, there is
+	// one option.
+	//
+	// Default: WAF_LOGS
+	LogType *string `type:"string" enum:"LogType"`
+
 	// The Amazon Resource Name (ARN) of the web ACL from which you want to delete
 	// the LoggingConfiguration.
 	//
@@ -10031,6 +10300,18 @@ func (s *DeleteLoggingConfigurationInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetLogScope sets the LogScope field's value.
+func (s *DeleteLoggingConfigurationInput) SetLogScope(v string) *DeleteLoggingConfigurationInput {
+	s.LogScope = &v
+	return s
+}
+
+// SetLogType sets the LogType field's value.
+func (s *DeleteLoggingConfigurationInput) SetLogType(v string) *DeleteLoggingConfigurationInput {
+	s.LogType = &v
+	return s
 }
 
 // SetResourceArn sets the ResourceArn field's value.
@@ -11179,20 +11460,30 @@ func (s *ExcludedRule) SetName(v string) *ExcludedRule {
 	return s
 }
 
-// The part of the web request that you want WAF to inspect. Include the single
-// FieldToMatch type that you want to inspect, with additional specifications
-// as needed, according to the type. You specify a single request component
-// in FieldToMatch for each rule statement that requires it. To inspect more
-// than one component of the web request, create a separate rule statement for
-// each component.
+// Specifies a web request component to be used in a rule match statement or
+// in a logging configuration.
 //
-// Example JSON for a QueryString field to match:
+//   - In a rule statement, this is the part of the web request that you want
+//     WAF to inspect. Include the single FieldToMatch type that you want to
+//     inspect, with additional specifications as needed, according to the type.
+//     You specify a single request component in FieldToMatch for each rule statement
+//     that requires it. To inspect more than one component of the web request,
+//     create a separate rule statement for each component. Example JSON for
+//     a QueryString field to match: "FieldToMatch": { "QueryString": {} } Example
+//     JSON for a Method field to match specification: "FieldToMatch": { "Method":
+//     { "Name": "DELETE" } }
 //
-// "FieldToMatch": { "QueryString": {} }
-//
-// Example JSON for a Method field to match specification:
-//
-// "FieldToMatch": { "Method": { "Name": "DELETE" } }
+//   - In a logging configuration, this is used in the RedactedFields property
+//     to specify a field to redact from the logging records. For this use case,
+//     note the following: Even though all FieldToMatch settings are available,
+//     the only valid settings for field redaction are UriPath, QueryString,
+//     SingleHeader, and Method. In this documentation, the descriptions of the
+//     individual fields talk about specifying the web request component to inspect,
+//     but for field redaction, you are specifying the component type to redact
+//     from the logs. If you have request sampling enabled, the redacted fields
+//     configuration for logging has no impact on sampling. The only way to exclude
+//     fields from request sampling is by disabling sampling in the web ACL visibility
+//     configuration.
 type FieldToMatch struct {
 	_ struct{} `type:"structure"`
 
@@ -11204,11 +11495,18 @@ type FieldToMatch struct {
 	// data that you want to send to your web server as the HTTP request body, such
 	// as data from a form.
 	//
-	// A limited amount of the request body is forwarded to WAF for inspection by
-	// the underlying host service. For regional resources, the limit is 8 KB (8,192
-	// bytes) and for CloudFront distributions, the limit is 16 KB (16,384 bytes).
-	// For CloudFront distributions, you can increase the limit in the web ACL's
-	// AssociationConfig, for additional processing fees.
+	// WAF does not support inspecting the entire contents of the web request body
+	// if the body exceeds the limit for the resource type. When a web request body
+	// is larger than the limit, the underlying host service only forwards the contents
+	// that are within the limit to WAF for inspection.
+	//
+	//    * For Application Load Balancer and AppSync, the limit is fixed at 8 KB
+	//    (8,192 bytes).
+	//
+	//    * For CloudFront, API Gateway, Amazon Cognito, App Runner, and Verified
+	//    Access, the default limit is 16 KB (16,384 bytes), and you can increase
+	//    the limit for each resource type in the web ACL AssociationConfig, for
+	//    additional processing fees.
 	//
 	// For information about how to handle oversized request bodies, see the Body
 	// object configuration.
@@ -11243,11 +11541,13 @@ type FieldToMatch struct {
 	// from the underlying host service.
 	Headers *Headers `type:"structure"`
 
-	// Match against the request's JA3 fingerprint. The JA3 fingerprint is a 32-character
-	// hash derived from the TLS Client Hello of an incoming request. This fingerprint
-	// serves as a unique identifier for the client's TLS configuration. WAF calculates
-	// and logs this fingerprint for each request that has enough TLS Client Hello
-	// information for the calculation. Almost all web requests include this information.
+	// Available for use with Amazon CloudFront distributions and Application Load
+	// Balancers. Match against the request's JA3 fingerprint. The JA3 fingerprint
+	// is a 32-character hash derived from the TLS Client Hello of an incoming request.
+	// This fingerprint serves as a unique identifier for the client's TLS configuration.
+	// WAF calculates and logs this fingerprint for each request that has enough
+	// TLS Client Hello information for the calculation. Almost all web requests
+	// include this information.
 	//
 	// You can use this choice only with a string match ByteMatchStatement with
 	// the PositionalConstraint set to EXACTLY.
@@ -11266,11 +11566,18 @@ type FieldToMatch struct {
 	// data that you want to send to your web server as the HTTP request body, such
 	// as data from a form.
 	//
-	// A limited amount of the request body is forwarded to WAF for inspection by
-	// the underlying host service. For regional resources, the limit is 8 KB (8,192
-	// bytes) and for CloudFront distributions, the limit is 16 KB (16,384 bytes).
-	// For CloudFront distributions, you can increase the limit in the web ACL's
-	// AssociationConfig, for additional processing fees.
+	// WAF does not support inspecting the entire contents of the web request body
+	// if the body exceeds the limit for the resource type. When a web request body
+	// is larger than the limit, the underlying host service only forwards the contents
+	// that are within the limit to WAF for inspection.
+	//
+	//    * For Application Load Balancer and AppSync, the limit is fixed at 8 KB
+	//    (8,192 bytes).
+	//
+	//    * For CloudFront, API Gateway, Amazon Cognito, App Runner, and Verified
+	//    Access, the default limit is 16 KB (16,384 bytes), and you can increase
+	//    the limit for each resource type in the web ACL AssociationConfig, for
+	//    additional processing fees.
 	//
 	// For information about how to handle oversized request bodies, see the JsonBody
 	// object configuration.
@@ -12219,6 +12526,24 @@ func (s *GetIPSetOutput) SetLockToken(v string) *GetIPSetOutput {
 type GetLoggingConfigurationInput struct {
 	_ struct{} `type:"structure"`
 
+	// The owner of the logging configuration, which must be set to CUSTOMER for
+	// the configurations that you manage.
+	//
+	// The log scope SECURITY_LAKE indicates a configuration that is managed through
+	// Amazon Security Lake. You can use Security Lake to collect log and event
+	// data from various sources for normalization, analysis, and management. For
+	// information, see Collecting data from Amazon Web Services services (https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html)
+	// in the Amazon Security Lake user guide.
+	//
+	// Default: CUSTOMER
+	LogScope *string `type:"string" enum:"LogScope"`
+
+	// Used to distinguish between various logging options. Currently, there is
+	// one option.
+	//
+	// Default: WAF_LOGS
+	LogType *string `type:"string" enum:"LogType"`
+
 	// The Amazon Resource Name (ARN) of the web ACL for which you want to get the
 	// LoggingConfiguration.
 	//
@@ -12258,6 +12583,18 @@ func (s *GetLoggingConfigurationInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetLogScope sets the LogScope field's value.
+func (s *GetLoggingConfigurationInput) SetLogScope(v string) *GetLoggingConfigurationInput {
+	s.LogScope = &v
+	return s
+}
+
+// SetLogType sets the LogType field's value.
+func (s *GetLoggingConfigurationInput) SetLogType(v string) *GetLoggingConfigurationInput {
+	s.LogType = &v
+	return s
 }
 
 // SetResourceArn sets the ResourceArn field's value.
@@ -14364,11 +14701,13 @@ func (s *ImmunityTimeProperty) SetImmunityTime(v int64) *ImmunityTimeProperty {
 	return s
 }
 
-// Match against the request's JA3 fingerprint. The JA3 fingerprint is a 32-character
-// hash derived from the TLS Client Hello of an incoming request. This fingerprint
-// serves as a unique identifier for the client's TLS configuration. WAF calculates
-// and logs this fingerprint for each request that has enough TLS Client Hello
-// information for the calculation. Almost all web requests include this information.
+// Available for use with Amazon CloudFront distributions and Application Load
+// Balancers. Match against the request's JA3 fingerprint. The JA3 fingerprint
+// is a 32-character hash derived from the TLS Client Hello of an incoming request.
+// This fingerprint serves as a unique identifier for the client's TLS configuration.
+// WAF calculates and logs this fingerprint for each request that has enough
+// TLS Client Hello information for the calculation. Almost all web requests
+// include this information.
 //
 // You can use this choice only with a string match ByteMatchStatement with
 // the PositionalConstraint set to EXACTLY.
@@ -14495,16 +14834,20 @@ type JsonBody struct {
 	// MatchScope is a required field
 	MatchScope *string `type:"string" required:"true" enum:"JsonMatchScope"`
 
-	// What WAF should do if the body is larger than WAF can inspect. WAF does not
-	// support inspecting the entire contents of the web request body if the body
-	// exceeds the limit for the resource type. If the body is larger than the limit,
-	// the underlying host service only forwards the contents that are below the
-	// limit to WAF for inspection.
+	// What WAF should do if the body is larger than WAF can inspect.
 	//
-	// The default limit is 8 KB (8,192 bytes) for regional resources and 16 KB
-	// (16,384 bytes) for CloudFront distributions. For CloudFront distributions,
-	// you can increase the limit in the web ACL AssociationConfig, for additional
-	// processing fees.
+	// WAF does not support inspecting the entire contents of the web request body
+	// if the body exceeds the limit for the resource type. When a web request body
+	// is larger than the limit, the underlying host service only forwards the contents
+	// that are within the limit to WAF for inspection.
+	//
+	//    * For Application Load Balancer and AppSync, the limit is fixed at 8 KB
+	//    (8,192 bytes).
+	//
+	//    * For CloudFront, API Gateway, Amazon Cognito, App Runner, and Verified
+	//    Access, the default limit is 16 KB (16,384 bytes), and you can increase
+	//    the limit for each resource type in the web ACL AssociationConfig, for
+	//    additional processing fees.
 	//
 	// The options for oversize handling are the following:
 	//
@@ -15474,6 +15817,18 @@ type ListLoggingConfigurationsInput struct {
 	// value that you can use in a subsequent call to get the next batch of objects.
 	Limit *int64 `min:"1" type:"integer"`
 
+	// The owner of the logging configuration, which must be set to CUSTOMER for
+	// the configurations that you manage.
+	//
+	// The log scope SECURITY_LAKE indicates a configuration that is managed through
+	// Amazon Security Lake. You can use Security Lake to collect log and event
+	// data from various sources for normalization, analysis, and management. For
+	// information, see Collecting data from Amazon Web Services services (https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html)
+	// in the Amazon Security Lake user guide.
+	//
+	// Default: CUSTOMER
+	LogScope *string `type:"string" enum:"LogScope"`
+
 	// When you request a list of objects with a Limit setting, if the number of
 	// objects that are still available for retrieval exceeds the limit, WAF returns
 	// a NextMarker value in the response. To retrieve the next batch of objects,
@@ -15538,6 +15893,12 @@ func (s *ListLoggingConfigurationsInput) Validate() error {
 // SetLimit sets the Limit field's value.
 func (s *ListLoggingConfigurationsInput) SetLimit(v int64) *ListLoggingConfigurationsInput {
 	s.Limit = &v
+	return s
+}
+
+// SetLogScope sets the LogScope field's value.
+func (s *ListLoggingConfigurationsInput) SetLogScope(v string) *ListLoggingConfigurationsInput {
+	s.LogScope = &v
 	return s
 }
 
@@ -16504,6 +16865,24 @@ type LoggingConfiguration struct {
 	// LogDestinationConfigs is a required field
 	LogDestinationConfigs []*string `min:"1" type:"list" required:"true"`
 
+	// The owner of the logging configuration, which must be set to CUSTOMER for
+	// the configurations that you manage.
+	//
+	// The log scope SECURITY_LAKE indicates a configuration that is managed through
+	// Amazon Security Lake. You can use Security Lake to collect log and event
+	// data from various sources for normalization, analysis, and management. For
+	// information, see Collecting data from Amazon Web Services services (https://docs.aws.amazon.com/security-lake/latest/userguide/internal-sources.html)
+	// in the Amazon Security Lake user guide.
+	//
+	// Default: CUSTOMER
+	LogScope *string `type:"string" enum:"LogScope"`
+
+	// Used to distinguish between various logging options. Currently, there is
+	// one option.
+	//
+	// Default: WAF_LOGS
+	LogType *string `type:"string" enum:"LogType"`
+
 	// Filtering that specifies which web requests are kept in the logs and which
 	// are dropped. You can filter on the rule action and on the web request labels
 	// that were applied by matching rules during web ACL evaluation.
@@ -16526,6 +16905,10 @@ type LoggingConfiguration struct {
 	//
 	// You can specify only the following fields for redaction: UriPath, QueryString,
 	// SingleHeader, and Method.
+	//
+	// This setting has no impact on request sampling. With request sampling, the
+	// only way to exclude fields is by disabling sampling in the web ACL visibility
+	// configuration.
 	RedactedFields []*FieldToMatch `type:"list"`
 
 	// The Amazon Resource Name (ARN) of the web ACL that you want to associate
@@ -16593,6 +16976,18 @@ func (s *LoggingConfiguration) Validate() error {
 // SetLogDestinationConfigs sets the LogDestinationConfigs field's value.
 func (s *LoggingConfiguration) SetLogDestinationConfigs(v []*string) *LoggingConfiguration {
 	s.LogDestinationConfigs = v
+	return s
+}
+
+// SetLogScope sets the LogScope field's value.
+func (s *LoggingConfiguration) SetLogScope(v string) *LoggingConfiguration {
+	s.LogScope = &v
+	return s
+}
+
+// SetLogType sets the LogType field's value.
+func (s *LoggingConfiguration) SetLogType(v string) *LoggingConfiguration {
+	s.LogType = &v
 	return s
 }
 
@@ -17061,7 +17456,7 @@ type ManagedRuleGroupStatement struct {
 	// how the rule group would handle your web traffic. You can also permanently
 	// override some or all actions, to modify how the rule group manages your web
 	// traffic.
-	RuleActionOverrides []*RuleActionOverride `min:"1" type:"list"`
+	RuleActionOverrides []*RuleActionOverride `type:"list"`
 
 	// An optional nested statement that narrows the scope of the web requests that
 	// are evaluated by the managed rule group. Requests are only evaluated by the
@@ -17109,9 +17504,6 @@ func (s *ManagedRuleGroupStatement) Validate() error {
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
-	if s.RuleActionOverrides != nil && len(s.RuleActionOverrides) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("RuleActionOverrides", 1))
 	}
 	if s.VendorName == nil {
 		invalidParams.Add(request.NewErrParamRequired("VendorName"))
@@ -18573,6 +18965,10 @@ func (s QueryString) GoString() string {
 // to your aggregation criteria, collects them into aggregation instances, and
 // counts and rate limits the requests for each instance.
 //
+// If you change any of these settings in a rule that's currently in use, the
+// change resets the rule's rate limiting counts. This can pause the rule's
+// rate limiting activities for up to a minute.
+//
 // You can specify individual aggregation keys, like IP address or HTTP method.
 // You can also specify aggregation key combinations, like IP address and HTTP
 // method, or HTTP method, query argument, and cookie.
@@ -18681,7 +19077,18 @@ type RateBasedStatement struct {
 	AggregateKeyType *string `type:"string" required:"true" enum:"RateBasedStatementAggregateKeyType"`
 
 	// Specifies the aggregate keys to use in a rate-base rule.
-	CustomKeys []*RateBasedStatementCustomKey `min:"1" type:"list"`
+	CustomKeys []*RateBasedStatementCustomKey `type:"list"`
+
+	// The amount of time, in seconds, that WAF should include in its request counts,
+	// looking back from the current time. For example, for a setting of 120, when
+	// WAF checks the rate, it counts the requests for the 2 minutes immediately
+	// preceding the current time. Valid settings are 60, 120, 300, and 600.
+	//
+	// This setting doesn't determine how often WAF checks the rate, but how far
+	// back it looks each time it checks. WAF checks the rate about every 10 seconds.
+	//
+	// Default: 300 (5 minutes)
+	EvaluationWindowSec *int64 `type:"long"`
 
 	// The configuration for inspecting IP addresses in an HTTP header that you
 	// specify, instead of using the IP address that's reported by the web request
@@ -18743,9 +19150,6 @@ func (s *RateBasedStatement) Validate() error {
 	if s.AggregateKeyType == nil {
 		invalidParams.Add(request.NewErrParamRequired("AggregateKeyType"))
 	}
-	if s.CustomKeys != nil && len(s.CustomKeys) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("CustomKeys", 1))
-	}
 	if s.Limit == nil {
 		invalidParams.Add(request.NewErrParamRequired("Limit"))
 	}
@@ -18788,6 +19192,12 @@ func (s *RateBasedStatement) SetAggregateKeyType(v string) *RateBasedStatement {
 // SetCustomKeys sets the CustomKeys field's value.
 func (s *RateBasedStatement) SetCustomKeys(v []*RateBasedStatementCustomKey) *RateBasedStatement {
 	s.CustomKeys = v
+	return s
+}
+
+// SetEvaluationWindowSec sets the EvaluationWindowSec field's value.
+func (s *RateBasedStatement) SetEvaluationWindowSec(v int64) *RateBasedStatement {
+	s.EvaluationWindowSec = &v
 	return s
 }
 
@@ -20067,21 +20477,28 @@ func (s *ReleaseSummary) SetTimestamp(v time.Time) *ReleaseSummary {
 	return s
 }
 
-// Customizes the maximum size of the request body that your protected CloudFront
-// distributions forward to WAF for inspection. The default size is 16 KB (16,384
-// bytes).
+// Customizes the maximum size of the request body that your protected CloudFront,
+// API Gateway, Amazon Cognito, App Runner, and Verified Access resources forward
+// to WAF for inspection. The default size is 16 KB (16,384 bytes). You can
+// change the setting for any of the available resource types.
 //
 // You are charged additional fees when your protected resources forward body
 // sizes that are larger than the default. For more information, see WAF Pricing
 // (http://aws.amazon.com/waf/pricing/).
+//
+// Example JSON: { "API_GATEWAY": "KB_48", "APP_RUNNER_SERVICE": "KB_32" }
+//
+// For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192
+// bytes).
 //
 // This is used in the AssociationConfig of the web ACL.
 type RequestBodyAssociatedResourceTypeConfig struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies the maximum size of the web request body component that an associated
-	// CloudFront distribution should send to WAF for inspection. This applies to
-	// statements in the web ACL that inspect the body or JSON body.
+	// CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resource
+	// should send to WAF for inspection. This applies to statements in the web
+	// ACL that inspect the body or JSON body.
 	//
 	// Default: 16 KB (16,384 bytes)
 	//
@@ -21578,7 +21995,7 @@ type RuleGroupReferenceStatement struct {
 	// how the rule group would handle your web traffic. You can also permanently
 	// override some or all actions, to modify how the rule group manages your web
 	// traffic.
-	RuleActionOverrides []*RuleActionOverride `min:"1" type:"list"`
+	RuleActionOverrides []*RuleActionOverride `type:"list"`
 }
 
 // String returns the string representation.
@@ -21607,9 +22024,6 @@ func (s *RuleGroupReferenceStatement) Validate() error {
 	}
 	if s.ARN != nil && len(*s.ARN) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("ARN", 20))
-	}
-	if s.RuleActionOverrides != nil && len(s.RuleActionOverrides) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("RuleActionOverrides", 1))
 	}
 	if s.ExcludedRules != nil {
 		for i, v := range s.ExcludedRules {
@@ -22048,13 +22462,12 @@ func (s *SingleQueryArgument) SetName(v string) *SingleQueryArgument {
 // query strings that are longer than 100 bytes.
 //
 // If you configure WAF to inspect the request body, WAF inspects only the number
-// of bytes of the body up to the limit for the web ACL. By default, for regional
-// web ACLs, this limit is 8 KB (8,192 bytes) and for CloudFront web ACLs, this
-// limit is 16 KB (16,384 bytes). For CloudFront web ACLs, you can increase
-// the limit in the web ACL AssociationConfig, for additional fees. If you know
-// that the request body for your web requests should never exceed the inspection
-// limit, you could use a size constraint statement to block requests that have
-// a larger request body size.
+// of bytes in the body up to the limit for the web ACL and protected resource
+// type. If you know that the request body for your web requests should never
+// exceed the inspection limit, you can use a size constraint statement to block
+// requests that have a larger request body size. For more information about
+// the inspection limits, see Body and JsonBody settings for the FieldToMatch
+// data type.
 //
 // If you choose URI for the value of Part of the request to filter on, the
 // slash (/) in the URI counts as one character. For example, the URI /logo.jpg
@@ -22382,6 +22795,10 @@ type Statement struct {
 	// to your aggregation criteria, collects them into aggregation instances, and
 	// counts and rate limits the requests for each instance.
 	//
+	// If you change any of these settings in a rule that's currently in use, the
+	// change resets the rule's rate limiting counts. This can pause the rule's
+	// rate limiting activities for up to a minute.
+	//
 	// You can specify individual aggregation keys, like IP address or HTTP method.
 	// You can also specify aggregation key combinations, like IP address and HTTP
 	// method, or HTTP method, query argument, and cookie.
@@ -22490,13 +22907,12 @@ type Statement struct {
 	// query strings that are longer than 100 bytes.
 	//
 	// If you configure WAF to inspect the request body, WAF inspects only the number
-	// of bytes of the body up to the limit for the web ACL. By default, for regional
-	// web ACLs, this limit is 8 KB (8,192 bytes) and for CloudFront web ACLs, this
-	// limit is 16 KB (16,384 bytes). For CloudFront web ACLs, you can increase
-	// the limit in the web ACL AssociationConfig, for additional fees. If you know
-	// that the request body for your web requests should never exceed the inspection
-	// limit, you could use a size constraint statement to block requests that have
-	// a larger request body size.
+	// of bytes in the body up to the limit for the web ACL and protected resource
+	// type. If you know that the request body for your web requests should never
+	// exceed the inspection limit, you can use a size constraint statement to block
+	// requests that have a larger request body size. For more information about
+	// the inspection limits, see Body and JsonBody settings for the FieldToMatch
+	// data type.
 	//
 	// If you choose URI for the value of Part of the request to filter on, the
 	// slash (/) in the URI counts as one character. For example, the URI /logo.jpg
@@ -24020,12 +24436,16 @@ type UpdateWebACLInput struct {
 	// and protected resources.
 	//
 	// Use this to customize the maximum size of the request body that your protected
-	// CloudFront distributions forward to WAF for inspection. The default is 16
-	// KB (16,384 bytes).
+	// resources forward to WAF for inspection. You can customize this setting for
+	// CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources.
+	// The default setting is 16 KB (16,384 bytes).
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
 	// (http://aws.amazon.com/waf/pricing/).
+	//
+	// For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192
+	// bytes).
 	AssociationConfig *AssociationConfig `type:"structure"`
 
 	// Specifies how WAF should handle CAPTCHA evaluations for rules that don't
@@ -24117,7 +24537,7 @@ type UpdateWebACLInput struct {
 	//
 	// Example JSON: "TokenDomains": { "mywebsite.com", "myotherwebsite.com" }
 	//
-	// Public suffixes aren't allowed. For example, you can't use usa.gov or co.uk
+	// Public suffixes aren't allowed. For example, you can't use gov.au or co.uk
 	// as token domains.
 	TokenDomains []*string `type:"list"`
 
@@ -24534,6 +24954,11 @@ type VisibilityConfig struct {
 
 	// Indicates whether WAF should store a sampling of the web requests that match
 	// the rules. You can view the sampled requests through the WAF console.
+	//
+	// Request sampling doesn't provide a field redaction option, and any field
+	// redaction that you specify in your logging configuration doesn't affect sampling.
+	// The only way to exclude fields from request sampling is by disabling sampling
+	// in the web ACL visibility configuration.
 	//
 	// SampledRequestsEnabled is a required field
 	SampledRequestsEnabled *bool `type:"boolean" required:"true"`
@@ -25236,6 +25661,9 @@ type WAFLimitsExceededException struct {
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"Message" type:"string"`
+
+	// Source type for the exception.
+	SourceType *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -25281,7 +25709,7 @@ func (s *WAFLimitsExceededException) OrigErr() error {
 }
 
 func (s *WAFLimitsExceededException) Error() string {
-	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+	return fmt.Sprintf("%s: %s\n%s", s.Code(), s.Message(), s.String())
 }
 
 // Status code returns the HTTP status code for the request's response error.
@@ -25917,12 +26345,16 @@ type WebACL struct {
 	// and protected resources.
 	//
 	// Use this to customize the maximum size of the request body that your protected
-	// CloudFront distributions forward to WAF for inspection. The default is 16
-	// KB (16,384 bytes).
+	// resources forward to WAF for inspection. You can customize this setting for
+	// CloudFront, API Gateway, Amazon Cognito, App Runner, or Verified Access resources.
+	// The default setting is 16 KB (16,384 bytes).
 	//
 	// You are charged additional fees when your protected resources forward body
 	// sizes that are larger than the default. For more information, see WAF Pricing
 	// (http://aws.amazon.com/waf/pricing/).
+	//
+	// For Application Load Balancer and AppSync, the limit is fixed at 8 KB (8,192
+	// bytes).
 	AssociationConfig *AssociationConfig `type:"structure"`
 
 	// The web ACL capacity units (WCUs) currently being used by this web ACL.
@@ -26365,12 +26797,28 @@ func ActionValue_Values() []string {
 const (
 	// AssociatedResourceTypeCloudfront is a AssociatedResourceType enum value
 	AssociatedResourceTypeCloudfront = "CLOUDFRONT"
+
+	// AssociatedResourceTypeApiGateway is a AssociatedResourceType enum value
+	AssociatedResourceTypeApiGateway = "API_GATEWAY"
+
+	// AssociatedResourceTypeCognitoUserPool is a AssociatedResourceType enum value
+	AssociatedResourceTypeCognitoUserPool = "COGNITO_USER_POOL"
+
+	// AssociatedResourceTypeAppRunnerService is a AssociatedResourceType enum value
+	AssociatedResourceTypeAppRunnerService = "APP_RUNNER_SERVICE"
+
+	// AssociatedResourceTypeVerifiedAccessInstance is a AssociatedResourceType enum value
+	AssociatedResourceTypeVerifiedAccessInstance = "VERIFIED_ACCESS_INSTANCE"
 )
 
 // AssociatedResourceType_Values returns all elements of the AssociatedResourceType enum
 func AssociatedResourceType_Values() []string {
 	return []string{
 		AssociatedResourceTypeCloudfront,
+		AssociatedResourceTypeApiGateway,
+		AssociatedResourceTypeCognitoUserPool,
+		AssociatedResourceTypeAppRunnerService,
+		AssociatedResourceTypeVerifiedAccessInstance,
 	}
 }
 
@@ -27591,6 +28039,34 @@ func LabelMatchScope_Values() []string {
 	return []string{
 		LabelMatchScopeLabel,
 		LabelMatchScopeNamespace,
+	}
+}
+
+const (
+	// LogScopeCustomer is a LogScope enum value
+	LogScopeCustomer = "CUSTOMER"
+
+	// LogScopeSecurityLake is a LogScope enum value
+	LogScopeSecurityLake = "SECURITY_LAKE"
+)
+
+// LogScope_Values returns all elements of the LogScope enum
+func LogScope_Values() []string {
+	return []string{
+		LogScopeCustomer,
+		LogScopeSecurityLake,
+	}
+}
+
+const (
+	// LogTypeWafLogs is a LogType enum value
+	LogTypeWafLogs = "WAF_LOGS"
+)
+
+// LogType_Values returns all elements of the LogType enum
+func LogType_Values() []string {
+	return []string{
+		LogTypeWafLogs,
 	}
 }
 

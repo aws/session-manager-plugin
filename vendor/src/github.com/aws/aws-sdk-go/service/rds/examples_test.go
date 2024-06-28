@@ -584,6 +584,8 @@ func ExampleRDS_CreateDBCluster_shared00() {
 			switch aerr.Code() {
 			case rds.ErrCodeDBClusterAlreadyExistsFault:
 				fmt.Println(rds.ErrCodeDBClusterAlreadyExistsFault, aerr.Error())
+			case rds.ErrCodeInsufficientDBInstanceCapacityFault:
+				fmt.Println(rds.ErrCodeInsufficientDBInstanceCapacityFault, aerr.Error())
 			case rds.ErrCodeInsufficientStorageClusterCapacityFault:
 				fmt.Println(rds.ErrCodeInsufficientStorageClusterCapacityFault, aerr.Error())
 			case rds.ErrCodeDBClusterQuotaExceededFault:
@@ -657,6 +659,8 @@ func ExampleRDS_CreateDBCluster_shared01() {
 			switch aerr.Code() {
 			case rds.ErrCodeDBClusterAlreadyExistsFault:
 				fmt.Println(rds.ErrCodeDBClusterAlreadyExistsFault, aerr.Error())
+			case rds.ErrCodeInsufficientDBInstanceCapacityFault:
+				fmt.Println(rds.ErrCodeInsufficientDBInstanceCapacityFault, aerr.Error())
 			case rds.ErrCodeInsufficientStorageClusterCapacityFault:
 				fmt.Println(rds.ErrCodeInsufficientStorageClusterCapacityFault, aerr.Error())
 			case rds.ErrCodeDBClusterQuotaExceededFault:
@@ -958,6 +962,8 @@ func ExampleRDS_CreateDBInstanceReadReplica_shared00() {
 				fmt.Println(rds.ErrCodeNetworkTypeNotSupported, aerr.Error())
 			case rds.ErrCodeTenantDatabaseQuotaExceededFault:
 				fmt.Println(rds.ErrCodeTenantDatabaseQuotaExceededFault, aerr.Error())
+			case rds.ErrCodeCertificateNotFoundFault:
+				fmt.Println(rds.ErrCodeCertificateNotFoundFault, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -1184,6 +1190,46 @@ func ExampleRDS_CreateGlobalCluster_shared00() {
 				fmt.Println(rds.ErrCodeInvalidDBClusterStateFault, aerr.Error())
 			case rds.ErrCodeDBClusterNotFoundFault:
 				fmt.Println(rds.ErrCodeDBClusterNotFoundFault, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		return
+	}
+
+	fmt.Println(result)
+}
+
+// To create a zero-ETL integration
+// The following example creates a zero-ETL integration with Amazon Redshift.
+func ExampleRDS_CreateIntegration_shared00() {
+	svc := rds.New(session.New())
+	input := &rds.CreateIntegrationInput{
+		IntegrationName: aws.String("my-integration"),
+		SourceArn:       aws.String("arn:aws:rds:us-east-1:123456789012:cluster:my-cluster"),
+		TargetArn:       aws.String("arn:aws:redshift-serverless:us-east-1:123456789012:namespace/62c70612-0302-4db7-8414-b5e3e049f0d8"),
+	}
+
+	result, err := svc.CreateIntegration(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case rds.ErrCodeDBClusterNotFoundFault:
+				fmt.Println(rds.ErrCodeDBClusterNotFoundFault, aerr.Error())
+			case rds.ErrCodeDBInstanceNotFoundFault:
+				fmt.Println(rds.ErrCodeDBInstanceNotFoundFault, aerr.Error())
+			case rds.ErrCodeIntegrationAlreadyExistsFault:
+				fmt.Println(rds.ErrCodeIntegrationAlreadyExistsFault, aerr.Error())
+			case rds.ErrCodeIntegrationQuotaExceededFault:
+				fmt.Println(rds.ErrCodeIntegrationQuotaExceededFault, aerr.Error())
+			case rds.ErrCodeKMSKeyNotAccessibleFault:
+				fmt.Println(rds.ErrCodeKMSKeyNotAccessibleFault, aerr.Error())
+			case rds.ErrCodeIntegrationConflictOperationFault:
+				fmt.Println(rds.ErrCodeIntegrationConflictOperationFault, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -1671,6 +1717,38 @@ func ExampleRDS_DeleteGlobalCluster_shared00() {
 				fmt.Println(rds.ErrCodeGlobalClusterNotFoundFault, aerr.Error())
 			case rds.ErrCodeInvalidGlobalClusterStateFault:
 				fmt.Println(rds.ErrCodeInvalidGlobalClusterStateFault, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		return
+	}
+
+	fmt.Println(result)
+}
+
+// To delete a zero-ETL integration
+// The following example deletes a zero-ETL integration with Amazon Redshift.
+func ExampleRDS_DeleteIntegration_shared00() {
+	svc := rds.New(session.New())
+	input := &rds.DeleteIntegrationInput{
+		IntegrationIdentifier: aws.String("5b9f3d79-7392-4a3e-896c-58eaa1b53231"),
+	}
+
+	result, err := svc.DeleteIntegration(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case rds.ErrCodeIntegrationNotFoundFault:
+				fmt.Println(rds.ErrCodeIntegrationNotFoundFault, aerr.Error())
+			case rds.ErrCodeIntegrationConflictOperationFault:
+				fmt.Println(rds.ErrCodeIntegrationConflictOperationFault, aerr.Error())
+			case rds.ErrCodeInvalidIntegrationStateFault:
+				fmt.Println(rds.ErrCodeInvalidIntegrationStateFault, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -2537,6 +2615,35 @@ func ExampleRDS_DescribeGlobalClusters_shared00() {
 			switch aerr.Code() {
 			case rds.ErrCodeGlobalClusterNotFoundFault:
 				fmt.Println(rds.ErrCodeGlobalClusterNotFoundFault, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		return
+	}
+
+	fmt.Println(result)
+}
+
+// To describe a zero-ETL integration
+// The following example retrieves information about a zero-ETL integration with Amazon
+// Redshift.
+func ExampleRDS_DescribeIntegrations_shared00() {
+	svc := rds.New(session.New())
+	input := &rds.DescribeIntegrationsInput{
+		IntegrationIdentifier: aws.String("5b9f3d79-7392-4a3e-896c-58eaa1b53231"),
+	}
+
+	result, err := svc.DescribeIntegrations(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case rds.ErrCodeIntegrationNotFoundFault:
+				fmt.Println(rds.ErrCodeIntegrationNotFoundFault, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -3470,6 +3577,39 @@ func ExampleRDS_ModifyGlobalCluster_shared00() {
 	fmt.Println(result)
 }
 
+// To modify a zero-ETL integration
+// The following example modifies the name of an existing zero-ETL integration.
+func ExampleRDS_ModifyIntegration_shared00() {
+	svc := rds.New(session.New())
+	input := &rds.ModifyIntegrationInput{
+		IntegrationIdentifier: aws.String("a1b2c3d4-5678-90ab-cdef-EXAMPLE11111"),
+		IntegrationName:       aws.String("my-renamed-integration"),
+	}
+
+	result, err := svc.ModifyIntegration(input)
+	if err != nil {
+		if aerr, ok := err.(awserr.Error); ok {
+			switch aerr.Code() {
+			case rds.ErrCodeIntegrationNotFoundFault:
+				fmt.Println(rds.ErrCodeIntegrationNotFoundFault, aerr.Error())
+			case rds.ErrCodeInvalidIntegrationStateFault:
+				fmt.Println(rds.ErrCodeInvalidIntegrationStateFault, aerr.Error())
+			case rds.ErrCodeIntegrationConflictOperationFault:
+				fmt.Println(rds.ErrCodeIntegrationConflictOperationFault, aerr.Error())
+			default:
+				fmt.Println(aerr.Error())
+			}
+		} else {
+			// Print the error, cast err to awserr.Error to get the Code and
+			// Message from an error.
+			fmt.Println(err.Error())
+		}
+		return
+	}
+
+	fmt.Println(result)
+}
+
 // To modify an option group
 // The following example adds an option to an option group.
 func ExampleRDS_ModifyOptionGroup_shared00() {
@@ -3934,6 +4074,8 @@ func ExampleRDS_RestoreDBClusterFromSnapshot_shared00() {
 				fmt.Println(rds.ErrCodeDBClusterParameterGroupNotFoundFault, aerr.Error())
 			case rds.ErrCodeInvalidDBInstanceStateFault:
 				fmt.Println(rds.ErrCodeInvalidDBInstanceStateFault, aerr.Error())
+			case rds.ErrCodeInsufficientDBInstanceCapacityFault:
+				fmt.Println(rds.ErrCodeInsufficientDBInstanceCapacityFault, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -4003,6 +4145,8 @@ func ExampleRDS_RestoreDBClusterToPointInTime_shared00() {
 				fmt.Println(rds.ErrCodeDBClusterParameterGroupNotFoundFault, aerr.Error())
 			case rds.ErrCodeDBClusterAutomatedBackupNotFoundFault:
 				fmt.Println(rds.ErrCodeDBClusterAutomatedBackupNotFoundFault, aerr.Error())
+			case rds.ErrCodeInsufficientDBInstanceCapacityFault:
+				fmt.Println(rds.ErrCodeInsufficientDBInstanceCapacityFault, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}
@@ -4078,6 +4222,8 @@ func ExampleRDS_RestoreDBInstanceFromDBSnapshot_shared00() {
 				fmt.Println(rds.ErrCodeNetworkTypeNotSupported, aerr.Error())
 			case rds.ErrCodeDBClusterSnapshotNotFoundFault:
 				fmt.Println(rds.ErrCodeDBClusterSnapshotNotFoundFault, aerr.Error())
+			case rds.ErrCodeCertificateNotFoundFault:
+				fmt.Println(rds.ErrCodeCertificateNotFoundFault, aerr.Error())
 			case rds.ErrCodeTenantDatabaseQuotaExceededFault:
 				fmt.Println(rds.ErrCodeTenantDatabaseQuotaExceededFault, aerr.Error())
 			default:
@@ -4157,6 +4303,8 @@ func ExampleRDS_RestoreDBInstanceToPointInTime_shared00() {
 				fmt.Println(rds.ErrCodeNetworkTypeNotSupported, aerr.Error())
 			case rds.ErrCodeTenantDatabaseQuotaExceededFault:
 				fmt.Println(rds.ErrCodeTenantDatabaseQuotaExceededFault, aerr.Error())
+			case rds.ErrCodeCertificateNotFoundFault:
+				fmt.Println(rds.ErrCodeCertificateNotFoundFault, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}

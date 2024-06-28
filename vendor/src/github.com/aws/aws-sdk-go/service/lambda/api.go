@@ -3488,6 +3488,10 @@ func (c *Lambda) InvokeAsyncRequest(input *InvokeAsyncInput) (req *request.Reque
 //
 // Invokes a function asynchronously.
 //
+// If you do use the InvokeAsync action, note that it doesn't support the use
+// of X-Ray active tracing. Trace ID is not propagated to the function, even
+// if X-Ray active tracing is turned on.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -7760,7 +7764,7 @@ type AddPermissionInput struct {
 	// For Alexa Smart Home functions, a token that the invoker must supply.
 	EventSourceToken *string `type:"string"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -8608,7 +8612,7 @@ type CreateAliasInput struct {
 	// A description of the alias.
 	Description *string `type:"string"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -8850,8 +8854,9 @@ type CreateEventSourceMappingInput struct {
 	// the batch in two and retry.
 	BisectBatchOnFunctionError *bool `type:"boolean"`
 
-	// (Kinesis and DynamoDB Streams only) A standard Amazon SQS queue or standard
-	// Amazon SNS topic destination for discarded records.
+	// (Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Kafka only) A configuration
+	// object that specifies the destination of an event after Lambda processes
+	// it.
 	DestinationConfig *DestinationConfig `type:"structure"`
 
 	// Specific configuration settings for a DocumentDB event source.
@@ -8871,7 +8876,9 @@ type CreateEventSourceMappingInput struct {
 	//
 	//    * Amazon Simple Queue Service – The ARN of the queue.
 	//
-	//    * Amazon Managed Streaming for Apache Kafka – The ARN of the cluster.
+	//    * Amazon Managed Streaming for Apache Kafka – The ARN of the cluster
+	//    or the ARN of the VPC connection (for cross-account event source mappings
+	//    (https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#msk-multi-vpc)).
 	//
 	//    * Amazon MQ – The ARN of the broker.
 	//
@@ -8883,7 +8890,7 @@ type CreateEventSourceMappingInput struct {
 	// (https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html).
 	FilterCriteria *FilterCriteria `type:"structure"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -9227,13 +9234,14 @@ type CreateFunctionInput struct {
 	Environment *Environment `type:"structure"`
 
 	// The size of the function's /tmp directory in MB. The default value is 512,
-	// but can be any whole number between 512 and 10,240 MB.
+	// but can be any whole number between 512 and 10,240 MB. For more information,
+	// see Configuring ephemeral storage (console) (https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage).
 	EphemeralStorage *EphemeralStorage `type:"structure"`
 
 	// Connection settings for an Amazon EFS file system.
 	FileSystemConfigs []*FileSystemConfig `type:"list"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -9256,7 +9264,7 @@ type CreateFunctionInput struct {
 	// (https://docs.aws.amazon.com/lambda/latest/dg/foundation-progmodel.html).
 	Handler *string `type:"string"`
 
-	// Container image configuration values (https://docs.aws.amazon.com/lambda/latest/dg/configuration-images.html#configuration-images-settings)
+	// Container image configuration values (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-parms)
 	// that override the values in the container image Dockerfile.
 	ImageConfig *ImageConfig `type:"structure"`
 
@@ -9561,7 +9569,7 @@ type CreateFunctionUrlConfigInput struct {
 	// settings for your function URL.
 	Cors *Cors `type:"structure"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -9797,7 +9805,7 @@ func (s *DeadLetterConfig) SetTargetArn(v string) *DeadLetterConfig {
 type DeleteAliasInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -10016,7 +10024,7 @@ func (s *DeleteEventSourceMappingInput) SetUUID(v string) *DeleteEventSourceMapp
 type DeleteFunctionCodeSigningConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -10098,7 +10106,7 @@ func (s DeleteFunctionCodeSigningConfigOutput) GoString() string {
 type DeleteFunctionConcurrencyInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -10180,7 +10188,7 @@ func (s DeleteFunctionConcurrencyOutput) GoString() string {
 type DeleteFunctionEventInvokeConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -10275,7 +10283,7 @@ func (s DeleteFunctionEventInvokeConfigOutput) GoString() string {
 type DeleteFunctionInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function or version.
+	// The name or ARN of the Lambda function or version.
 	//
 	// Name formats
 	//
@@ -10370,7 +10378,7 @@ func (s DeleteFunctionOutput) GoString() string {
 type DeleteFunctionUrlConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -10549,7 +10557,7 @@ func (s DeleteLayerVersionOutput) GoString() string {
 type DeleteProvisionedConcurrencyConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -11427,7 +11435,8 @@ func (s *EnvironmentResponse) SetVariables(v map[string]*string) *EnvironmentRes
 }
 
 // The size of the function's /tmp directory in MB. The default value is 512,
-// but it can be any whole number between 512 and 10,240 MB.
+// but can be any whole number between 512 and 10,240 MB. For more information,
+// see Configuring ephemeral storage (console) (https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage).
 type EphemeralStorage struct {
 	_ struct{} `type:"structure"`
 
@@ -11502,8 +11511,9 @@ type EventSourceMappingConfiguration struct {
 	// the batch in two and retry. The default value is false.
 	BisectBatchOnFunctionError *bool `type:"boolean"`
 
-	// (Kinesis and DynamoDB Streams only) An Amazon SQS queue or Amazon SNS topic
-	// destination for discarded records.
+	// (Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Apache Kafka event
+	// sources only) A configuration object that specifies the destination of an
+	// event after Lambda processes it.
 	DestinationConfig *DestinationConfig `type:"structure"`
 
 	// Specific configuration settings for a DocumentDB event source.
@@ -12106,8 +12116,9 @@ type FunctionConfiguration struct {
 	// Omitted from CloudTrail logs.
 	Environment *EnvironmentResponse `type:"structure"`
 
-	// The size of the function’s /tmp directory in MB. The default value is 512,
-	// but it can be any whole number between 512 and 10,240 MB.
+	// The size of the function's /tmp directory in MB. The default value is 512,
+	// but can be any whole number between 512 and 10,240 MB. For more information,
+	// see Configuring ephemeral storage (console) (https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage).
 	EphemeralStorage *EphemeralStorage `type:"structure"`
 
 	// Connection settings for an Amazon EFS file system (https://docs.aws.amazon.com/lambda/latest/dg/configuration-filesystem.html).
@@ -12700,7 +12711,7 @@ func (s *GetAccountSettingsOutput) SetAccountUsage(v *AccountUsage) *GetAccountS
 type GetAliasInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -12908,7 +12919,7 @@ func (s *GetEventSourceMappingInput) SetUUID(v string) *GetEventSourceMappingInp
 type GetFunctionCodeSigningConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -12973,7 +12984,7 @@ type GetFunctionCodeSigningConfigOutput struct {
 	// CodeSigningConfigArn is a required field
 	CodeSigningConfigArn *string `type:"string" required:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -13023,7 +13034,7 @@ func (s *GetFunctionCodeSigningConfigOutput) SetFunctionName(v string) *GetFunct
 type GetFunctionConcurrencyInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -13114,7 +13125,7 @@ func (s *GetFunctionConcurrencyOutput) SetReservedConcurrentExecutions(v int64) 
 type GetFunctionConfigurationInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -13188,7 +13199,7 @@ func (s *GetFunctionConfigurationInput) SetQualifier(v string) *GetFunctionConfi
 type GetFunctionEventInvokeConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -13338,7 +13349,7 @@ func (s *GetFunctionEventInvokeConfigOutput) SetMaximumRetryAttempts(v int64) *G
 type GetFunctionInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -13470,7 +13481,7 @@ func (s *GetFunctionOutput) SetTags(v map[string]*string) *GetFunctionOutput {
 type GetFunctionUrlConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -14081,7 +14092,7 @@ func (s *GetLayerVersionPolicyOutput) SetRevisionId(v string) *GetLayerVersionPo
 type GetPolicyInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -14194,7 +14205,7 @@ func (s *GetPolicyOutput) SetRevisionId(v string) *GetPolicyOutput {
 type GetProvisionedConcurrencyConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -14351,7 +14362,7 @@ func (s *GetProvisionedConcurrencyConfigOutput) SetStatusReason(v string) *GetPr
 type GetRuntimeManagementConfigInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -15083,7 +15094,7 @@ func (s *InvalidZipFileException) RequestID() string {
 type InvokeAsyncInput struct {
 	_ struct{} `deprecated:"true" type:"structure" payload:"InvokeArgs"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -15193,10 +15204,11 @@ type InvokeInput struct {
 	_ struct{} `type:"structure" payload:"Payload"`
 
 	// Up to 3,583 bytes of base64-encoded data about the invoking client to pass
-	// to the function in the context object.
+	// to the function in the context object. Lambda passes the ClientContext object
+	// to your function for synchronous invocations only.
 	ClientContext *string `location:"header" locationName:"X-Amz-Client-Context" type:"string"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -15541,7 +15553,7 @@ type InvokeWithResponseStreamInput struct {
 	// to the function in the context object.
 	ClientContext *string `location:"header" locationName:"X-Amz-Client-Context" type:"string"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -16498,7 +16510,7 @@ func (s *LayersListItem) SetLayerName(v string) *LayersListItem {
 type ListAliasesInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -16734,14 +16746,16 @@ type ListEventSourceMappingsInput struct {
 	//
 	//    * Amazon Simple Queue Service – The ARN of the queue.
 	//
-	//    * Amazon Managed Streaming for Apache Kafka – The ARN of the cluster.
+	//    * Amazon Managed Streaming for Apache Kafka – The ARN of the cluster
+	//    or the ARN of the VPC connection (for cross-account event source mappings
+	//    (https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#msk-multi-vpc)).
 	//
 	//    * Amazon MQ – The ARN of the broker.
 	//
 	//    * Amazon DocumentDB – The ARN of the DocumentDB change stream.
 	EventSourceArn *string `location:"querystring" locationName:"EventSourceArn" type:"string"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -16868,7 +16882,7 @@ func (s *ListEventSourceMappingsOutput) SetNextMarker(v string) *ListEventSource
 type ListFunctionEventInvokeConfigsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -16990,7 +17004,7 @@ func (s *ListFunctionEventInvokeConfigsOutput) SetNextMarker(v string) *ListFunc
 type ListFunctionUrlConfigsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -17348,7 +17362,7 @@ type ListLayerVersionsInput struct {
 	// The compatible instruction set architecture (https://docs.aws.amazon.com/lambda/latest/dg/foundation-arch.html).
 	CompatibleArchitecture *string `location:"querystring" locationName:"CompatibleArchitecture" type:"string" enum:"Architecture"`
 
-	// A runtime identifier. For example, go1.x.
+	// A runtime identifier. For example, java21.
 	//
 	// The following list includes deprecated runtimes. For more information, see
 	// Runtime deprecation policy (https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy).
@@ -17479,7 +17493,7 @@ type ListLayersInput struct {
 	// The compatible instruction set architecture (https://docs.aws.amazon.com/lambda/latest/dg/foundation-arch.html).
 	CompatibleArchitecture *string `location:"querystring" locationName:"CompatibleArchitecture" type:"string" enum:"Architecture"`
 
-	// A runtime identifier. For example, go1.x.
+	// A runtime identifier. For example, java21.
 	//
 	// The following list includes deprecated runtimes. For more information, see
 	// Runtime deprecation policy (https://docs.aws.amazon.com/lambda/latest/dg/lambda-runtimes.html#runtime-support-policy).
@@ -17590,7 +17604,7 @@ func (s *ListLayersOutput) SetNextMarker(v string) *ListLayersOutput {
 type ListProvisionedConcurrencyConfigsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -17793,7 +17807,7 @@ func (s *ListTagsOutput) SetTags(v map[string]*string) *ListTagsOutput {
 type ListVersionsByFunctionInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -17920,7 +17934,7 @@ type LoggingConfig struct {
 
 	// Set this property to filter the application logs for your function that Lambda
 	// sends to CloudWatch. Lambda only sends application logs at the selected level
-	// and lower.
+	// of detail and lower, where TRACE is the highest level and FATAL is the lowest.
 	ApplicationLogLevel *string `type:"string" enum:"ApplicationLogLevel"`
 
 	// The format in which Lambda sends your function's application and system logs
@@ -17935,7 +17949,7 @@ type LoggingConfig struct {
 
 	// Set this property to filter the system logs for your function that Lambda
 	// sends to CloudWatch. Lambda only sends system logs at the selected level
-	// and lower.
+	// of detail and lower, where DEBUG is the highest level and WARN is the lowest.
 	SystemLogLevel *string `type:"string" enum:"SystemLogLevel"`
 }
 
@@ -17999,6 +18013,19 @@ type OnFailure struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the destination resource.
+	//
+	// To retain records of asynchronous invocations (https://docs.aws.amazon.com/lambda/latest/dg/invocation-async.html#invocation-async-destinations),
+	// you can configure an Amazon SNS topic, Amazon SQS queue, Lambda function,
+	// or Amazon EventBridge event bus as the destination.
+	//
+	// To retain records of failed invocations from Kinesis and DynamoDB event sources
+	// (https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventsourcemapping.html#event-source-mapping-destinations),
+	// you can configure an Amazon SNS topic or Amazon SQS queue as the destination.
+	//
+	// To retain records of failed invocations from self-managed Kafka (https://docs.aws.amazon.com/lambda/latest/dg/with-kafka.html#services-smaa-onfailure-destination)
+	// or Amazon MSK (https://docs.aws.amazon.com/lambda/latest/dg/with-msk.html#services-msk-onfailure-destination),
+	// you can configure an Amazon SNS topic, Amazon SQS queue, or Amazon S3 bucket
+	// as the destination.
 	Destination *string `type:"string"`
 }
 
@@ -18587,7 +18614,7 @@ type PublishVersionInput struct {
 	// configuration.
 	Description *string `type:"string"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -18675,7 +18702,7 @@ type PutFunctionCodeSigningConfigInput struct {
 	// CodeSigningConfigArn is a required field
 	CodeSigningConfigArn *string `type:"string" required:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -18749,7 +18776,7 @@ type PutFunctionCodeSigningConfigOutput struct {
 	// CodeSigningConfigArn is a required field
 	CodeSigningConfigArn *string `type:"string" required:"true"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -18799,7 +18826,7 @@ func (s *PutFunctionCodeSigningConfigOutput) SetFunctionName(v string) *PutFunct
 type PutFunctionConcurrencyInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -18918,7 +18945,7 @@ type PutFunctionEventInvokeConfigInput struct {
 	//    * Event Bus - The ARN of an Amazon EventBridge event bus.
 	DestinationConfig *DestinationConfig `type:"structure"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -19095,7 +19122,7 @@ func (s *PutFunctionEventInvokeConfigOutput) SetMaximumRetryAttempts(v int64) *P
 type PutProvisionedConcurrencyConfigInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -19269,7 +19296,7 @@ func (s *PutProvisionedConcurrencyConfigOutput) SetStatusReason(v string) *PutPr
 type PutRuntimeManagementConfigInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -19625,7 +19652,7 @@ func (s RemoveLayerVersionPermissionOutput) GoString() string {
 type RemovePermissionInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -21199,7 +21226,7 @@ type UpdateAliasInput struct {
 	// A description of the alias.
 	Description *string `type:"string"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -21454,8 +21481,9 @@ type UpdateEventSourceMappingInput struct {
 	// the batch in two and retry.
 	BisectBatchOnFunctionError *bool `type:"boolean"`
 
-	// (Kinesis and DynamoDB Streams only) A standard Amazon SQS queue or standard
-	// Amazon SNS topic destination for discarded records.
+	// (Kinesis, DynamoDB Streams, Amazon MSK, and self-managed Kafka only) A configuration
+	// object that specifies the destination of an event after Lambda processes
+	// it.
 	DestinationConfig *DestinationConfig `type:"structure"`
 
 	// Specific configuration settings for a DocumentDB event source.
@@ -21472,7 +21500,7 @@ type UpdateEventSourceMappingInput struct {
 	// (https://docs.aws.amazon.com/lambda/latest/dg/invocation-eventfiltering.html).
 	FilterCriteria *FilterCriteria `type:"structure"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -21719,7 +21747,7 @@ type UpdateFunctionCodeInput struct {
 	// modifying the function code.
 	DryRun *bool `type:"boolean"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -21893,13 +21921,14 @@ type UpdateFunctionConfigurationInput struct {
 	Environment *Environment `type:"structure"`
 
 	// The size of the function's /tmp directory in MB. The default value is 512,
-	// but can be any whole number between 512 and 10,240 MB.
+	// but can be any whole number between 512 and 10,240 MB. For more information,
+	// see Configuring ephemeral storage (console) (https://docs.aws.amazon.com/lambda/latest/dg/configuration-function-common.html#configuration-ephemeral-storage).
 	EphemeralStorage *EphemeralStorage `type:"structure"`
 
 	// Connection settings for an Amazon EFS file system.
 	FileSystemConfigs []*FileSystemConfig `type:"list"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -21922,7 +21951,7 @@ type UpdateFunctionConfigurationInput struct {
 	// (https://docs.aws.amazon.com/lambda/latest/dg/foundation-progmodel.html).
 	Handler *string `type:"string"`
 
-	// Container image configuration values (https://docs.aws.amazon.com/lambda/latest/dg/images-parms.html)
+	// Container image configuration values (https://docs.aws.amazon.com/lambda/latest/dg/images-create.html#images-parms)
 	// that override the values in the container image Docker file.
 	ImageConfig *ImageConfig `type:"structure"`
 
@@ -22176,7 +22205,7 @@ type UpdateFunctionEventInvokeConfigInput struct {
 	//    * Event Bus - The ARN of an Amazon EventBridge event bus.
 	DestinationConfig *DestinationConfig `type:"structure"`
 
-	// The name of the Lambda function, version, or alias.
+	// The name or ARN of the Lambda function, version, or alias.
 	//
 	// Name formats
 	//
@@ -22363,7 +22392,7 @@ type UpdateFunctionUrlConfigInput struct {
 	// settings for your function URL.
 	Cors *Cors `type:"structure"`
 
-	// The name of the Lambda function.
+	// The name or ARN of the Lambda function.
 	//
 	// Name formats
 	//
@@ -23133,6 +23162,9 @@ const (
 	// RuntimeDotnet6 is a Runtime enum value
 	RuntimeDotnet6 = "dotnet6"
 
+	// RuntimeDotnet8 is a Runtime enum value
+	RuntimeDotnet8 = "dotnet8"
+
 	// RuntimeNodejs43Edge is a Runtime enum value
 	RuntimeNodejs43Edge = "nodejs4.3-edge"
 
@@ -23162,6 +23194,9 @@ const (
 
 	// RuntimeRuby32 is a Runtime enum value
 	RuntimeRuby32 = "ruby3.2"
+
+	// RuntimeRuby33 is a Runtime enum value
+	RuntimeRuby33 = "ruby3.3"
 
 	// RuntimePython311 is a Runtime enum value
 	RuntimePython311 = "python3.11"
@@ -23203,6 +23238,7 @@ func Runtime_Values() []string {
 		RuntimeDotnetcore21,
 		RuntimeDotnetcore31,
 		RuntimeDotnet6,
+		RuntimeDotnet8,
 		RuntimeNodejs43Edge,
 		RuntimeGo1X,
 		RuntimeRuby25,
@@ -23213,6 +23249,7 @@ func Runtime_Values() []string {
 		RuntimePython310,
 		RuntimeJava17,
 		RuntimeRuby32,
+		RuntimeRuby33,
 		RuntimePython311,
 		RuntimeNodejs20X,
 		RuntimeProvidedAl2023,

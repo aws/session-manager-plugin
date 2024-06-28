@@ -32,6 +32,12 @@ const (
 	// Unable to modify the tag due to a simultaneous update request.
 	ErrCodeConcurrentModificationException = "ConcurrentModificationException"
 
+	// ErrCodeConcurrentPipelineExecutionsLimitExceededException for service response error code
+	// "ConcurrentPipelineExecutionsLimitExceededException".
+	//
+	// The pipeline has reached the limit for concurrent pipeline executions.
+	ErrCodeConcurrentPipelineExecutionsLimitExceededException = "ConcurrentPipelineExecutionsLimitExceededException"
+
 	// ErrCodeConflictException for service response error code
 	// "ConflictException".
 	//
@@ -174,6 +180,13 @@ const (
 	// a Stopped state, or it might no longer be in progress.
 	ErrCodePipelineExecutionNotStoppableException = "PipelineExecutionNotStoppableException"
 
+	// ErrCodePipelineExecutionOutdatedException for service response error code
+	// "PipelineExecutionOutdatedException".
+	//
+	// The specified pipeline execution is outdated and cannot be used as a target
+	// pipeline execution for rollback.
+	ErrCodePipelineExecutionOutdatedException = "PipelineExecutionOutdatedException"
+
 	// ErrCodePipelineNameInUseException for service response error code
 	// "PipelineNameInUseException".
 	//
@@ -223,6 +236,14 @@ const (
 	// The tags limit for a resource has been exceeded.
 	ErrCodeTooManyTagsException = "TooManyTagsException"
 
+	// ErrCodeUnableToRollbackStageException for service response error code
+	// "UnableToRollbackStageException".
+	//
+	// Unable to roll back the stage. The cause might be if the pipeline version
+	// has changed since the target pipeline execution was deployed, the stage is
+	// currently running, or an incorrect target pipeline execution ID was provided.
+	ErrCodeUnableToRollbackStageException = "UnableToRollbackStageException"
+
 	// ErrCodeValidationException for service response error code
 	// "ValidationException".
 	//
@@ -237,40 +258,43 @@ const (
 )
 
 var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
-	"ActionNotFoundException":                         newErrorActionNotFoundException,
-	"ActionTypeNotFoundException":                     newErrorActionTypeNotFoundException,
-	"ApprovalAlreadyCompletedException":               newErrorApprovalAlreadyCompletedException,
-	"ConcurrentModificationException":                 newErrorConcurrentModificationException,
-	"ConflictException":                               newErrorConflictException,
-	"DuplicatedStopRequestException":                  newErrorDuplicatedStopRequestException,
-	"InvalidActionDeclarationException":               newErrorInvalidActionDeclarationException,
-	"InvalidApprovalTokenException":                   newErrorInvalidApprovalTokenException,
-	"InvalidArnException":                             newErrorInvalidArnException,
-	"InvalidBlockerDeclarationException":              newErrorInvalidBlockerDeclarationException,
-	"InvalidClientTokenException":                     newErrorInvalidClientTokenException,
-	"InvalidJobException":                             newErrorInvalidJobException,
-	"InvalidJobStateException":                        newErrorInvalidJobStateException,
-	"InvalidNextTokenException":                       newErrorInvalidNextTokenException,
-	"InvalidNonceException":                           newErrorInvalidNonceException,
-	"InvalidStageDeclarationException":                newErrorInvalidStageDeclarationException,
-	"InvalidStructureException":                       newErrorInvalidStructureException,
-	"InvalidTagsException":                            newErrorInvalidTagsException,
-	"InvalidWebhookAuthenticationParametersException": newErrorInvalidWebhookAuthenticationParametersException,
-	"InvalidWebhookFilterPatternException":            newErrorInvalidWebhookFilterPatternException,
-	"JobNotFoundException":                            newErrorJobNotFoundException,
-	"LimitExceededException":                          newErrorLimitExceededException,
-	"NotLatestPipelineExecutionException":             newErrorNotLatestPipelineExecutionException,
-	"OutputVariablesSizeExceededException":            newErrorOutputVariablesSizeExceededException,
-	"PipelineExecutionNotFoundException":              newErrorPipelineExecutionNotFoundException,
-	"PipelineExecutionNotStoppableException":          newErrorPipelineExecutionNotStoppableException,
-	"PipelineNameInUseException":                      newErrorPipelineNameInUseException,
-	"PipelineNotFoundException":                       newErrorPipelineNotFoundException,
-	"PipelineVersionNotFoundException":                newErrorPipelineVersionNotFoundException,
-	"RequestFailedException":                          newErrorRequestFailedException,
-	"ResourceNotFoundException":                       newErrorResourceNotFoundException,
-	"StageNotFoundException":                          newErrorStageNotFoundException,
-	"StageNotRetryableException":                      newErrorStageNotRetryableException,
-	"TooManyTagsException":                            newErrorTooManyTagsException,
-	"ValidationException":                             newErrorValidationException,
-	"WebhookNotFoundException":                        newErrorWebhookNotFoundException,
+	"ActionNotFoundException":                            newErrorActionNotFoundException,
+	"ActionTypeNotFoundException":                        newErrorActionTypeNotFoundException,
+	"ApprovalAlreadyCompletedException":                  newErrorApprovalAlreadyCompletedException,
+	"ConcurrentModificationException":                    newErrorConcurrentModificationException,
+	"ConcurrentPipelineExecutionsLimitExceededException": newErrorConcurrentPipelineExecutionsLimitExceededException,
+	"ConflictException":                                  newErrorConflictException,
+	"DuplicatedStopRequestException":                     newErrorDuplicatedStopRequestException,
+	"InvalidActionDeclarationException":                  newErrorInvalidActionDeclarationException,
+	"InvalidApprovalTokenException":                      newErrorInvalidApprovalTokenException,
+	"InvalidArnException":                                newErrorInvalidArnException,
+	"InvalidBlockerDeclarationException":                 newErrorInvalidBlockerDeclarationException,
+	"InvalidClientTokenException":                        newErrorInvalidClientTokenException,
+	"InvalidJobException":                                newErrorInvalidJobException,
+	"InvalidJobStateException":                           newErrorInvalidJobStateException,
+	"InvalidNextTokenException":                          newErrorInvalidNextTokenException,
+	"InvalidNonceException":                              newErrorInvalidNonceException,
+	"InvalidStageDeclarationException":                   newErrorInvalidStageDeclarationException,
+	"InvalidStructureException":                          newErrorInvalidStructureException,
+	"InvalidTagsException":                               newErrorInvalidTagsException,
+	"InvalidWebhookAuthenticationParametersException":    newErrorInvalidWebhookAuthenticationParametersException,
+	"InvalidWebhookFilterPatternException":               newErrorInvalidWebhookFilterPatternException,
+	"JobNotFoundException":                               newErrorJobNotFoundException,
+	"LimitExceededException":                             newErrorLimitExceededException,
+	"NotLatestPipelineExecutionException":                newErrorNotLatestPipelineExecutionException,
+	"OutputVariablesSizeExceededException":               newErrorOutputVariablesSizeExceededException,
+	"PipelineExecutionNotFoundException":                 newErrorPipelineExecutionNotFoundException,
+	"PipelineExecutionNotStoppableException":             newErrorPipelineExecutionNotStoppableException,
+	"PipelineExecutionOutdatedException":                 newErrorPipelineExecutionOutdatedException,
+	"PipelineNameInUseException":                         newErrorPipelineNameInUseException,
+	"PipelineNotFoundException":                          newErrorPipelineNotFoundException,
+	"PipelineVersionNotFoundException":                   newErrorPipelineVersionNotFoundException,
+	"RequestFailedException":                             newErrorRequestFailedException,
+	"ResourceNotFoundException":                          newErrorResourceNotFoundException,
+	"StageNotFoundException":                             newErrorStageNotFoundException,
+	"StageNotRetryableException":                         newErrorStageNotRetryableException,
+	"TooManyTagsException":                               newErrorTooManyTagsException,
+	"UnableToRollbackStageException":                     newErrorUnableToRollbackStageException,
+	"ValidationException":                                newErrorValidationException,
+	"WebhookNotFoundException":                           newErrorWebhookNotFoundException,
 }

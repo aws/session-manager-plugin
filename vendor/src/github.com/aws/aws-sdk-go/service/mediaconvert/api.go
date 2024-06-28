@@ -930,7 +930,12 @@ const opDescribeEndpoints = "DescribeEndpoints"
 //	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/DescribeEndpoints
+//
+// Deprecated: DescribeEndpoints and account specific endpoints are no longer required. We recommend that you send your requests directly to the regional endpoint instead.
 func (c *MediaConvert) DescribeEndpointsRequest(input *DescribeEndpointsInput) (req *request.Request, output *DescribeEndpointsOutput) {
+	if c.Client.Config.Logger != nil {
+		c.Client.Config.Logger.Log("This operation, DescribeEndpoints, has been deprecated")
+	}
 	op := &request.Operation{
 		Name:       opDescribeEndpoints,
 		HTTPMethod: "POST",
@@ -954,8 +959,10 @@ func (c *MediaConvert) DescribeEndpointsRequest(input *DescribeEndpointsInput) (
 
 // DescribeEndpoints API operation for AWS Elemental MediaConvert.
 //
-// Send an request with an empty body to the regional API endpoint to get your
-// account API endpoint.
+// Send a request with an empty body to the regional API endpoint to get your
+// account API endpoint. Note that DescribeEndpoints is no longer required.
+// We recommend that you send your requests directly to the regional endpoint
+// instead.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -979,6 +986,8 @@ func (c *MediaConvert) DescribeEndpointsRequest(input *DescribeEndpointsInput) (
 //   - ConflictException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/DescribeEndpoints
+//
+// Deprecated: DescribeEndpoints and account specific endpoints are no longer required. We recommend that you send your requests directly to the regional endpoint instead.
 func (c *MediaConvert) DescribeEndpoints(input *DescribeEndpointsInput) (*DescribeEndpointsOutput, error) {
 	req, out := c.DescribeEndpointsRequest(input)
 	return out, req.Send()
@@ -993,6 +1002,8 @@ func (c *MediaConvert) DescribeEndpoints(input *DescribeEndpointsInput) (*Descri
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: DescribeEndpoints and account specific endpoints are no longer required. We recommend that you send your requests directly to the regional endpoint instead.
 func (c *MediaConvert) DescribeEndpointsWithContext(ctx aws.Context, input *DescribeEndpointsInput, opts ...request.Option) (*DescribeEndpointsOutput, error) {
 	req, out := c.DescribeEndpointsRequest(input)
 	req.SetContext(ctx)
@@ -1016,6 +1027,8 @@ func (c *MediaConvert) DescribeEndpointsWithContext(ctx aws.Context, input *Desc
 //	        fmt.Println(page)
 //	        return pageNum <= 3
 //	    })
+//
+// Deprecated: DescribeEndpoints and account specific endpoints are no longer required. We recommend that you send your requests directly to the regional endpoint instead.
 func (c *MediaConvert) DescribeEndpointsPages(input *DescribeEndpointsInput, fn func(*DescribeEndpointsOutput, bool) bool) error {
 	return c.DescribeEndpointsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1027,6 +1040,8 @@ func (c *MediaConvert) DescribeEndpointsPages(input *DescribeEndpointsInput, fn 
 // the context is nil a panic will occur. In the future the SDK may create
 // sub-contexts for http.Requests. See https://golang.org/pkg/context/
 // for more information on using Contexts.
+//
+// Deprecated: DescribeEndpoints and account specific endpoints are no longer required. We recommend that you send your requests directly to the regional endpoint instead.
 func (c *MediaConvert) DescribeEndpointsPagesWithContext(ctx aws.Context, input *DescribeEndpointsInput, fn func(*DescribeEndpointsOutput, bool) bool, opts ...request.Option) error {
 	p := request.Pagination{
 		NewRequest: func() (*request.Request, error) {
@@ -2345,6 +2360,154 @@ func (c *MediaConvert) PutPolicyWithContext(ctx aws.Context, input *PutPolicyInp
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
+}
+
+const opSearchJobs = "SearchJobs"
+
+// SearchJobsRequest generates a "aws/request.Request" representing the
+// client's request for the SearchJobs operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See SearchJobs for more information on using the SearchJobs
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the SearchJobsRequest method.
+//	req, resp := client.SearchJobsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/SearchJobs
+func (c *MediaConvert) SearchJobsRequest(input *SearchJobsInput) (req *request.Request, output *SearchJobsOutput) {
+	op := &request.Operation{
+		Name:       opSearchJobs,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2017-08-29/search",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &SearchJobsInput{}
+	}
+
+	output = &SearchJobsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// SearchJobs API operation for AWS Elemental MediaConvert.
+//
+// Retrieve a JSON array that includes job details for up to twenty of your
+// most recent jobs. Optionally filter results further according to input file,
+// queue, or status. To retrieve the twenty next most recent jobs, use the nextToken
+// string returned with the array.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Elemental MediaConvert's
+// API operation SearchJobs for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//
+//   - InternalServerErrorException
+//
+//   - ForbiddenException
+//
+//   - NotFoundException
+//
+//   - TooManyRequestsException
+//
+//   - ConflictException
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/mediaconvert-2017-08-29/SearchJobs
+func (c *MediaConvert) SearchJobs(input *SearchJobsInput) (*SearchJobsOutput, error) {
+	req, out := c.SearchJobsRequest(input)
+	return out, req.Send()
+}
+
+// SearchJobsWithContext is the same as SearchJobs with the addition of
+// the ability to pass a context and additional request options.
+//
+// See SearchJobs for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *MediaConvert) SearchJobsWithContext(ctx aws.Context, input *SearchJobsInput, opts ...request.Option) (*SearchJobsOutput, error) {
+	req, out := c.SearchJobsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// SearchJobsPages iterates over the pages of a SearchJobs operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See SearchJobs method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a SearchJobs operation.
+//	pageNum := 0
+//	err := client.SearchJobsPages(params,
+//	    func(page *mediaconvert.SearchJobsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *MediaConvert) SearchJobsPages(input *SearchJobsInput, fn func(*SearchJobsOutput, bool) bool) error {
+	return c.SearchJobsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// SearchJobsPagesWithContext same as SearchJobsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *MediaConvert) SearchJobsPagesWithContext(ctx aws.Context, input *SearchJobsInput, fn func(*SearchJobsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *SearchJobsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.SearchJobsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*SearchJobsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
 }
 
 const opTagResource = "TagResource"
@@ -5372,6 +5535,26 @@ type BurninDestinationSettings struct {
 	// input captions, if present.
 	FontColor *string `locationName:"fontColor" type:"string" enum:"BurninSubtitleFontColor"`
 
+	// Specify a bold TrueType font file to use when rendering your output captions.
+	// Enter an S3, HTTP, or HTTPS URL. When you do, you must also separately specify
+	// a regular, an italic, and a bold italic font file.
+	FontFileBold *string `locationName:"fontFileBold" type:"string"`
+
+	// Specify a bold italic TrueType font file to use when rendering your output
+	// captions.Enter an S3, HTTP, or HTTPS URL.When you do, you must also separately
+	// specify a regular, a bold, and an italic font file.
+	FontFileBoldItalic *string `locationName:"fontFileBoldItalic" type:"string"`
+
+	// Specify an italic TrueType font file to use when rendering your output captions.
+	// Enter an S3, HTTP, or HTTPS URL. When you do, you must also separately specify
+	// a regular, a bold, and a bold italic font file.
+	FontFileItalic *string `locationName:"fontFileItalic" type:"string"`
+
+	// Specify a regular TrueType font file to use when rendering your output captions.
+	// Enter an S3, HTTP, or HTTPS URL. When you do, you must also separately specify
+	// a bold, an italic, and a bold italic font file.
+	FontFileRegular *string `locationName:"fontFileRegular" type:"string"`
+
 	// Specify the opacity of the burned-in captions. 255 is opaque; 0 is transparent.
 	FontOpacity *int64 `locationName:"fontOpacity" type:"integer"`
 
@@ -5427,14 +5610,16 @@ type BurninDestinationSettings struct {
 	// y-offset data from your input captions, if present.
 	ShadowYOffset *int64 `locationName:"shadowYOffset" type:"integer"`
 
-	// Set Style passthrough to ENABLED to use the available style, color, and position
-	// information from your input captions. MediaConvert uses default settings
-	// for any missing style and position information in your input captions. Set
-	// Style passthrough to DISABLED, or leave blank, to ignore the style and position
-	// information from your input captions and use default settings: white text
-	// with black outlining, bottom-center positioning, and automatic sizing. Whether
-	// you set Style passthrough to enabled or not, you can also choose to manually
-	// override any of the individual style and position settings.
+	// To use the available style, color, and position information from your input
+	// captions: Set Style passthrough to Enabled. Note that MediaConvert uses default
+	// settings for any missing style or position information in your input captions
+	// To ignore the style and position information from your input captions and
+	// use default settings: Leave blank or keep the default value, Disabled. Default
+	// settings include white text with black outlining, bottom-center positioning,
+	// and automatic sizing. Whether you set Style passthrough to enabled or not,
+	// you can also choose to manually override any of the individual style and
+	// position settings. You can also override any fonts by manually specifying
+	// custom font files.
 	StylePassthrough *string `locationName:"stylePassthrough" type:"string" enum:"BurnInSubtitleStylePassthrough"`
 
 	// Specify whether the text spacing in your captions is set by the captions
@@ -5529,6 +5714,30 @@ func (s *BurninDestinationSettings) SetFallbackFont(v string) *BurninDestination
 // SetFontColor sets the FontColor field's value.
 func (s *BurninDestinationSettings) SetFontColor(v string) *BurninDestinationSettings {
 	s.FontColor = &v
+	return s
+}
+
+// SetFontFileBold sets the FontFileBold field's value.
+func (s *BurninDestinationSettings) SetFontFileBold(v string) *BurninDestinationSettings {
+	s.FontFileBold = &v
+	return s
+}
+
+// SetFontFileBoldItalic sets the FontFileBoldItalic field's value.
+func (s *BurninDestinationSettings) SetFontFileBoldItalic(v string) *BurninDestinationSettings {
+	s.FontFileBoldItalic = &v
+	return s
+}
+
+// SetFontFileItalic sets the FontFileItalic field's value.
+func (s *BurninDestinationSettings) SetFontFileItalic(v string) *BurninDestinationSettings {
+	s.FontFileItalic = &v
+	return s
+}
+
+// SetFontFileRegular sets the FontFileRegular field's value.
+func (s *BurninDestinationSettings) SetFontFileRegular(v string) *BurninDestinationSettings {
+	s.FontFileRegular = &v
 	return s
 }
 
@@ -6697,6 +6906,17 @@ type CmafGroupSettings struct {
 	// generation.
 	CodecSpecification *string `locationName:"codecSpecification" type:"string" enum:"CmafCodecSpecification"`
 
+	// Specify whether MediaConvert generates I-frame only video segments for DASH
+	// trick play, also known as trick mode. When specified, the I-frame only video
+	// segments are included within an additional AdaptationSet in your DASH output
+	// manifest. To generate I-frame only video segments: Enter a name as a text
+	// string, up to 256 character long. This name is appended to the end of this
+	// output group's base filename, that you specify as part of your destination
+	// URI, and used for the I-frame only video segment files. You may also include
+	// format identifiers. For more information, see: https://docs.aws.amazon.com/mediaconvert/latest/ug/using-variables-in-your-job-settings.html#using-settings-variables-with-streaming-outputs
+	// To not generate I-frame only video segments: Leave blank.
+	DashIFrameTrickPlayNameModifier *string `locationName:"dashIFrameTrickPlayNameModifier" min:"1" type:"string"`
+
 	// Specify how MediaConvert writes SegmentTimeline in your output DASH manifest.
 	// To write a SegmentTimeline in each video Representation: Keep the default
 	// value, Basic. To write a common SegmentTimeline in the video AdaptationSet:
@@ -6817,10 +7037,7 @@ type CmafGroupSettings struct {
 	// nearest integer value above its current value in seconds. When set to SPEC\\_COMPLIANT,
 	// the segment target duration is rounded up to the nearest integer value if
 	// fraction seconds are greater than or equal to 0.5 (>= 0.5) and rounded down
-	// if less than 0.5 (< 0.5). You may need to use LEGACY if your client needs
-	// to ensure that the target duration is always longer than the actual duration
-	// of the segment. Some older players may experience interrupted playback when
-	// the actual duration of a track in a segment is longer than the target duration.
+	// if less than 0.5 (
 	TargetDurationCompatibilityMode *string `locationName:"targetDurationCompatibilityMode" type:"string" enum:"CmafTargetDurationCompatibilityMode"`
 
 	// Specify the video sample composition time offset mode in the output fMP4
@@ -6868,6 +7085,9 @@ func (s CmafGroupSettings) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CmafGroupSettings) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CmafGroupSettings"}
+	if s.DashIFrameTrickPlayNameModifier != nil && len(*s.DashIFrameTrickPlayNameModifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashIFrameTrickPlayNameModifier", 1))
+	}
 	if s.FragmentLength != nil && *s.FragmentLength < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("FragmentLength", 1))
 	}
@@ -6922,6 +7142,12 @@ func (s *CmafGroupSettings) SetClientCache(v string) *CmafGroupSettings {
 // SetCodecSpecification sets the CodecSpecification field's value.
 func (s *CmafGroupSettings) SetCodecSpecification(v string) *CmafGroupSettings {
 	s.CodecSpecification = &v
+	return s
+}
+
+// SetDashIFrameTrickPlayNameModifier sets the DashIFrameTrickPlayNameModifier field's value.
+func (s *CmafGroupSettings) SetDashIFrameTrickPlayNameModifier(v string) *CmafGroupSettings {
+	s.DashIFrameTrickPlayNameModifier = &v
 	return s
 }
 
@@ -7415,6 +7641,96 @@ func (s *CmfcSettings) SetTimedMetadataValue(v string) *CmfcSettings {
 	return s
 }
 
+// Custom 3D lut settings
+type ColorConversion3DLUTSetting struct {
+	_ struct{} `type:"structure"`
+
+	// Specify the input file S3, HTTP, or HTTPS URL for your 3D LUT .cube file.
+	// Note that MediaConvert accepts 3D LUT files up to 8MB in size.
+	FileInput *string `locationName:"fileInput" min:"14" type:"string"`
+
+	// Specify which inputs use this 3D LUT, according to their color space.
+	InputColorSpace *string `locationName:"inputColorSpace" type:"string" enum:"ColorSpace"`
+
+	// Specify which inputs use this 3D LUT, according to their luminance. To apply
+	// this 3D LUT to HDR10 or P3D65 (HDR) inputs with a specific mastering luminance:
+	// Enter an integer from 0 to 2147483647, corresponding to the input's Maximum
+	// luminance value. To apply this 3D LUT to any input regardless of its luminance:
+	// Leave blank, or enter 0.
+	InputMasteringLuminance *int64 `locationName:"inputMasteringLuminance" type:"integer"`
+
+	// Specify which outputs use this 3D LUT, according to their color space.
+	OutputColorSpace *string `locationName:"outputColorSpace" type:"string" enum:"ColorSpace"`
+
+	// Specify which outputs use this 3D LUT, according to their luminance. To apply
+	// this 3D LUT to HDR10 or P3D65 (HDR) outputs with a specific luminance: Enter
+	// an integer from 0 to 2147483647, corresponding to the output's luminance.
+	// To apply this 3D LUT to any output regardless of its luminance: Leave blank,
+	// or enter 0.
+	OutputMasteringLuminance *int64 `locationName:"outputMasteringLuminance" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColorConversion3DLUTSetting) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ColorConversion3DLUTSetting) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ColorConversion3DLUTSetting) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ColorConversion3DLUTSetting"}
+	if s.FileInput != nil && len(*s.FileInput) < 14 {
+		invalidParams.Add(request.NewErrParamMinLen("FileInput", 14))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFileInput sets the FileInput field's value.
+func (s *ColorConversion3DLUTSetting) SetFileInput(v string) *ColorConversion3DLUTSetting {
+	s.FileInput = &v
+	return s
+}
+
+// SetInputColorSpace sets the InputColorSpace field's value.
+func (s *ColorConversion3DLUTSetting) SetInputColorSpace(v string) *ColorConversion3DLUTSetting {
+	s.InputColorSpace = &v
+	return s
+}
+
+// SetInputMasteringLuminance sets the InputMasteringLuminance field's value.
+func (s *ColorConversion3DLUTSetting) SetInputMasteringLuminance(v int64) *ColorConversion3DLUTSetting {
+	s.InputMasteringLuminance = &v
+	return s
+}
+
+// SetOutputColorSpace sets the OutputColorSpace field's value.
+func (s *ColorConversion3DLUTSetting) SetOutputColorSpace(v string) *ColorConversion3DLUTSetting {
+	s.OutputColorSpace = &v
+	return s
+}
+
+// SetOutputMasteringLuminance sets the OutputMasteringLuminance field's value.
+func (s *ColorConversion3DLUTSetting) SetOutputMasteringLuminance(v int64) *ColorConversion3DLUTSetting {
+	s.OutputMasteringLuminance = &v
+	return s
+}
+
 // Settings for color correction.
 type ColorCorrector struct {
 	_ struct{} `type:"structure"`
@@ -7470,6 +7786,11 @@ type ColorCorrector struct {
 
 	// Hue in degrees.
 	Hue *int64 `locationName:"hue" type:"integer"`
+
+	// Specify the maximum mastering display luminance. Enter an integer from 0
+	// to 2147483647, in units of 0.0001 nits. For example, enter 10000000 for 1000
+	// nits.
+	MaxLuminance *int64 `locationName:"maxLuminance" type:"integer"`
 
 	// Specify how MediaConvert limits the color sample range for this output. To
 	// create a limited range output from a full range input: Choose Limited range
@@ -7589,6 +7910,12 @@ func (s *ColorCorrector) SetHdrToSdrToneMapper(v string) *ColorCorrector {
 // SetHue sets the Hue field's value.
 func (s *ColorCorrector) SetHue(v int64) *ColorCorrector {
 	s.Hue = &v
+	return s
+}
+
+// SetMaxLuminance sets the MaxLuminance field's value.
+func (s *ColorCorrector) SetMaxLuminance(v int64) *ColorCorrector {
+	s.MaxLuminance = &v
 	return s
 }
 
@@ -8678,6 +9005,17 @@ type DashIsoGroupSettings struct {
 	// URL than the manifest file.
 	BaseUrl *string `locationName:"baseUrl" type:"string"`
 
+	// Specify whether MediaConvert generates I-frame only video segments for DASH
+	// trick play, also known as trick mode. When specified, the I-frame only video
+	// segments are included within an additional AdaptationSet in your DASH output
+	// manifest. To generate I-frame only video segments: Enter a name as a text
+	// string, up to 256 character long. This name is appended to the end of this
+	// output group's base filename, that you specify as part of your destination
+	// URI, and used for the I-frame only video segment files. You may also include
+	// format identifiers. For more information, see: https://docs.aws.amazon.com/mediaconvert/latest/ug/using-variables-in-your-job-settings.html#using-settings-variables-with-streaming-outputs
+	// To not generate I-frame only video segments: Leave blank.
+	DashIFrameTrickPlayNameModifier *string `locationName:"dashIFrameTrickPlayNameModifier" min:"1" type:"string"`
+
 	// Specify how MediaConvert writes SegmentTimeline in your output DASH manifest.
 	// To write a SegmentTimeline in each video Representation: Keep the default
 	// value, Basic. To write a common SegmentTimeline in the video AdaptationSet:
@@ -8827,6 +9165,9 @@ func (s DashIsoGroupSettings) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *DashIsoGroupSettings) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "DashIsoGroupSettings"}
+	if s.DashIFrameTrickPlayNameModifier != nil && len(*s.DashIFrameTrickPlayNameModifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DashIFrameTrickPlayNameModifier", 1))
+	}
 	if s.FragmentLength != nil && *s.FragmentLength < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("FragmentLength", 1))
 	}
@@ -8870,6 +9211,12 @@ func (s *DashIsoGroupSettings) SetAudioChannelConfigSchemeIdUri(v string) *DashI
 // SetBaseUrl sets the BaseUrl field's value.
 func (s *DashIsoGroupSettings) SetBaseUrl(v string) *DashIsoGroupSettings {
 	s.BaseUrl = &v
+	return s
+}
+
+// SetDashIFrameTrickPlayNameModifier sets the DashIFrameTrickPlayNameModifier field's value.
+func (s *DashIsoGroupSettings) SetDashIFrameTrickPlayNameModifier(v string) *DashIsoGroupSettings {
+	s.DashIFrameTrickPlayNameModifier = &v
 	return s
 }
 
@@ -9427,10 +9774,14 @@ func (s DeleteQueueOutput) GoString() string {
 	return s.String()
 }
 
-// Send an request with an empty body to the regional API endpoint to get your
-// account API endpoint.
+// Send a request with an empty body to the regional API endpoint to get your
+// account API endpoint. Note that DescribeEndpoints is no longer required.
+// We recommend that you send your requests directly to the regional endpoint
+// instead.
+//
+// Deprecated: DescribeEndpoints and account specific endpoints are no longer required. We recommend that you send your requests directly to the regional endpoint instead.
 type DescribeEndpointsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `deprecated:"true" type:"structure"`
 
 	// Optional. Max number of endpoints, up to twenty, that will be returned at
 	// one time.
@@ -9440,7 +9791,7 @@ type DescribeEndpointsInput struct {
 	// return your endpoints if any exist, or to create an endpoint for you and
 	// return it if one doesn't already exist. Specify GET_ONLY to return your endpoints
 	// if any exist, or an empty list if none exist.
-	Mode *string `locationName:"mode" type:"string" enum:"DescribeEndpointsMode"`
+	Mode *string `locationName:"mode" deprecated:"true" type:"string" enum:"DescribeEndpointsMode"`
 
 	// Use this string, provided with the response to a previous request, to request
 	// the next batch of endpoints.
@@ -9484,8 +9835,10 @@ func (s *DescribeEndpointsInput) SetNextToken(v string) *DescribeEndpointsInput 
 }
 
 // Successful describe endpoints requests will return your account API endpoint.
+//
+// Deprecated: DescribeEndpoints and account specific endpoints are no longer required. We recommend that you send your requests directly to the regional endpoint instead.
 type DescribeEndpointsOutput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `deprecated:"true" type:"structure"`
 
 	// List of endpoints
 	Endpoints []*Endpoint `locationName:"endpoints" type:"list"`
@@ -9994,6 +10347,26 @@ type DvbSubDestinationSettings struct {
 	// identical.
 	FontColor *string `locationName:"fontColor" type:"string" enum:"DvbSubtitleFontColor"`
 
+	// Specify a bold TrueType font file to use when rendering your output captions.
+	// Enter an S3, HTTP, or HTTPS URL. When you do, you must also separately specify
+	// a regular, an italic, and a bold italic font file.
+	FontFileBold *string `locationName:"fontFileBold" type:"string"`
+
+	// Specify a bold italic TrueType font file to use when rendering your output
+	// captions.Enter an S3, HTTP, or HTTPS URL.When you do, you must also separately
+	// specify a regular, a bold, and an italic font file.
+	FontFileBoldItalic *string `locationName:"fontFileBoldItalic" type:"string"`
+
+	// Specify an italic TrueType font file to use when rendering your output captions.
+	// Enter an S3, HTTP, or HTTPS URL. When you do, you must also separately specify
+	// a regular, a bold, and a bold italic font file.
+	FontFileItalic *string `locationName:"fontFileItalic" type:"string"`
+
+	// Specify a regular TrueType font file to use when rendering your output captions.
+	// Enter an S3, HTTP, or HTTPS URL. When you do, you must also separately specify
+	// a bold, an italic, and a bold italic font file.
+	FontFileRegular *string `locationName:"fontFileRegular" type:"string"`
+
 	// Specify the opacity of the burned-in captions. 255 is opaque; 0 is transparent.Within
 	// your job settings, all of your DVB-Sub settings must be identical.
 	FontOpacity *int64 `locationName:"fontOpacity" type:"integer"`
@@ -10064,14 +10437,16 @@ type DvbSubDestinationSettings struct {
 	// all of your DVB-Sub settings must be identical.
 	ShadowYOffset *int64 `locationName:"shadowYOffset" type:"integer"`
 
-	// Set Style passthrough to ENABLED to use the available style, color, and position
-	// information from your input captions. MediaConvert uses default settings
-	// for any missing style and position information in your input captions. Set
-	// Style passthrough to DISABLED, or leave blank, to ignore the style and position
-	// information from your input captions and use default settings: white text
-	// with black outlining, bottom-center positioning, and automatic sizing. Whether
-	// you set Style passthrough to enabled or not, you can also choose to manually
-	// override any of the individual style and position settings.
+	// To use the available style, color, and position information from your input
+	// captions: Set Style passthrough to Enabled. Note that MediaConvert uses default
+	// settings for any missing style or position information in your input captions
+	// To ignore the style and position information from your input captions and
+	// use default settings: Leave blank or keep the default value, Disabled. Default
+	// settings include white text with black outlining, bottom-center positioning,
+	// and automatic sizing. Whether you set Style passthrough to enabled or not,
+	// you can also choose to manually override any of the individual style and
+	// position settings. You can also override any fonts by manually specifying
+	// custom font files.
 	StylePassthrough *string `locationName:"stylePassthrough" type:"string" enum:"DvbSubtitleStylePassthrough"`
 
 	// Specify whether your DVB subtitles are standard or for hearing impaired.
@@ -10204,6 +10579,30 @@ func (s *DvbSubDestinationSettings) SetFallbackFont(v string) *DvbSubDestination
 // SetFontColor sets the FontColor field's value.
 func (s *DvbSubDestinationSettings) SetFontColor(v string) *DvbSubDestinationSettings {
 	s.FontColor = &v
+	return s
+}
+
+// SetFontFileBold sets the FontFileBold field's value.
+func (s *DvbSubDestinationSettings) SetFontFileBold(v string) *DvbSubDestinationSettings {
+	s.FontFileBold = &v
+	return s
+}
+
+// SetFontFileBoldItalic sets the FontFileBoldItalic field's value.
+func (s *DvbSubDestinationSettings) SetFontFileBoldItalic(v string) *DvbSubDestinationSettings {
+	s.FontFileBoldItalic = &v
+	return s
+}
+
+// SetFontFileItalic sets the FontFileItalic field's value.
+func (s *DvbSubDestinationSettings) SetFontFileItalic(v string) *DvbSubDestinationSettings {
+	s.FontFileItalic = &v
+	return s
+}
+
+// SetFontFileRegular sets the FontFileRegular field's value.
+func (s *DvbSubDestinationSettings) SetFontFileRegular(v string) *DvbSubDestinationSettings {
+	s.FontFileRegular = &v
 	return s
 }
 
@@ -14332,10 +14731,7 @@ type HlsGroupSettings struct {
 	// nearest integer value above its current value in seconds. When set to SPEC\\_COMPLIANT,
 	// the segment target duration is rounded up to the nearest integer value if
 	// fraction seconds are greater than or equal to 0.5 (>= 0.5) and rounded down
-	// if less than 0.5 (< 0.5). You may need to use LEGACY if your client needs
-	// to ensure that the target duration is always longer than the actual duration
-	// of the segment. Some older players may experience interrupted playback when
-	// the actual duration of a track in a segment is longer than the target duration.
+	// if less than 0.5 (
 	TargetDurationCompatibilityMode *string `locationName:"targetDurationCompatibilityMode" type:"string" enum:"HlsTargetDurationCompatibilityMode"`
 
 	// Specify the type of the ID3 frame to use for ID3 timestamps in your output.
@@ -16076,10 +16472,30 @@ func (s *InputTemplate) SetVideoSelector(v *VideoSelector) *InputTemplate {
 type InputVideoGenerator struct {
 	_ struct{} `type:"structure"`
 
-	// Specify an integer value for Black video duration from 50 to 86400000 to
-	// generate a black video input for that many milliseconds. Required when you
-	// include Video generator.
+	// Specify the number of audio channels to include in your video generator input.
+	// MediaConvert creates these audio channels as silent audio within a single
+	// audio track. Enter an integer from 1 to 32.
+	Channels *int64 `locationName:"channels" min:"1" type:"integer"`
+
+	// Specify the duration, in milliseconds, for your video generator input.Enter
+	// an integer from 50 to 86400000.
 	Duration *int64 `locationName:"duration" min:"50" type:"integer"`
+
+	// Specify the denominator of the fraction that represents the frame rate for
+	// your video generator input. When you do, you must also specify a value for
+	// Frame rate numerator. MediaConvert uses a default frame rate of 29.97 when
+	// you leave Frame rate numerator and Frame rate denominator blank.
+	FramerateDenominator *int64 `locationName:"framerateDenominator" min:"1" type:"integer"`
+
+	// Specify the numerator of the fraction that represents the frame rate for
+	// your video generator input. When you do, you must also specify a value for
+	// Frame rate denominator. MediaConvert uses a default frame rate of 29.97 when
+	// you leave Frame rate numerator and Frame rate denominator blank.
+	FramerateNumerator *int64 `locationName:"framerateNumerator" min:"1" type:"integer"`
+
+	// Specify the audio sample rate, in Hz, for the silent audio in your video
+	// generator input.Enter an integer from 32000 to 48000.
+	SampleRate *int64 `locationName:"sampleRate" min:"32000" type:"integer"`
 }
 
 // String returns the string representation.
@@ -16103,8 +16519,20 @@ func (s InputVideoGenerator) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *InputVideoGenerator) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "InputVideoGenerator"}
+	if s.Channels != nil && *s.Channels < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("Channels", 1))
+	}
 	if s.Duration != nil && *s.Duration < 50 {
 		invalidParams.Add(request.NewErrParamMinValue("Duration", 50))
+	}
+	if s.FramerateDenominator != nil && *s.FramerateDenominator < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("FramerateDenominator", 1))
+	}
+	if s.FramerateNumerator != nil && *s.FramerateNumerator < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("FramerateNumerator", 1))
+	}
+	if s.SampleRate != nil && *s.SampleRate < 32000 {
+		invalidParams.Add(request.NewErrParamMinValue("SampleRate", 32000))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -16113,9 +16541,33 @@ func (s *InputVideoGenerator) Validate() error {
 	return nil
 }
 
+// SetChannels sets the Channels field's value.
+func (s *InputVideoGenerator) SetChannels(v int64) *InputVideoGenerator {
+	s.Channels = &v
+	return s
+}
+
 // SetDuration sets the Duration field's value.
 func (s *InputVideoGenerator) SetDuration(v int64) *InputVideoGenerator {
 	s.Duration = &v
+	return s
+}
+
+// SetFramerateDenominator sets the FramerateDenominator field's value.
+func (s *InputVideoGenerator) SetFramerateDenominator(v int64) *InputVideoGenerator {
+	s.FramerateDenominator = &v
+	return s
+}
+
+// SetFramerateNumerator sets the FramerateNumerator field's value.
+func (s *InputVideoGenerator) SetFramerateNumerator(v int64) *InputVideoGenerator {
+	s.FramerateNumerator = &v
+	return s
+}
+
+// SetSampleRate sets the SampleRate field's value.
+func (s *InputVideoGenerator) SetSampleRate(v int64) *InputVideoGenerator {
+	s.SampleRate = &v
 	return s
 }
 
@@ -16705,6 +17157,11 @@ type JobSettings struct {
 	// image, and audio muted during SCTE-35 triggered ad avails.
 	AvailBlanking *AvailBlanking `locationName:"availBlanking" type:"structure"`
 
+	// Use 3D LUTs to specify custom color mapping behavior when you convert from
+	// one color space into another. You can include up to 8 different 3D LUTs.
+	// For more information, see: https://docs.aws.amazon.com/mediaconvert/latest/ug/3d-luts.html
+	ColorConversion3DLUTSettings []*ColorConversion3DLUTSetting `locationName:"colorConversion3DLUTSettings" type:"list"`
+
 	// Settings for Event Signaling And Messaging (ESAM). If you don't do ad insertion,
 	// you can ignore these settings.
 	Esam *EsamSettings `locationName:"esam" type:"structure"`
@@ -16809,6 +17266,16 @@ func (s *JobSettings) Validate() error {
 			invalidParams.AddNested("AvailBlanking", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ColorConversion3DLUTSettings != nil {
+		for i, v := range s.ColorConversion3DLUTSettings {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ColorConversion3DLUTSettings", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.Inputs != nil {
 		for i, v := range s.Inputs {
 			if v == nil {
@@ -16860,6 +17327,12 @@ func (s *JobSettings) SetAdAvailOffset(v int64) *JobSettings {
 // SetAvailBlanking sets the AvailBlanking field's value.
 func (s *JobSettings) SetAvailBlanking(v *AvailBlanking) *JobSettings {
 	s.AvailBlanking = v
+	return s
+}
+
+// SetColorConversion3DLUTSettings sets the ColorConversion3DLUTSettings field's value.
+func (s *JobSettings) SetColorConversion3DLUTSettings(v []*ColorConversion3DLUTSetting) *JobSettings {
+	s.ColorConversion3DLUTSettings = v
 	return s
 }
 
@@ -17095,6 +17568,11 @@ type JobTemplateSettings struct {
 	// image, and audio muted during SCTE-35 triggered ad avails.
 	AvailBlanking *AvailBlanking `locationName:"availBlanking" type:"structure"`
 
+	// Use 3D LUTs to specify custom color mapping behavior when you convert from
+	// one color space into another. You can include up to 8 different 3D LUTs.
+	// For more information, see: https://docs.aws.amazon.com/mediaconvert/latest/ug/3d-luts.html
+	ColorConversion3DLUTSettings []*ColorConversion3DLUTSetting `locationName:"colorConversion3DLUTSettings" type:"list"`
+
 	// Settings for Event Signaling And Messaging (ESAM). If you don't do ad insertion,
 	// you can ignore these settings.
 	Esam *EsamSettings `locationName:"esam" type:"structure"`
@@ -17199,6 +17677,16 @@ func (s *JobTemplateSettings) Validate() error {
 			invalidParams.AddNested("AvailBlanking", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.ColorConversion3DLUTSettings != nil {
+		for i, v := range s.ColorConversion3DLUTSettings {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ColorConversion3DLUTSettings", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 	if s.Inputs != nil {
 		for i, v := range s.Inputs {
 			if v == nil {
@@ -17250,6 +17738,12 @@ func (s *JobTemplateSettings) SetAdAvailOffset(v int64) *JobTemplateSettings {
 // SetAvailBlanking sets the AvailBlanking field's value.
 func (s *JobTemplateSettings) SetAvailBlanking(v *AvailBlanking) *JobTemplateSettings {
 	s.AvailBlanking = v
+	return s
+}
+
+// SetColorConversion3DLUTSettings sets the ColorConversion3DLUTSettings field's value.
+func (s *JobTemplateSettings) SetColorConversion3DLUTSettings(v []*ColorConversion3DLUTSetting) *JobTemplateSettings {
+	s.ColorConversion3DLUTSettings = v
 	return s
 }
 
@@ -18317,6 +18811,16 @@ type M2tsSettings struct {
 	// Default is 480.
 	PmtPid *int64 `locationName:"pmtPid" min:"32" type:"integer"`
 
+	// Specify whether MediaConvert automatically attempts to prevent decoder buffer
+	// underflows in your transport stream output. Use if you are seeing decoder
+	// buffer underflows in your output and are unable to increase your transport
+	// stream's bitrate. For most workflows: We recommend that you keep the default
+	// value, Disabled. To prevent decoder buffer underflows in your output, when
+	// possible: Choose Enabled. Note that if MediaConvert prevents a decoder buffer
+	// underflow in your output, output video quality is reduced and your job will
+	// take longer to complete.
+	PreventBufferUnderflow *string `locationName:"preventBufferUnderflow" type:"string" enum:"M2tsPreventBufferUnderflow"`
+
 	// Specify the packet identifier (PID) of the private metadata stream. Default
 	// is 503.
 	PrivateMetadataPid *int64 `locationName:"privateMetadataPid" min:"32" type:"integer"`
@@ -18630,6 +19134,12 @@ func (s *M2tsSettings) SetPmtInterval(v int64) *M2tsSettings {
 // SetPmtPid sets the PmtPid field's value.
 func (s *M2tsSettings) SetPmtPid(v int64) *M2tsSettings {
 	s.PmtPid = &v
+	return s
+}
+
+// SetPreventBufferUnderflow sets the PreventBufferUnderflow field's value.
+func (s *M2tsSettings) SetPreventBufferUnderflow(v string) *M2tsSettings {
+	s.PreventBufferUnderflow = &v
 	return s
 }
 
@@ -22874,6 +23384,22 @@ func (s *Rectangle) SetY(v int64) *Rectangle {
 type RemixSettings struct {
 	_ struct{} `type:"structure"`
 
+	// Optionally specify the channel in your input that contains your audio description
+	// audio signal. MediaConvert mixes your audio signal across all output channels,
+	// while reducing their volume according to your data stream. When you specify
+	// an audio description audio channel, you must also specify an audio description
+	// data channel. For more information about audio description signals, see the
+	// BBC WHP 198 and 051 white papers.
+	AudioDescriptionAudioChannel *int64 `locationName:"audioDescriptionAudioChannel" min:"1" type:"integer"`
+
+	// Optionally specify the channel in your input that contains your audio description
+	// data stream. MediaConvert mixes your audio signal across all output channels,
+	// while reducing their volume according to your data stream. When you specify
+	// an audio description data channel, you must also specify an audio description
+	// audio channel. For more information about audio description signals, see
+	// the BBC WHP 198 and 051 white papers.
+	AudioDescriptionDataChannel *int64 `locationName:"audioDescriptionDataChannel" min:"1" type:"integer"`
+
 	// Channel mapping contains the group of fields that hold the remixing value
 	// for each channel, in dB. Specify remix values to indicate how much of the
 	// content from your input audio channel you want in your output audio channels.
@@ -22924,6 +23450,12 @@ func (s RemixSettings) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *RemixSettings) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "RemixSettings"}
+	if s.AudioDescriptionAudioChannel != nil && *s.AudioDescriptionAudioChannel < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("AudioDescriptionAudioChannel", 1))
+	}
+	if s.AudioDescriptionDataChannel != nil && *s.AudioDescriptionDataChannel < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("AudioDescriptionDataChannel", 1))
+	}
 	if s.ChannelsIn != nil && *s.ChannelsIn < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("ChannelsIn", 1))
 	}
@@ -22935,6 +23467,18 @@ func (s *RemixSettings) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAudioDescriptionAudioChannel sets the AudioDescriptionAudioChannel field's value.
+func (s *RemixSettings) SetAudioDescriptionAudioChannel(v int64) *RemixSettings {
+	s.AudioDescriptionAudioChannel = &v
+	return s
+}
+
+// SetAudioDescriptionDataChannel sets the AudioDescriptionDataChannel field's value.
+func (s *RemixSettings) SetAudioDescriptionDataChannel(v int64) *RemixSettings {
+	s.AudioDescriptionDataChannel = &v
+	return s
 }
 
 // SetChannelMapping sets the ChannelMapping field's value.
@@ -23364,6 +23908,147 @@ func (s SccDestinationSettings) GoString() string {
 // SetFramerate sets the Framerate field's value.
 func (s *SccDestinationSettings) SetFramerate(v string) *SccDestinationSettings {
 	s.Framerate = &v
+	return s
+}
+
+// Retrieve a JSON array that includes job details for up to twenty of your
+// most recent jobs. Optionally filter results further according to input file,
+// queue, or status. To retrieve the twenty next most recent jobs, use the nextToken
+// string returned with the array.
+type SearchJobsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// Optional. Provide your input file URL or your partial input file name. The
+	// maximum length for an input file is 300 characters.
+	InputFile *string `location:"querystring" locationName:"inputFile" type:"string"`
+
+	// Optional. Number of jobs, up to twenty, that will be returned at one time.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// Optional. Use this string, provided with the response to a previous request,
+	// to request the next batch of jobs.
+	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
+
+	// Optional. When you request lists of resources, you can specify whether they
+	// are sorted in ASCENDING or DESCENDING order. Default varies by resource.
+	Order *string `location:"querystring" locationName:"order" type:"string" enum:"Order"`
+
+	// Optional. Provide a queue name, or a queue ARN, to return only jobs from
+	// that queue.
+	Queue *string `location:"querystring" locationName:"queue" type:"string"`
+
+	// Optional. A job's status can be SUBMITTED, PROGRESSING, COMPLETE, CANCELED,
+	// or ERROR.
+	Status *string `location:"querystring" locationName:"status" type:"string" enum:"JobStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SearchJobsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SearchJobsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SearchJobsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SearchJobsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInputFile sets the InputFile field's value.
+func (s *SearchJobsInput) SetInputFile(v string) *SearchJobsInput {
+	s.InputFile = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *SearchJobsInput) SetMaxResults(v int64) *SearchJobsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *SearchJobsInput) SetNextToken(v string) *SearchJobsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetOrder sets the Order field's value.
+func (s *SearchJobsInput) SetOrder(v string) *SearchJobsInput {
+	s.Order = &v
+	return s
+}
+
+// SetQueue sets the Queue field's value.
+func (s *SearchJobsInput) SetQueue(v string) *SearchJobsInput {
+	s.Queue = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *SearchJobsInput) SetStatus(v string) *SearchJobsInput {
+	s.Status = &v
+	return s
+}
+
+// Successful search jobs requests return a JSON array of jobs. If you don't
+// specify how they are ordered, you will receive the most recently created
+// first.
+type SearchJobsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// List of jobs.
+	Jobs []*Job `locationName:"jobs" type:"list"`
+
+	// Use this string to request the next batch of jobs.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SearchJobsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SearchJobsOutput) GoString() string {
+	return s.String()
+}
+
+// SetJobs sets the Jobs field's value.
+func (s *SearchJobsOutput) SetJobs(v []*Job) *SearchJobsOutput {
+	s.Jobs = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *SearchJobsOutput) SetNextToken(v string) *SearchJobsOutput {
+	s.NextToken = &v
 	return s
 }
 
@@ -24201,6 +24886,172 @@ func (s *TtmlDestinationSettings) SetStylePassthrough(v string) *TtmlDestination
 	return s
 }
 
+// Required when you set Codec, under VideoDescription>CodecSettings to the
+// value UNCOMPRESSED.
+type UncompressedSettings struct {
+	_ struct{} `type:"structure"`
+
+	// The four character code for the uncompressed video.
+	Fourcc *string `locationName:"fourcc" type:"string" enum:"UncompressedFourcc"`
+
+	// Use the Framerate setting to specify the frame rate for this output. If you
+	// want to keep the same frame rate as the input video, choose Follow source.
+	// If you want to do frame rate conversion, choose a frame rate from the dropdown
+	// list or choose Custom. The framerates shown in the dropdown list are decimal
+	// approximations of fractions. If you choose Custom, specify your frame rate
+	// as a fraction.
+	FramerateControl *string `locationName:"framerateControl" type:"string" enum:"UncompressedFramerateControl"`
+
+	// Choose the method that you want MediaConvert to use when increasing or decreasing
+	// the frame rate. For numerically simple conversions, such as 60 fps to 30
+	// fps: We recommend that you keep the default value, Drop duplicate. For numerically
+	// complex conversions, to avoid stutter: Choose Interpolate. This results in
+	// a smooth picture, but might introduce undesirable video artifacts. For complex
+	// frame rate conversions, especially if your source video has already been
+	// converted from its original cadence: Choose FrameFormer to do motion-compensated
+	// interpolation. FrameFormer uses the best conversion method frame by frame.
+	// Note that using FrameFormer increases the transcoding time and incurs a significant
+	// add-on cost. When you choose FrameFormer, your input video resolution must
+	// be at least 128x96.
+	FramerateConversionAlgorithm *string `locationName:"framerateConversionAlgorithm" type:"string" enum:"UncompressedFramerateConversionAlgorithm"`
+
+	// When you use the API for transcode jobs that use frame rate conversion, specify
+	// the frame rate as a fraction. For example, 24000 / 1001 = 23.976 fps. Use
+	// FramerateDenominator to specify the denominator of this fraction. In this
+	// example, use 1001 for the value of FramerateDenominator. When you use the
+	// console for transcode jobs that use frame rate conversion, provide the value
+	// as a decimal number for Framerate. In this example, specify 23.976.
+	FramerateDenominator *int64 `locationName:"framerateDenominator" min:"1" type:"integer"`
+
+	// When you use the API for transcode jobs that use frame rate conversion, specify
+	// the frame rate as a fraction. For example, 24000 / 1001 = 23.976 fps. Use
+	// FramerateNumerator to specify the numerator of this fraction. In this example,
+	// use 24000 for the value of FramerateNumerator. When you use the console for
+	// transcode jobs that use frame rate conversion, provide the value as a decimal
+	// number for Framerate. In this example, specify 23.976.
+	FramerateNumerator *int64 `locationName:"framerateNumerator" min:"1" type:"integer"`
+
+	// Optional. Choose the scan line type for this output. If you don't specify
+	// a value, MediaConvert will create a progressive output.
+	InterlaceMode *string `locationName:"interlaceMode" type:"string" enum:"UncompressedInterlaceMode"`
+
+	// Use this setting for interlaced outputs, when your output frame rate is half
+	// of your input frame rate. In this situation, choose Optimized interlacing
+	// to create a better quality interlaced output. In this case, each progressive
+	// frame from the input corresponds to an interlaced field in the output. Keep
+	// the default value, Basic interlacing, for all other output frame rates. With
+	// basic interlacing, MediaConvert performs any frame rate conversion first
+	// and then interlaces the frames. When you choose Optimized interlacing and
+	// you set your output frame rate to a value that isn't suitable for optimized
+	// interlacing, MediaConvert automatically falls back to basic interlacing.
+	// Required settings: To use optimized interlacing, you must set Telecine to
+	// None or Soft. You can't use optimized interlacing for hard telecine outputs.
+	// You must also set Interlace mode to a value other than Progressive.
+	ScanTypeConversionMode *string `locationName:"scanTypeConversionMode" type:"string" enum:"UncompressedScanTypeConversionMode"`
+
+	// Ignore this setting unless your input frame rate is 23.976 or 24 frames per
+	// second (fps). Enable slow PAL to create a 25 fps output by relabeling the
+	// video frames and resampling your audio. Note that enabling this setting will
+	// slightly reduce the duration of your video. Related settings: You must also
+	// set Framerate to 25.
+	SlowPal *string `locationName:"slowPal" type:"string" enum:"UncompressedSlowPal"`
+
+	// When you do frame rate conversion from 23.976 frames per second (fps) to
+	// 29.97 fps, and your output scan type is interlaced, you can optionally enable
+	// hard telecine to create a smoother picture. When you keep the default value,
+	// None, MediaConvert does a standard frame rate conversion to 29.97 without
+	// doing anything with the field polarity to create a smoother picture.
+	Telecine *string `locationName:"telecine" type:"string" enum:"UncompressedTelecine"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UncompressedSettings) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UncompressedSettings) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UncompressedSettings) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UncompressedSettings"}
+	if s.FramerateDenominator != nil && *s.FramerateDenominator < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("FramerateDenominator", 1))
+	}
+	if s.FramerateNumerator != nil && *s.FramerateNumerator < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("FramerateNumerator", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFourcc sets the Fourcc field's value.
+func (s *UncompressedSettings) SetFourcc(v string) *UncompressedSettings {
+	s.Fourcc = &v
+	return s
+}
+
+// SetFramerateControl sets the FramerateControl field's value.
+func (s *UncompressedSettings) SetFramerateControl(v string) *UncompressedSettings {
+	s.FramerateControl = &v
+	return s
+}
+
+// SetFramerateConversionAlgorithm sets the FramerateConversionAlgorithm field's value.
+func (s *UncompressedSettings) SetFramerateConversionAlgorithm(v string) *UncompressedSettings {
+	s.FramerateConversionAlgorithm = &v
+	return s
+}
+
+// SetFramerateDenominator sets the FramerateDenominator field's value.
+func (s *UncompressedSettings) SetFramerateDenominator(v int64) *UncompressedSettings {
+	s.FramerateDenominator = &v
+	return s
+}
+
+// SetFramerateNumerator sets the FramerateNumerator field's value.
+func (s *UncompressedSettings) SetFramerateNumerator(v int64) *UncompressedSettings {
+	s.FramerateNumerator = &v
+	return s
+}
+
+// SetInterlaceMode sets the InterlaceMode field's value.
+func (s *UncompressedSettings) SetInterlaceMode(v string) *UncompressedSettings {
+	s.InterlaceMode = &v
+	return s
+}
+
+// SetScanTypeConversionMode sets the ScanTypeConversionMode field's value.
+func (s *UncompressedSettings) SetScanTypeConversionMode(v string) *UncompressedSettings {
+	s.ScanTypeConversionMode = &v
+	return s
+}
+
+// SetSlowPal sets the SlowPal field's value.
+func (s *UncompressedSettings) SetSlowPal(v string) *UncompressedSettings {
+	s.SlowPal = &v
+	return s
+}
+
+// SetTelecine sets the Telecine field's value.
+func (s *UncompressedSettings) SetTelecine(v string) *UncompressedSettings {
+	s.Telecine = &v
+	return s
+}
+
 // To remove tags from a resource, send a request with the Amazon Resource Name
 // (ARN) of the resource and the keys of the tags that you want to remove.
 type UntagResourceInput struct {
@@ -24897,8 +25748,8 @@ func (s *Vc3Settings) SetVc3Class(v string) *Vc3Settings {
 // settings object. The following lists the codec enum, settings object pairs.
 // * AV1, Av1Settings * AVC_INTRA, AvcIntraSettings * FRAME_CAPTURE, FrameCaptureSettings
 // * H_264, H264Settings * H_265, H265Settings * MPEG2, Mpeg2Settings * PRORES,
-// ProresSettings * VC3, Vc3Settings * VP8, Vp8Settings * VP9, Vp9Settings *
-// XAVC, XavcSettings
+// ProresSettings * UNCOMPRESSED, UncompressedSettings * VC3, Vc3Settings *
+// VP8, Vp8Settings * VP9, Vp9Settings * XAVC, XavcSettings
 type VideoCodecSettings struct {
 	_ struct{} `type:"structure"`
 
@@ -24934,6 +25785,10 @@ type VideoCodecSettings struct {
 
 	// Required when you set Codec to the value PRORES.
 	ProresSettings *ProresSettings `locationName:"proresSettings" type:"structure"`
+
+	// Required when you set Codec, under VideoDescription>CodecSettings to the
+	// value UNCOMPRESSED.
+	UncompressedSettings *UncompressedSettings `locationName:"uncompressedSettings" type:"structure"`
 
 	// Required when you set Codec to the value VC3
 	Vc3Settings *Vc3Settings `locationName:"vc3Settings" type:"structure"`
@@ -25002,6 +25857,11 @@ func (s *VideoCodecSettings) Validate() error {
 	if s.ProresSettings != nil {
 		if err := s.ProresSettings.Validate(); err != nil {
 			invalidParams.AddNested("ProresSettings", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.UncompressedSettings != nil {
+		if err := s.UncompressedSettings.Validate(); err != nil {
+			invalidParams.AddNested("UncompressedSettings", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.Vc3Settings != nil {
@@ -25079,6 +25939,12 @@ func (s *VideoCodecSettings) SetProresSettings(v *ProresSettings) *VideoCodecSet
 	return s
 }
 
+// SetUncompressedSettings sets the UncompressedSettings field's value.
+func (s *VideoCodecSettings) SetUncompressedSettings(v *UncompressedSettings) *VideoCodecSettings {
+	s.UncompressedSettings = v
+	return s
+}
+
 // SetVc3Settings sets the Vc3Settings field's value.
 func (s *VideoCodecSettings) SetVc3Settings(v *Vc3Settings) *VideoCodecSettings {
 	s.Vc3Settings = v
@@ -25127,8 +25993,8 @@ type VideoDescription struct {
 	// settings object. The following lists the codec enum, settings object pairs.
 	// * AV1, Av1Settings * AVC_INTRA, AvcIntraSettings * FRAME_CAPTURE, FrameCaptureSettings
 	// * H_264, H264Settings * H_265, H265Settings * MPEG2, Mpeg2Settings * PRORES,
-	// ProresSettings * VC3, Vc3Settings * VP8, Vp8Settings * VP9, Vp9Settings *
-	// XAVC, XavcSettings
+	// ProresSettings * UNCOMPRESSED, UncompressedSettings * VC3, Vc3Settings *
+	// VP8, Vp8Settings * VP9, Vp9Settings * XAVC, XavcSettings
 	CodecSettings *VideoCodecSettings `locationName:"codecSettings" type:"structure"`
 
 	// Choose Insert for this setting to include color metadata in this output.
@@ -25802,6 +26668,11 @@ type VideoSelector struct {
 	// see https://docs.aws.amazon.com/console/mediaconvert/hdr.
 	Hdr10Metadata *Hdr10Metadata `locationName:"hdr10Metadata" type:"structure"`
 
+	// Specify the maximum mastering display luminance. Enter an integer from 0
+	// to 2147483647, in units of 0.0001 nits. For example, enter 10000000 for 1000
+	// nits.
+	MaxLuminance *int64 `locationName:"maxLuminance" type:"integer"`
+
 	// Use this setting if your input has video and audio durations that don't align,
 	// and your output or player has strict alignment requirements. Examples: Input
 	// audio track has a delayed start. Input video track ends before audio ends.
@@ -25904,6 +26775,12 @@ func (s *VideoSelector) SetEmbeddedTimecodeOverride(v string) *VideoSelector {
 // SetHdr10Metadata sets the Hdr10Metadata field's value.
 func (s *VideoSelector) SetHdr10Metadata(v *Hdr10Metadata) *VideoSelector {
 	s.Hdr10Metadata = v
+	return s
+}
+
+// SetMaxLuminance sets the MaxLuminance field's value.
+func (s *VideoSelector) SetMaxLuminance(v int64) *VideoSelector {
+	s.MaxLuminance = &v
 	return s
 }
 
@@ -28839,14 +29716,16 @@ func BillingTagsSource_Values() []string {
 	}
 }
 
-// Set Style passthrough to ENABLED to use the available style, color, and position
-// information from your input captions. MediaConvert uses default settings
-// for any missing style and position information in your input captions. Set
-// Style passthrough to DISABLED, or leave blank, to ignore the style and position
-// information from your input captions and use default settings: white text
-// with black outlining, bottom-center positioning, and automatic sizing. Whether
-// you set Style passthrough to enabled or not, you can also choose to manually
-// override any of the individual style and position settings.
+// To use the available style, color, and position information from your input
+// captions: Set Style passthrough to Enabled. Note that MediaConvert uses default
+// settings for any missing style or position information in your input captions
+// To ignore the style and position information from your input captions and
+// use default settings: Leave blank or keep the default value, Disabled. Default
+// settings include white text with black outlining, bottom-center positioning,
+// and automatic sizing. Whether you set Style passthrough to enabled or not,
+// you can also choose to manually override any of the individual style and
+// position settings. You can also override any fonts by manually specifying
+// custom font files.
 const (
 	// BurnInSubtitleStylePassthroughEnabled is a BurnInSubtitleStylePassthrough enum value
 	BurnInSubtitleStylePassthroughEnabled = "ENABLED"
@@ -29568,10 +30447,7 @@ func CmafStreamInfResolution_Values() []string {
 // nearest integer value above its current value in seconds. When set to SPEC\\_COMPLIANT,
 // the segment target duration is rounded up to the nearest integer value if
 // fraction seconds are greater than or equal to 0.5 (>= 0.5) and rounded down
-// if less than 0.5 (< 0.5). You may need to use LEGACY if your client needs
-// to ensure that the target duration is always longer than the actual duration
-// of the segment. Some older players may experience interrupted playback when
-// the actual duration of a track in a segment is longer than the target duration.
+// if less than 0.5 (
 const (
 	// CmafTargetDurationCompatibilityModeLegacy is a CmafTargetDurationCompatibilityMode enum value
 	CmafTargetDurationCompatibilityModeLegacy = "LEGACY"
@@ -30104,6 +30980,9 @@ const (
 
 	// ContainerTypeRaw is a ContainerType enum value
 	ContainerTypeRaw = "RAW"
+
+	// ContainerTypeY4m is a ContainerType enum value
+	ContainerTypeY4m = "Y4M"
 )
 
 // ContainerType_Values returns all elements of the ContainerType enum
@@ -30120,6 +30999,7 @@ func ContainerType_Values() []string {
 		ContainerTypeMxf,
 		ContainerTypeWebm,
 		ContainerTypeRaw,
+		ContainerTypeY4m,
 	}
 }
 
@@ -30873,14 +31753,16 @@ func DvbSubtitleShadowColor_Values() []string {
 	}
 }
 
-// Set Style passthrough to ENABLED to use the available style, color, and position
-// information from your input captions. MediaConvert uses default settings
-// for any missing style and position information in your input captions. Set
-// Style passthrough to DISABLED, or leave blank, to ignore the style and position
-// information from your input captions and use default settings: white text
-// with black outlining, bottom-center positioning, and automatic sizing. Whether
-// you set Style passthrough to enabled or not, you can also choose to manually
-// override any of the individual style and position settings.
+// To use the available style, color, and position information from your input
+// captions: Set Style passthrough to Enabled. Note that MediaConvert uses default
+// settings for any missing style or position information in your input captions
+// To ignore the style and position information from your input captions and
+// use default settings: Leave blank or keep the default value, Disabled. Default
+// settings include white text with black outlining, bottom-center positioning,
+// and automatic sizing. Whether you set Style passthrough to enabled or not,
+// you can also choose to manually override any of the individual style and
+// position settings. You can also override any fonts by manually specifying
+// custom font files.
 const (
 	// DvbSubtitleStylePassthroughEnabled is a DvbSubtitleStylePassthrough enum value
 	DvbSubtitleStylePassthroughEnabled = "ENABLED"
@@ -33675,10 +34557,7 @@ func HlsStreamInfResolution_Values() []string {
 // nearest integer value above its current value in seconds. When set to SPEC\\_COMPLIANT,
 // the segment target duration is rounded up to the nearest integer value if
 // fraction seconds are greater than or equal to 0.5 (>= 0.5) and rounded down
-// if less than 0.5 (< 0.5). You may need to use LEGACY if your client needs
-// to ensure that the target duration is always longer than the actual duration
-// of the segment. Some older players may experience interrupted playback when
-// the actual duration of a track in a segment is longer than the target duration.
+// if less than 0.5 (
 const (
 	// HlsTargetDurationCompatibilityModeLegacy is a HlsTargetDurationCompatibilityMode enum value
 	HlsTargetDurationCompatibilityModeLegacy = "LEGACY"
@@ -35046,6 +35925,30 @@ func M2tsPcrControl_Values() []string {
 	return []string{
 		M2tsPcrControlPcrEveryPesPacket,
 		M2tsPcrControlConfiguredPcrPeriod,
+	}
+}
+
+// Specify whether MediaConvert automatically attempts to prevent decoder buffer
+// underflows in your transport stream output. Use if you are seeing decoder
+// buffer underflows in your output and are unable to increase your transport
+// stream's bitrate. For most workflows: We recommend that you keep the default
+// value, Disabled. To prevent decoder buffer underflows in your output, when
+// possible: Choose Enabled. Note that if MediaConvert prevents a decoder buffer
+// underflow in your output, output video quality is reduced and your job will
+// take longer to complete.
+const (
+	// M2tsPreventBufferUnderflowDisabled is a M2tsPreventBufferUnderflow enum value
+	M2tsPreventBufferUnderflowDisabled = "DISABLED"
+
+	// M2tsPreventBufferUnderflowEnabled is a M2tsPreventBufferUnderflow enum value
+	M2tsPreventBufferUnderflowEnabled = "ENABLED"
+)
+
+// M2tsPreventBufferUnderflow_Values returns all elements of the M2tsPreventBufferUnderflow enum
+func M2tsPreventBufferUnderflow_Values() []string {
+	return []string{
+		M2tsPreventBufferUnderflowDisabled,
+		M2tsPreventBufferUnderflowEnabled,
 	}
 }
 
@@ -37472,6 +38375,168 @@ func Type_Values() []string {
 	}
 }
 
+// The four character code for the uncompressed video.
+const (
+	// UncompressedFourccI420 is a UncompressedFourcc enum value
+	UncompressedFourccI420 = "I420"
+
+	// UncompressedFourccI422 is a UncompressedFourcc enum value
+	UncompressedFourccI422 = "I422"
+
+	// UncompressedFourccI444 is a UncompressedFourcc enum value
+	UncompressedFourccI444 = "I444"
+)
+
+// UncompressedFourcc_Values returns all elements of the UncompressedFourcc enum
+func UncompressedFourcc_Values() []string {
+	return []string{
+		UncompressedFourccI420,
+		UncompressedFourccI422,
+		UncompressedFourccI444,
+	}
+}
+
+// Use the Framerate setting to specify the frame rate for this output. If you
+// want to keep the same frame rate as the input video, choose Follow source.
+// If you want to do frame rate conversion, choose a frame rate from the dropdown
+// list or choose Custom. The framerates shown in the dropdown list are decimal
+// approximations of fractions. If you choose Custom, specify your frame rate
+// as a fraction.
+const (
+	// UncompressedFramerateControlInitializeFromSource is a UncompressedFramerateControl enum value
+	UncompressedFramerateControlInitializeFromSource = "INITIALIZE_FROM_SOURCE"
+
+	// UncompressedFramerateControlSpecified is a UncompressedFramerateControl enum value
+	UncompressedFramerateControlSpecified = "SPECIFIED"
+)
+
+// UncompressedFramerateControl_Values returns all elements of the UncompressedFramerateControl enum
+func UncompressedFramerateControl_Values() []string {
+	return []string{
+		UncompressedFramerateControlInitializeFromSource,
+		UncompressedFramerateControlSpecified,
+	}
+}
+
+// Choose the method that you want MediaConvert to use when increasing or decreasing
+// the frame rate. For numerically simple conversions, such as 60 fps to 30
+// fps: We recommend that you keep the default value, Drop duplicate. For numerically
+// complex conversions, to avoid stutter: Choose Interpolate. This results in
+// a smooth picture, but might introduce undesirable video artifacts. For complex
+// frame rate conversions, especially if your source video has already been
+// converted from its original cadence: Choose FrameFormer to do motion-compensated
+// interpolation. FrameFormer uses the best conversion method frame by frame.
+// Note that using FrameFormer increases the transcoding time and incurs a significant
+// add-on cost. When you choose FrameFormer, your input video resolution must
+// be at least 128x96.
+const (
+	// UncompressedFramerateConversionAlgorithmDuplicateDrop is a UncompressedFramerateConversionAlgorithm enum value
+	UncompressedFramerateConversionAlgorithmDuplicateDrop = "DUPLICATE_DROP"
+
+	// UncompressedFramerateConversionAlgorithmInterpolate is a UncompressedFramerateConversionAlgorithm enum value
+	UncompressedFramerateConversionAlgorithmInterpolate = "INTERPOLATE"
+
+	// UncompressedFramerateConversionAlgorithmFrameformer is a UncompressedFramerateConversionAlgorithm enum value
+	UncompressedFramerateConversionAlgorithmFrameformer = "FRAMEFORMER"
+)
+
+// UncompressedFramerateConversionAlgorithm_Values returns all elements of the UncompressedFramerateConversionAlgorithm enum
+func UncompressedFramerateConversionAlgorithm_Values() []string {
+	return []string{
+		UncompressedFramerateConversionAlgorithmDuplicateDrop,
+		UncompressedFramerateConversionAlgorithmInterpolate,
+		UncompressedFramerateConversionAlgorithmFrameformer,
+	}
+}
+
+// Optional. Choose the scan line type for this output. If you don't specify
+// a value, MediaConvert will create a progressive output.
+const (
+	// UncompressedInterlaceModeInterlaced is a UncompressedInterlaceMode enum value
+	UncompressedInterlaceModeInterlaced = "INTERLACED"
+
+	// UncompressedInterlaceModeProgressive is a UncompressedInterlaceMode enum value
+	UncompressedInterlaceModeProgressive = "PROGRESSIVE"
+)
+
+// UncompressedInterlaceMode_Values returns all elements of the UncompressedInterlaceMode enum
+func UncompressedInterlaceMode_Values() []string {
+	return []string{
+		UncompressedInterlaceModeInterlaced,
+		UncompressedInterlaceModeProgressive,
+	}
+}
+
+// Use this setting for interlaced outputs, when your output frame rate is half
+// of your input frame rate. In this situation, choose Optimized interlacing
+// to create a better quality interlaced output. In this case, each progressive
+// frame from the input corresponds to an interlaced field in the output. Keep
+// the default value, Basic interlacing, for all other output frame rates. With
+// basic interlacing, MediaConvert performs any frame rate conversion first
+// and then interlaces the frames. When you choose Optimized interlacing and
+// you set your output frame rate to a value that isn't suitable for optimized
+// interlacing, MediaConvert automatically falls back to basic interlacing.
+// Required settings: To use optimized interlacing, you must set Telecine to
+// None or Soft. You can't use optimized interlacing for hard telecine outputs.
+// You must also set Interlace mode to a value other than Progressive.
+const (
+	// UncompressedScanTypeConversionModeInterlaced is a UncompressedScanTypeConversionMode enum value
+	UncompressedScanTypeConversionModeInterlaced = "INTERLACED"
+
+	// UncompressedScanTypeConversionModeInterlacedOptimize is a UncompressedScanTypeConversionMode enum value
+	UncompressedScanTypeConversionModeInterlacedOptimize = "INTERLACED_OPTIMIZE"
+)
+
+// UncompressedScanTypeConversionMode_Values returns all elements of the UncompressedScanTypeConversionMode enum
+func UncompressedScanTypeConversionMode_Values() []string {
+	return []string{
+		UncompressedScanTypeConversionModeInterlaced,
+		UncompressedScanTypeConversionModeInterlacedOptimize,
+	}
+}
+
+// Ignore this setting unless your input frame rate is 23.976 or 24 frames per
+// second (fps). Enable slow PAL to create a 25 fps output by relabeling the
+// video frames and resampling your audio. Note that enabling this setting will
+// slightly reduce the duration of your video. Related settings: You must also
+// set Framerate to 25.
+const (
+	// UncompressedSlowPalDisabled is a UncompressedSlowPal enum value
+	UncompressedSlowPalDisabled = "DISABLED"
+
+	// UncompressedSlowPalEnabled is a UncompressedSlowPal enum value
+	UncompressedSlowPalEnabled = "ENABLED"
+)
+
+// UncompressedSlowPal_Values returns all elements of the UncompressedSlowPal enum
+func UncompressedSlowPal_Values() []string {
+	return []string{
+		UncompressedSlowPalDisabled,
+		UncompressedSlowPalEnabled,
+	}
+}
+
+// When you do frame rate conversion from 23.976 frames per second (fps) to
+// 29.97 fps, and your output scan type is interlaced, you can optionally enable
+// hard telecine to create a smoother picture. When you keep the default value,
+// None, MediaConvert does a standard frame rate conversion to 29.97 without
+// doing anything with the field polarity to create a smoother picture.
+const (
+	// UncompressedTelecineNone is a UncompressedTelecine enum value
+	UncompressedTelecineNone = "NONE"
+
+	// UncompressedTelecineHard is a UncompressedTelecine enum value
+	UncompressedTelecineHard = "HARD"
+)
+
+// UncompressedTelecine_Values returns all elements of the UncompressedTelecine enum
+func UncompressedTelecine_Values() []string {
+	return []string{
+		UncompressedTelecineNone,
+		UncompressedTelecineHard,
+	}
+}
+
 // Specify the VC3 class to choose the quality characteristics for this output.
 // VC3 class, together with the settings Framerate (framerateNumerator and framerateDenominator)
 // and Resolution (height and width), determine your output bitrate. For example,
@@ -37685,6 +38750,9 @@ const (
 	// VideoCodecProres is a VideoCodec enum value
 	VideoCodecProres = "PRORES"
 
+	// VideoCodecUncompressed is a VideoCodec enum value
+	VideoCodecUncompressed = "UNCOMPRESSED"
+
 	// VideoCodecVc3 is a VideoCodec enum value
 	VideoCodecVc3 = "VC3"
 
@@ -37709,6 +38777,7 @@ func VideoCodec_Values() []string {
 		VideoCodecMpeg2,
 		VideoCodecPassthrough,
 		VideoCodecProres,
+		VideoCodecUncompressed,
 		VideoCodecVc3,
 		VideoCodecVp8,
 		VideoCodecVp9,

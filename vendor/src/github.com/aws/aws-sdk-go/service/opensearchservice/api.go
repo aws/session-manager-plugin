@@ -490,6 +490,98 @@ func (c *OpenSearchService) AuthorizeVpcEndpointAccessWithContext(ctx aws.Contex
 	return out, req.Send()
 }
 
+const opCancelDomainConfigChange = "CancelDomainConfigChange"
+
+// CancelDomainConfigChangeRequest generates a "aws/request.Request" representing the
+// client's request for the CancelDomainConfigChange operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CancelDomainConfigChange for more information on using the CancelDomainConfigChange
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CancelDomainConfigChangeRequest method.
+//	req, resp := client.CancelDomainConfigChangeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/CancelDomainConfigChange
+func (c *OpenSearchService) CancelDomainConfigChangeRequest(input *CancelDomainConfigChangeInput) (req *request.Request, output *CancelDomainConfigChangeOutput) {
+	op := &request.Operation{
+		Name:       opCancelDomainConfigChange,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2021-01-01/opensearch/domain/{DomainName}/config/cancel",
+	}
+
+	if input == nil {
+		input = &CancelDomainConfigChangeInput{}
+	}
+
+	output = &CancelDomainConfigChangeOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CancelDomainConfigChange API operation for Amazon OpenSearch Service.
+//
+// Cancels a pending configuration change on an Amazon OpenSearch Service domain.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon OpenSearch Service's
+// API operation CancelDomainConfigChange for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BaseException
+//     An error occurred while processing the request.
+//
+//   - InternalException
+//     Request processing failed because of an unknown error, exception, or internal
+//     failure.
+//
+//   - ResourceNotFoundException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - ValidationException
+//     An exception for accessing or deleting a resource that doesn't exist.
+//
+//   - DisabledOperationException
+//     An error occured because the client wanted to access an unsupported operation.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/opensearch-2021-01-01/CancelDomainConfigChange
+func (c *OpenSearchService) CancelDomainConfigChange(input *CancelDomainConfigChangeInput) (*CancelDomainConfigChangeOutput, error) {
+	req, out := c.CancelDomainConfigChangeRequest(input)
+	return out, req.Send()
+}
+
+// CancelDomainConfigChangeWithContext is the same as CancelDomainConfigChange with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CancelDomainConfigChange for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *OpenSearchService) CancelDomainConfigChangeWithContext(ctx aws.Context, input *CancelDomainConfigChangeInput, opts ...request.Option) (*CancelDomainConfigChangeOutput, error) {
+	req, out := c.CancelDomainConfigChangeRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCancelServiceSoftwareUpdate = "CancelServiceSoftwareUpdate"
 
 // CancelServiceSoftwareUpdateRequest generates a "aws/request.Request" representing the
@@ -6561,6 +6653,114 @@ func (c *OpenSearchService) UpgradeDomainWithContext(ctx aws.Context, input *Upg
 	return out, req.Send()
 }
 
+// Container for parameters required to enable all machine learning features.
+type AIMLOptionsInput_ struct {
+	_ struct{} `type:"structure"`
+
+	// Container for parameters required for natural language query generation on
+	// the specified domain.
+	NaturalLanguageQueryGenerationOptions *NaturalLanguageQueryGenerationOptionsInput_ `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AIMLOptionsInput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AIMLOptionsInput_) GoString() string {
+	return s.String()
+}
+
+// SetNaturalLanguageQueryGenerationOptions sets the NaturalLanguageQueryGenerationOptions field's value.
+func (s *AIMLOptionsInput_) SetNaturalLanguageQueryGenerationOptions(v *NaturalLanguageQueryGenerationOptionsInput_) *AIMLOptionsInput_ {
+	s.NaturalLanguageQueryGenerationOptions = v
+	return s
+}
+
+// Container for parameters representing the state of machine learning features
+// on the specified domain.
+type AIMLOptionsOutput_ struct {
+	_ struct{} `type:"structure"`
+
+	// Container for parameters required for natural language query generation on
+	// the specified domain.
+	NaturalLanguageQueryGenerationOptions *NaturalLanguageQueryGenerationOptionsOutput_ `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AIMLOptionsOutput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AIMLOptionsOutput_) GoString() string {
+	return s.String()
+}
+
+// SetNaturalLanguageQueryGenerationOptions sets the NaturalLanguageQueryGenerationOptions field's value.
+func (s *AIMLOptionsOutput_) SetNaturalLanguageQueryGenerationOptions(v *NaturalLanguageQueryGenerationOptionsOutput_) *AIMLOptionsOutput_ {
+	s.NaturalLanguageQueryGenerationOptions = v
+	return s
+}
+
+// The status of machine learning options on the specified domain.
+type AIMLOptionsStatus struct {
+	_ struct{} `type:"structure"`
+
+	// Machine learning options on the specified domain.
+	Options *AIMLOptionsOutput_ `type:"structure"`
+
+	// Provides the current status of an entity.
+	Status *OptionStatus `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AIMLOptionsStatus) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AIMLOptionsStatus) GoString() string {
+	return s.String()
+}
+
+// SetOptions sets the Options field's value.
+func (s *AIMLOptionsStatus) SetOptions(v *AIMLOptionsOutput_) *AIMLOptionsStatus {
+	s.Options = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *AIMLOptionsStatus) SetStatus(v *OptionStatus) *AIMLOptionsStatus {
+	s.Status = v
+	return s
+}
+
 // Information about an Amazon OpenSearch Service domain.
 type AWSDomainInformation struct {
 	_ struct{} `type:"structure"`
@@ -7189,6 +7389,10 @@ type AdvancedSecurityOptions struct {
 	// True if the internal user database is enabled.
 	InternalUserDatabaseEnabled *bool `type:"boolean"`
 
+	// Container for information about the JWT configuration of the Amazon OpenSearch
+	// Service.
+	JWTOptions *JWTOptionsOutput_ `type:"structure"`
+
 	// Container for information about the SAML configuration for OpenSearch Dashboards.
 	SAMLOptions *SAMLOptionsOutput_ `type:"structure"`
 }
@@ -7235,6 +7439,12 @@ func (s *AdvancedSecurityOptions) SetInternalUserDatabaseEnabled(v bool) *Advanc
 	return s
 }
 
+// SetJWTOptions sets the JWTOptions field's value.
+func (s *AdvancedSecurityOptions) SetJWTOptions(v *JWTOptionsOutput_) *AdvancedSecurityOptions {
+	s.JWTOptions = v
+	return s
+}
+
 // SetSAMLOptions sets the SAMLOptions field's value.
 func (s *AdvancedSecurityOptions) SetSAMLOptions(v *SAMLOptionsOutput_) *AdvancedSecurityOptions {
 	s.SAMLOptions = v
@@ -7257,6 +7467,10 @@ type AdvancedSecurityOptionsInput_ struct {
 
 	// True to enable the internal user database.
 	InternalUserDatabaseEnabled *bool `type:"boolean"`
+
+	// Container for information about the JWT configuration of the Amazon OpenSearch
+	// Service.
+	JWTOptions *JWTOptionsInput_ `type:"structure"`
 
 	// Container for information about the master user.
 	MasterUserOptions *MasterUserOptions `type:"structure"`
@@ -7286,6 +7500,11 @@ func (s AdvancedSecurityOptionsInput_) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *AdvancedSecurityOptionsInput_) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "AdvancedSecurityOptionsInput_"}
+	if s.JWTOptions != nil {
+		if err := s.JWTOptions.Validate(); err != nil {
+			invalidParams.AddNested("JWTOptions", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.MasterUserOptions != nil {
 		if err := s.MasterUserOptions.Validate(); err != nil {
 			invalidParams.AddNested("MasterUserOptions", err.(request.ErrInvalidParams))
@@ -7318,6 +7537,12 @@ func (s *AdvancedSecurityOptionsInput_) SetEnabled(v bool) *AdvancedSecurityOpti
 // SetInternalUserDatabaseEnabled sets the InternalUserDatabaseEnabled field's value.
 func (s *AdvancedSecurityOptionsInput_) SetInternalUserDatabaseEnabled(v bool) *AdvancedSecurityOptionsInput_ {
 	s.InternalUserDatabaseEnabled = &v
+	return s
+}
+
+// SetJWTOptions sets the JWTOptions field's value.
+func (s *AdvancedSecurityOptionsInput_) SetJWTOptions(v *JWTOptionsInput_) *AdvancedSecurityOptionsInput_ {
+	s.JWTOptions = v
 	return s
 }
 
@@ -8254,6 +8479,116 @@ func (s *BaseException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+type CancelDomainConfigChangeInput struct {
+	_ struct{} `type:"structure"`
+
+	// The name of an OpenSearch Service domain. Domain names are unique across
+	// the domains owned by an account within an Amazon Web Services Region.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"DomainName" min:"3" type:"string" required:"true"`
+
+	// When set to True, returns the list of change IDs and properties that will
+	// be cancelled without actually cancelling the change.
+	DryRun *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CancelDomainConfigChangeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CancelDomainConfigChangeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CancelDomainConfigChangeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CancelDomainConfigChangeInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *CancelDomainConfigChangeInput) SetDomainName(v string) *CancelDomainConfigChangeInput {
+	s.DomainName = &v
+	return s
+}
+
+// SetDryRun sets the DryRun field's value.
+func (s *CancelDomainConfigChangeInput) SetDryRun(v bool) *CancelDomainConfigChangeInput {
+	s.DryRun = &v
+	return s
+}
+
+type CancelDomainConfigChangeOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The unique identifiers of the changes that were cancelled.
+	CancelledChangeIds []*string `type:"list"`
+
+	// The domain change properties that were cancelled.
+	CancelledChangeProperties []*CancelledChangeProperty `type:"list"`
+
+	// Whether or not the request was a dry run. If True, the changes were not actually
+	// cancelled.
+	DryRun *bool `type:"boolean"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CancelDomainConfigChangeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CancelDomainConfigChangeOutput) GoString() string {
+	return s.String()
+}
+
+// SetCancelledChangeIds sets the CancelledChangeIds field's value.
+func (s *CancelDomainConfigChangeOutput) SetCancelledChangeIds(v []*string) *CancelDomainConfigChangeOutput {
+	s.CancelledChangeIds = v
+	return s
+}
+
+// SetCancelledChangeProperties sets the CancelledChangeProperties field's value.
+func (s *CancelDomainConfigChangeOutput) SetCancelledChangeProperties(v []*CancelledChangeProperty) *CancelDomainConfigChangeOutput {
+	s.CancelledChangeProperties = v
+	return s
+}
+
+// SetDryRun sets the DryRun field's value.
+func (s *CancelDomainConfigChangeOutput) SetDryRun(v bool) *CancelDomainConfigChangeOutput {
+	s.DryRun = &v
+	return s
+}
+
 // Container for the request parameters to cancel a service software update.
 type CancelServiceSoftwareUpdateInput struct {
 	_ struct{} `type:"structure"`
@@ -8338,6 +8673,57 @@ func (s *CancelServiceSoftwareUpdateOutput) SetServiceSoftwareOptions(v *Service
 	return s
 }
 
+// A property change that was cancelled for an Amazon OpenSearch Service domain.
+type CancelledChangeProperty struct {
+	_ struct{} `type:"structure"`
+
+	// The current value of the property, after the change was cancelled.
+	ActiveValue *string `type:"string"`
+
+	// The pending value of the property that was cancelled. This would have been
+	// the eventual value of the property if the chance had not been cancelled.
+	CancelledValue *string `type:"string"`
+
+	// The name of the property whose change was cancelled.
+	PropertyName *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CancelledChangeProperty) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CancelledChangeProperty) GoString() string {
+	return s.String()
+}
+
+// SetActiveValue sets the ActiveValue field's value.
+func (s *CancelledChangeProperty) SetActiveValue(v string) *CancelledChangeProperty {
+	s.ActiveValue = &v
+	return s
+}
+
+// SetCancelledValue sets the CancelledValue field's value.
+func (s *CancelledChangeProperty) SetCancelledValue(v string) *CancelledChangeProperty {
+	s.CancelledValue = &v
+	return s
+}
+
+// SetPropertyName sets the PropertyName field's value.
+func (s *CancelledChangeProperty) SetPropertyName(v string) *CancelledChangeProperty {
+	s.PropertyName = &v
+	return s
+}
+
 // Container for information about a configuration change happening on a domain.
 type ChangeProgressDetails struct {
 	_ struct{} `type:"structure"`
@@ -8345,8 +8731,21 @@ type ChangeProgressDetails struct {
 	// The ID of the configuration change.
 	ChangeId *string `min:"36" type:"string"`
 
+	// The current status of the configuration change.
+	ConfigChangeStatus *string `type:"string" enum:"ConfigChangeStatus"`
+
+	// The IAM principal who initiated the configuration change.
+	InitiatedBy *string `type:"string" enum:"InitiatedBy"`
+
+	// The last time that the configuration change was updated.
+	LastUpdatedTime *time.Time `type:"timestamp"`
+
 	// A message corresponding to the status of the configuration change.
 	Message *string `type:"string"`
+
+	// The time that the configuration change was initiated, in Universal Coordinated
+	// Time (UTC).
+	StartTime *time.Time `type:"timestamp"`
 }
 
 // String returns the string representation.
@@ -8373,9 +8772,33 @@ func (s *ChangeProgressDetails) SetChangeId(v string) *ChangeProgressDetails {
 	return s
 }
 
+// SetConfigChangeStatus sets the ConfigChangeStatus field's value.
+func (s *ChangeProgressDetails) SetConfigChangeStatus(v string) *ChangeProgressDetails {
+	s.ConfigChangeStatus = &v
+	return s
+}
+
+// SetInitiatedBy sets the InitiatedBy field's value.
+func (s *ChangeProgressDetails) SetInitiatedBy(v string) *ChangeProgressDetails {
+	s.InitiatedBy = &v
+	return s
+}
+
+// SetLastUpdatedTime sets the LastUpdatedTime field's value.
+func (s *ChangeProgressDetails) SetLastUpdatedTime(v time.Time) *ChangeProgressDetails {
+	s.LastUpdatedTime = &v
+	return s
+}
+
 // SetMessage sets the Message field's value.
 func (s *ChangeProgressDetails) SetMessage(v string) *ChangeProgressDetails {
 	s.Message = &v
+	return s
+}
+
+// SetStartTime sets the StartTime field's value.
+func (s *ChangeProgressDetails) SetStartTime(v time.Time) *ChangeProgressDetails {
+	s.StartTime = &v
 	return s
 }
 
@@ -8453,6 +8876,15 @@ type ChangeProgressStatusDetails struct {
 	// The list of properties in the domain configuration change that have completed.
 	CompletedProperties []*string `type:"list"`
 
+	// The current status of the configuration change.
+	ConfigChangeStatus *string `type:"string" enum:"ConfigChangeStatus"`
+
+	// The IAM principal who initiated the configuration change.
+	InitiatedBy *string `type:"string" enum:"InitiatedBy"`
+
+	// The last time that the status of the configuration change was updated.
+	LastUpdatedTime *time.Time `type:"timestamp"`
+
 	// The list of properties in the domain configuration change that are still
 	// pending.
 	PendingProperties []*string `type:"list"`
@@ -8500,6 +8932,24 @@ func (s *ChangeProgressStatusDetails) SetChangeProgressStages(v []*ChangeProgres
 // SetCompletedProperties sets the CompletedProperties field's value.
 func (s *ChangeProgressStatusDetails) SetCompletedProperties(v []*string) *ChangeProgressStatusDetails {
 	s.CompletedProperties = v
+	return s
+}
+
+// SetConfigChangeStatus sets the ConfigChangeStatus field's value.
+func (s *ChangeProgressStatusDetails) SetConfigChangeStatus(v string) *ChangeProgressStatusDetails {
+	s.ConfigChangeStatus = &v
+	return s
+}
+
+// SetInitiatedBy sets the InitiatedBy field's value.
+func (s *ChangeProgressStatusDetails) SetInitiatedBy(v string) *ChangeProgressStatusDetails {
+	s.InitiatedBy = &v
+	return s
+}
+
+// SetLastUpdatedTime sets the LastUpdatedTime field's value.
+func (s *ChangeProgressStatusDetails) SetLastUpdatedTime(v time.Time) *ChangeProgressStatusDetails {
+	s.LastUpdatedTime = &v
 	return s
 }
 
@@ -8863,7 +9313,8 @@ func (s *CognitoOptionsStatus) SetStatus(v *OptionStatus) *CognitoOptionsStatus 
 type ColdStorageOptions struct {
 	_ struct{} `type:"structure"`
 
-	// Whether to enable or disable cold storage on the domain.
+	// Whether to enable or disable cold storage on the domain. You must enable
+	// UltraWarm storage to enable cold storage.
 	//
 	// Enabled is a required field
 	Enabled *bool `type:"boolean" required:"true"`
@@ -9061,6 +9512,9 @@ func (s *ConnectionProperties) SetEndpoint(v string) *ConnectionProperties {
 type CreateDomainInput struct {
 	_ struct{} `type:"structure"`
 
+	// Options for all machine learning features for the specified domain.
+	AIMLOptions *AIMLOptionsInput_ `type:"structure"`
+
 	// Identity and Access Management (IAM) policy document specifying the access
 	// policies for the new domain.
 	AccessPolicies *string `type:"string"`
@@ -9128,7 +9582,10 @@ type CreateDomainInput struct {
 	// OpenSearch Service domains (https://docs.aws.amazon.com/opensearch-service/latest/developerguide/createupdatedomains.html#createdomains).
 	EngineVersion *string `min:"14" type:"string"`
 
-	// The type of IP addresses supported by the endpoint for the domain.
+	// Specify either dual stack or IPv4 as your IP address type. Dual stack allows
+	// you to share domain resources across IPv4 and IPv6 address types, and is
+	// the recommended option. If you set your IP address type to dual stack, you
+	// can't change your address type later.
 	IPAddressType *string `type:"string" enum:"IPAddressType"`
 
 	// Key-value pairs to configure log publishing.
@@ -9251,6 +9708,12 @@ func (s *CreateDomainInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAIMLOptions sets the AIMLOptions field's value.
+func (s *CreateDomainInput) SetAIMLOptions(v *AIMLOptionsInput_) *CreateDomainInput {
+	s.AIMLOptions = v
+	return s
 }
 
 // SetAccessPolicies sets the AccessPolicies field's value.
@@ -9873,6 +10336,9 @@ type DataSourceDetails struct {
 
 	// The name of the data source.
 	Name *string `min:"3" type:"string"`
+
+	// The status of the data source.
+	Status *string `type:"string" enum:"DataSourceStatus"`
 }
 
 // String returns the string representation.
@@ -9908,6 +10374,12 @@ func (s *DataSourceDetails) SetDescription(v string) *DataSourceDetails {
 // SetName sets the Name field's value.
 func (s *DataSourceDetails) SetName(v string) *DataSourceDetails {
 	s.Name = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *DataSourceDetails) SetStatus(v string) *DataSourceDetails {
+	s.Status = &v
 	return s
 }
 
@@ -10617,7 +11089,7 @@ type DescribeDomainAutoTunesOutput struct {
 	AutoTunes []*AutoTune `type:"list"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 }
@@ -11504,7 +11976,7 @@ type DescribeInboundConnectionsOutput struct {
 	Connections []*InboundConnection `type:"list"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 }
@@ -11735,7 +12207,7 @@ type DescribeOutboundConnectionsOutput struct {
 	Connections []*OutboundConnection `type:"list"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 }
@@ -11902,7 +12374,7 @@ type DescribePackagesOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 
@@ -12013,7 +12485,7 @@ type DescribeReservedInstanceOfferingsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 
@@ -12124,7 +12596,7 @@ type DescribeReservedInstancesOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 
@@ -12420,6 +12892,9 @@ func (s *DissociatePackageOutput) SetDomainPackageDetails(v *DomainPackageDetail
 type DomainConfig struct {
 	_ struct{} `type:"structure"`
 
+	// Container for parameters required to enable all machine learning features.
+	AIMLOptions *AIMLOptionsStatus `type:"structure"`
+
 	// Specifies the access policies for the domain.
 	AccessPolicies *AccessPoliciesStatus `type:"structure"`
 
@@ -12456,11 +12931,17 @@ type DomainConfig struct {
 	// The OpenSearch or Elasticsearch version that the domain is running.
 	EngineVersion *VersionStatus `type:"structure"`
 
-	// The type of IP addresses supported by the endpoint for the domain.
+	// Choose either dual stack or IPv4 as your IP address type. Dual stack allows
+	// you to share domain resources across IPv4 and IPv6 address types, and is
+	// the recommended option. If you set your IP address type to dual stack, you
+	// can't change your address type later.
 	IPAddressType *IPAddressTypeStatus `type:"structure"`
 
 	// Key-value pairs to configure log publishing.
 	LogPublishingOptions *LogPublishingOptionsStatus `type:"structure"`
+
+	// Information about the domain properties that are currently being modified.
+	ModifyingProperties []*ModifyingProperties `type:"list"`
 
 	// Whether node-to-node encryption is enabled or disabled.
 	NodeToNodeEncryptionOptions *NodeToNodeEncryptionOptionsStatus `type:"structure"`
@@ -12496,6 +12977,12 @@ func (s DomainConfig) String() string {
 // value will be replaced with "sensitive".
 func (s DomainConfig) GoString() string {
 	return s.String()
+}
+
+// SetAIMLOptions sets the AIMLOptions field's value.
+func (s *DomainConfig) SetAIMLOptions(v *AIMLOptionsStatus) *DomainConfig {
+	s.AIMLOptions = v
+	return s
 }
 
 // SetAccessPolicies sets the AccessPolicies field's value.
@@ -12576,6 +13063,12 @@ func (s *DomainConfig) SetLogPublishingOptions(v *LogPublishingOptionsStatus) *D
 	return s
 }
 
+// SetModifyingProperties sets the ModifyingProperties field's value.
+func (s *DomainConfig) SetModifyingProperties(v []*ModifyingProperties) *DomainConfig {
+	s.ModifyingProperties = v
+	return s
+}
+
 // SetNodeToNodeEncryptionOptions sets the NodeToNodeEncryptionOptions field's value.
 func (s *DomainConfig) SetNodeToNodeEncryptionOptions(v *NodeToNodeEncryptionOptionsStatus) *DomainConfig {
 	s.NodeToNodeEncryptionOptions = v
@@ -12631,6 +13124,9 @@ type DomainEndpointOptions struct {
 	//
 	//    * Policy-Min-TLS-1-2-2019-07: TLS security policy that supports only TLS
 	//    version 1.2
+	//
+	//    * Policy-Min-TLS-1-2-PFS-2023-10: TLS security policy that supports TLS
+	//    version 1.2 to TLS version 1.3 with perfect forward secrecy cipher suites
 	TLSSecurityPolicy *string `type:"string" enum:"TLSSecurityPolicy"`
 }
 
@@ -13133,6 +13629,9 @@ func (s *DomainPackageDetails) SetReferencePath(v string) *DomainPackageDetails 
 type DomainStatus struct {
 	_ struct{} `type:"structure"`
 
+	// Container for parameters required to enable all machine learning features.
+	AIMLOptions *AIMLOptionsOutput_ `type:"structure"`
+
 	// The Amazon Resource Name (ARN) of the domain. For more information, see IAM
 	// identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_identifiers.html)
 	// in the AWS Identity and Access Management User Guide.
@@ -13178,6 +13677,9 @@ type DomainStatus struct {
 	// for all traffic.
 	DomainEndpointOptions *DomainEndpointOptions `type:"structure"`
 
+	// The dual stack hosted zone ID for the domain.
+	DomainEndpointV2HostedZoneId *string `type:"string"`
+
 	// Unique identifier for the domain.
 	//
 	// DomainId is a required field
@@ -13189,6 +13691,9 @@ type DomainStatus struct {
 	// DomainName is a required field
 	DomainName *string `min:"3" type:"string" required:"true"`
 
+	// The status of any changes that are currently in progress for the domain.
+	DomainProcessingStatus *string `type:"string" enum:"DomainProcessingStatusType"`
+
 	// Container for EBS-based storage settings for the domain.
 	EBSOptions *EBSOptions `type:"structure"`
 
@@ -13199,12 +13704,18 @@ type DomainStatus struct {
 	// to the domain.
 	Endpoint *string `type:"string"`
 
-	// The domain endpoint to which index and search requests are submitted. For
-	// example, search-imdb-movies-oopcnjfn6ugo.eu-west-1.es.amazonaws.com or doc-imdb-movies-oopcnjfn6u.eu-west-1.es.amazonaws.com.
+	// If IPAddressType to set to dualstack, a version 2 domain endpoint is provisioned.
+	// This endpoint functions like a normal endpoint, except that it works with
+	// both IPv4 and IPv6 IP addresses. Normal endpoints work only with IPv4 IP
+	// addresses.
 	EndpointV2 *string `type:"string"`
 
 	// The key-value pair that exists if the OpenSearch Service domain uses VPC
-	// endpoints.. Example key, value: 'vpc','vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.us-east-1.es.amazonaws.com'.
+	// endpoints. For example:
+	//
+	//    * IPv4 IP addresses - 'vpc','vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.us-east-1.es.amazonaws.com'
+	//
+	//    * Dual stack IP addresses - 'vpcv2':'vpc-endpoint-h2dsd34efgyghrtguk5gt6j2foh4.aos.us-east-1.on.aws'
 	Endpoints map[string]*string `type:"map"`
 
 	// Version of OpenSearch or Elasticsearch that the domain is running, in the
@@ -13216,6 +13727,9 @@ type DomainStatus struct {
 
 	// Log publishing options for the domain.
 	LogPublishingOptions map[string]*LogPublishingOption `type:"map"`
+
+	// Information about the domain properties that are currently being modified.
+	ModifyingProperties []*ModifyingProperties `type:"list"`
 
 	// Whether node-to-node encryption is enabled or disabled.
 	NodeToNodeEncryptionOptions *NodeToNodeEncryptionOptions `type:"structure"`
@@ -13263,6 +13777,12 @@ func (s DomainStatus) String() string {
 // value will be replaced with "sensitive".
 func (s DomainStatus) GoString() string {
 	return s.String()
+}
+
+// SetAIMLOptions sets the AIMLOptions field's value.
+func (s *DomainStatus) SetAIMLOptions(v *AIMLOptionsOutput_) *DomainStatus {
+	s.AIMLOptions = v
+	return s
 }
 
 // SetARN sets the ARN field's value.
@@ -13331,6 +13851,12 @@ func (s *DomainStatus) SetDomainEndpointOptions(v *DomainEndpointOptions) *Domai
 	return s
 }
 
+// SetDomainEndpointV2HostedZoneId sets the DomainEndpointV2HostedZoneId field's value.
+func (s *DomainStatus) SetDomainEndpointV2HostedZoneId(v string) *DomainStatus {
+	s.DomainEndpointV2HostedZoneId = &v
+	return s
+}
+
 // SetDomainId sets the DomainId field's value.
 func (s *DomainStatus) SetDomainId(v string) *DomainStatus {
 	s.DomainId = &v
@@ -13340,6 +13866,12 @@ func (s *DomainStatus) SetDomainId(v string) *DomainStatus {
 // SetDomainName sets the DomainName field's value.
 func (s *DomainStatus) SetDomainName(v string) *DomainStatus {
 	s.DomainName = &v
+	return s
+}
+
+// SetDomainProcessingStatus sets the DomainProcessingStatus field's value.
+func (s *DomainStatus) SetDomainProcessingStatus(v string) *DomainStatus {
+	s.DomainProcessingStatus = &v
 	return s
 }
 
@@ -13388,6 +13920,12 @@ func (s *DomainStatus) SetIPAddressType(v string) *DomainStatus {
 // SetLogPublishingOptions sets the LogPublishingOptions field's value.
 func (s *DomainStatus) SetLogPublishingOptions(v map[string]*LogPublishingOption) *DomainStatus {
 	s.LogPublishingOptions = v
+	return s
+}
+
+// SetModifyingProperties sets the ModifyingProperties field's value.
+func (s *DomainStatus) SetModifyingProperties(v []*ModifyingProperties) *DomainStatus {
+	s.ModifyingProperties = v
 	return s
 }
 
@@ -13740,8 +14278,9 @@ func (s *EBSOptionsStatus) SetStatus(v *OptionStatus) *EBSOptionsStatus {
 }
 
 // Specifies whether the domain should encrypt data at rest, and if so, the
-// Key Management Service (KMS) key to use. Can be used only to create a new
-// domain, not update an existing one.
+// Key Management Service (KMS) key to use. Can only be used when creating a
+// new domain or enabling encryption at rest for the first time on an existing
+// domain. You can't modify this parameter after it's already been specified.
 type EncryptionAtRestOptions struct {
 	_ struct{} `type:"structure"`
 
@@ -14132,6 +14671,9 @@ type GetDataSourceOutput struct {
 
 	// The name of the data source.
 	Name *string `min:"3" type:"string"`
+
+	// The status of the data source.
+	Status *string `type:"string" enum:"DataSourceStatus"`
 }
 
 // String returns the string representation.
@@ -14167,6 +14709,12 @@ func (s *GetDataSourceOutput) SetDescription(v string) *GetDataSourceOutput {
 // SetName sets the Name field's value.
 func (s *GetDataSourceOutput) SetName(v string) *GetDataSourceOutput {
 	s.Name = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *GetDataSourceOutput) SetStatus(v string) *GetDataSourceOutput {
+	s.Status = &v
 	return s
 }
 
@@ -14391,7 +14939,7 @@ type GetPackageVersionHistoryOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 
@@ -14514,7 +15062,7 @@ type GetUpgradeHistoryOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 
@@ -15194,6 +15742,141 @@ func (s *InvalidTypeException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The JWT authentication and authorization configuration for an Amazon OpenSearch
+// Service domain.
+type JWTOptionsInput_ struct {
+	_ struct{} `type:"structure"`
+
+	// True to enable JWT authentication and authorization for a domain.
+	Enabled *bool `type:"boolean"`
+
+	// Element of the JWT assertion used by the cluster to verify JWT signatures.
+	PublicKey *string `type:"string"`
+
+	// Element of the JWT assertion to use for roles.
+	RolesKey *string `min:"1" type:"string"`
+
+	// Element of the JWT assertion to use for the user name.
+	SubjectKey *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JWTOptionsInput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JWTOptionsInput_) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *JWTOptionsInput_) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "JWTOptionsInput_"}
+	if s.RolesKey != nil && len(*s.RolesKey) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RolesKey", 1))
+	}
+	if s.SubjectKey != nil && len(*s.SubjectKey) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SubjectKey", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEnabled sets the Enabled field's value.
+func (s *JWTOptionsInput_) SetEnabled(v bool) *JWTOptionsInput_ {
+	s.Enabled = &v
+	return s
+}
+
+// SetPublicKey sets the PublicKey field's value.
+func (s *JWTOptionsInput_) SetPublicKey(v string) *JWTOptionsInput_ {
+	s.PublicKey = &v
+	return s
+}
+
+// SetRolesKey sets the RolesKey field's value.
+func (s *JWTOptionsInput_) SetRolesKey(v string) *JWTOptionsInput_ {
+	s.RolesKey = &v
+	return s
+}
+
+// SetSubjectKey sets the SubjectKey field's value.
+func (s *JWTOptionsInput_) SetSubjectKey(v string) *JWTOptionsInput_ {
+	s.SubjectKey = &v
+	return s
+}
+
+// Describes the JWT options configured for the domain.
+type JWTOptionsOutput_ struct {
+	_ struct{} `type:"structure"`
+
+	// True if JWT use is enabled.
+	Enabled *bool `type:"boolean"`
+
+	// The key used to verify the signature of incoming JWT requests.
+	PublicKey *string `type:"string"`
+
+	// The key used for matching the JWT roles attribute.
+	RolesKey *string `type:"string"`
+
+	// The key used for matching the JWT subject attribute.
+	SubjectKey *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JWTOptionsOutput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JWTOptionsOutput_) GoString() string {
+	return s.String()
+}
+
+// SetEnabled sets the Enabled field's value.
+func (s *JWTOptionsOutput_) SetEnabled(v bool) *JWTOptionsOutput_ {
+	s.Enabled = &v
+	return s
+}
+
+// SetPublicKey sets the PublicKey field's value.
+func (s *JWTOptionsOutput_) SetPublicKey(v string) *JWTOptionsOutput_ {
+	s.PublicKey = &v
+	return s
+}
+
+// SetRolesKey sets the RolesKey field's value.
+func (s *JWTOptionsOutput_) SetRolesKey(v string) *JWTOptionsOutput_ {
+	s.RolesKey = &v
+	return s
+}
+
+// SetSubjectKey sets the SubjectKey field's value.
+func (s *JWTOptionsOutput_) SetSubjectKey(v string) *JWTOptionsOutput_ {
+	s.SubjectKey = &v
+	return s
+}
+
 // An exception for trying to create more than the allowed number of resources
 // or sub-resources.
 type LimitExceededException struct {
@@ -15490,7 +16173,7 @@ type ListDomainMaintenancesOutput struct {
 	DomainMaintenances []*DomainMaintenanceDetails `type:"list"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 }
@@ -15670,7 +16353,7 @@ type ListDomainsForPackageOutput struct {
 	DomainPackageDetailsList []*DomainPackageDetails `type:"list"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 }
@@ -15817,7 +16500,7 @@ type ListInstanceTypeDetailsOutput struct {
 	InstanceTypeDetails []*InstanceTypeDetails `type:"list"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 }
@@ -15931,7 +16614,7 @@ type ListPackagesForDomainOutput struct {
 	DomainPackageDetailsList []*DomainPackageDetails `type:"list"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 }
@@ -16040,7 +16723,7 @@ type ListScheduledActionsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 
@@ -16210,7 +16893,7 @@ type ListVersionsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	NextToken *string `type:"string"`
 
@@ -16320,7 +17003,7 @@ type ListVpcEndpointAccessOutput struct {
 	AuthorizedPrincipalList []*AuthorizedPrincipal `type:"list" required:"true"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	//
 	// NextToken is a required field
@@ -16421,7 +17104,7 @@ type ListVpcEndpointsForDomainOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	//
 	// NextToken is a required field
@@ -16500,7 +17183,7 @@ type ListVpcEndpointsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// When nextToken is returned, there are more results available. The value of
-	// nextToken is a unique pagination token for each page. Make the call again
+	// nextToken is a unique pagination token for each page. Send the request again
 	// using the returned token to retrieve the next page.
 	//
 	// NextToken is a required field
@@ -16720,6 +17403,149 @@ func (s *MasterUserOptions) SetMasterUserName(v string) *MasterUserOptions {
 // SetMasterUserPassword sets the MasterUserPassword field's value.
 func (s *MasterUserOptions) SetMasterUserPassword(v string) *MasterUserOptions {
 	s.MasterUserPassword = &v
+	return s
+}
+
+// Information about the domain properties that are currently being modified.
+type ModifyingProperties struct {
+	_ struct{} `type:"structure"`
+
+	// The current value of the domain property that is being modified.
+	ActiveValue *string `type:"string"`
+
+	// The name of the property that is currently being modified.
+	Name *string `type:"string"`
+
+	// The value that the property that is currently being modified will eventually
+	// have.
+	PendingValue *string `type:"string"`
+
+	// The type of value that is currently being modified. Properties can have two
+	// types:
+	//
+	//    * PLAIN_TEXT: Contain direct values such as "1", "True", or "c5.large.search".
+	//
+	//    * STRINGIFIED_JSON: Contain content in JSON format, such as {"Enabled":"True"}".
+	ValueType *string `type:"string" enum:"PropertyValueType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyingProperties) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ModifyingProperties) GoString() string {
+	return s.String()
+}
+
+// SetActiveValue sets the ActiveValue field's value.
+func (s *ModifyingProperties) SetActiveValue(v string) *ModifyingProperties {
+	s.ActiveValue = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ModifyingProperties) SetName(v string) *ModifyingProperties {
+	s.Name = &v
+	return s
+}
+
+// SetPendingValue sets the PendingValue field's value.
+func (s *ModifyingProperties) SetPendingValue(v string) *ModifyingProperties {
+	s.PendingValue = &v
+	return s
+}
+
+// SetValueType sets the ValueType field's value.
+func (s *ModifyingProperties) SetValueType(v string) *ModifyingProperties {
+	s.ValueType = &v
+	return s
+}
+
+// Container for parameters required to enable the natural language query generation
+// feature.
+type NaturalLanguageQueryGenerationOptionsInput_ struct {
+	_ struct{} `type:"structure"`
+
+	// The desired state of the natural language query generation feature. Valid
+	// values are ENABLED and DISABLED.
+	DesiredState *string `type:"string" enum:"NaturalLanguageQueryGenerationDesiredState"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NaturalLanguageQueryGenerationOptionsInput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NaturalLanguageQueryGenerationOptionsInput_) GoString() string {
+	return s.String()
+}
+
+// SetDesiredState sets the DesiredState field's value.
+func (s *NaturalLanguageQueryGenerationOptionsInput_) SetDesiredState(v string) *NaturalLanguageQueryGenerationOptionsInput_ {
+	s.DesiredState = &v
+	return s
+}
+
+// Container for parameters representing the state of the natural language query
+// generation feature on the specified domain.
+type NaturalLanguageQueryGenerationOptionsOutput_ struct {
+	_ struct{} `type:"structure"`
+
+	// The current state of the natural language query generation feature, indicating
+	// completion, in progress, or failure.
+	CurrentState *string `type:"string" enum:"NaturalLanguageQueryGenerationCurrentState"`
+
+	// The desired state of the natural language query generation feature. Valid
+	// values are ENABLED and DISABLED.
+	DesiredState *string `type:"string" enum:"NaturalLanguageQueryGenerationDesiredState"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NaturalLanguageQueryGenerationOptionsOutput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s NaturalLanguageQueryGenerationOptionsOutput_) GoString() string {
+	return s.String()
+}
+
+// SetCurrentState sets the CurrentState field's value.
+func (s *NaturalLanguageQueryGenerationOptionsOutput_) SetCurrentState(v string) *NaturalLanguageQueryGenerationOptionsOutput_ {
+	s.CurrentState = &v
+	return s
+}
+
+// SetDesiredState sets the DesiredState field's value.
+func (s *NaturalLanguageQueryGenerationOptionsOutput_) SetDesiredState(v string) *NaturalLanguageQueryGenerationOptionsOutput_ {
+	s.DesiredState = &v
 	return s
 }
 
@@ -19513,6 +20339,9 @@ type UpdateDataSourceInput struct {
 	//
 	// Name is a required field
 	Name *string `location:"uri" locationName:"DataSourceName" min:"3" type:"string" required:"true"`
+
+	// The status of the data source update.
+	Status *string `type:"string" enum:"DataSourceStatus"`
 }
 
 // String returns the string representation.
@@ -19587,6 +20416,12 @@ func (s *UpdateDataSourceInput) SetName(v string) *UpdateDataSourceInput {
 	return s
 }
 
+// SetStatus sets the Status field's value.
+func (s *UpdateDataSourceInput) SetStatus(v string) *UpdateDataSourceInput {
+	s.Status = &v
+	return s
+}
+
 // The result of an UpdateDataSource operation.
 type UpdateDataSourceOutput struct {
 	_ struct{} `type:"structure"`
@@ -19622,6 +20457,9 @@ func (s *UpdateDataSourceOutput) SetMessage(v string) *UpdateDataSourceOutput {
 // Container for the request parameters to the UpdateDomain operation.
 type UpdateDomainConfigInput struct {
 	_ struct{} `type:"structure"`
+
+	// Options for all machine learning features for the specified domain.
+	AIMLOptions *AIMLOptionsInput_ `type:"structure"`
 
 	// Identity and Access Management (IAM) access policy as a JSON-formatted string.
 	AccessPolicies *string `type:"string"`
@@ -19690,7 +20528,10 @@ type UpdateDomainConfigInput struct {
 	// Encryption at rest options for the domain.
 	EncryptionAtRestOptions *EncryptionAtRestOptions `type:"structure"`
 
-	// The type of IP addresses supported by the endpoint for the domain.
+	// Specify either dual stack or IPv4 as your IP address type. Dual stack allows
+	// you to share domain resources across IPv4 and IPv6 address types, and is
+	// the recommended option. If your IP address type is currently set to dual
+	// stack, you can't change it.
 	IPAddressType *string `type:"string" enum:"IPAddressType"`
 
 	// Options to publish OpenSearch logs to Amazon CloudWatch Logs.
@@ -19792,6 +20633,12 @@ func (s *UpdateDomainConfigInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetAIMLOptions sets the AIMLOptions field's value.
+func (s *UpdateDomainConfigInput) SetAIMLOptions(v *AIMLOptionsInput_) *UpdateDomainConfigInput {
+	s.AIMLOptions = v
+	return s
 }
 
 // SetAccessPolicies sets the AccessPolicies field's value.
@@ -21375,6 +22222,46 @@ func AutoTuneType_Values() []string {
 	}
 }
 
+const (
+	// ConfigChangeStatusPending is a ConfigChangeStatus enum value
+	ConfigChangeStatusPending = "Pending"
+
+	// ConfigChangeStatusInitializing is a ConfigChangeStatus enum value
+	ConfigChangeStatusInitializing = "Initializing"
+
+	// ConfigChangeStatusValidating is a ConfigChangeStatus enum value
+	ConfigChangeStatusValidating = "Validating"
+
+	// ConfigChangeStatusValidationFailed is a ConfigChangeStatus enum value
+	ConfigChangeStatusValidationFailed = "ValidationFailed"
+
+	// ConfigChangeStatusApplyingChanges is a ConfigChangeStatus enum value
+	ConfigChangeStatusApplyingChanges = "ApplyingChanges"
+
+	// ConfigChangeStatusCompleted is a ConfigChangeStatus enum value
+	ConfigChangeStatusCompleted = "Completed"
+
+	// ConfigChangeStatusPendingUserInput is a ConfigChangeStatus enum value
+	ConfigChangeStatusPendingUserInput = "PendingUserInput"
+
+	// ConfigChangeStatusCancelled is a ConfigChangeStatus enum value
+	ConfigChangeStatusCancelled = "Cancelled"
+)
+
+// ConfigChangeStatus_Values returns all elements of the ConfigChangeStatus enum
+func ConfigChangeStatus_Values() []string {
+	return []string{
+		ConfigChangeStatusPending,
+		ConfigChangeStatusInitializing,
+		ConfigChangeStatusValidating,
+		ConfigChangeStatusValidationFailed,
+		ConfigChangeStatusApplyingChanges,
+		ConfigChangeStatusCompleted,
+		ConfigChangeStatusPendingUserInput,
+		ConfigChangeStatusCancelled,
+	}
+}
+
 // The connection mode for the cross-cluster connection.
 //
 //   - DIRECT - Used for cross-cluster search or cross-cluster replication.
@@ -21394,6 +22281,22 @@ func ConnectionMode_Values() []string {
 	return []string{
 		ConnectionModeDirect,
 		ConnectionModeVpcEndpoint,
+	}
+}
+
+const (
+	// DataSourceStatusActive is a DataSourceStatus enum value
+	DataSourceStatusActive = "ACTIVE"
+
+	// DataSourceStatusDisabled is a DataSourceStatus enum value
+	DataSourceStatusDisabled = "DISABLED"
+)
+
+// DataSourceStatus_Values returns all elements of the DataSourceStatus enum
+func DataSourceStatus_Values() []string {
+	return []string{
+		DataSourceStatusActive,
+		DataSourceStatusDisabled,
 	}
 }
 
@@ -21506,6 +22409,42 @@ func DomainPackageStatus_Values() []string {
 }
 
 const (
+	// DomainProcessingStatusTypeCreating is a DomainProcessingStatusType enum value
+	DomainProcessingStatusTypeCreating = "Creating"
+
+	// DomainProcessingStatusTypeActive is a DomainProcessingStatusType enum value
+	DomainProcessingStatusTypeActive = "Active"
+
+	// DomainProcessingStatusTypeModifying is a DomainProcessingStatusType enum value
+	DomainProcessingStatusTypeModifying = "Modifying"
+
+	// DomainProcessingStatusTypeUpgradingEngineVersion is a DomainProcessingStatusType enum value
+	DomainProcessingStatusTypeUpgradingEngineVersion = "UpgradingEngineVersion"
+
+	// DomainProcessingStatusTypeUpdatingServiceSoftware is a DomainProcessingStatusType enum value
+	DomainProcessingStatusTypeUpdatingServiceSoftware = "UpdatingServiceSoftware"
+
+	// DomainProcessingStatusTypeIsolated is a DomainProcessingStatusType enum value
+	DomainProcessingStatusTypeIsolated = "Isolated"
+
+	// DomainProcessingStatusTypeDeleting is a DomainProcessingStatusType enum value
+	DomainProcessingStatusTypeDeleting = "Deleting"
+)
+
+// DomainProcessingStatusType_Values returns all elements of the DomainProcessingStatusType enum
+func DomainProcessingStatusType_Values() []string {
+	return []string{
+		DomainProcessingStatusTypeCreating,
+		DomainProcessingStatusTypeActive,
+		DomainProcessingStatusTypeModifying,
+		DomainProcessingStatusTypeUpgradingEngineVersion,
+		DomainProcessingStatusTypeUpdatingServiceSoftware,
+		DomainProcessingStatusTypeIsolated,
+		DomainProcessingStatusTypeDeleting,
+	}
+}
+
+const (
 	// DomainStateActive is a DomainState enum value
 	DomainStateActive = "Active"
 
@@ -21613,6 +22552,22 @@ func InboundConnectionStatusCode_Values() []string {
 	}
 }
 
+const (
+	// InitiatedByCustomer is a InitiatedBy enum value
+	InitiatedByCustomer = "CUSTOMER"
+
+	// InitiatedByService is a InitiatedBy enum value
+	InitiatedByService = "SERVICE"
+)
+
+// InitiatedBy_Values returns all elements of the InitiatedBy enum
+func InitiatedBy_Values() []string {
+	return []string{
+		InitiatedByCustomer,
+		InitiatedByService,
+	}
+}
+
 // The type of log file. Can be one of the following:
 //
 //   - INDEX_SLOW_LOGS - Index slow logs contain insert requests that took
@@ -21712,6 +22667,58 @@ func MasterNodeStatus_Values() []string {
 	return []string{
 		MasterNodeStatusAvailable,
 		MasterNodeStatusUnAvailable,
+	}
+}
+
+const (
+	// NaturalLanguageQueryGenerationCurrentStateNotEnabled is a NaturalLanguageQueryGenerationCurrentState enum value
+	NaturalLanguageQueryGenerationCurrentStateNotEnabled = "NOT_ENABLED"
+
+	// NaturalLanguageQueryGenerationCurrentStateEnableComplete is a NaturalLanguageQueryGenerationCurrentState enum value
+	NaturalLanguageQueryGenerationCurrentStateEnableComplete = "ENABLE_COMPLETE"
+
+	// NaturalLanguageQueryGenerationCurrentStateEnableInProgress is a NaturalLanguageQueryGenerationCurrentState enum value
+	NaturalLanguageQueryGenerationCurrentStateEnableInProgress = "ENABLE_IN_PROGRESS"
+
+	// NaturalLanguageQueryGenerationCurrentStateEnableFailed is a NaturalLanguageQueryGenerationCurrentState enum value
+	NaturalLanguageQueryGenerationCurrentStateEnableFailed = "ENABLE_FAILED"
+
+	// NaturalLanguageQueryGenerationCurrentStateDisableComplete is a NaturalLanguageQueryGenerationCurrentState enum value
+	NaturalLanguageQueryGenerationCurrentStateDisableComplete = "DISABLE_COMPLETE"
+
+	// NaturalLanguageQueryGenerationCurrentStateDisableInProgress is a NaturalLanguageQueryGenerationCurrentState enum value
+	NaturalLanguageQueryGenerationCurrentStateDisableInProgress = "DISABLE_IN_PROGRESS"
+
+	// NaturalLanguageQueryGenerationCurrentStateDisableFailed is a NaturalLanguageQueryGenerationCurrentState enum value
+	NaturalLanguageQueryGenerationCurrentStateDisableFailed = "DISABLE_FAILED"
+)
+
+// NaturalLanguageQueryGenerationCurrentState_Values returns all elements of the NaturalLanguageQueryGenerationCurrentState enum
+func NaturalLanguageQueryGenerationCurrentState_Values() []string {
+	return []string{
+		NaturalLanguageQueryGenerationCurrentStateNotEnabled,
+		NaturalLanguageQueryGenerationCurrentStateEnableComplete,
+		NaturalLanguageQueryGenerationCurrentStateEnableInProgress,
+		NaturalLanguageQueryGenerationCurrentStateEnableFailed,
+		NaturalLanguageQueryGenerationCurrentStateDisableComplete,
+		NaturalLanguageQueryGenerationCurrentStateDisableInProgress,
+		NaturalLanguageQueryGenerationCurrentStateDisableFailed,
+	}
+}
+
+const (
+	// NaturalLanguageQueryGenerationDesiredStateEnabled is a NaturalLanguageQueryGenerationDesiredState enum value
+	NaturalLanguageQueryGenerationDesiredStateEnabled = "ENABLED"
+
+	// NaturalLanguageQueryGenerationDesiredStateDisabled is a NaturalLanguageQueryGenerationDesiredState enum value
+	NaturalLanguageQueryGenerationDesiredStateDisabled = "DISABLED"
+)
+
+// NaturalLanguageQueryGenerationDesiredState_Values returns all elements of the NaturalLanguageQueryGenerationDesiredState enum
+func NaturalLanguageQueryGenerationDesiredState_Values() []string {
+	return []string{
+		NaturalLanguageQueryGenerationDesiredStateEnabled,
+		NaturalLanguageQueryGenerationDesiredStateDisabled,
 	}
 }
 
@@ -21857,6 +22864,30 @@ const (
 
 	// OpenSearchPartitionInstanceTypeT32xlargeSearch is a OpenSearchPartitionInstanceType enum value
 	OpenSearchPartitionInstanceTypeT32xlargeSearch = "t3.2xlarge.search"
+
+	// OpenSearchPartitionInstanceTypeOr1MediumSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr1MediumSearch = "or1.medium.search"
+
+	// OpenSearchPartitionInstanceTypeOr1LargeSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr1LargeSearch = "or1.large.search"
+
+	// OpenSearchPartitionInstanceTypeOr1XlargeSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr1XlargeSearch = "or1.xlarge.search"
+
+	// OpenSearchPartitionInstanceTypeOr12xlargeSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr12xlargeSearch = "or1.2xlarge.search"
+
+	// OpenSearchPartitionInstanceTypeOr14xlargeSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr14xlargeSearch = "or1.4xlarge.search"
+
+	// OpenSearchPartitionInstanceTypeOr18xlargeSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr18xlargeSearch = "or1.8xlarge.search"
+
+	// OpenSearchPartitionInstanceTypeOr112xlargeSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr112xlargeSearch = "or1.12xlarge.search"
+
+	// OpenSearchPartitionInstanceTypeOr116xlargeSearch is a OpenSearchPartitionInstanceType enum value
+	OpenSearchPartitionInstanceTypeOr116xlargeSearch = "or1.16xlarge.search"
 
 	// OpenSearchPartitionInstanceTypeUltrawarm1MediumSearch is a OpenSearchPartitionInstanceType enum value
 	OpenSearchPartitionInstanceTypeUltrawarm1MediumSearch = "ultrawarm1.medium.search"
@@ -22079,6 +23110,14 @@ func OpenSearchPartitionInstanceType_Values() []string {
 		OpenSearchPartitionInstanceTypeT3LargeSearch,
 		OpenSearchPartitionInstanceTypeT3XlargeSearch,
 		OpenSearchPartitionInstanceTypeT32xlargeSearch,
+		OpenSearchPartitionInstanceTypeOr1MediumSearch,
+		OpenSearchPartitionInstanceTypeOr1LargeSearch,
+		OpenSearchPartitionInstanceTypeOr1XlargeSearch,
+		OpenSearchPartitionInstanceTypeOr12xlargeSearch,
+		OpenSearchPartitionInstanceTypeOr14xlargeSearch,
+		OpenSearchPartitionInstanceTypeOr18xlargeSearch,
+		OpenSearchPartitionInstanceTypeOr112xlargeSearch,
+		OpenSearchPartitionInstanceTypeOr116xlargeSearch,
 		OpenSearchPartitionInstanceTypeUltrawarm1MediumSearch,
 		OpenSearchPartitionInstanceTypeUltrawarm1LargeSearch,
 		OpenSearchPartitionInstanceTypeUltrawarm1XlargeSearch,
@@ -22334,6 +23373,22 @@ func PrincipalType_Values() []string {
 }
 
 const (
+	// PropertyValueTypePlainText is a PropertyValueType enum value
+	PropertyValueTypePlainText = "PLAIN_TEXT"
+
+	// PropertyValueTypeStringifiedJson is a PropertyValueType enum value
+	PropertyValueTypeStringifiedJson = "STRINGIFIED_JSON"
+)
+
+// PropertyValueType_Values returns all elements of the PropertyValueType enum
+func PropertyValueType_Values() []string {
+	return []string{
+		PropertyValueTypePlainText,
+		PropertyValueTypeStringifiedJson,
+	}
+}
+
+const (
 	// ReservedInstancePaymentOptionAllUpfront is a ReservedInstancePaymentOption enum value
 	ReservedInstancePaymentOptionAllUpfront = "ALL_UPFRONT"
 
@@ -22471,6 +23526,9 @@ const (
 
 	// TLSSecurityPolicyPolicyMinTls12201907 is a TLSSecurityPolicy enum value
 	TLSSecurityPolicyPolicyMinTls12201907 = "Policy-Min-TLS-1-2-2019-07"
+
+	// TLSSecurityPolicyPolicyMinTls12Pfs202310 is a TLSSecurityPolicy enum value
+	TLSSecurityPolicyPolicyMinTls12Pfs202310 = "Policy-Min-TLS-1-2-PFS-2023-10"
 )
 
 // TLSSecurityPolicy_Values returns all elements of the TLSSecurityPolicy enum
@@ -22478,6 +23536,7 @@ func TLSSecurityPolicy_Values() []string {
 	return []string{
 		TLSSecurityPolicyPolicyMinTls10201907,
 		TLSSecurityPolicyPolicyMinTls12201907,
+		TLSSecurityPolicyPolicyMinTls12Pfs202310,
 	}
 }
 

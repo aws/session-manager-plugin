@@ -5,6 +5,7 @@
     "endpointPrefix":"route53resolver",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceAbbreviation":"Route53Resolver",
     "serviceFullName":"Amazon Route 53 Resolver",
     "serviceId":"Route53Resolver",
@@ -1381,7 +1382,15 @@
           "shape":"BlockOverrideTtl",
           "box":true
         },
-        "Name":{"shape":"Name"}
+        "Name":{"shape":"Name"},
+        "FirewallDomainRedirectionAction":{
+          "shape":"FirewallDomainRedirectionAction",
+          "box":true
+        },
+        "Qtype":{
+          "shape":"Qtype",
+          "box":true
+        }
       }
     },
     "CreateFirewallRuleResponse":{
@@ -1563,7 +1572,8 @@
       ],
       "members":{
         "FirewallRuleGroupId":{"shape":"ResourceId"},
-        "FirewallDomainListId":{"shape":"ResourceId"}
+        "FirewallDomainListId":{"shape":"ResourceId"},
+        "Qtype":{"shape":"Qtype"}
       }
     },
     "DeleteFirewallRuleResponse":{
@@ -1790,6 +1800,13 @@
       "max":255,
       "min":1
     },
+    "FirewallDomainRedirectionAction":{
+      "type":"string",
+      "enum":[
+        "INSPECT_REDIRECTION_DOMAIN",
+        "TRUST_REDIRECTION_DOMAIN"
+      ]
+    },
     "FirewallDomainUpdateOperation":{
       "type":"string",
       "enum":[
@@ -1824,7 +1841,9 @@
         "BlockOverrideTtl":{"shape":"Unsigned"},
         "CreatorRequestId":{"shape":"CreatorRequestId"},
         "CreationTime":{"shape":"Rfc3339TimeString"},
-        "ModificationTime":{"shape":"Rfc3339TimeString"}
+        "ModificationTime":{"shape":"Rfc3339TimeString"},
+        "FirewallDomainRedirectionAction":{"shape":"FirewallDomainRedirectionAction"},
+        "Qtype":{"shape":"Qtype"}
       }
     },
     "FirewallRuleGroup":{
@@ -2800,6 +2819,11 @@
         "ReturnValue":{"shape":"Boolean"}
       }
     },
+    "Qtype":{
+      "type":"string",
+      "max":16,
+      "min":1
+    },
     "ResolverAutodefinedReverseStatus":{
       "type":"string",
       "enum":[
@@ -3342,7 +3366,12 @@
         "Name":{
           "shape":"Name",
           "box":true
-        }
+        },
+        "FirewallDomainRedirectionAction":{
+          "shape":"FirewallDomainRedirectionAction",
+          "box":true
+        },
+        "Qtype":{"shape":"Qtype"}
       }
     },
     "UpdateFirewallRuleResponse":{

@@ -257,9 +257,10 @@ func (c *InternetMonitor) GetHealthEventRequest(input *GetHealthEventInput) (req
 
 // GetHealthEvent API operation for Amazon CloudWatch Internet Monitor.
 //
-// Gets information the Amazon CloudWatch Internet Monitor has created and stored
-// about a health event for a specified monitor. This information includes the
-// impacted locations, and all the information related to the event, by location.
+// Gets information that Amazon CloudWatch Internet Monitor has created and
+// stored about a health event for a specified monitor. This information includes
+// the impacted locations, and all the information related to the event, by
+// location.
 //
 // The information returned includes the impact on performance, availability,
 // and round-trip time, information about the network providers (ASNs), the
@@ -306,6 +307,101 @@ func (c *InternetMonitor) GetHealthEvent(input *GetHealthEventInput) (*GetHealth
 // for more information on using Contexts.
 func (c *InternetMonitor) GetHealthEventWithContext(ctx aws.Context, input *GetHealthEventInput, opts ...request.Option) (*GetHealthEventOutput, error) {
 	req, out := c.GetHealthEventRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetInternetEvent = "GetInternetEvent"
+
+// GetInternetEventRequest generates a "aws/request.Request" representing the
+// client's request for the GetInternetEvent operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetInternetEvent for more information on using the GetInternetEvent
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetInternetEventRequest method.
+//	req, resp := client.GetInternetEventRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/internetmonitor-2021-06-03/GetInternetEvent
+func (c *InternetMonitor) GetInternetEventRequest(input *GetInternetEventInput) (req *request.Request, output *GetInternetEventOutput) {
+	op := &request.Operation{
+		Name:       opGetInternetEvent,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v20210603/InternetEvents/{EventId}",
+	}
+
+	if input == nil {
+		input = &GetInternetEventInput{}
+	}
+
+	output = &GetInternetEventOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetInternetEvent API operation for Amazon CloudWatch Internet Monitor.
+//
+// Gets information that Amazon CloudWatch Internet Monitor has generated about
+// an internet event. Internet Monitor displays information about recent global
+// health events, called internet events, on a global outages map that is available
+// to all Amazon Web Services customers.
+//
+// The information returned here includes the impacted location, when the event
+// started and (if the event is over) ended, the type of event (PERFORMANCE
+// or AVAILABILITY), and the status (ACTIVE or RESOLVED).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon CloudWatch Internet Monitor's
+// API operation GetInternetEvent for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An internal error occurred.
+//
+//   - AccessDeniedException
+//     You don't have sufficient permission to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     Invalid request.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/internetmonitor-2021-06-03/GetInternetEvent
+func (c *InternetMonitor) GetInternetEvent(input *GetInternetEventInput) (*GetInternetEventOutput, error) {
+	req, out := c.GetInternetEventRequest(input)
+	return out, req.Send()
+}
+
+// GetInternetEventWithContext is the same as GetInternetEvent with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetInternetEvent for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *InternetMonitor) GetInternetEventWithContext(ctx aws.Context, input *GetInternetEventInput, opts ...request.Option) (*GetInternetEventOutput, error) {
+	req, out := c.GetInternetEventRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -710,7 +806,7 @@ func (c *InternetMonitor) ListHealthEventsRequest(input *ListHealthEventsInput) 
 // ListHealthEvents API operation for Amazon CloudWatch Internet Monitor.
 //
 // Lists all health events for a monitor in Amazon CloudWatch Internet Monitor.
-// Returns information for health events including the event start and end time
+// Returns information for health events including the event start and end times,
 // and the status.
 //
 // Health events that have start times during the time frame that is requested
@@ -803,6 +899,163 @@ func (c *InternetMonitor) ListHealthEventsPagesWithContext(ctx aws.Context, inpu
 
 	for p.Next() {
 		if !fn(p.Page().(*ListHealthEventsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListInternetEvents = "ListInternetEvents"
+
+// ListInternetEventsRequest generates a "aws/request.Request" representing the
+// client's request for the ListInternetEvents operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListInternetEvents for more information on using the ListInternetEvents
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListInternetEventsRequest method.
+//	req, resp := client.ListInternetEventsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/internetmonitor-2021-06-03/ListInternetEvents
+func (c *InternetMonitor) ListInternetEventsRequest(input *ListInternetEventsInput) (req *request.Request, output *ListInternetEventsOutput) {
+	op := &request.Operation{
+		Name:       opListInternetEvents,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v20210603/InternetEvents",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListInternetEventsInput{}
+	}
+
+	output = &ListInternetEventsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListInternetEvents API operation for Amazon CloudWatch Internet Monitor.
+//
+// Lists internet events that cause performance or availability issues for client
+// locations. Amazon CloudWatch Internet Monitor displays information about
+// recent global health events, called internet events, on a global outages
+// map that is available to all Amazon Web Services customers.
+//
+// You can constrain the list of internet events returned by providing a start
+// time and end time to define a total time frame for events you want to list.
+// Both start time and end time specify the time when an event started. End
+// time is optional. If you don't include it, the default end time is the current
+// time.
+//
+// You can also limit the events returned to a specific status (ACTIVE or RESOLVED)
+// or type (PERFORMANCE or AVAILABILITY).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon CloudWatch Internet Monitor's
+// API operation ListInternetEvents for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InternalServerException
+//     An internal error occurred.
+//
+//   - AccessDeniedException
+//     You don't have sufficient permission to perform this action.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+//   - ValidationException
+//     Invalid request.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/internetmonitor-2021-06-03/ListInternetEvents
+func (c *InternetMonitor) ListInternetEvents(input *ListInternetEventsInput) (*ListInternetEventsOutput, error) {
+	req, out := c.ListInternetEventsRequest(input)
+	return out, req.Send()
+}
+
+// ListInternetEventsWithContext is the same as ListInternetEvents with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListInternetEvents for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *InternetMonitor) ListInternetEventsWithContext(ctx aws.Context, input *ListInternetEventsInput, opts ...request.Option) (*ListInternetEventsOutput, error) {
+	req, out := c.ListInternetEventsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListInternetEventsPages iterates over the pages of a ListInternetEvents operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListInternetEvents method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListInternetEvents operation.
+//	pageNum := 0
+//	err := client.ListInternetEventsPages(params,
+//	    func(page *internetmonitor.ListInternetEventsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *InternetMonitor) ListInternetEventsPages(input *ListInternetEventsInput, fn func(*ListInternetEventsOutput, bool) bool) error {
+	return c.ListInternetEventsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListInternetEventsPagesWithContext same as ListInternetEventsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *InternetMonitor) ListInternetEventsPagesWithContext(ctx aws.Context, input *ListInternetEventsInput, fn func(*ListInternetEventsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListInternetEventsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListInternetEventsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListInternetEventsOutput), !p.HasNextPage()) {
 			break
 		}
 	}
@@ -1753,6 +2006,122 @@ func (s *BadRequestException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The impacted location, such as a city, that Amazon Web Services clients access
+// application resources from.
+type ClientLocation struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the internet service provider (ISP) or network (ASN).
+	//
+	// ASName is a required field
+	ASName *string `type:"string" required:"true"`
+
+	// The Autonomous System Number (ASN) of the network at an impacted location.
+	//
+	// ASNumber is a required field
+	ASNumber *int64 `type:"long" required:"true"`
+
+	// The name of the city where the internet event is located.
+	//
+	// City is a required field
+	City *string `type:"string" required:"true"`
+
+	// The name of the country where the internet event is located.
+	//
+	// Country is a required field
+	Country *string `type:"string" required:"true"`
+
+	// The latitude where the internet event is located.
+	//
+	// Latitude is a required field
+	Latitude *float64 `type:"double" required:"true"`
+
+	// The longitude where the internet event is located.
+	//
+	// Longitude is a required field
+	Longitude *float64 `type:"double" required:"true"`
+
+	// The metro area where the health event is located.
+	//
+	// Metro indicates a metropolitan region in the United States, such as the region
+	// around New York City. In non-US countries, this is a second-level subdivision.
+	// For example, in the United Kingdom, it could be a county, a London borough,
+	// a unitary authority, council area, and so on.
+	Metro *string `type:"string"`
+
+	// The subdivision location where the health event is located. The subdivision
+	// usually maps to states in most countries (including the United States). For
+	// United Kingdom, it maps to a country (England, Scotland, Wales) or province
+	// (Northern Ireland).
+	Subdivision *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ClientLocation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ClientLocation) GoString() string {
+	return s.String()
+}
+
+// SetASName sets the ASName field's value.
+func (s *ClientLocation) SetASName(v string) *ClientLocation {
+	s.ASName = &v
+	return s
+}
+
+// SetASNumber sets the ASNumber field's value.
+func (s *ClientLocation) SetASNumber(v int64) *ClientLocation {
+	s.ASNumber = &v
+	return s
+}
+
+// SetCity sets the City field's value.
+func (s *ClientLocation) SetCity(v string) *ClientLocation {
+	s.City = &v
+	return s
+}
+
+// SetCountry sets the Country field's value.
+func (s *ClientLocation) SetCountry(v string) *ClientLocation {
+	s.Country = &v
+	return s
+}
+
+// SetLatitude sets the Latitude field's value.
+func (s *ClientLocation) SetLatitude(v float64) *ClientLocation {
+	s.Latitude = &v
+	return s
+}
+
+// SetLongitude sets the Longitude field's value.
+func (s *ClientLocation) SetLongitude(v float64) *ClientLocation {
+	s.Longitude = &v
+	return s
+}
+
+// SetMetro sets the Metro field's value.
+func (s *ClientLocation) SetMetro(v string) *ClientLocation {
+	s.Metro = &v
+	return s
+}
+
+// SetSubdivision sets the Subdivision field's value.
+func (s *ClientLocation) SetSubdivision(v string) *ClientLocation {
+	s.Subdivision = &v
+	return s
+}
+
 // The requested resource is in use.
 type ConflictException struct {
 	_            struct{}                  `type:"structure"`
@@ -2172,6 +2541,13 @@ type GetHealthEventInput struct {
 	// EventId is a required field
 	EventId *string `location:"uri" locationName:"EventId" min:"1" type:"string" required:"true"`
 
+	// The account ID for an account that you've set up cross-account sharing for
+	// in Amazon CloudWatch Internet Monitor. You configure cross-account sharing
+	// by using Amazon CloudWatch Observability Access Manager. For more information,
+	// see Internet Monitor cross-account observability (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cwim-cross-account.html)
+	// in the Amazon CloudWatch Internet Monitor User Guide.
+	LinkedAccountId *string `location:"querystring" locationName:"LinkedAccountId" min:"12" type:"string"`
+
 	// The name of the monitor.
 	//
 	// MonitorName is a required field
@@ -2205,6 +2581,9 @@ func (s *GetHealthEventInput) Validate() error {
 	if s.EventId != nil && len(*s.EventId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("EventId", 1))
 	}
+	if s.LinkedAccountId != nil && len(*s.LinkedAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("LinkedAccountId", 12))
+	}
 	if s.MonitorName == nil {
 		invalidParams.Add(request.NewErrParamRequired("MonitorName"))
 	}
@@ -2221,6 +2600,12 @@ func (s *GetHealthEventInput) Validate() error {
 // SetEventId sets the EventId field's value.
 func (s *GetHealthEventInput) SetEventId(v string) *GetHealthEventInput {
 	s.EventId = &v
+	return s
+}
+
+// SetLinkedAccountId sets the LinkedAccountId field's value.
+func (s *GetHealthEventInput) SetLinkedAccountId(v string) *GetHealthEventInput {
+	s.LinkedAccountId = &v
 	return s
 }
 
@@ -2372,8 +2757,163 @@ func (s *GetHealthEventOutput) SetStatus(v string) *GetHealthEventOutput {
 	return s
 }
 
+type GetInternetEventInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The EventId of the internet event to return information for.
+	//
+	// EventId is a required field
+	EventId *string `location:"uri" locationName:"EventId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInternetEventInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInternetEventInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetInternetEventInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetInternetEventInput"}
+	if s.EventId == nil {
+		invalidParams.Add(request.NewErrParamRequired("EventId"))
+	}
+	if s.EventId != nil && len(*s.EventId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EventId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEventId sets the EventId field's value.
+func (s *GetInternetEventInput) SetEventId(v string) *GetInternetEventInput {
+	s.EventId = &v
+	return s
+}
+
+type GetInternetEventOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The impacted location, such as a city, where clients access Amazon Web Services
+	// application resources.
+	//
+	// ClientLocation is a required field
+	ClientLocation *ClientLocation `type:"structure" required:"true"`
+
+	// The time when the internet event ended. If the event hasn't ended yet, this
+	// value is empty.
+	EndedAt *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	// The Amazon Resource Name (ARN) of the internet event.
+	//
+	// EventArn is a required field
+	EventArn *string `min:"20" type:"string" required:"true"`
+
+	// The internally-generated identifier of an internet event.
+	//
+	// EventId is a required field
+	EventId *string `min:"1" type:"string" required:"true"`
+
+	// The status of the internet event.
+	//
+	// EventStatus is a required field
+	EventStatus *string `type:"string" required:"true" enum:"InternetEventStatus"`
+
+	// The type of network impairment.
+	//
+	// EventType is a required field
+	EventType *string `type:"string" required:"true" enum:"InternetEventType"`
+
+	// The time when the internet event started.
+	//
+	// StartedAt is a required field
+	StartedAt *time.Time `type:"timestamp" timestampFormat:"iso8601" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInternetEventOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInternetEventOutput) GoString() string {
+	return s.String()
+}
+
+// SetClientLocation sets the ClientLocation field's value.
+func (s *GetInternetEventOutput) SetClientLocation(v *ClientLocation) *GetInternetEventOutput {
+	s.ClientLocation = v
+	return s
+}
+
+// SetEndedAt sets the EndedAt field's value.
+func (s *GetInternetEventOutput) SetEndedAt(v time.Time) *GetInternetEventOutput {
+	s.EndedAt = &v
+	return s
+}
+
+// SetEventArn sets the EventArn field's value.
+func (s *GetInternetEventOutput) SetEventArn(v string) *GetInternetEventOutput {
+	s.EventArn = &v
+	return s
+}
+
+// SetEventId sets the EventId field's value.
+func (s *GetInternetEventOutput) SetEventId(v string) *GetInternetEventOutput {
+	s.EventId = &v
+	return s
+}
+
+// SetEventStatus sets the EventStatus field's value.
+func (s *GetInternetEventOutput) SetEventStatus(v string) *GetInternetEventOutput {
+	s.EventStatus = &v
+	return s
+}
+
+// SetEventType sets the EventType field's value.
+func (s *GetInternetEventOutput) SetEventType(v string) *GetInternetEventOutput {
+	s.EventType = &v
+	return s
+}
+
+// SetStartedAt sets the StartedAt field's value.
+func (s *GetInternetEventOutput) SetStartedAt(v time.Time) *GetInternetEventOutput {
+	s.StartedAt = &v
+	return s
+}
+
 type GetMonitorInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The account ID for an account that you've set up cross-account sharing for
+	// in Amazon CloudWatch Internet Monitor. You configure cross-account sharing
+	// by using Amazon CloudWatch Observability Access Manager. For more information,
+	// see Internet Monitor cross-account observability (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cwim-cross-account.html)
+	// in the Amazon CloudWatch Internet Monitor User Guide.
+	LinkedAccountId *string `location:"querystring" locationName:"LinkedAccountId" min:"12" type:"string"`
 
 	// The name of the monitor.
 	//
@@ -2402,6 +2942,9 @@ func (s GetMonitorInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *GetMonitorInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "GetMonitorInput"}
+	if s.LinkedAccountId != nil && len(*s.LinkedAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("LinkedAccountId", 12))
+	}
 	if s.MonitorName == nil {
 		invalidParams.Add(request.NewErrParamRequired("MonitorName"))
 	}
@@ -2413,6 +2956,12 @@ func (s *GetMonitorInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetLinkedAccountId sets the LinkedAccountId field's value.
+func (s *GetMonitorInput) SetLinkedAccountId(v string) *GetMonitorInput {
+	s.LinkedAccountId = &v
+	return s
 }
 
 // SetMonitorName sets the MonitorName field's value.
@@ -2898,7 +3447,7 @@ type HealthEvent struct {
 	// StartedAt is a required field
 	StartedAt *time.Time `type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
-	// Health event list member.
+	// The status of a health event.
 	//
 	// Status is a required field
 	Status *string `type:"string" required:"true" enum:"HealthEventStatus"`
@@ -3080,7 +3629,7 @@ func (s *HealthEventsConfig) SetPerformanceScoreThreshold(v float64) *HealthEven
 type ImpactedLocation struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the network at an impacted location.
+	// The name of the internet service provider (ISP) or network (ASN).
 	//
 	// ASName is a required field
 	ASName *string `type:"string" required:"true"`
@@ -3110,6 +3659,10 @@ type ImpactedLocation struct {
 
 	// The calculated health at a specific location.
 	InternetHealth *InternetHealth `type:"structure"`
+
+	// The IPv4 prefixes at the client location that was impacted by the health
+	// event.
+	Ipv4Prefixes []*string `type:"list"`
 
 	// The latitude where the health event is located.
 	Latitude *float64 `type:"double"`
@@ -3201,6 +3754,12 @@ func (s *ImpactedLocation) SetCountryCode(v string) *ImpactedLocation {
 // SetInternetHealth sets the InternetHealth field's value.
 func (s *ImpactedLocation) SetInternetHealth(v *InternetHealth) *ImpactedLocation {
 	s.InternetHealth = v
+	return s
+}
+
+// SetIpv4Prefixes sets the Ipv4Prefixes field's value.
+func (s *ImpactedLocation) SetIpv4Prefixes(v []*string) *ImpactedLocation {
+	s.Ipv4Prefixes = v
 	return s
 }
 
@@ -3372,6 +3931,111 @@ func (s *InternalServerException) StatusCode() int {
 // RequestID returns the service's response RequestID for request.
 func (s *InternalServerException) RequestID() string {
 	return s.RespMetadata.RequestID
+}
+
+// A summary of information about an internet event in Amazon CloudWatch Internet
+// Monitor. Internet events are issues that cause performance degradation or
+// availability problems for impacted Amazon Web Services client locations.
+// Internet Monitor displays information about recent global health events,
+// called internet events, on a global outages map that is available to all
+// Amazon Web Services customers.
+type InternetEventSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The impacted location, such as a city, that Amazon Web Services clients access
+	// application resources from.
+	//
+	// ClientLocation is a required field
+	ClientLocation *ClientLocation `type:"structure" required:"true"`
+
+	// The time when an internet event ended. If the event hasn't ended yet, this
+	// value is empty.
+	EndedAt *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	// The Amazon Resource Name (ARN) of the internet event.
+	//
+	// EventArn is a required field
+	EventArn *string `min:"20" type:"string" required:"true"`
+
+	// The internally-generated identifier of an internet event.
+	//
+	// EventId is a required field
+	EventId *string `min:"1" type:"string" required:"true"`
+
+	// The status of an internet event.
+	//
+	// EventStatus is a required field
+	EventStatus *string `type:"string" required:"true" enum:"InternetEventStatus"`
+
+	// The type of network impairment.
+	//
+	// EventType is a required field
+	EventType *string `type:"string" required:"true" enum:"InternetEventType"`
+
+	// The time when an internet event started.
+	//
+	// StartedAt is a required field
+	StartedAt *time.Time `type:"timestamp" timestampFormat:"iso8601" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InternetEventSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InternetEventSummary) GoString() string {
+	return s.String()
+}
+
+// SetClientLocation sets the ClientLocation field's value.
+func (s *InternetEventSummary) SetClientLocation(v *ClientLocation) *InternetEventSummary {
+	s.ClientLocation = v
+	return s
+}
+
+// SetEndedAt sets the EndedAt field's value.
+func (s *InternetEventSummary) SetEndedAt(v time.Time) *InternetEventSummary {
+	s.EndedAt = &v
+	return s
+}
+
+// SetEventArn sets the EventArn field's value.
+func (s *InternetEventSummary) SetEventArn(v string) *InternetEventSummary {
+	s.EventArn = &v
+	return s
+}
+
+// SetEventId sets the EventId field's value.
+func (s *InternetEventSummary) SetEventId(v string) *InternetEventSummary {
+	s.EventId = &v
+	return s
+}
+
+// SetEventStatus sets the EventStatus field's value.
+func (s *InternetEventSummary) SetEventStatus(v string) *InternetEventSummary {
+	s.EventStatus = &v
+	return s
+}
+
+// SetEventType sets the EventType field's value.
+func (s *InternetEventSummary) SetEventType(v string) *InternetEventSummary {
+	s.EventType = &v
+	return s
+}
+
+// SetStartedAt sets the StartedAt field's value.
+func (s *InternetEventSummary) SetStartedAt(v time.Time) *InternetEventSummary {
+	s.StartedAt = &v
+	return s
 }
 
 // Internet health includes measurements calculated by Amazon CloudWatch Internet
@@ -3566,6 +4230,13 @@ type ListHealthEventsInput struct {
 	// The status of a health event.
 	EventStatus *string `location:"querystring" locationName:"EventStatus" type:"string" enum:"HealthEventStatus"`
 
+	// The account ID for an account that you've set up cross-account sharing for
+	// in Amazon CloudWatch Internet Monitor. You configure cross-account sharing
+	// by using Amazon CloudWatch Observability Access Manager. For more information,
+	// see Internet Monitor cross-account observability (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cwim-cross-account.html)
+	// in the Amazon CloudWatch Internet Monitor User Guide.
+	LinkedAccountId *string `location:"querystring" locationName:"LinkedAccountId" min:"12" type:"string"`
+
 	// The number of health event objects that you want to return with this call.
 	MaxResults *int64 `location:"querystring" locationName:"MaxResults" min:"1" type:"integer"`
 
@@ -3603,6 +4274,9 @@ func (s ListHealthEventsInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *ListHealthEventsInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "ListHealthEventsInput"}
+	if s.LinkedAccountId != nil && len(*s.LinkedAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("LinkedAccountId", 12))
+	}
 	if s.MaxResults != nil && *s.MaxResults < 1 {
 		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
 	}
@@ -3628,6 +4302,12 @@ func (s *ListHealthEventsInput) SetEndTime(v time.Time) *ListHealthEventsInput {
 // SetEventStatus sets the EventStatus field's value.
 func (s *ListHealthEventsInput) SetEventStatus(v string) *ListHealthEventsInput {
 	s.EventStatus = &v
+	return s
+}
+
+// SetLinkedAccountId sets the LinkedAccountId field's value.
+func (s *ListHealthEventsInput) SetLinkedAccountId(v string) *ListHealthEventsInput {
+	s.LinkedAccountId = &v
 	return s
 }
 
@@ -3698,8 +4378,151 @@ func (s *ListHealthEventsOutput) SetNextToken(v string) *ListHealthEventsOutput 
 	return s
 }
 
+type ListInternetEventsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The end time of the time window that you want to get a list of internet events
+	// for.
+	EndTime *time.Time `location:"querystring" locationName:"EndTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The status of an internet event.
+	EventStatus *string `location:"querystring" locationName:"EventStatus" type:"string"`
+
+	// The type of network impairment.
+	EventType *string `location:"querystring" locationName:"EventType" type:"string"`
+
+	// The number of query results that you want to return with this call.
+	MaxResults *int64 `location:"querystring" locationName:"InternetEventMaxResults" min:"1" type:"integer"`
+
+	// The token for the next set of results. You receive this token from a previous
+	// call.
+	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
+
+	// The start time of the time window that you want to get a list of internet
+	// events for.
+	StartTime *time.Time `location:"querystring" locationName:"StartTime" type:"timestamp" timestampFormat:"iso8601"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListInternetEventsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListInternetEventsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListInternetEventsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListInternetEventsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEndTime sets the EndTime field's value.
+func (s *ListInternetEventsInput) SetEndTime(v time.Time) *ListInternetEventsInput {
+	s.EndTime = &v
+	return s
+}
+
+// SetEventStatus sets the EventStatus field's value.
+func (s *ListInternetEventsInput) SetEventStatus(v string) *ListInternetEventsInput {
+	s.EventStatus = &v
+	return s
+}
+
+// SetEventType sets the EventType field's value.
+func (s *ListInternetEventsInput) SetEventType(v string) *ListInternetEventsInput {
+	s.EventType = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListInternetEventsInput) SetMaxResults(v int64) *ListInternetEventsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListInternetEventsInput) SetNextToken(v string) *ListInternetEventsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetStartTime sets the StartTime field's value.
+func (s *ListInternetEventsInput) SetStartTime(v time.Time) *ListInternetEventsInput {
+	s.StartTime = &v
+	return s
+}
+
+type ListInternetEventsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A set of internet events returned for the list operation.
+	//
+	// InternetEvents is a required field
+	InternetEvents []*InternetEventSummary `type:"list" required:"true"`
+
+	// The token for the next set of results. You receive this token from a previous
+	// call.
+	NextToken *string `type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListInternetEventsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListInternetEventsOutput) GoString() string {
+	return s.String()
+}
+
+// SetInternetEvents sets the InternetEvents field's value.
+func (s *ListInternetEventsOutput) SetInternetEvents(v []*InternetEventSummary) *ListInternetEventsOutput {
+	s.InternetEvents = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListInternetEventsOutput) SetNextToken(v string) *ListInternetEventsOutput {
+	s.NextToken = &v
+	return s
+}
+
 type ListMonitorsInput struct {
 	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A boolean option that you can set to TRUE to include monitors for linked
+	// accounts in a list of monitors, when you've set up cross-account sharing
+	// in Amazon CloudWatch Internet Monitor. You configure cross-account sharing
+	// by using Amazon CloudWatch Observability Access Manager. For more information,
+	// see Internet Monitor cross-account observability (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cwim-cross-account.html)
+	// in the Amazon CloudWatch Internet Monitor User Guide.
+	IncludeLinkedAccounts *bool `location:"querystring" locationName:"IncludeLinkedAccounts" type:"boolean"`
 
 	// The number of monitor objects that you want to return with this call.
 	MaxResults *int64 `location:"querystring" locationName:"MaxResults" min:"1" type:"integer"`
@@ -3744,6 +4567,12 @@ func (s *ListMonitorsInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetIncludeLinkedAccounts sets the IncludeLinkedAccounts field's value.
+func (s *ListMonitorsInput) SetIncludeLinkedAccounts(v bool) *ListMonitorsInput {
+	s.IncludeLinkedAccounts = &v
+	return s
 }
 
 // SetMaxResults sets the MaxResults field's value.
@@ -3914,7 +4743,7 @@ type LocalHealthEventsConfig struct {
 	// is crossed for a local health score.
 	//
 	// If you don't set a minimum traffic impact threshold, the default value is
-	// 0.01%.
+	// 0.1%.
 	MinTrafficImpact *float64 `type:"double"`
 
 	// The status of whether Internet Monitor creates a health event based on a
@@ -4025,12 +4854,12 @@ func (s *Monitor) SetStatus(v string) *Monitor {
 	return s
 }
 
-// An internet service provider (ISP) or network in Amazon CloudWatch Internet
-// Monitor.
+// An internet service provider (ISP) or network (ASN) in Amazon CloudWatch
+// Internet Monitor.
 type Network struct {
 	_ struct{} `type:"structure"`
 
-	// The internet provider name or network name.
+	// The name of the internet service provider (ISP) or network (ASN).
 	//
 	// ASName is a required field
 	ASName *string `type:"string" required:"true"`
@@ -4082,7 +4911,7 @@ type NetworkImpairment struct {
 	// AsPath is a required field
 	AsPath []*Network `type:"list" required:"true"`
 
-	// Type of network impairment.
+	// The type of network impairment.
 	//
 	// NetworkEventType is a required field
 	NetworkEventType *string `type:"string" required:"true" enum:"TriangulationEventType"`
@@ -4556,6 +5385,13 @@ type StartQueryInput struct {
 	// in the Amazon CloudWatch Internet Monitor User Guide.
 	FilterParameters []*FilterParameter `type:"list"`
 
+	// The account ID for an account that you've set up cross-account sharing for
+	// in Amazon CloudWatch Internet Monitor. You configure cross-account sharing
+	// by using Amazon CloudWatch Observability Access Manager. For more information,
+	// see Internet Monitor cross-account observability (https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cwim-cross-account.html)
+	// in the Amazon CloudWatch Internet Monitor User Guide.
+	LinkedAccountId *string `min:"12" type:"string"`
+
 	// The name of the monitor to query.
 	//
 	// MonitorName is a required field
@@ -4564,11 +5400,15 @@ type StartQueryInput struct {
 	// The type of query to run. The following are the three types of queries that
 	// you can run using the Internet Monitor query interface:
 	//
-	//    * MEASUREMENTS: TBD definition
+	//    * MEASUREMENTS: Provides availability score, performance score, total
+	//    traffic, and round-trip times, at 5 minute intervals.
 	//
-	//    * TOP_LOCATIONS: TBD definition
+	//    * TOP_LOCATIONS: Provides availability score, performance score, total
+	//    traffic, and time to first byte (TTFB) information, for the top location
+	//    and ASN combinations that you're monitoring, by traffic volume.
 	//
-	//    * TOP_LOCATION_DETAILS: TBD definition
+	//    * TOP_LOCATION_DETAILS: Provides TTFB for Amazon CloudFront, your current
+	//    configuration, and the best performing EC2 configuration, at 1 hour intervals.
 	//
 	// For lists of the fields returned with each query type and more information
 	// about how each type of query is performed, see Using the Amazon CloudWatch
@@ -4609,6 +5449,9 @@ func (s *StartQueryInput) Validate() error {
 	if s.EndTime == nil {
 		invalidParams.Add(request.NewErrParamRequired("EndTime"))
 	}
+	if s.LinkedAccountId != nil && len(*s.LinkedAccountId) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("LinkedAccountId", 12))
+	}
 	if s.MonitorName == nil {
 		invalidParams.Add(request.NewErrParamRequired("MonitorName"))
 	}
@@ -4637,6 +5480,12 @@ func (s *StartQueryInput) SetEndTime(v time.Time) *StartQueryInput {
 // SetFilterParameters sets the FilterParameters field's value.
 func (s *StartQueryInput) SetFilterParameters(v []*FilterParameter) *StartQueryInput {
 	s.FilterParameters = v
+	return s
+}
+
+// SetLinkedAccountId sets the LinkedAccountId field's value.
+func (s *StartQueryInput) SetLinkedAccountId(v string) *StartQueryInput {
+	s.LinkedAccountId = &v
 	return s
 }
 
@@ -5391,6 +6240,38 @@ func HealthEventStatus_Values() []string {
 	return []string{
 		HealthEventStatusActive,
 		HealthEventStatusResolved,
+	}
+}
+
+const (
+	// InternetEventStatusActive is a InternetEventStatus enum value
+	InternetEventStatusActive = "ACTIVE"
+
+	// InternetEventStatusResolved is a InternetEventStatus enum value
+	InternetEventStatusResolved = "RESOLVED"
+)
+
+// InternetEventStatus_Values returns all elements of the InternetEventStatus enum
+func InternetEventStatus_Values() []string {
+	return []string{
+		InternetEventStatusActive,
+		InternetEventStatusResolved,
+	}
+}
+
+const (
+	// InternetEventTypeAvailability is a InternetEventType enum value
+	InternetEventTypeAvailability = "AVAILABILITY"
+
+	// InternetEventTypePerformance is a InternetEventType enum value
+	InternetEventTypePerformance = "PERFORMANCE"
+)
+
+// InternetEventType_Values returns all elements of the InternetEventType enum
+func InternetEventType_Values() []string {
+	return []string{
+		InternetEventTypeAvailability,
+		InternetEventTypePerformance,
 	}
 }
 

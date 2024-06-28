@@ -1398,6 +1398,24 @@ func (c *B2bi) ListCapabilitiesRequest(input *ListCapabilitiesInput) (req *reque
 //
 // See the AWS API reference guide for AWS B2B Data Interchange's
 // API operation ListCapabilities for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ValidationException
+//     Occurs when a B2BI object cannot be validated against a request from another
+//     object.
+//
+//   - ThrottlingException
+//     The request was denied due to throttling: the data speed and rendering may
+//     be limited depending on various parameters and conditions.
+//
+//   - InternalServerException
+//     This exception is thrown when an error occurs in the Amazon Web Services
+//     B2B Data Interchange service.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/b2bi-2022-06-23/ListCapabilities
 func (c *B2bi) ListCapabilities(input *ListCapabilitiesInput) (*ListCapabilitiesOutput, error) {
 	req, out := c.ListCapabilitiesRequest(input)
@@ -1686,6 +1704,24 @@ func (c *B2bi) ListProfilesRequest(input *ListProfilesInput) (req *request.Reque
 //
 // See the AWS API reference guide for AWS B2B Data Interchange's
 // API operation ListProfiles for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ValidationException
+//     Occurs when a B2BI object cannot be validated against a request from another
+//     object.
+//
+//   - ThrottlingException
+//     The request was denied due to throttling: the data speed and rendering may
+//     be limited depending on various parameters and conditions.
+//
+//   - InternalServerException
+//     This exception is thrown when an error occurs in the Amazon Web Services
+//     B2B Data Interchange service.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/b2bi-2022-06-23/ListProfiles
 func (c *B2bi) ListProfiles(input *ListProfilesInput) (*ListProfilesOutput, error) {
 	req, out := c.ListProfilesRequest(input)
@@ -1823,6 +1859,10 @@ func (c *B2bi) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req 
 //     some cases, the resource exists in a region other than the region specified
 //     in the API call.
 //
+//   - InternalServerException
+//     This exception is thrown when an error occurs in the Amazon Web Services
+//     B2B Data Interchange service.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/b2bi-2022-06-23/ListTagsForResource
 func (c *B2bi) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
 	req, out := c.ListTagsForResourceRequest(input)
@@ -1904,6 +1944,24 @@ func (c *B2bi) ListTransformersRequest(input *ListTransformersInput) (req *reque
 //
 // See the AWS API reference guide for AWS B2B Data Interchange's
 // API operation ListTransformers for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You do not have sufficient access to perform this action.
+//
+//   - ValidationException
+//     Occurs when a B2BI object cannot be validated against a request from another
+//     object.
+//
+//   - ThrottlingException
+//     The request was denied due to throttling: the data speed and rendering may
+//     be limited depending on various parameters and conditions.
+//
+//   - InternalServerException
+//     This exception is thrown when an error occurs in the Amazon Web Services
+//     B2B Data Interchange service.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/b2bi-2022-06-23/ListTransformers
 func (c *B2bi) ListTransformers(input *ListTransformersInput) (*ListTransformersOutput, error) {
 	req, out := c.ListTransformersRequest(input)
@@ -2037,6 +2095,10 @@ func (c *B2bi) StartTransformerJobRequest(input *StartTransformerJobInput) (req 
 //
 // Returned Error Types:
 //
+//   - ConflictException
+//     A conflict exception is thrown when you attempt to delete a resource (such
+//     as a profile or a capability) that is being used by other resources.
+//
 //   - AccessDeniedException
 //     You do not have sufficient access to perform this action.
 //
@@ -2150,6 +2212,10 @@ func (c *B2bi) TagResourceRequest(input *TagResourceInput) (req *request.Request
 //     Occurs when the requested resource does not exist, or cannot be found. In
 //     some cases, the resource exists in a region other than the region specified
 //     in the API call.
+//
+//   - InternalServerException
+//     This exception is thrown when an error occurs in the Amazon Web Services
+//     B2B Data Interchange service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/b2bi-2022-06-23/TagResource
 func (c *B2bi) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -2314,7 +2380,8 @@ func (c *B2bi) TestParsingRequest(input *TestParsingInput) (req *request.Request
 
 // TestParsing API operation for AWS B2B Data Interchange.
 //
-// Parses the input EDI (electronic data interchange) file.
+// Parses the input EDI (electronic data interchange) file. The input file has
+// a file size limit of 250 KB.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2432,6 +2499,10 @@ func (c *B2bi) UntagResourceRequest(input *UntagResourceInput) (req *request.Req
 //     Occurs when the requested resource does not exist, or cannot be found. In
 //     some cases, the resource exists in a region other than the region specified
 //     in the API call.
+//
+//   - InternalServerException
+//     This exception is thrown when an error occurs in the Amazon Web Services
+//     B2B Data Interchange service.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/b2bi-2022-06-23/UntagResource
 func (c *B2bi) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -3376,7 +3447,9 @@ type CreatePartnershipInput struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies a list of the capabilities associated with this partnership.
-	Capabilities []*string `locationName:"capabilities" type:"list"`
+	//
+	// Capabilities is a required field
+	Capabilities []*string `locationName:"capabilities" type:"list" required:"true"`
 
 	// Reserved for future use.
 	ClientToken *string `locationName:"clientToken" type:"string" idempotencyToken:"true"`
@@ -3435,6 +3508,9 @@ func (s CreatePartnershipInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreatePartnershipInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreatePartnershipInput"}
+	if s.Capabilities == nil {
+		invalidParams.Add(request.NewErrParamRequired("Capabilities"))
+	}
 	if s.Email == nil {
 		invalidParams.Add(request.NewErrParamRequired("Email"))
 	}
@@ -3925,8 +4001,8 @@ type CreateTransformerInput struct {
 	// FileFormat is a required field
 	FileFormat *string `locationName:"fileFormat" type:"string" required:"true" enum:"FileFormat"`
 
-	// Specifies the name of the mapping template for the transformer. This template
-	// is used to convert the input document into the correct set of objects.
+	// Specifies the mapping template for the transformer. This template is used
+	// to map the parsed EDI file using JSONata or XSLT.
 	//
 	// MappingTemplate is a required field
 	MappingTemplate *string `locationName:"mappingTemplate" type:"string" required:"true"`
@@ -4062,8 +4138,8 @@ type CreateTransformerOutput struct {
 	// FileFormat is a required field
 	FileFormat *string `locationName:"fileFormat" type:"string" required:"true" enum:"FileFormat"`
 
-	// Returns the name of the mapping template for the transformer. This template
-	// is used to convert the input document into the correct set of objects.
+	// Returns the mapping template for the transformer. This template is used to
+	// map the parsed EDI file using JSONata or XSLT.
 	//
 	// MappingTemplate is a required field
 	MappingTemplate *string `locationName:"mappingTemplate" type:"string" required:"true"`
@@ -5303,8 +5379,8 @@ type GetTransformerOutput struct {
 	// FileFormat is a required field
 	FileFormat *string `locationName:"fileFormat" type:"string" required:"true" enum:"FileFormat"`
 
-	// Returns the name of the mapping template for the transformer. This template
-	// is used to convert the input document into the correct set of objects.
+	// Returns the mapping template for the transformer. This template is used to
+	// map the parsed EDI file using JSONata or XSLT.
 	//
 	// MappingTemplate is a required field
 	MappingTemplate *string `locationName:"mappingTemplate" type:"string" required:"true"`
@@ -6708,8 +6784,8 @@ type TestMappingInput struct {
 	// InputFileContent is a required field
 	InputFileContent *string `locationName:"inputFileContent" type:"string" required:"true"`
 
-	// Specifies the name of the mapping template for the transformer. This template
-	// is used to convert the input document into the correct set of objects.
+	// Specifies the mapping template for the transformer. This template is used
+	// to map the parsed EDI file using JSONata or XSLT.
 	//
 	// MappingTemplate is a required field
 	MappingTemplate *string `locationName:"mappingTemplate" type:"string" required:"true"`
@@ -7014,8 +7090,8 @@ type TransformerSummary struct {
 	// FileFormat is a required field
 	FileFormat *string `locationName:"fileFormat" type:"string" required:"true" enum:"FileFormat"`
 
-	// Returns the name of the mapping template for the transformer. This template
-	// is used to convert the input document into the correct set of objects.
+	// Returns the mapping template for the transformer. This template is used to
+	// map the parsed EDI file using JSONata or XSLT.
 	//
 	// MappingTemplate is a required field
 	MappingTemplate *string `locationName:"mappingTemplate" type:"string" required:"true"`
@@ -7862,8 +7938,8 @@ type UpdateTransformerInput struct {
 	// are JSON and XML.
 	FileFormat *string `locationName:"fileFormat" type:"string" enum:"FileFormat"`
 
-	// Specifies the name of the mapping template for the transformer. This template
-	// is used to convert the input document into the correct set of objects.
+	// Specifies the mapping template for the transformer. This template is used
+	// to map the parsed EDI file using JSONata or XSLT.
 	MappingTemplate *string `locationName:"mappingTemplate" type:"string"`
 
 	// Specify a new name for the transformer, if you want to update it.
@@ -7983,8 +8059,8 @@ type UpdateTransformerOutput struct {
 	// FileFormat is a required field
 	FileFormat *string `locationName:"fileFormat" type:"string" required:"true" enum:"FileFormat"`
 
-	// Returns the name of the mapping template for the transformer. This template
-	// is used to convert the input document into the correct set of objects.
+	// Returns the mapping template for the transformer. This template is used to
+	// map the parsed EDI file using JSONata or XSLT.
 	//
 	// MappingTemplate is a required field
 	MappingTemplate *string `locationName:"mappingTemplate" type:"string" required:"true"`
@@ -8178,8 +8254,6 @@ type X12Details struct {
 	// set. Transaction sets are maintained by the X12 Accredited Standards Committee.
 	TransactionSet *string `locationName:"transactionSet" type:"string" enum:"X12TransactionSet"`
 
-	// Returns the version to use for the specified X12 transaction set. Supported
-	// versions are 4010, 4030, and 5010.
 	Version *string `locationName:"version" type:"string" enum:"X12Version"`
 }
 
@@ -8306,11 +8380,47 @@ const (
 	// X12TransactionSetX12210 is a X12TransactionSet enum value
 	X12TransactionSetX12210 = "X12_210"
 
+	// X12TransactionSetX12211 is a X12TransactionSet enum value
+	X12TransactionSetX12211 = "X12_211"
+
 	// X12TransactionSetX12214 is a X12TransactionSet enum value
 	X12TransactionSetX12214 = "X12_214"
 
 	// X12TransactionSetX12215 is a X12TransactionSet enum value
 	X12TransactionSetX12215 = "X12_215"
+
+	// X12TransactionSetX12259 is a X12TransactionSet enum value
+	X12TransactionSetX12259 = "X12_259"
+
+	// X12TransactionSetX12260 is a X12TransactionSet enum value
+	X12TransactionSetX12260 = "X12_260"
+
+	// X12TransactionSetX12266 is a X12TransactionSet enum value
+	X12TransactionSetX12266 = "X12_266"
+
+	// X12TransactionSetX12269 is a X12TransactionSet enum value
+	X12TransactionSetX12269 = "X12_269"
+
+	// X12TransactionSetX12270 is a X12TransactionSet enum value
+	X12TransactionSetX12270 = "X12_270"
+
+	// X12TransactionSetX12271 is a X12TransactionSet enum value
+	X12TransactionSetX12271 = "X12_271"
+
+	// X12TransactionSetX12274 is a X12TransactionSet enum value
+	X12TransactionSetX12274 = "X12_274"
+
+	// X12TransactionSetX12275 is a X12TransactionSet enum value
+	X12TransactionSetX12275 = "X12_275"
+
+	// X12TransactionSetX12276 is a X12TransactionSet enum value
+	X12TransactionSetX12276 = "X12_276"
+
+	// X12TransactionSetX12277 is a X12TransactionSet enum value
+	X12TransactionSetX12277 = "X12_277"
+
+	// X12TransactionSetX12278 is a X12TransactionSet enum value
+	X12TransactionSetX12278 = "X12_278"
 
 	// X12TransactionSetX12310 is a X12TransactionSet enum value
 	X12TransactionSetX12310 = "X12_310"
@@ -8327,6 +8437,18 @@ const (
 	// X12TransactionSetX12410 is a X12TransactionSet enum value
 	X12TransactionSetX12410 = "X12_410"
 
+	// X12TransactionSetX12417 is a X12TransactionSet enum value
+	X12TransactionSetX12417 = "X12_417"
+
+	// X12TransactionSetX12421 is a X12TransactionSet enum value
+	X12TransactionSetX12421 = "X12_421"
+
+	// X12TransactionSetX12426 is a X12TransactionSet enum value
+	X12TransactionSetX12426 = "X12_426"
+
+	// X12TransactionSetX12810 is a X12TransactionSet enum value
+	X12TransactionSetX12810 = "X12_810"
+
 	// X12TransactionSetX12820 is a X12TransactionSet enum value
 	X12TransactionSetX12820 = "X12_820"
 
@@ -8336,8 +8458,26 @@ const (
 	// X12TransactionSetX12830 is a X12TransactionSet enum value
 	X12TransactionSetX12830 = "X12_830"
 
+	// X12TransactionSetX12832 is a X12TransactionSet enum value
+	X12TransactionSetX12832 = "X12_832"
+
+	// X12TransactionSetX12834 is a X12TransactionSet enum value
+	X12TransactionSetX12834 = "X12_834"
+
+	// X12TransactionSetX12835 is a X12TransactionSet enum value
+	X12TransactionSetX12835 = "X12_835"
+
+	// X12TransactionSetX12837 is a X12TransactionSet enum value
+	X12TransactionSetX12837 = "X12_837"
+
+	// X12TransactionSetX12844 is a X12TransactionSet enum value
+	X12TransactionSetX12844 = "X12_844"
+
 	// X12TransactionSetX12846 is a X12TransactionSet enum value
 	X12TransactionSetX12846 = "X12_846"
+
+	// X12TransactionSetX12849 is a X12TransactionSet enum value
+	X12TransactionSetX12849 = "X12_849"
 
 	// X12TransactionSetX12850 is a X12TransactionSet enum value
 	X12TransactionSetX12850 = "X12_850"
@@ -8360,14 +8500,98 @@ const (
 	// X12TransactionSetX12864 is a X12TransactionSet enum value
 	X12TransactionSetX12864 = "X12_864"
 
+	// X12TransactionSetX12865 is a X12TransactionSet enum value
+	X12TransactionSetX12865 = "X12_865"
+
+	// X12TransactionSetX12869 is a X12TransactionSet enum value
+	X12TransactionSetX12869 = "X12_869"
+
+	// X12TransactionSetX12870 is a X12TransactionSet enum value
+	X12TransactionSetX12870 = "X12_870"
+
 	// X12TransactionSetX12940 is a X12TransactionSet enum value
 	X12TransactionSetX12940 = "X12_940"
+
+	// X12TransactionSetX12945 is a X12TransactionSet enum value
+	X12TransactionSetX12945 = "X12_945"
 
 	// X12TransactionSetX12990 is a X12TransactionSet enum value
 	X12TransactionSetX12990 = "X12_990"
 
 	// X12TransactionSetX12997 is a X12TransactionSet enum value
 	X12TransactionSetX12997 = "X12_997"
+
+	// X12TransactionSetX12999 is a X12TransactionSet enum value
+	X12TransactionSetX12999 = "X12_999"
+
+	// X12TransactionSetX12270X279 is a X12TransactionSet enum value
+	X12TransactionSetX12270X279 = "X12_270_X279"
+
+	// X12TransactionSetX12271X279 is a X12TransactionSet enum value
+	X12TransactionSetX12271X279 = "X12_271_X279"
+
+	// X12TransactionSetX12275X210 is a X12TransactionSet enum value
+	X12TransactionSetX12275X210 = "X12_275_X210"
+
+	// X12TransactionSetX12275X211 is a X12TransactionSet enum value
+	X12TransactionSetX12275X211 = "X12_275_X211"
+
+	// X12TransactionSetX12276X212 is a X12TransactionSet enum value
+	X12TransactionSetX12276X212 = "X12_276_X212"
+
+	// X12TransactionSetX12277X212 is a X12TransactionSet enum value
+	X12TransactionSetX12277X212 = "X12_277_X212"
+
+	// X12TransactionSetX12277X214 is a X12TransactionSet enum value
+	X12TransactionSetX12277X214 = "X12_277_X214"
+
+	// X12TransactionSetX12277X364 is a X12TransactionSet enum value
+	X12TransactionSetX12277X364 = "X12_277_X364"
+
+	// X12TransactionSetX12278X217 is a X12TransactionSet enum value
+	X12TransactionSetX12278X217 = "X12_278_X217"
+
+	// X12TransactionSetX12820X218 is a X12TransactionSet enum value
+	X12TransactionSetX12820X218 = "X12_820_X218"
+
+	// X12TransactionSetX12820X306 is a X12TransactionSet enum value
+	X12TransactionSetX12820X306 = "X12_820_X306"
+
+	// X12TransactionSetX12824X186 is a X12TransactionSet enum value
+	X12TransactionSetX12824X186 = "X12_824_X186"
+
+	// X12TransactionSetX12834X220 is a X12TransactionSet enum value
+	X12TransactionSetX12834X220 = "X12_834_X220"
+
+	// X12TransactionSetX12834X307 is a X12TransactionSet enum value
+	X12TransactionSetX12834X307 = "X12_834_X307"
+
+	// X12TransactionSetX12834X318 is a X12TransactionSet enum value
+	X12TransactionSetX12834X318 = "X12_834_X318"
+
+	// X12TransactionSetX12835X221 is a X12TransactionSet enum value
+	X12TransactionSetX12835X221 = "X12_835_X221"
+
+	// X12TransactionSetX12837X222 is a X12TransactionSet enum value
+	X12TransactionSetX12837X222 = "X12_837_X222"
+
+	// X12TransactionSetX12837X223 is a X12TransactionSet enum value
+	X12TransactionSetX12837X223 = "X12_837_X223"
+
+	// X12TransactionSetX12837X224 is a X12TransactionSet enum value
+	X12TransactionSetX12837X224 = "X12_837_X224"
+
+	// X12TransactionSetX12837X291 is a X12TransactionSet enum value
+	X12TransactionSetX12837X291 = "X12_837_X291"
+
+	// X12TransactionSetX12837X292 is a X12TransactionSet enum value
+	X12TransactionSetX12837X292 = "X12_837_X292"
+
+	// X12TransactionSetX12837X298 is a X12TransactionSet enum value
+	X12TransactionSetX12837X298 = "X12_837_X298"
+
+	// X12TransactionSetX12999X231 is a X12TransactionSet enum value
+	X12TransactionSetX12999X231 = "X12_999_X231"
 )
 
 // X12TransactionSet_Values returns all elements of the X12TransactionSet enum
@@ -8377,17 +8601,39 @@ func X12TransactionSet_Values() []string {
 		X12TransactionSetX12180,
 		X12TransactionSetX12204,
 		X12TransactionSetX12210,
+		X12TransactionSetX12211,
 		X12TransactionSetX12214,
 		X12TransactionSetX12215,
+		X12TransactionSetX12259,
+		X12TransactionSetX12260,
+		X12TransactionSetX12266,
+		X12TransactionSetX12269,
+		X12TransactionSetX12270,
+		X12TransactionSetX12271,
+		X12TransactionSetX12274,
+		X12TransactionSetX12275,
+		X12TransactionSetX12276,
+		X12TransactionSetX12277,
+		X12TransactionSetX12278,
 		X12TransactionSetX12310,
 		X12TransactionSetX12315,
 		X12TransactionSetX12322,
 		X12TransactionSetX12404,
 		X12TransactionSetX12410,
+		X12TransactionSetX12417,
+		X12TransactionSetX12421,
+		X12TransactionSetX12426,
+		X12TransactionSetX12810,
 		X12TransactionSetX12820,
 		X12TransactionSetX12824,
 		X12TransactionSetX12830,
+		X12TransactionSetX12832,
+		X12TransactionSetX12834,
+		X12TransactionSetX12835,
+		X12TransactionSetX12837,
+		X12TransactionSetX12844,
 		X12TransactionSetX12846,
+		X12TransactionSetX12849,
 		X12TransactionSetX12850,
 		X12TransactionSetX12852,
 		X12TransactionSetX12855,
@@ -8395,9 +8641,37 @@ func X12TransactionSet_Values() []string {
 		X12TransactionSetX12860,
 		X12TransactionSetX12861,
 		X12TransactionSetX12864,
+		X12TransactionSetX12865,
+		X12TransactionSetX12869,
+		X12TransactionSetX12870,
 		X12TransactionSetX12940,
+		X12TransactionSetX12945,
 		X12TransactionSetX12990,
 		X12TransactionSetX12997,
+		X12TransactionSetX12999,
+		X12TransactionSetX12270X279,
+		X12TransactionSetX12271X279,
+		X12TransactionSetX12275X210,
+		X12TransactionSetX12275X211,
+		X12TransactionSetX12276X212,
+		X12TransactionSetX12277X212,
+		X12TransactionSetX12277X214,
+		X12TransactionSetX12277X364,
+		X12TransactionSetX12278X217,
+		X12TransactionSetX12820X218,
+		X12TransactionSetX12820X306,
+		X12TransactionSetX12824X186,
+		X12TransactionSetX12834X220,
+		X12TransactionSetX12834X307,
+		X12TransactionSetX12834X318,
+		X12TransactionSetX12835X221,
+		X12TransactionSetX12837X222,
+		X12TransactionSetX12837X223,
+		X12TransactionSetX12837X224,
+		X12TransactionSetX12837X291,
+		X12TransactionSetX12837X292,
+		X12TransactionSetX12837X298,
+		X12TransactionSetX12999X231,
 	}
 }
 
@@ -8410,6 +8684,9 @@ const (
 
 	// X12VersionVersion5010 is a X12Version enum value
 	X12VersionVersion5010 = "VERSION_5010"
+
+	// X12VersionVersion5010Hipaa is a X12Version enum value
+	X12VersionVersion5010Hipaa = "VERSION_5010_HIPAA"
 )
 
 // X12Version_Values returns all elements of the X12Version enum
@@ -8418,5 +8695,6 @@ func X12Version_Values() []string {
 		X12VersionVersion4010,
 		X12VersionVersion4030,
 		X12VersionVersion5010,
+		X12VersionVersion5010Hipaa,
 	}
 }

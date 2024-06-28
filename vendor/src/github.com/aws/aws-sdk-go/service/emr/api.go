@@ -4675,6 +4675,94 @@ func (c *EMR) RunJobFlowWithContext(ctx aws.Context, input *RunJobFlowInput, opt
 	return out, req.Send()
 }
 
+const opSetKeepJobFlowAliveWhenNoSteps = "SetKeepJobFlowAliveWhenNoSteps"
+
+// SetKeepJobFlowAliveWhenNoStepsRequest generates a "aws/request.Request" representing the
+// client's request for the SetKeepJobFlowAliveWhenNoSteps operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See SetKeepJobFlowAliveWhenNoSteps for more information on using the SetKeepJobFlowAliveWhenNoSteps
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the SetKeepJobFlowAliveWhenNoStepsRequest method.
+//	req, resp := client.SetKeepJobFlowAliveWhenNoStepsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/SetKeepJobFlowAliveWhenNoSteps
+func (c *EMR) SetKeepJobFlowAliveWhenNoStepsRequest(input *SetKeepJobFlowAliveWhenNoStepsInput) (req *request.Request, output *SetKeepJobFlowAliveWhenNoStepsOutput) {
+	op := &request.Operation{
+		Name:       opSetKeepJobFlowAliveWhenNoSteps,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &SetKeepJobFlowAliveWhenNoStepsInput{}
+	}
+
+	output = &SetKeepJobFlowAliveWhenNoStepsOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// SetKeepJobFlowAliveWhenNoSteps API operation for Amazon EMR.
+//
+// You can use the SetKeepJobFlowAliveWhenNoSteps to configure a cluster (job
+// flow) to terminate after the step execution, i.e., all your steps are executed.
+// If you want a transient cluster that shuts down after the last of the current
+// executing steps are completed, you can configure SetKeepJobFlowAliveWhenNoSteps
+// to false. If you want a long running cluster, configure SetKeepJobFlowAliveWhenNoSteps
+// to true.
+//
+// For more information, see Managing Cluster Termination (https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_TerminationProtection.html)
+// in the Amazon EMR Management Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR's
+// API operation SetKeepJobFlowAliveWhenNoSteps for usage and error information.
+//
+// Returned Error Types:
+//   - InternalServerError
+//     Indicates that an error occurred while processing the request and that the
+//     request was not completed.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/SetKeepJobFlowAliveWhenNoSteps
+func (c *EMR) SetKeepJobFlowAliveWhenNoSteps(input *SetKeepJobFlowAliveWhenNoStepsInput) (*SetKeepJobFlowAliveWhenNoStepsOutput, error) {
+	req, out := c.SetKeepJobFlowAliveWhenNoStepsRequest(input)
+	return out, req.Send()
+}
+
+// SetKeepJobFlowAliveWhenNoStepsWithContext is the same as SetKeepJobFlowAliveWhenNoSteps with the addition of
+// the ability to pass a context and additional request options.
+//
+// See SetKeepJobFlowAliveWhenNoSteps for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMR) SetKeepJobFlowAliveWhenNoStepsWithContext(ctx aws.Context, input *SetKeepJobFlowAliveWhenNoStepsInput, opts ...request.Option) (*SetKeepJobFlowAliveWhenNoStepsOutput, error) {
+	req, out := c.SetKeepJobFlowAliveWhenNoStepsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opSetTerminationProtection = "SetTerminationProtection"
 
 // SetTerminationProtectionRequest generates a "aws/request.Request" representing the
@@ -4734,7 +4822,7 @@ func (c *EMR) SetTerminationProtectionRequest(input *SetTerminationProtectionInp
 // to true, you must first unlock the job flow by a subsequent call to SetTerminationProtection
 // in which you set the value to false.
 //
-// For more information, seeManaging Cluster Termination (https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_TerminationProtection.html)
+// For more information, see Managing Cluster Termination (https://docs.aws.amazon.com/emr/latest/ManagementGuide/UsingEMR_TerminationProtection.html)
 // in the Amazon EMR Management Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -4766,6 +4854,100 @@ func (c *EMR) SetTerminationProtection(input *SetTerminationProtectionInput) (*S
 // for more information on using Contexts.
 func (c *EMR) SetTerminationProtectionWithContext(ctx aws.Context, input *SetTerminationProtectionInput, opts ...request.Option) (*SetTerminationProtectionOutput, error) {
 	req, out := c.SetTerminationProtectionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opSetUnhealthyNodeReplacement = "SetUnhealthyNodeReplacement"
+
+// SetUnhealthyNodeReplacementRequest generates a "aws/request.Request" representing the
+// client's request for the SetUnhealthyNodeReplacement operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See SetUnhealthyNodeReplacement for more information on using the SetUnhealthyNodeReplacement
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the SetUnhealthyNodeReplacementRequest method.
+//	req, resp := client.SetUnhealthyNodeReplacementRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/SetUnhealthyNodeReplacement
+func (c *EMR) SetUnhealthyNodeReplacementRequest(input *SetUnhealthyNodeReplacementInput) (req *request.Request, output *SetUnhealthyNodeReplacementOutput) {
+	op := &request.Operation{
+		Name:       opSetUnhealthyNodeReplacement,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &SetUnhealthyNodeReplacementInput{}
+	}
+
+	output = &SetUnhealthyNodeReplacementOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// SetUnhealthyNodeReplacement API operation for Amazon EMR.
+//
+// Specify whether to enable unhealthy node replacement, which lets Amazon EMR
+// gracefully replace core nodes on a cluster if any nodes become unhealthy.
+// For example, a node becomes unhealthy if disk usage is above 90%. If unhealthy
+// node replacement is on and TerminationProtected are off, Amazon EMR immediately
+// terminates the unhealthy core nodes. To use unhealthy node replacement and
+// retain unhealthy core nodes, use to turn on termination protection. In such
+// cases, Amazon EMR adds the unhealthy nodes to a denylist, reducing job interruptions
+// and failures.
+//
+// If unhealthy node replacement is on, Amazon EMR notifies YARN and other applications
+// on the cluster to stop scheduling tasks with these nodes, moves the data,
+// and then terminates the nodes.
+//
+// For more information, see graceful node replacement (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-node-replacement.html)
+// in the Amazon EMR Management Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR's
+// API operation SetUnhealthyNodeReplacement for usage and error information.
+//
+// Returned Error Types:
+//   - InternalServerError
+//     Indicates that an error occurred while processing the request and that the
+//     request was not completed.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/elasticmapreduce-2009-03-31/SetUnhealthyNodeReplacement
+func (c *EMR) SetUnhealthyNodeReplacement(input *SetUnhealthyNodeReplacementInput) (*SetUnhealthyNodeReplacementOutput, error) {
+	req, out := c.SetUnhealthyNodeReplacementRequest(input)
+	return out, req.Send()
+}
+
+// SetUnhealthyNodeReplacementWithContext is the same as SetUnhealthyNodeReplacement with the addition of
+// the ability to pass a context and additional request options.
+//
+// See SetUnhealthyNodeReplacement for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMR) SetUnhealthyNodeReplacementWithContext(ctx aws.Context, input *SetUnhealthyNodeReplacementInput, opts ...request.Option) (*SetUnhealthyNodeReplacementOutput, error) {
+	req, out := c.SetUnhealthyNodeReplacementRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -6667,7 +6849,8 @@ type Cluster struct {
 	// is the private DNS name. On a public subnet, this is the public DNS name.
 	MasterPublicDnsName *string `type:"string"`
 
-	// The name of the cluster.
+	// The name of the cluster. This parameter can't contain the characters <, >,
+	// $, |, or ` (backtick).
 	Name *string `type:"string"`
 
 	// An approximation of the cost of the cluster, represented in m1.small/hours.
@@ -6744,6 +6927,10 @@ type Cluster struct {
 	// EC2 instances from being terminated by an API call or user intervention,
 	// or in the event of a cluster error.
 	TerminationProtected *bool `type:"boolean"`
+
+	// Indicates whether Amazon EMR should gracefully replace Amazon EC2 core instances
+	// that have degraded within the cluster.
+	UnhealthyNodeReplacement *bool `type:"boolean"`
 
 	// Indicates whether the cluster is visible to IAM principals in the Amazon
 	// Web Services account associated with the cluster. When true, IAM principals
@@ -6966,6 +7153,12 @@ func (s *Cluster) SetTags(v []*Tag) *Cluster {
 // SetTerminationProtected sets the TerminationProtected field's value.
 func (s *Cluster) SetTerminationProtected(v bool) *Cluster {
 	s.TerminationProtected = &v
+	return s
+}
+
+// SetUnhealthyNodeReplacement sets the UnhealthyNodeReplacement field's value.
+func (s *Cluster) SetUnhealthyNodeReplacement(v bool) *Cluster {
+	s.UnhealthyNodeReplacement = &v
 	return s
 }
 
@@ -12615,8 +12808,8 @@ type JobFlowInstancesConfig struct {
 	InstanceGroups []*InstanceGroupConfig `type:"list"`
 
 	// Specifies whether the cluster should remain available after completing all
-	// steps. Defaults to true. For more information about configuring cluster termination,
-	// see Control Cluster Termination (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-termination.html)
+	// steps. Defaults to false. For more information about configuring cluster
+	// termination, see Control Cluster Termination (https://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-termination.html)
 	// in the EMR Management Guide.
 	KeepJobFlowAliveWhenNoSteps *bool `type:"boolean"`
 
@@ -12637,6 +12830,10 @@ type JobFlowInstancesConfig struct {
 	// from being terminated by API call, user intervention, or in the event of
 	// a job-flow error.
 	TerminationProtected *bool `type:"boolean"`
+
+	// Indicates whether Amazon EMR should gracefully replace core nodes that have
+	// degraded within the cluster.
+	UnhealthyNodeReplacement *bool `type:"boolean"`
 }
 
 // String returns the string representation.
@@ -12795,6 +12992,12 @@ func (s *JobFlowInstancesConfig) SetTerminationProtected(v bool) *JobFlowInstanc
 	return s
 }
 
+// SetUnhealthyNodeReplacement sets the UnhealthyNodeReplacement field's value.
+func (s *JobFlowInstancesConfig) SetUnhealthyNodeReplacement(v bool) *JobFlowInstancesConfig {
+	s.UnhealthyNodeReplacement = &v
+	return s
+}
+
 // Specify the type of Amazon EC2 instances that the cluster (job flow) runs
 // on.
 type JobFlowInstancesDetail struct {
@@ -12858,6 +13061,10 @@ type JobFlowInstancesDetail struct {
 	// termination by API calls, user intervention, or in the event of a job-flow
 	// error.
 	TerminationProtected *bool `type:"boolean"`
+
+	// Indicates whether Amazon EMR should gracefully replace core nodes that have
+	// degraded within the cluster.
+	UnhealthyNodeReplacement *bool `type:"boolean"`
 }
 
 // String returns the string representation.
@@ -12953,6 +13160,12 @@ func (s *JobFlowInstancesDetail) SetSlaveInstanceType(v string) *JobFlowInstance
 // SetTerminationProtected sets the TerminationProtected field's value.
 func (s *JobFlowInstancesDetail) SetTerminationProtected(v bool) *JobFlowInstancesDetail {
 	s.TerminationProtected = &v
+	return s
+}
+
+// SetUnhealthyNodeReplacement sets the UnhealthyNodeReplacement field's value.
+func (s *JobFlowInstancesDetail) SetUnhealthyNodeReplacement(v bool) *JobFlowInstancesDetail {
+	s.UnhealthyNodeReplacement = &v
 	return s
 }
 
@@ -17444,6 +17657,91 @@ func (s *SessionMappingSummary) SetStudioId(v string) *SessionMappingSummary {
 	return s
 }
 
+type SetKeepJobFlowAliveWhenNoStepsInput struct {
+	_ struct{} `type:"structure"`
+
+	// A list of strings that uniquely identify the clusters to protect. This identifier
+	// is returned by RunJobFlow (https://docs.aws.amazon.com/emr/latest/APIReference/API_RunJobFlow.html)
+	// and can also be obtained from DescribeJobFlows (https://docs.aws.amazon.com/emr/latest/APIReference/API_DescribeJobFlows.html).
+	//
+	// JobFlowIds is a required field
+	JobFlowIds []*string `type:"list" required:"true"`
+
+	// A Boolean that indicates whether to terminate the cluster after all steps
+	// are executed.
+	//
+	// KeepJobFlowAliveWhenNoSteps is a required field
+	KeepJobFlowAliveWhenNoSteps *bool `type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetKeepJobFlowAliveWhenNoStepsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetKeepJobFlowAliveWhenNoStepsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SetKeepJobFlowAliveWhenNoStepsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SetKeepJobFlowAliveWhenNoStepsInput"}
+	if s.JobFlowIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("JobFlowIds"))
+	}
+	if s.KeepJobFlowAliveWhenNoSteps == nil {
+		invalidParams.Add(request.NewErrParamRequired("KeepJobFlowAliveWhenNoSteps"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetJobFlowIds sets the JobFlowIds field's value.
+func (s *SetKeepJobFlowAliveWhenNoStepsInput) SetJobFlowIds(v []*string) *SetKeepJobFlowAliveWhenNoStepsInput {
+	s.JobFlowIds = v
+	return s
+}
+
+// SetKeepJobFlowAliveWhenNoSteps sets the KeepJobFlowAliveWhenNoSteps field's value.
+func (s *SetKeepJobFlowAliveWhenNoStepsInput) SetKeepJobFlowAliveWhenNoSteps(v bool) *SetKeepJobFlowAliveWhenNoStepsInput {
+	s.KeepJobFlowAliveWhenNoSteps = &v
+	return s
+}
+
+type SetKeepJobFlowAliveWhenNoStepsOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetKeepJobFlowAliveWhenNoStepsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetKeepJobFlowAliveWhenNoStepsOutput) GoString() string {
+	return s.String()
+}
+
 // The input argument to the TerminationProtection operation.
 type SetTerminationProtectionInput struct {
 	_ struct{} `type:"structure"`
@@ -17527,6 +17825,90 @@ func (s SetTerminationProtectionOutput) String() string {
 // be included in the string output. The member name will be present, but the
 // value will be replaced with "sensitive".
 func (s SetTerminationProtectionOutput) GoString() string {
+	return s.String()
+}
+
+type SetUnhealthyNodeReplacementInput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of strings that uniquely identify the clusters for which to turn
+	// on unhealthy node replacement. You can get these identifiers by running the
+	// RunJobFlow or the DescribeJobFlows operations.
+	//
+	// JobFlowIds is a required field
+	JobFlowIds []*string `type:"list" required:"true"`
+
+	// Indicates whether to turn on or turn off graceful unhealthy node replacement.
+	//
+	// UnhealthyNodeReplacement is a required field
+	UnhealthyNodeReplacement *bool `type:"boolean" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetUnhealthyNodeReplacementInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetUnhealthyNodeReplacementInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SetUnhealthyNodeReplacementInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SetUnhealthyNodeReplacementInput"}
+	if s.JobFlowIds == nil {
+		invalidParams.Add(request.NewErrParamRequired("JobFlowIds"))
+	}
+	if s.UnhealthyNodeReplacement == nil {
+		invalidParams.Add(request.NewErrParamRequired("UnhealthyNodeReplacement"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetJobFlowIds sets the JobFlowIds field's value.
+func (s *SetUnhealthyNodeReplacementInput) SetJobFlowIds(v []*string) *SetUnhealthyNodeReplacementInput {
+	s.JobFlowIds = v
+	return s
+}
+
+// SetUnhealthyNodeReplacement sets the UnhealthyNodeReplacement field's value.
+func (s *SetUnhealthyNodeReplacementInput) SetUnhealthyNodeReplacement(v bool) *SetUnhealthyNodeReplacementInput {
+	s.UnhealthyNodeReplacement = &v
+	return s
+}
+
+type SetUnhealthyNodeReplacementOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetUnhealthyNodeReplacementOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SetUnhealthyNodeReplacementOutput) GoString() string {
 	return s.String()
 }
 

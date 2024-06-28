@@ -364,6 +364,9 @@ func (c *WorkSpacesWeb) AssociateTrustStoreRequest(input *AssociateTrustStoreInp
 //   - ValidationException
 //     There is a validation error.
 //
+//   - ConflictException
+//     There is a conflict.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/AssociateTrustStore
 func (c *WorkSpacesWeb) AssociateTrustStore(input *AssociateTrustStoreInput) (*AssociateTrustStoreOutput, error) {
 	req, out := c.AssociateTrustStoreRequest(input)
@@ -2155,6 +2158,9 @@ func (c *WorkSpacesWeb) DisassociateBrowserSettingsRequest(input *DisassociateBr
 //   - ValidationException
 //     There is a validation error.
 //
+//   - ConflictException
+//     There is a conflict.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateBrowserSettings
 func (c *WorkSpacesWeb) DisassociateBrowserSettings(input *DisassociateBrowserSettingsInput) (*DisassociateBrowserSettingsOutput, error) {
 	req, out := c.DisassociateBrowserSettingsRequest(input)
@@ -2246,6 +2252,9 @@ func (c *WorkSpacesWeb) DisassociateIpAccessSettingsRequest(input *DisassociateI
 //
 //   - ValidationException
 //     There is a validation error.
+//
+//   - ConflictException
+//     There is a conflict.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateIpAccessSettings
 func (c *WorkSpacesWeb) DisassociateIpAccessSettings(input *DisassociateIpAccessSettingsInput) (*DisassociateIpAccessSettingsOutput, error) {
@@ -2339,6 +2348,9 @@ func (c *WorkSpacesWeb) DisassociateNetworkSettingsRequest(input *DisassociateNe
 //   - ValidationException
 //     There is a validation error.
 //
+//   - ConflictException
+//     There is a conflict.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateNetworkSettings
 func (c *WorkSpacesWeb) DisassociateNetworkSettings(input *DisassociateNetworkSettingsInput) (*DisassociateNetworkSettingsOutput, error) {
 	req, out := c.DisassociateNetworkSettingsRequest(input)
@@ -2430,6 +2442,9 @@ func (c *WorkSpacesWeb) DisassociateTrustStoreRequest(input *DisassociateTrustSt
 //
 //   - ValidationException
 //     There is a validation error.
+//
+//   - ConflictException
+//     There is a conflict.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateTrustStore
 func (c *WorkSpacesWeb) DisassociateTrustStore(input *DisassociateTrustStoreInput) (*DisassociateTrustStoreOutput, error) {
@@ -2523,6 +2538,9 @@ func (c *WorkSpacesWeb) DisassociateUserAccessLoggingSettingsRequest(input *Disa
 //   - ValidationException
 //     There is a validation error.
 //
+//   - ConflictException
+//     There is a conflict.
+//
 // See also, https://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateUserAccessLoggingSettings
 func (c *WorkSpacesWeb) DisassociateUserAccessLoggingSettings(input *DisassociateUserAccessLoggingSettingsInput) (*DisassociateUserAccessLoggingSettingsOutput, error) {
 	req, out := c.DisassociateUserAccessLoggingSettingsRequest(input)
@@ -2614,6 +2632,9 @@ func (c *WorkSpacesWeb) DisassociateUserSettingsRequest(input *DisassociateUserS
 //
 //   - ValidationException
 //     There is a validation error.
+//
+//   - ConflictException
+//     There is a conflict.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/workspaces-web-2020-07-08/DisassociateUserSettings
 func (c *WorkSpacesWeb) DisassociateUserSettings(input *DisassociateUserSettingsInput) (*DisassociateUserSettingsOutput, error) {
@@ -5563,6 +5584,9 @@ func (c *WorkSpacesWeb) UpdatePortalRequest(input *UpdatePortalInput) (req *requ
 //   - ThrottlingException
 //     There is a throttling error.
 //
+//   - ServiceQuotaExceededException
+//     The service quota has been exceeded.
+//
 //   - ValidationException
 //     There is a validation error.
 //
@@ -6597,6 +6621,9 @@ func (s *AssociateUserSettingsOutput) SetUserSettingsArn(v string) *AssociateUse
 type BrowserSettings struct {
 	_ struct{} `type:"structure"`
 
+	// The additional encryption context of the browser settings.
+	AdditionalEncryptionContext map[string]*string `locationName:"additionalEncryptionContext" type:"map"`
+
 	// A list of web portal ARNs that this browser settings is associated with.
 	AssociatedPortalArns []*string `locationName:"associatedPortalArns" type:"list"`
 
@@ -6612,6 +6639,10 @@ type BrowserSettings struct {
 	//
 	// BrowserSettingsArn is a required field
 	BrowserSettingsArn *string `locationName:"browserSettingsArn" min:"20" type:"string" required:"true"`
+
+	// The customer managed key used to encrypt sensitive information in the browser
+	// settings.
+	CustomerManagedKey *string `locationName:"customerManagedKey" min:"20" type:"string"`
 }
 
 // String returns the string representation.
@@ -6632,6 +6663,12 @@ func (s BrowserSettings) GoString() string {
 	return s.String()
 }
 
+// SetAdditionalEncryptionContext sets the AdditionalEncryptionContext field's value.
+func (s *BrowserSettings) SetAdditionalEncryptionContext(v map[string]*string) *BrowserSettings {
+	s.AdditionalEncryptionContext = v
+	return s
+}
+
 // SetAssociatedPortalArns sets the AssociatedPortalArns field's value.
 func (s *BrowserSettings) SetAssociatedPortalArns(v []*string) *BrowserSettings {
 	s.AssociatedPortalArns = v
@@ -6647,6 +6684,12 @@ func (s *BrowserSettings) SetBrowserPolicy(v string) *BrowserSettings {
 // SetBrowserSettingsArn sets the BrowserSettingsArn field's value.
 func (s *BrowserSettings) SetBrowserSettingsArn(v string) *BrowserSettings {
 	s.BrowserSettingsArn = &v
+	return s
+}
+
+// SetCustomerManagedKey sets the CustomerManagedKey field's value.
+func (s *BrowserSettings) SetCustomerManagedKey(v string) *BrowserSettings {
+	s.CustomerManagedKey = &v
 	return s
 }
 
@@ -6906,14 +6949,26 @@ type CookieSpecification struct {
 
 	// The domain of the cookie.
 	//
+	// Domain is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CookieSpecification's
+	// String and GoString methods.
+	//
 	// Domain is a required field
-	Domain *string `locationName:"domain" type:"string" required:"true"`
+	Domain *string `locationName:"domain" type:"string" required:"true" sensitive:"true"`
 
 	// The name of the cookie.
-	Name *string `locationName:"name" type:"string"`
+	//
+	// Name is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CookieSpecification's
+	// String and GoString methods.
+	Name *string `locationName:"name" type:"string" sensitive:"true"`
 
 	// The path of the cookie.
-	Path *string `locationName:"path" type:"string"`
+	//
+	// Path is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CookieSpecification's
+	// String and GoString methods.
+	Path *string `locationName:"path" type:"string" sensitive:"true"`
 }
 
 // String returns the string representation.
@@ -7067,7 +7122,7 @@ type CreateBrowserSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The custom managed key of the browser settings.
@@ -7200,7 +7255,7 @@ type CreateIdentityProviderInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The identity provider details. The following list describes the provider
@@ -7220,7 +7275,8 @@ type CreateIdentityProviderInput struct {
 	//    discovery URL specified by oidc_issuer key
 	//
 	//    * For SAML providers: MetadataFile OR MetadataURL IDPSignout (boolean)
-	//    optional
+	//    optional IDPInit (boolean) optional RequestSigningAlgorithm (string) optional
+	//    - Only accepts rsa-sha256 EncryptedResponses (boolean) optional
 	//
 	// IdentityProviderDetails is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by CreateIdentityProviderInput's
@@ -7247,6 +7303,9 @@ type CreateIdentityProviderInput struct {
 	//
 	// PortalArn is a required field
 	PortalArn *string `locationName:"portalArn" min:"20" type:"string" required:"true"`
+
+	// The tags to add to the identity provider resource. A tag is a key-value pair.
+	Tags []*Tag `locationName:"tags" type:"list"`
 }
 
 // String returns the string representation.
@@ -7291,6 +7350,16 @@ func (s *CreateIdentityProviderInput) Validate() error {
 	if s.PortalArn != nil && len(*s.PortalArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("PortalArn", 20))
 	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -7325,6 +7394,12 @@ func (s *CreateIdentityProviderInput) SetIdentityProviderType(v string) *CreateI
 // SetPortalArn sets the PortalArn field's value.
 func (s *CreateIdentityProviderInput) SetPortalArn(v string) *CreateIdentityProviderInput {
 	s.PortalArn = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateIdentityProviderInput) SetTags(v []*Tag) *CreateIdentityProviderInput {
+	s.Tags = v
 	return s
 }
 
@@ -7374,7 +7449,7 @@ type CreateIpAccessSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The custom managed key of the IP access settings.
@@ -7403,7 +7478,8 @@ type CreateIpAccessSettingsInput struct {
 	// IpRules is a required field
 	IpRules []*IpRule `locationName:"ipRules" min:"1" type:"list" required:"true" sensitive:"true"`
 
-	// The tags to add to the browser settings resource. A tag is a key-value pair.
+	// The tags to add to the IP access settings resource. A tag is a key-value
+	// pair.
 	Tags []*Tag `locationName:"tags" type:"list"`
 }
 
@@ -7558,7 +7634,7 @@ type CreateNetworkSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// One or more security groups used to control access from streaming instances
@@ -7719,11 +7795,10 @@ type CreatePortalInput struct {
 	// with your web portal. User and group access to your web portal is controlled
 	// through your identity provider.
 	//
-	// IAM_Identity_Center web portals are authenticated through AWS IAM Identity
-	// Center (successor to AWS Single Sign-On). They provide additional features,
-	// such as IdP-initiated authentication. Identity sources (including external
-	// identity provider integration), plus user and group access to your web portal,
-	// can be configured in the IAM Identity Center.
+	// IAM Identity Center web portals are authenticated through IAM Identity Center
+	// (successor to Single Sign-On). Identity sources (including external identity
+	// provider integration), plus user and group access to your web portal, can
+	// be configured in the IAM Identity Center.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
 
 	// A unique, case-sensitive identifier that you provide to ensure the idempotency
@@ -7733,7 +7808,7 @@ type CreatePortalInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The customer managed key of the web portal.
@@ -7746,6 +7821,12 @@ type CreatePortalInput struct {
 	// replaced with "sensitive" in string returned by CreatePortalInput's
 	// String and GoString methods.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" sensitive:"true"`
+
+	// The type and resources of the underlying instance.
+	InstanceType *string `locationName:"instanceType" type:"string" enum:"InstanceType"`
+
+	// The maximum number of concurrent sessions for the portal.
+	MaxConcurrentSessions *int64 `locationName:"maxConcurrentSessions" min:"1" type:"integer"`
 
 	// The tags to add to the web portal. A tag is a key-value pair.
 	Tags []*Tag `locationName:"tags" type:"list"`
@@ -7780,6 +7861,9 @@ func (s *CreatePortalInput) Validate() error {
 	}
 	if s.DisplayName != nil && len(*s.DisplayName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DisplayName", 1))
+	}
+	if s.MaxConcurrentSessions != nil && *s.MaxConcurrentSessions < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxConcurrentSessions", 1))
 	}
 	if s.Tags != nil {
 		for i, v := range s.Tags {
@@ -7825,6 +7909,18 @@ func (s *CreatePortalInput) SetCustomerManagedKey(v string) *CreatePortalInput {
 // SetDisplayName sets the DisplayName field's value.
 func (s *CreatePortalInput) SetDisplayName(v string) *CreatePortalInput {
 	s.DisplayName = &v
+	return s
+}
+
+// SetInstanceType sets the InstanceType field's value.
+func (s *CreatePortalInput) SetInstanceType(v string) *CreatePortalInput {
+	s.InstanceType = &v
+	return s
+}
+
+// SetMaxConcurrentSessions sets the MaxConcurrentSessions field's value.
+func (s *CreatePortalInput) SetMaxConcurrentSessions(v int64) *CreatePortalInput {
+	s.MaxConcurrentSessions = &v
 	return s
 }
 
@@ -7894,7 +7990,7 @@ type CreateTrustStoreInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The tags to add to the trust store. A tag is a key-value pair.
@@ -8006,7 +8102,7 @@ type CreateUserAccessLoggingSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The ARN of the Kinesis stream.
@@ -8129,7 +8225,7 @@ type CreateUserSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The configuration that specifies which cookies should be synchronized from
@@ -8149,6 +8245,10 @@ type CreateUserSettingsInput struct {
 	// The customer managed key used to encrypt sensitive information in the user
 	// settings.
 	CustomerManagedKey *string `locationName:"customerManagedKey" min:"20" type:"string"`
+
+	// Specifies whether the user can use deep links that open automatically when
+	// connecting to a session.
+	DeepLinkAllowed *string `locationName:"deepLinkAllowed" type:"string" enum:"EnabledType"`
 
 	// The amount of time that a streaming session remains active after users disconnect.
 	DisconnectTimeoutInMinutes *int64 `locationName:"disconnectTimeoutInMinutes" min:"1" type:"integer"`
@@ -8278,6 +8378,12 @@ func (s *CreateUserSettingsInput) SetCopyAllowed(v string) *CreateUserSettingsIn
 // SetCustomerManagedKey sets the CustomerManagedKey field's value.
 func (s *CreateUserSettingsInput) SetCustomerManagedKey(v string) *CreateUserSettingsInput {
 	s.CustomerManagedKey = &v
+	return s
+}
+
+// SetDeepLinkAllowed sets the DeepLinkAllowed field's value.
+func (s *CreateUserSettingsInput) SetDeepLinkAllowed(v string) *CreateUserSettingsInput {
+	s.DeepLinkAllowed = &v
 	return s
 }
 
@@ -10214,7 +10320,9 @@ type IdentityProvider struct {
 	//    discovery URL specified by oidc_issuer key jwks_uri if not available from
 	//    discovery URL specified by oidc_issuer key
 	//
-	//    * For SAML providers: MetadataFile OR MetadataURL IDPSignout optional
+	//    * For SAML providers: MetadataFile OR MetadataURL IDPSignout (boolean)
+	//    optional IDPInit (boolean) optional RequestSigningAlgorithm (string) optional
+	//    - Only accepts rsa-sha256 EncryptedResponses (boolean) optional
 	//
 	// IdentityProviderDetails is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by IdentityProvider's
@@ -10401,12 +10509,19 @@ func (s *InternalServerException) RequestID() string {
 type IpAccessSettings struct {
 	_ struct{} `type:"structure"`
 
+	// The additional encryption context of the IP access settings.
+	AdditionalEncryptionContext map[string]*string `locationName:"additionalEncryptionContext" type:"map"`
+
 	// A list of web portal ARNs that this IP access settings resource is associated
 	// with.
 	AssociatedPortalArns []*string `locationName:"associatedPortalArns" type:"list"`
 
 	// The creation date timestamp of the IP access settings.
 	CreationDate *time.Time `locationName:"creationDate" type:"timestamp"`
+
+	// The customer managed key used to encrypt sensitive information in the IP
+	// access settings.
+	CustomerManagedKey *string `locationName:"customerManagedKey" min:"20" type:"string"`
 
 	// The description of the IP access settings.
 	//
@@ -10453,6 +10568,12 @@ func (s IpAccessSettings) GoString() string {
 	return s.String()
 }
 
+// SetAdditionalEncryptionContext sets the AdditionalEncryptionContext field's value.
+func (s *IpAccessSettings) SetAdditionalEncryptionContext(v map[string]*string) *IpAccessSettings {
+	s.AdditionalEncryptionContext = v
+	return s
+}
+
 // SetAssociatedPortalArns sets the AssociatedPortalArns field's value.
 func (s *IpAccessSettings) SetAssociatedPortalArns(v []*string) *IpAccessSettings {
 	s.AssociatedPortalArns = v
@@ -10462,6 +10583,12 @@ func (s *IpAccessSettings) SetAssociatedPortalArns(v []*string) *IpAccessSetting
 // SetCreationDate sets the CreationDate field's value.
 func (s *IpAccessSettings) SetCreationDate(v time.Time) *IpAccessSettings {
 	s.CreationDate = &v
+	return s
+}
+
+// SetCustomerManagedKey sets the CustomerManagedKey field's value.
+func (s *IpAccessSettings) SetCustomerManagedKey(v string) *IpAccessSettings {
+	s.CustomerManagedKey = &v
 	return s
 }
 
@@ -11736,6 +11863,9 @@ func (s *NetworkSettingsSummary) SetVpcId(v string) *NetworkSettingsSummary {
 type Portal struct {
 	_ struct{} `type:"structure"`
 
+	// The additional encryption context of the portal.
+	AdditionalEncryptionContext map[string]*string `locationName:"additionalEncryptionContext" type:"map"`
+
 	// The type of authentication integration points used when signing into the
 	// web portal. Defaults to Standard.
 	//
@@ -11744,11 +11874,10 @@ type Portal struct {
 	// with your web portal. User and group access to your web portal is controlled
 	// through your identity provider.
 	//
-	// IAM_Identity_Center web portals are authenticated through AWS IAM Identity
-	// Center (successor to AWS Single Sign-On). They provide additional features,
-	// such as IdP-initiated authentication. Identity sources (including external
-	// identity provider integration), plus user and group access to your web portal,
-	// can be configured in the IAM Identity Center.
+	// IAM Identity Center web portals are authenticated through IAM Identity Center
+	// (successor to Single Sign-On). Identity sources (including external identity
+	// provider integration), plus user and group access to your web portal, can
+	// be configured in the IAM Identity Center.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
 
 	// The ARN of the browser settings that is associated with this web portal.
@@ -11760,6 +11889,9 @@ type Portal struct {
 	// The creation date of the web portal.
 	CreationDate *time.Time `locationName:"creationDate" type:"timestamp"`
 
+	// The customer managed key used to encrypt sensitive information in the portal.
+	CustomerManagedKey *string `locationName:"customerManagedKey" min:"20" type:"string"`
+
 	// The name of the web portal.
 	//
 	// DisplayName is a sensitive parameter and its value will be
@@ -11767,8 +11899,14 @@ type Portal struct {
 	// String and GoString methods.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" sensitive:"true"`
 
+	// The type and resources of the underlying instance.
+	InstanceType *string `locationName:"instanceType" type:"string" enum:"InstanceType"`
+
 	// The ARN of the IP access settings.
 	IpAccessSettingsArn *string `locationName:"ipAccessSettingsArn" min:"20" type:"string"`
+
+	// The maximum number of concurrent sessions for the portal.
+	MaxConcurrentSessions *int64 `locationName:"maxConcurrentSessions" min:"1" type:"integer"`
 
 	// The ARN of the network settings that is associated with the web portal.
 	NetworkSettingsArn *string `locationName:"networkSettingsArn" min:"20" type:"string"`
@@ -11820,6 +11958,12 @@ func (s Portal) GoString() string {
 	return s.String()
 }
 
+// SetAdditionalEncryptionContext sets the AdditionalEncryptionContext field's value.
+func (s *Portal) SetAdditionalEncryptionContext(v map[string]*string) *Portal {
+	s.AdditionalEncryptionContext = v
+	return s
+}
+
 // SetAuthenticationType sets the AuthenticationType field's value.
 func (s *Portal) SetAuthenticationType(v string) *Portal {
 	s.AuthenticationType = &v
@@ -11844,15 +11988,33 @@ func (s *Portal) SetCreationDate(v time.Time) *Portal {
 	return s
 }
 
+// SetCustomerManagedKey sets the CustomerManagedKey field's value.
+func (s *Portal) SetCustomerManagedKey(v string) *Portal {
+	s.CustomerManagedKey = &v
+	return s
+}
+
 // SetDisplayName sets the DisplayName field's value.
 func (s *Portal) SetDisplayName(v string) *Portal {
 	s.DisplayName = &v
 	return s
 }
 
+// SetInstanceType sets the InstanceType field's value.
+func (s *Portal) SetInstanceType(v string) *Portal {
+	s.InstanceType = &v
+	return s
+}
+
 // SetIpAccessSettingsArn sets the IpAccessSettingsArn field's value.
 func (s *Portal) SetIpAccessSettingsArn(v string) *Portal {
 	s.IpAccessSettingsArn = &v
+	return s
+}
+
+// SetMaxConcurrentSessions sets the MaxConcurrentSessions field's value.
+func (s *Portal) SetMaxConcurrentSessions(v int64) *Portal {
+	s.MaxConcurrentSessions = &v
 	return s
 }
 
@@ -11922,11 +12084,10 @@ type PortalSummary struct {
 	// with your web portal. User and group access to your web portal is controlled
 	// through your identity provider.
 	//
-	// IAM_Identity_Center web portals are authenticated through AWS IAM Identity
-	// Center (successor to AWS Single Sign-On). They provide additional features,
-	// such as IdP-initiated authentication. Identity sources (including external
-	// identity provider integration), plus user and group access to your web portal,
-	// can be configured in the IAM Identity Center.
+	// IAM Identity Center web portals are authenticated through IAM Identity Center
+	// (successor to Single Sign-On). Identity sources (including external identity
+	// provider integration), plus user and group access to your web portal, can
+	// be configured in the IAM Identity Center.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
 
 	// The ARN of the browser settings that is associated with the web portal.
@@ -11945,8 +12106,14 @@ type PortalSummary struct {
 	// String and GoString methods.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" sensitive:"true"`
 
+	// The type and resources of the underlying instance.
+	InstanceType *string `locationName:"instanceType" type:"string" enum:"InstanceType"`
+
 	// The ARN of the IP access settings.
 	IpAccessSettingsArn *string `locationName:"ipAccessSettingsArn" min:"20" type:"string"`
+
+	// The maximum number of concurrent sessions for the portal.
+	MaxConcurrentSessions *int64 `locationName:"maxConcurrentSessions" min:"1" type:"integer"`
 
 	// The ARN of the network settings that is associated with the web portal.
 	NetworkSettingsArn *string `locationName:"networkSettingsArn" min:"20" type:"string"`
@@ -12025,9 +12192,21 @@ func (s *PortalSummary) SetDisplayName(v string) *PortalSummary {
 	return s
 }
 
+// SetInstanceType sets the InstanceType field's value.
+func (s *PortalSummary) SetInstanceType(v string) *PortalSummary {
+	s.InstanceType = &v
+	return s
+}
+
 // SetIpAccessSettingsArn sets the IpAccessSettingsArn field's value.
 func (s *PortalSummary) SetIpAccessSettingsArn(v string) *PortalSummary {
 	s.IpAccessSettingsArn = &v
+	return s
+}
+
+// SetMaxConcurrentSessions sets the MaxConcurrentSessions field's value.
+func (s *PortalSummary) SetMaxConcurrentSessions(v int64) *PortalSummary {
+	s.MaxConcurrentSessions = &v
 	return s
 }
 
@@ -12307,7 +12486,7 @@ type TagResourceInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The ARN of the resource.
@@ -12739,7 +12918,7 @@ type UpdateBrowserSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 }
 
@@ -12844,7 +13023,7 @@ type UpdateIdentityProviderInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The ARN of the identity provider.
@@ -12869,7 +13048,8 @@ type UpdateIdentityProviderInput struct {
 	//    discovery URL specified by oidc_issuer key
 	//
 	//    * For SAML providers: MetadataFile OR MetadataURL IDPSignout (boolean)
-	//    optional
+	//    optional IDPInit (boolean) optional RequestSigningAlgorithm (string) optional
+	//    - Only accepts rsa-sha256 EncryptedResponses (boolean) optional
 	//
 	// IdentityProviderDetails is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by UpdateIdentityProviderInput's
@@ -13000,7 +13180,7 @@ type UpdateIpAccessSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The description of the IP access settings.
@@ -13159,7 +13339,7 @@ type UpdateNetworkSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The ARN of the network settings.
@@ -13300,11 +13480,10 @@ type UpdatePortalInput struct {
 	// with your web portal. User and group access to your web portal is controlled
 	// through your identity provider.
 	//
-	// IAM_Identity_Center web portals are authenticated through AWS IAM Identity
-	// Center (successor to AWS Single Sign-On). They provide additional features,
-	// such as IdP-initiated authentication. Identity sources (including external
-	// identity provider integration), plus user and group access to your web portal,
-	// can be configured in the IAM Identity Center.
+	// IAM Identity Center web portals are authenticated through IAM Identity Center
+	// (successor to Single Sign-On). Identity sources (including external identity
+	// provider integration), plus user and group access to your web portal, can
+	// be configured in the IAM Identity Center.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
 
 	// The name of the web portal. This is not visible to users who log into the
@@ -13314,6 +13493,12 @@ type UpdatePortalInput struct {
 	// replaced with "sensitive" in string returned by UpdatePortalInput's
 	// String and GoString methods.
 	DisplayName *string `locationName:"displayName" min:"1" type:"string" sensitive:"true"`
+
+	// The type and resources of the underlying instance.
+	InstanceType *string `locationName:"instanceType" type:"string" enum:"InstanceType"`
+
+	// The maximum number of concurrent sessions for the portal.
+	MaxConcurrentSessions *int64 `locationName:"maxConcurrentSessions" min:"1" type:"integer"`
 
 	// The ARN of the web portal.
 	//
@@ -13345,6 +13530,9 @@ func (s *UpdatePortalInput) Validate() error {
 	if s.DisplayName != nil && len(*s.DisplayName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DisplayName", 1))
 	}
+	if s.MaxConcurrentSessions != nil && *s.MaxConcurrentSessions < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxConcurrentSessions", 1))
+	}
 	if s.PortalArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("PortalArn"))
 	}
@@ -13367,6 +13555,18 @@ func (s *UpdatePortalInput) SetAuthenticationType(v string) *UpdatePortalInput {
 // SetDisplayName sets the DisplayName field's value.
 func (s *UpdatePortalInput) SetDisplayName(v string) *UpdatePortalInput {
 	s.DisplayName = &v
+	return s
+}
+
+// SetInstanceType sets the InstanceType field's value.
+func (s *UpdatePortalInput) SetInstanceType(v string) *UpdatePortalInput {
+	s.InstanceType = &v
+	return s
+}
+
+// SetMaxConcurrentSessions sets the MaxConcurrentSessions field's value.
+func (s *UpdatePortalInput) SetMaxConcurrentSessions(v int64) *UpdatePortalInput {
+	s.MaxConcurrentSessions = &v
 	return s
 }
 
@@ -13423,7 +13623,7 @@ type UpdateTrustStoreInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The ARN of the trust store.
@@ -13536,7 +13736,7 @@ type UpdateUserAccessLoggingSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The ARN of the Kinesis stream.
@@ -13649,7 +13849,7 @@ type UpdateUserSettingsInput struct {
 	// original successful request.
 	//
 	// If you do not specify a client token, one is automatically generated by the
-	// AWS SDK.
+	// Amazon Web Services SDK.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
 
 	// The configuration that specifies which cookies should be synchronized from
@@ -13665,6 +13865,10 @@ type UpdateUserSettingsInput struct {
 	// Specifies whether the user can copy text from the streaming session to the
 	// local device.
 	CopyAllowed *string `locationName:"copyAllowed" type:"string" enum:"EnabledType"`
+
+	// Specifies whether the user can use deep links that open automatically when
+	// connecting to a session.
+	DeepLinkAllowed *string `locationName:"deepLinkAllowed" type:"string" enum:"EnabledType"`
 
 	// The amount of time that a streaming session remains active after users disconnect.
 	DisconnectTimeoutInMinutes *int64 `locationName:"disconnectTimeoutInMinutes" min:"1" type:"integer"`
@@ -13754,6 +13958,12 @@ func (s *UpdateUserSettingsInput) SetCookieSynchronizationConfiguration(v *Cooki
 // SetCopyAllowed sets the CopyAllowed field's value.
 func (s *UpdateUserSettingsInput) SetCopyAllowed(v string) *UpdateUserSettingsInput {
 	s.CopyAllowed = &v
+	return s
+}
+
+// SetDeepLinkAllowed sets the DeepLinkAllowed field's value.
+func (s *UpdateUserSettingsInput) SetDeepLinkAllowed(v string) *UpdateUserSettingsInput {
+	s.DeepLinkAllowed = &v
 	return s
 }
 
@@ -13935,6 +14145,9 @@ func (s *UserAccessLoggingSettingsSummary) SetUserAccessLoggingSettingsArn(v str
 type UserSettings struct {
 	_ struct{} `type:"structure"`
 
+	// The additional encryption context of the user settings.
+	AdditionalEncryptionContext map[string]*string `locationName:"additionalEncryptionContext" type:"map"`
+
 	// A list of web portal ARNs that this user settings is associated with.
 	AssociatedPortalArns []*string `locationName:"associatedPortalArns" type:"list"`
 
@@ -13949,6 +14162,14 @@ type UserSettings struct {
 	// Specifies whether the user can copy text from the streaming session to the
 	// local device.
 	CopyAllowed *string `locationName:"copyAllowed" type:"string" enum:"EnabledType"`
+
+	// The customer managed key used to encrypt sensitive information in the user
+	// settings.
+	CustomerManagedKey *string `locationName:"customerManagedKey" min:"20" type:"string"`
+
+	// Specifies whether the user can use deep links that open automatically when
+	// connecting to a session.
+	DeepLinkAllowed *string `locationName:"deepLinkAllowed" type:"string" enum:"EnabledType"`
 
 	// The amount of time that a streaming session remains active after users disconnect.
 	DisconnectTimeoutInMinutes *int64 `locationName:"disconnectTimeoutInMinutes" min:"1" type:"integer"`
@@ -13996,6 +14217,12 @@ func (s UserSettings) GoString() string {
 	return s.String()
 }
 
+// SetAdditionalEncryptionContext sets the AdditionalEncryptionContext field's value.
+func (s *UserSettings) SetAdditionalEncryptionContext(v map[string]*string) *UserSettings {
+	s.AdditionalEncryptionContext = v
+	return s
+}
+
 // SetAssociatedPortalArns sets the AssociatedPortalArns field's value.
 func (s *UserSettings) SetAssociatedPortalArns(v []*string) *UserSettings {
 	s.AssociatedPortalArns = v
@@ -14011,6 +14238,18 @@ func (s *UserSettings) SetCookieSynchronizationConfiguration(v *CookieSynchroniz
 // SetCopyAllowed sets the CopyAllowed field's value.
 func (s *UserSettings) SetCopyAllowed(v string) *UserSettings {
 	s.CopyAllowed = &v
+	return s
+}
+
+// SetCustomerManagedKey sets the CustomerManagedKey field's value.
+func (s *UserSettings) SetCustomerManagedKey(v string) *UserSettings {
+	s.CustomerManagedKey = &v
+	return s
+}
+
+// SetDeepLinkAllowed sets the DeepLinkAllowed field's value.
+func (s *UserSettings) SetDeepLinkAllowed(v string) *UserSettings {
+	s.DeepLinkAllowed = &v
 	return s
 }
 
@@ -14072,6 +14311,10 @@ type UserSettingsSummary struct {
 	// local device.
 	CopyAllowed *string `locationName:"copyAllowed" type:"string" enum:"EnabledType"`
 
+	// Specifies whether the user can use deep links that open automatically when
+	// connecting to a session.
+	DeepLinkAllowed *string `locationName:"deepLinkAllowed" type:"string" enum:"EnabledType"`
+
 	// The amount of time that a streaming session remains active after users disconnect.
 	DisconnectTimeoutInMinutes *int64 `locationName:"disconnectTimeoutInMinutes" min:"1" type:"integer"`
 
@@ -14127,6 +14370,12 @@ func (s *UserSettingsSummary) SetCookieSynchronizationConfiguration(v *CookieSyn
 // SetCopyAllowed sets the CopyAllowed field's value.
 func (s *UserSettingsSummary) SetCopyAllowed(v string) *UserSettingsSummary {
 	s.CopyAllowed = &v
+	return s
+}
+
+// SetDeepLinkAllowed sets the DeepLinkAllowed field's value.
+func (s *UserSettingsSummary) SetDeepLinkAllowed(v string) *UserSettingsSummary {
+	s.DeepLinkAllowed = &v
 	return s
 }
 
@@ -14360,6 +14609,26 @@ func IdentityProviderType_Values() []string {
 		IdentityProviderTypeLoginWithAmazon,
 		IdentityProviderTypeSignInWithApple,
 		IdentityProviderTypeOidc,
+	}
+}
+
+const (
+	// InstanceTypeStandardRegular is a InstanceType enum value
+	InstanceTypeStandardRegular = "standard.regular"
+
+	// InstanceTypeStandardLarge is a InstanceType enum value
+	InstanceTypeStandardLarge = "standard.large"
+
+	// InstanceTypeStandardXlarge is a InstanceType enum value
+	InstanceTypeStandardXlarge = "standard.xlarge"
+)
+
+// InstanceType_Values returns all elements of the InstanceType enum
+func InstanceType_Values() []string {
+	return []string{
+		InstanceTypeStandardRegular,
+		InstanceTypeStandardLarge,
+		InstanceTypeStandardXlarge,
 	}
 }
 

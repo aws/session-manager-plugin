@@ -96,12 +96,31 @@ type ConnectCasesAPI interface {
 	DeleteDomainWithContext(aws.Context, *connectcases.DeleteDomainInput, ...request.Option) (*connectcases.DeleteDomainOutput, error)
 	DeleteDomainRequest(*connectcases.DeleteDomainInput) (*request.Request, *connectcases.DeleteDomainOutput)
 
+	DeleteField(*connectcases.DeleteFieldInput) (*connectcases.DeleteFieldOutput, error)
+	DeleteFieldWithContext(aws.Context, *connectcases.DeleteFieldInput, ...request.Option) (*connectcases.DeleteFieldOutput, error)
+	DeleteFieldRequest(*connectcases.DeleteFieldInput) (*request.Request, *connectcases.DeleteFieldOutput)
+
+	DeleteLayout(*connectcases.DeleteLayoutInput) (*connectcases.DeleteLayoutOutput, error)
+	DeleteLayoutWithContext(aws.Context, *connectcases.DeleteLayoutInput, ...request.Option) (*connectcases.DeleteLayoutOutput, error)
+	DeleteLayoutRequest(*connectcases.DeleteLayoutInput) (*request.Request, *connectcases.DeleteLayoutOutput)
+
+	DeleteTemplate(*connectcases.DeleteTemplateInput) (*connectcases.DeleteTemplateOutput, error)
+	DeleteTemplateWithContext(aws.Context, *connectcases.DeleteTemplateInput, ...request.Option) (*connectcases.DeleteTemplateOutput, error)
+	DeleteTemplateRequest(*connectcases.DeleteTemplateInput) (*request.Request, *connectcases.DeleteTemplateOutput)
+
 	GetCase(*connectcases.GetCaseInput) (*connectcases.GetCaseOutput, error)
 	GetCaseWithContext(aws.Context, *connectcases.GetCaseInput, ...request.Option) (*connectcases.GetCaseOutput, error)
 	GetCaseRequest(*connectcases.GetCaseInput) (*request.Request, *connectcases.GetCaseOutput)
 
 	GetCasePages(*connectcases.GetCaseInput, func(*connectcases.GetCaseOutput, bool) bool) error
 	GetCasePagesWithContext(aws.Context, *connectcases.GetCaseInput, func(*connectcases.GetCaseOutput, bool) bool, ...request.Option) error
+
+	GetCaseAuditEvents(*connectcases.GetCaseAuditEventsInput) (*connectcases.GetCaseAuditEventsOutput, error)
+	GetCaseAuditEventsWithContext(aws.Context, *connectcases.GetCaseAuditEventsInput, ...request.Option) (*connectcases.GetCaseAuditEventsOutput, error)
+	GetCaseAuditEventsRequest(*connectcases.GetCaseAuditEventsInput) (*request.Request, *connectcases.GetCaseAuditEventsOutput)
+
+	GetCaseAuditEventsPages(*connectcases.GetCaseAuditEventsInput, func(*connectcases.GetCaseAuditEventsOutput, bool) bool) error
+	GetCaseAuditEventsPagesWithContext(aws.Context, *connectcases.GetCaseAuditEventsInput, func(*connectcases.GetCaseAuditEventsOutput, bool) bool, ...request.Option) error
 
 	GetCaseEventConfiguration(*connectcases.GetCaseEventConfigurationInput) (*connectcases.GetCaseEventConfigurationOutput, error)
 	GetCaseEventConfigurationWithContext(aws.Context, *connectcases.GetCaseEventConfigurationInput, ...request.Option) (*connectcases.GetCaseEventConfigurationOutput, error)

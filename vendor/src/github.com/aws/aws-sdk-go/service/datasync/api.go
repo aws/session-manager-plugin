@@ -325,8 +325,8 @@ func (c *DataSync) CreateLocationAzureBlobRequest(input *CreateLocationAzureBlob
 
 // CreateLocationAzureBlob API operation for AWS DataSync.
 //
-// Creates an endpoint for a Microsoft Azure Blob Storage container that DataSync
-// can use as a transfer source or destination.
+// Creates a transfer location for a Microsoft Azure Blob Storage container.
+// DataSync can use this location as a transfer source or destination.
 //
 // Before you begin, make sure you know how DataSync accesses Azure Blob Storage
 // (https://docs.aws.amazon.com/datasync/latest/userguide/creating-azure-blob-location.html#azure-blob-access)
@@ -415,9 +415,11 @@ func (c *DataSync) CreateLocationEfsRequest(input *CreateLocationEfsInput) (req 
 
 // CreateLocationEfs API operation for AWS DataSync.
 //
-// Creates an endpoint for an Amazon EFS file system that DataSync can access
-// for a transfer. For more information, see Creating a location for Amazon
-// EFS (https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html).
+// Creates a transfer location for an Amazon EFS file system. DataSync can use
+// this location as a source or destination for transferring data.
+//
+// Before you begin, make sure that you understand how DataSync accesses Amazon
+// EFS file systems (https://docs.aws.amazon.com/datasync/latest/userguide/create-efs-location.html#create-efs-location-access).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -499,7 +501,11 @@ func (c *DataSync) CreateLocationFsxLustreRequest(input *CreateLocationFsxLustre
 
 // CreateLocationFsxLustre API operation for AWS DataSync.
 //
-// Creates an endpoint for an Amazon FSx for Lustre file system.
+// Creates a transfer location for an Amazon FSx for Lustre file system. DataSync
+// can use this location as a source or destination for transferring data.
+//
+// Before you begin, make sure that you understand how DataSync accesses FSx
+// for Lustre file systems (https://docs.aws.amazon.com/datasync/latest/userguide/create-lustre-location.html#create-lustre-location-access).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -581,11 +587,12 @@ func (c *DataSync) CreateLocationFsxOntapRequest(input *CreateLocationFsxOntapIn
 
 // CreateLocationFsxOntap API operation for AWS DataSync.
 //
-// Creates an endpoint for an Amazon FSx for NetApp ONTAP file system that DataSync
-// can use for a data transfer.
+// Creates a transfer location for an Amazon FSx for NetApp ONTAP file system.
+// DataSync can use this location as a source or destination for transferring
+// data.
 //
-// Before you begin, make sure that you understand how DataSync accesses an
-// FSx for ONTAP file system (https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html#create-ontap-location-access).
+// Before you begin, make sure that you understand how DataSync accesses FSx
+// for ONTAP file systems (https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html#create-ontap-location-access).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -667,9 +674,11 @@ func (c *DataSync) CreateLocationFsxOpenZfsRequest(input *CreateLocationFsxOpenZ
 
 // CreateLocationFsxOpenZfs API operation for AWS DataSync.
 //
-// Creates an endpoint for an Amazon FSx for OpenZFS file system that DataSync
-// can access for a transfer. For more information, see Creating a location
-// for FSx for OpenZFS (https://docs.aws.amazon.com/datasync/latest/userguide/create-openzfs-location.html).
+// Creates a transfer location for an Amazon FSx for OpenZFS file system. DataSync
+// can use this location as a source or destination for transferring data.
+//
+// Before you begin, make sure that you understand how DataSync accesses FSx
+// for OpenZFS file systems (https://docs.aws.amazon.com/datasync/latest/userguide/create-openzfs-location.html#create-openzfs-access).
 //
 // Request parameters related to SMB aren't supported with the CreateLocationFsxOpenZfs
 // operation.
@@ -754,11 +763,12 @@ func (c *DataSync) CreateLocationFsxWindowsRequest(input *CreateLocationFsxWindo
 
 // CreateLocationFsxWindows API operation for AWS DataSync.
 //
-// Creates an endpoint for an Amazon FSx for Windows File Server file system
-// that DataSync can use for a data transfer.
+// Creates a transfer location for an Amazon FSx for Windows File Server file
+// system. DataSync can use this location as a source or destination for transferring
+// data.
 //
-// Before you begin, make sure that you understand how DataSync accesses an
-// FSx for Windows File Server (https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-location-access).
+// Before you begin, make sure that you understand how DataSync accesses FSx
+// for Windows File Server file systems (https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-location-access).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -840,7 +850,12 @@ func (c *DataSync) CreateLocationHdfsRequest(input *CreateLocationHdfsInput) (re
 
 // CreateLocationHdfs API operation for AWS DataSync.
 //
-// Creates an endpoint for a Hadoop Distributed File System (HDFS).
+// Creates a transfer location for a Hadoop Distributed File System (HDFS).
+// DataSync can use this location as a source or destination for transferring
+// data.
+//
+// Before you begin, make sure that you understand how DataSync accesses HDFS
+// clusters (https://docs.aws.amazon.com/datasync/latest/userguide/create-hdfs-location.html#accessing-hdfs).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -922,11 +937,12 @@ func (c *DataSync) CreateLocationNfsRequest(input *CreateLocationNfsInput) (req 
 
 // CreateLocationNfs API operation for AWS DataSync.
 //
-// Creates an endpoint for a Network File System (NFS) file server that DataSync
-// can use for a data transfer.
+// Creates a transfer location for a Network File System (NFS) file server.
+// DataSync can use this location as a source or destination for transferring
+// data.
 //
-// For more information, see Configuring transfers to or from an NFS file server
-// (https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html).
+// Before you begin, make sure that you understand how DataSync accesses NFS
+// file servers (https://docs.aws.amazon.com/datasync/latest/userguide/create-nfs-location.html#accessing-nfs).
 //
 // If you're copying data to or from an Snowcone device, you can also use CreateLocationNfs
 // to create your transfer location. For more information, see Configuring transfers
@@ -1012,9 +1028,11 @@ func (c *DataSync) CreateLocationObjectStorageRequest(input *CreateLocationObjec
 
 // CreateLocationObjectStorage API operation for AWS DataSync.
 //
-// Creates an endpoint for an object storage system that DataSync can access
-// for a transfer. For more information, see Creating a location for object
-// storage (https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html).
+// Creates a transfer location for an object storage system. DataSync can use
+// this location as a source or destination for transferring data.
+//
+// Before you begin, make sure that you understand the prerequisites (https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html#create-object-location-prerequisites)
+// for DataSync to work with object storage systems.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1096,16 +1114,16 @@ func (c *DataSync) CreateLocationS3Request(input *CreateLocationS3Input) (req *r
 
 // CreateLocationS3 API operation for AWS DataSync.
 //
-// A location is an endpoint for an Amazon S3 bucket. DataSync can use the location
-// as a source or destination for copying data.
+// Creates a transfer location for an Amazon S3 bucket. DataSync can use this
+// location as a source or destination for transferring data.
 //
-// Before you create your location, make sure that you read the following sections:
+// Before you begin, make sure that you read the following topics:
 //
 //   - Storage class considerations with Amazon S3 locations (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes)
 //
 //   - Evaluating S3 request costs when using DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests)
 //
-// For more information, see Creating an Amazon S3 location (https://docs.aws.amazon.com/datasync/latest/userguide/create-locations-cli.html#create-location-s3-cli).
+// For more information, see Configuring transfers with Amazon S3 (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1187,11 +1205,12 @@ func (c *DataSync) CreateLocationSmbRequest(input *CreateLocationSmbInput) (req 
 
 // CreateLocationSmb API operation for AWS DataSync.
 //
-// Creates an endpoint for a Server Message Block (SMB) file server that DataSync
-// can use for a data transfer.
+// Creates a transfer location for a Server Message Block (SMB) file server.
+// DataSync can use this location as a source or destination for transferring
+// data.
 //
-// Before you begin, make sure that you understand how DataSync accesses an
-// SMB file server (https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html).
+// Before you begin, make sure that you understand how DataSync accesses SMB
+// file servers (https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1273,12 +1292,10 @@ func (c *DataSync) CreateTaskRequest(input *CreateTaskInput) (req *request.Reque
 
 // CreateTask API operation for AWS DataSync.
 //
-// Configures a transfer task, which defines where and how DataSync moves your
-// data.
+// Configures a task, which defines where and how DataSync transfers your data.
 //
-// A task includes a source location, destination location, and the options
-// for how and when you want to transfer your data (such as bandwidth limits,
-// scheduling, among other options).
+// A task includes a source location, destination location, and transfer options
+// (such as bandwidth limits, scheduling, and more).
 //
 // If you're planning to transfer data to or from an Amazon S3 location, review
 // how DataSync can affect your S3 request charges (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-s3-requests)
@@ -1454,7 +1471,7 @@ func (c *DataSync) DeleteLocationRequest(input *DeleteLocationInput) (req *reque
 
 // DeleteLocation API operation for AWS DataSync.
 //
-// Deletes the configuration of a location used by DataSync.
+// Deletes a transfer location resource from DataSync.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1537,7 +1554,7 @@ func (c *DataSync) DeleteTaskRequest(input *DeleteTaskInput) (req *request.Reque
 
 // DeleteTask API operation for AWS DataSync.
 //
-// Deletes an DataSync transfer task.
+// Deletes a transfer task resource from DataSync.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1869,7 +1886,8 @@ func (c *DataSync) DescribeLocationEfsRequest(input *DescribeLocationEfsInput) (
 
 // DescribeLocationEfs API operation for AWS DataSync.
 //
-// Returns metadata about your DataSync location for an Amazon EFS file system.
+// Provides details about how an DataSync transfer location for an Amazon EFS
+// file system is configured.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1951,8 +1969,8 @@ func (c *DataSync) DescribeLocationFsxLustreRequest(input *DescribeLocationFsxLu
 
 // DescribeLocationFsxLustre API operation for AWS DataSync.
 //
-// Provides details about how an DataSync location for an Amazon FSx for Lustre
-// file system is configured.
+// Provides details about how an DataSync transfer location for an Amazon FSx
+// for Lustre file system is configured.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2034,8 +2052,8 @@ func (c *DataSync) DescribeLocationFsxOntapRequest(input *DescribeLocationFsxOnt
 
 // DescribeLocationFsxOntap API operation for AWS DataSync.
 //
-// Provides details about how an DataSync location for an Amazon FSx for NetApp
-// ONTAP file system is configured.
+// Provides details about how an DataSync transfer location for an Amazon FSx
+// for NetApp ONTAP file system is configured.
 //
 // If your location uses SMB, the DescribeLocationFsxOntap operation doesn't
 // actually return a Password.
@@ -2120,8 +2138,8 @@ func (c *DataSync) DescribeLocationFsxOpenZfsRequest(input *DescribeLocationFsxO
 
 // DescribeLocationFsxOpenZfs API operation for AWS DataSync.
 //
-// Provides details about how an DataSync location for an Amazon FSx for OpenZFS
-// file system is configured.
+// Provides details about how an DataSync transfer location for an Amazon FSx
+// for OpenZFS file system is configured.
 //
 // Response elements related to SMB aren't supported with the DescribeLocationFsxOpenZfs
 // operation.
@@ -2206,8 +2224,8 @@ func (c *DataSync) DescribeLocationFsxWindowsRequest(input *DescribeLocationFsxW
 
 // DescribeLocationFsxWindows API operation for AWS DataSync.
 //
-// Returns metadata about an Amazon FSx for Windows File Server location, such
-// as information about its path.
+// Provides details about how an DataSync transfer location for an Amazon FSx
+// for Windows File Server file system is configured.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2289,8 +2307,8 @@ func (c *DataSync) DescribeLocationHdfsRequest(input *DescribeLocationHdfsInput)
 
 // DescribeLocationHdfs API operation for AWS DataSync.
 //
-// Returns metadata, such as the authentication information about the Hadoop
-// Distributed File System (HDFS) location.
+// Provides details about how an DataSync transfer location for a Hadoop Distributed
+// File System (HDFS) is configured.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2455,7 +2473,8 @@ func (c *DataSync) DescribeLocationObjectStorageRequest(input *DescribeLocationO
 
 // DescribeLocationObjectStorage API operation for AWS DataSync.
 //
-// Returns metadata about your DataSync location for an object storage system.
+// Provides details about how an DataSync transfer location for an object storage
+// system is configured.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2537,7 +2556,8 @@ func (c *DataSync) DescribeLocationS3Request(input *DescribeLocationS3Input) (re
 
 // DescribeLocationS3 API operation for AWS DataSync.
 //
-// Returns metadata, such as bucket name, about an Amazon S3 bucket location.
+// Provides details about how an DataSync transfer location for an S3 bucket
+// is configured.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2619,7 +2639,8 @@ func (c *DataSync) DescribeLocationSmbRequest(input *DescribeLocationSmbInput) (
 
 // DescribeLocationSmb API operation for AWS DataSync.
 //
-// Returns metadata, such as the path and user information about an SMB location.
+// Provides details about how an DataSync transfer location for a Server Message
+// Block (SMB) file server is configured.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3071,7 +3092,8 @@ func (c *DataSync) DescribeTaskRequest(input *DescribeTaskInput) (req *request.R
 
 // DescribeTask API operation for AWS DataSync.
 //
-// Provides information about an DataSync transfer task.
+// Provides information about a task, which defines where and how DataSync transfers
+// your data.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4053,7 +4075,7 @@ func (c *DataSync) ListTaskExecutionsRequest(input *ListTaskExecutionsInput) (re
 
 // ListTaskExecutions API operation for AWS DataSync.
 //
-// Returns a list of executed tasks.
+// Returns a list of executions for an DataSync transfer task.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5273,9 +5295,8 @@ func (c *DataSync) UpdateLocationObjectStorageRequest(input *UpdateLocationObjec
 
 // UpdateLocationObjectStorage API operation for AWS DataSync.
 //
-// Updates some parameters of an existing object storage location that DataSync
-// accesses for a transfer. For information about creating a self-managed object
-// storage location, see Creating a location for object storage (https://docs.aws.amazon.com/datasync/latest/userguide/create-object-location.html).
+// Updates some parameters of an existing DataSync location for an object storage
+// system.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5528,7 +5549,8 @@ func (c *DataSync) UpdateTaskRequest(input *UpdateTaskInput) (req *request.Reque
 
 // UpdateTask API operation for AWS DataSync.
 //
-// Updates the configuration of a DataSync transfer task.
+// Updates the configuration of a task, which defines where and how DataSync
+// transfers your data.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5861,7 +5883,7 @@ type AgentListEntry struct {
 	AgentArn *string `type:"string"`
 
 	// The name of an agent.
-	Name *string `min:"1" type:"string"`
+	Name *string `type:"string"`
 
 	// The platform-related details about the agent, such as the version number.
 	Platform *Platform `type:"structure"`
@@ -6125,7 +6147,7 @@ type CreateAgentInput struct {
 	ActivationKey *string `type:"string" required:"true"`
 
 	// Specifies a name for your agent. You can see this name in the DataSync console.
-	AgentName *string `min:"1" type:"string"`
+	AgentName *string `type:"string"`
 
 	// Specifies the Amazon Resource Name (ARN) of the security group that protects
 	// your task's network interfaces (https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces)
@@ -6174,9 +6196,6 @@ func (s *CreateAgentInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateAgentInput"}
 	if s.ActivationKey == nil {
 		invalidParams.Add(request.NewErrParamRequired("ActivationKey"))
-	}
-	if s.AgentName != nil && len(*s.AgentName) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("AgentName", 1))
 	}
 	if s.SecurityGroupArns != nil && len(s.SecurityGroupArns) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("SecurityGroupArns", 1))
@@ -7065,14 +7084,11 @@ func (s *CreateLocationFsxOpenZfsOutput) SetLocationArn(v string) *CreateLocatio
 type CreateLocationFsxWindowsInput struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the name of the Windows domain that the FSx for Windows File Server
-	// belongs to.
+	// Specifies the name of the Microsoft Active Directory domain that the FSx
+	// for Windows File Server file system belongs to.
 	//
-	// If you have multiple domains in your environment, configuring this parameter
-	// makes sure that DataSync connects to the right file server.
-	//
-	// For more information, see required permissions (https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-windows-location-permissions)
-	// for FSx for Windows File Server locations.
+	// If you have multiple Active Directory domains in your environment, configuring
+	// this parameter makes sure that DataSync connects to the right file system.
 	Domain *string `type:"string"`
 
 	// Specifies the Amazon Resource Name (ARN) for the FSx for Windows File Server
@@ -7081,11 +7097,9 @@ type CreateLocationFsxWindowsInput struct {
 	// FsxFilesystemArn is a required field
 	FsxFilesystemArn *string `type:"string" required:"true"`
 
-	// Specifies the password of the user who has the permissions to access files
-	// and folders in the file system.
-	//
-	// For more information, see required permissions (https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-windows-location-permissions)
-	// for FSx for Windows File Server locations.
+	// Specifies the password of the user with the permissions to mount and access
+	// the files, folders, and file metadata in your FSx for Windows File Server
+	// file system.
 	//
 	// Password is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by CreateLocationFsxWindowsInput's
@@ -7118,8 +7132,8 @@ type CreateLocationFsxWindowsInput struct {
 	// location.
 	Tags []*TagListEntry `type:"list"`
 
-	// Specifies the user who has the permissions to access files, folders, and
-	// metadata in your file system.
+	// Specifies the user with the permissions to mount and access the files, folders,
+	// and file metadata in your FSx for Windows File Server file system.
 	//
 	// For information about choosing a user with the right level of access for
 	// your transfer, see required permissions (https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-windows-location-permissions)
@@ -7699,19 +7713,25 @@ type CreateLocationObjectStorageInput struct {
 	// String and GoString methods.
 	SecretKey *string `type:"string" sensitive:"true"`
 
-	// Specifies a file with the certificates that are used to sign the object storage
-	// server's certificate (for example, file:///home/user/.ssh/storage_sys_certificate.pem).
-	// The file you specify must include the following:
+	// Specifies a certificate chain for DataSync to authenticate with your object
+	// storage system if the system uses a private or self-signed certificate authority
+	// (CA). You must specify a single .pem file with a full certificate chain (for
+	// example, file:///home/user/.ssh/object_storage_certificates.pem).
 	//
-	//    * The certificate of the signing certificate authority (CA)
+	// The certificate chain might include:
 	//
-	//    * Any intermediate certificates
+	//    * The object storage system's certificate
 	//
-	//    * base64 encoding
+	//    * All intermediate certificates (if there are any)
 	//
-	//    * A .pem extension
+	//    * The root certificate of the signing CA
 	//
-	// The file can be up to 32768 bytes (before base64 encoding).
+	// You can concatenate your certificates into a .pem file (which can be up to
+	// 32768 bytes before base64 encoding). The following example cat command creates
+	// an object_storage_certificates.pem file that includes three certificates:
+	//
+	// cat object_server_certificate.pem intermediate_certificate.pem ca_root_certificate.pem
+	// > object_storage_certificates.pem
 	//
 	// To use this parameter, configure ServerProtocol to HTTPS.
 	// ServerCertificate is automatically base64 encoded/decoded by the SDK.
@@ -7893,44 +7913,60 @@ func (s *CreateLocationObjectStorageOutput) SetLocationArn(v string) *CreateLoca
 type CreateLocationS3Input struct {
 	_ struct{} `type:"structure"`
 
-	// If you're using DataSync on an Amazon Web Services Outpost, specify the Amazon
-	// Resource Names (ARNs) of the DataSync agents deployed on your Outpost. For
-	// more information about launching a DataSync agent on an Amazon Web Services
-	// Outpost, see Deploy your DataSync agent on Outposts (https://docs.aws.amazon.com/datasync/latest/userguide/deploy-agents.html#outposts-agent).
+	// (Amazon S3 on Outposts only) Specifies the Amazon Resource Name (ARN) of
+	// the DataSync agent on your Outpost.
+	//
+	// For more information, see Deploy your DataSync agent on Outposts (https://docs.aws.amazon.com/datasync/latest/userguide/deploy-agents.html#outposts-agent).
 	AgentArns []*string `min:"1" type:"list"`
 
-	// The ARN of the Amazon S3 bucket. If the bucket is on an Amazon Web Services
-	// Outpost, this must be an access point ARN.
+	// Specifies the ARN of the S3 bucket that you want to use as a location. (When
+	// creating your DataSync task later, you specify whether this location is a
+	// transfer source or destination.)
+	//
+	// If your S3 bucket is located on an Outposts resource, you must specify an
+	// Amazon S3 access point. For more information, see Managing data access with
+	// Amazon S3 access points (https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-points.html)
+	// in the Amazon S3 User Guide.
 	//
 	// S3BucketArn is a required field
 	S3BucketArn *string `type:"string" required:"true"`
 
-	// The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
-	// role used to access an Amazon S3 bucket.
+	// Specifies the Amazon Resource Name (ARN) of the Identity and Access Management
+	// (IAM) role that DataSync uses to access your S3 bucket.
 	//
-	// For detailed information about using such a role, see Creating a Location
-	// for Amazon S3 in the DataSync User Guide.
+	// For more information, see Accessing S3 buckets (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-access).
 	//
 	// S3Config is a required field
 	S3Config *S3Config `type:"structure" required:"true"`
 
-	// The Amazon S3 storage class that you want to store your files in when this
-	// location is used as a task destination. For buckets in Amazon Web Services
-	// Regions, the storage class defaults to Standard. For buckets on Outposts,
-	// the storage class defaults to Amazon Web Services S3 Outposts.
+	// Specifies the storage class that you want your objects to use when Amazon
+	// S3 is a transfer destination.
 	//
-	// For more information about S3 storage classes, see Amazon S3 Storage Classes
-	// (http://aws.amazon.com/s3/storage-classes/). Some storage classes have behaviors
-	// that can affect your S3 storage cost. For detailed information, see Considerations
-	// when working with S3 storage classes in DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
+	// For buckets in Amazon Web Services Regions, the storage class defaults to
+	// STANDARD. For buckets on Outposts, the storage class defaults to OUTPOSTS.
+	//
+	// For more information, see Storage class considerations with Amazon S3 transfers
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
 	S3StorageClass *string `type:"string" enum:"S3StorageClass"`
 
-	// A subdirectory in the Amazon S3 bucket. This subdirectory in Amazon S3 is
-	// used to read data from the S3 source location or write data to the S3 destination.
+	// Specifies a prefix in the S3 bucket that DataSync reads from or writes to
+	// (depending on whether the bucket is a source or destination location).
+	//
+	// DataSync can't transfer objects with a prefix that begins with a slash (/)
+	// or includes //, /./, or /../ patterns. For example:
+	//
+	//    * /photos
+	//
+	//    * photos//2006/January
+	//
+	//    * photos/./2006/February
+	//
+	//    * photos/../2006/March
 	Subdirectory *string `type:"string"`
 
-	// The key-value pair that represents the tag that you want to add to the location.
-	// The value can be an empty string. We recommend using tags to name your resources.
+	// Specifies labels that help you categorize, filter, and search for your Amazon
+	// Web Services resources. We recommend creating at least a name tag for your
+	// transfer location.
 	Tags []*TagListEntry `type:"list"`
 }
 
@@ -8026,8 +8062,7 @@ func (s *CreateLocationS3Input) SetTags(v []*TagListEntry) *CreateLocationS3Inpu
 type CreateLocationS3Output struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the source Amazon S3 bucket location that
-	// is created.
+	// The ARN of the S3 location that you created.
 	LocationArn *string `type:"string"`
 }
 
@@ -8065,13 +8100,11 @@ type CreateLocationSmbInput struct {
 	// AgentArns is a required field
 	AgentArns []*string `min:"1" type:"list" required:"true"`
 
-	// Specifies the Windows domain name that your SMB file server belongs to.
+	// Specifies the name of the Active Directory domain that your SMB file server
+	// belongs to.
 	//
-	// If you have multiple domains in your environment, configuring this parameter
-	// makes sure that DataSync connects to the right file server.
-	//
-	// For more information, see required permissions (https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions)
-	// for SMB locations.
+	// If you have multiple Active Directory domains in your environment, configuring
+	// this parameter makes sure that DataSync connects to the right file server.
 	Domain *string `type:"string"`
 
 	// Specifies the version of the SMB protocol that DataSync uses to access your
@@ -8104,9 +8137,9 @@ type CreateLocationSmbInput struct {
 	// (for example, /path/to/subdirectory). Make sure that other SMB clients in
 	// your network can also mount this path.
 	//
-	// To copy all data in the specified subdirectory, DataSync must be able to
-	// mount the SMB share and access all of its data. For more information, see
-	// required permissions (https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions)
+	// To copy all data in the subdirectory, DataSync must be able to mount the
+	// SMB share and access all of its data. For more information, see required
+	// permissions (https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions)
 	// for SMB locations.
 	//
 	// Subdirectory is a required field
@@ -8117,8 +8150,8 @@ type CreateLocationSmbInput struct {
 	// location.
 	Tags []*TagListEntry `type:"list"`
 
-	// Specifies the user name that can mount your SMB file server and has permission
-	// to access the files and folders involved in your transfer.
+	// Specifies the user that can mount and access the files, folders, and file
+	// metadata in your SMB file server.
 	//
 	// For information about choosing a user with the right level of access for
 	// your transfer, see required permissions (https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions)
@@ -8268,57 +8301,65 @@ func (s *CreateLocationSmbOutput) SetLocationArn(v string) *CreateLocationSmbOut
 type CreateTaskInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon CloudWatch log group that is
-	// used to monitor and log events in the task.
+	// Specifies the Amazon Resource Name (ARN) of an Amazon CloudWatch log group
+	// for monitoring your task.
 	CloudWatchLogGroupArn *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of an Amazon Web Services storage resource's
-	// location.
+	// Specifies the ARN of your transfer's destination location.
 	//
 	// DestinationLocationArn is a required field
 	DestinationLocationArn *string `type:"string" required:"true"`
 
-	// Specifies a list of filter rules that exclude specific data during your transfer.
-	// For more information and examples, see Filtering data transferred by DataSync
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
+	// Specifies exclude filters that define the files, objects, and folders in
+	// your source location that you don't want DataSync to transfer. For more information
+	// and examples, see Specifying what DataSync transfers by using filters (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
 	Excludes []*FilterRule `type:"list"`
 
-	// Specifies a list of filter rules that include specific data during your transfer.
-	// For more information and examples, see Filtering data transferred by DataSync
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
+	// Specifies include filters define the files, objects, and folders in your
+	// source location that you want DataSync to transfer. For more information
+	// and examples, see Specifying what DataSync transfers by using filters (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
 	Includes []*FilterRule `type:"list"`
 
-	// The name of a task. This value is a text reference that is used to identify
-	// the task in the console.
-	Name *string `min:"1" type:"string"`
-
-	// Specifies the configuration options for a task. Some options include preserving
-	// file or object metadata and verifying data integrity.
+	// Configures a manifest, which is a list of files or objects that you want
+	// DataSync to transfer. For more information and configuration examples, see
+	// Specifying what DataSync transfers by using a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
 	//
-	// You can also override these options before starting an individual run of
-	// a task (also known as a task execution). For more information, see StartTaskExecution
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/API_StartTaskExecution.html).
+	// When using this parameter, your caller identity (the role that you're using
+	// DataSync with) must have the iam:PassRole permission. The AWSDataSyncFullAccess
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-awsdatasyncfullaccess)
+	// policy includes this permission.
+	ManifestConfig *ManifestConfig `type:"structure"`
+
+	// Specifies the name of your task.
+	Name *string `type:"string"`
+
+	// Specifies your task's settings, such as preserving file metadata, verifying
+	// data integrity, among other options.
 	Options *Options `type:"structure"`
 
-	// Specifies a schedule used to periodically transfer files from a source to
-	// a destination location. The schedule should be specified in UTC time. For
-	// more information, see Scheduling your task (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html).
+	// Specifies a schedule for when you want your task to run. For more information,
+	// see Scheduling your task (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html).
 	Schedule *TaskSchedule `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the source location for the task.
+	// Specifies the ARN of your transfer's source location.
 	//
 	// SourceLocationArn is a required field
 	SourceLocationArn *string `type:"string" required:"true"`
 
-	// Specifies the tags that you want to apply to the Amazon Resource Name (ARN)
-	// representing the task.
+	// Specifies the tags that you want to apply to your task.
 	//
 	// Tags are key-value pairs that help you manage, filter, and search for your
 	// DataSync resources.
 	Tags []*TagListEntry `type:"list"`
 
 	// Specifies how you want to configure a task report, which provides detailed
-	// information about for your DataSync transfer.
+	// information about your DataSync transfer. For more information, see Monitoring
+	// your DataSync transfers with task reports (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
+	//
+	// When using this parameter, your caller identity (the role that you're using
+	// DataSync with) must have the iam:PassRole permission. The AWSDataSyncFullAccess
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-awsdatasyncfullaccess)
+	// policy includes this permission.
 	TaskReportConfig *TaskReportConfig `type:"structure"`
 }
 
@@ -8346,11 +8387,13 @@ func (s *CreateTaskInput) Validate() error {
 	if s.DestinationLocationArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("DestinationLocationArn"))
 	}
-	if s.Name != nil && len(*s.Name) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
 	if s.SourceLocationArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("SourceLocationArn"))
+	}
+	if s.ManifestConfig != nil {
+		if err := s.ManifestConfig.Validate(); err != nil {
+			invalidParams.AddNested("ManifestConfig", err.(request.ErrInvalidParams))
+		}
 	}
 	if s.Options != nil {
 		if err := s.Options.Validate(); err != nil {
@@ -8405,6 +8448,12 @@ func (s *CreateTaskInput) SetExcludes(v []*FilterRule) *CreateTaskInput {
 // SetIncludes sets the Includes field's value.
 func (s *CreateTaskInput) SetIncludes(v []*FilterRule) *CreateTaskInput {
 	s.Includes = v
+	return s
+}
+
+// SetManifestConfig sets the ManifestConfig field's value.
+func (s *CreateTaskInput) SetManifestConfig(v *ManifestConfig) *CreateTaskInput {
+	s.ManifestConfig = v
 	return s
 }
 
@@ -8824,7 +8873,7 @@ type DescribeAgentOutput struct {
 	LastConnectionTime *time.Time `type:"timestamp"`
 
 	// The name of the agent.
-	Name *string `min:"1" type:"string"`
+	Name *string `type:"string"`
 
 	// The platform-related details about the agent, such as the version number.
 	Platform *Platform `type:"structure"`
@@ -9672,8 +9721,8 @@ func (s *DescribeLocationFsxOpenZfsOutput) SetSecurityGroupArns(v []*string) *De
 type DescribeLocationFsxWindowsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the FSx for Windows File Server location
-	// to describe.
+	// Specifies the Amazon Resource Name (ARN) of the FSx for Windows File Server
+	// location.
 	//
 	// LocationArn is a required field
 	LocationArn *string `type:"string" required:"true"`
@@ -9722,23 +9771,23 @@ type DescribeLocationFsxWindowsOutput struct {
 	// The time that the FSx for Windows File Server location was created.
 	CreationTime *time.Time `type:"timestamp"`
 
-	// The name of the Windows domain that the FSx for Windows File Server belongs
-	// to.
+	// The name of the Microsoft Active Directory domain that the FSx for Windows
+	// File Server file system belongs to.
 	Domain *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the FSx for Windows File Server location
-	// that was described.
+	// The ARN of the FSx for Windows File Server location.
 	LocationArn *string `type:"string"`
 
-	// The URL of the FSx for Windows File Server location that was described.
+	// The uniform resource identifier (URI) of the FSx for Windows File Server
+	// location.
 	LocationUri *string `type:"string"`
 
-	// The Amazon Resource Names (ARNs) of the security groups that are configured
-	// for the FSx for Windows File Server file system.
+	// The ARNs of the security groups that are configured for the FSx for Windows
+	// File Server file system.
 	SecurityGroupArns []*string `min:"1" type:"list"`
 
-	// The user who has the permissions to access files and folders in the FSx for
-	// Windows File Server file system.
+	// The user with the permissions to mount and access the FSx for Windows File
+	// Server file system.
 	User *string `type:"string"`
 }
 
@@ -9799,7 +9848,7 @@ func (s *DescribeLocationFsxWindowsOutput) SetUser(v string) *DescribeLocationFs
 type DescribeLocationHdfsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the HDFS cluster location to describe.
+	// Specifies the Amazon Resource Name (ARN) of the HDFS location.
 	//
 	// LocationArn is a required field
 	LocationArn *string `type:"string" required:"true"`
@@ -9845,7 +9894,7 @@ func (s *DescribeLocationHdfsInput) SetLocationArn(v string) *DescribeLocationHd
 type DescribeLocationHdfsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The ARNs of the agents that are used to connect to the HDFS cluster.
+	// The ARNs of the DataSync agents that can connect with your HDFS cluster.
 	AgentArns []*string `min:"1" type:"list"`
 
 	// The type of authentication used to determine the identity of the user.
@@ -9864,26 +9913,26 @@ type DescribeLocationHdfsOutput struct {
 	// The URI of the HDFS cluster's Key Management Server (KMS).
 	KmsKeyProviderUri *string `min:"1" type:"string"`
 
-	// The ARN of the HDFS cluster location.
+	// The ARN of the HDFS location.
 	LocationArn *string `type:"string"`
 
-	// The URI of the HDFS cluster location.
+	// The URI of the HDFS location.
 	LocationUri *string `type:"string"`
 
-	// The NameNode that manage the HDFS namespace.
+	// The NameNode that manages the HDFS namespace.
 	NameNodes []*HdfsNameNode `min:"1" type:"list"`
 
-	// The Quality of Protection (QOP) configuration specifies the Remote Procedure
-	// Call (RPC) and data transfer protection settings configured on the Hadoop
-	// Distributed File System (HDFS) cluster.
+	// The Quality of Protection (QOP) configuration, which specifies the Remote
+	// Procedure Call (RPC) and data transfer protection settings configured on
+	// the HDFS cluster.
 	QopConfiguration *QopConfiguration `type:"structure"`
 
 	// The number of DataNodes to replicate the data to when writing to the HDFS
 	// cluster.
 	ReplicationFactor *int64 `min:"1" type:"integer"`
 
-	// The user name used to identify the client on the host operating system. This
-	// parameter is used if the AuthenticationType is defined as SIMPLE.
+	// The user name to identify the client on the host operating system. This parameter
+	// is used if the AuthenticationType is defined as SIMPLE.
 	SimpleUser *string `min:"1" type:"string"`
 }
 
@@ -10035,7 +10084,7 @@ type DescribeLocationNfsOutput struct {
 	// The ARN of the NFS location.
 	LocationArn *string `type:"string"`
 
-	// The URL of the NFS location.
+	// The URI of the NFS location.
 	LocationUri *string `type:"string"`
 
 	// The mount options that DataSync uses to mount your NFS file server.
@@ -10097,8 +10146,7 @@ func (s *DescribeLocationNfsOutput) SetOnPremConfig(v *OnPremConfig) *DescribeLo
 type DescribeLocationObjectStorageInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the object storage system location that
-	// you want information about.
+	// Specifies the Amazon Resource Name (ARN) of the object storage system location.
 	//
 	// LocationArn is a required field
 	LocationArn *string `type:"string" required:"true"`
@@ -10149,7 +10197,8 @@ type DescribeLocationObjectStorageOutput struct {
 	// object storage system.
 	AccessKey *string `type:"string"`
 
-	// The ARNs of the DataSync agents that can securely connect with your location.
+	// The ARNs of the DataSync agents that can connect with your object storage
+	// system.
 	AgentArns []*string `min:"1" type:"list"`
 
 	// The time that the location was created.
@@ -10158,11 +10207,12 @@ type DescribeLocationObjectStorageOutput struct {
 	// The ARN of the object storage system location.
 	LocationArn *string `type:"string"`
 
-	// The URL of the object storage system location.
+	// The URI of the object storage system location.
 	LocationUri *string `type:"string"`
 
-	// The self-signed certificate that DataSync uses to securely authenticate with
-	// your object storage system.
+	// The certificate chain for DataSync to authenticate with your object storage
+	// system if the system uses a private or self-signed certificate authority
+	// (CA).
 	// ServerCertificate is automatically base64 encoded/decoded by the SDK.
 	ServerCertificate []byte `type:"blob"`
 
@@ -10244,7 +10294,7 @@ func (s *DescribeLocationObjectStorageOutput) SetServerProtocol(v string) *Descr
 type DescribeLocationS3Input struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon S3 bucket location to describe.
+	// Specifies the Amazon Resource Name (ARN) of the Amazon S3 location.
 	//
 	// LocationArn is a required field
 	LocationArn *string `type:"string" required:"true"`
@@ -10291,34 +10341,33 @@ func (s *DescribeLocationS3Input) SetLocationArn(v string) *DescribeLocationS3In
 type DescribeLocationS3Output struct {
 	_ struct{} `type:"structure"`
 
-	// If you are using DataSync on an Amazon Web Services Outpost, the Amazon Resource
-	// Name (ARNs) of the EC2 agents deployed on your Outpost. For more information
-	// about launching a DataSync agent on an Amazon Web Services Outpost, see Deploy
-	// your DataSync agent on Outposts (https://docs.aws.amazon.com/datasync/latest/userguide/deploy-agents.html#outposts-agent).
+	// The ARNs of the DataSync agents deployed on your Outpost when using working
+	// with Amazon S3 on Outposts.
+	//
+	// For more information, see Deploy your DataSync agent on Outposts (https://docs.aws.amazon.com/datasync/latest/userguide/deploy-agents.html#outposts-agent).
 	AgentArns []*string `min:"1" type:"list"`
 
-	// The time that the Amazon S3 bucket location was created.
+	// The time that the Amazon S3 location was created.
 	CreationTime *time.Time `type:"timestamp"`
 
-	// The Amazon Resource Name (ARN) of the Amazon S3 bucket or access point.
+	// The ARN of the Amazon S3 location.
 	LocationArn *string `type:"string"`
 
 	// The URL of the Amazon S3 location that was described.
 	LocationUri *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
-	// role used to access an Amazon S3 bucket.
+	// Specifies the Amazon Resource Name (ARN) of the Identity and Access Management
+	// (IAM) role that DataSync uses to access your S3 bucket.
 	//
-	// For detailed information about using such a role, see Creating a Location
-	// for Amazon S3 in the DataSync User Guide.
+	// For more information, see Accessing S3 buckets (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-access).
 	S3Config *S3Config `type:"structure"`
 
-	// The Amazon S3 storage class that you chose to store your files in when this
-	// location is used as a task destination. For more information about S3 storage
-	// classes, see Amazon S3 Storage Classes (http://aws.amazon.com/s3/storage-classes/).
-	// Some storage classes have behaviors that can affect your S3 storage cost.
-	// For detailed information, see Considerations when working with S3 storage
-	// classes in DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
+	// When Amazon S3 is a destination location, this is the storage class that
+	// you chose for your objects.
+	//
+	// Some storage classes have behaviors that can affect your Amazon S3 storage
+	// costs. For more information, see Storage class considerations with Amazon
+	// S3 transfers (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
 	S3StorageClass *string `type:"string" enum:"S3StorageClass"`
 }
 
@@ -10380,7 +10429,8 @@ func (s *DescribeLocationS3Output) SetS3StorageClass(v string) *DescribeLocation
 type DescribeLocationSmbInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the SMB location to describe.
+	// Specifies the Amazon Resource Name (ARN) of the SMB location that you want
+	// information about.
 	//
 	// LocationArn is a required field
 	LocationArn *string `type:"string" required:"true"`
@@ -10427,28 +10477,27 @@ func (s *DescribeLocationSmbInput) SetLocationArn(v string) *DescribeLocationSmb
 type DescribeLocationSmbOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the source SMB file system location that
-	// is created.
+	// The ARNs of the DataSync agents that can connect with your SMB file server.
 	AgentArns []*string `min:"1" type:"list"`
 
 	// The time that the SMB location was created.
 	CreationTime *time.Time `type:"timestamp"`
 
-	// The name of the Windows domain that the SMB server belongs to.
+	// The name of the Microsoft Active Directory domain that the SMB file server
+	// belongs to.
 	Domain *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the SMB location that was described.
+	// The ARN of the SMB location.
 	LocationArn *string `type:"string"`
 
-	// The URL of the source SMB location that was described.
+	// The URI of the SMB location.
 	LocationUri *string `type:"string"`
 
-	// The mount options that are available for DataSync to use to access an SMB
-	// location.
+	// The protocol that DataSync use to access your SMB file.
 	MountOptions *SmbMountOptions `type:"structure"`
 
-	// The user who can mount the share, has the permissions to access files and
-	// folders in the SMB share.
+	// The user that can mount and access the files, folders, and file metadata
+	// in your SMB file server.
 	User *string `type:"string"`
 }
 
@@ -11118,13 +11167,21 @@ type DescribeTaskExecutionOutput struct {
 	// (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
 	Includes []*FilterRule `type:"list"`
 
+	// The configuration of the manifest that lists the files or objects to transfer.
+	// For more information, see Specifying what DataSync transfers by using a manifest
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
+	ManifestConfig *ManifestConfig `type:"structure"`
+
 	// Indicates how your transfer task is configured. These options include how
 	// DataSync handles files, objects, and their associated metadata during your
 	// transfer. You also can specify how to verify data integrity, set bandwidth
 	// limits for your task, among other options.
 	//
 	// Each option has a default value. Unless you need to, you don't have to configure
-	// any of these options before starting your task.
+	// any option before calling StartTaskExecution (https://docs.aws.amazon.com/datasync/latest/userguide/API_StartTaskExecution.html).
+	//
+	// You also can override your task options for each task execution. For example,
+	// you might want to adjust the LogLevel for an individual execution.
 	Options *Options `type:"structure"`
 
 	// Indicates whether DataSync generated a complete task report (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html)
@@ -11148,7 +11205,8 @@ type DescribeTaskExecutionOutput struct {
 	TaskExecutionArn *string `type:"string"`
 
 	// The configuration of your task report, which provides detailed information
-	// about for your DataSync transfer.
+	// about for your DataSync transfer. For more information, see Creating a task
+	// report (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
 	TaskReportConfig *TaskReportConfig `type:"structure"`
 }
 
@@ -11242,6 +11300,12 @@ func (s *DescribeTaskExecutionOutput) SetIncludes(v []*FilterRule) *DescribeTask
 	return s
 }
 
+// SetManifestConfig sets the ManifestConfig field's value.
+func (s *DescribeTaskExecutionOutput) SetManifestConfig(v *ManifestConfig) *DescribeTaskExecutionOutput {
+	s.ManifestConfig = v
+	return s
+}
+
 // SetOptions sets the Options field's value.
 func (s *DescribeTaskExecutionOutput) SetOptions(v *Options) *DescribeTaskExecutionOutput {
 	s.Options = v
@@ -11288,7 +11352,8 @@ func (s *DescribeTaskExecutionOutput) SetTaskReportConfig(v *TaskReportConfig) *
 type DescribeTaskInput struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the Amazon Resource Name (ARN) of the transfer task.
+	// Specifies the Amazon Resource Name (ARN) of the transfer task that you want
+	// information about.
 	//
 	// TaskArn is a required field
 	TaskArn *string `type:"string" required:"true"`
@@ -11335,81 +11400,82 @@ func (s *DescribeTaskInput) SetTaskArn(v string) *DescribeTaskInput {
 type DescribeTaskOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the Amazon CloudWatch log group that was
-	// used to monitor and log events in the task.
+	// The Amazon Resource Name (ARN) of an Amazon CloudWatch log group for monitoring
+	// your task.
 	//
-	// For more information on these groups, see Working with Log Groups and Log
-	// Streams in the Amazon CloudWatch User Guide.
+	// For more information, see Monitoring DataSync with Amazon CloudWatch (https://docs.aws.amazon.com/datasync/latest/userguide/monitor-datasync.html).
 	CloudWatchLogGroupArn *string `type:"string"`
 
 	// The time that the task was created.
 	CreationTime *time.Time `type:"timestamp"`
 
-	// The Amazon Resource Name (ARN) of the task execution that is transferring
-	// files.
+	// The ARN of the most recent task execution.
 	CurrentTaskExecutionArn *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Web Services storage resource's
-	// location.
+	// The ARN of your transfer's destination location.
 	DestinationLocationArn *string `type:"string"`
 
-	// The Amazon Resource Names (ARNs) of the network interfaces created for your
-	// destination location. For more information, see Network interface requirements
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces).
+	// The ARNs of the network interfaces (https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces)
+	// that DataSync created for your destination location.
 	DestinationNetworkInterfaceArns []*string `type:"list"`
 
-	// Errors that DataSync encountered during execution of the task. You can use
-	// this error code to help troubleshoot issues.
+	// If there's an issue with your task, you can use the error code to help you
+	// troubleshoot the problem. For more information, see Troubleshooting issues
+	// with DataSync transfers (https://docs.aws.amazon.com/datasync/latest/userguide/troubleshooting-datasync-locations-tasks.html).
 	ErrorCode *string `type:"string"`
 
-	// Detailed description of an error that was encountered during the task execution.
-	// You can use this information to help troubleshoot issues.
+	// If there's an issue with your task, you can use the error details to help
+	// you troubleshoot the problem. For more information, see Troubleshooting issues
+	// with DataSync transfers (https://docs.aws.amazon.com/datasync/latest/userguide/troubleshooting-datasync-locations-tasks.html).
 	ErrorDetail *string `type:"string"`
 
-	// A list of filter rules that exclude specific data during your transfer. For
-	// more information and examples, see Filtering data transferred by DataSync
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
+	// The exclude filters that define the files, objects, and folders in your source
+	// location that you don't want DataSync to transfer. For more information and
+	// examples, see Specifying what DataSync transfers by using filters (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
 	Excludes []*FilterRule `type:"list"`
 
-	// A list of filter rules that include specific data during your transfer. For
-	// more information and examples, see Filtering data transferred by DataSync
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
+	// The include filters that define the files, objects, and folders in your source
+	// location that you want DataSync to transfer. For more information and examples,
+	// see Specifying what DataSync transfers by using filters (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
 	Includes []*FilterRule `type:"list"`
 
-	// The name of the task that was described.
-	Name *string `min:"1" type:"string"`
+	// The configuration of the manifest that lists the files or objects that you
+	// want DataSync to transfer. For more information, see Specifying what DataSync
+	// transfers by using a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
+	ManifestConfig *ManifestConfig `type:"structure"`
 
-	// The configuration options that control the behavior of the StartTaskExecution
-	// operation. Some options include preserving file or object metadata and verifying
-	// data integrity.
-	//
-	// You can override these options for each task execution. For more information,
-	// see StartTaskExecution (https://docs.aws.amazon.com/datasync/latest/userguide/API_StartTaskExecution.html).
+	// The name of your task.
+	Name *string `type:"string"`
+
+	// The task's settings. For example, what file metadata gets preserved, how
+	// data integrity gets verified at the end of your transfer, bandwidth limits,
+	// among other options.
 	Options *Options `type:"structure"`
 
-	// The schedule used to periodically transfer files from a source to a destination
-	// location.
+	// The schedule for when you want your task to run. For more information, see
+	// Scheduling your task (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html).
 	Schedule *TaskSchedule `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the source file system's location.
+	// The details about your task schedule (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html).
+	ScheduleDetails *TaskScheduleDetails `type:"structure"`
+
+	// The ARN of your transfer's source location.
 	SourceLocationArn *string `type:"string"`
 
-	// The Amazon Resource Names (ARNs) of the network interfaces created for your
-	// source location. For more information, see Network interface requirements
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces).
+	// The ARNs of the network interfaces (https://docs.aws.amazon.com/datasync/latest/userguide/datasync-network.html#required-network-interfaces)
+	// that DataSync created for your source location.
 	SourceNetworkInterfaceArns []*string `type:"list"`
 
-	// The status of the task that was described.
-	//
-	// For detailed information about task execution statuses, see Understanding
-	// Task Statuses in the DataSync User Guide.
+	// The status of your task. For information about what each status means, see
+	// Task statuses (https://docs.aws.amazon.com/datasync/latest/userguide/understand-task-statuses.html#understand-task-creation-statuses).
 	Status *string `type:"string" enum:"TaskStatus"`
 
-	// The Amazon Resource Name (ARN) of the task that was described.
+	// The ARN of your task.
 	TaskArn *string `type:"string"`
 
-	// The configuration of your task report. For more information, see Creating
-	// a task report (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
+	// The configuration of your task report, which provides detailed information
+	// about your DataSync transfer. For more information, see Monitoring your DataSync
+	// transfers with task reports (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
 	TaskReportConfig *TaskReportConfig `type:"structure"`
 }
 
@@ -11485,6 +11551,12 @@ func (s *DescribeTaskOutput) SetIncludes(v []*FilterRule) *DescribeTaskOutput {
 	return s
 }
 
+// SetManifestConfig sets the ManifestConfig field's value.
+func (s *DescribeTaskOutput) SetManifestConfig(v *ManifestConfig) *DescribeTaskOutput {
+	s.ManifestConfig = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *DescribeTaskOutput) SetName(v string) *DescribeTaskOutput {
 	s.Name = &v
@@ -11500,6 +11572,12 @@ func (s *DescribeTaskOutput) SetOptions(v *Options) *DescribeTaskOutput {
 // SetSchedule sets the Schedule field's value.
 func (s *DescribeTaskOutput) SetSchedule(v *TaskSchedule) *DescribeTaskOutput {
 	s.Schedule = v
+	return s
+}
+
+// SetScheduleDetails sets the ScheduleDetails field's value.
+func (s *DescribeTaskOutput) SetScheduleDetails(v *TaskScheduleDetails) *DescribeTaskOutput {
+	s.ScheduleDetails = v
 	return s
 }
 
@@ -11858,6 +11936,9 @@ type FsxProtocolSmb struct {
 
 	// Specifies the fully qualified domain name (FQDN) of the Microsoft Active
 	// Directory that your storage virtual machine (SVM) belongs to.
+	//
+	// If you have multiple domains in your environment, configuring this setting
+	// makes sure that DataSync connects to the right SVM.
 	Domain *string `type:"string"`
 
 	// Specifies the version of the Server Message Block (SMB) protocol that DataSync
@@ -11873,31 +11954,11 @@ type FsxProtocolSmb struct {
 	// Password is a required field
 	Password *string `type:"string" required:"true" sensitive:"true"`
 
-	// Specifies a user name that can mount the location and access the files, folders,
-	// and metadata that you need in the SVM.
+	// Specifies a user that can mount and access the files, folders, and metadata
+	// in your SVM.
 	//
-	// If you provide a user in your Active Directory, note the following:
-	//
-	//    * If you're using Directory Service for Microsoft Active Directory, the
-	//    user must be a member of the Amazon Web Services Delegated FSx Administrators
-	//    group.
-	//
-	//    * If you're using a self-managed Active Directory, the user must be a
-	//    member of either the Domain Admins group or a custom group that you specified
-	//    for file system administration when you created your file system.
-	//
-	// Make sure that the user has the permissions it needs to copy the data you
-	// want:
-	//
-	//    * SE_TCB_NAME: Required to set object ownership and file metadata. With
-	//    this privilege, you also can copy NTFS discretionary access lists (DACLs).
-	//
-	//    * SE_SECURITY_NAME: May be needed to copy NTFS system access control lists
-	//    (SACLs). This operation specifically requires the Windows privilege, which
-	//    is granted to members of the Domain Admins group. If you configure your
-	//    task to copy SACLs, make sure that the user has the required privileges.
-	//    For information about copying SACLs, see Ownership and permissions-related
-	//    options (https://docs.aws.amazon.com/datasync/latest/userguide/create-task.html#configure-ownership-and-permissions).
+	// For information about choosing a user with the right level of access for
+	// your transfer, see Using the SMB protocol (https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html#create-ontap-location-smb).
 	//
 	// User is a required field
 	User *string `type:"string" required:"true"`
@@ -12897,14 +12958,15 @@ func (s *ListTagsForResourceOutput) SetTags(v []*TagListEntry) *ListTagsForResou
 type ListTaskExecutionsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum number of executed tasks to list.
+	// Specifies how many results you want in the response.
 	MaxResults *int64 `type:"integer"`
 
-	// An opaque string that indicates the position at which to begin the next list
-	// of the executed tasks.
+	// Specifies an opaque string that indicates the position at which to begin
+	// the next list of results in the response.
 	NextToken *string `type:"string"`
 
-	// The Amazon Resource Name (ARN) of the task whose tasks you want to list.
+	// Specifies the Amazon Resource Name (ARN) of the task that you want execution
+	// information about.
 	TaskArn *string `type:"string"`
 }
 
@@ -12948,11 +13010,11 @@ func (s *ListTaskExecutionsInput) SetTaskArn(v string) *ListTaskExecutionsInput 
 type ListTaskExecutionsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An opaque string that indicates the position at which to begin returning
-	// the next list of executed tasks.
+	// The opaque string that indicates the position to begin the next list of results
+	// in the response.
 	NextToken *string `type:"string"`
 
-	// A list of executed tasks.
+	// A list of the task's executions.
 	TaskExecutions []*TaskExecutionListEntry `type:"list"`
 }
 
@@ -13242,6 +13304,82 @@ func (s *LocationListEntry) SetLocationArn(v string) *LocationListEntry {
 // SetLocationUri sets the LocationUri field's value.
 func (s *LocationListEntry) SetLocationUri(v string) *LocationListEntry {
 	s.LocationUri = &v
+	return s
+}
+
+// Configures a manifest, which is a list of files or objects that you want
+// DataSync to transfer. For more information and configuration examples, see
+// Specifying what DataSync transfers by using a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
+type ManifestConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies what DataSync uses the manifest for.
+	Action *string `type:"string" enum:"ManifestAction"`
+
+	// Specifies the file format of your manifest. For more information, see Creating
+	// a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html#transferring-with-manifest-create).
+	Format *string `type:"string" enum:"ManifestFormat"`
+
+	// Specifies the manifest that you want DataSync to use and where it's hosted.
+	//
+	// You must specify this parameter if you're configuring a new manifest on or
+	// after February 7, 2024.
+	//
+	// If you don't, you'll get a 400 status code and ValidationException error
+	// stating that you're missing the IAM role for DataSync to access the S3 bucket
+	// where you're hosting your manifest. For more information, see Providing DataSync
+	// access to your manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html#transferring-with-manifest-access).
+	Source *SourceManifestConfig `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ManifestConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ManifestConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ManifestConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ManifestConfig"}
+	if s.Source != nil {
+		if err := s.Source.Validate(); err != nil {
+			invalidParams.AddNested("Source", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAction sets the Action field's value.
+func (s *ManifestConfig) SetAction(v string) *ManifestConfig {
+	s.Action = &v
+	return s
+}
+
+// SetFormat sets the Format field's value.
+func (s *ManifestConfig) SetFormat(v string) *ManifestConfig {
+	s.Format = &v
+	return s
+}
+
+// SetSource sets the Source field's value.
+func (s *ManifestConfig) SetSource(v *SourceManifestConfig) *ManifestConfig {
+	s.Source = v
 	return s
 }
 
@@ -13935,23 +14073,24 @@ func (s *OnPremConfig) SetAgentArns(v []*string) *OnPremConfig {
 // limits for your task, among other options.
 //
 // Each option has a default value. Unless you need to, you don't have to configure
-// any of these options before starting your task.
+// any option before calling StartTaskExecution (https://docs.aws.amazon.com/datasync/latest/userguide/API_StartTaskExecution.html).
+//
+// You also can override your task options for each task execution. For example,
+// you might want to adjust the LogLevel for an individual execution.
 type Options struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies whether to preserve metadata indicating the last time a file was
-	// read or written to. If you set Atime to BEST_EFFORT, DataSync attempts to
-	// preserve the original Atime attribute on all source files (that is, the version
-	// before the PREPARING phase of the task execution).
+	// read or written to.
 	//
 	// The behavior of Atime isn't fully standard across platforms, so DataSync
 	// can only do this on a best-effort basis.
 	//
-	// Default value: BEST_EFFORT
+	//    * BEST_EFFORT (default) - DataSync attempts to preserve the original Atime
+	//    attribute on all source files (that is, the version before the PREPARING
+	//    phase of the task execution). This option is recommended.
 	//
-	// BEST_EFFORT: Attempt to preserve the per-file Atime value (recommended).
-	//
-	// NONE: Ignore Atime.
+	//    * NONE - Ignores Atime.
 	//
 	// If Atime is set to BEST_EFFORT, Mtime must be set to PRESERVE.
 	//
@@ -13964,54 +14103,56 @@ type Options struct {
 
 	// Specifies the POSIX group ID (GID) of the file's owners.
 	//
+	//    * INT_VALUE (default) - Preserves the integer value of user ID (UID) and
+	//    GID, which is recommended.
+	//
+	//    * NONE - Ignores UID and GID.
+	//
 	// For more information, see Metadata copied by DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/special-files.html#metadata-copied).
-	//
-	// Default value: INT_VALUE. This preserves the integer value of the ID.
-	//
-	// INT_VALUE: Preserve the integer value of user ID (UID) and GID (recommended).
-	//
-	// NONE: Ignore UID and GID.
 	Gid *string `type:"string" enum:"Gid"`
 
 	// Specifies the type of logs that DataSync publishes to a Amazon CloudWatch
 	// Logs log group. To specify the log group, see CloudWatchLogGroupArn (https://docs.aws.amazon.com/datasync/latest/userguide/API_CreateTask.html#DataSync-CreateTask-request-CloudWatchLogGroupArn).
 	//
-	// If you set LogLevel to OFF, no logs are published. BASIC publishes logs on
-	// errors for individual files transferred. TRANSFER publishes logs for every
-	// file or object that is transferred and integrity checked.
+	//    * BASIC - Publishes logs with only basic information (such as transfer
+	//    errors).
+	//
+	//    * TRANSFER - Publishes logs for all files or objects that your DataSync
+	//    task transfers and performs data-integrity checks on.
+	//
+	//    * OFF - No logs are published.
 	LogLevel *string `type:"string" enum:"LogLevel"`
 
 	// Specifies whether to preserve metadata indicating the last time that a file
 	// was written to before the PREPARING phase of your task execution. This option
 	// is required when you need to run the a task more than once.
 	//
-	// Default Value: PRESERVE
+	//    * PRESERVE (default) - Preserves original Mtime, which is recommended.
 	//
-	// PRESERVE: Preserve original Mtime (recommended)
-	//
-	// NONE: Ignore Mtime.
+	//    * NONE - Ignores Mtime.
 	//
 	// If Mtime is set to PRESERVE, Atime must be set to BEST_EFFORT.
 	//
 	// If Mtime is set to NONE, Atime must also be set to NONE.
 	Mtime *string `type:"string" enum:"Mtime"`
 
-	// Specifies whether object tags are preserved when transferring between object
-	// storage systems. If you want your DataSync task to ignore object tags, specify
-	// the NONE value.
-	//
-	// Default Value: PRESERVE
+	// Specifies whether you want DataSync to PRESERVE object tags (default behavior)
+	// when transferring between object storage systems. If you want your DataSync
+	// task to ignore object tags, specify the NONE value.
 	ObjectTags *string `type:"string" enum:"ObjectTags"`
 
-	// Specifies whether data at the destination location should be overwritten
-	// or preserved. If set to NEVER, a destination file for example will not be
-	// replaced by a source file (even if the destination file differs from the
-	// source file). If you modify files in the destination and you sync the files,
-	// you can use this value to protect against overwriting those changes.
+	// Specifies whether DataSync should modify or preserve data at the destination
+	// location.
 	//
-	// Some storage classes have specific behaviors that can affect your Amazon
-	// S3 storage cost. For detailed information, see Considerations when working
-	// with Amazon S3 storage classes in DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
+	//    * ALWAYS (default) - DataSync modifies data in the destination location
+	//    when source data (including metadata) has changed. If DataSync overwrites
+	//    objects, you might incur additional charges for certain Amazon S3 storage
+	//    classes (for example, for retrieval or early deletion). For more information,
+	//    see Storage class considerations with Amazon S3 transfers (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
+	//
+	//    * NEVER - DataSync doesn't overwrite data in the destination location
+	//    even if the source data has changed. You can use this option to protect
+	//    against overwriting changes made to files or objects in the destination.
 	OverwriteMode *string `type:"string" enum:"OverwriteMode"`
 
 	// Specifies which users or groups can access a file for a specific purpose
@@ -14019,11 +14160,9 @@ type Options struct {
 	//
 	// For more information, see Metadata copied by DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/special-files.html#metadata-copied).
 	//
-	// Default value: PRESERVE
+	//    * PRESERVE (default) - Preserves POSIX-style permissions, which is recommended.
 	//
-	// PRESERVE: Preserve POSIX-style permissions (recommended).
-	//
-	// NONE: Ignore permissions.
+	//    * NONE - Ignores POSIX-style permissions.
 	//
 	// DataSync can preserve extant permissions of a source location.
 	PosixPermissions *string `type:"string" enum:"PosixPermissions"`
@@ -14034,11 +14173,9 @@ type Options struct {
 	// charges for certain storage classes. For detailed information, see Considerations
 	// when working with Amazon S3 storage classes in DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
 	//
-	// Default value: PRESERVE
+	//    * PRESERVE (default) - Ignores such destination files, which is recommended.
 	//
-	// PRESERVE: Ignore such destination files (recommended).
-	//
-	// REMOVE: Delete destination files that aren’t present in the source.
+	//    * REMOVE - Deletes destination files that aren’t present in the source.
 	//
 	// If you set this parameter to REMOVE, you can't set TransferMode to ALL. When
 	// you transfer all data, DataSync doesn't scan your destination location and
@@ -14053,12 +14190,10 @@ type Options struct {
 	// DataSync can't copy the actual contents of these devices because they're
 	// nonterminal and don't return an end-of-file (EOF) marker.
 	//
-	// Default value: NONE
+	//    * NONE (default) - Ignores special devices (recommended).
 	//
-	// NONE: Ignore special devices (recommended).
-	//
-	// PRESERVE: Preserve character and block device metadata. This option currently
-	// isn't supported for Amazon EFS.
+	//    * PRESERVE - Preserves character and block device metadata. This option
+	//    currently isn't supported for Amazon EFS.
 	PreserveDevices *string `type:"string" enum:"PreserveDevices"`
 
 	// Specifies which components of the SMB security descriptor are copied from
@@ -14068,32 +14203,26 @@ type Options struct {
 	// File Server locations or between two FSx for Windows File Server locations.
 	// For more information, see how DataSync handles metadata (https://docs.aws.amazon.com/datasync/latest/userguide/special-files.html).
 	//
-	// Default value: OWNER_DACL
+	//    * OWNER_DACL (default) - For each copied object, DataSync copies the following
+	//    metadata: The object owner. NTFS discretionary access control lists (DACLs),
+	//    which determine whether to grant access to an object. DataSync won't copy
+	//    NTFS system access control lists (SACLs) with this option.
 	//
-	// OWNER_DACL: For each copied object, DataSync copies the following metadata:
+	//    * OWNER_DACL_SACL - For each copied object, DataSync copies the following
+	//    metadata: The object owner. NTFS discretionary access control lists (DACLs),
+	//    which determine whether to grant access to an object. SACLs, which are
+	//    used by administrators to log attempts to access a secured object. Copying
+	//    SACLs requires granting additional permissions to the Windows user that
+	//    DataSync uses to access your SMB location. For information about choosing
+	//    a user with the right permissions, see required permissions for SMB (https://docs.aws.amazon.com/datasync/latest/userguide/create-smb-location.html#configuring-smb-permissions),
+	//    FSx for Windows File Server (https://docs.aws.amazon.com/datasync/latest/userguide/create-fsx-location.html#create-fsx-windows-location-permissions),
+	//    or FSx for ONTAP (https://docs.aws.amazon.com/datasync/latest/userguide/create-ontap-location.html#create-ontap-location-smb)
+	//    (depending on the type of location in your transfer).
 	//
-	//    * The object owner.
-	//
-	//    * NTFS discretionary access control lists (DACLs), which determine whether
-	//    to grant access to an object. DataSync won't copy NTFS system access control
-	//    lists (SACLs) with this option.
-	//
-	// OWNER_DACL_SACL: For each copied object, DataSync copies the following metadata:
-	//
-	//    * The object owner.
-	//
-	//    * NTFS discretionary access control lists (DACLs), which determine whether
-	//    to grant access to an object.
-	//
-	//    * SACLs, which are used by administrators to log attempts to access a
-	//    secured object. Copying SACLs requires granting additional permissions
-	//    to the Windows user that DataSync uses to access your SMB location. For
-	//    information about choosing a user that ensures sufficient permissions
-	//    to files, folders, and metadata, see user (create-smb-location.html#SMBuser).
-	//
-	// NONE: None of the SMB security descriptor components are copied. Destination
-	// objects are owned by the user that was provided for accessing the destination
-	// location. DACLs and SACLs are set based on the destination server’s configuration.
+	//    * NONE - None of the SMB security descriptor components are copied. Destination
+	//    objects are owned by the user that was provided for accessing the destination
+	//    location. DACLs and SACLs are set based on the destination server’s
+	//    configuration.
 	SecurityDescriptorCopyFlags *string `type:"string" enum:"SmbSecurityDescriptorCopyFlags"`
 
 	// Specifies whether your transfer tasks should be put into a queue during certain
@@ -14105,48 +14234,45 @@ type Options struct {
 	// between the source and the destination location or transfers all the content
 	// from the source (without comparing what's in the destination).
 	//
-	// CHANGED: DataSync copies only data or metadata that is new or different content
-	// from the source location to the destination location.
+	//    * CHANGED (default) - DataSync copies only data or metadata that is new
+	//    or different content from the source location to the destination location.
 	//
-	// ALL: DataSync copies all source location content to the destination (without
-	// comparing what's in the destination).
+	//    * ALL - DataSync copies everything in the source to the destination without
+	//    comparing differences between the locations.
 	TransferMode *string `type:"string" enum:"TransferMode"`
 
 	// Specifies the POSIX user ID (UID) of the file's owner.
 	//
+	//    * INT_VALUE (default) - Preserves the integer value of UID and group ID
+	//    (GID), which is recommended.
+	//
+	//    * NONE - Ignores UID and GID.
+	//
 	// For more information, see Metadata copied by DataSync (https://docs.aws.amazon.com/datasync/latest/userguide/special-files.html#metadata-copied).
-	//
-	// Default value: INT_VALUE. This preserves the integer value of the ID.
-	//
-	// INT_VALUE: Preserve the integer value of UID and group ID (GID) (recommended).
-	//
-	// NONE: Ignore UID and GID.
 	Uid *string `type:"string" enum:"Uid"`
 
 	// Specifies how and when DataSync checks the integrity of your data during
 	// a transfer.
 	//
-	// Default value: POINT_IN_TIME_CONSISTENT
+	//    * ONLY_FILES_TRANSFERRED (recommended) - DataSync calculates the checksum
+	//    of transferred files and metadata at the source location. At the end of
+	//    the transfer, DataSync then compares this checksum to the checksum calculated
+	//    on those files at the destination. We recommend this option when transferring
+	//    to S3 Glacier Flexible Retrieval or S3 Glacier Deep Archive storage classes.
+	//    For more information, see Storage class considerations with Amazon S3
+	//    locations (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
 	//
-	// ONLY_FILES_TRANSFERRED (recommended): DataSync calculates the checksum of
-	// transferred files and metadata at the source location. At the end of the
-	// transfer, DataSync then compares this checksum to the checksum calculated
-	// on those files at the destination.
+	//    * POINT_IN_TIME_CONSISTENT (default) - At the end of the transfer, DataSync
+	//    scans the entire source and destination to verify that both locations
+	//    are fully synchronized. If you use a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html),
+	//    DataSync only scans and verifies what's listed in the manifest. You can't
+	//    use this option when transferring to S3 Glacier Flexible Retrieval or
+	//    S3 Glacier Deep Archive storage classes. For more information, see Storage
+	//    class considerations with Amazon S3 locations (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
 	//
-	// We recommend this option when transferring to S3 Glacier Flexible Retrieval
-	// or S3 Glacier Deep Archive storage classes. For more information, see Storage
-	// class considerations with Amazon S3 locations (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
-	//
-	// POINT_IN_TIME_CONSISTENT: At the end of the transfer, DataSync scans the
-	// entire source and destination to verify that both locations are fully synchronized.
-	//
-	// You can't use this option when transferring to S3 Glacier Flexible Retrieval
-	// or S3 Glacier Deep Archive storage classes. For more information, see Storage
-	// class considerations with Amazon S3 locations (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#using-storage-classes).
-	//
-	// NONE: DataSync doesn't run additional verification at the end of the transfer.
-	// All data transmissions are still integrity-checked with checksum verification
-	// during the transfer.
+	//    * NONE - DataSync doesn't run additional verification at the end of the
+	//    transfer. All data transmissions are still integrity-checked with checksum
+	//    verification during the transfer.
 	VerifyMode *string `type:"string" enum:"VerifyMode"`
 }
 
@@ -14331,12 +14457,6 @@ type Platform struct {
 	_ struct{} `type:"structure"`
 
 	// The version of the DataSync agent.
-	//
-	// Beginning December 7, 2023, we will discontinue version 1 DataSync agents.
-	// Check the DataSync console to see if you have affected agents. If you do,
-	// replace (https://docs.aws.amazon.com/datasync/latest/userguide/replacing-agent.html)
-	// those agents before then to avoid data transfer or storage discovery disruptions.
-	// If you need more help, contact Amazon Web Services Support (https://aws.amazon.com/contact-us/).
 	Version *string `min:"1" type:"string"`
 }
 
@@ -14655,7 +14775,7 @@ type ReportDestinationS3 struct {
 
 	// Specifies the Amazon Resource Name (ARN) of the IAM policy that allows DataSync
 	// to upload a task report to your S3 bucket. For more information, see Allowing
-	// DataSync to upload a task report to an Amazon S3 bucket (https://docs.aws.amazon.com/https:/docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
+	// DataSync to upload a task report to an Amazon S3 bucket (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
 	//
 	// BucketAccessRoleArn is a required field
 	BucketAccessRoleArn *string `type:"string" required:"true"`
@@ -15006,15 +15126,14 @@ func (s *ResourceMetrics) SetTimestamp(v time.Time) *ResourceMetrics {
 	return s
 }
 
-// The Amazon Resource Name (ARN) of the Identity and Access Management (IAM)
-// role used to access an Amazon S3 bucket.
+// Specifies the Amazon Resource Name (ARN) of the Identity and Access Management
+// (IAM) role that DataSync uses to access your S3 bucket.
 //
-// For detailed information about using such a role, see Creating a Location
-// for Amazon S3 in the DataSync User Guide.
+// For more information, see Accessing S3 buckets (https://docs.aws.amazon.com/datasync/latest/userguide/create-s3-location.html#create-s3-location-access).
 type S3Config struct {
 	_ struct{} `type:"structure"`
 
-	// The ARN of the IAM role for accessing the S3 bucket.
+	// Specifies the ARN of the IAM role that DataSync uses to access your S3 bucket.
 	//
 	// BucketAccessRoleArn is a required field
 	BucketAccessRoleArn *string `type:"string" required:"true"`
@@ -15054,6 +15173,100 @@ func (s *S3Config) Validate() error {
 // SetBucketAccessRoleArn sets the BucketAccessRoleArn field's value.
 func (s *S3Config) SetBucketAccessRoleArn(v string) *S3Config {
 	s.BucketAccessRoleArn = &v
+	return s
+}
+
+// Specifies the S3 bucket where you're hosting the manifest that you want DataSync
+// to use. For more information and configuration examples, see Specifying what
+// DataSync transfers by using a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
+type S3ManifestConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the Identity and Access Management (IAM) role that allows DataSync
+	// to access your manifest. For more information, see Providing DataSync access
+	// to your manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html#transferring-with-manifest-access).
+	//
+	// BucketAccessRoleArn is a required field
+	BucketAccessRoleArn *string `type:"string" required:"true"`
+
+	// Specifies the Amazon S3 object key of your manifest. This can include a prefix
+	// (for example, prefix/my-manifest.csv).
+	//
+	// ManifestObjectPath is a required field
+	ManifestObjectPath *string `type:"string" required:"true"`
+
+	// Specifies the object version ID of the manifest that you want DataSync to
+	// use. If you don't set this, DataSync uses the latest version of the object.
+	ManifestObjectVersionId *string `min:"1" type:"string"`
+
+	// Specifies the Amazon Resource Name (ARN) of the S3 bucket where you're hosting
+	// your manifest.
+	//
+	// S3BucketArn is a required field
+	S3BucketArn *string `type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3ManifestConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s S3ManifestConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *S3ManifestConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "S3ManifestConfig"}
+	if s.BucketAccessRoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("BucketAccessRoleArn"))
+	}
+	if s.ManifestObjectPath == nil {
+		invalidParams.Add(request.NewErrParamRequired("ManifestObjectPath"))
+	}
+	if s.ManifestObjectVersionId != nil && len(*s.ManifestObjectVersionId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ManifestObjectVersionId", 1))
+	}
+	if s.S3BucketArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("S3BucketArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBucketAccessRoleArn sets the BucketAccessRoleArn field's value.
+func (s *S3ManifestConfig) SetBucketAccessRoleArn(v string) *S3ManifestConfig {
+	s.BucketAccessRoleArn = &v
+	return s
+}
+
+// SetManifestObjectPath sets the ManifestObjectPath field's value.
+func (s *S3ManifestConfig) SetManifestObjectPath(v string) *S3ManifestConfig {
+	s.ManifestObjectPath = &v
+	return s
+}
+
+// SetManifestObjectVersionId sets the ManifestObjectVersionId field's value.
+func (s *S3ManifestConfig) SetManifestObjectVersionId(v string) *S3ManifestConfig {
+	s.ManifestObjectVersionId = &v
+	return s
+}
+
+// SetS3BucketArn sets the S3BucketArn field's value.
+func (s *S3ManifestConfig) SetS3BucketArn(v string) *S3ManifestConfig {
+	s.S3BucketArn = &v
 	return s
 }
 
@@ -15108,6 +15321,60 @@ func (s SmbMountOptions) GoString() string {
 // SetVersion sets the Version field's value.
 func (s *SmbMountOptions) SetVersion(v string) *SmbMountOptions {
 	s.Version = &v
+	return s
+}
+
+// Specifies the manifest that you want DataSync to use and where it's hosted.
+// For more information and configuration examples, see Specifying what DataSync
+// transfers by using a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
+type SourceManifestConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the S3 bucket where you're hosting your manifest.
+	//
+	// S3 is a required field
+	S3 *S3ManifestConfig `type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceManifestConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceManifestConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SourceManifestConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SourceManifestConfig"}
+	if s.S3 == nil {
+		invalidParams.Add(request.NewErrParamRequired("S3"))
+	}
+	if s.S3 != nil {
+		if err := s.S3.Validate(); err != nil {
+			invalidParams.AddNested("S3", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetS3 sets the S3 field's value.
+func (s *SourceManifestConfig) SetS3(v *S3ManifestConfig) *SourceManifestConfig {
+	s.S3 = v
 	return s
 }
 
@@ -15258,13 +15525,29 @@ type StartTaskExecutionInput struct {
 	// pipe), for example, "/folder1|/folder2".
 	Includes []*FilterRule `type:"list"`
 
+	// Configures a manifest, which is a list of files or objects that you want
+	// DataSync to transfer. For more information and configuration examples, see
+	// Specifying what DataSync transfers by using a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
+	//
+	// When using this parameter, your caller identity (the role that you're using
+	// DataSync with) must have the iam:PassRole permission. The AWSDataSyncFullAccess
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-awsdatasyncfullaccess)
+	// policy includes this permission.
+	//
+	// To remove a manifest configuration, specify this parameter with an empty
+	// value.
+	ManifestConfig *ManifestConfig `type:"structure"`
+
 	// Indicates how your transfer task is configured. These options include how
 	// DataSync handles files, objects, and their associated metadata during your
 	// transfer. You also can specify how to verify data integrity, set bandwidth
 	// limits for your task, among other options.
 	//
 	// Each option has a default value. Unless you need to, you don't have to configure
-	// any of these options before starting your task.
+	// any option before calling StartTaskExecution (https://docs.aws.amazon.com/datasync/latest/userguide/API_StartTaskExecution.html).
+	//
+	// You also can override your task options for each task execution. For example,
+	// you might want to adjust the LogLevel for an individual execution.
 	OverrideOptions *Options `type:"structure"`
 
 	// Specifies the tags that you want to apply to the Amazon Resource Name (ARN)
@@ -15280,7 +15563,15 @@ type StartTaskExecutionInput struct {
 	TaskArn *string `type:"string" required:"true"`
 
 	// Specifies how you want to configure a task report, which provides detailed
-	// information about for your DataSync transfer.
+	// information about your DataSync transfer. For more information, see Monitoring
+	// your DataSync transfers with task reports (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
+	//
+	// When using this parameter, your caller identity (the role that you're using
+	// DataSync with) must have the iam:PassRole permission. The AWSDataSyncFullAccess
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-awsdatasyncfullaccess)
+	// policy includes this permission.
+	//
+	// To remove a task report configuration, specify this parameter as empty.
 	TaskReportConfig *TaskReportConfig `type:"structure"`
 }
 
@@ -15307,6 +15598,11 @@ func (s *StartTaskExecutionInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "StartTaskExecutionInput"}
 	if s.TaskArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("TaskArn"))
+	}
+	if s.ManifestConfig != nil {
+		if err := s.ManifestConfig.Validate(); err != nil {
+			invalidParams.AddNested("ManifestConfig", err.(request.ErrInvalidParams))
+		}
 	}
 	if s.OverrideOptions != nil {
 		if err := s.OverrideOptions.Validate(); err != nil {
@@ -15344,6 +15640,12 @@ func (s *StartTaskExecutionInput) SetExcludes(v []*FilterRule) *StartTaskExecuti
 // SetIncludes sets the Includes field's value.
 func (s *StartTaskExecutionInput) SetIncludes(v []*FilterRule) *StartTaskExecutionInput {
 	s.Includes = v
+	return s
+}
+
+// SetManifestConfig sets the ManifestConfig field's value.
+func (s *StartTaskExecutionInput) SetManifestConfig(v *ManifestConfig) *StartTaskExecutionInput {
+	s.ManifestConfig = v
 	return s
 }
 
@@ -15526,7 +15828,7 @@ type TagListEntry struct {
 	Key *string `min:"1" type:"string" required:"true"`
 
 	// The value for an Amazon Web Services resource tag.
-	Value *string `min:"1" type:"string"`
+	Value *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -15555,9 +15857,6 @@ func (s *TagListEntry) Validate() error {
 	}
 	if s.Key != nil && len(*s.Key) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Key", 1))
-	}
-	if s.Value != nil && len(*s.Value) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("Value", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -15672,17 +15971,17 @@ func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
 
-// Represents a single entry in a list of task executions. TaskExecutionListEntry
-// returns an array that contains a list of specific invocations of a task when
-// the ListTaskExecutions (https://docs.aws.amazon.com/datasync/latest/userguide/API_ListTaskExecutions.html)
-// operation is called.
+// Represents a single entry in a list of DataSync task executions that's returned
+// with the ListTaskExecutions (https://docs.aws.amazon.com/datasync/latest/userguide/API_ListTaskExecutions.html)
+// operation.
 type TaskExecutionListEntry struct {
 	_ struct{} `type:"structure"`
 
-	// The status of a task execution.
+	// The status of a task execution. For more information, see Task execution
+	// statuses (https://docs.aws.amazon.com/datasync/latest/userguide/understand-task-statuses.html#understand-task-execution-statuses).
 	Status *string `type:"string" enum:"TaskExecutionStatus"`
 
-	// The Amazon Resource Name (ARN) of the task that was executed.
+	// The Amazon Resource Name (ARN) of a task execution.
 	TaskExecutionArn *string `type:"string"`
 }
 
@@ -15916,7 +16215,7 @@ type TaskListEntry struct {
 	_ struct{} `type:"structure"`
 
 	// The name of the task.
-	Name *string `min:"1" type:"string"`
+	Name *string `type:"string"`
 
 	// The status of the task.
 	Status *string `type:"string" enum:"TaskStatus"`
@@ -16070,16 +16369,26 @@ func (s *TaskReportConfig) SetReportLevel(v string) *TaskReportConfig {
 	return s
 }
 
-// Specifies the schedule you want your task to use for repeated executions.
-// For more information, see Schedule Expressions for Rules (https://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html).
+// Configures your DataSync task to run on a schedule (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html)
+// (at a minimum interval of 1 hour).
 type TaskSchedule struct {
 	_ struct{} `type:"structure"`
 
-	// A cron expression that specifies when DataSync initiates a scheduled transfer
-	// from a source to a destination location.
+	// Specifies your task schedule by using a cron expression in UTC time. For
+	// information about cron expression syntax, see the Amazon EventBridge User
+	// Guide (https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-cron-expressions.html).
 	//
 	// ScheduleExpression is a required field
 	ScheduleExpression *string `type:"string" required:"true"`
+
+	// Specifies whether to enable or disable your task schedule. Your schedule
+	// is enabled by default, but there can be situations where you need to disable
+	// it. For example, you might need to pause a recurring transfer to fix an issue
+	// with your task or perform maintenance on your storage system.
+	//
+	// DataSync might disable your schedule automatically if your task fails repeatedly
+	// with the same error. For more information, see TaskScheduleDetails (https://docs.aws.amazon.com/datasync/latest/userguide/API_TaskScheduleDetails.html).
+	Status *string `type:"string" enum:"ScheduleStatus"`
 }
 
 // String returns the string representation.
@@ -16116,6 +16425,77 @@ func (s *TaskSchedule) Validate() error {
 // SetScheduleExpression sets the ScheduleExpression field's value.
 func (s *TaskSchedule) SetScheduleExpression(v string) *TaskSchedule {
 	s.ScheduleExpression = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *TaskSchedule) SetStatus(v string) *TaskSchedule {
+	s.Status = &v
+	return s
+}
+
+// Provides information about your DataSync task schedule (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html).
+type TaskScheduleDetails struct {
+	_ struct{} `type:"structure"`
+
+	// Indicates how your task schedule was disabled.
+	//
+	//    * USER - Your schedule was manually disabled by using the UpdateTask (https://docs.aws.amazon.com/datasync/latest/userguide/API_UpdateTask.html)
+	//    operation or DataSync console.
+	//
+	//    * SERVICE - Your schedule was automatically disabled by DataSync because
+	//    the task failed repeatedly with the same error.
+	DisabledBy *string `type:"string" enum:"ScheduleDisabledBy"`
+
+	// Provides a reason if the task schedule is disabled.
+	//
+	// If your schedule is disabled by USER, you see a Manually disabled by user.
+	// message.
+	//
+	// If your schedule is disabled by SERVICE, you see an error message to help
+	// you understand why the task keeps failing. For information on resolving DataSync
+	// errors, see Troubleshooting issues with DataSync transfers (https://docs.aws.amazon.com/datasync/latest/userguide/troubleshooting-datasync-locations-tasks.html).
+	DisabledReason *string `type:"string"`
+
+	// Indicates the last time the status of your task schedule changed. For example,
+	// if DataSync automatically disables your schedule because of a repeated error,
+	// you can see when the schedule was disabled.
+	StatusUpdateTime *time.Time `type:"timestamp"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TaskScheduleDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TaskScheduleDetails) GoString() string {
+	return s.String()
+}
+
+// SetDisabledBy sets the DisabledBy field's value.
+func (s *TaskScheduleDetails) SetDisabledBy(v string) *TaskScheduleDetails {
+	s.DisabledBy = &v
+	return s
+}
+
+// SetDisabledReason sets the DisabledReason field's value.
+func (s *TaskScheduleDetails) SetDisabledReason(v string) *TaskScheduleDetails {
+	s.DisabledReason = &v
+	return s
+}
+
+// SetStatusUpdateTime sets the StatusUpdateTime field's value.
+func (s *TaskScheduleDetails) SetStatusUpdateTime(v time.Time) *TaskScheduleDetails {
+	s.StatusUpdateTime = &v
 	return s
 }
 
@@ -16276,7 +16656,7 @@ type UpdateAgentInput struct {
 	AgentArn *string `type:"string" required:"true"`
 
 	// The name that you want to use to configure the agent.
-	Name *string `min:"1" type:"string"`
+	Name *string `type:"string"`
 }
 
 // String returns the string representation.
@@ -16302,9 +16682,6 @@ func (s *UpdateAgentInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UpdateAgentInput"}
 	if s.AgentArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("AgentArn"))
-	}
-	if s.Name != nil && len(*s.Name) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -16931,14 +17308,29 @@ type UpdateLocationObjectStorageInput struct {
 	// String and GoString methods.
 	SecretKey *string `type:"string" sensitive:"true"`
 
-	// Specifies a certificate to authenticate with an object storage system that
-	// uses a private or self-signed certificate authority (CA). You must specify
-	// a Base64-encoded .pem file (for example, file:///home/user/.ssh/storage_sys_certificate.pem).
-	// The certificate can be up to 32768 bytes (before Base64 encoding).
+	// Specifies a certificate chain for DataSync to authenticate with your object
+	// storage system if the system uses a private or self-signed certificate authority
+	// (CA). You must specify a single .pem file with a full certificate chain (for
+	// example, file:///home/user/.ssh/object_storage_certificates.pem).
+	//
+	// The certificate chain might include:
+	//
+	//    * The object storage system's certificate
+	//
+	//    * All intermediate certificates (if there are any)
+	//
+	//    * The root certificate of the signing CA
+	//
+	// You can concatenate your certificates into a .pem file (which can be up to
+	// 32768 bytes before base64 encoding). The following example cat command creates
+	// an object_storage_certificates.pem file that includes three certificates:
+	//
+	// cat object_server_certificate.pem intermediate_certificate.pem ca_root_certificate.pem
+	// > object_storage_certificates.pem
 	//
 	// To use this parameter, configure ServerProtocol to HTTPS.
 	//
-	// Updating the certificate doesn't interfere with tasks that you have in progress.
+	// Updating this parameter doesn't interfere with tasks that you have in progress.
 	// ServerCertificate is automatically base64 encoded/decoded by the SDK.
 	ServerCertificate []byte `type:"blob"`
 
@@ -17358,7 +17750,10 @@ type UpdateTaskExecutionInput struct {
 	// limits for your task, among other options.
 	//
 	// Each option has a default value. Unless you need to, you don't have to configure
-	// any of these options before starting your task.
+	// any option before calling StartTaskExecution (https://docs.aws.amazon.com/datasync/latest/userguide/API_StartTaskExecution.html).
+	//
+	// You also can override your task options for each task execution. For example,
+	// you might want to adjust the LogLevel for an individual execution.
 	//
 	// Options is a required field
 	Options *Options `type:"structure" required:"true"`
@@ -17447,22 +17842,34 @@ func (s UpdateTaskExecutionOutput) GoString() string {
 type UpdateTaskInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the resource name of the Amazon CloudWatch
-	// log group.
+	// Specifies the Amazon Resource Name (ARN) of an Amazon CloudWatch log group
+	// for monitoring your task.
 	CloudWatchLogGroupArn *string `type:"string"`
 
-	// Specifies a list of filter rules that exclude specific data during your transfer.
-	// For more information and examples, see Filtering data transferred by DataSync
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
+	// Specifies exclude filters that define the files, objects, and folders in
+	// your source location that you don't want DataSync to transfer. For more information
+	// and examples, see Specifying what DataSync transfers by using filters (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
 	Excludes []*FilterRule `type:"list"`
 
-	// Specifies a list of filter rules that include specific data during your transfer.
-	// For more information and examples, see Filtering data transferred by DataSync
-	// (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
+	// Specifies include filters define the files, objects, and folders in your
+	// source location that you want DataSync to transfer. For more information
+	// and examples, see Specifying what DataSync transfers by using filters (https://docs.aws.amazon.com/datasync/latest/userguide/filtering.html).
 	Includes []*FilterRule `type:"list"`
 
-	// The name of the task to update.
-	Name *string `min:"1" type:"string"`
+	// Configures a manifest, which is a list of files or objects that you want
+	// DataSync to transfer. For more information and configuration examples, see
+	// Specifying what DataSync transfers by using a manifest (https://docs.aws.amazon.com/datasync/latest/userguide/transferring-with-manifest.html).
+	//
+	// When using this parameter, your caller identity (the IAM role that you're
+	// using DataSync with) must have the iam:PassRole permission. The AWSDataSyncFullAccess
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-awsdatasyncfullaccess)
+	// policy includes this permission.
+	//
+	// To remove a manifest configuration, specify this parameter as empty.
+	ManifestConfig *ManifestConfig `type:"structure"`
+
+	// Specifies the name of your task.
+	Name *string `type:"string"`
 
 	// Indicates how your transfer task is configured. These options include how
 	// DataSync handles files, objects, and their associated metadata during your
@@ -17470,23 +17877,31 @@ type UpdateTaskInput struct {
 	// limits for your task, among other options.
 	//
 	// Each option has a default value. Unless you need to, you don't have to configure
-	// any of these options before starting your task.
+	// any option before calling StartTaskExecution (https://docs.aws.amazon.com/datasync/latest/userguide/API_StartTaskExecution.html).
+	//
+	// You also can override your task options for each task execution. For example,
+	// you might want to adjust the LogLevel for an individual execution.
 	Options *Options `type:"structure"`
 
-	// Specifies a schedule used to periodically transfer files from a source to
-	// a destination location. You can configure your task to execute hourly, daily,
-	// weekly or on specific days of the week. You control when in the day or hour
-	// you want the task to execute. The time you specify is UTC time. For more
-	// information, see Scheduling your task (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html).
+	// Specifies a schedule for when you want your task to run. For more information,
+	// see Scheduling your task (https://docs.aws.amazon.com/datasync/latest/userguide/task-scheduling.html).
 	Schedule *TaskSchedule `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the resource name of the task to update.
+	// Specifies the ARN of the task that you want to update.
 	//
 	// TaskArn is a required field
 	TaskArn *string `type:"string" required:"true"`
 
 	// Specifies how you want to configure a task report, which provides detailed
-	// information about for your DataSync transfer.
+	// information about your DataSync transfer. For more information, see Monitoring
+	// your DataSync transfers with task reports (https://docs.aws.amazon.com/datasync/latest/userguide/task-reports.html).
+	//
+	// When using this parameter, your caller identity (the IAM role that you're
+	// using DataSync with) must have the iam:PassRole permission. The AWSDataSyncFullAccess
+	// (https://docs.aws.amazon.com/datasync/latest/userguide/security-iam-awsmanpol.html#security-iam-awsmanpol-awsdatasyncfullaccess)
+	// policy includes this permission.
+	//
+	// To remove a task report configuration, specify this parameter as empty.
 	TaskReportConfig *TaskReportConfig `type:"structure"`
 }
 
@@ -17511,11 +17926,13 @@ func (s UpdateTaskInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *UpdateTaskInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UpdateTaskInput"}
-	if s.Name != nil && len(*s.Name) < 1 {
-		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
 	if s.TaskArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("TaskArn"))
+	}
+	if s.ManifestConfig != nil {
+		if err := s.ManifestConfig.Validate(); err != nil {
+			invalidParams.AddNested("ManifestConfig", err.(request.ErrInvalidParams))
+		}
 	}
 	if s.Options != nil {
 		if err := s.Options.Validate(); err != nil {
@@ -17554,6 +17971,12 @@ func (s *UpdateTaskInput) SetExcludes(v []*FilterRule) *UpdateTaskInput {
 // SetIncludes sets the Includes field's value.
 func (s *UpdateTaskInput) SetIncludes(v []*FilterRule) *UpdateTaskInput {
 	s.Includes = v
+	return s
+}
+
+// SetManifestConfig sets the ManifestConfig field's value.
+func (s *UpdateTaskInput) SetManifestConfig(v *ManifestConfig) *UpdateTaskInput {
+	s.ManifestConfig = v
 	return s
 }
 
@@ -17942,6 +18365,30 @@ func LogLevel_Values() []string {
 }
 
 const (
+	// ManifestActionTransfer is a ManifestAction enum value
+	ManifestActionTransfer = "TRANSFER"
+)
+
+// ManifestAction_Values returns all elements of the ManifestAction enum
+func ManifestAction_Values() []string {
+	return []string{
+		ManifestActionTransfer,
+	}
+}
+
+const (
+	// ManifestFormatCsv is a ManifestFormat enum value
+	ManifestFormatCsv = "CSV"
+)
+
+// ManifestFormat_Values returns all elements of the ManifestFormat enum
+func ManifestFormat_Values() []string {
+	return []string{
+		ManifestFormatCsv,
+	}
+}
+
+const (
 	// MtimeNone is a Mtime enum value
 	MtimeNone = "NONE"
 
@@ -18258,6 +18705,38 @@ func S3StorageClass_Values() []string {
 }
 
 const (
+	// ScheduleDisabledByUser is a ScheduleDisabledBy enum value
+	ScheduleDisabledByUser = "USER"
+
+	// ScheduleDisabledByService is a ScheduleDisabledBy enum value
+	ScheduleDisabledByService = "SERVICE"
+)
+
+// ScheduleDisabledBy_Values returns all elements of the ScheduleDisabledBy enum
+func ScheduleDisabledBy_Values() []string {
+	return []string{
+		ScheduleDisabledByUser,
+		ScheduleDisabledByService,
+	}
+}
+
+const (
+	// ScheduleStatusEnabled is a ScheduleStatus enum value
+	ScheduleStatusEnabled = "ENABLED"
+
+	// ScheduleStatusDisabled is a ScheduleStatus enum value
+	ScheduleStatusDisabled = "DISABLED"
+)
+
+// ScheduleStatus_Values returns all elements of the ScheduleStatus enum
+func ScheduleStatus_Values() []string {
+	return []string{
+		ScheduleStatusEnabled,
+		ScheduleStatusDisabled,
+	}
+}
+
+const (
 	// SmbSecurityDescriptorCopyFlagsNone is a SmbSecurityDescriptorCopyFlags enum value
 	SmbSecurityDescriptorCopyFlagsNone = "NONE"
 
@@ -18329,6 +18808,9 @@ const (
 	// TaskExecutionStatusQueued is a TaskExecutionStatus enum value
 	TaskExecutionStatusQueued = "QUEUED"
 
+	// TaskExecutionStatusCancelling is a TaskExecutionStatus enum value
+	TaskExecutionStatusCancelling = "CANCELLING"
+
 	// TaskExecutionStatusLaunching is a TaskExecutionStatus enum value
 	TaskExecutionStatusLaunching = "LAUNCHING"
 
@@ -18352,6 +18834,7 @@ const (
 func TaskExecutionStatus_Values() []string {
 	return []string{
 		TaskExecutionStatusQueued,
+		TaskExecutionStatusCancelling,
 		TaskExecutionStatusLaunching,
 		TaskExecutionStatusPreparing,
 		TaskExecutionStatusTransferring,

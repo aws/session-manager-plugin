@@ -247,6 +247,84 @@ func (c *CodeBuild) BatchGetBuildsWithContext(ctx aws.Context, input *BatchGetBu
 	return out, req.Send()
 }
 
+const opBatchGetFleets = "BatchGetFleets"
+
+// BatchGetFleetsRequest generates a "aws/request.Request" representing the
+// client's request for the BatchGetFleets operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See BatchGetFleets for more information on using the BatchGetFleets
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the BatchGetFleetsRequest method.
+//	req, resp := client.BatchGetFleetsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetFleets
+func (c *CodeBuild) BatchGetFleetsRequest(input *BatchGetFleetsInput) (req *request.Request, output *BatchGetFleetsOutput) {
+	op := &request.Operation{
+		Name:       opBatchGetFleets,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &BatchGetFleetsInput{}
+	}
+
+	output = &BatchGetFleetsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// BatchGetFleets API operation for AWS CodeBuild.
+//
+// Gets information about one or more compute fleets.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodeBuild's
+// API operation BatchGetFleets for usage and error information.
+//
+// Returned Error Types:
+//   - InvalidInputException
+//     The input value that was provided is not valid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/BatchGetFleets
+func (c *CodeBuild) BatchGetFleets(input *BatchGetFleetsInput) (*BatchGetFleetsOutput, error) {
+	req, out := c.BatchGetFleetsRequest(input)
+	return out, req.Send()
+}
+
+// BatchGetFleetsWithContext is the same as BatchGetFleets with the addition of
+// the ability to pass a context and additional request options.
+//
+// See BatchGetFleets for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeBuild) BatchGetFleetsWithContext(ctx aws.Context, input *BatchGetFleetsInput, opts ...request.Option) (*BatchGetFleetsOutput, error) {
+	req, out := c.BatchGetFleetsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opBatchGetProjects = "BatchGetProjects"
 
 // BatchGetProjectsRequest generates a "aws/request.Request" representing the
@@ -476,6 +554,93 @@ func (c *CodeBuild) BatchGetReports(input *BatchGetReportsInput) (*BatchGetRepor
 // for more information on using Contexts.
 func (c *CodeBuild) BatchGetReportsWithContext(ctx aws.Context, input *BatchGetReportsInput, opts ...request.Option) (*BatchGetReportsOutput, error) {
 	req, out := c.BatchGetReportsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opCreateFleet = "CreateFleet"
+
+// CreateFleetRequest generates a "aws/request.Request" representing the
+// client's request for the CreateFleet operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateFleet for more information on using the CreateFleet
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateFleetRequest method.
+//	req, resp := client.CreateFleetRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/CreateFleet
+func (c *CodeBuild) CreateFleetRequest(input *CreateFleetInput) (req *request.Request, output *CreateFleetOutput) {
+	op := &request.Operation{
+		Name:       opCreateFleet,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateFleetInput{}
+	}
+
+	output = &CreateFleetOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateFleet API operation for AWS CodeBuild.
+//
+// Creates a compute fleet.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodeBuild's
+// API operation CreateFleet for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InvalidInputException
+//     The input value that was provided is not valid.
+//
+//   - ResourceAlreadyExistsException
+//     The specified Amazon Web Services resource cannot be created, because an
+//     Amazon Web Services resource with the same settings already exists.
+//
+//   - AccountLimitExceededException
+//     An Amazon Web Services service limit was exceeded for the calling Amazon
+//     Web Services account.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/CreateFleet
+func (c *CodeBuild) CreateFleet(input *CreateFleetInput) (*CreateFleetOutput, error) {
+	req, out := c.CreateFleetRequest(input)
+	return out, req.Send()
+}
+
+// CreateFleetWithContext is the same as CreateFleet with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateFleet for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeBuild) CreateFleetWithContext(ctx aws.Context, input *CreateFleetInput, opts ...request.Option) (*CreateFleetOutput, error) {
+	req, out := c.CreateFleetRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -827,6 +992,86 @@ func (c *CodeBuild) DeleteBuildBatch(input *DeleteBuildBatchInput) (*DeleteBuild
 // for more information on using Contexts.
 func (c *CodeBuild) DeleteBuildBatchWithContext(ctx aws.Context, input *DeleteBuildBatchInput, opts ...request.Option) (*DeleteBuildBatchOutput, error) {
 	req, out := c.DeleteBuildBatchRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDeleteFleet = "DeleteFleet"
+
+// DeleteFleetRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteFleet operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteFleet for more information on using the DeleteFleet
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteFleetRequest method.
+//	req, resp := client.DeleteFleetRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/DeleteFleet
+func (c *CodeBuild) DeleteFleetRequest(input *DeleteFleetInput) (req *request.Request, output *DeleteFleetOutput) {
+	op := &request.Operation{
+		Name:       opDeleteFleet,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteFleetInput{}
+	}
+
+	output = &DeleteFleetOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(jsonrpc.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteFleet API operation for AWS CodeBuild.
+//
+// Deletes a compute fleet. When you delete a compute fleet, its builds are
+// not deleted.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodeBuild's
+// API operation DeleteFleet for usage and error information.
+//
+// Returned Error Types:
+//   - InvalidInputException
+//     The input value that was provided is not valid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/DeleteFleet
+func (c *CodeBuild) DeleteFleet(input *DeleteFleetInput) (*DeleteFleetOutput, error) {
+	req, out := c.DeleteFleetRequest(input)
+	return out, req.Send()
+}
+
+// DeleteFleetWithContext is the same as DeleteFleet with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteFleet for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeBuild) DeleteFleetWithContext(ctx aws.Context, input *DeleteFleetInput, opts ...request.Option) (*DeleteFleetOutput, error) {
+	req, out := c.DeleteFleetRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -2550,6 +2795,142 @@ func (c *CodeBuild) ListCuratedEnvironmentImagesWithContext(ctx aws.Context, inp
 	return out, req.Send()
 }
 
+const opListFleets = "ListFleets"
+
+// ListFleetsRequest generates a "aws/request.Request" representing the
+// client's request for the ListFleets operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListFleets for more information on using the ListFleets
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListFleetsRequest method.
+//	req, resp := client.ListFleetsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListFleets
+func (c *CodeBuild) ListFleetsRequest(input *ListFleetsInput) (req *request.Request, output *ListFleetsOutput) {
+	op := &request.Operation{
+		Name:       opListFleets,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListFleetsInput{}
+	}
+
+	output = &ListFleetsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListFleets API operation for AWS CodeBuild.
+//
+// Gets a list of compute fleet names with each compute fleet name representing
+// a single compute fleet.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodeBuild's
+// API operation ListFleets for usage and error information.
+//
+// Returned Error Types:
+//   - InvalidInputException
+//     The input value that was provided is not valid.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/ListFleets
+func (c *CodeBuild) ListFleets(input *ListFleetsInput) (*ListFleetsOutput, error) {
+	req, out := c.ListFleetsRequest(input)
+	return out, req.Send()
+}
+
+// ListFleetsWithContext is the same as ListFleets with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListFleets for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeBuild) ListFleetsWithContext(ctx aws.Context, input *ListFleetsInput, opts ...request.Option) (*ListFleetsOutput, error) {
+	req, out := c.ListFleetsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListFleetsPages iterates over the pages of a ListFleets operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListFleets method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListFleets operation.
+//	pageNum := 0
+//	err := client.ListFleetsPages(params,
+//	    func(page *codebuild.ListFleetsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *CodeBuild) ListFleetsPages(input *ListFleetsInput, fn func(*ListFleetsOutput, bool) bool) error {
+	return c.ListFleetsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListFleetsPagesWithContext same as ListFleetsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeBuild) ListFleetsPagesWithContext(ctx aws.Context, input *ListFleetsInput, fn func(*ListFleetsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListFleetsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListFleetsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListFleetsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListProjects = "ListProjects"
 
 // ListProjectsRequest generates a "aws/request.Request" representing the
@@ -3741,7 +4122,13 @@ func (c *CodeBuild) StartBuildRequest(input *StartBuildInput) (req *request.Requ
 
 // StartBuild API operation for AWS CodeBuild.
 //
-// Starts running a build.
+// Starts running a build with the settings defined in the project. These setting
+// include: how to run a build, where to get the source code, which build environment
+// to use, which build commands to run, and where to store the build output.
+//
+// You can also start a build run by overriding some of the build settings in
+// the project. The overrides only apply for that specific start build request.
+// The settings in the project are unaltered.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4025,6 +4412,92 @@ func (c *CodeBuild) StopBuildBatch(input *StopBuildBatchInput) (*StopBuildBatchO
 // for more information on using Contexts.
 func (c *CodeBuild) StopBuildBatchWithContext(ctx aws.Context, input *StopBuildBatchInput, opts ...request.Option) (*StopBuildBatchOutput, error) {
 	req, out := c.StopBuildBatchRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUpdateFleet = "UpdateFleet"
+
+// UpdateFleetRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateFleet operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateFleet for more information on using the UpdateFleet
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateFleetRequest method.
+//	req, resp := client.UpdateFleetRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/UpdateFleet
+func (c *CodeBuild) UpdateFleetRequest(input *UpdateFleetInput) (req *request.Request, output *UpdateFleetOutput) {
+	op := &request.Operation{
+		Name:       opUpdateFleet,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &UpdateFleetInput{}
+	}
+
+	output = &UpdateFleetOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateFleet API operation for AWS CodeBuild.
+//
+// Updates a compute fleet.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS CodeBuild's
+// API operation UpdateFleet for usage and error information.
+//
+// Returned Error Types:
+//
+//   - InvalidInputException
+//     The input value that was provided is not valid.
+//
+//   - ResourceNotFoundException
+//     The specified Amazon Web Services resource cannot be found.
+//
+//   - AccountLimitExceededException
+//     An Amazon Web Services service limit was exceeded for the calling Amazon
+//     Web Services account.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/codebuild-2016-10-06/UpdateFleet
+func (c *CodeBuild) UpdateFleet(input *UpdateFleetInput) (*UpdateFleetOutput, error) {
+	req, out := c.UpdateFleetRequest(input)
+	return out, req.Send()
+}
+
+// UpdateFleetWithContext is the same as UpdateFleet with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateFleet for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *CodeBuild) UpdateFleetWithContext(ctx aws.Context, input *UpdateFleetInput, opts ...request.Option) (*UpdateFleetOutput, error) {
+	req, out := c.UpdateFleetRequest(input)
 	req.SetContext(ctx)
 	req.ApplyOptions(opts...)
 	return out, req.Send()
@@ -4718,6 +5191,95 @@ func (s *BatchGetBuildsOutput) SetBuildsNotFound(v []*string) *BatchGetBuildsOut
 	return s
 }
 
+type BatchGetFleetsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The names or ARNs of the compute fleets.
+	//
+	// Names is a required field
+	Names []*string `locationName:"names" min:"1" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFleetsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFleetsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *BatchGetFleetsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "BatchGetFleetsInput"}
+	if s.Names == nil {
+		invalidParams.Add(request.NewErrParamRequired("Names"))
+	}
+	if s.Names != nil && len(s.Names) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Names", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetNames sets the Names field's value.
+func (s *BatchGetFleetsInput) SetNames(v []*string) *BatchGetFleetsInput {
+	s.Names = v
+	return s
+}
+
+type BatchGetFleetsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the requested compute fleets.
+	Fleets []*Fleet `locationName:"fleets" min:"1" type:"list"`
+
+	// The names of compute fleets for which information could not be found.
+	FleetsNotFound []*string `locationName:"fleetsNotFound" min:"1" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFleetsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BatchGetFleetsOutput) GoString() string {
+	return s.String()
+}
+
+// SetFleets sets the Fleets field's value.
+func (s *BatchGetFleetsOutput) SetFleets(v []*Fleet) *BatchGetFleetsOutput {
+	s.Fleets = v
+	return s
+}
+
+// SetFleetsNotFound sets the FleetsNotFound field's value.
+func (s *BatchGetFleetsOutput) SetFleetsNotFound(v []*string) *BatchGetFleetsOutput {
+	s.FleetsNotFound = v
+	return s
+}
+
 type BatchGetProjectsInput struct {
 	_ struct{} `type:"structure"`
 
@@ -5193,8 +5755,8 @@ type Build struct {
 	// When the build process started, expressed in Unix time format.
 	StartTime *time.Time `locationName:"startTime" type:"timestamp"`
 
-	// How long, in minutes, for CodeBuild to wait before timing out this build
-	// if it does not get marked as completed.
+	// How long, in minutes, from 5 to 2160 (36 hours), for CodeBuild to wait before
+	// timing out this build if it does not get marked as completed.
 	TimeoutInMinutes *int64 `locationName:"timeoutInMinutes" type:"integer"`
 
 	// If your CodeBuild project accesses resources in an Amazon VPC, you provide
@@ -6752,6 +7314,281 @@ func (s *CodeCoverageReportSummary) SetLinesMissed(v int64) *CodeCoverageReportS
 	return s
 }
 
+type CreateFleetInput struct {
+	_ struct{} `type:"structure"`
+
+	// The initial number of machines allocated to the ﬂeet, which deﬁnes the
+	// number of builds that can run in parallel.
+	//
+	// BaseCapacity is a required field
+	BaseCapacity *int64 `locationName:"baseCapacity" min:"1" type:"integer" required:"true"`
+
+	// Information about the compute resources the compute fleet uses. Available
+	// values include:
+	//
+	//    * BUILD_GENERAL1_SMALL: Use up to 3 GB memory and 2 vCPUs for builds.
+	//
+	//    * BUILD_GENERAL1_MEDIUM: Use up to 7 GB memory and 4 vCPUs for builds.
+	//
+	//    * BUILD_GENERAL1_LARGE: Use up to 16 GB memory and 8 vCPUs for builds,
+	//    depending on your environment type.
+	//
+	//    * BUILD_GENERAL1_XLARGE: Use up to 70 GB memory and 36 vCPUs for builds,
+	//    depending on your environment type.
+	//
+	//    * BUILD_GENERAL1_2XLARGE: Use up to 145 GB memory, 72 vCPUs, and 824 GB
+	//    of SSD storage for builds. This compute type supports Docker images up
+	//    to 100 GB uncompressed.
+	//
+	// If you use BUILD_GENERAL1_SMALL:
+	//
+	//    * For environment type LINUX_CONTAINER, you can use up to 3 GB memory
+	//    and 2 vCPUs for builds.
+	//
+	//    * For environment type LINUX_GPU_CONTAINER, you can use up to 16 GB memory,
+	//    4 vCPUs, and 1 NVIDIA A10G Tensor Core GPU for builds.
+	//
+	//    * For environment type ARM_CONTAINER, you can use up to 4 GB memory and
+	//    2 vCPUs on ARM-based processors for builds.
+	//
+	// If you use BUILD_GENERAL1_LARGE:
+	//
+	//    * For environment type LINUX_CONTAINER, you can use up to 15 GB memory
+	//    and 8 vCPUs for builds.
+	//
+	//    * For environment type LINUX_GPU_CONTAINER, you can use up to 255 GB memory,
+	//    32 vCPUs, and 4 NVIDIA Tesla V100 GPUs for builds.
+	//
+	//    * For environment type ARM_CONTAINER, you can use up to 16 GB memory and
+	//    8 vCPUs on ARM-based processors for builds.
+	//
+	// For more information, see Build environment compute types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
+	// in the CodeBuild User Guide.
+	//
+	// ComputeType is a required field
+	ComputeType *string `locationName:"computeType" type:"string" required:"true" enum:"ComputeType"`
+
+	// The environment type of the compute fleet.
+	//
+	//    * The environment type ARM_CONTAINER is available only in regions US East
+	//    (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific
+	//    (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific
+	//    (Sydney), EU (Frankfurt), and South America (São Paulo).
+	//
+	//    * The environment type LINUX_CONTAINER is available only in regions US
+	//    East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU
+	//    (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific
+	//    (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).
+	//
+	//    * The environment type LINUX_GPU_CONTAINER is available only in regions
+	//    US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland),
+	//    EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).
+	//
+	//    * The environment type WINDOWS_SERVER_2019_CONTAINER is available only
+	//    in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).
+	//
+	//    * The environment type WINDOWS_SERVER_2022_CONTAINER is available only
+	//    in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU
+	//    (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore),
+	//    Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).
+	//
+	// For more information, see Build environment compute types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
+	// in the CodeBuild user guide.
+	//
+	// EnvironmentType is a required field
+	EnvironmentType *string `locationName:"environmentType" type:"string" required:"true" enum:"EnvironmentType"`
+
+	// The service role associated with the compute fleet. For more information,
+	// see Allow a user to add a permission policy for a fleet service role (https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html)
+	// in the CodeBuild User Guide.
+	FleetServiceRole *string `locationName:"fleetServiceRole" min:"1" type:"string"`
+
+	// The name of the compute fleet.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" min:"2" type:"string" required:"true"`
+
+	// The compute fleet overflow behavior.
+	//
+	//    * For overflow behavior QUEUE, your overflow builds need to wait on the
+	//    existing fleet instance to become available.
+	//
+	//    * For overflow behavior ON_DEMAND, your overflow builds run on CodeBuild
+	//    on-demand. If you choose to set your overflow behavior to on-demand while
+	//    creating a VPC-connected fleet, make sure that you add the required VPC
+	//    permissions to your project service role. For more information, see Example
+	//    policy statement to allow CodeBuild access to Amazon Web Services services
+	//    required to create a VPC network interface (https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-create-vpc-network-interface).
+	OverflowBehavior *string `locationName:"overflowBehavior" type:"string" enum:"FleetOverflowBehavior"`
+
+	// The scaling configuration of the compute fleet.
+	ScalingConfiguration *ScalingConfigurationInput_ `locationName:"scalingConfiguration" type:"structure"`
+
+	// A list of tag key and value pairs associated with this compute fleet.
+	//
+	// These tags are available for use by Amazon Web Services services that support
+	// CodeBuild build project tags.
+	Tags []*Tag `locationName:"tags" type:"list"`
+
+	// Information about the VPC configuration that CodeBuild accesses.
+	VpcConfig *VpcConfig `locationName:"vpcConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateFleetInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateFleetInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateFleetInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateFleetInput"}
+	if s.BaseCapacity == nil {
+		invalidParams.Add(request.NewErrParamRequired("BaseCapacity"))
+	}
+	if s.BaseCapacity != nil && *s.BaseCapacity < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("BaseCapacity", 1))
+	}
+	if s.ComputeType == nil {
+		invalidParams.Add(request.NewErrParamRequired("ComputeType"))
+	}
+	if s.EnvironmentType == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentType"))
+	}
+	if s.FleetServiceRole != nil && len(*s.FleetServiceRole) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("FleetServiceRole", 1))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 2))
+	}
+	if s.ScalingConfiguration != nil {
+		if err := s.ScalingConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("ScalingConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.VpcConfig != nil {
+		if err := s.VpcConfig.Validate(); err != nil {
+			invalidParams.AddNested("VpcConfig", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetBaseCapacity sets the BaseCapacity field's value.
+func (s *CreateFleetInput) SetBaseCapacity(v int64) *CreateFleetInput {
+	s.BaseCapacity = &v
+	return s
+}
+
+// SetComputeType sets the ComputeType field's value.
+func (s *CreateFleetInput) SetComputeType(v string) *CreateFleetInput {
+	s.ComputeType = &v
+	return s
+}
+
+// SetEnvironmentType sets the EnvironmentType field's value.
+func (s *CreateFleetInput) SetEnvironmentType(v string) *CreateFleetInput {
+	s.EnvironmentType = &v
+	return s
+}
+
+// SetFleetServiceRole sets the FleetServiceRole field's value.
+func (s *CreateFleetInput) SetFleetServiceRole(v string) *CreateFleetInput {
+	s.FleetServiceRole = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CreateFleetInput) SetName(v string) *CreateFleetInput {
+	s.Name = &v
+	return s
+}
+
+// SetOverflowBehavior sets the OverflowBehavior field's value.
+func (s *CreateFleetInput) SetOverflowBehavior(v string) *CreateFleetInput {
+	s.OverflowBehavior = &v
+	return s
+}
+
+// SetScalingConfiguration sets the ScalingConfiguration field's value.
+func (s *CreateFleetInput) SetScalingConfiguration(v *ScalingConfigurationInput_) *CreateFleetInput {
+	s.ScalingConfiguration = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateFleetInput) SetTags(v []*Tag) *CreateFleetInput {
+	s.Tags = v
+	return s
+}
+
+// SetVpcConfig sets the VpcConfig field's value.
+func (s *CreateFleetInput) SetVpcConfig(v *VpcConfig) *CreateFleetInput {
+	s.VpcConfig = v
+	return s
+}
+
+type CreateFleetOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Information about the compute fleet
+	Fleet *Fleet `locationName:"fleet" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateFleetOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateFleetOutput) GoString() string {
+	return s.String()
+}
+
+// SetFleet sets the Fleet field's value.
+func (s *CreateFleetOutput) SetFleet(v *Fleet) *CreateFleetOutput {
+	s.Fleet = v
+	return s
+}
+
 type CreateProjectInput struct {
 	_ struct{} `type:"structure"`
 
@@ -6848,6 +7685,8 @@ type CreateProjectInput struct {
 	//    commit ID is used. If not specified, the default branch's HEAD commit
 	//    ID is used.
 	//
+	//    * For GitLab: the commit ID, branch, or Git tag to use.
+	//
 	//    * For Bitbucket: the commit ID, branch name, or tag name that corresponds
 	//    to the version of the source code you want to build. If a branch name
 	//    is specified, the branch's HEAD commit ID is used. If not specified, the
@@ -6869,12 +7708,14 @@ type CreateProjectInput struct {
 	// CodeBuild build project tags.
 	Tags []*Tag `locationName:"tags" type:"list"`
 
-	// How long, in minutes, from 5 to 480 (8 hours), for CodeBuild to wait before
+	// How long, in minutes, from 5 to 2160 (36 hours), for CodeBuild to wait before
 	// it times out any build that has not been marked as completed. The default
 	// is 60 minutes.
 	TimeoutInMinutes *int64 `locationName:"timeoutInMinutes" min:"5" type:"integer"`
 
 	// VpcConfig enables CodeBuild to access resources in an Amazon VPC.
+	//
+	// If you're using compute fleets during project creation, do not provide vpcConfig.
 	VpcConfig *VpcConfig `locationName:"vpcConfig" type:"structure"`
 }
 
@@ -7326,10 +8167,24 @@ type CreateWebhookInput struct {
 	// array must pass. For a filter group to pass, each of its filters must pass.
 	FilterGroups [][]*WebhookFilter `locationName:"filterGroups" type:"list"`
 
+	// If manualCreation is true, CodeBuild doesn't create a webhook in GitHub and
+	// instead returns payloadUrl and secret values for the webhook. The payloadUrl
+	// and secret values in the output can be used to manually create a webhook
+	// within GitHub.
+	//
+	// manualCreation is only available for GitHub webhooks.
+	ManualCreation *bool `locationName:"manualCreation" type:"boolean"`
+
 	// The name of the CodeBuild project.
 	//
 	// ProjectName is a required field
 	ProjectName *string `locationName:"projectName" min:"2" type:"string" required:"true"`
+
+	// The scope configuration for global or organization webhooks.
+	//
+	// Global or organization webhooks are only available for GitHub and Github
+	// Enterprise webhooks.
+	ScopeConfiguration *ScopeConfiguration `locationName:"scopeConfiguration" type:"structure"`
 }
 
 // String returns the string representation.
@@ -7359,6 +8214,11 @@ func (s *CreateWebhookInput) Validate() error {
 	if s.ProjectName != nil && len(*s.ProjectName) < 2 {
 		invalidParams.Add(request.NewErrParamMinLen("ProjectName", 2))
 	}
+	if s.ScopeConfiguration != nil {
+		if err := s.ScopeConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("ScopeConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -7384,9 +8244,21 @@ func (s *CreateWebhookInput) SetFilterGroups(v [][]*WebhookFilter) *CreateWebhoo
 	return s
 }
 
+// SetManualCreation sets the ManualCreation field's value.
+func (s *CreateWebhookInput) SetManualCreation(v bool) *CreateWebhookInput {
+	s.ManualCreation = &v
+	return s
+}
+
 // SetProjectName sets the ProjectName field's value.
 func (s *CreateWebhookInput) SetProjectName(v string) *CreateWebhookInput {
 	s.ProjectName = &v
+	return s
+}
+
+// SetScopeConfiguration sets the ScopeConfiguration field's value.
+func (s *CreateWebhookInput) SetScopeConfiguration(v *ScopeConfiguration) *CreateWebhookInput {
+	s.ScopeConfiguration = v
 	return s
 }
 
@@ -7564,6 +8436,77 @@ func (s *DeleteBuildBatchOutput) SetBuildsNotDeleted(v []*BuildNotDeleted) *Dele
 func (s *DeleteBuildBatchOutput) SetStatusCode(v string) *DeleteBuildBatchOutput {
 	s.StatusCode = &v
 	return s
+}
+
+type DeleteFleetInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the compute fleet.
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteFleetInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteFleetInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteFleetInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteFleetInput"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
+	if s.Arn != nil && len(*s.Arn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Arn", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetArn sets the Arn field's value.
+func (s *DeleteFleetInput) SetArn(v string) *DeleteFleetInput {
+	s.Arn = &v
+	return s
+}
+
+type DeleteFleetOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteFleetOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteFleetOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteProjectInput struct {
@@ -8587,6 +9530,308 @@ func (s *ExportedEnvironmentVariable) SetValue(v string) *ExportedEnvironmentVar
 	return s
 }
 
+// A set of dedicated instances for your build environment.
+type Fleet struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the compute fleet.
+	Arn *string `locationName:"arn" min:"1" type:"string"`
+
+	// The initial number of machines allocated to the compute ﬂeet, which deﬁnes
+	// the number of builds that can run in parallel.
+	BaseCapacity *int64 `locationName:"baseCapacity" min:"1" type:"integer"`
+
+	// Information about the compute resources the compute fleet uses. Available
+	// values include:
+	//
+	//    * BUILD_GENERAL1_SMALL: Use up to 3 GB memory and 2 vCPUs for builds.
+	//
+	//    * BUILD_GENERAL1_MEDIUM: Use up to 7 GB memory and 4 vCPUs for builds.
+	//
+	//    * BUILD_GENERAL1_LARGE: Use up to 16 GB memory and 8 vCPUs for builds,
+	//    depending on your environment type.
+	//
+	//    * BUILD_GENERAL1_XLARGE: Use up to 70 GB memory and 36 vCPUs for builds,
+	//    depending on your environment type.
+	//
+	//    * BUILD_GENERAL1_2XLARGE: Use up to 145 GB memory, 72 vCPUs, and 824 GB
+	//    of SSD storage for builds. This compute type supports Docker images up
+	//    to 100 GB uncompressed.
+	//
+	// If you use BUILD_GENERAL1_SMALL:
+	//
+	//    * For environment type LINUX_CONTAINER, you can use up to 3 GB memory
+	//    and 2 vCPUs for builds.
+	//
+	//    * For environment type LINUX_GPU_CONTAINER, you can use up to 16 GB memory,
+	//    4 vCPUs, and 1 NVIDIA A10G Tensor Core GPU for builds.
+	//
+	//    * For environment type ARM_CONTAINER, you can use up to 4 GB memory and
+	//    2 vCPUs on ARM-based processors for builds.
+	//
+	// If you use BUILD_GENERAL1_LARGE:
+	//
+	//    * For environment type LINUX_CONTAINER, you can use up to 15 GB memory
+	//    and 8 vCPUs for builds.
+	//
+	//    * For environment type LINUX_GPU_CONTAINER, you can use up to 255 GB memory,
+	//    32 vCPUs, and 4 NVIDIA Tesla V100 GPUs for builds.
+	//
+	//    * For environment type ARM_CONTAINER, you can use up to 16 GB memory and
+	//    8 vCPUs on ARM-based processors for builds.
+	//
+	// For more information, see Build environment compute types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
+	// in the CodeBuild User Guide.
+	ComputeType *string `locationName:"computeType" type:"string" enum:"ComputeType"`
+
+	// The time at which the compute fleet was created.
+	Created *time.Time `locationName:"created" type:"timestamp"`
+
+	// The environment type of the compute fleet.
+	//
+	//    * The environment type ARM_CONTAINER is available only in regions US East
+	//    (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific
+	//    (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific
+	//    (Sydney), EU (Frankfurt), and South America (São Paulo).
+	//
+	//    * The environment type LINUX_CONTAINER is available only in regions US
+	//    East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU
+	//    (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific
+	//    (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).
+	//
+	//    * The environment type LINUX_GPU_CONTAINER is available only in regions
+	//    US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland),
+	//    EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).
+	//
+	//    * The environment type WINDOWS_SERVER_2019_CONTAINER is available only
+	//    in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).
+	//
+	//    * The environment type WINDOWS_SERVER_2022_CONTAINER is available only
+	//    in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU
+	//    (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore),
+	//    Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).
+	//
+	// For more information, see Build environment compute types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
+	// in the CodeBuild user guide.
+	EnvironmentType *string `locationName:"environmentType" type:"string" enum:"EnvironmentType"`
+
+	// The service role associated with the compute fleet. For more information,
+	// see Allow a user to add a permission policy for a fleet service role (https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html)
+	// in the CodeBuild User Guide.
+	FleetServiceRole *string `locationName:"fleetServiceRole" min:"1" type:"string"`
+
+	// The ID of the compute fleet.
+	Id *string `locationName:"id" min:"1" type:"string"`
+
+	// The time at which the compute fleet was last modified.
+	LastModified *time.Time `locationName:"lastModified" type:"timestamp"`
+
+	// The name of the compute fleet.
+	Name *string `locationName:"name" min:"2" type:"string"`
+
+	// The compute fleet overflow behavior.
+	//
+	//    * For overflow behavior QUEUE, your overflow builds need to wait on the
+	//    existing fleet instance to become available.
+	//
+	//    * For overflow behavior ON_DEMAND, your overflow builds run on CodeBuild
+	//    on-demand. If you choose to set your overflow behavior to on-demand while
+	//    creating a VPC-connected fleet, make sure that you add the required VPC
+	//    permissions to your project service role. For more information, see Example
+	//    policy statement to allow CodeBuild access to Amazon Web Services services
+	//    required to create a VPC network interface (https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-create-vpc-network-interface).
+	OverflowBehavior *string `locationName:"overflowBehavior" type:"string" enum:"FleetOverflowBehavior"`
+
+	// The scaling configuration of the compute fleet.
+	ScalingConfiguration *ScalingConfigurationOutput_ `locationName:"scalingConfiguration" type:"structure"`
+
+	// The status of the compute fleet.
+	Status *FleetStatus `locationName:"status" type:"structure"`
+
+	// A list of tag key and value pairs associated with this compute fleet.
+	//
+	// These tags are available for use by Amazon Web Services services that support
+	// CodeBuild build project tags.
+	Tags []*Tag `locationName:"tags" type:"list"`
+
+	// Information about the VPC configuration that CodeBuild accesses.
+	VpcConfig *VpcConfig `locationName:"vpcConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Fleet) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Fleet) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *Fleet) SetArn(v string) *Fleet {
+	s.Arn = &v
+	return s
+}
+
+// SetBaseCapacity sets the BaseCapacity field's value.
+func (s *Fleet) SetBaseCapacity(v int64) *Fleet {
+	s.BaseCapacity = &v
+	return s
+}
+
+// SetComputeType sets the ComputeType field's value.
+func (s *Fleet) SetComputeType(v string) *Fleet {
+	s.ComputeType = &v
+	return s
+}
+
+// SetCreated sets the Created field's value.
+func (s *Fleet) SetCreated(v time.Time) *Fleet {
+	s.Created = &v
+	return s
+}
+
+// SetEnvironmentType sets the EnvironmentType field's value.
+func (s *Fleet) SetEnvironmentType(v string) *Fleet {
+	s.EnvironmentType = &v
+	return s
+}
+
+// SetFleetServiceRole sets the FleetServiceRole field's value.
+func (s *Fleet) SetFleetServiceRole(v string) *Fleet {
+	s.FleetServiceRole = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *Fleet) SetId(v string) *Fleet {
+	s.Id = &v
+	return s
+}
+
+// SetLastModified sets the LastModified field's value.
+func (s *Fleet) SetLastModified(v time.Time) *Fleet {
+	s.LastModified = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *Fleet) SetName(v string) *Fleet {
+	s.Name = &v
+	return s
+}
+
+// SetOverflowBehavior sets the OverflowBehavior field's value.
+func (s *Fleet) SetOverflowBehavior(v string) *Fleet {
+	s.OverflowBehavior = &v
+	return s
+}
+
+// SetScalingConfiguration sets the ScalingConfiguration field's value.
+func (s *Fleet) SetScalingConfiguration(v *ScalingConfigurationOutput_) *Fleet {
+	s.ScalingConfiguration = v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *Fleet) SetStatus(v *FleetStatus) *Fleet {
+	s.Status = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *Fleet) SetTags(v []*Tag) *Fleet {
+	s.Tags = v
+	return s
+}
+
+// SetVpcConfig sets the VpcConfig field's value.
+func (s *Fleet) SetVpcConfig(v *VpcConfig) *Fleet {
+	s.VpcConfig = v
+	return s
+}
+
+// The status of the compute fleet.
+type FleetStatus struct {
+	_ struct{} `type:"structure"`
+
+	// Additional information about a compute fleet. Valid values include:
+	//
+	//    * CREATE_FAILED: The compute fleet has failed to create.
+	//
+	//    * UPDATE_FAILED: The compute fleet has failed to update.
+	Context *string `locationName:"context" type:"string" enum:"FleetContextCode"`
+
+	// A message associated with the status of a compute fleet.
+	Message *string `locationName:"message" type:"string"`
+
+	// The status code of the compute fleet. Valid values include:
+	//
+	//    * CREATING: The compute fleet is being created.
+	//
+	//    * UPDATING: The compute fleet is being updated.
+	//
+	//    * ROTATING: The compute fleet is being rotated.
+	//
+	//    * PENDING_DELETION: The compute fleet is pending deletion.
+	//
+	//    * DELETING: The compute fleet is being deleted.
+	//
+	//    * CREATE_FAILED: The compute fleet has failed to create.
+	//
+	//    * UPDATE_ROLLBACK_FAILED: The compute fleet has failed to update and could
+	//    not rollback to previous state.
+	//
+	//    * ACTIVE: The compute fleet has succeeded and is active.
+	StatusCode *string `locationName:"statusCode" type:"string" enum:"FleetStatusCode"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FleetStatus) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s FleetStatus) GoString() string {
+	return s.String()
+}
+
+// SetContext sets the Context field's value.
+func (s *FleetStatus) SetContext(v string) *FleetStatus {
+	s.Context = &v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *FleetStatus) SetMessage(v string) *FleetStatus {
+	s.Message = &v
+	return s
+}
+
+// SetStatusCode sets the StatusCode field's value.
+func (s *FleetStatus) SetStatusCode(v string) *FleetStatus {
+	s.StatusCode = &v
+	return s
+}
+
 type GetReportGroupTrendInput struct {
 	_ struct{} `type:"structure"`
 
@@ -8877,8 +10122,9 @@ type ImportSourceCredentialsInput struct {
 	_ struct{} `type:"structure"`
 
 	// The type of authentication used to connect to a GitHub, GitHub Enterprise,
-	// or Bitbucket repository. An OAUTH connection is not supported by the API
-	// and must be created using the CodeBuild console.
+	// GitLab, GitLab Self Managed, or Bitbucket repository. An OAUTH connection
+	// is not supported by the API and must be created using the CodeBuild console.
+	// Note that CODECONNECTIONS is only valid for GitLab and GitLab Self Managed.
 	//
 	// AuthType is a required field
 	AuthType *string `locationName:"authType" type:"string" required:"true" enum:"AuthType"`
@@ -8894,7 +10140,8 @@ type ImportSourceCredentialsInput struct {
 	ShouldOverwrite *bool `locationName:"shouldOverwrite" type:"boolean"`
 
 	// For GitHub or GitHub Enterprise, this is the personal access token. For Bitbucket,
-	// this is the app password.
+	// this is either the access token or the app password. For the authType CODECONNECTIONS,
+	// this is the connectionArn.
 	//
 	// Token is a sensitive parameter and its value will be
 	// replaced with "sensitive" in string returned by ImportSourceCredentialsInput's
@@ -9669,6 +10916,146 @@ func (s ListCuratedEnvironmentImagesOutput) GoString() string {
 // SetPlatforms sets the Platforms field's value.
 func (s *ListCuratedEnvironmentImagesOutput) SetPlatforms(v []*EnvironmentPlatform) *ListCuratedEnvironmentImagesOutput {
 	s.Platforms = v
+	return s
+}
+
+type ListFleetsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The maximum number of paginated compute fleets returned per response. Use
+	// nextToken to iterate pages in the list of returned compute fleets.
+	MaxResults *int64 `locationName:"maxResults" min:"1" type:"integer"`
+
+	// During a previous call, if there are more than 100 items in the list, only
+	// the first 100 items are returned, along with a unique string called a nextToken.
+	// To get the next batch of items in the list, call this operation again, adding
+	// the next token to the call. To get all of the items in the list, keep calling
+	// this operation with each subsequent next token that is returned, until no
+	// more next tokens are returned.
+	//
+	// NextToken is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ListFleetsInput's
+	// String and GoString methods.
+	NextToken *string `locationName:"nextToken" type:"string" sensitive:"true"`
+
+	// The criterion to be used to list compute fleet names. Valid values include:
+	//
+	//    * CREATED_TIME: List based on when each compute fleet was created.
+	//
+	//    * LAST_MODIFIED_TIME: List based on when information about each compute
+	//    fleet was last changed.
+	//
+	//    * NAME: List based on each compute fleet's name.
+	//
+	// Use sortOrder to specify in what order to list the compute fleet names based
+	// on the preceding criteria.
+	SortBy *string `locationName:"sortBy" type:"string" enum:"FleetSortByType"`
+
+	// The order in which to list compute fleets. Valid values include:
+	//
+	//    * ASCENDING: List in ascending order.
+	//
+	//    * DESCENDING: List in descending order.
+	//
+	// Use sortBy to specify the criterion to be used to list compute fleet names.
+	SortOrder *string `locationName:"sortOrder" type:"string" enum:"SortOrderType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFleetsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFleetsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListFleetsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListFleetsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListFleetsInput) SetMaxResults(v int64) *ListFleetsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListFleetsInput) SetNextToken(v string) *ListFleetsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetSortBy sets the SortBy field's value.
+func (s *ListFleetsInput) SetSortBy(v string) *ListFleetsInput {
+	s.SortBy = &v
+	return s
+}
+
+// SetSortOrder sets the SortOrder field's value.
+func (s *ListFleetsInput) SetSortOrder(v string) *ListFleetsInput {
+	s.SortOrder = &v
+	return s
+}
+
+type ListFleetsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of compute fleet names.
+	Fleets []*string `locationName:"fleets" min:"1" type:"list"`
+
+	// If there are more than 100 items in the list, only the first 100 items are
+	// returned, along with a unique string called a nextToken. To get the next
+	// batch of items in the list, call this operation again, adding the next token
+	// to the call.
+	NextToken *string `locationName:"nextToken" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFleetsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListFleetsOutput) GoString() string {
+	return s.String()
+}
+
+// SetFleets sets the Fleets field's value.
+func (s *ListFleetsOutput) SetFleets(v []*string) *ListFleetsOutput {
+	s.Fleets = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListFleetsOutput) SetNextToken(v string) *ListFleetsOutput {
+	s.NextToken = &v
 	return s
 }
 
@@ -10963,6 +12350,8 @@ type Project struct {
 	//    commit ID is used. If not specified, the default branch's HEAD commit
 	//    ID is used.
 	//
+	//    * For GitLab: the commit ID, branch, or Git tag to use.
+	//
 	//    * For Bitbucket: the commit ID, branch name, or tag name that corresponds
 	//    to the version of the source code you want to build. If a branch name
 	//    is specified, the branch's HEAD commit ID is used. If not specified, the
@@ -10984,7 +12373,7 @@ type Project struct {
 	// CodeBuild build project tags.
 	Tags []*Tag `locationName:"tags" type:"list"`
 
-	// How long, in minutes, from 5 to 480 (8 hours), for CodeBuild to wait before
+	// How long, in minutes, from 5 to 2160 (36 hours), for CodeBuild to wait before
 	// timing out any related build that did not get marked as completed. The default
 	// is 60 minutes.
 	TimeoutInMinutes *int64 `locationName:"timeoutInMinutes" min:"5" type:"integer"`
@@ -11707,6 +13096,9 @@ type ProjectEnvironment struct {
 	//    * BUILD_GENERAL1_LARGE: Use up to 16 GB memory and 8 vCPUs for builds,
 	//    depending on your environment type.
 	//
+	//    * BUILD_GENERAL1_XLARGE: Use up to 70 GB memory and 36 vCPUs for builds,
+	//    depending on your environment type.
+	//
 	//    * BUILD_GENERAL1_2XLARGE: Use up to 145 GB memory, 72 vCPUs, and 824 GB
 	//    of SSD storage for builds. This compute type supports Docker images up
 	//    to 100 GB uncompressed.
@@ -11748,6 +13140,9 @@ type ProjectEnvironment struct {
 	//    * For environment type ARM_CONTAINER, you can use up to 16 GB memory and
 	//    8 vCPUs on ARM-based processors for builds.
 	//
+	// If you're using compute fleets during project creation, computeType will
+	// be ignored.
+	//
 	// For more information, see Build Environment Compute Types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
 	// in the CodeBuild User Guide.
 	//
@@ -11757,6 +13152,9 @@ type ProjectEnvironment struct {
 	// A set of environment variables to make available to builds for this build
 	// project.
 	EnvironmentVariables []*EnvironmentVariable `locationName:"environmentVariables" type:"list"`
+
+	// A ProjectFleet object to use for this build project.
+	Fleet *ProjectFleet `locationName:"fleet" type:"structure"`
 
 	// The image tag or image digest that identifies the Docker image to use for
 	// this build project. Use the following formats:
@@ -11824,11 +13222,11 @@ type ProjectEnvironment struct {
 	//    (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific
 	//    (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Sydney), and EU (Frankfurt).
 	//
-	//    * The environment type LINUX_CONTAINER with compute type build.general1.2xlarge
-	//    is available only in regions US East (N. Virginia), US East (Ohio), US
-	//    West (Oregon), Canada (Central), EU (Ireland), EU (London), EU (Frankfurt),
-	//    Asia Pacific (Tokyo), Asia Pacific (Seoul), Asia Pacific (Singapore),
-	//    Asia Pacific (Sydney), China (Beijing), and China (Ningxia).
+	//    * The environment type LINUX_CONTAINER is available only in regions US
+	//    East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central),
+	//    EU (Ireland), EU (London), EU (Frankfurt), Asia Pacific (Tokyo), Asia
+	//    Pacific (Seoul), Asia Pacific (Singapore), Asia Pacific (Sydney), China
+	//    (Beijing), and China (Ningxia).
 	//
 	//    * The environment type LINUX_GPU_CONTAINER is available only in regions
 	//    US East (N. Virginia), US East (Ohio), US West (Oregon), Canada (Central),
@@ -11845,6 +13243,8 @@ type ProjectEnvironment struct {
 	//    * The environment types WINDOWS_CONTAINER and WINDOWS_SERVER_2019_CONTAINER
 	//    are available only in regions US East (N. Virginia), US East (Ohio), US
 	//    West (Oregon), and EU (Ireland).
+	//
+	// If you're using compute fleets during project creation, type will be ignored.
 	//
 	// For more information, see Build environment compute types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
 	// in the CodeBuild user guide.
@@ -11923,6 +13323,12 @@ func (s *ProjectEnvironment) SetComputeType(v string) *ProjectEnvironment {
 // SetEnvironmentVariables sets the EnvironmentVariables field's value.
 func (s *ProjectEnvironment) SetEnvironmentVariables(v []*EnvironmentVariable) *ProjectEnvironment {
 	s.EnvironmentVariables = v
+	return s
+}
+
+// SetFleet sets the Fleet field's value.
+func (s *ProjectEnvironment) SetFleet(v *ProjectFleet) *ProjectEnvironment {
+	s.Fleet = v
 	return s
 }
 
@@ -12041,6 +13447,39 @@ func (s *ProjectFileSystemLocation) SetType(v string) *ProjectFileSystemLocation
 	return s
 }
 
+// Information about the compute fleet of the build project. For more information,
+// see Working with reserved capacity in CodeBuild (https://docs.aws.amazon.com/codebuild/latest/userguide/fleets.html).
+type ProjectFleet struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the compute fleet ARN for the build project.
+	FleetArn *string `locationName:"fleetArn" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProjectFleet) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ProjectFleet) GoString() string {
+	return s.String()
+}
+
+// SetFleetArn sets the FleetArn field's value.
+func (s *ProjectFleet) SetFleetArn(v string) *ProjectFleet {
+	s.FleetArn = &v
+	return s
+}
+
 // Information about the build input source code for the build project.
 type ProjectSource struct {
 	_ struct{} `type:"structure"`
@@ -12107,6 +13546,18 @@ type ProjectSource struct {
 	//    console.) To instruct CodeBuild to use this connection, in the source
 	//    object, set the auth object's type value to OAUTH.
 	//
+	//    * For source code in an GitLab or self-managed GitLab repository, the
+	//    HTTPS clone URL to the repository that contains the source and the buildspec
+	//    file. You must connect your Amazon Web Services account to your GitLab
+	//    account. Use the CodeBuild console to start creating a build project.
+	//    When you use the console to connect (or reconnect) with GitLab, on the
+	//    Connections Authorize application page, choose Authorize. Then on the
+	//    CodeConnections Create GitLab connection page, choose Connect to GitLab.
+	//    (After you have connected to your GitLab account, you do not need to finish
+	//    creating the build project. You can leave the CodeBuild console.) To instruct
+	//    CodeBuild to override the default connection and use this connection instead,
+	//    set the auth object's type value to CODECONNECTIONS in the source object.
+	//
 	//    * For source code in a Bitbucket repository, the HTTPS clone URL to the
 	//    repository that contains the source and the buildspec file. You must connect
 	//    your Amazon Web Services account to your Bitbucket account. Use the CodeBuild
@@ -12124,8 +13575,9 @@ type ProjectSource struct {
 
 	// Set to true to report the status of a build's start and finish to your source
 	// provider. This option is valid only when your source provider is GitHub,
-	// GitHub Enterprise, or Bitbucket. If this is set and you use a different source
-	// provider, an invalidInputException is thrown.
+	// GitHub Enterprise, GitLab, GitLab Self Managed, or Bitbucket. If this is
+	// set and you use a different source provider, an invalidInputException is
+	// thrown.
 	//
 	// To be able to report the build status to the source provider, the user associated
 	// with the source provider must have write access to the repo. If the user
@@ -12154,10 +13606,14 @@ type ProjectSource struct {
 	//    * CODEPIPELINE: The source code settings are specified in the source action
 	//    of a pipeline in CodePipeline.
 	//
-	//    * GITHUB: The source code is in a GitHub or GitHub Enterprise Cloud repository.
+	//    * GITHUB: The source code is in a GitHub repository.
 	//
 	//    * GITHUB_ENTERPRISE: The source code is in a GitHub Enterprise Server
 	//    repository.
+	//
+	//    * GITLAB: The source code is in a GitLab repository.
+	//
+	//    * GITLAB_SELF_MANAGED: The source code is in a self-managed GitLab repository.
 	//
 	//    * NO_SOURCE: The project does not have input source code.
 	//
@@ -12290,6 +13746,8 @@ type ProjectSourceVersion struct {
 	//    (for example, pr/25). If a branch name is specified, the branch's HEAD
 	//    commit ID is used. If not specified, the default branch's HEAD commit
 	//    ID is used.
+	//
+	//    * For GitLab: the commit ID, branch, or Git tag to use.
 	//
 	//    * For Bitbucket: the commit ID, branch name, or tag name that corresponds
 	//    to the version of the source code you want to build. If a branch name
@@ -13562,6 +15020,201 @@ func (s *S3ReportExportConfig) SetPath(v string) *S3ReportExportConfig {
 	return s
 }
 
+// The scaling configuration input of a compute fleet.
+type ScalingConfigurationInput_ struct {
+	_ struct{} `type:"structure"`
+
+	// The maximum number of instances in the ﬂeet when auto-scaling.
+	MaxCapacity *int64 `locationName:"maxCapacity" min:"1" type:"integer"`
+
+	// The scaling type for a compute fleet.
+	ScalingType *string `locationName:"scalingType" type:"string" enum:"FleetScalingType"`
+
+	// A list of TargetTrackingScalingConfiguration objects.
+	TargetTrackingScalingConfigs []*TargetTrackingScalingConfiguration `locationName:"targetTrackingScalingConfigs" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScalingConfigurationInput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScalingConfigurationInput_) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ScalingConfigurationInput_) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ScalingConfigurationInput_"}
+	if s.MaxCapacity != nil && *s.MaxCapacity < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxCapacity", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxCapacity sets the MaxCapacity field's value.
+func (s *ScalingConfigurationInput_) SetMaxCapacity(v int64) *ScalingConfigurationInput_ {
+	s.MaxCapacity = &v
+	return s
+}
+
+// SetScalingType sets the ScalingType field's value.
+func (s *ScalingConfigurationInput_) SetScalingType(v string) *ScalingConfigurationInput_ {
+	s.ScalingType = &v
+	return s
+}
+
+// SetTargetTrackingScalingConfigs sets the TargetTrackingScalingConfigs field's value.
+func (s *ScalingConfigurationInput_) SetTargetTrackingScalingConfigs(v []*TargetTrackingScalingConfiguration) *ScalingConfigurationInput_ {
+	s.TargetTrackingScalingConfigs = v
+	return s
+}
+
+// The scaling configuration output of a compute fleet.
+type ScalingConfigurationOutput_ struct {
+	_ struct{} `type:"structure"`
+
+	// The desired number of instances in the ﬂeet when auto-scaling.
+	DesiredCapacity *int64 `locationName:"desiredCapacity" min:"1" type:"integer"`
+
+	// The maximum number of instances in the ﬂeet when auto-scaling.
+	MaxCapacity *int64 `locationName:"maxCapacity" min:"1" type:"integer"`
+
+	// The scaling type for a compute fleet.
+	ScalingType *string `locationName:"scalingType" type:"string" enum:"FleetScalingType"`
+
+	// A list of TargetTrackingScalingConfiguration objects.
+	TargetTrackingScalingConfigs []*TargetTrackingScalingConfiguration `locationName:"targetTrackingScalingConfigs" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScalingConfigurationOutput_) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScalingConfigurationOutput_) GoString() string {
+	return s.String()
+}
+
+// SetDesiredCapacity sets the DesiredCapacity field's value.
+func (s *ScalingConfigurationOutput_) SetDesiredCapacity(v int64) *ScalingConfigurationOutput_ {
+	s.DesiredCapacity = &v
+	return s
+}
+
+// SetMaxCapacity sets the MaxCapacity field's value.
+func (s *ScalingConfigurationOutput_) SetMaxCapacity(v int64) *ScalingConfigurationOutput_ {
+	s.MaxCapacity = &v
+	return s
+}
+
+// SetScalingType sets the ScalingType field's value.
+func (s *ScalingConfigurationOutput_) SetScalingType(v string) *ScalingConfigurationOutput_ {
+	s.ScalingType = &v
+	return s
+}
+
+// SetTargetTrackingScalingConfigs sets the TargetTrackingScalingConfigs field's value.
+func (s *ScalingConfigurationOutput_) SetTargetTrackingScalingConfigs(v []*TargetTrackingScalingConfiguration) *ScalingConfigurationOutput_ {
+	s.TargetTrackingScalingConfigs = v
+	return s
+}
+
+// Contains configuration information about the scope for a webhook.
+type ScopeConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The domain of the GitHub Enterprise organization. Note that this parameter
+	// is only required if your project's source type is GITHUB_ENTERPRISE
+	Domain *string `locationName:"domain" type:"string"`
+
+	// The name of either the enterprise or organization that will send webhook
+	// events to CodeBuild, depending on if the webhook is a global or organization
+	// webhook respectively.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" type:"string" required:"true"`
+
+	// The type of scope for a GitHub webhook.
+	//
+	// Scope is a required field
+	Scope *string `locationName:"scope" type:"string" required:"true" enum:"WebhookScopeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScopeConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ScopeConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ScopeConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ScopeConfiguration"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Scope == nil {
+		invalidParams.Add(request.NewErrParamRequired("Scope"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomain sets the Domain field's value.
+func (s *ScopeConfiguration) SetDomain(v string) *ScopeConfiguration {
+	s.Domain = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ScopeConfiguration) SetName(v string) *ScopeConfiguration {
+	s.Name = &v
+	return s
+}
+
+// SetScope sets the Scope field's value.
+func (s *ScopeConfiguration) SetScope(v string) *ScopeConfiguration {
+	s.Scope = &v
+	return s
+}
+
 // Information about the authorization settings for CodeBuild to access the
 // source code to be built.
 //
@@ -13573,11 +15226,7 @@ type SourceAuth struct {
 	// The resource value that applies to the specified authorization type.
 	Resource *string `locationName:"resource" type:"string"`
 
-	//
-	// This data type is deprecated and is no longer accurate or used.
-	//
-	// The authorization type to use. The only valid value is OAUTH, which represents
-	// the OAuth authorization type.
+	// The authorization type to use. Valid options are OAUTH or CODECONNECTIONS.
 	//
 	// Type is a required field
 	Type *string `locationName:"type" type:"string" required:"true" enum:"SourceAuthType"`
@@ -13626,8 +15275,8 @@ func (s *SourceAuth) SetType(v string) *SourceAuth {
 	return s
 }
 
-// Information about the credentials for a GitHub, GitHub Enterprise, or Bitbucket
-// repository.
+// Information about the credentials for a GitHub, GitHub Enterprise, GitLab,
+// GitLab Self Managed, or Bitbucket repository.
 type SourceCredentialsInfo struct {
 	_ struct{} `type:"structure"`
 
@@ -13635,11 +15284,15 @@ type SourceCredentialsInfo struct {
 	Arn *string `locationName:"arn" min:"1" type:"string"`
 
 	// The type of authentication used by the credentials. Valid options are OAUTH,
-	// BASIC_AUTH, or PERSONAL_ACCESS_TOKEN.
+	// BASIC_AUTH, PERSONAL_ACCESS_TOKEN, or CODECONNECTIONS.
 	AuthType *string `locationName:"authType" type:"string" enum:"AuthType"`
 
+	// The connection ARN if your serverType type is GITLAB or GITLAB_SELF_MANAGED
+	// and your authType is CODECONNECTIONS.
+	Resource *string `locationName:"resource" type:"string"`
+
 	// The type of source provider. The valid options are GITHUB, GITHUB_ENTERPRISE,
-	// or BITBUCKET.
+	// GITLAB, GITLAB_SELF_MANAGED, or BITBUCKET.
 	ServerType *string `locationName:"serverType" type:"string" enum:"ServerType"`
 }
 
@@ -13670,6 +15323,12 @@ func (s *SourceCredentialsInfo) SetArn(v string) *SourceCredentialsInfo {
 // SetAuthType sets the AuthType field's value.
 func (s *SourceCredentialsInfo) SetAuthType(v string) *SourceCredentialsInfo {
 	s.AuthType = &v
+	return s
+}
+
+// SetResource sets the Resource field's value.
+func (s *SourceCredentialsInfo) SetResource(v string) *SourceCredentialsInfo {
+	s.Resource = &v
 	return s
 }
 
@@ -14231,8 +15890,9 @@ type StartBuildInput struct {
 	// is GITHUB, GITHUB_ENTERPRISE, or BITBUCKET.
 	BuildStatusConfigOverride *BuildStatusConfig `locationName:"buildStatusConfigOverride" type:"structure"`
 
-	// A buildspec file declaration that overrides, for this build only, the latest
-	// one already defined in the build project.
+	// A buildspec file declaration that overrides the latest one defined in the
+	// build project, for this build only. The buildspec defined on the project
+	// is not changed.
 	//
 	// If this value is set, it can be either an inline buildspec definition, the
 	// path to an alternate buildspec file relative to the value of the built-in
@@ -14242,6 +15902,12 @@ type StartBuildInput struct {
 	// If this value is not provided or is set to an empty string, the source code
 	// must contain a buildspec file in its root directory. For more information,
 	// see Buildspec File Name and Storage Location (https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html#build-spec-ref-name-storage).
+	//
+	// Since this property allows you to change the build commands that will run
+	// in the container, you should note that an IAM principal with the ability
+	// to call this API and set this parameter can override the default settings.
+	// Moreover, we encourage that you use a trustworthy buildspec location like
+	// a file in your source repository or a Amazon S3 bucket.
 	BuildspecOverride *string `locationName:"buildspecOverride" type:"string"`
 
 	// A ProjectCache object specified for this build that overrides the one defined
@@ -14277,6 +15943,10 @@ type StartBuildInput struct {
 	// A set of environment variables that overrides, for this build only, the latest
 	// ones already defined in the build project.
 	EnvironmentVariablesOverride []*EnvironmentVariable `locationName:"environmentVariablesOverride" type:"list"`
+
+	// A ProjectFleet object specified for this build that overrides the one defined
+	// in the build project.
+	FleetOverride *ProjectFleet `locationName:"fleetOverride" type:"structure"`
 
 	// The user-defined depth of history, with a minimum value of 0, that overrides,
 	// for this build only, any previous depth of history defined in the build project.
@@ -14368,7 +16038,7 @@ type StartBuildInput struct {
 
 	// An authorization type for this build that overrides the one defined in the
 	// build project. This override applies only if the build project's source is
-	// BitBucket or GitHub.
+	// BitBucket, GitHub, GitLab, or GitLab Self Managed.
 	SourceAuthOverride *SourceAuth `locationName:"sourceAuthOverride" type:"structure"`
 
 	// A location that overrides, for this build, the source location for the one
@@ -14395,6 +16065,10 @@ type StartBuildInput struct {
 	// If a branch name is specified, the branch's HEAD commit ID is used. If not
 	// specified, the default branch's HEAD commit ID is used.
 	//
+	// GitLab
+	//
+	// The commit ID, branch, or Git tag to use.
+	//
 	// Bitbucket
 	//
 	// The commit ID, branch name, or tag name that corresponds to the version of
@@ -14414,7 +16088,7 @@ type StartBuildInput struct {
 	// in the CodeBuild User Guide.
 	SourceVersion *string `locationName:"sourceVersion" type:"string"`
 
-	// The number of build timeout minutes, from 5 to 480 (8 hours), that overrides,
+	// The number of build timeout minutes, from 5 to 2160 (36 hours), that overrides,
 	// for this build only, the latest setting already defined in the build project.
 	TimeoutInMinutesOverride *int64 `locationName:"timeoutInMinutesOverride" min:"5" type:"integer"`
 }
@@ -14595,6 +16269,12 @@ func (s *StartBuildInput) SetEnvironmentTypeOverride(v string) *StartBuildInput 
 // SetEnvironmentVariablesOverride sets the EnvironmentVariablesOverride field's value.
 func (s *StartBuildInput) SetEnvironmentVariablesOverride(v []*EnvironmentVariable) *StartBuildInput {
 	s.EnvironmentVariablesOverride = v
+	return s
+}
+
+// SetFleetOverride sets the FleetOverride field's value.
+func (s *StartBuildInput) SetFleetOverride(v *ProjectFleet) *StartBuildInput {
+	s.FleetOverride = v
 	return s
 }
 
@@ -14972,6 +16652,47 @@ func (s *Tag) SetValue(v string) *Tag {
 	return s
 }
 
+// Defines when a new instance is auto-scaled into the compute fleet.
+type TargetTrackingScalingConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The metric type to determine auto-scaling.
+	MetricType *string `locationName:"metricType" type:"string" enum:"FleetScalingMetricType"`
+
+	// The value of metricType when to start scaling.
+	TargetValue *float64 `locationName:"targetValue" type:"double"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TargetTrackingScalingConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TargetTrackingScalingConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetMetricType sets the MetricType field's value.
+func (s *TargetTrackingScalingConfiguration) SetMetricType(v string) *TargetTrackingScalingConfiguration {
+	s.MetricType = &v
+	return s
+}
+
+// SetTargetValue sets the TargetValue field's value.
+func (s *TargetTrackingScalingConfiguration) SetTargetValue(v float64) *TargetTrackingScalingConfiguration {
+	s.TargetValue = &v
+	return s
+}
+
 // Information about a test case created using a framework such as NUnit or
 // Cucumber. A test case might be a unit test or a configuration test.
 type TestCase struct {
@@ -15185,6 +16906,266 @@ func (s *TestReportSummary) SetTotal(v int64) *TestReportSummary {
 	return s
 }
 
+type UpdateFleetInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the compute fleet.
+	//
+	// Arn is a required field
+	Arn *string `locationName:"arn" min:"1" type:"string" required:"true"`
+
+	// The initial number of machines allocated to the compute ﬂeet, which deﬁnes
+	// the number of builds that can run in parallel.
+	BaseCapacity *int64 `locationName:"baseCapacity" min:"1" type:"integer"`
+
+	// Information about the compute resources the compute fleet uses. Available
+	// values include:
+	//
+	//    * BUILD_GENERAL1_SMALL: Use up to 3 GB memory and 2 vCPUs for builds.
+	//
+	//    * BUILD_GENERAL1_MEDIUM: Use up to 7 GB memory and 4 vCPUs for builds.
+	//
+	//    * BUILD_GENERAL1_LARGE: Use up to 16 GB memory and 8 vCPUs for builds,
+	//    depending on your environment type.
+	//
+	//    * BUILD_GENERAL1_XLARGE: Use up to 70 GB memory and 36 vCPUs for builds,
+	//    depending on your environment type.
+	//
+	//    * BUILD_GENERAL1_2XLARGE: Use up to 145 GB memory, 72 vCPUs, and 824 GB
+	//    of SSD storage for builds. This compute type supports Docker images up
+	//    to 100 GB uncompressed.
+	//
+	// If you use BUILD_GENERAL1_SMALL:
+	//
+	//    * For environment type LINUX_CONTAINER, you can use up to 3 GB memory
+	//    and 2 vCPUs for builds.
+	//
+	//    * For environment type LINUX_GPU_CONTAINER, you can use up to 16 GB memory,
+	//    4 vCPUs, and 1 NVIDIA A10G Tensor Core GPU for builds.
+	//
+	//    * For environment type ARM_CONTAINER, you can use up to 4 GB memory and
+	//    2 vCPUs on ARM-based processors for builds.
+	//
+	// If you use BUILD_GENERAL1_LARGE:
+	//
+	//    * For environment type LINUX_CONTAINER, you can use up to 15 GB memory
+	//    and 8 vCPUs for builds.
+	//
+	//    * For environment type LINUX_GPU_CONTAINER, you can use up to 255 GB memory,
+	//    32 vCPUs, and 4 NVIDIA Tesla V100 GPUs for builds.
+	//
+	//    * For environment type ARM_CONTAINER, you can use up to 16 GB memory and
+	//    8 vCPUs on ARM-based processors for builds.
+	//
+	// For more information, see Build environment compute types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
+	// in the CodeBuild User Guide.
+	ComputeType *string `locationName:"computeType" type:"string" enum:"ComputeType"`
+
+	// The environment type of the compute fleet.
+	//
+	//    * The environment type ARM_CONTAINER is available only in regions US East
+	//    (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), Asia Pacific
+	//    (Mumbai), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific
+	//    (Sydney), EU (Frankfurt), and South America (São Paulo).
+	//
+	//    * The environment type LINUX_CONTAINER is available only in regions US
+	//    East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland), EU
+	//    (Frankfurt), Asia Pacific (Tokyo), Asia Pacific (Singapore), Asia Pacific
+	//    (Sydney), South America (São Paulo), and Asia Pacific (Mumbai).
+	//
+	//    * The environment type LINUX_GPU_CONTAINER is available only in regions
+	//    US East (N. Virginia), US East (Ohio), US West (Oregon), EU (Ireland),
+	//    EU (Frankfurt), Asia Pacific (Tokyo), and Asia Pacific (Sydney).
+	//
+	//    * The environment type WINDOWS_SERVER_2019_CONTAINER is available only
+	//    in regions US East (N. Virginia), US East (Ohio), US West (Oregon), Asia
+	//    Pacific (Sydney), Asia Pacific (Tokyo), Asia Pacific (Mumbai) and EU (Ireland).
+	//
+	//    * The environment type WINDOWS_SERVER_2022_CONTAINER is available only
+	//    in regions US East (N. Virginia), US East (Ohio), US West (Oregon), EU
+	//    (Ireland), EU (Frankfurt), Asia Pacific (Sydney), Asia Pacific (Singapore),
+	//    Asia Pacific (Tokyo), South America (São Paulo) and Asia Pacific (Mumbai).
+	//
+	// For more information, see Build environment compute types (https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-compute-types.html)
+	// in the CodeBuild user guide.
+	EnvironmentType *string `locationName:"environmentType" type:"string" enum:"EnvironmentType"`
+
+	// The service role associated with the compute fleet. For more information,
+	// see Allow a user to add a permission policy for a fleet service role (https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-permission-policy-fleet-service-role.html)
+	// in the CodeBuild User Guide.
+	FleetServiceRole *string `locationName:"fleetServiceRole" min:"1" type:"string"`
+
+	// The compute fleet overflow behavior.
+	//
+	//    * For overflow behavior QUEUE, your overflow builds need to wait on the
+	//    existing fleet instance to become available.
+	//
+	//    * For overflow behavior ON_DEMAND, your overflow builds run on CodeBuild
+	//    on-demand. If you choose to set your overflow behavior to on-demand while
+	//    creating a VPC-connected fleet, make sure that you add the required VPC
+	//    permissions to your project service role. For more information, see Example
+	//    policy statement to allow CodeBuild access to Amazon Web Services services
+	//    required to create a VPC network interface (https://docs.aws.amazon.com/codebuild/latest/userguide/auth-and-access-control-iam-identity-based-access-control.html#customer-managed-policies-example-create-vpc-network-interface).
+	OverflowBehavior *string `locationName:"overflowBehavior" type:"string" enum:"FleetOverflowBehavior"`
+
+	// The scaling configuration of the compute fleet.
+	ScalingConfiguration *ScalingConfigurationInput_ `locationName:"scalingConfiguration" type:"structure"`
+
+	// A list of tag key and value pairs associated with this compute fleet.
+	//
+	// These tags are available for use by Amazon Web Services services that support
+	// CodeBuild build project tags.
+	Tags []*Tag `locationName:"tags" type:"list"`
+
+	// Information about the VPC configuration that CodeBuild accesses.
+	VpcConfig *VpcConfig `locationName:"vpcConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateFleetInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateFleetInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateFleetInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateFleetInput"}
+	if s.Arn == nil {
+		invalidParams.Add(request.NewErrParamRequired("Arn"))
+	}
+	if s.Arn != nil && len(*s.Arn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Arn", 1))
+	}
+	if s.BaseCapacity != nil && *s.BaseCapacity < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("BaseCapacity", 1))
+	}
+	if s.FleetServiceRole != nil && len(*s.FleetServiceRole) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("FleetServiceRole", 1))
+	}
+	if s.ScalingConfiguration != nil {
+		if err := s.ScalingConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("ScalingConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Tags != nil {
+		for i, v := range s.Tags {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.VpcConfig != nil {
+		if err := s.VpcConfig.Validate(); err != nil {
+			invalidParams.AddNested("VpcConfig", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetArn sets the Arn field's value.
+func (s *UpdateFleetInput) SetArn(v string) *UpdateFleetInput {
+	s.Arn = &v
+	return s
+}
+
+// SetBaseCapacity sets the BaseCapacity field's value.
+func (s *UpdateFleetInput) SetBaseCapacity(v int64) *UpdateFleetInput {
+	s.BaseCapacity = &v
+	return s
+}
+
+// SetComputeType sets the ComputeType field's value.
+func (s *UpdateFleetInput) SetComputeType(v string) *UpdateFleetInput {
+	s.ComputeType = &v
+	return s
+}
+
+// SetEnvironmentType sets the EnvironmentType field's value.
+func (s *UpdateFleetInput) SetEnvironmentType(v string) *UpdateFleetInput {
+	s.EnvironmentType = &v
+	return s
+}
+
+// SetFleetServiceRole sets the FleetServiceRole field's value.
+func (s *UpdateFleetInput) SetFleetServiceRole(v string) *UpdateFleetInput {
+	s.FleetServiceRole = &v
+	return s
+}
+
+// SetOverflowBehavior sets the OverflowBehavior field's value.
+func (s *UpdateFleetInput) SetOverflowBehavior(v string) *UpdateFleetInput {
+	s.OverflowBehavior = &v
+	return s
+}
+
+// SetScalingConfiguration sets the ScalingConfiguration field's value.
+func (s *UpdateFleetInput) SetScalingConfiguration(v *ScalingConfigurationInput_) *UpdateFleetInput {
+	s.ScalingConfiguration = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *UpdateFleetInput) SetTags(v []*Tag) *UpdateFleetInput {
+	s.Tags = v
+	return s
+}
+
+// SetVpcConfig sets the VpcConfig field's value.
+func (s *UpdateFleetInput) SetVpcConfig(v *VpcConfig) *UpdateFleetInput {
+	s.VpcConfig = v
+	return s
+}
+
+type UpdateFleetOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A Fleet object.
+	Fleet *Fleet `locationName:"fleet" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateFleetOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateFleetOutput) GoString() string {
+	return s.String()
+}
+
+// SetFleet sets the Fleet field's value.
+func (s *UpdateFleetOutput) SetFleet(v *Fleet) *UpdateFleetOutput {
+	s.Fleet = v
+	return s
+}
+
 type UpdateProjectInput struct {
 	_ struct{} `type:"structure"`
 
@@ -15279,6 +17260,8 @@ type UpdateProjectInput struct {
 	//    commit ID is used. If not specified, the default branch's HEAD commit
 	//    ID is used.
 	//
+	//    * For GitLab: the commit ID, branch, or Git tag to use.
+	//
 	//    * For Bitbucket: the commit ID, branch name, or tag name that corresponds
 	//    to the version of the source code you want to build. If a branch name
 	//    is specified, the branch's HEAD commit ID is used. If not specified, the
@@ -15300,7 +17283,7 @@ type UpdateProjectInput struct {
 	// CodeBuild build project tags.
 	Tags []*Tag `locationName:"tags" type:"list"`
 
-	// The replacement value in minutes, from 5 to 480 (8 hours), for CodeBuild
+	// The replacement value in minutes, from 5 to 2160 (36 hours), for CodeBuild
 	// to wait before timing out any related build that did not get marked as completed.
 	TimeoutInMinutes *int64 `locationName:"timeoutInMinutes" min:"5" type:"integer"`
 
@@ -16064,8 +18047,22 @@ type Webhook struct {
 	// modified.
 	LastModifiedSecret *time.Time `locationName:"lastModifiedSecret" type:"timestamp"`
 
+	// If manualCreation is true, CodeBuild doesn't create a webhook in GitHub and
+	// instead returns payloadUrl and secret values for the webhook. The payloadUrl
+	// and secret values in the output can be used to manually create a webhook
+	// within GitHub.
+	//
+	// manualCreation is only available for GitHub webhooks.
+	ManualCreation *bool `locationName:"manualCreation" type:"boolean"`
+
 	// The CodeBuild endpoint where webhook events are sent.
 	PayloadUrl *string `locationName:"payloadUrl" min:"1" type:"string"`
+
+	// The scope configuration for global or organization webhooks.
+	//
+	// Global or organization webhooks are only available for GitHub and Github
+	// Enterprise webhooks.
+	ScopeConfiguration *ScopeConfiguration `locationName:"scopeConfiguration" type:"structure"`
 
 	// The secret token of the associated repository.
 	//
@@ -16118,9 +18115,21 @@ func (s *Webhook) SetLastModifiedSecret(v time.Time) *Webhook {
 	return s
 }
 
+// SetManualCreation sets the ManualCreation field's value.
+func (s *Webhook) SetManualCreation(v bool) *Webhook {
+	s.ManualCreation = &v
+	return s
+}
+
 // SetPayloadUrl sets the PayloadUrl field's value.
 func (s *Webhook) SetPayloadUrl(v string) *Webhook {
 	s.PayloadUrl = &v
+	return s
+}
+
+// SetScopeConfiguration sets the ScopeConfiguration field's value.
+func (s *Webhook) SetScopeConfiguration(v *ScopeConfiguration) *Webhook {
+	s.ScopeConfiguration = v
 	return s
 }
 
@@ -16159,56 +18168,58 @@ type WebhookFilter struct {
 	// Pattern is a required field
 	Pattern *string `locationName:"pattern" type:"string" required:"true"`
 
-	// The type of webhook filter. There are six webhook filter types: EVENT, ACTOR_ACCOUNT_ID,
-	// HEAD_REF, BASE_REF, FILE_PATH, and COMMIT_MESSAGE.
+	// The type of webhook filter. There are nine webhook filter types: EVENT, ACTOR_ACCOUNT_ID,
+	// HEAD_REF, BASE_REF, FILE_PATH, COMMIT_MESSAGE, TAG_NAME, RELEASE_NAME, and
+	// WORKFLOW_NAME.
 	//
-	// EVENT
+	//    * EVENT A webhook event triggers a build when the provided pattern matches
+	//    one of nine event types: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED,
+	//    PULL_REQUEST_CLOSED, PULL_REQUEST_REOPENED, PULL_REQUEST_MERGED, RELEASED,
+	//    PRERELEASED, and WORKFLOW_JOB_QUEUED. The EVENT patterns are specified
+	//    as a comma-separated string. For example, PUSH, PULL_REQUEST_CREATED,
+	//    PULL_REQUEST_UPDATED filters all push, pull request created, and pull
+	//    request updated events. Types PULL_REQUEST_REOPENED and WORKFLOW_JOB_QUEUED
+	//    work with GitHub and GitHub Enterprise only. Types RELEASED and PRERELEASED
+	//    work with GitHub only.
 	//
-	// A webhook event triggers a build when the provided pattern matches one of
-	// five event types: PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED, PULL_REQUEST_REOPENED,
-	// and PULL_REQUEST_MERGED. The EVENT patterns are specified as a comma-separated
-	// string. For example, PUSH, PULL_REQUEST_CREATED, PULL_REQUEST_UPDATED filters
-	// all push, pull request created, and pull request updated events.
+	//    * ACTOR_ACCOUNT_ID A webhook event triggers a build when a GitHub, GitHub
+	//    Enterprise, or Bitbucket account ID matches the regular expression pattern.
 	//
-	// The PULL_REQUEST_REOPENED works with GitHub and GitHub Enterprise only.
+	//    * HEAD_REF A webhook event triggers a build when the head reference matches
+	//    the regular expression pattern. For example, refs/heads/branch-name and
+	//    refs/tags/tag-name. Works with GitHub and GitHub Enterprise push, GitHub
+	//    and GitHub Enterprise pull request, Bitbucket push, and Bitbucket pull
+	//    request events.
 	//
-	// ACTOR_ACCOUNT_ID
+	//    * BASE_REF A webhook event triggers a build when the base reference matches
+	//    the regular expression pattern. For example, refs/heads/branch-name. Works
+	//    with pull request events only.
 	//
-	// A webhook event triggers a build when a GitHub, GitHub Enterprise, or Bitbucket
-	// account ID matches the regular expression pattern.
+	//    * FILE_PATH A webhook triggers a build when the path of a changed file
+	//    matches the regular expression pattern. Works with GitHub and Bitbucket
+	//    events push and pull requests events. Also works with GitHub Enterprise
+	//    push events, but does not work with GitHub Enterprise pull request events.
 	//
-	// HEAD_REF
+	//    * COMMIT_MESSAGE A webhook triggers a build when the head commit message
+	//    matches the regular expression pattern. Works with GitHub and Bitbucket
+	//    events push and pull requests events. Also works with GitHub Enterprise
+	//    push events, but does not work with GitHub Enterprise pull request events.
 	//
-	// A webhook event triggers a build when the head reference matches the regular
-	// expression pattern. For example, refs/heads/branch-name and refs/tags/tag-name.
+	//    * TAG_NAME A webhook triggers a build when the tag name of the release
+	//    matches the regular expression pattern. Works with RELEASED and PRERELEASED
+	//    events only.
 	//
-	// Works with GitHub and GitHub Enterprise push, GitHub and GitHub Enterprise
-	// pull request, Bitbucket push, and Bitbucket pull request events.
+	//    * RELEASE_NAME A webhook triggers a build when the release name matches
+	//    the regular expression pattern. Works with RELEASED and PRERELEASED events
+	//    only.
 	//
-	// BASE_REF
+	//    * REPOSITORY_NAME A webhook triggers a build when the repository name
+	//    matches the regular expression pattern. Works with GitHub global or organization
+	//    webhooks only.
 	//
-	// A webhook event triggers a build when the base reference matches the regular
-	// expression pattern. For example, refs/heads/branch-name.
-	//
-	// Works with pull request events only.
-	//
-	// FILE_PATH
-	//
-	// A webhook triggers a build when the path of a changed file matches the regular
-	// expression pattern.
-	//
-	// Works with GitHub and Bitbucket events push and pull requests events. Also
-	// works with GitHub Enterprise push events, but does not work with GitHub Enterprise
-	// pull request events.
-	//
-	// COMMIT_MESSAGE
-	//
-	// A webhook triggers a build when the head commit message matches the regular
-	// expression pattern.
-	//
-	// Works with GitHub and Bitbucket events push and pull requests events. Also
-	// works with GitHub Enterprise push events, but does not work with GitHub Enterprise
-	// pull request events.
+	//    * WORKFLOW_NAME A webhook triggers a build when the workflow name matches
+	//    the regular expression pattern. Works with WORKFLOW_JOB_QUEUED events
+	//    only.
 	//
 	// Type is a required field
 	Type *string `locationName:"type" type:"string" required:"true" enum:"WebhookFilterType"`
@@ -16311,6 +18322,9 @@ const (
 
 	// AuthTypePersonalAccessToken is a AuthType enum value
 	AuthTypePersonalAccessToken = "PERSONAL_ACCESS_TOKEN"
+
+	// AuthTypeCodeconnections is a AuthType enum value
+	AuthTypeCodeconnections = "CODECONNECTIONS"
 )
 
 // AuthType_Values returns all elements of the AuthType enum
@@ -16319,6 +18333,7 @@ func AuthType_Values() []string {
 		AuthTypeOauth,
 		AuthTypeBasicAuth,
 		AuthTypePersonalAccessToken,
+		AuthTypeCodeconnections,
 	}
 }
 
@@ -16530,6 +18545,9 @@ const (
 	// ComputeTypeBuildGeneral1Large is a ComputeType enum value
 	ComputeTypeBuildGeneral1Large = "BUILD_GENERAL1_LARGE"
 
+	// ComputeTypeBuildGeneral1Xlarge is a ComputeType enum value
+	ComputeTypeBuildGeneral1Xlarge = "BUILD_GENERAL1_XLARGE"
+
 	// ComputeTypeBuildGeneral12xlarge is a ComputeType enum value
 	ComputeTypeBuildGeneral12xlarge = "BUILD_GENERAL1_2XLARGE"
 
@@ -16555,6 +18573,7 @@ func ComputeType_Values() []string {
 		ComputeTypeBuildGeneral1Small,
 		ComputeTypeBuildGeneral1Medium,
 		ComputeTypeBuildGeneral1Large,
+		ComputeTypeBuildGeneral1Xlarge,
 		ComputeTypeBuildGeneral12xlarge,
 		ComputeTypeBuildLambda1gb,
 		ComputeTypeBuildLambda2gb,
@@ -16641,6 +18660,126 @@ const (
 func FileSystemType_Values() []string {
 	return []string{
 		FileSystemTypeEfs,
+	}
+}
+
+const (
+	// FleetContextCodeCreateFailed is a FleetContextCode enum value
+	FleetContextCodeCreateFailed = "CREATE_FAILED"
+
+	// FleetContextCodeUpdateFailed is a FleetContextCode enum value
+	FleetContextCodeUpdateFailed = "UPDATE_FAILED"
+
+	// FleetContextCodeActionRequired is a FleetContextCode enum value
+	FleetContextCodeActionRequired = "ACTION_REQUIRED"
+)
+
+// FleetContextCode_Values returns all elements of the FleetContextCode enum
+func FleetContextCode_Values() []string {
+	return []string{
+		FleetContextCodeCreateFailed,
+		FleetContextCodeUpdateFailed,
+		FleetContextCodeActionRequired,
+	}
+}
+
+const (
+	// FleetOverflowBehaviorQueue is a FleetOverflowBehavior enum value
+	FleetOverflowBehaviorQueue = "QUEUE"
+
+	// FleetOverflowBehaviorOnDemand is a FleetOverflowBehavior enum value
+	FleetOverflowBehaviorOnDemand = "ON_DEMAND"
+)
+
+// FleetOverflowBehavior_Values returns all elements of the FleetOverflowBehavior enum
+func FleetOverflowBehavior_Values() []string {
+	return []string{
+		FleetOverflowBehaviorQueue,
+		FleetOverflowBehaviorOnDemand,
+	}
+}
+
+const (
+	// FleetScalingMetricTypeFleetUtilizationRate is a FleetScalingMetricType enum value
+	FleetScalingMetricTypeFleetUtilizationRate = "FLEET_UTILIZATION_RATE"
+)
+
+// FleetScalingMetricType_Values returns all elements of the FleetScalingMetricType enum
+func FleetScalingMetricType_Values() []string {
+	return []string{
+		FleetScalingMetricTypeFleetUtilizationRate,
+	}
+}
+
+const (
+	// FleetScalingTypeTargetTrackingScaling is a FleetScalingType enum value
+	FleetScalingTypeTargetTrackingScaling = "TARGET_TRACKING_SCALING"
+)
+
+// FleetScalingType_Values returns all elements of the FleetScalingType enum
+func FleetScalingType_Values() []string {
+	return []string{
+		FleetScalingTypeTargetTrackingScaling,
+	}
+}
+
+const (
+	// FleetSortByTypeName is a FleetSortByType enum value
+	FleetSortByTypeName = "NAME"
+
+	// FleetSortByTypeCreatedTime is a FleetSortByType enum value
+	FleetSortByTypeCreatedTime = "CREATED_TIME"
+
+	// FleetSortByTypeLastModifiedTime is a FleetSortByType enum value
+	FleetSortByTypeLastModifiedTime = "LAST_MODIFIED_TIME"
+)
+
+// FleetSortByType_Values returns all elements of the FleetSortByType enum
+func FleetSortByType_Values() []string {
+	return []string{
+		FleetSortByTypeName,
+		FleetSortByTypeCreatedTime,
+		FleetSortByTypeLastModifiedTime,
+	}
+}
+
+const (
+	// FleetStatusCodeCreating is a FleetStatusCode enum value
+	FleetStatusCodeCreating = "CREATING"
+
+	// FleetStatusCodeUpdating is a FleetStatusCode enum value
+	FleetStatusCodeUpdating = "UPDATING"
+
+	// FleetStatusCodeRotating is a FleetStatusCode enum value
+	FleetStatusCodeRotating = "ROTATING"
+
+	// FleetStatusCodePendingDeletion is a FleetStatusCode enum value
+	FleetStatusCodePendingDeletion = "PENDING_DELETION"
+
+	// FleetStatusCodeDeleting is a FleetStatusCode enum value
+	FleetStatusCodeDeleting = "DELETING"
+
+	// FleetStatusCodeCreateFailed is a FleetStatusCode enum value
+	FleetStatusCodeCreateFailed = "CREATE_FAILED"
+
+	// FleetStatusCodeUpdateRollbackFailed is a FleetStatusCode enum value
+	FleetStatusCodeUpdateRollbackFailed = "UPDATE_ROLLBACK_FAILED"
+
+	// FleetStatusCodeActive is a FleetStatusCode enum value
+	FleetStatusCodeActive = "ACTIVE"
+)
+
+// FleetStatusCode_Values returns all elements of the FleetStatusCode enum
+func FleetStatusCode_Values() []string {
+	return []string{
+		FleetStatusCodeCreating,
+		FleetStatusCodeUpdating,
+		FleetStatusCodeRotating,
+		FleetStatusCodePendingDeletion,
+		FleetStatusCodeDeleting,
+		FleetStatusCodeCreateFailed,
+		FleetStatusCodeUpdateRollbackFailed,
+		FleetStatusCodeActive,
 	}
 }
 
@@ -16990,6 +19129,12 @@ const (
 
 	// ServerTypeGithubEnterprise is a ServerType enum value
 	ServerTypeGithubEnterprise = "GITHUB_ENTERPRISE"
+
+	// ServerTypeGitlab is a ServerType enum value
+	ServerTypeGitlab = "GITLAB"
+
+	// ServerTypeGitlabSelfManaged is a ServerType enum value
+	ServerTypeGitlabSelfManaged = "GITLAB_SELF_MANAGED"
 )
 
 // ServerType_Values returns all elements of the ServerType enum
@@ -16998,6 +19143,8 @@ func ServerType_Values() []string {
 		ServerTypeGithub,
 		ServerTypeBitbucket,
 		ServerTypeGithubEnterprise,
+		ServerTypeGitlab,
+		ServerTypeGitlabSelfManaged,
 	}
 }
 
@@ -17036,12 +19183,16 @@ func SortOrderType_Values() []string {
 const (
 	// SourceAuthTypeOauth is a SourceAuthType enum value
 	SourceAuthTypeOauth = "OAUTH"
+
+	// SourceAuthTypeCodeconnections is a SourceAuthType enum value
+	SourceAuthTypeCodeconnections = "CODECONNECTIONS"
 )
 
 // SourceAuthType_Values returns all elements of the SourceAuthType enum
 func SourceAuthType_Values() []string {
 	return []string{
 		SourceAuthTypeOauth,
+		SourceAuthTypeCodeconnections,
 	}
 }
 
@@ -17054,6 +19205,12 @@ const (
 
 	// SourceTypeGithub is a SourceType enum value
 	SourceTypeGithub = "GITHUB"
+
+	// SourceTypeGitlab is a SourceType enum value
+	SourceTypeGitlab = "GITLAB"
+
+	// SourceTypeGitlabSelfManaged is a SourceType enum value
+	SourceTypeGitlabSelfManaged = "GITLAB_SELF_MANAGED"
 
 	// SourceTypeS3 is a SourceType enum value
 	SourceTypeS3 = "S3"
@@ -17074,6 +19231,8 @@ func SourceType_Values() []string {
 		SourceTypeCodecommit,
 		SourceTypeCodepipeline,
 		SourceTypeGithub,
+		SourceTypeGitlab,
+		SourceTypeGitlabSelfManaged,
 		SourceTypeS3,
 		SourceTypeBitbucket,
 		SourceTypeGithubEnterprise,
@@ -17147,6 +19306,15 @@ const (
 
 	// WebhookFilterTypeCommitMessage is a WebhookFilterType enum value
 	WebhookFilterTypeCommitMessage = "COMMIT_MESSAGE"
+
+	// WebhookFilterTypeWorkflowName is a WebhookFilterType enum value
+	WebhookFilterTypeWorkflowName = "WORKFLOW_NAME"
+
+	// WebhookFilterTypeTagName is a WebhookFilterType enum value
+	WebhookFilterTypeTagName = "TAG_NAME"
+
+	// WebhookFilterTypeReleaseName is a WebhookFilterType enum value
+	WebhookFilterTypeReleaseName = "RELEASE_NAME"
 )
 
 // WebhookFilterType_Values returns all elements of the WebhookFilterType enum
@@ -17158,5 +19326,24 @@ func WebhookFilterType_Values() []string {
 		WebhookFilterTypeActorAccountId,
 		WebhookFilterTypeFilePath,
 		WebhookFilterTypeCommitMessage,
+		WebhookFilterTypeWorkflowName,
+		WebhookFilterTypeTagName,
+		WebhookFilterTypeReleaseName,
+	}
+}
+
+const (
+	// WebhookScopeTypeGithubOrganization is a WebhookScopeType enum value
+	WebhookScopeTypeGithubOrganization = "GITHUB_ORGANIZATION"
+
+	// WebhookScopeTypeGithubGlobal is a WebhookScopeType enum value
+	WebhookScopeTypeGithubGlobal = "GITHUB_GLOBAL"
+)
+
+// WebhookScopeType_Values returns all elements of the WebhookScopeType enum
+func WebhookScopeType_Values() []string {
+	return []string{
+		WebhookScopeTypeGithubOrganization,
+		WebhookScopeTypeGithubGlobal,
 	}
 }
