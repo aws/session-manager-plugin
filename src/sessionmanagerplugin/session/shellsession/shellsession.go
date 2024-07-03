@@ -176,3 +176,51 @@ func (s *ShellEscapeSequenceTracking) Trigger() {
 		panic("Unexpected trigger, when prior newline missing")
 	}
 }
+
+// handleEscapeSequence process key presses looking for the escape sequence
+func (s *ShellSession) handleEscapeSequence(log log.T, stdinBytes []byte, stdinBytesLen int) (skipMessage bool, err error) {
+	const (
+		escape_help = "\nSupported escape sequence commands:\n" +
+			"~?  - this help message\n" +
+			"~~  - send the ~ character to the remote target\n" +
+			"~-  - disable escape sequences for the rest of this session\n" +
+			"~.  - disconnect and terminate session\n" +
+			"(Note that escapes are only recognized immediately after newline.)"
+	)
+
+	if s.escapeTracking.enabled {
+		if s.escapeTracking.newline && stdinBytesLen == 1 {
+			if s.escapeTracking.escaped {
+				switch stdinBytes[0] {
+				case '?': // help
+					println(escape_help)
+					s.escapeTracking.Reset()
+					return true, nil
+				case '.': // disconnect and terminate
+					if err := s.Session.TerminateSession(log); err != nil {
+						return true, err
+					}
+					return true, nil
+				case '-': // disable
+					s.escapeTracking.Disable()
+					return true, nil
+				case '~': // send explicit ~ character
+					s.escapeTracking.Reset()
+					return false, nil
+				}
+				s.escapeTracking.Reset()
+			} else if stdinBytes[0] == '~' {
+				s.escapeTracking.Trigger()
+				return true, nil
+			} else {
+				s.escapeTracking.Reset()
+			}
+		}
+
+		// If last sent bytes ends with newline, mark as possible escape sequence
+		if stdinBytes[stdinBytesLen-1] == '\n' || stdinBytes[stdinBytesLen-1] == '\r' {
+			s.escapeTracking.HalfTrigger()
+		}
+	}
+	return false, nil
+}
