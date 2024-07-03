@@ -75,6 +75,13 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 			break
 		}
 
+		if skip, err := s.handleEscapeSequence(log, stdinBytes, stdinBytesLen); err != nil {
+			log.Errorf("Escape sequence failure: %v", err)
+			s.Stop()
+		} else if skip {
+			continue
+		}
+
 		if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, stdinBytes[:stdinBytesLen]); err != nil {
 			log.Errorf("Failed to send UTF8 char: %v", err)
 			break
