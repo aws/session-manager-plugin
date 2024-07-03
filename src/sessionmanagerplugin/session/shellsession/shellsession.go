@@ -40,6 +40,7 @@ type ShellSession struct {
 	// SizeData is used to store size data at session level to compare with new size.
 	SizeData          message.SizeData
 	originalSttyState bytes.Buffer
+	escapeTracking    ShellEscapeSequenceTracking
 }
 
 var GetTerminalSizeCall = func(fd int) (width int, height int, err error) {
@@ -62,6 +63,11 @@ func (s *ShellSession) Initialize(log log.T, sessionVar *session.Session) {
 		func(input []byte) {
 			s.DataChannel.OutputMessageHandler(log, s.Stop, s.SessionId, input)
 		})
+	s.escapeTracking = ShellEscapeSequenceTracking{
+		enabled: true,
+		newline: false,
+		escaped: false,
+	}
 }
 
 // StartSession takes input and write it to data channel
@@ -137,4 +143,36 @@ func (s *ShellSession) handleTerminalResize(log log.T) {
 func (s ShellSession) ProcessStreamMessagePayload(log log.T, outputMessage message.ClientMessage) (isHandlerReady bool, err error) {
 	s.DisplayMode.DisplayMessage(log, outputMessage)
 	return true, nil
+}
+
+// Shell Session Escape Sequence Tracking Flags
+type ShellEscapeSequenceTracking struct {
+	enabled bool // whether the shell session should check for escape sequences
+	newline bool // whether the last character was a newline (the first half of the trigger)
+	escaped bool // whether the shell session is escaped (the second half of the trigger)
+}
+
+// Reset Escape Sequence due to finishing an escape sequence, or invalid escape sequence.
+func (s *ShellEscapeSequenceTracking) Reset() {
+	s.escaped = false
+	s.newline = false
+}
+
+// Disable checking for Escape Sequences for the rest of the connected Session.
+func (s *ShellEscapeSequenceTracking) Disable() {
+	s.enabled = false
+}
+
+// First half of trigger (newline) detected
+func (s *ShellEscapeSequenceTracking) HalfTrigger() {
+	s.newline = true
+}
+
+// Second half of trigger (~) detected
+func (s *ShellEscapeSequenceTracking) Trigger() {
+	if s.newline {
+		s.escaped = true
+	} else {
+		panic("Unexpected trigger, when prior newline missing")
+	}
 }
