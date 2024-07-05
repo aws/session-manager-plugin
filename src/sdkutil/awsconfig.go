@@ -26,14 +26,13 @@ import (
 var defaultRegion string
 var defaultProfile string
 
-// GetNewSessionWithEndpoint creates aws sdk session with given profile, region and endpoint
-func GetNewSessionWithEndpoint(endpoint string) (sess *session.Session, err error) {
+// GetDefaultSession creates aws sdk session with given profile and region
+func GetDefaultSession() (sess *session.Session, err error) {
 	if sess, err = session.NewSessionWithOptions(session.Options{
 		Config: aws.Config{
 			Retryer:    newRetryer(),
 			SleepDelay: sleepDelay,
 			Region:     aws.String(defaultRegion),
-			Endpoint:   aws.String(endpoint),
 		},
 		SharedConfigState: session.SharedConfigEnable,
 		Profile:           defaultProfile,
@@ -41,11 +40,6 @@ func GetNewSessionWithEndpoint(endpoint string) (sess *session.Session, err erro
 		return nil, fmt.Errorf("Error creating new aws sdk session %s", err)
 	}
 	return sess, nil
-}
-
-// GetDefaultSession creates aws sdk session with given profile and region
-func GetDefaultSession() (sess *session.Session, err error) {
-	return GetNewSessionWithEndpoint("")
 }
 
 // Sets the region and profile for default aws sessions
