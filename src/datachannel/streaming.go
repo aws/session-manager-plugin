@@ -62,6 +62,8 @@ type IDataChannel interface {
 	RegisterOutputStreamHandler(handler OutputStreamDataMessageHandler, isSessionSpecificHandler bool)
 	DeregisterOutputStreamHandler(handler OutputStreamDataMessageHandler)
 	IsSessionTypeSet() chan bool
+	EndSession() error
+	IsSessionEnded() bool
 	IsStreamMessageResendTimeout() chan bool
 	GetSessionType() string
 	SetSessionType(sessionType string)
@@ -105,6 +107,8 @@ type DataChannel struct {
 	sessionType       string
 	isSessionTypeSet  chan bool
 	sessionProperties interface{}
+
+	isSessionEnded bool
 
 	// Used to detect if resending a streaming message reaches timeout
 	isStreamMessageResendTimeout chan bool
@@ -187,6 +191,7 @@ func (dataChannel *DataChannel) Initialize(log log.T, clientId string, sessionId
 	dataChannel.wsChannel = &communicator.WebSocketChannel{}
 	dataChannel.encryptionEnabled = false
 	dataChannel.isSessionTypeSet = make(chan bool, 1)
+	dataChannel.isSessionEnded = false
 	dataChannel.isStreamMessageResendTimeout = make(chan bool, 1)
 	dataChannel.sessionType = ""
 	dataChannel.IsAwsCliUpgradeNeeded = isAwsCliUpgradeNeeded
@@ -199,7 +204,7 @@ func (dataChannel *DataChannel) SetWebsocket(log log.T, channelUrl string, chann
 
 // FinalizeHandshake sends the token for service to acknowledge the connection.
 func (dataChannel *DataChannel) FinalizeDataChannelHandshake(log log.T, tokenValue string) (err error) {
-	uuid.SwitchFormat(uuid.CleanHyphen)
+	uuid.SwitchFormat(uuid.FormatCanonical)
 	uid := uuid.NewV4().String()
 
 	log.Infof("Sending token through data channel %s to acknowledge connection", dataChannel.wsChannel.GetStreamUrl())
@@ -772,7 +777,7 @@ func (dataChannel *DataChannel) HandleAcknowledgeMessage(
 }
 
 // handleChannelClosedMessage exits the shell
-func (dataChannel DataChannel) HandleChannelClosedMessage(log log.T, stopHandler Stop, sessionId string, outputMessage message.ClientMessage) {
+func (dataChannel *DataChannel) HandleChannelClosedMessage(log log.T, stopHandler Stop, sessionId string, outputMessage message.ClientMessage) {
 	var (
 		channelClosedMessage message.ChannelClosed
 		err                  error
@@ -787,6 +792,8 @@ func (dataChannel DataChannel) HandleChannelClosedMessage(log log.T, stopHandler
 	} else {
 		fmt.Fprintf(os.Stdout, "\n\nSessionId: %s : %s\n\n", sessionId, channelClosedMessage.Output)
 	}
+	dataChannel.EndSession()
+	dataChannel.Close(log)
 
 	stopHandler()
 }
@@ -849,7 +856,7 @@ func (dataChannel *DataChannel) CalculateRetransmissionTimeout(log log.T, stream
 func (dataChannel *DataChannel) ProcessKMSEncryptionHandshakeAction(log log.T, actionParams json.RawMessage) (err error) {
 
 	if dataChannel.IsAwsCliUpgradeNeeded {
-		return errors.New("Installed version of CLI does not support Session Manager encryption feature. Please upgrade to the latest version of your CLI (e.g., AWS CLI).")
+		return errors.New("installed version of CLI does not support Session Manager encryption feature. Please upgrade to the latest version of your CLI (e.g., AWS CLI)")
 	}
 	kmsEncRequest := message.KMSEncryptionRequest{}
 	json.Unmarshal(actionParams, &kmsEncRequest)
@@ -881,13 +888,24 @@ func (dataChannel *DataChannel) ProcessSessionTypeHandshakeAction(actionParams j
 		dataChannel.sessionProperties = sessTypeReq.Properties
 		return nil
 	default:
-		return errors.New(fmt.Sprintf("Unknown session type %s", sessTypeReq.SessionType))
+		return fmt.Errorf("Unknown session type %s", sessTypeReq.SessionType)
 	}
 }
 
 // IsSessionTypeSet check has data channel sessionType been set
 func (dataChannel *DataChannel) IsSessionTypeSet() chan bool {
 	return dataChannel.isSessionTypeSet
+}
+
+// IsSessionEnded check if session has ended
+func (dataChannel *DataChannel) IsSessionEnded() bool {
+	return dataChannel.isSessionEnded
+}
+
+// IsSessionEnded check if session has ended
+func (dataChannel *DataChannel) EndSession() error {
+	dataChannel.isSessionEnded = true
+	return nil
 }
 
 // IsStreamMessageResendTimeout checks if resending a streaming message reaches timeout

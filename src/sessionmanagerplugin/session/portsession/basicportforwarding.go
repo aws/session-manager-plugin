@@ -34,21 +34,11 @@ import (
 // accepts one client connection at a time
 type BasicPortForwarding struct {
 	port           IPortSession
-	stream         *net.Conn
-	listener       *net.Listener
+	stream         net.Conn
+	listener       net.Listener
 	sessionId      string
 	portParameters PortParameters
 	session        session.Session
-}
-
-// getNewListener returns a new listener to given address and type like tcp, unix etc.
-var getNewListener = func(listenerType string, listenerAddress string) (listener net.Listener, err error) {
-	return net.Listen(listenerType, listenerAddress)
-}
-
-// acceptConnection returns connection to the listener
-var acceptConnection = func(log log.T, listener net.Listener) (tcpConn net.Conn, err error) {
-	return listener.Accept()
 }
 
 // IsStreamNotSet checks if stream is not set
@@ -58,10 +48,11 @@ func (p *BasicPortForwarding) IsStreamNotSet() (status bool) {
 
 // Stop closes the stream
 func (p *BasicPortForwarding) Stop() {
+	p.listener.Close()
 	if p.stream != nil {
-		(*p.stream).Close()
+		p.stream.Close()
 	}
-	os.Exit(0)
+	return
 }
 
 // InitializeStreams establishes connection and initializes the stream
@@ -77,7 +68,7 @@ func (p *BasicPortForwarding) InitializeStreams(log log.T, agentVersion string) 
 func (p *BasicPortForwarding) ReadStream(log log.T) (err error) {
 	msg := make([]byte, config.StreamDataPayloadSize)
 	for {
-		numBytes, err := (*p.stream).Read(msg)
+		numBytes, err := p.stream.Read(msg)
 		if err != nil {
 			log.Debugf("Reading from port %s failed with error: %v. Close this connection, listen and accept new one.",
 				p.portParameters.PortNumber, err)
@@ -108,7 +99,7 @@ func (p *BasicPortForwarding) ReadStream(log log.T) (err error) {
 
 // WriteStream writes data to stream
 func (p *BasicPortForwarding) WriteStream(outputMessage message.ClientMessage) error {
-	_, err := (*p.stream).Write(outputMessage.Payload)
+	_, err := p.stream.Write(outputMessage.Payload)
 	return err
 }
 
@@ -120,41 +111,40 @@ func (p *BasicPortForwarding) startLocalConn(log log.T) (err error) {
 		localPortNumber = "0"
 	}
 
-	var listener net.Listener
-	if listener, err = p.startLocalListener(log, localPortNumber); err != nil {
+	if err = p.startLocalListener(log, localPortNumber); err != nil {
 		log.Errorf("Unable to open tcp connection to port. %v", err)
 		return err
 	}
 
-	var tcpConn net.Conn
-	if tcpConn, err = acceptConnection(log, listener); err != nil {
-		log.Errorf("Failed to accept connection with error. %v", err)
-		return err
+	if p.stream, err = p.listener.Accept(); err != nil {
+		if p.session.DataChannel.IsSessionEnded() == false {
+			log.Errorf("Failed to accept connection with error. %v", err)
+			return err
+		}
 	}
-	log.Infof("Connection accepted for session %s.", p.sessionId)
-	fmt.Printf("Connection accepted for session %s.\n", p.sessionId)
-
-	p.listener = &listener
-	p.stream = &tcpConn
+	if p.session.DataChannel.IsSessionEnded() == false {
+		log.Infof("Connection accepted for session %s.", p.sessionId)
+		fmt.Printf("Connection accepted for session %s.\n", p.sessionId)
+	}
 
 	return
 }
 
 // startLocalListener starts a local listener to given address
-func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (listener net.Listener, err error) {
+func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (err error) {
 	var displayMessage string
 	switch p.portParameters.LocalConnectionType {
 	case "unix":
-		if listener, err = getNewListener(p.portParameters.LocalConnectionType, p.portParameters.LocalUnixSocket); err != nil {
+		if p.listener, err = net.Listen(p.portParameters.LocalConnectionType, p.portParameters.LocalUnixSocket); err != nil {
 			return
 		}
 		displayMessage = fmt.Sprintf("Unix socket %s opened for sessionId %s.", p.portParameters.LocalUnixSocket, p.sessionId)
 	default:
-		if listener, err = getNewListener("tcp", "localhost:"+portNumber); err != nil {
+		if p.listener, err = net.Listen("tcp", "localhost:"+portNumber); err != nil {
 			return
 		}
 		// get port number the TCP listener opened
-		p.portParameters.LocalPortNumber = strconv.Itoa(listener.Addr().(*net.TCPAddr).Port)
+		p.portParameters.LocalPortNumber = strconv.Itoa(p.listener.Addr().(*net.TCPAddr).Port)
 		displayMessage = fmt.Sprintf("Port %s opened for sessionId %s.", p.portParameters.LocalPortNumber, p.sessionId)
 	}
 
@@ -171,29 +161,31 @@ func (p *BasicPortForwarding) handleControlSignals(log log.T) {
 		<-c
 		fmt.Println("Terminate signal received, exiting.")
 
+		p.session.DataChannel.EndSession()
 		if version.DoesAgentSupportTerminateSessionFlag(log, p.session.DataChannel.GetAgentVersion()) {
 			if err := p.session.DataChannel.SendFlag(log, message.TerminateSession); err != nil {
 				log.Errorf("Failed to send TerminateSession flag: %v", err)
 			}
 			fmt.Fprintf(os.Stdout, "\n\nExiting session with sessionId: %s.\n\n", p.sessionId)
-			p.Stop()
 		} else {
 			p.session.TerminateSession(log)
 		}
+		p.Stop()
 	}()
 }
 
 // reconnect closes existing connection, listens to new connection and accept it
 func (p *BasicPortForwarding) reconnect(log log.T) (err error) {
 	// close existing connection as it is in a state from which data cannot be read
-	(*p.stream).Close()
+	p.stream.Close()
 
 	// wait for new connection on listener and accept it
-	var conn net.Conn
-	if conn, err = acceptConnection(log, *p.listener); err != nil {
-		return log.Errorf("Failed to accept connection with error. %v", err)
+	if p.stream, err = p.listener.Accept(); err != nil {
+		if p.session.DataChannel.IsSessionEnded() == false {
+			log.Errorf("Failed to accept connection with error. %v", err)
+			return err
+		}
 	}
-	p.stream = &conn
 
 	return
 }

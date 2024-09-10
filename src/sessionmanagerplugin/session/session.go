@@ -20,7 +20,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"strings"
 	"time"
 
 	"github.com/aws/session-manager-plugin/src/config"
@@ -140,7 +139,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 		target             string
 	)
 	log := log.Logger(true, "session-manager-plugin")
-	uuid.SwitchFormat(uuid.CleanHyphen)
+	uuid.SwitchFormat(uuid.FormatCanonical)
 
 	if len(args) == 1 {
 		fmt.Fprint(out, "\nThe Session Manager plugin was installed successfully. "+
@@ -163,14 +162,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	for argsIndex := 1; argsIndex < len(args); argsIndex++ {
 		switch argsIndex {
 		case 1:
-			if strings.HasPrefix(args[1], "AWS_SSM_START_SESSION_RESPONSE") == true {
-				response = []byte(os.Getenv(args[1]))
-				if err = os.Unsetenv(args[1]); err != nil {
-					log.Errorf("Failed to remove temporary session env parameter: %v", err)
-				}
-			} else {
-				response = []byte(args[1])
-			}
+			response = []byte(args[1])
 		case 2:
 			region = args[2]
 		case 3:
@@ -211,8 +203,10 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	}
 
 	if err = startSession(&session, log); err != nil {
-		log.Errorf("Cannot perform start session: %v", err)
-		fmt.Fprintf(out, "Cannot perform start session: %v\n", err)
+		if session.DataChannel.IsSessionEnded() == false {
+			log.Errorf("Cannot perform start session: %v", err)
+			fmt.Fprintf(out, "Cannot perform start session: %v\n", err)
+		}
 		return
 	}
 }
@@ -239,7 +233,9 @@ func (s *Session) Execute(log log.T) (err error) {
 		s.SessionType = s.DataChannel.GetSessionType()
 		s.SessionProperties = s.DataChannel.GetSessionProperties()
 		if err = setSessionHandlersWithSessionType(s, log); err != nil {
-			log.Errorf("Session ending with error: %v", err)
+			if s.DataChannel.IsSessionEnded() == false {
+				log.Errorf("Session ending with error: %v", err)
+			}
 			return
 		}
 	}
