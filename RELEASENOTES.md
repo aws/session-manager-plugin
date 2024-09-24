@@ -1,5 +1,9 @@
 Latest
 ================
+- Support passing plugin version with OpenDataChannel request
+
+1.2.650.0
+================
 - Upgrade aws-sdk-go to 1.54.10
 - Reformat comments for gofmt check
 
