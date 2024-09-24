@@ -29,4 +29,7 @@ type OpenDataChannelInput struct {
 
 	// ClientId is a required field
 	ClientId *string `json:"ClientId" min:"1" type:"string" required:"true"`
+
+	// ClientVersion is a required field
+	ClientVersion *string `json:"ClientVersion" min:"1" type:"string" required:"true"`
 }
