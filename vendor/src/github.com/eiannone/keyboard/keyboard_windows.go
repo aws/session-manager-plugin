@@ -195,9 +195,9 @@ func getKeyEvent(r *k32_event) (keyEvent, bool) {
             e.key = KeyCtrl5
         case 54:
             e.key = KeyCtrl6
-        case 189, 191, 55:
+        case 189, 191: //, 55:
             e.key = KeyCtrl7
-        case 8, 56:
+        case 8: //, 56:
             e.key = KeyCtrl8
         }
 
