@@ -23,5 +23,5 @@ import (
 )
 
 func main() {
-	session.ValidateInputAndStartSession(os.Args, os.Stdout)
+	session.ValidateInputAndStartSession(os.Args, os.Stderr)
 }

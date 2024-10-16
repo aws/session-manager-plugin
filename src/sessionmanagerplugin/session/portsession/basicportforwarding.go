@@ -175,7 +175,7 @@ func (p *BasicPortForwarding) handleControlSignals(log log.T) {
 			if err := p.session.DataChannel.SendFlag(log, message.TerminateSession); err != nil {
 				log.Errorf("Failed to send TerminateSession flag: %v", err)
 			}
-			fmt.Fprintf(os.Stdout, "\n\nExiting session with sessionId: %s.\n\n", p.sessionId)
+			fmt.Fprintf(os.Stderr, "\n\nExiting session with sessionId: %s.\n\n", p.sessionId)
 			p.Stop()
 		} else {
 			p.session.TerminateSession(log)
