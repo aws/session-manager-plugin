@@ -77,6 +77,12 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 		}
 		if character != 0 {
 			charBytes := []byte(string(character))
+			if skip, err := s.handleEscapeSequence(log, charBytes, len(charBytes)); err != nil {
+				log.Errorf("Escape sequence failure: %v", err)
+				s.Stop()
+			} else if skip {
+				continue
+			}
 			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, charBytes); err != nil {
 				log.Errorf("Failed to send UTF8 char: %v", err)
 				break
@@ -85,6 +91,12 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 			keyBytes := []byte(string(key))
 			if byteValue, ok := specialKeysInputMap[key]; ok {
 				keyBytes = byteValue
+			}
+			if skip, err := s.handleEscapeSequence(log, keyBytes, len(keyBytes)); err != nil {
+				log.Errorf("Escape sequence failure: %v", err)
+				s.Stop()
+			} else if skip {
+				continue
 			}
 			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, keyBytes); err != nil {
 				log.Errorf("Failed to send UTF8 char: %v", err)
