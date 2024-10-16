@@ -21,7 +21,7 @@ import (
 	"html/template"
 	"strings"
 
-	sdkSession "github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/session-manager-plugin/src/datachannel"
 	"github.com/aws/session-manager-plugin/src/jsonutil"
@@ -92,13 +92,11 @@ type StartSessionCommand struct {
 var getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.SSM, error) {
 	sdkutil.SetRegionAndProfile(region, profile)
 
-	var sdkSession *sdkSession.Session
-	sdkSession, err := sdkutil.GetNewSessionWithEndpoint(endpoint)
-	if err != nil {
-		log.Errorf("Get session with endpoint Failed: %v", err)
+	if sdkSession, err := sdkutil.GetDefaultSession(); err != nil {
 		return nil, err
+	} else {
+		return ssm.New(sdkSession, aws.NewConfig().WithEndpoint(endpoint)), nil
 	}
-	return ssm.New(sdkSession), nil
 }
 
 // executeSession to open datachannel

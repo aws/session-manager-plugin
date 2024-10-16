@@ -19,6 +19,7 @@ import (
 	"math/rand"
 	"os"
 
+	"github.com/aws/aws-sdk-go/aws"
 	sdkSession "github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/session-manager-plugin/src/config"
@@ -99,10 +100,10 @@ func (s *Session) GetResumeSessionParams(log log.T) (string, error) {
 		sdkSession          *sdkSession.Session
 	)
 
-	if sdkSession, err = sdkutil.GetNewSessionWithEndpoint(s.Endpoint); err != nil {
+	if sdkSession, err = sdkutil.GetDefaultSession(); err != nil {
 		return "", err
 	}
-	s.sdk = ssm.New(sdkSession)
+	s.sdk = ssm.New(sdkSession, aws.NewConfig().WithEndpoint(s.Endpoint))
 
 	resumeSessionInput := ssm.ResumeSessionInput{
 		SessionId: &s.SessionId,
@@ -140,15 +141,14 @@ func (s *Session) ResumeSessionHandler(log log.T) (err error) {
 // TerminateSession calls TerminateSession API
 func (s *Session) TerminateSession(log log.T) error {
 	var (
-		err        error
-		newSession *sdkSession.Session
+		err error
 	)
 
-	if newSession, err = sdkutil.GetNewSessionWithEndpoint(s.Endpoint); err != nil {
-		log.Errorf("Terminate Session failed: %v", err)
+	if sdkSession, err := sdkutil.GetDefaultSession(); err != nil {
 		return err
+	} else {
+		s.sdk = ssm.New(sdkSession, aws.NewConfig().WithEndpoint(s.Endpoint))
 	}
-	s.sdk = ssm.New(newSession)
 
 	terminateSessionInput := ssm.TerminateSessionInput{
 		SessionId: &s.SessionId,
