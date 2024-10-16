@@ -41,8 +41,9 @@ import (
 
 // MuxClient contains smux client session and corresponding network connection
 type MuxClient struct {
-	conn    net.Conn
-	session *smux.Session
+	conn          net.Conn
+	localListener net.Listener
+	session       *smux.Session
 }
 
 // MgsConn contains local server and corresponding connection to smux client
@@ -71,6 +72,7 @@ func (c *MgsConn) close() {
 func (c *MuxClient) close() {
 	c.session.Close()
 	c.conn.Close()
+	c.localListener.Close()
 }
 
 // IsStreamNotSet checks if stream is not set
@@ -87,7 +89,7 @@ func (p *MuxPortForwarding) Stop() {
 		p.muxClient.close()
 	}
 	p.cleanUp()
-	os.Exit(0)
+	return
 }
 
 // InitializeStreams initializes i/o streams
@@ -114,6 +116,16 @@ func (p *MuxPortForwarding) ReadStream(log log.T) (err error) {
 	// set up network listener on SSM port and handle client connections
 	g.Go(func() error {
 		return p.handleClientConnections(log, ctx)
+	})
+
+	g.Go(func() error {
+		for {
+			time.Sleep(50 * time.Millisecond)
+			if p.session.DataChannel.IsSessionEnded() == true {
+				p.Stop()
+				return nil
+			}
+		}
 	})
 
 	return g.Wait()
@@ -169,13 +181,13 @@ func (p *MuxPortForwarding) initialize(log log.T, agentVersion string) (err erro
 		} else {
 			smuxConfig := smux.DefaultConfig()
 			if version.DoesAgentSupportDisableSmuxKeepAlive(log, agentVersion) {
-				// Disable smux KeepAlive or else it breaks Session Manager idle timeout.
 				smuxConfig.KeepAliveDisabled = true
 			}
 			if muxSession, err := smux.Client(muxConn, smuxConfig); err != nil {
 				return err
 			} else {
-				p.muxClient = &MuxClient{muxConn, muxSession}
+				var localListener net.Listener
+				p.muxClient = &MuxClient{muxConn, localListener, muxSession}
 			}
 		}
 		return nil
@@ -195,7 +207,6 @@ func (p *MuxPortForwarding) handleControlSignals(log log.T) {
 		if err := p.session.DataChannel.SendFlag(log, message.TerminateSession); err != nil {
 			log.Errorf("Failed to send TerminateSession flag: %v", err)
 		}
-		fmt.Fprintf(os.Stdout, "\n\nExiting session with sessionId: %s.\n\n", p.sessionId)
 		p.Stop()
 	}()
 }
@@ -228,12 +239,11 @@ func (p *MuxPortForwarding) transferDataToServer(log log.T, ctx context.Context)
 // handleClientConnections sets up network server on local ssm port to accept connections from clients (browser/terminal)
 func (p *MuxPortForwarding) handleClientConnections(log log.T, ctx context.Context) (err error) {
 	var (
-		listener   net.Listener
 		displayMsg string
 	)
 
 	if p.portParameters.LocalConnectionType == "unix" {
-		if listener, err = net.Listen(p.portParameters.LocalConnectionType, p.portParameters.LocalUnixSocket); err != nil {
+		if p.muxClient.localListener, err = net.Listen(p.portParameters.LocalConnectionType, p.portParameters.LocalUnixSocket); err != nil {
 			return err
 		}
 		displayMsg = fmt.Sprintf("Unix socket %s opened for sessionId %s.", p.portParameters.LocalUnixSocket, p.sessionId)
@@ -242,14 +252,14 @@ func (p *MuxPortForwarding) handleClientConnections(log log.T, ctx context.Conte
 		if p.portParameters.LocalPortNumber == "" {
 			localPortNumber = "0"
 		}
-		if listener, err = net.Listen("tcp", "localhost:"+localPortNumber); err != nil {
+		if p.muxClient.localListener, err = net.Listen("tcp", "localhost:"+localPortNumber); err != nil {
 			return err
 		}
-		p.portParameters.LocalPortNumber = strconv.Itoa(listener.Addr().(*net.TCPAddr).Port)
+		p.portParameters.LocalPortNumber = strconv.Itoa(p.muxClient.localListener.Addr().(*net.TCPAddr).Port)
 		displayMsg = fmt.Sprintf("Port %s opened for sessionId %s.", p.portParameters.LocalPortNumber, p.sessionId)
 	}
 
-	defer listener.Close()
+	defer p.muxClient.localListener.Close()
 
 	log.Infof(displayMsg)
 	fmt.Printf(displayMsg)
@@ -263,7 +273,7 @@ func (p *MuxPortForwarding) handleClientConnections(log log.T, ctx context.Conte
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			if conn, err := listener.Accept(); err != nil {
+			if conn, err := p.muxClient.localListener.Accept(); err != nil {
 				log.Errorf("Error while accepting connection: %v", err)
 			} else {
 				log.Infof("Connection accepted from %s\n for session [%s]", conn.RemoteAddr(), p.sessionId)
