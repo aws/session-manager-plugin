@@ -20,9 +20,12 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"sync"
 	"testing"
 
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/signer/v4"
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/gorilla/websocket"
 	"github.com/stretchr/testify/assert"
@@ -35,6 +38,8 @@ var (
 	defaultStreamUrl    = "streamUrl"
 	defaultError        = errors.New("Default Error")
 	defaultMessage      = []byte("Default Message")
+	defaultRegion       = "us-east-1"
+	mockSigner          = &v4.Signer{Credentials: credentials.NewStaticCredentials("AKID", "SECRET", "SESSION")}
 )
 
 type ErrorCallbackWrapper struct {
@@ -141,10 +146,11 @@ func TestWebsocketChannel_SetOnMessage(t *testing.T) {
 func TestWebsocketchannel_Initialize(t *testing.T) {
 	t.Log("Starting test: webSocketChannel.Initialize")
 	channel := &WebSocketChannel{}
-	channel.Initialize(mockLogger, defaultStreamUrl, defaultChannelToken)
+	channel.Initialize(mockLogger, defaultStreamUrl, defaultChannelToken, defaultRegion, mockSigner)
 
 	assert.Equal(t, defaultStreamUrl, channel.Url)
 	assert.Equal(t, defaultChannelToken, channel.ChannelToken)
+	assert.Equal(t, mockSigner, channel.Signer)
 }
 
 func TestOpenCloseWebSocketChannel(t *testing.T) {
@@ -167,6 +173,48 @@ func TestOpenCloseWebSocketChannel(t *testing.T) {
 	assert.Nil(t, err, "Error closing the websocket connection.")
 	assert.False(t, websocketchannel.IsOpen, "IsOpen is not set to false.")
 	t.Log("Ending test: TestOpenCloseWebSocketChannel")
+}
+
+func TestOpenWebSocketChannelWithPresignedURL(t *testing.T) {
+	t.Log("Starting test: TestOpenWebSocketChannelWithPresignedURL")
+	srv := httptest.NewServer(http.HandlerFunc(handlerToBeTested))
+	u, _ := url.Parse(srv.URL)
+	u.Scheme = "ws"
+	var log = log.NewMockLog()
+
+	query := u.Query()
+	query.Set("X-Amz-Signature", "SAMPLE_SIGNATURE")
+	u.RawQuery = query.Encode()
+
+	websocketchannel := WebSocketChannel{
+		Url:    u.String(),
+		Signer: nil,
+	}
+
+	err := websocketchannel.Open(log)
+	assert.Nil(t, err, "Error opening the websocket connection.")
+	assert.NotNil(t, websocketchannel.Connection, "Open connection failed.")
+	assert.True(t, websocketchannel.IsOpen, "IsOpen is not set to true.")
+	assert.True(t, strings.Contains(websocketchannel.Url, "SAMPLE_SIGNATURE"),
+		"URL not included signature as expected")
+
+	err = websocketchannel.Close(log)
+	assert.Nil(t, err, "Error closing the websocket connection.")
+	assert.False(t, websocketchannel.IsOpen, "IsOpen is not set to false.")
+	t.Log("Ending test: TestOpenCloseWebSocketChannel")
+}
+
+func TestOpenWebSocketChannelWithInvalidURL(t *testing.T) {
+	t.Log("Starting test: TestOpenWebSocketChannelWithInvalidURL")
+	var log = log.NewMockLog()
+	websocketchannel := WebSocketChannel{
+		Url:    "invalid_url",
+		Signer: nil,
+	}
+
+	err := websocketchannel.Open(log)
+	assert.NotNil(t, err, "malformed ws or wss URL.")
+	assert.Nil(t, websocketchannel.Connection, "Open connection failed.")
 }
 
 func TestReadWriteTextToWebSocketChannel(t *testing.T) {

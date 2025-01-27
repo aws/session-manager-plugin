@@ -28,6 +28,7 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/signer/v4"
 	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
 	"github.com/aws/session-manager-plugin/src/communicator"
 	"github.com/aws/session-manager-plugin/src/config"
@@ -42,7 +43,7 @@ import (
 
 type IDataChannel interface {
 	Initialize(log log.T, clientId string, sessionId string, targetId string, isAwsCliUpgradeNeeded bool)
-	SetWebsocket(log log.T, streamUrl string, tokenValue string)
+	SetWebsocket(log log.T, streamUrl string, tokenValue string, region string, signer *v4.Signer)
 	Reconnect(log log.T) error
 	SendFlag(log log.T, flagType message.PayloadTypeFlag) error
 	Open(log log.T) error
@@ -193,8 +194,8 @@ func (dataChannel *DataChannel) Initialize(log log.T, clientId string, sessionId
 }
 
 // SetWebsocket function populates websocket channel object
-func (dataChannel *DataChannel) SetWebsocket(log log.T, channelUrl string, channelToken string) {
-	dataChannel.wsChannel.Initialize(log, channelUrl, channelToken)
+func (dataChannel *DataChannel) SetWebsocket(log log.T, channelUrl string, channelToken string, region string, signer *v4.Signer) {
+	dataChannel.wsChannel.Initialize(log, channelUrl, channelToken, region, signer)
 }
 
 // FinalizeHandshake sends the token for service to acknowledge the connection.

@@ -50,7 +50,20 @@ func TestWebsocketUtilOpenCloseConnection(t *testing.T) {
 	u.Scheme = "ws"
 	var log = log.NewMockLog()
 	var ws = NewWebsocketUtil(log, nil)
-	conn, _ := ws.OpenConnection(u.String())
+	conn, _ := ws.OpenConnection(u.String(), nil)
+	assert.NotNil(t, conn, "Open connection failed.")
+
+	err := ws.CloseConnection(conn)
+	assert.Nil(t, err, "Error closing the websocket connection.")
+}
+
+func TestWebsocketUtilOpenCloseConnectionWithHeader(t *testing.T) {
+	srv := httptest.NewServer(http.HandlerFunc(handlerToBeTested))
+	u, _ := url.Parse(srv.URL)
+	u.Scheme = "ws"
+	var log = log.NewMockLog()
+	var ws = NewWebsocketUtil(log, nil)
+	conn, _ := ws.OpenConnection(u.String(), http.Header{})
 	assert.NotNil(t, conn, "Open connection failed.")
 
 	err := ws.CloseConnection(conn)
@@ -63,7 +76,7 @@ func TestWebsocketUtilOpenConnectionInvalidUrl(t *testing.T) {
 	u.Scheme = "ws"
 	var log = log.NewMockLog()
 	var ws = NewWebsocketUtil(log, nil)
-	conn, _ := ws.OpenConnection("InvalidUrl")
+	conn, _ := ws.OpenConnection("InvalidUrl", http.Header{})
 	assert.Nil(t, conn, "Open connection failed.")
 
 	err := ws.CloseConnection(conn)
@@ -76,7 +89,7 @@ func TestSendMessage(t *testing.T) {
 	u.Scheme = "ws"
 	var log = log.NewMockLog()
 	var ws = NewWebsocketUtil(log, nil)
-	conn, _ := ws.OpenConnection(u.String())
+	conn, _ := ws.OpenConnection(u.String(), http.Header{})
 	assert.NotNil(t, conn, "Open connection failed.")
 	conn.WriteMessage(websocket.TextMessage, []byte("testing testing"))
 

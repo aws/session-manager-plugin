@@ -54,6 +54,11 @@ func SetRegionAndProfile(region string, profile string) {
 	defaultProfile = profile
 }
 
+// Gets the region for default aws sessions
+func GetRegion() (region string) {
+	return defaultRegion
+}
+
 var newRetryer = func() aws.RequestRetryer {
 	r := retryer.SsmCliRetryer{}
 	r.NumMaxRetries = 3

@@ -17,6 +17,7 @@ package config
 import "time"
 
 const (
+	ServiceName                        = "ssmmessages"
 	RolePublishSubscribe               = "publish_subscribe"
 	MessageSchemaVersion               = "1.0"
 	DefaultTransmissionTimeout         = 200 * time.Millisecond

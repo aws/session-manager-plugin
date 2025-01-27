@@ -23,9 +23,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aws/session-manager-plugin/src/config"
-
+	"github.com/aws/aws-sdk-go/aws/signer/v4"
 	"github.com/aws/aws-sdk-go/service/ssm"
+	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/datachannel"
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/message"
@@ -85,6 +85,8 @@ type Session struct {
 	SessionType           string
 	SessionProperties     interface{}
 	DisplayMode           sessionutil.DisplayMode
+	Region                string
+	Signer                *v4.Signer
 }
 
 // startSession create the datachannel for session
@@ -203,6 +205,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 		session.Endpoint = ssmEndpoint
 		session.ClientId = clientId
 		session.TargetId = target
+		session.Region = region
 		session.DataChannel = &datachannel.DataChannel{}
 
 	default:

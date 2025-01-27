@@ -20,6 +20,7 @@ import (
 	"os"
 
 	sdkSession "github.com/aws/aws-sdk-go/aws/session"
+	v4 "github.com/aws/aws-sdk-go/aws/signer/v4"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/log"
@@ -37,8 +38,15 @@ func (s *Session) OpenDataChannel(log log.T) (err error) {
 		MaxAttempts:         config.DataChannelNumMaxRetries,
 	}
 
+	sess, err := sdkutil.GetNewSessionWithEndpoint(s.Endpoint)
+	if err != nil {
+		log.Errorf("Failed to get credential to create aws session")
+	} else {
+		s.Signer = v4.NewSigner(sess.Config.Credentials)
+	}
+
 	s.DataChannel.Initialize(log, s.ClientId, s.SessionId, s.TargetId, s.IsAwsCliUpgradeNeeded)
-	s.DataChannel.SetWebsocket(log, s.StreamUrl, s.TokenValue)
+	s.DataChannel.SetWebsocket(log, s.StreamUrl, s.TokenValue, s.Region, s.Signer)
 	s.DataChannel.GetWsChannel().SetOnMessage(
 		func(input []byte) {
 			s.DataChannel.OutputMessageHandler(log, s.Stop, s.SessionId, input)
@@ -103,6 +111,7 @@ func (s *Session) GetResumeSessionParams(log log.T) (string, error) {
 		return "", err
 	}
 	s.sdk = ssm.New(sdkSession)
+	s.Signer = v4.NewSigner(sdkSession.Config.Credentials)
 
 	resumeSessionInput := ssm.ResumeSessionInput{
 		SessionId: &s.SessionId,
@@ -149,6 +158,7 @@ func (s *Session) TerminateSession(log log.T) error {
 		return err
 	}
 	s.sdk = ssm.New(newSession)
+	s.Signer = v4.NewSigner(newSession.Config.Credentials)
 
 	terminateSessionInput := ssm.TerminateSessionInput{
 		SessionId: &s.SessionId,

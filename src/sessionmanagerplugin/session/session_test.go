@@ -166,7 +166,7 @@ func TestExecuteAndStreamMessageResendTimesOut(t *testing.T) {
 
 func SetupMockActions() {
 	mockDataChannel.On("Initialize", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return()
-	mockDataChannel.On("SetWebsocket", mock.Anything, mock.Anything, mock.Anything).Return()
+	mockDataChannel.On("SetWebsocket", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return()
 	mockDataChannel.On("GetWsChannel").Return(mockWsChannel)
 	mockDataChannel.On("RegisterOutputStreamHandler", mock.Anything, mock.Anything)
 	mockDataChannel.On("ResendStreamDataMessageScheduler", mock.Anything).Return(nil)
