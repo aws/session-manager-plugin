@@ -15,14 +15,17 @@
 package portsession
 
 import (
+	"fmt"
 	"io"
 	"os"
+	"os/signal"
 	"time"
 
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/message"
 	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session"
+	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/sessionutil"
 )
 
 type StandardStreamForwarding struct {
@@ -42,14 +45,28 @@ func (p *StandardStreamForwarding) IsStreamNotSet() (status bool) {
 func (p *StandardStreamForwarding) Stop() {
 	p.inputStream.Close()
 	p.outputStream.Close()
-	os.Exit(0)
+	return
 }
 
 // InitializeStreams initializes the streams with its file descriptors
 func (p *StandardStreamForwarding) InitializeStreams(log log.T, agentVersion string) (err error) {
+	p.handleControlSignals(log)
 	p.inputStream = os.Stdin
 	p.outputStream = os.Stdout
 	return
+}
+
+// handleControlSignals handles terminate signals
+func (p *StandardStreamForwarding) handleControlSignals(log log.T) {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, sessionutil.ControlSignals...)
+	go func() {
+		<-c
+		fmt.Println("Terminate signal received, exiting.")
+
+		p.session.DataChannel.EndSession()
+		p.Stop()
+	}()
 }
 
 // ReadStream reads data from the input stream

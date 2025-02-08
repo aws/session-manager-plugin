@@ -18,7 +18,6 @@
 package shellsession
 
 import (
-	"os"
 	"time"
 
 	"github.com/aws/session-manager-plugin/src/log"
@@ -55,7 +54,7 @@ var specialKeysInputMap = map[keyboard.Key][]byte{
 
 // stop restores the terminal settings and exits
 func (s *ShellSession) Stop() {
-	os.Exit(0)
+	keyboard.Close()
 }
 
 // handleKeyboardInput handles input entered by customer on terminal
@@ -64,35 +63,50 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 		character rune         //character input from keyboard
 		key       keyboard.Key //special keys like arrows and function keys
 	)
-	if err = keyboard.Open(); err != nil {
-		log.Errorf("Failed to load Keyboard: %v", err)
-		return
-	}
-	defer keyboard.Close()
 
-	for {
-		if character, key, err = keyboard.GetKey(); err != nil {
-			log.Errorf("Failed to get the key stroke: %v", err)
+	charCH := make(chan rune)
+	keyCH := make(chan keyboard.Key)
+	go func(charCH chan rune, keyCH chan keyboard.Key) {
+		if err = keyboard.Open(); err != nil {
+			log.Errorf("Failed to load Keyboard: %v", err)
 			return
 		}
-		if character != 0 {
-			charBytes := []byte(string(character))
+		for {
+			if character, key, err = keyboard.GetKey(); err != nil {
+				log.Errorf("Failed to get the key stroke: %v", err)
+				return
+			}
+			if character != 0 {
+				charCH <- character
+			} else if key != 0 {
+				keyCH <- key
+			}
+		}
+	}(charCH, keyCH)
+
+	for {
+		select {
+		case <-time.After(time.Second):
+			if s.Session.DataChannel.IsSessionEnded() == true {
+				s.Stop()
+				return
+			}
+		case charStr := <-charCH:
+			charBytes := []byte(string(charStr))
 			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, charBytes); err != nil {
 				log.Errorf("Failed to send UTF8 char: %v", err)
-				break
+				return
 			}
-		} else if key != 0 {
-			keyBytes := []byte(string(key))
+		case keyStr := <-keyCH:
+			keyBytes := []byte(string(keyStr))
 			if byteValue, ok := specialKeysInputMap[key]; ok {
 				keyBytes = byteValue
 			}
 			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, keyBytes); err != nil {
 				log.Errorf("Failed to send UTF8 char: %v", err)
-				break
+				return
 			}
 		}
-		// sleep to limit the rate of transfer
-		time.Sleep(time.Millisecond)
 	}
 	return
 }
