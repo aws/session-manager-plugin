@@ -16,8 +16,10 @@ package session
 
 import (
 	"fmt"
+	"os"
 	"testing"
 
+	"github.com/aws/session-manager-plugin/src/communicator"
 	wsChannelMock "github.com/aws/session-manager-plugin/src/communicator/mocks"
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/datachannel"
@@ -34,18 +36,107 @@ var (
 	instanceId = "i-123456"
 )
 
-func TestOpenDataChannel(t *testing.T) {
+func TestOpenDataChannelWithNoCredential(t *testing.T) {
 	mockDataChannel = &dataChannelMock.IDataChannel{}
 	mockWsChannel = &wsChannelMock.IWebSocketChannel{}
 
-	sessionMock := &Session{}
+	// Ensure no credentials are available
+	os.Unsetenv("AWS_ACCESS_KEY_ID")
+	os.Unsetenv("AWS_SECRET_ACCESS_KEY")
+	os.Unsetenv("AWS_SESSION_TOKEN")
+	os.Unsetenv("AWS_PROFILE")
+
+	sessionMock := &Session{
+		StreamUrl: "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/test-session?role=publish_subscribe", // Non-presigned URL
+		Endpoint:  "",                                                                                              // Add endpoint for session creation
+	}
 	sessionMock.DataChannel = mockDataChannel
 	SetupMockActions()
 	mockDataChannel.On("Open", mock.Anything).Return(nil)
 
 	err := sessionMock.OpenDataChannel(logger)
 	assert.Nil(t, err)
+}
+
+func TestOpenDataChannel(t *testing.T) {
+	mockDataChannel = &dataChannelMock.IDataChannel{}
+	mockWsChannel = &wsChannelMock.IWebSocketChannel{}
+
+	sessionMock := &Session{
+		// Non-presigned URL
+		StreamUrl: "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/test-session?role=publish_subscribe",
+	}
+	sessionMock.DataChannel = mockDataChannel
+	SetupMockActions()
+	mockDataChannel.On("Open", mock.Anything).Return(nil)
+
+	// Set up credentials for this test
+	os.Setenv("AWS_ACCESS_KEY_ID", "test-access-key-id")
+	os.Setenv("AWS_SECRET_ACCESS_KEY", "test-secret-access-key")
+	defer func() {
+		os.Unsetenv("AWS_ACCESS_KEY_ID")
+		os.Unsetenv("AWS_SECRET_ACCESS_KEY")
+	}()
+
+	err := sessionMock.OpenDataChannel(logger)
+	assert.Nil(t, err)
 	assert.NotNil(t, sessionMock.Signer)
+}
+
+func TestOpenDataChannelWithClientConfigureSkipped(t *testing.T) {
+	mockDataChannel = &dataChannelMock.IDataChannel{}
+	mockWsChannel = &wsChannelMock.IWebSocketChannel{}
+
+	// Set environment variable to skip client configuration
+	os.Setenv("SSM_PLUGIN_SKIP_CLIENT_CONFIGURE", "true")
+	defer os.Unsetenv("SSM_PLUGIN_SKIP_CLIENT_CONFIGURE")
+
+	sessionMock := &Session{
+		StreamUrl: "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/test-session?role=publish_subscribe",
+	}
+	sessionMock.DataChannel = mockDataChannel
+	SetupMockActions()
+	mockDataChannel.On("Open", mock.Anything).Return(nil)
+
+	err := sessionMock.OpenDataChannel(logger)
+	assert.Nil(t, err)
+	assert.Nil(t, sessionMock.Signer) // Should be nil because client configuration is skipped
+}
+
+func TestOpenDataChannelWithPresignedURL(t *testing.T) {
+	mockDataChannel = &dataChannelMock.IDataChannel{}
+	mockWsChannel = &wsChannelMock.IWebSocketChannel{}
+
+	sessionMock := &Session{
+		StreamUrl: "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/test-session?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20230101%2Fus-east-1%2Fssmmessages%2Faws4_request&X-Amz-Date=20230101T000000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=example-signature",
+	}
+	sessionMock.DataChannel = mockDataChannel
+	SetupMockActions()
+	mockDataChannel.On("Open", mock.Anything).Return(nil)
+
+	err := sessionMock.OpenDataChannel(logger)
+	assert.Nil(t, err)
+	assert.Nil(t, sessionMock.Signer) // Should be nil because URL is presigned
+}
+
+func TestIsPresignedURL(t *testing.T) {
+	// Test presigned URL
+	presignedURL := "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/test-session?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIOSFODNN7EXAMPLE%2F20230101%2Fus-east-1%2Fssmmessages%2Faws4_request&X-Amz-Date=20230101T000000Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=example-signature"
+	isPresigned, err := communicator.IsPresignedURL(presignedURL)
+	assert.Nil(t, err)
+	assert.True(t, isPresigned)
+
+	// Test non-presigned URL
+	regularURL := "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/test-session?role=publish_subscribe"
+	isPresigned, err = communicator.IsPresignedURL(regularURL)
+	assert.Nil(t, err)
+	assert.False(t, isPresigned)
+
+	// Test invalid URL
+	invalidURL := "ht!tp://invalid url with spaces"
+	isPresigned, err = communicator.IsPresignedURL(invalidURL)
+	assert.NotNil(t, err)
+	assert.False(t, isPresigned)
 }
 
 func TestOpenDataChannelWithError(t *testing.T) {

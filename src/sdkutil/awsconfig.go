@@ -43,6 +43,25 @@ func GetNewSessionWithEndpoint(endpoint string) (sess *session.Session, err erro
 	return sess, nil
 }
 
+// GetSessionWithQuickCheck creates aws sdk session with fast checking
+// with minimal retry logic to avoid delays while maintaining reliability
+func GetSessionWithQuickCheck(endpoint string) (sess *session.Session, err error) {
+	if sess, err = session.NewSessionWithOptions(session.Options{
+		Config: aws.Config{
+			Region:     aws.String(defaultRegion),
+			Endpoint:   aws.String(endpoint),
+			MaxRetries: aws.Int(1),
+			SleepDelay: fastSleepDelay,
+		},
+		SharedConfigState: session.SharedConfigEnable,
+		Profile:           defaultProfile,
+	}); err != nil {
+
+		return nil, fmt.Errorf("Error creating new aws sdk session %s", err)
+	}
+	return sess, nil
+}
+
 // GetDefaultSession creates aws sdk session with given profile and region
 func GetDefaultSession() (sess *session.Session, err error) {
 	return GetNewSessionWithEndpoint("")
@@ -67,4 +86,13 @@ var newRetryer = func() aws.RequestRetryer {
 
 var sleepDelay = func(d time.Duration) {
 	time.Sleep(d)
+}
+
+var fastSleepDelay = func(d time.Duration) {
+	// For credential checks, use minimal delay (max 50ms)
+	if d > 50*time.Millisecond {
+		time.Sleep(50 * time.Millisecond)
+	} else {
+		time.Sleep(d)
+	}
 }

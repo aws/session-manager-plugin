@@ -141,8 +141,8 @@ func (webSocketChannel *WebSocketChannel) getV4SignatureHeader(log log.T, Url st
 	return request.Header, err
 }
 
-// isPresignedURL check is the url presigned.
-func isPresignedURL(rawURL string) (bool, error) {
+// IsPresignedURL check is the url presigned.
+func IsPresignedURL(rawURL string) (bool, error) {
 	parsedURL, err := url.Parse(rawURL)
 	if err != nil {
 		return false, err
@@ -187,7 +187,7 @@ func (webSocketChannel *WebSocketChannel) Close(log log.T) error {
 func (webSocketChannel *WebSocketChannel) Open(log log.T) error {
 	// initialize the write mutex
 	webSocketChannel.writeLock = &sync.Mutex{}
-	presigned, err := isPresignedURL(webSocketChannel.Url)
+	presigned, err := IsPresignedURL(webSocketChannel.Url)
 	if err != nil {
 		return err
 	}

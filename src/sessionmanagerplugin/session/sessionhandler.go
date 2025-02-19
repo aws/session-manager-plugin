@@ -15,6 +15,7 @@
 package session
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
 	"os"
@@ -22,6 +23,7 @@ import (
 	sdkSession "github.com/aws/aws-sdk-go/aws/session"
 	v4 "github.com/aws/aws-sdk-go/aws/signer/v4"
 	"github.com/aws/aws-sdk-go/service/ssm"
+	"github.com/aws/session-manager-plugin/src/communicator"
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/message"
@@ -38,11 +40,36 @@ func (s *Session) OpenDataChannel(log log.T) (err error) {
 		MaxAttempts:         config.DataChannelNumMaxRetries,
 	}
 
-	sess, err := sdkutil.GetNewSessionWithEndpoint(s.Endpoint)
-	if err != nil {
-		log.Errorf("Failed to get credential to create aws session")
+	// Check environment variable to control client configuration
+	// SSM_PLUGIN_SKIP_CLIENT_CONFIGURE:
+	//   - not set or "false": perform client configuration (default behavior)
+	//   - "true": skip client configuration
+	skipClientConfigure := os.Getenv("SSM_PLUGIN_SKIP_CLIENT_CONFIGURE")
+	if skipClientConfigure != "true" {
+		// Check if the StreamUrl is presigned first to avoid unnecessary credential lookup delay
+		presigned, err := communicator.IsPresignedURL(s.StreamUrl)
+		if err != nil {
+			log.Errorf("Failed to check if URL is presigned: %v", err)
+		}
+
+		// Only attempt credential lookup if URL is not presigned
+		if !presigned {
+			sess, err := sdkutil.GetSessionWithQuickCheck(s.Endpoint)
+			if err != nil {
+				log.Errorf("Failed to create aws session: %v", err)
+			} else {
+				_, err = sess.Config.Credentials.Get()
+				if err != nil {
+					log.Errorf("Failed to get credential for sign: %v", err)
+				} else {
+					s.Signer = v4.NewSigner(sess.Config.Credentials)
+				}
+			}
+		} else {
+			log.Debugf("StreamUrl is presigned, skipping credential lookup")
+		}
 	} else {
-		s.Signer = v4.NewSigner(sess.Config.Credentials)
+		log.Debugf("Client configuration skipped by SSM_PLUGIN_SKIP_CLIENT_CONFIGURE=%s", skipClientConfigure)
 	}
 
 	s.DataChannel.Initialize(log, s.ClientId, s.SessionId, s.TargetId, s.IsAwsCliUpgradeNeeded)
@@ -103,15 +130,35 @@ func (s *Session) Stop() {
 func (s *Session) GetResumeSessionParams(log log.T) (string, error) {
 	var (
 		resumeSessionOutput *ssm.ResumeSessionOutput
+		awsSession          *sdkSession.Session
 		err                 error
-		sdkSession          *sdkSession.Session
+		getCredErr          error
 	)
 
-	if sdkSession, err = sdkutil.GetNewSessionWithEndpoint(s.Endpoint); err != nil {
-		return "", err
+	// Check if the StreamUrl is presigned first to avoid unnecessary credential lookup delay
+	presigned, err := communicator.IsPresignedURL(s.StreamUrl)
+	if err != nil {
+		log.Errorf("Failed to check if URL is presigned: %v", err)
+		presigned = false
 	}
-	s.sdk = ssm.New(sdkSession)
-	s.Signer = v4.NewSigner(sdkSession.Config.Credentials)
+
+	// Only attempt credential lookup if URL is not presigned
+	// Use the same session for consistency to ensure same profile is used
+	if !presigned {
+		if awsSession, err = sdkutil.GetSessionWithQuickCheck(s.Endpoint); err != nil {
+			return "", err
+		}
+		s.sdk = ssm.New(awsSession)
+		_, getCredErr = awsSession.Config.Credentials.Get()
+		if getCredErr != nil {
+			log.Errorf("Failed to get credential for sign")
+		} else {
+			s.Signer = v4.NewSigner(awsSession.Config.Credentials)
+		}
+	} else {
+		log.Debugf("StreamUrl is presigned, skipping resume session")
+		return "", errors.New("Skip resuming session with presigned URL")
+	}
 
 	resumeSessionInput := ssm.ResumeSessionInput{
 		SessionId: &s.SessionId,
@@ -153,12 +200,11 @@ func (s *Session) TerminateSession(log log.T) error {
 		newSession *sdkSession.Session
 	)
 
-	if newSession, err = sdkutil.GetNewSessionWithEndpoint(s.Endpoint); err != nil {
+	if newSession, err = sdkutil.GetSessionWithQuickCheck(s.Endpoint); err != nil {
 		log.Errorf("Terminate Session failed: %v", err)
 		return err
 	}
 	s.sdk = ssm.New(newSession)
-	s.Signer = v4.NewSigner(newSession.Config.Credentials)
 
 	terminateSessionInput := ssm.TerminateSessionInput{
 		SessionId: &s.SessionId,
