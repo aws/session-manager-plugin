@@ -92,7 +92,6 @@ func (p *MuxPortForwarding) Stop() {
 
 // InitializeStreams initializes i/o streams
 func (p *MuxPortForwarding) InitializeStreams(log log.T, agentVersion string) (err error) {
-
 	p.handleControlSignals(log)
 	p.socketFile = getUnixSocketPath(p.sessionId, os.TempDir(), "session_manager_plugin_mux.sock")
 
@@ -144,7 +143,6 @@ func (p *MuxPortForwarding) cleanUp() {
 
 // initialize opens a network connection that acts as smux client
 func (p *MuxPortForwarding) initialize(log log.T, agentVersion string) (err error) {
-
 	// open a network listener
 	var listener net.Listener
 	if listener, err = sessionutil.NewListener(log, p.socketFile); err != nil {
@@ -252,7 +250,7 @@ func (p *MuxPortForwarding) handleClientConnections(log log.T, ctx context.Conte
 	defer listener.Close()
 
 	log.Infof(displayMsg)
-	fmt.Printf(displayMsg)
+	fmt.Print(displayMsg)
 
 	log.Infof("Waiting for connections...\n")
 	fmt.Printf("\nWaiting for connections...\n")
