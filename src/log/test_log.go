@@ -96,7 +96,7 @@ func (_m *Mock) Infof(format string, params ...interface{}) {
 func (_m *Mock) Warnf(format string, params ...interface{}) error {
 	fmt.Print(_m.context)
 	msg := fmt.Sprintf("Warnf: "+format, params...)
-	fmt.Printf(msg)
+	fmt.Printf("%s", msg)
 	fmt.Println()
 	_m.Called(format, params)
 	return errors.New(msg)
@@ -106,7 +106,7 @@ func (_m *Mock) Warnf(format string, params ...interface{}) error {
 func (_m *Mock) Errorf(format string, params ...interface{}) error {
 	fmt.Print(_m.context)
 	msg := fmt.Sprintf("Errorf: "+format, params...)
-	fmt.Printf(msg)
+	fmt.Printf("%s", msg)
 	fmt.Println()
 	_m.Called(format, params)
 	return errors.New(msg)
@@ -116,7 +116,7 @@ func (_m *Mock) Errorf(format string, params ...interface{}) error {
 func (_m *Mock) Criticalf(format string, params ...interface{}) error {
 	fmt.Print(_m.context)
 	msg := fmt.Sprintf("Criticalf: "+format, params...)
-	fmt.Printf(msg)
+	fmt.Printf("%s", msg)
 	fmt.Println()
 	_m.Called(format, params)
 	return errors.New(msg)
@@ -150,7 +150,7 @@ func (_m *Mock) Info(v ...interface{}) {
 func (_m *Mock) Warn(v ...interface{}) error {
 	fmt.Print(_m.context)
 	msg := fmt.Sprint("Warn: ") + fmt.Sprint(v...)
-	fmt.Printf(msg)
+	fmt.Printf("%s", msg)
 	fmt.Println()
 	_m.Called(v)
 	return errors.New(msg)
@@ -160,7 +160,7 @@ func (_m *Mock) Warn(v ...interface{}) error {
 func (_m *Mock) Error(v ...interface{}) error {
 	fmt.Print(_m.context)
 	msg := fmt.Sprint("Error: ") + fmt.Sprint(v...)
-	fmt.Printf(msg)
+	fmt.Printf("%s", msg)
 	fmt.Println()
 	_m.Called(v)
 	return errors.New(msg)
