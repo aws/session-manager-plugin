@@ -23,37 +23,37 @@ import (
 // can be stubbed out for unit testing your code with the SDK without needing
 // to inject custom request handlers into the SDK's request pipeline.
 //
-//    // myFunc uses an SDK service client to make a request to
-//    // AWS CodePipeline.
-//    func myFunc(svc codepipelineiface.CodePipelineAPI) bool {
-//        // Make svc.AcknowledgeJob request
-//    }
+//	// myFunc uses an SDK service client to make a request to
+//	// AWS CodePipeline.
+//	func myFunc(svc codepipelineiface.CodePipelineAPI) bool {
+//	    // Make svc.AcknowledgeJob request
+//	}
 //
-//    func main() {
-//        sess := session.New()
-//        svc := codepipeline.New(sess)
+//	func main() {
+//	    sess := session.New()
+//	    svc := codepipeline.New(sess)
 //
-//        myFunc(svc)
-//    }
+//	    myFunc(svc)
+//	}
 //
 // In your _test.go file:
 //
-//    // Define a mock struct to be used in your unit tests of myFunc.
-//    type mockCodePipelineClient struct {
-//        codepipelineiface.CodePipelineAPI
-//    }
-//    func (m *mockCodePipelineClient) AcknowledgeJob(input *codepipeline.AcknowledgeJobInput) (*codepipeline.AcknowledgeJobOutput, error) {
-//        // mock response/functionality
-//    }
+//	// Define a mock struct to be used in your unit tests of myFunc.
+//	type mockCodePipelineClient struct {
+//	    codepipelineiface.CodePipelineAPI
+//	}
+//	func (m *mockCodePipelineClient) AcknowledgeJob(input *codepipeline.AcknowledgeJobInput) (*codepipeline.AcknowledgeJobOutput, error) {
+//	    // mock response/functionality
+//	}
 //
-//    func TestMyFunc(t *testing.T) {
-//        // Setup Test
-//        mockSvc := &mockCodePipelineClient{}
+//	func TestMyFunc(t *testing.T) {
+//	    // Setup Test
+//	    mockSvc := &mockCodePipelineClient{}
 //
-//        myfunc(mockSvc)
+//	    myfunc(mockSvc)
 //
-//        // Verify myFunc's functionality
-//    }
+//	    // Verify myFunc's functionality
+//	}
 //
 // It is important to note that this interface will have breaking changes
 // when the service model is updated and adds new API operations, paginators,
@@ -209,6 +209,10 @@ type CodePipelineAPI interface {
 	RetryStageExecution(*codepipeline.RetryStageExecutionInput) (*codepipeline.RetryStageExecutionOutput, error)
 	RetryStageExecutionWithContext(aws.Context, *codepipeline.RetryStageExecutionInput, ...request.Option) (*codepipeline.RetryStageExecutionOutput, error)
 	RetryStageExecutionRequest(*codepipeline.RetryStageExecutionInput) (*request.Request, *codepipeline.RetryStageExecutionOutput)
+
+	RollbackStage(*codepipeline.RollbackStageInput) (*codepipeline.RollbackStageOutput, error)
+	RollbackStageWithContext(aws.Context, *codepipeline.RollbackStageInput, ...request.Option) (*codepipeline.RollbackStageOutput, error)
+	RollbackStageRequest(*codepipeline.RollbackStageInput) (*request.Request, *codepipeline.RollbackStageOutput)
 
 	StartPipelineExecution(*codepipeline.StartPipelineExecutionInput) (*codepipeline.StartPipelineExecutionOutput, error)
 	StartPipelineExecutionWithContext(aws.Context, *codepipeline.StartPipelineExecutionInput, ...request.Option) (*codepipeline.StartPipelineExecutionOutput, error)

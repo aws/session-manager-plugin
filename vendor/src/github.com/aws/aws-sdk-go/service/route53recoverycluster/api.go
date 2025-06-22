@@ -28,14 +28,13 @@ const opGetRoutingControlState = "GetRoutingControlState"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetRoutingControlStateRequest method.
+//	req, resp := client.GetRoutingControlStateRequest(params)
 //
-//    // Example sending a request using the GetRoutingControlStateRequest method.
-//    req, resp := client.GetRoutingControlStateRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/GetRoutingControlState
 func (c *Route53RecoveryCluster) GetRoutingControlStateRequest(input *GetRoutingControlStateInput) (req *request.Request, output *GetRoutingControlStateOutput) {
@@ -57,17 +56,30 @@ func (c *Route53RecoveryCluster) GetRoutingControlStateRequest(input *GetRouting
 // GetRoutingControlState API operation for Route53 Recovery Cluster.
 //
 // Get the state for a routing control. A routing control is a simple on/off
-// switch that you can use to route traffic to cells. When the state is On,
-// traffic flows to a cell. When it's off, traffic does not flow.
+// switch that you can use to route traffic to cells. When a routing control
+// state is set to ON, traffic flows to a cell. When the state is set to OFF,
+// traffic does not flow.
 //
-// Before you can create a routing control, you first must create a cluster
-// to host the control. For more information, see CreateCluster (https://docs.aws.amazon.com/recovery-cluster/latest/api/cluster.html).
-// Access one of the endpoints for the cluster to get or update the routing
-// control state to redirect traffic.
+// Before you can create a routing control, you must first create a cluster,
+// and then host the control in a control panel on the cluster. For more information,
+// see Create routing control structures (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide. You
+// access one of the endpoints for the cluster to get or update the routing
+// control state to redirect traffic for your application.
 //
-// For more information about working with routing controls, see Routing control
-// (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html)
-// in the Route 53 Application Recovery Controller Developer Guide.
+// You must specify Regional endpoints when you work with API cluster operations
+// to get or update routing control states in Route 53 ARC.
+//
+// To see a code example for getting a routing control state, including accessing
+// Regional cluster endpoints in sequence, see API examples (https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide.
+//
+// Learn more about working with routing controls in the following topics in
+// the Amazon Route 53 Application Recovery Controller Developer Guide:
+//
+//   - Viewing and updating routing control states (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html)
+//
+//   - Working with routing controls in Route 53 ARC (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html)
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -77,23 +89,24 @@ func (c *Route53RecoveryCluster) GetRoutingControlStateRequest(input *GetRouting
 // API operation GetRoutingControlState for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   You don't have sufficient permissions to query the routing control state.
 //
-//   * InternalServerException
-//   There was an unexpected error during processing of the request.
+//   - AccessDeniedException
+//     You don't have sufficient permissions to perform this action.
 //
-//   * ResourceNotFoundException
-//   The request references a routing control that was not found.
+//   - InternalServerException
+//     There was an unexpected error during processing of the request.
 //
-//   * ValidationException
-//   There was a validation error on the request.
+//   - ResourceNotFoundException
+//     The request references a routing control or control panel that was not found.
 //
-//   * ThrottlingException
-//   The request was denied because of request throttling.
+//   - ValidationException
+//     There was a validation error on the request.
 //
-//   * EndpointTemporarilyUnavailableException
-//   The cluster endpoint isn't available. Try another cluster endpoint.
+//   - ThrottlingException
+//     The request was denied because of request throttling.
+//
+//   - EndpointTemporarilyUnavailableException
+//     The cluster endpoint isn't available. Try another cluster endpoint.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/GetRoutingControlState
 func (c *Route53RecoveryCluster) GetRoutingControlState(input *GetRoutingControlStateInput) (*GetRoutingControlStateOutput, error) {
@@ -117,6 +130,182 @@ func (c *Route53RecoveryCluster) GetRoutingControlStateWithContext(ctx aws.Conte
 	return out, req.Send()
 }
 
+const opListRoutingControls = "ListRoutingControls"
+
+// ListRoutingControlsRequest generates a "aws/request.Request" representing the
+// client's request for the ListRoutingControls operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListRoutingControls for more information on using the ListRoutingControls
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListRoutingControlsRequest method.
+//	req, resp := client.ListRoutingControlsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/ListRoutingControls
+func (c *Route53RecoveryCluster) ListRoutingControlsRequest(input *ListRoutingControlsInput) (req *request.Request, output *ListRoutingControlsOutput) {
+	op := &request.Operation{
+		Name:       opListRoutingControls,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListRoutingControlsInput{}
+	}
+
+	output = &ListRoutingControlsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListRoutingControls API operation for Route53 Recovery Cluster.
+//
+// List routing control names and Amazon Resource Names (ARNs), as well as the
+// routing control state for each routing control, along with the control panel
+// name and control panel ARN for the routing controls. If you specify a control
+// panel ARN, this call lists the routing controls in the control panel. Otherwise,
+// it lists all the routing controls in the cluster.
+//
+// A routing control is a simple on/off switch in Route 53 ARC that you can
+// use to route traffic to cells. When a routing control state is set to ON,
+// traffic flows to a cell. When the state is set to OFF, traffic does not flow.
+//
+// Before you can create a routing control, you must first create a cluster,
+// and then host the control in a control panel on the cluster. For more information,
+// see Create routing control structures (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.create.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide. You
+// access one of the endpoints for the cluster to get or update the routing
+// control state to redirect traffic for your application.
+//
+// You must specify Regional endpoints when you work with API cluster operations
+// to use this API operation to list routing controls in Route 53 ARC.
+//
+// Learn more about working with routing controls in the following topics in
+// the Amazon Route 53 Application Recovery Controller Developer Guide:
+//
+//   - Viewing and updating routing control states (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html)
+//
+//   - Working with routing controls in Route 53 ARC (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html)
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Route53 Recovery Cluster's
+// API operation ListRoutingControls for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have sufficient permissions to perform this action.
+//
+//   - InternalServerException
+//     There was an unexpected error during processing of the request.
+//
+//   - ResourceNotFoundException
+//     The request references a routing control or control panel that was not found.
+//
+//   - ValidationException
+//     There was a validation error on the request.
+//
+//   - ThrottlingException
+//     The request was denied because of request throttling.
+//
+//   - EndpointTemporarilyUnavailableException
+//     The cluster endpoint isn't available. Try another cluster endpoint.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/ListRoutingControls
+func (c *Route53RecoveryCluster) ListRoutingControls(input *ListRoutingControlsInput) (*ListRoutingControlsOutput, error) {
+	req, out := c.ListRoutingControlsRequest(input)
+	return out, req.Send()
+}
+
+// ListRoutingControlsWithContext is the same as ListRoutingControls with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListRoutingControls for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Route53RecoveryCluster) ListRoutingControlsWithContext(ctx aws.Context, input *ListRoutingControlsInput, opts ...request.Option) (*ListRoutingControlsOutput, error) {
+	req, out := c.ListRoutingControlsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListRoutingControlsPages iterates over the pages of a ListRoutingControls operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListRoutingControls method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListRoutingControls operation.
+//	pageNum := 0
+//	err := client.ListRoutingControlsPages(params,
+//	    func(page *route53recoverycluster.ListRoutingControlsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *Route53RecoveryCluster) ListRoutingControlsPages(input *ListRoutingControlsInput, fn func(*ListRoutingControlsOutput, bool) bool) error {
+	return c.ListRoutingControlsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListRoutingControlsPagesWithContext same as ListRoutingControlsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Route53RecoveryCluster) ListRoutingControlsPagesWithContext(ctx aws.Context, input *ListRoutingControlsInput, fn func(*ListRoutingControlsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListRoutingControlsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListRoutingControlsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListRoutingControlsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opUpdateRoutingControlState = "UpdateRoutingControlState"
 
 // UpdateRoutingControlStateRequest generates a "aws/request.Request" representing the
@@ -133,14 +322,13 @@ const opUpdateRoutingControlState = "UpdateRoutingControlState"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateRoutingControlStateRequest method.
+//	req, resp := client.UpdateRoutingControlStateRequest(params)
 //
-//    // Example sending a request using the UpdateRoutingControlStateRequest method.
-//    req, resp := client.UpdateRoutingControlStateRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/UpdateRoutingControlState
 func (c *Route53RecoveryCluster) UpdateRoutingControlStateRequest(input *UpdateRoutingControlStateInput) (req *request.Request, output *UpdateRoutingControlStateOutput) {
@@ -163,12 +351,34 @@ func (c *Route53RecoveryCluster) UpdateRoutingControlStateRequest(input *UpdateR
 // UpdateRoutingControlState API operation for Route53 Recovery Cluster.
 //
 // Set the state of the routing control to reroute traffic. You can set the
-// value to be On or Off. When the state is On, traffic flows to a cell. When
-// it's off, traffic does not flow.
+// value to ON or OFF. When the state is ON, traffic flows to a cell. When the
+// state is OFF, traffic does not flow.
 //
-// For more information about working with routing controls, see Routing control
-// (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html)
-// in the Route 53 Application Recovery Controller Developer Guide.
+// With Route 53 ARC, you can add safety rules for routing controls, which are
+// safeguards for routing control state updates that help prevent unexpected
+// outcomes, like fail open traffic routing. However, there are scenarios when
+// you might want to bypass the routing control safeguards that are enforced
+// with safety rules that you've configured. For example, you might want to
+// fail over quickly for disaster recovery, and one or more safety rules might
+// be unexpectedly preventing you from updating a routing control state to reroute
+// traffic. In a "break glass" scenario like this, you can override one or more
+// safety rules to change a routing control state and fail over your application.
+//
+// The SafetyRulesToOverride property enables you override one or more safety
+// rules and update routing control states. For more information, see Override
+// safety rules to reroute traffic (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide.
+//
+// You must specify Regional endpoints when you work with API cluster operations
+// to get or update routing control states in Route 53 ARC.
+//
+// To see a code example for getting a routing control state, including accessing
+// Regional cluster endpoints in sequence, see API examples (https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide.
+//
+//   - Viewing and updating routing control states (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html)
+//
+//   - Working with routing controls overall (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html)
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -178,26 +388,27 @@ func (c *Route53RecoveryCluster) UpdateRoutingControlStateRequest(input *UpdateR
 // API operation UpdateRoutingControlState for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   You don't have sufficient permissions to query the routing control state.
 //
-//   * InternalServerException
-//   There was an unexpected error during processing of the request.
+//   - AccessDeniedException
+//     You don't have sufficient permissions to perform this action.
 //
-//   * ResourceNotFoundException
-//   The request references a routing control that was not found.
+//   - InternalServerException
+//     There was an unexpected error during processing of the request.
 //
-//   * ValidationException
-//   There was a validation error on the request.
+//   - ResourceNotFoundException
+//     The request references a routing control or control panel that was not found.
 //
-//   * ThrottlingException
-//   The request was denied because of request throttling.
+//   - ValidationException
+//     There was a validation error on the request.
 //
-//   * EndpointTemporarilyUnavailableException
-//   The cluster endpoint isn't available. Try another cluster endpoint.
+//   - ThrottlingException
+//     The request was denied because of request throttling.
 //
-//   * ConflictException
-//   There was a conflict with this request. Try again.
+//   - EndpointTemporarilyUnavailableException
+//     The cluster endpoint isn't available. Try another cluster endpoint.
+//
+//   - ConflictException
+//     There was a conflict with this request. Try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/UpdateRoutingControlState
 func (c *Route53RecoveryCluster) UpdateRoutingControlState(input *UpdateRoutingControlStateInput) (*UpdateRoutingControlStateOutput, error) {
@@ -237,14 +448,13 @@ const opUpdateRoutingControlStates = "UpdateRoutingControlStates"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateRoutingControlStatesRequest method.
+//	req, resp := client.UpdateRoutingControlStatesRequest(params)
 //
-//    // Example sending a request using the UpdateRoutingControlStatesRequest method.
-//    req, resp := client.UpdateRoutingControlStatesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/UpdateRoutingControlStates
 func (c *Route53RecoveryCluster) UpdateRoutingControlStatesRequest(input *UpdateRoutingControlStatesInput) (req *request.Request, output *UpdateRoutingControlStatesOutput) {
@@ -267,12 +477,34 @@ func (c *Route53RecoveryCluster) UpdateRoutingControlStatesRequest(input *Update
 // UpdateRoutingControlStates API operation for Route53 Recovery Cluster.
 //
 // Set multiple routing control states. You can set the value for each state
-// to be On or Off. When the state is On, traffic flows to a cell. When it's
-// off, traffic does not flow.
+// to be ON or OFF. When the state is ON, traffic flows to a cell. When it's
+// OFF, traffic does not flow.
 //
-// For more information about working with routing controls, see Routing control
-// (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html)
-// in the Route 53 Application Recovery Controller Developer Guide.
+// With Route 53 ARC, you can add safety rules for routing controls, which are
+// safeguards for routing control state updates that help prevent unexpected
+// outcomes, like fail open traffic routing. However, there are scenarios when
+// you might want to bypass the routing control safeguards that are enforced
+// with safety rules that you've configured. For example, you might want to
+// fail over quickly for disaster recovery, and one or more safety rules might
+// be unexpectedly preventing you from updating a routing control state to reroute
+// traffic. In a "break glass" scenario like this, you can override one or more
+// safety rules to change a routing control state and fail over your application.
+//
+// The SafetyRulesToOverride property enables you override one or more safety
+// rules and update routing control states. For more information, see Override
+// safety rules to reroute traffic (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide.
+//
+// You must specify Regional endpoints when you work with API cluster operations
+// to get or update routing control states in Route 53 ARC.
+//
+// To see a code example for getting a routing control state, including accessing
+// Regional cluster endpoints in sequence, see API examples (https://docs.aws.amazon.com/r53recovery/latest/dg/service_code_examples_actions.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide.
+//
+//   - Viewing and updating routing control states (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.update.html)
+//
+//   - Working with routing controls overall (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.html)
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -282,26 +514,31 @@ func (c *Route53RecoveryCluster) UpdateRoutingControlStatesRequest(input *Update
 // API operation UpdateRoutingControlStates for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   You don't have sufficient permissions to query the routing control state.
 //
-//   * InternalServerException
-//   There was an unexpected error during processing of the request.
+//   - AccessDeniedException
+//     You don't have sufficient permissions to perform this action.
 //
-//   * ResourceNotFoundException
-//   The request references a routing control that was not found.
+//   - InternalServerException
+//     There was an unexpected error during processing of the request.
 //
-//   * ValidationException
-//   There was a validation error on the request.
+//   - ResourceNotFoundException
+//     The request references a routing control or control panel that was not found.
 //
-//   * ThrottlingException
-//   The request was denied because of request throttling.
+//   - ValidationException
+//     There was a validation error on the request.
 //
-//   * EndpointTemporarilyUnavailableException
-//   The cluster endpoint isn't available. Try another cluster endpoint.
+//   - ThrottlingException
+//     The request was denied because of request throttling.
 //
-//   * ConflictException
-//   There was a conflict with this request. Try again.
+//   - EndpointTemporarilyUnavailableException
+//     The cluster endpoint isn't available. Try another cluster endpoint.
+//
+//   - ConflictException
+//     There was a conflict with this request. Try again.
+//
+//   - ServiceLimitExceededException
+//     The request can't update that many routing control states at the same time.
+//     Try again with fewer routing control states.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-cluster-2019-12-02/UpdateRoutingControlStates
 func (c *Route53RecoveryCluster) UpdateRoutingControlStates(input *UpdateRoutingControlStatesInput) (*UpdateRoutingControlStatesOutput, error) {
@@ -325,7 +562,7 @@ func (c *Route53RecoveryCluster) UpdateRoutingControlStatesWithContext(ctx aws.C
 	return out, req.Send()
 }
 
-// You don't have sufficient permissions to query the routing control state.
+// You don't have sufficient permissions to perform this action.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -333,12 +570,20 @@ type AccessDeniedException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) GoString() string {
 	return s.String()
 }
@@ -400,12 +645,20 @@ type ConflictException struct {
 	ResourceType *string `locationName:"resourceType" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) GoString() string {
 	return s.String()
 }
@@ -456,12 +709,20 @@ type EndpointTemporarilyUnavailableException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EndpointTemporarilyUnavailableException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EndpointTemporarilyUnavailableException) GoString() string {
 	return s.String()
 }
@@ -507,19 +768,27 @@ func (s *EndpointTemporarilyUnavailableException) RequestID() string {
 type GetRoutingControlStateInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Number (ARN) for the routing control that you want to
-	// get the state for.
+	// The Amazon Resource Name (ARN) for the routing control that you want to get
+	// the state for.
 	//
 	// RoutingControlArn is a required field
 	RoutingControlArn *string `min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRoutingControlStateInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRoutingControlStateInput) GoString() string {
 	return s.String()
 }
@@ -549,10 +818,13 @@ func (s *GetRoutingControlStateInput) SetRoutingControlArn(v string) *GetRouting
 type GetRoutingControlStateOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Number (ARN) of the response.
+	// The Amazon Resource Name (ARN) of the response.
 	//
 	// RoutingControlArn is a required field
 	RoutingControlArn *string `min:"1" type:"string" required:"true"`
+
+	// The routing control name.
+	RoutingControlName *string `min:"1" type:"string"`
 
 	// The state of the routing control.
 	//
@@ -560,12 +832,20 @@ type GetRoutingControlStateOutput struct {
 	RoutingControlState *string `type:"string" required:"true" enum:"RoutingControlState"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRoutingControlStateOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRoutingControlStateOutput) GoString() string {
 	return s.String()
 }
@@ -573,6 +853,12 @@ func (s GetRoutingControlStateOutput) GoString() string {
 // SetRoutingControlArn sets the RoutingControlArn field's value.
 func (s *GetRoutingControlStateOutput) SetRoutingControlArn(v string) *GetRoutingControlStateOutput {
 	s.RoutingControlArn = &v
+	return s
+}
+
+// SetRoutingControlName sets the RoutingControlName field's value.
+func (s *GetRoutingControlStateOutput) SetRoutingControlName(v string) *GetRoutingControlStateOutput {
+	s.RoutingControlName = &v
 	return s
 }
 
@@ -593,12 +879,20 @@ type InternalServerException struct {
 	RetryAfterSeconds *int64 `locationName:"retryAfterSeconds" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) GoString() string {
 	return s.String()
 }
@@ -641,7 +935,121 @@ func (s *InternalServerException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The request references a routing control that was not found.
+type ListRoutingControlsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the control panel of the routing controls
+	// to list.
+	ControlPanelArn *string `min:"1" type:"string"`
+
+	// The number of routing controls objects that you want to return with this
+	// call. The default value is 500.
+	MaxResults *int64 `min:"1" type:"integer"`
+
+	// The token for the next set of results. You receive this token from a previous
+	// call.
+	NextToken *string `min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoutingControlsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoutingControlsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListRoutingControlsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListRoutingControlsInput"}
+	if s.ControlPanelArn != nil && len(*s.ControlPanelArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlPanelArn", 1))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetControlPanelArn sets the ControlPanelArn field's value.
+func (s *ListRoutingControlsInput) SetControlPanelArn(v string) *ListRoutingControlsInput {
+	s.ControlPanelArn = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListRoutingControlsInput) SetMaxResults(v int64) *ListRoutingControlsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListRoutingControlsInput) SetNextToken(v string) *ListRoutingControlsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListRoutingControlsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The token for the next set of results. You receive this token from a previous
+	// call.
+	NextToken *string `min:"1" type:"string"`
+
+	// The list of routing controls.
+	//
+	// RoutingControls is a required field
+	RoutingControls []*RoutingControl `type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoutingControlsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListRoutingControlsOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListRoutingControlsOutput) SetNextToken(v string) *ListRoutingControlsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetRoutingControls sets the RoutingControls field's value.
+func (s *ListRoutingControlsOutput) SetRoutingControls(v []*RoutingControl) *ListRoutingControlsOutput {
+	s.RoutingControls = v
+	return s
+}
+
+// The request references a routing control or control panel that was not found.
 type ResourceNotFoundException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -659,12 +1067,20 @@ type ResourceNotFoundException struct {
 	ResourceType *string `locationName:"resourceType" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) GoString() string {
 	return s.String()
 }
@@ -707,6 +1123,170 @@ func (s *ResourceNotFoundException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// A routing control, which is a simple on/off switch that you can use to route
+// traffic to cells. When a routing control state is set to ON, traffic flows
+// to a cell. When the state is set to OFF, traffic does not flow.
+type RoutingControl struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the control panel where the routing control
+	// is located.
+	ControlPanelArn *string `min:"1" type:"string"`
+
+	// The name of the control panel where the routing control is located. Only
+	// ASCII characters are supported for control panel names.
+	ControlPanelName *string `min:"1" type:"string"`
+
+	// The Amazon Web Services account ID of the routing control owner.
+	Owner *string `min:"12" type:"string"`
+
+	// The Amazon Resource Name (ARN) of the routing control.
+	RoutingControlArn *string `min:"1" type:"string"`
+
+	// The name of the routing control.
+	RoutingControlName *string `min:"1" type:"string"`
+
+	// The current state of the routing control. When a routing control state is
+	// set to ON, traffic flows to a cell. When the state is set to OFF, traffic
+	// does not flow.
+	RoutingControlState *string `type:"string" enum:"RoutingControlState"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RoutingControl) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RoutingControl) GoString() string {
+	return s.String()
+}
+
+// SetControlPanelArn sets the ControlPanelArn field's value.
+func (s *RoutingControl) SetControlPanelArn(v string) *RoutingControl {
+	s.ControlPanelArn = &v
+	return s
+}
+
+// SetControlPanelName sets the ControlPanelName field's value.
+func (s *RoutingControl) SetControlPanelName(v string) *RoutingControl {
+	s.ControlPanelName = &v
+	return s
+}
+
+// SetOwner sets the Owner field's value.
+func (s *RoutingControl) SetOwner(v string) *RoutingControl {
+	s.Owner = &v
+	return s
+}
+
+// SetRoutingControlArn sets the RoutingControlArn field's value.
+func (s *RoutingControl) SetRoutingControlArn(v string) *RoutingControl {
+	s.RoutingControlArn = &v
+	return s
+}
+
+// SetRoutingControlName sets the RoutingControlName field's value.
+func (s *RoutingControl) SetRoutingControlName(v string) *RoutingControl {
+	s.RoutingControlName = &v
+	return s
+}
+
+// SetRoutingControlState sets the RoutingControlState field's value.
+func (s *RoutingControl) SetRoutingControlState(v string) *RoutingControl {
+	s.RoutingControlState = &v
+	return s
+}
+
+// The request can't update that many routing control states at the same time.
+// Try again with fewer routing control states.
+type ServiceLimitExceededException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	// The code of the limit that was exceeded.
+	//
+	// LimitCode is a required field
+	LimitCode *string `locationName:"limitCode" type:"string" required:"true"`
+
+	Message_ *string `locationName:"message" type:"string"`
+
+	// The resource identifier of the limit that was exceeded.
+	ResourceId *string `locationName:"resourceId" type:"string"`
+
+	// The resource type of the limit that was exceeded.
+	ResourceType *string `locationName:"resourceType" type:"string"`
+
+	// The service code of the limit that was exceeded.
+	//
+	// ServiceCode is a required field
+	ServiceCode *string `locationName:"serviceCode" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceLimitExceededException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceLimitExceededException) GoString() string {
+	return s.String()
+}
+
+func newErrorServiceLimitExceededException(v protocol.ResponseMetadata) error {
+	return &ServiceLimitExceededException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ServiceLimitExceededException) Code() string {
+	return "ServiceLimitExceededException"
+}
+
+// Message returns the exception's message.
+func (s *ServiceLimitExceededException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ServiceLimitExceededException) OrigErr() error {
+	return nil
+}
+
+func (s *ServiceLimitExceededException) Error() string {
+	return fmt.Sprintf("%s: %s\n%s", s.Code(), s.Message(), s.String())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ServiceLimitExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ServiceLimitExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // The request was denied because of request throttling.
 type ThrottlingException struct {
 	_            struct{}                  `type:"structure"`
@@ -718,12 +1298,20 @@ type ThrottlingException struct {
 	RetryAfterSeconds *int64 `locationName:"retryAfterSeconds" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) GoString() string {
 	return s.String()
 }
@@ -766,11 +1354,11 @@ func (s *ThrottlingException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// A routing control state.
+// A routing control state entry.
 type UpdateRoutingControlStateEntry struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Number (ARN) for the routing control state entry.
+	// The Amazon Resource Name (ARN) for a routing control state entry.
 	//
 	// RoutingControlArn is a required field
 	RoutingControlArn *string `min:"1" type:"string" required:"true"`
@@ -781,12 +1369,20 @@ type UpdateRoutingControlStateEntry struct {
 	RoutingControlState *string `type:"string" required:"true" enum:"RoutingControlState"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStateEntry) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStateEntry) GoString() string {
 	return s.String()
 }
@@ -825,24 +1421,41 @@ func (s *UpdateRoutingControlStateEntry) SetRoutingControlState(v string) *Updat
 type UpdateRoutingControlStateInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Number (ARN) for the routing control that you want to
-	// update the state for.
+	// The Amazon Resource Name (ARN) for the routing control that you want to update
+	// the state for.
 	//
 	// RoutingControlArn is a required field
 	RoutingControlArn *string `min:"1" type:"string" required:"true"`
 
-	// The state of the routing control. You can set the value to be On or Off.
+	// The state of the routing control. You can set the value to ON or OFF.
 	//
 	// RoutingControlState is a required field
 	RoutingControlState *string `type:"string" required:"true" enum:"RoutingControlState"`
+
+	// The Amazon Resource Names (ARNs) for the safety rules that you want to override
+	// when you're updating the state of a routing control. You can override one
+	// safety rule or multiple safety rules by including one or more ARNs, separated
+	// by commas.
+	//
+	// For more information, see Override safety rules to reroute traffic (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html)
+	// in the Amazon Route 53 Application Recovery Controller Developer Guide.
+	SafetyRulesToOverride []*string `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStateInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStateInput) GoString() string {
 	return s.String()
 }
@@ -878,16 +1491,30 @@ func (s *UpdateRoutingControlStateInput) SetRoutingControlState(v string) *Updat
 	return s
 }
 
+// SetSafetyRulesToOverride sets the SafetyRulesToOverride field's value.
+func (s *UpdateRoutingControlStateInput) SetSafetyRulesToOverride(v []*string) *UpdateRoutingControlStateInput {
+	s.SafetyRulesToOverride = v
+	return s
+}
+
 type UpdateRoutingControlStateOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStateOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStateOutput) GoString() string {
 	return s.String()
 }
@@ -895,18 +1522,35 @@ func (s UpdateRoutingControlStateOutput) GoString() string {
 type UpdateRoutingControlStatesInput struct {
 	_ struct{} `type:"structure"`
 
+	// The Amazon Resource Names (ARNs) for the safety rules that you want to override
+	// when you're updating routing control states. You can override one safety
+	// rule or multiple safety rules by including one or more ARNs, separated by
+	// commas.
+	//
+	// For more information, see Override safety rules to reroute traffic (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.override-safety-rule.html)
+	// in the Amazon Route 53 Application Recovery Controller Developer Guide.
+	SafetyRulesToOverride []*string `type:"list"`
+
 	// A set of routing control entries that you want to update.
 	//
 	// UpdateRoutingControlStateEntries is a required field
 	UpdateRoutingControlStateEntries []*UpdateRoutingControlStateEntry `type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStatesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStatesInput) GoString() string {
 	return s.String()
 }
@@ -934,6 +1578,12 @@ func (s *UpdateRoutingControlStatesInput) Validate() error {
 	return nil
 }
 
+// SetSafetyRulesToOverride sets the SafetyRulesToOverride field's value.
+func (s *UpdateRoutingControlStatesInput) SetSafetyRulesToOverride(v []*string) *UpdateRoutingControlStatesInput {
+	s.SafetyRulesToOverride = v
+	return s
+}
+
 // SetUpdateRoutingControlStateEntries sets the UpdateRoutingControlStateEntries field's value.
 func (s *UpdateRoutingControlStatesInput) SetUpdateRoutingControlStateEntries(v []*UpdateRoutingControlStateEntry) *UpdateRoutingControlStatesInput {
 	s.UpdateRoutingControlStateEntries = v
@@ -944,12 +1594,20 @@ type UpdateRoutingControlStatesOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStatesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlStatesOutput) GoString() string {
 	return s.String()
 }
@@ -968,12 +1626,20 @@ type ValidationException struct {
 	Reason *string `locationName:"reason" type:"string" enum:"ValidationExceptionReason"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) GoString() string {
 	return s.String()
 }
@@ -1031,12 +1697,20 @@ type ValidationExceptionField struct {
 	Name *string `locationName:"name" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationExceptionField) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationExceptionField) GoString() string {
 	return s.String()
 }

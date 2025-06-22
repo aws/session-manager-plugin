@@ -1,7 +1,9 @@
 Testify - Thou Shalt Write Tests
 ================================
 
-[![Build Status](https://travis-ci.org/stretchr/testify.svg)](https://travis-ci.org/stretchr/testify)
+ℹ️ We are working on testify v2 and would love to hear what you'd like to see in it, have your say here: https://cutt.ly/testify
+
+[![Build Status](https://github.com/stretchr/testify/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/stretchr/testify/actions/workflows/main.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/stretchr/testify)](https://goreportcard.com/report/github.com/stretchr/testify) [![PkgGoDev](https://pkg.go.dev/badge/github.com/stretchr/testify)](https://pkg.go.dev/github.com/stretchr/testify)
 
 Go code (golang) set of packages that provide many tools for testifying that your code will behave as you intend.
 
@@ -9,20 +11,18 @@ Features include:
 
   * [Easy assertions](#assert-package)
   * [Mocking](#mock-package)
-  * [HTTP response trapping](#http-package)
   * [Testing suite interfaces and functions](#suite-package)
 
 Get started:
 
   * Install testify with [one line of code](#installation), or [update it with another](#staying-up-to-date)
-  * For an introduction to writing test code in Go, see http://golang.org/doc/code.html#Testing
-  * Check out the API Documentation http://godoc.org/github.com/stretchr/testify
-  * To make your testing life easier, check out our other project, [gorc](http://github.com/stretchr/gorc)
-  * A little about [Test-Driven Development (TDD)](http://en.wikipedia.org/wiki/Test-driven_development)
+  * For an introduction to writing test code in Go, see https://go.dev/doc/code#Testing
+  * Check out the API Documentation https://pkg.go.dev/github.com/stretchr/testify
+  * A little about [Test-Driven Development (TDD)](https://en.wikipedia.org/wiki/Test-driven_development)
 
 
 
-[`assert`](http://godoc.org/github.com/stretchr/testify/assert "API documentation") package
+[`assert`](https://pkg.go.dev/github.com/stretchr/testify/assert "API documentation") package
 -------------------------------------------------------------------------------------------
 
 The `assert` package provides some helpful methods that allow you to write better test code in Go.
@@ -99,27 +99,21 @@ func TestSomething(t *testing.T) {
 }
 ```
 
-[`require`](http://godoc.org/github.com/stretchr/testify/require "API documentation") package
+[`require`](https://pkg.go.dev/github.com/stretchr/testify/require "API documentation") package
 ---------------------------------------------------------------------------------------------
 
 The `require` package provides same global functions as the `assert` package, but instead of returning a boolean result they terminate current test.
+These functions must be called from the goroutine running the test or benchmark function, not from other goroutines created during the test.
+Otherwise race conditions may occur.
 
-See [t.FailNow](http://golang.org/pkg/testing/#T.FailNow) for details.
+See [t.FailNow](https://pkg.go.dev/testing#T.FailNow) for details.
 
-
-[`http`](http://godoc.org/github.com/stretchr/testify/http "API documentation") package
----------------------------------------------------------------------------------------
-
-The `http` package contains test objects useful for testing code that relies on the `net/http` package.  Check out the [(deprecated) API documentation for the `http` package](http://godoc.org/github.com/stretchr/testify/http).
-
-We recommend you use [httptest](http://golang.org/pkg/net/http/httptest) instead.
-
-[`mock`](http://godoc.org/github.com/stretchr/testify/mock "API documentation") package
+[`mock`](https://pkg.go.dev/github.com/stretchr/testify/mock "API documentation") package
 ----------------------------------------------------------------------------------------
 
 The `mock` package provides a mechanism for easily writing mock objects that can be used in place of real objects when writing test code.
 
-An example test function that tests a piece of code that relies on an external object `testObj`, can setup expectations (testify) and assert that they indeed happened:
+An example test function that tests a piece of code that relies on an external object `testObj`, can set up expectations (testify) and assert that they indeed happened:
 
 ```go
 package yours
@@ -164,7 +158,7 @@ func TestSomething(t *testing.T) {
   // create an instance of our test object
   testObj := new(MyMockedObject)
 
-  // setup expectations
+  // set up expectations
   testObj.On("DoSomething", 123).Return(true, nil)
 
   // call the code we are testing
@@ -173,17 +167,65 @@ func TestSomething(t *testing.T) {
   // assert that the expectations were met
   testObj.AssertExpectations(t)
 
+
+}
+
+// TestSomethingWithPlaceholder is a second example of how to use our test object to
+// make assertions about some target code we are testing.
+// This time using a placeholder. Placeholders might be used when the
+// data being passed in is normally dynamically generated and cannot be
+// predicted beforehand (eg. containing hashes that are time sensitive)
+func TestSomethingWithPlaceholder(t *testing.T) {
+
+  // create an instance of our test object
+  testObj := new(MyMockedObject)
+
+  // set up expectations with a placeholder in the argument list
+  testObj.On("DoSomething", mock.Anything).Return(true, nil)
+
+  // call the code we are testing
+  targetFuncThatDoesSomethingWithObj(testObj)
+
+  // assert that the expectations were met
+  testObj.AssertExpectations(t)
+
+
+}
+
+// TestSomethingElse2 is a third example that shows how you can use
+// the Unset method to cleanup handlers and then add new ones.
+func TestSomethingElse2(t *testing.T) {
+
+  // create an instance of our test object
+  testObj := new(MyMockedObject)
+
+  // set up expectations with a placeholder in the argument list
+  mockCall := testObj.On("DoSomething", mock.Anything).Return(true, nil)
+
+  // call the code we are testing
+  targetFuncThatDoesSomethingWithObj(testObj)
+
+  // assert that the expectations were met
+  testObj.AssertExpectations(t)
+
+  // remove the handler now so we can add another one that takes precedence
+  mockCall.Unset()
+
+  // return false now instead of true
+  testObj.On("DoSomething", mock.Anything).Return(false, nil)
+
+  testObj.AssertExpectations(t)
 }
 ```
 
-For more information on how to write mock code, check out the [API documentation for the `mock` package](http://godoc.org/github.com/stretchr/testify/mock).
+For more information on how to write mock code, check out the [API documentation for the `mock` package](https://pkg.go.dev/github.com/stretchr/testify/mock).
 
-You can use the [mockery tool](http://github.com/vektra/mockery) to autogenerate the mock code against an interface as well, making using mocks much quicker.
+You can use the [mockery tool](https://vektra.github.io/mockery/latest/) to autogenerate the mock code against an interface as well, making using mocks much quicker.
 
-[`suite`](http://godoc.org/github.com/stretchr/testify/suite "API documentation") package
+[`suite`](https://pkg.go.dev/github.com/stretchr/testify/suite "API documentation") package
 -----------------------------------------------------------------------------------------
 
-The `suite` package provides functionality that you might be used to from more common object oriented languages.  With it, you can build a testing suite as a struct, build setup/teardown methods and testing methods on your struct, and run them with 'go test' as per normal.
+The `suite` package provides functionality that you might be used to from more common object-oriented languages.  With it, you can build a testing suite as a struct, build setup/teardown methods and testing methods on your struct, and run them with 'go test' as per normal.
 
 An example suite is shown below:
 
@@ -224,7 +266,7 @@ func TestExampleTestSuite(t *testing.T) {
 
 For a more complete example, using all of the functionality provided by the suite package, look at our [example testing suite](https://github.com/stretchr/testify/blob/master/suite/suite_test.go)
 
-For more information on writing suites, check out the [API documentation for the `suite` package](http://godoc.org/github.com/stretchr/testify/suite).
+For more information on writing suites, check out the [API documentation for the `suite` package](https://pkg.go.dev/github.com/stretchr/testify/suite).
 
 `Suite` object has assertion methods:
 
@@ -268,14 +310,15 @@ Installation
 
 To install Testify, use `go get`:
 
-    * Latest version: go get github.com/stretchr/testify
-    * Specific version: go get gopkg.in/stretchr/testify.v1
+    go get github.com/stretchr/testify
 
 This will then make the following packages available to you:
 
     github.com/stretchr/testify/assert
+    github.com/stretchr/testify/require
     github.com/stretchr/testify/mock
-    github.com/stretchr/testify/http
+    github.com/stretchr/testify/suite
+    github.com/stretchr/testify/http (deprecated)
 
 Import the `testify/assert` package into your code using this template:
 
@@ -303,10 +346,10 @@ To update Testify to the latest version, use `go get -u github.com/stretchr/test
 
 ------
 
-Version History
-===============
+Supported go versions
+==================
 
-   * 1.0 - New package versioning strategy adopted.
+We currently support the most recent major Go versions from 1.19 onward.
 
 ------
 
@@ -315,18 +358,15 @@ Contributing
 
 Please feel free to submit issues, fork the repository and send pull requests!
 
-When submitting an issue, we ask that you please include a complete test function that demonstrates the issue.  Extra credit for those using Testify to write the test code that demonstrates it.
+When submitting an issue, we ask that you please include a complete test function that demonstrates the issue. Extra credit for those using Testify to write the test code that demonstrates it.
+
+Code generation is used. [Look for `Code generated with`](https://github.com/search?q=repo%3Astretchr%2Ftestify%20%22Code%20generated%20with%22&type=code) at the top of some files. Run `go generate ./...` to update generated files.
+
+We also chat on the [Gophers Slack](https://gophers.slack.com) group in the `#testify` and `#testify-dev` channels.
 
 ------
 
-Licence
+License
 =======
-Copyright (c) 2012 - 2013 Mat Ryer and Tyler Bunnell
 
-Please consider promoting this project if you find it useful.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This project is licensed under the terms of the MIT license.

@@ -29,14 +29,13 @@ const opCreateCell = "CreateCell"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateCellRequest method.
+//	req, resp := client.CreateCellRequest(params)
 //
-//    // Example sending a request using the CreateCellRequest method.
-//    req, resp := client.CreateCellRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateCell
 func (c *Route53RecoveryReadiness) CreateCellRequest(input *CreateCellInput) (req *request.Request, output *CreateCellOutput) {
@@ -57,7 +56,7 @@ func (c *Route53RecoveryReadiness) CreateCellRequest(input *CreateCellInput) (re
 
 // CreateCell API operation for AWS Route53 Recovery Readiness.
 //
-// Creates a new Cell.
+// Creates a cell in an account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -67,15 +66,16 @@ func (c *Route53RecoveryReadiness) CreateCellRequest(input *CreateCellInput) (re
 // API operation CreateCell for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * ConflictException
+//   - InternalServerException
 //
-//   * AccessDeniedException
+//   - ConflictException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateCell
 func (c *Route53RecoveryReadiness) CreateCell(input *CreateCellInput) (*CreateCellOutput, error) {
@@ -115,14 +115,13 @@ const opCreateCrossAccountAuthorization = "CreateCrossAccountAuthorization"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateCrossAccountAuthorizationRequest method.
+//	req, resp := client.CreateCrossAccountAuthorizationRequest(params)
 //
-//    // Example sending a request using the CreateCrossAccountAuthorizationRequest method.
-//    req, resp := client.CreateCrossAccountAuthorizationRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateCrossAccountAuthorization
 func (c *Route53RecoveryReadiness) CreateCrossAccountAuthorizationRequest(input *CreateCrossAccountAuthorizationInput) (req *request.Request, output *CreateCrossAccountAuthorizationOutput) {
@@ -143,7 +142,9 @@ func (c *Route53RecoveryReadiness) CreateCrossAccountAuthorizationRequest(input 
 
 // CreateCrossAccountAuthorization API operation for AWS Route53 Recovery Readiness.
 //
-// Create a new cross account readiness authorization.
+// Creates a cross-account readiness authorization. This lets you authorize
+// another account to work with Route 53 Application Recovery Controller, for
+// example, to check the readiness status of resources in a separate account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -153,15 +154,16 @@ func (c *Route53RecoveryReadiness) CreateCrossAccountAuthorizationRequest(input 
 // API operation CreateCrossAccountAuthorization for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * ConflictException
+//   - InternalServerException
 //
-//   * AccessDeniedException
+//   - ConflictException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateCrossAccountAuthorization
 func (c *Route53RecoveryReadiness) CreateCrossAccountAuthorization(input *CreateCrossAccountAuthorizationInput) (*CreateCrossAccountAuthorizationOutput, error) {
@@ -201,14 +203,13 @@ const opCreateReadinessCheck = "CreateReadinessCheck"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateReadinessCheckRequest method.
+//	req, resp := client.CreateReadinessCheckRequest(params)
 //
-//    // Example sending a request using the CreateReadinessCheckRequest method.
-//    req, resp := client.CreateReadinessCheckRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateReadinessCheck
 func (c *Route53RecoveryReadiness) CreateReadinessCheckRequest(input *CreateReadinessCheckInput) (req *request.Request, output *CreateReadinessCheckOutput) {
@@ -229,7 +230,10 @@ func (c *Route53RecoveryReadiness) CreateReadinessCheckRequest(input *CreateRead
 
 // CreateReadinessCheck API operation for AWS Route53 Recovery Readiness.
 //
-// Creates a new Readiness Check.
+// Creates a readiness check in an account. A readiness check monitors a resource
+// set in your application, such as a set of Amazon Aurora instances, that Application
+// Recovery Controller is auditing recovery readiness for. The audits run once
+// every minute on every resource that's associated with a readiness check.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -239,15 +243,16 @@ func (c *Route53RecoveryReadiness) CreateReadinessCheckRequest(input *CreateRead
 // API operation CreateReadinessCheck for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * ConflictException
+//   - InternalServerException
 //
-//   * AccessDeniedException
+//   - ConflictException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateReadinessCheck
 func (c *Route53RecoveryReadiness) CreateReadinessCheck(input *CreateReadinessCheckInput) (*CreateReadinessCheckOutput, error) {
@@ -287,14 +292,13 @@ const opCreateRecoveryGroup = "CreateRecoveryGroup"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateRecoveryGroupRequest method.
+//	req, resp := client.CreateRecoveryGroupRequest(params)
 //
-//    // Example sending a request using the CreateRecoveryGroupRequest method.
-//    req, resp := client.CreateRecoveryGroupRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateRecoveryGroup
 func (c *Route53RecoveryReadiness) CreateRecoveryGroupRequest(input *CreateRecoveryGroupInput) (req *request.Request, output *CreateRecoveryGroupOutput) {
@@ -315,7 +319,8 @@ func (c *Route53RecoveryReadiness) CreateRecoveryGroupRequest(input *CreateRecov
 
 // CreateRecoveryGroup API operation for AWS Route53 Recovery Readiness.
 //
-// Creates a new Recovery Group.
+// Creates a recovery group in an account. A recovery group corresponds to an
+// application and includes a list of the cells that make up the application.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -325,15 +330,16 @@ func (c *Route53RecoveryReadiness) CreateRecoveryGroupRequest(input *CreateRecov
 // API operation CreateRecoveryGroup for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * ConflictException
+//   - InternalServerException
 //
-//   * AccessDeniedException
+//   - ConflictException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateRecoveryGroup
 func (c *Route53RecoveryReadiness) CreateRecoveryGroup(input *CreateRecoveryGroupInput) (*CreateRecoveryGroupOutput, error) {
@@ -373,14 +379,13 @@ const opCreateResourceSet = "CreateResourceSet"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateResourceSetRequest method.
+//	req, resp := client.CreateResourceSetRequest(params)
 //
-//    // Example sending a request using the CreateResourceSetRequest method.
-//    req, resp := client.CreateResourceSetRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateResourceSet
 func (c *Route53RecoveryReadiness) CreateResourceSetRequest(input *CreateResourceSetInput) (req *request.Request, output *CreateResourceSetOutput) {
@@ -401,7 +406,9 @@ func (c *Route53RecoveryReadiness) CreateResourceSetRequest(input *CreateResourc
 
 // CreateResourceSet API operation for AWS Route53 Recovery Readiness.
 //
-// Creates a new Resource Set.
+// Creates a resource set. A resource set is a set of resources of one type
+// that span multiple cells. You can associate a resource set with a readiness
+// check to monitor the resources for failover readiness.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -411,15 +418,16 @@ func (c *Route53RecoveryReadiness) CreateResourceSetRequest(input *CreateResourc
 // API operation CreateResourceSet for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * ConflictException
+//   - InternalServerException
 //
-//   * AccessDeniedException
+//   - ConflictException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/CreateResourceSet
 func (c *Route53RecoveryReadiness) CreateResourceSet(input *CreateResourceSetInput) (*CreateResourceSetOutput, error) {
@@ -459,14 +467,13 @@ const opDeleteCell = "DeleteCell"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteCellRequest method.
+//	req, resp := client.DeleteCellRequest(params)
 //
-//    // Example sending a request using the DeleteCellRequest method.
-//    req, resp := client.DeleteCellRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteCell
 func (c *Route53RecoveryReadiness) DeleteCellRequest(input *DeleteCellInput) (req *request.Request, output *DeleteCellOutput) {
@@ -488,7 +495,8 @@ func (c *Route53RecoveryReadiness) DeleteCellRequest(input *DeleteCellInput) (re
 
 // DeleteCell API operation for AWS Route53 Recovery Readiness.
 //
-// Deletes an existing Cell.
+// Delete a cell. When successful, the response code is 204, with no response
+// body.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -498,15 +506,16 @@ func (c *Route53RecoveryReadiness) DeleteCellRequest(input *DeleteCellInput) (re
 // API operation DeleteCell for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteCell
 func (c *Route53RecoveryReadiness) DeleteCell(input *DeleteCellInput) (*DeleteCellOutput, error) {
@@ -546,14 +555,13 @@ const opDeleteCrossAccountAuthorization = "DeleteCrossAccountAuthorization"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteCrossAccountAuthorizationRequest method.
+//	req, resp := client.DeleteCrossAccountAuthorizationRequest(params)
 //
-//    // Example sending a request using the DeleteCrossAccountAuthorizationRequest method.
-//    req, resp := client.DeleteCrossAccountAuthorizationRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteCrossAccountAuthorization
 func (c *Route53RecoveryReadiness) DeleteCrossAccountAuthorizationRequest(input *DeleteCrossAccountAuthorizationInput) (req *request.Request, output *DeleteCrossAccountAuthorizationOutput) {
@@ -575,7 +583,7 @@ func (c *Route53RecoveryReadiness) DeleteCrossAccountAuthorizationRequest(input 
 
 // DeleteCrossAccountAuthorization API operation for AWS Route53 Recovery Readiness.
 //
-// Delete cross account readiness authorization
+// Deletes cross account readiness authorization.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -585,13 +593,14 @@ func (c *Route53RecoveryReadiness) DeleteCrossAccountAuthorizationRequest(input 
 // API operation DeleteCrossAccountAuthorization for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteCrossAccountAuthorization
 func (c *Route53RecoveryReadiness) DeleteCrossAccountAuthorization(input *DeleteCrossAccountAuthorizationInput) (*DeleteCrossAccountAuthorizationOutput, error) {
@@ -631,14 +640,13 @@ const opDeleteReadinessCheck = "DeleteReadinessCheck"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteReadinessCheckRequest method.
+//	req, resp := client.DeleteReadinessCheckRequest(params)
 //
-//    // Example sending a request using the DeleteReadinessCheckRequest method.
-//    req, resp := client.DeleteReadinessCheckRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteReadinessCheck
 func (c *Route53RecoveryReadiness) DeleteReadinessCheckRequest(input *DeleteReadinessCheckInput) (req *request.Request, output *DeleteReadinessCheckOutput) {
@@ -660,7 +668,7 @@ func (c *Route53RecoveryReadiness) DeleteReadinessCheckRequest(input *DeleteRead
 
 // DeleteReadinessCheck API operation for AWS Route53 Recovery Readiness.
 //
-// Deletes an existing Readiness Check.
+// Deletes a readiness check.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -670,15 +678,16 @@ func (c *Route53RecoveryReadiness) DeleteReadinessCheckRequest(input *DeleteRead
 // API operation DeleteReadinessCheck for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteReadinessCheck
 func (c *Route53RecoveryReadiness) DeleteReadinessCheck(input *DeleteReadinessCheckInput) (*DeleteReadinessCheckOutput, error) {
@@ -718,14 +727,13 @@ const opDeleteRecoveryGroup = "DeleteRecoveryGroup"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteRecoveryGroupRequest method.
+//	req, resp := client.DeleteRecoveryGroupRequest(params)
 //
-//    // Example sending a request using the DeleteRecoveryGroupRequest method.
-//    req, resp := client.DeleteRecoveryGroupRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteRecoveryGroup
 func (c *Route53RecoveryReadiness) DeleteRecoveryGroupRequest(input *DeleteRecoveryGroupInput) (req *request.Request, output *DeleteRecoveryGroupOutput) {
@@ -747,7 +755,7 @@ func (c *Route53RecoveryReadiness) DeleteRecoveryGroupRequest(input *DeleteRecov
 
 // DeleteRecoveryGroup API operation for AWS Route53 Recovery Readiness.
 //
-// Deletes an existing Recovery Group.
+// Deletes a recovery group.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -757,15 +765,16 @@ func (c *Route53RecoveryReadiness) DeleteRecoveryGroupRequest(input *DeleteRecov
 // API operation DeleteRecoveryGroup for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteRecoveryGroup
 func (c *Route53RecoveryReadiness) DeleteRecoveryGroup(input *DeleteRecoveryGroupInput) (*DeleteRecoveryGroupOutput, error) {
@@ -805,14 +814,13 @@ const opDeleteResourceSet = "DeleteResourceSet"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteResourceSetRequest method.
+//	req, resp := client.DeleteResourceSetRequest(params)
 //
-//    // Example sending a request using the DeleteResourceSetRequest method.
-//    req, resp := client.DeleteResourceSetRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteResourceSet
 func (c *Route53RecoveryReadiness) DeleteResourceSetRequest(input *DeleteResourceSetInput) (req *request.Request, output *DeleteResourceSetOutput) {
@@ -834,7 +842,7 @@ func (c *Route53RecoveryReadiness) DeleteResourceSetRequest(input *DeleteResourc
 
 // DeleteResourceSet API operation for AWS Route53 Recovery Readiness.
 //
-// Deletes an existing Resource Set.
+// Deletes a resource set.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -844,15 +852,16 @@ func (c *Route53RecoveryReadiness) DeleteResourceSetRequest(input *DeleteResourc
 // API operation DeleteResourceSet for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/DeleteResourceSet
 func (c *Route53RecoveryReadiness) DeleteResourceSet(input *DeleteResourceSetInput) (*DeleteResourceSetOutput, error) {
@@ -892,14 +901,13 @@ const opGetArchitectureRecommendations = "GetArchitectureRecommendations"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetArchitectureRecommendationsRequest method.
+//	req, resp := client.GetArchitectureRecommendationsRequest(params)
 //
-//    // Example sending a request using the GetArchitectureRecommendationsRequest method.
-//    req, resp := client.GetArchitectureRecommendationsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetArchitectureRecommendations
 func (c *Route53RecoveryReadiness) GetArchitectureRecommendationsRequest(input *GetArchitectureRecommendationsInput) (req *request.Request, output *GetArchitectureRecommendationsOutput) {
@@ -920,8 +928,8 @@ func (c *Route53RecoveryReadiness) GetArchitectureRecommendationsRequest(input *
 
 // GetArchitectureRecommendations API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a collection of recommendations to improve resilliance and readiness
-// check quality for a Recovery Group.
+// Gets recommendations about architecture designs for improving resiliency
+// for an application, based on a recovery group.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -931,15 +939,16 @@ func (c *Route53RecoveryReadiness) GetArchitectureRecommendationsRequest(input *
 // API operation GetArchitectureRecommendations for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetArchitectureRecommendations
 func (c *Route53RecoveryReadiness) GetArchitectureRecommendations(input *GetArchitectureRecommendationsInput) (*GetArchitectureRecommendationsOutput, error) {
@@ -979,14 +988,13 @@ const opGetCell = "GetCell"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetCellRequest method.
+//	req, resp := client.GetCellRequest(params)
 //
-//    // Example sending a request using the GetCellRequest method.
-//    req, resp := client.GetCellRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetCell
 func (c *Route53RecoveryReadiness) GetCellRequest(input *GetCellInput) (req *request.Request, output *GetCellOutput) {
@@ -1007,7 +1015,9 @@ func (c *Route53RecoveryReadiness) GetCellRequest(input *GetCellInput) (req *req
 
 // GetCell API operation for AWS Route53 Recovery Readiness.
 //
-// Returns information about a Cell.
+// Gets information about a cell including cell name, cell Amazon Resource Name
+// (ARN), ARNs of nested cells for this cell, and a list of those cell ARNs
+// with their associated recovery group ARNs.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1017,15 +1027,16 @@ func (c *Route53RecoveryReadiness) GetCellRequest(input *GetCellInput) (req *req
 // API operation GetCell for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetCell
 func (c *Route53RecoveryReadiness) GetCell(input *GetCellInput) (*GetCellOutput, error) {
@@ -1065,14 +1076,13 @@ const opGetCellReadinessSummary = "GetCellReadinessSummary"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetCellReadinessSummaryRequest method.
+//	req, resp := client.GetCellReadinessSummaryRequest(params)
 //
-//    // Example sending a request using the GetCellReadinessSummaryRequest method.
-//    req, resp := client.GetCellReadinessSummaryRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetCellReadinessSummary
 func (c *Route53RecoveryReadiness) GetCellReadinessSummaryRequest(input *GetCellReadinessSummaryInput) (req *request.Request, output *GetCellReadinessSummaryOutput) {
@@ -1099,7 +1109,8 @@ func (c *Route53RecoveryReadiness) GetCellReadinessSummaryRequest(input *GetCell
 
 // GetCellReadinessSummary API operation for AWS Route53 Recovery Readiness.
 //
-// Returns information about readiness of a Cell.
+// Gets readiness for a cell. Aggregates the readiness of all the resources
+// that are associated with the cell into a single value.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1109,15 +1120,16 @@ func (c *Route53RecoveryReadiness) GetCellReadinessSummaryRequest(input *GetCell
 // API operation GetCellReadinessSummary for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetCellReadinessSummary
 func (c *Route53RecoveryReadiness) GetCellReadinessSummary(input *GetCellReadinessSummaryInput) (*GetCellReadinessSummaryOutput, error) {
@@ -1149,15 +1161,14 @@ func (c *Route53RecoveryReadiness) GetCellReadinessSummaryWithContext(ctx aws.Co
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetCellReadinessSummary operation.
-//    pageNum := 0
-//    err := client.GetCellReadinessSummaryPages(params,
-//        func(page *route53recoveryreadiness.GetCellReadinessSummaryOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetCellReadinessSummary operation.
+//	pageNum := 0
+//	err := client.GetCellReadinessSummaryPages(params,
+//	    func(page *route53recoveryreadiness.GetCellReadinessSummaryOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) GetCellReadinessSummaryPages(input *GetCellReadinessSummaryInput, fn func(*GetCellReadinessSummaryOutput, bool) bool) error {
 	return c.GetCellReadinessSummaryPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1209,14 +1220,13 @@ const opGetReadinessCheck = "GetReadinessCheck"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetReadinessCheckRequest method.
+//	req, resp := client.GetReadinessCheckRequest(params)
 //
-//    // Example sending a request using the GetReadinessCheckRequest method.
-//    req, resp := client.GetReadinessCheckRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetReadinessCheck
 func (c *Route53RecoveryReadiness) GetReadinessCheckRequest(input *GetReadinessCheckInput) (req *request.Request, output *GetReadinessCheckOutput) {
@@ -1237,7 +1247,7 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckRequest(input *GetReadinessC
 
 // GetReadinessCheck API operation for AWS Route53 Recovery Readiness.
 //
-// Returns information about a ReadinessCheck.
+// Gets details about a readiness check.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1247,15 +1257,16 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckRequest(input *GetReadinessC
 // API operation GetReadinessCheck for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetReadinessCheck
 func (c *Route53RecoveryReadiness) GetReadinessCheck(input *GetReadinessCheckInput) (*GetReadinessCheckOutput, error) {
@@ -1295,14 +1306,13 @@ const opGetReadinessCheckResourceStatus = "GetReadinessCheckResourceStatus"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetReadinessCheckResourceStatusRequest method.
+//	req, resp := client.GetReadinessCheckResourceStatusRequest(params)
 //
-//    // Example sending a request using the GetReadinessCheckResourceStatusRequest method.
-//    req, resp := client.GetReadinessCheckResourceStatusRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetReadinessCheckResourceStatus
 func (c *Route53RecoveryReadiness) GetReadinessCheckResourceStatusRequest(input *GetReadinessCheckResourceStatusInput) (req *request.Request, output *GetReadinessCheckResourceStatusOutput) {
@@ -1329,8 +1339,9 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckResourceStatusRequest(input 
 
 // GetReadinessCheckResourceStatus API operation for AWS Route53 Recovery Readiness.
 //
-// Returns detailed information about the status of an individual resource within
-// a Readiness Check's Resource Set.
+// Gets individual readiness status for a readiness check. To see the overall
+// readiness status for a recovery group, that considers the readiness status
+// for all the readiness checks in the recovery group, use GetRecoveryGroupReadinessSummary.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1340,15 +1351,16 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckResourceStatusRequest(input 
 // API operation GetReadinessCheckResourceStatus for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetReadinessCheckResourceStatus
 func (c *Route53RecoveryReadiness) GetReadinessCheckResourceStatus(input *GetReadinessCheckResourceStatusInput) (*GetReadinessCheckResourceStatusOutput, error) {
@@ -1380,15 +1392,14 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckResourceStatusWithContext(ct
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetReadinessCheckResourceStatus operation.
-//    pageNum := 0
-//    err := client.GetReadinessCheckResourceStatusPages(params,
-//        func(page *route53recoveryreadiness.GetReadinessCheckResourceStatusOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetReadinessCheckResourceStatus operation.
+//	pageNum := 0
+//	err := client.GetReadinessCheckResourceStatusPages(params,
+//	    func(page *route53recoveryreadiness.GetReadinessCheckResourceStatusOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) GetReadinessCheckResourceStatusPages(input *GetReadinessCheckResourceStatusInput, fn func(*GetReadinessCheckResourceStatusOutput, bool) bool) error {
 	return c.GetReadinessCheckResourceStatusPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1440,14 +1451,13 @@ const opGetReadinessCheckStatus = "GetReadinessCheckStatus"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetReadinessCheckStatusRequest method.
+//	req, resp := client.GetReadinessCheckStatusRequest(params)
 //
-//    // Example sending a request using the GetReadinessCheckStatusRequest method.
-//    req, resp := client.GetReadinessCheckStatusRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetReadinessCheckStatus
 func (c *Route53RecoveryReadiness) GetReadinessCheckStatusRequest(input *GetReadinessCheckStatusInput) (req *request.Request, output *GetReadinessCheckStatusOutput) {
@@ -1474,7 +1484,9 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckStatusRequest(input *GetRead
 
 // GetReadinessCheckStatus API operation for AWS Route53 Recovery Readiness.
 //
-// Returns information about the status of a Readiness Check.
+// Gets the readiness status for an individual readiness check. To see the overall
+// readiness status for a recovery group, that considers the readiness status
+// for all the readiness checks in a recovery group, use GetRecoveryGroupReadinessSummary.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1484,15 +1496,16 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckStatusRequest(input *GetRead
 // API operation GetReadinessCheckStatus for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetReadinessCheckStatus
 func (c *Route53RecoveryReadiness) GetReadinessCheckStatus(input *GetReadinessCheckStatusInput) (*GetReadinessCheckStatusOutput, error) {
@@ -1524,15 +1537,14 @@ func (c *Route53RecoveryReadiness) GetReadinessCheckStatusWithContext(ctx aws.Co
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetReadinessCheckStatus operation.
-//    pageNum := 0
-//    err := client.GetReadinessCheckStatusPages(params,
-//        func(page *route53recoveryreadiness.GetReadinessCheckStatusOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetReadinessCheckStatus operation.
+//	pageNum := 0
+//	err := client.GetReadinessCheckStatusPages(params,
+//	    func(page *route53recoveryreadiness.GetReadinessCheckStatusOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) GetReadinessCheckStatusPages(input *GetReadinessCheckStatusInput, fn func(*GetReadinessCheckStatusOutput, bool) bool) error {
 	return c.GetReadinessCheckStatusPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1584,14 +1596,13 @@ const opGetRecoveryGroup = "GetRecoveryGroup"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetRecoveryGroupRequest method.
+//	req, resp := client.GetRecoveryGroupRequest(params)
 //
-//    // Example sending a request using the GetRecoveryGroupRequest method.
-//    req, resp := client.GetRecoveryGroupRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetRecoveryGroup
 func (c *Route53RecoveryReadiness) GetRecoveryGroupRequest(input *GetRecoveryGroupInput) (req *request.Request, output *GetRecoveryGroupOutput) {
@@ -1612,7 +1623,8 @@ func (c *Route53RecoveryReadiness) GetRecoveryGroupRequest(input *GetRecoveryGro
 
 // GetRecoveryGroup API operation for AWS Route53 Recovery Readiness.
 //
-// Returns information about a Recovery Group.
+// Gets details about a recovery group, including a list of the cells that are
+// included in it.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1622,15 +1634,16 @@ func (c *Route53RecoveryReadiness) GetRecoveryGroupRequest(input *GetRecoveryGro
 // API operation GetRecoveryGroup for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetRecoveryGroup
 func (c *Route53RecoveryReadiness) GetRecoveryGroup(input *GetRecoveryGroupInput) (*GetRecoveryGroupOutput, error) {
@@ -1670,14 +1683,13 @@ const opGetRecoveryGroupReadinessSummary = "GetRecoveryGroupReadinessSummary"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetRecoveryGroupReadinessSummaryRequest method.
+//	req, resp := client.GetRecoveryGroupReadinessSummaryRequest(params)
 //
-//    // Example sending a request using the GetRecoveryGroupReadinessSummaryRequest method.
-//    req, resp := client.GetRecoveryGroupReadinessSummaryRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetRecoveryGroupReadinessSummary
 func (c *Route53RecoveryReadiness) GetRecoveryGroupReadinessSummaryRequest(input *GetRecoveryGroupReadinessSummaryInput) (req *request.Request, output *GetRecoveryGroupReadinessSummaryOutput) {
@@ -1704,7 +1716,9 @@ func (c *Route53RecoveryReadiness) GetRecoveryGroupReadinessSummaryRequest(input
 
 // GetRecoveryGroupReadinessSummary API operation for AWS Route53 Recovery Readiness.
 //
-// Returns information about a Recovery Group.
+// Displays a summary of information about a recovery group's readiness status.
+// Includes the readiness checks for resources in the recovery group and the
+// readiness status of each one.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1714,15 +1728,16 @@ func (c *Route53RecoveryReadiness) GetRecoveryGroupReadinessSummaryRequest(input
 // API operation GetRecoveryGroupReadinessSummary for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetRecoveryGroupReadinessSummary
 func (c *Route53RecoveryReadiness) GetRecoveryGroupReadinessSummary(input *GetRecoveryGroupReadinessSummaryInput) (*GetRecoveryGroupReadinessSummaryOutput, error) {
@@ -1754,15 +1769,14 @@ func (c *Route53RecoveryReadiness) GetRecoveryGroupReadinessSummaryWithContext(c
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetRecoveryGroupReadinessSummary operation.
-//    pageNum := 0
-//    err := client.GetRecoveryGroupReadinessSummaryPages(params,
-//        func(page *route53recoveryreadiness.GetRecoveryGroupReadinessSummaryOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetRecoveryGroupReadinessSummary operation.
+//	pageNum := 0
+//	err := client.GetRecoveryGroupReadinessSummaryPages(params,
+//	    func(page *route53recoveryreadiness.GetRecoveryGroupReadinessSummaryOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) GetRecoveryGroupReadinessSummaryPages(input *GetRecoveryGroupReadinessSummaryInput, fn func(*GetRecoveryGroupReadinessSummaryOutput, bool) bool) error {
 	return c.GetRecoveryGroupReadinessSummaryPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1814,14 +1828,13 @@ const opGetResourceSet = "GetResourceSet"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetResourceSetRequest method.
+//	req, resp := client.GetResourceSetRequest(params)
 //
-//    // Example sending a request using the GetResourceSetRequest method.
-//    req, resp := client.GetResourceSetRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetResourceSet
 func (c *Route53RecoveryReadiness) GetResourceSetRequest(input *GetResourceSetInput) (req *request.Request, output *GetResourceSetOutput) {
@@ -1842,7 +1855,8 @@ func (c *Route53RecoveryReadiness) GetResourceSetRequest(input *GetResourceSetIn
 
 // GetResourceSet API operation for AWS Route53 Recovery Readiness.
 //
-// Returns information about a Resource Set.
+// Displays the details about a resource set, including a list of the resources
+// in the set.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1852,15 +1866,16 @@ func (c *Route53RecoveryReadiness) GetResourceSetRequest(input *GetResourceSetIn
 // API operation GetResourceSet for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/GetResourceSet
 func (c *Route53RecoveryReadiness) GetResourceSet(input *GetResourceSetInput) (*GetResourceSetOutput, error) {
@@ -1900,14 +1915,13 @@ const opListCells = "ListCells"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListCellsRequest method.
+//	req, resp := client.ListCellsRequest(params)
 //
-//    // Example sending a request using the ListCellsRequest method.
-//    req, resp := client.ListCellsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListCells
 func (c *Route53RecoveryReadiness) ListCellsRequest(input *ListCellsInput) (req *request.Request, output *ListCellsOutput) {
@@ -1934,7 +1948,7 @@ func (c *Route53RecoveryReadiness) ListCellsRequest(input *ListCellsInput) (req 
 
 // ListCells API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a collection of Cells.
+// Lists the cells for an account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1944,13 +1958,14 @@ func (c *Route53RecoveryReadiness) ListCellsRequest(input *ListCellsInput) (req 
 // API operation ListCells for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListCells
 func (c *Route53RecoveryReadiness) ListCells(input *ListCellsInput) (*ListCellsOutput, error) {
@@ -1982,15 +1997,14 @@ func (c *Route53RecoveryReadiness) ListCellsWithContext(ctx aws.Context, input *
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListCells operation.
-//    pageNum := 0
-//    err := client.ListCellsPages(params,
-//        func(page *route53recoveryreadiness.ListCellsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListCells operation.
+//	pageNum := 0
+//	err := client.ListCellsPages(params,
+//	    func(page *route53recoveryreadiness.ListCellsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) ListCellsPages(input *ListCellsInput, fn func(*ListCellsOutput, bool) bool) error {
 	return c.ListCellsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2042,14 +2056,13 @@ const opListCrossAccountAuthorizations = "ListCrossAccountAuthorizations"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListCrossAccountAuthorizationsRequest method.
+//	req, resp := client.ListCrossAccountAuthorizationsRequest(params)
 //
-//    // Example sending a request using the ListCrossAccountAuthorizationsRequest method.
-//    req, resp := client.ListCrossAccountAuthorizationsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListCrossAccountAuthorizations
 func (c *Route53RecoveryReadiness) ListCrossAccountAuthorizationsRequest(input *ListCrossAccountAuthorizationsInput) (req *request.Request, output *ListCrossAccountAuthorizationsOutput) {
@@ -2076,7 +2089,8 @@ func (c *Route53RecoveryReadiness) ListCrossAccountAuthorizationsRequest(input *
 
 // ListCrossAccountAuthorizations API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a collection of cross account readiness authorizations.
+// Lists the cross-account readiness authorizations that are in place for an
+// account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2086,13 +2100,14 @@ func (c *Route53RecoveryReadiness) ListCrossAccountAuthorizationsRequest(input *
 // API operation ListCrossAccountAuthorizations for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListCrossAccountAuthorizations
 func (c *Route53RecoveryReadiness) ListCrossAccountAuthorizations(input *ListCrossAccountAuthorizationsInput) (*ListCrossAccountAuthorizationsOutput, error) {
@@ -2124,15 +2139,14 @@ func (c *Route53RecoveryReadiness) ListCrossAccountAuthorizationsWithContext(ctx
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListCrossAccountAuthorizations operation.
-//    pageNum := 0
-//    err := client.ListCrossAccountAuthorizationsPages(params,
-//        func(page *route53recoveryreadiness.ListCrossAccountAuthorizationsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListCrossAccountAuthorizations operation.
+//	pageNum := 0
+//	err := client.ListCrossAccountAuthorizationsPages(params,
+//	    func(page *route53recoveryreadiness.ListCrossAccountAuthorizationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) ListCrossAccountAuthorizationsPages(input *ListCrossAccountAuthorizationsInput, fn func(*ListCrossAccountAuthorizationsOutput, bool) bool) error {
 	return c.ListCrossAccountAuthorizationsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2184,14 +2198,13 @@ const opListReadinessChecks = "ListReadinessChecks"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListReadinessChecksRequest method.
+//	req, resp := client.ListReadinessChecksRequest(params)
 //
-//    // Example sending a request using the ListReadinessChecksRequest method.
-//    req, resp := client.ListReadinessChecksRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListReadinessChecks
 func (c *Route53RecoveryReadiness) ListReadinessChecksRequest(input *ListReadinessChecksInput) (req *request.Request, output *ListReadinessChecksOutput) {
@@ -2218,7 +2231,7 @@ func (c *Route53RecoveryReadiness) ListReadinessChecksRequest(input *ListReadine
 
 // ListReadinessChecks API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a collection of Readiness Checks.
+// Lists the readiness checks for an account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2228,13 +2241,14 @@ func (c *Route53RecoveryReadiness) ListReadinessChecksRequest(input *ListReadine
 // API operation ListReadinessChecks for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListReadinessChecks
 func (c *Route53RecoveryReadiness) ListReadinessChecks(input *ListReadinessChecksInput) (*ListReadinessChecksOutput, error) {
@@ -2266,15 +2280,14 @@ func (c *Route53RecoveryReadiness) ListReadinessChecksWithContext(ctx aws.Contex
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListReadinessChecks operation.
-//    pageNum := 0
-//    err := client.ListReadinessChecksPages(params,
-//        func(page *route53recoveryreadiness.ListReadinessChecksOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListReadinessChecks operation.
+//	pageNum := 0
+//	err := client.ListReadinessChecksPages(params,
+//	    func(page *route53recoveryreadiness.ListReadinessChecksOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) ListReadinessChecksPages(input *ListReadinessChecksInput, fn func(*ListReadinessChecksOutput, bool) bool) error {
 	return c.ListReadinessChecksPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2326,14 +2339,13 @@ const opListRecoveryGroups = "ListRecoveryGroups"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListRecoveryGroupsRequest method.
+//	req, resp := client.ListRecoveryGroupsRequest(params)
 //
-//    // Example sending a request using the ListRecoveryGroupsRequest method.
-//    req, resp := client.ListRecoveryGroupsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListRecoveryGroups
 func (c *Route53RecoveryReadiness) ListRecoveryGroupsRequest(input *ListRecoveryGroupsInput) (req *request.Request, output *ListRecoveryGroupsOutput) {
@@ -2360,7 +2372,7 @@ func (c *Route53RecoveryReadiness) ListRecoveryGroupsRequest(input *ListRecovery
 
 // ListRecoveryGroups API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a collection of Recovery Groups.
+// Lists the recovery groups in an account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2370,13 +2382,14 @@ func (c *Route53RecoveryReadiness) ListRecoveryGroupsRequest(input *ListRecovery
 // API operation ListRecoveryGroups for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListRecoveryGroups
 func (c *Route53RecoveryReadiness) ListRecoveryGroups(input *ListRecoveryGroupsInput) (*ListRecoveryGroupsOutput, error) {
@@ -2408,15 +2421,14 @@ func (c *Route53RecoveryReadiness) ListRecoveryGroupsWithContext(ctx aws.Context
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListRecoveryGroups operation.
-//    pageNum := 0
-//    err := client.ListRecoveryGroupsPages(params,
-//        func(page *route53recoveryreadiness.ListRecoveryGroupsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListRecoveryGroups operation.
+//	pageNum := 0
+//	err := client.ListRecoveryGroupsPages(params,
+//	    func(page *route53recoveryreadiness.ListRecoveryGroupsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) ListRecoveryGroupsPages(input *ListRecoveryGroupsInput, fn func(*ListRecoveryGroupsOutput, bool) bool) error {
 	return c.ListRecoveryGroupsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2468,14 +2480,13 @@ const opListResourceSets = "ListResourceSets"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListResourceSetsRequest method.
+//	req, resp := client.ListResourceSetsRequest(params)
 //
-//    // Example sending a request using the ListResourceSetsRequest method.
-//    req, resp := client.ListResourceSetsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListResourceSets
 func (c *Route53RecoveryReadiness) ListResourceSetsRequest(input *ListResourceSetsInput) (req *request.Request, output *ListResourceSetsOutput) {
@@ -2502,7 +2513,7 @@ func (c *Route53RecoveryReadiness) ListResourceSetsRequest(input *ListResourceSe
 
 // ListResourceSets API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a collection of Resource Sets.
+// Lists the resource sets in an account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2512,13 +2523,14 @@ func (c *Route53RecoveryReadiness) ListResourceSetsRequest(input *ListResourceSe
 // API operation ListResourceSets for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListResourceSets
 func (c *Route53RecoveryReadiness) ListResourceSets(input *ListResourceSetsInput) (*ListResourceSetsOutput, error) {
@@ -2550,15 +2562,14 @@ func (c *Route53RecoveryReadiness) ListResourceSetsWithContext(ctx aws.Context, 
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListResourceSets operation.
-//    pageNum := 0
-//    err := client.ListResourceSetsPages(params,
-//        func(page *route53recoveryreadiness.ListResourceSetsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListResourceSets operation.
+//	pageNum := 0
+//	err := client.ListResourceSetsPages(params,
+//	    func(page *route53recoveryreadiness.ListResourceSetsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) ListResourceSetsPages(input *ListResourceSetsInput, fn func(*ListResourceSetsOutput, bool) bool) error {
 	return c.ListResourceSetsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2610,14 +2621,13 @@ const opListRules = "ListRules"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListRulesRequest method.
+//	req, resp := client.ListRulesRequest(params)
 //
-//    // Example sending a request using the ListRulesRequest method.
-//    req, resp := client.ListRulesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListRules
 func (c *Route53RecoveryReadiness) ListRulesRequest(input *ListRulesInput) (req *request.Request, output *ListRulesOutput) {
@@ -2644,7 +2654,8 @@ func (c *Route53RecoveryReadiness) ListRulesRequest(input *ListRulesInput) (req 
 
 // ListRules API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a collection of rules that are applied as part of Readiness Checks.
+// Lists all readiness rules, or lists the readiness rules for a specific resource
+// type.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2654,13 +2665,14 @@ func (c *Route53RecoveryReadiness) ListRulesRequest(input *ListRulesInput) (req 
 // API operation ListRules for usage and error information.
 //
 // Returned Error Types:
-//   * ThrottlingException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListRules
 func (c *Route53RecoveryReadiness) ListRules(input *ListRulesInput) (*ListRulesOutput, error) {
@@ -2692,15 +2704,14 @@ func (c *Route53RecoveryReadiness) ListRulesWithContext(ctx aws.Context, input *
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListRules operation.
-//    pageNum := 0
-//    err := client.ListRulesPages(params,
-//        func(page *route53recoveryreadiness.ListRulesOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListRules operation.
+//	pageNum := 0
+//	err := client.ListRulesPages(params,
+//	    func(page *route53recoveryreadiness.ListRulesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryReadiness) ListRulesPages(input *ListRulesInput, fn func(*ListRulesOutput, bool) bool) error {
 	return c.ListRulesPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2752,14 +2763,13 @@ const opListTagsForResources = "ListTagsForResources"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListTagsForResourcesRequest method.
+//	req, resp := client.ListTagsForResourcesRequest(params)
 //
-//    // Example sending a request using the ListTagsForResourcesRequest method.
-//    req, resp := client.ListTagsForResourcesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListTagsForResources
 func (c *Route53RecoveryReadiness) ListTagsForResourcesRequest(input *ListTagsForResourcesInput) (req *request.Request, output *ListTagsForResourcesOutput) {
@@ -2780,7 +2790,7 @@ func (c *Route53RecoveryReadiness) ListTagsForResourcesRequest(input *ListTagsFo
 
 // ListTagsForResources API operation for AWS Route53 Recovery Readiness.
 //
-// Returns a list of the tags assigned to the specified resource.
+// Lists the tags for a resource.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2790,11 +2800,12 @@ func (c *Route53RecoveryReadiness) ListTagsForResourcesRequest(input *ListTagsFo
 // API operation ListTagsForResources for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ValidationException
+//   - ResourceNotFoundException
 //
-//   * InternalServerException
+//   - ValidationException
+//
+//   - InternalServerException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/ListTagsForResources
 func (c *Route53RecoveryReadiness) ListTagsForResources(input *ListTagsForResourcesInput) (*ListTagsForResourcesOutput, error) {
@@ -2834,14 +2845,13 @@ const opTagResource = "TagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the TagResourceRequest method.
+//	req, resp := client.TagResourceRequest(params)
 //
-//    // Example sending a request using the TagResourceRequest method.
-//    req, resp := client.TagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/TagResource
 func (c *Route53RecoveryReadiness) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
@@ -2863,8 +2873,7 @@ func (c *Route53RecoveryReadiness) TagResourceRequest(input *TagResourceInput) (
 
 // TagResource API operation for AWS Route53 Recovery Readiness.
 //
-// Adds tags to the specified resource. You can specify one or more tags to
-// add.
+// Adds a tag to a resource.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2874,11 +2883,12 @@ func (c *Route53RecoveryReadiness) TagResourceRequest(input *TagResourceInput) (
 // API operation TagResource for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ValidationException
+//   - ResourceNotFoundException
 //
-//   * InternalServerException
+//   - ValidationException
+//
+//   - InternalServerException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/TagResource
 func (c *Route53RecoveryReadiness) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -2918,14 +2928,13 @@ const opUntagResource = "UntagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UntagResourceRequest method.
+//	req, resp := client.UntagResourceRequest(params)
 //
-//    // Example sending a request using the UntagResourceRequest method.
-//    req, resp := client.UntagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UntagResource
 func (c *Route53RecoveryReadiness) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
@@ -2947,8 +2956,7 @@ func (c *Route53RecoveryReadiness) UntagResourceRequest(input *UntagResourceInpu
 
 // UntagResource API operation for AWS Route53 Recovery Readiness.
 //
-// Removes tags from the specified resource. You can specify one or more tags
-// to remove.
+// Removes a tag from a resource.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2958,11 +2966,12 @@ func (c *Route53RecoveryReadiness) UntagResourceRequest(input *UntagResourceInpu
 // API operation UntagResource for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ValidationException
+//   - ResourceNotFoundException
 //
-//   * InternalServerException
+//   - ValidationException
+//
+//   - InternalServerException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UntagResource
 func (c *Route53RecoveryReadiness) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -3002,14 +3011,13 @@ const opUpdateCell = "UpdateCell"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateCellRequest method.
+//	req, resp := client.UpdateCellRequest(params)
 //
-//    // Example sending a request using the UpdateCellRequest method.
-//    req, resp := client.UpdateCellRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateCell
 func (c *Route53RecoveryReadiness) UpdateCellRequest(input *UpdateCellInput) (req *request.Request, output *UpdateCellOutput) {
@@ -3030,7 +3038,8 @@ func (c *Route53RecoveryReadiness) UpdateCellRequest(input *UpdateCellInput) (re
 
 // UpdateCell API operation for AWS Route53 Recovery Readiness.
 //
-// Updates an existing Cell.
+// Updates a cell to replace the list of nested cells with a new list of nested
+// cells.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3040,15 +3049,16 @@ func (c *Route53RecoveryReadiness) UpdateCellRequest(input *UpdateCellInput) (re
 // API operation UpdateCell for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateCell
 func (c *Route53RecoveryReadiness) UpdateCell(input *UpdateCellInput) (*UpdateCellOutput, error) {
@@ -3088,14 +3098,13 @@ const opUpdateReadinessCheck = "UpdateReadinessCheck"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateReadinessCheckRequest method.
+//	req, resp := client.UpdateReadinessCheckRequest(params)
 //
-//    // Example sending a request using the UpdateReadinessCheckRequest method.
-//    req, resp := client.UpdateReadinessCheckRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateReadinessCheck
 func (c *Route53RecoveryReadiness) UpdateReadinessCheckRequest(input *UpdateReadinessCheckInput) (req *request.Request, output *UpdateReadinessCheckOutput) {
@@ -3116,7 +3125,7 @@ func (c *Route53RecoveryReadiness) UpdateReadinessCheckRequest(input *UpdateRead
 
 // UpdateReadinessCheck API operation for AWS Route53 Recovery Readiness.
 //
-// Updates an exisiting Readiness Check.
+// Updates a readiness check.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3126,15 +3135,16 @@ func (c *Route53RecoveryReadiness) UpdateReadinessCheckRequest(input *UpdateRead
 // API operation UpdateReadinessCheck for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateReadinessCheck
 func (c *Route53RecoveryReadiness) UpdateReadinessCheck(input *UpdateReadinessCheckInput) (*UpdateReadinessCheckOutput, error) {
@@ -3174,14 +3184,13 @@ const opUpdateRecoveryGroup = "UpdateRecoveryGroup"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateRecoveryGroupRequest method.
+//	req, resp := client.UpdateRecoveryGroupRequest(params)
 //
-//    // Example sending a request using the UpdateRecoveryGroupRequest method.
-//    req, resp := client.UpdateRecoveryGroupRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateRecoveryGroup
 func (c *Route53RecoveryReadiness) UpdateRecoveryGroupRequest(input *UpdateRecoveryGroupInput) (req *request.Request, output *UpdateRecoveryGroupOutput) {
@@ -3202,7 +3211,7 @@ func (c *Route53RecoveryReadiness) UpdateRecoveryGroupRequest(input *UpdateRecov
 
 // UpdateRecoveryGroup API operation for AWS Route53 Recovery Readiness.
 //
-// Updates an existing Recovery Group.
+// Updates a recovery group.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3212,15 +3221,16 @@ func (c *Route53RecoveryReadiness) UpdateRecoveryGroupRequest(input *UpdateRecov
 // API operation UpdateRecoveryGroup for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateRecoveryGroup
 func (c *Route53RecoveryReadiness) UpdateRecoveryGroup(input *UpdateRecoveryGroupInput) (*UpdateRecoveryGroupOutput, error) {
@@ -3260,14 +3270,13 @@ const opUpdateResourceSet = "UpdateResourceSet"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateResourceSetRequest method.
+//	req, resp := client.UpdateResourceSetRequest(params)
 //
-//    // Example sending a request using the UpdateResourceSetRequest method.
-//    req, resp := client.UpdateResourceSetRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateResourceSet
 func (c *Route53RecoveryReadiness) UpdateResourceSetRequest(input *UpdateResourceSetInput) (req *request.Request, output *UpdateResourceSetOutput) {
@@ -3288,7 +3297,7 @@ func (c *Route53RecoveryReadiness) UpdateResourceSetRequest(input *UpdateResourc
 
 // UpdateResourceSet API operation for AWS Route53 Recovery Readiness.
 //
-// Updates an existing Resource Set.
+// Updates a resource set.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3298,15 +3307,16 @@ func (c *Route53RecoveryReadiness) UpdateResourceSetRequest(input *UpdateResourc
 // API operation UpdateResourceSet for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
 //
-//   * ThrottlingException
+//   - ResourceNotFoundException
 //
-//   * ValidationException
+//   - ThrottlingException
 //
-//   * InternalServerException
+//   - ValidationException
 //
-//   * AccessDeniedException
+//   - InternalServerException
+//
+//   - AccessDeniedException
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-readiness-2019-12-02/UpdateResourceSet
 func (c *Route53RecoveryReadiness) UpdateResourceSet(input *UpdateResourceSetInput) (*UpdateResourceSetOutput, error) {
@@ -3337,12 +3347,20 @@ type AccessDeniedException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) GoString() string {
 	return s.String()
 }
@@ -3385,40 +3403,50 @@ func (s *AccessDeniedException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// A Cell and its properties
+// Information about a cell.
 type CellOutput_ struct {
 	_ struct{} `type:"structure"`
 
-	// The arn for the Cell
+	// The Amazon Resource Name (ARN) for the cell.
 	//
 	// CellArn is a required field
 	CellArn *string `locationName:"cellArn" type:"string" required:"true"`
 
-	// The name of the Cell
+	// The name of the cell.
 	//
 	// CellName is a required field
 	CellName *string `locationName:"cellName" type:"string" required:"true"`
 
-	// A list of Cell arns
+	// A list of cell ARNs.
 	//
 	// Cells is a required field
 	Cells []*string `locationName:"cells" type:"list" required:"true"`
 
-	// A list of Cell ARNs and/or RecoveryGroup ARNs
+	// The readiness scope for the cell, which can be a cell Amazon Resource Name
+	// (ARN) or a recovery group ARN. This is a list but currently can have only
+	// one element.
 	//
 	// ParentReadinessScopes is a required field
 	ParentReadinessScopes []*string `locationName:"parentReadinessScopes" type:"list" required:"true"`
 
-	// A collection of tags associated with a resource
+	// Tags on the resources.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CellOutput_) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CellOutput_) GoString() string {
 	return s.String()
 }
@@ -3460,12 +3488,20 @@ type ConflictException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) GoString() string {
 	return s.String()
 }
@@ -3516,16 +3552,24 @@ type CreateCellInput struct {
 
 	Cells []*string `locationName:"cells" type:"list"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCellInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCellInput) GoString() string {
 	return s.String()
 }
@@ -3572,16 +3616,24 @@ type CreateCellOutput struct {
 
 	ParentReadinessScopes []*string `locationName:"parentReadinessScopes" type:"list"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCellOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCellOutput) GoString() string {
 	return s.String()
 }
@@ -3619,18 +3671,26 @@ func (s *CreateCellOutput) SetTags(v map[string]*string) *CreateCellOutput {
 type CreateCrossAccountAuthorizationInput struct {
 	_ struct{} `type:"structure"`
 
-	// A cross-account authorization, e.g. arn:aws:iam::123456789012:root
+	// CrossAccountAuthorization
 	//
 	// CrossAccountAuthorization is a required field
 	CrossAccountAuthorization *string `locationName:"crossAccountAuthorization" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCrossAccountAuthorizationInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCrossAccountAuthorizationInput) GoString() string {
 	return s.String()
 }
@@ -3657,16 +3717,24 @@ func (s *CreateCrossAccountAuthorizationInput) SetCrossAccountAuthorization(v st
 type CreateCrossAccountAuthorizationOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A cross-account authorization, e.g. arn:aws:iam::123456789012:root
+	// CrossAccountAuthorization
 	CrossAccountAuthorization *string `locationName:"crossAccountAuthorization" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCrossAccountAuthorizationOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateCrossAccountAuthorizationOutput) GoString() string {
 	return s.String()
 }
@@ -3686,16 +3754,24 @@ type CreateReadinessCheckInput struct {
 	// ResourceSetName is a required field
 	ResourceSetName *string `locationName:"resourceSetName" type:"string" required:"true"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateReadinessCheckInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateReadinessCheckInput) GoString() string {
 	return s.String()
 }
@@ -3743,16 +3819,24 @@ type CreateReadinessCheckOutput struct {
 
 	ResourceSet *string `locationName:"resourceSet" type:"string"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateReadinessCheckOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateReadinessCheckOutput) GoString() string {
 	return s.String()
 }
@@ -3789,16 +3873,24 @@ type CreateRecoveryGroupInput struct {
 	// RecoveryGroupName is a required field
 	RecoveryGroupName *string `locationName:"recoveryGroupName" type:"string" required:"true"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRecoveryGroupInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRecoveryGroupInput) GoString() string {
 	return s.String()
 }
@@ -3843,16 +3935,24 @@ type CreateRecoveryGroupOutput struct {
 
 	RecoveryGroupName *string `locationName:"recoveryGroupName" type:"string"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRecoveryGroupOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRecoveryGroupOutput) GoString() string {
 	return s.String()
 }
@@ -3893,16 +3993,24 @@ type CreateResourceSetInput struct {
 	// Resources is a required field
 	Resources []*Resource `locationName:"resources" type:"list" required:"true"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResourceSetInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResourceSetInput) GoString() string {
 	return s.String()
 }
@@ -3961,16 +4069,24 @@ type CreateResourceSetOutput struct {
 
 	Resources []*Resource `locationName:"resources" type:"list"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResourceSetOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResourceSetOutput) GoString() string {
 	return s.String()
 }
@@ -4005,33 +4121,43 @@ func (s *CreateResourceSetOutput) SetTags(v map[string]*string) *CreateResourceS
 	return s
 }
 
-// A component for DNS/Routing Control Readiness Checks
+// A component for DNS/routing control readiness checks and architecture checks.
 type DNSTargetResource struct {
 	_ struct{} `type:"structure"`
 
-	// The DNS Name that acts as ingress point to a portion of application
+	// The domain name that acts as an ingress point to a portion of the customer
+	// application.
 	DomainName *string `locationName:"domainName" type:"string"`
 
-	// The Hosted Zone ARN that contains the DNS record with the provided name of
-	// target resource.
+	// The hosted zone Amazon Resource Name (ARN) that contains the DNS record with
+	// the provided name of the target resource.
 	HostedZoneArn *string `locationName:"hostedZoneArn" type:"string"`
 
-	// The R53 Set Id to uniquely identify a record given a Name and a Type
+	// The Route 53 record set ID that uniquely identifies a DNS record, given a
+	// name and a type.
 	RecordSetId *string `locationName:"recordSetId" type:"string"`
 
-	// The Type of DNS Record of target resource
+	// The type of DNS record of the target resource.
 	RecordType *string `locationName:"recordType" type:"string"`
 
-	// The target resource the R53 record points to
+	// The target resource of the DNS target resource.
 	TargetResource *TargetResource `locationName:"targetResource" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DNSTargetResource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DNSTargetResource) GoString() string {
 	return s.String()
 }
@@ -4067,18 +4193,26 @@ func (s *DNSTargetResource) SetTargetResource(v *TargetResource) *DNSTargetResou
 }
 
 type DeleteCellInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// CellName is a required field
 	CellName *string `location:"uri" locationName:"cellName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCellInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCellInput) GoString() string {
 	return s.String()
 }
@@ -4109,29 +4243,45 @@ type DeleteCellOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCellOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCellOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteCrossAccountAuthorizationInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// CrossAccountAuthorization is a required field
 	CrossAccountAuthorization *string `location:"uri" locationName:"crossAccountAuthorization" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCrossAccountAuthorizationInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCrossAccountAuthorizationInput) GoString() string {
 	return s.String()
 }
@@ -4162,29 +4312,45 @@ type DeleteCrossAccountAuthorizationOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCrossAccountAuthorizationOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCrossAccountAuthorizationOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteReadinessCheckInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ReadinessCheckName is a required field
 	ReadinessCheckName *string `location:"uri" locationName:"readinessCheckName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteReadinessCheckInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteReadinessCheckInput) GoString() string {
 	return s.String()
 }
@@ -4215,29 +4381,45 @@ type DeleteReadinessCheckOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteReadinessCheckOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteReadinessCheckOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteRecoveryGroupInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// RecoveryGroupName is a required field
 	RecoveryGroupName *string `location:"uri" locationName:"recoveryGroupName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRecoveryGroupInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRecoveryGroupInput) GoString() string {
 	return s.String()
 }
@@ -4268,29 +4450,45 @@ type DeleteRecoveryGroupOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRecoveryGroupOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRecoveryGroupOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteResourceSetInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ResourceSetName is a required field
 	ResourceSetName *string `location:"uri" locationName:"resourceSetName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResourceSetInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResourceSetInput) GoString() string {
 	return s.String()
 }
@@ -4321,18 +4519,26 @@ type DeleteResourceSetOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResourceSetOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResourceSetOutput) GoString() string {
 	return s.String()
 }
 
 type GetArchitectureRecommendationsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
@@ -4342,12 +4548,20 @@ type GetArchitectureRecommendationsInput struct {
 	RecoveryGroupName *string `location:"uri" locationName:"recoveryGroupName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetArchitectureRecommendationsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetArchitectureRecommendationsInput) GoString() string {
 	return s.String()
 }
@@ -4392,8 +4606,8 @@ func (s *GetArchitectureRecommendationsInput) SetRecoveryGroupName(v string) *Ge
 type GetArchitectureRecommendationsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The time a Recovery Group was last assessed for recommendations in UTC ISO-8601
-	// format
+	// The time that a recovery group was last assessed for recommendations, in
+	// UTC ISO-8601 format.
 	LastAuditTimestamp *time.Time `locationName:"lastAuditTimestamp" type:"timestamp" timestampFormat:"iso8601"`
 
 	NextToken *string `locationName:"nextToken" type:"string"`
@@ -4401,12 +4615,20 @@ type GetArchitectureRecommendationsOutput struct {
 	Recommendations []*Recommendation `locationName:"recommendations" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetArchitectureRecommendationsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetArchitectureRecommendationsOutput) GoString() string {
 	return s.String()
 }
@@ -4430,18 +4652,26 @@ func (s *GetArchitectureRecommendationsOutput) SetRecommendations(v []*Recommend
 }
 
 type GetCellInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// CellName is a required field
 	CellName *string `location:"uri" locationName:"cellName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellInput) GoString() string {
 	return s.String()
 }
@@ -4479,16 +4709,24 @@ type GetCellOutput struct {
 
 	ParentReadinessScopes []*string `locationName:"parentReadinessScopes" type:"list"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellOutput) GoString() string {
 	return s.String()
 }
@@ -4524,7 +4762,7 @@ func (s *GetCellOutput) SetTags(v map[string]*string) *GetCellOutput {
 }
 
 type GetCellReadinessSummaryInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// CellName is a required field
 	CellName *string `location:"uri" locationName:"cellName" type:"string" required:"true"`
@@ -4534,12 +4772,20 @@ type GetCellReadinessSummaryInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellReadinessSummaryInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellReadinessSummaryInput) GoString() string {
 	return s.String()
 }
@@ -4586,18 +4832,26 @@ type GetCellReadinessSummaryOutput struct {
 
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// The readiness of an entire ReadinessCheck or an individual resource ARN.
+	// The readiness status.
 	Readiness *string `locationName:"readiness" type:"string" enum:"Readiness"`
 
 	ReadinessChecks []*ReadinessCheckSummary `locationName:"readinessChecks" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellReadinessSummaryOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCellReadinessSummaryOutput) GoString() string {
 	return s.String()
 }
@@ -4621,18 +4875,26 @@ func (s *GetCellReadinessSummaryOutput) SetReadinessChecks(v []*ReadinessCheckSu
 }
 
 type GetReadinessCheckInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ReadinessCheckName is a required field
 	ReadinessCheckName *string `location:"uri" locationName:"readinessCheckName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckInput) GoString() string {
 	return s.String()
 }
@@ -4668,16 +4930,24 @@ type GetReadinessCheckOutput struct {
 
 	ResourceSet *string `locationName:"resourceSet" type:"string"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckOutput) GoString() string {
 	return s.String()
 }
@@ -4707,7 +4977,7 @@ func (s *GetReadinessCheckOutput) SetTags(v map[string]*string) *GetReadinessChe
 }
 
 type GetReadinessCheckResourceStatusInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
@@ -4720,12 +4990,20 @@ type GetReadinessCheckResourceStatusInput struct {
 	ResourceIdentifier *string `location:"uri" locationName:"resourceIdentifier" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckResourceStatusInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckResourceStatusInput) GoString() string {
 	return s.String()
 }
@@ -4784,18 +5062,26 @@ type GetReadinessCheckResourceStatusOutput struct {
 
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// The readiness of an entire ReadinessCheck or an individual resource ARN.
+	// The readiness status.
 	Readiness *string `locationName:"readiness" type:"string" enum:"Readiness"`
 
 	Rules []*RuleResult `locationName:"rules" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckResourceStatusOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckResourceStatusOutput) GoString() string {
 	return s.String()
 }
@@ -4819,7 +5105,7 @@ func (s *GetReadinessCheckResourceStatusOutput) SetRules(v []*RuleResult) *GetRe
 }
 
 type GetReadinessCheckStatusInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
@@ -4829,12 +5115,20 @@ type GetReadinessCheckStatusInput struct {
 	ReadinessCheckName *string `location:"uri" locationName:"readinessCheckName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckStatusInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckStatusInput) GoString() string {
 	return s.String()
 }
@@ -4883,18 +5177,26 @@ type GetReadinessCheckStatusOutput struct {
 
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// The readiness of an entire ReadinessCheck or an individual resource ARN.
+	// The readiness status.
 	Readiness *string `locationName:"readiness" type:"string" enum:"Readiness"`
 
 	Resources []*ResourceResult `locationName:"resources" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckStatusOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetReadinessCheckStatusOutput) GoString() string {
 	return s.String()
 }
@@ -4924,18 +5226,26 @@ func (s *GetReadinessCheckStatusOutput) SetResources(v []*ResourceResult) *GetRe
 }
 
 type GetRecoveryGroupInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// RecoveryGroupName is a required field
 	RecoveryGroupName *string `location:"uri" locationName:"recoveryGroupName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupInput) GoString() string {
 	return s.String()
 }
@@ -4971,16 +5281,24 @@ type GetRecoveryGroupOutput struct {
 
 	RecoveryGroupName *string `locationName:"recoveryGroupName" type:"string"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupOutput) GoString() string {
 	return s.String()
 }
@@ -5010,7 +5328,7 @@ func (s *GetRecoveryGroupOutput) SetTags(v map[string]*string) *GetRecoveryGroup
 }
 
 type GetRecoveryGroupReadinessSummaryInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
@@ -5020,12 +5338,20 @@ type GetRecoveryGroupReadinessSummaryInput struct {
 	RecoveryGroupName *string `location:"uri" locationName:"recoveryGroupName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupReadinessSummaryInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupReadinessSummaryInput) GoString() string {
 	return s.String()
 }
@@ -5072,18 +5398,26 @@ type GetRecoveryGroupReadinessSummaryOutput struct {
 
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	// The readiness of an entire ReadinessCheck or an individual resource ARN.
+	// The readiness status.
 	Readiness *string `locationName:"readiness" type:"string" enum:"Readiness"`
 
 	ReadinessChecks []*ReadinessCheckSummary `locationName:"readinessChecks" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupReadinessSummaryOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetRecoveryGroupReadinessSummaryOutput) GoString() string {
 	return s.String()
 }
@@ -5107,18 +5441,26 @@ func (s *GetRecoveryGroupReadinessSummaryOutput) SetReadinessChecks(v []*Readine
 }
 
 type GetResourceSetInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ResourceSetName is a required field
 	ResourceSetName *string `location:"uri" locationName:"resourceSetName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResourceSetInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResourceSetInput) GoString() string {
 	return s.String()
 }
@@ -5156,16 +5498,24 @@ type GetResourceSetOutput struct {
 
 	Resources []*Resource `locationName:"resources" type:"list"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResourceSetOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResourceSetOutput) GoString() string {
 	return s.String()
 }
@@ -5207,12 +5557,20 @@ type InternalServerException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) GoString() string {
 	return s.String()
 }
@@ -5256,19 +5614,27 @@ func (s *InternalServerException) RequestID() string {
 }
 
 type ListCellsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCellsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCellsInput) GoString() string {
 	return s.String()
 }
@@ -5306,12 +5672,20 @@ type ListCellsOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCellsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCellsOutput) GoString() string {
 	return s.String()
 }
@@ -5329,19 +5703,27 @@ func (s *ListCellsOutput) SetNextToken(v string) *ListCellsOutput {
 }
 
 type ListCrossAccountAuthorizationsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCrossAccountAuthorizationsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCrossAccountAuthorizationsInput) GoString() string {
 	return s.String()
 }
@@ -5379,12 +5761,20 @@ type ListCrossAccountAuthorizationsOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCrossAccountAuthorizationsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCrossAccountAuthorizationsOutput) GoString() string {
 	return s.String()
 }
@@ -5402,19 +5792,27 @@ func (s *ListCrossAccountAuthorizationsOutput) SetNextToken(v string) *ListCross
 }
 
 type ListReadinessChecksInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListReadinessChecksInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListReadinessChecksInput) GoString() string {
 	return s.String()
 }
@@ -5452,12 +5850,20 @@ type ListReadinessChecksOutput struct {
 	ReadinessChecks []*ReadinessCheckOutput_ `locationName:"readinessChecks" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListReadinessChecksOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListReadinessChecksOutput) GoString() string {
 	return s.String()
 }
@@ -5475,19 +5881,27 @@ func (s *ListReadinessChecksOutput) SetReadinessChecks(v []*ReadinessCheckOutput
 }
 
 type ListRecoveryGroupsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRecoveryGroupsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRecoveryGroupsInput) GoString() string {
 	return s.String()
 }
@@ -5525,12 +5939,20 @@ type ListRecoveryGroupsOutput struct {
 	RecoveryGroups []*RecoveryGroupOutput_ `locationName:"recoveryGroups" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRecoveryGroupsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRecoveryGroupsOutput) GoString() string {
 	return s.String()
 }
@@ -5548,19 +5970,27 @@ func (s *ListRecoveryGroupsOutput) SetRecoveryGroups(v []*RecoveryGroupOutput_) 
 }
 
 type ListResourceSetsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResourceSetsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResourceSetsInput) GoString() string {
 	return s.String()
 }
@@ -5598,12 +6028,20 @@ type ListResourceSetsOutput struct {
 	ResourceSets []*ResourceSetOutput_ `locationName:"resourceSets" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResourceSetsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResourceSetsOutput) GoString() string {
 	return s.String()
 }
@@ -5621,7 +6059,7 @@ func (s *ListResourceSetsOutput) SetResourceSets(v []*ResourceSetOutput_) *ListR
 }
 
 type ListRulesInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
@@ -5630,12 +6068,20 @@ type ListRulesInput struct {
 	ResourceType *string `location:"querystring" locationName:"resourceType" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRulesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRulesInput) GoString() string {
 	return s.String()
 }
@@ -5679,12 +6125,20 @@ type ListRulesOutput struct {
 	Rules []*ListRulesOutput_ `locationName:"rules" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRulesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRulesOutput) GoString() string {
 	return s.String()
 }
@@ -5701,32 +6155,41 @@ func (s *ListRulesOutput) SetRules(v []*ListRulesOutput_) *ListRulesOutput {
 	return s
 }
 
-// A collection of rules used in a readiness check
+// Readiness rule information, including the resource type, rule ID, and rule
+// description.
 type ListRulesOutput_ struct {
 	_ struct{} `type:"structure"`
 
-	// The resource type the rule applies to.
+	// The resource type that the readiness rule applies to.
 	//
 	// ResourceType is a required field
 	ResourceType *string `locationName:"resourceType" type:"string" required:"true"`
 
-	// A description of the rule
+	// The description of a readiness rule.
 	//
 	// RuleDescription is a required field
 	RuleDescription *string `locationName:"ruleDescription" type:"string" required:"true"`
 
-	// The Rule's ID.
+	// The ID for the readiness rule.
 	//
 	// RuleId is a required field
 	RuleId *string `locationName:"ruleId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRulesOutput_) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRulesOutput_) GoString() string {
 	return s.String()
 }
@@ -5750,18 +6213,26 @@ func (s *ListRulesOutput_) SetRuleId(v string) *ListRulesOutput_ {
 }
 
 type ListTagsForResourcesInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resource-arn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourcesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourcesInput) GoString() string {
 	return s.String()
 }
@@ -5791,16 +6262,24 @@ func (s *ListTagsForResourcesInput) SetResourceArn(v string) *ListTagsForResourc
 type ListTagsForResourcesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourcesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourcesOutput) GoString() string {
 	return s.String()
 }
@@ -5811,20 +6290,28 @@ func (s *ListTagsForResourcesOutput) SetTags(v map[string]*string) *ListTagsForR
 	return s
 }
 
-// Information relating to readiness check status
+// Information relating to readiness check status.
 type Message struct {
 	_ struct{} `type:"structure"`
 
-	// The text of a readiness check message
+	// The text of a readiness check message.
 	MessageText *string `locationName:"messageText" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Message) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Message) GoString() string {
 	return s.String()
 }
@@ -5835,20 +6322,28 @@ func (s *Message) SetMessageText(v string) *Message {
 	return s
 }
 
-// The NLB resource a DNS Target Resource points to
+// The Network Load Balancer resource that a DNS target resource points to.
 type NLBResource struct {
 	_ struct{} `type:"structure"`
 
-	// An NLB resource arn
+	// The Network Load Balancer resource Amazon Resource Name (ARN).
 	Arn *string `locationName:"arn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NLBResource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NLBResource) GoString() string {
 	return s.String()
 }
@@ -5859,23 +6354,31 @@ func (s *NLBResource) SetArn(v string) *NLBResource {
 	return s
 }
 
-// The Route 53 resource a DNS Target Resource record points to
+// The Route 53 resource that a DNS target resource record points to.
 type R53ResourceRecord struct {
 	_ struct{} `type:"structure"`
 
-	// The DNS target name
+	// The DNS target domain name.
 	DomainName *string `locationName:"domainName" type:"string"`
 
-	// The Resource Record set id
+	// The Route 53 Resource Record Set ID.
 	RecordSetId *string `locationName:"recordSetId" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s R53ResourceRecord) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s R53ResourceRecord) GoString() string {
 	return s.String()
 }
@@ -5892,33 +6395,41 @@ func (s *R53ResourceRecord) SetRecordSetId(v string) *R53ResourceRecord {
 	return s
 }
 
-// A resource used for checking the readiness of a Resource Set
+// A readiness check.
 type ReadinessCheckOutput_ struct {
 	_ struct{} `type:"structure"`
 
-	// Arn associated with ReadinessCheck
+	// The Amazon Resource Name (ARN) associated with a readiness check.
 	//
 	// ReadinessCheckArn is a required field
 	ReadinessCheckArn *string `locationName:"readinessCheckArn" type:"string" required:"true"`
 
-	// Name for a ReadinessCheck
+	// Name of a readiness check.
 	ReadinessCheckName *string `locationName:"readinessCheckName" type:"string"`
 
-	// Name of the ResourceSet to be checked
+	// Name of the resource set to be checked.
 	//
 	// ResourceSet is a required field
 	ResourceSet *string `locationName:"resourceSet" type:"string" required:"true"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ReadinessCheckOutput_) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ReadinessCheckOutput_) GoString() string {
 	return s.String()
 }
@@ -5947,25 +6458,32 @@ func (s *ReadinessCheckOutput_) SetTags(v map[string]*string) *ReadinessCheckOut
 	return s
 }
 
-// Summary of ReadinessCheck status, paginated in GetRecoveryGroupReadinessSummary
-// and GetCellReadinessSummary
+// Summary of all readiness check statuses in a recovery group, paginated in
+// GetRecoveryGroupReadinessSummary and GetCellReadinessSummary.
 type ReadinessCheckSummary struct {
 	_ struct{} `type:"structure"`
 
-	// The readiness of this ReadinessCheck
+	// The readiness status of this readiness check.
 	Readiness *string `locationName:"readiness" type:"string" enum:"Readiness"`
 
-	// The name of a ReadinessCheck which is part of the given RecoveryGroup or
-	// Cell
+	// The name of a readiness check.
 	ReadinessCheckName *string `locationName:"readinessCheckName" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ReadinessCheckSummary) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ReadinessCheckSummary) GoString() string {
 	return s.String()
 }
@@ -5982,22 +6500,31 @@ func (s *ReadinessCheckSummary) SetReadinessCheckName(v string) *ReadinessCheckS
 	return s
 }
 
-// Guidance for improving Recovery Group resilliancy
+// Recommendations that are provided to make an application more recovery resilient.
 type Recommendation struct {
 	_ struct{} `type:"structure"`
 
-	// Guidance text for recommendation
+	// Text of the recommendations that are provided to make an application more
+	// recovery resilient.
 	//
 	// RecommendationText is a required field
 	RecommendationText *string `locationName:"recommendationText" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Recommendation) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Recommendation) GoString() string {
 	return s.String()
 }
@@ -6008,35 +6535,43 @@ func (s *Recommendation) SetRecommendationText(v string) *Recommendation {
 	return s
 }
 
-// A Recovery Group generally containing multiple Cells
+// A representation of the application, typically containing multiple cells.
 type RecoveryGroupOutput_ struct {
 	_ struct{} `type:"structure"`
 
-	// A list of Cell arns
+	// A list of a cell's Amazon Resource Names (ARNs).
 	//
 	// Cells is a required field
 	Cells []*string `locationName:"cells" type:"list" required:"true"`
 
-	// The arn for the RecoveryGroup
+	// The Amazon Resource Name (ARN) for the recovery group.
 	//
 	// RecoveryGroupArn is a required field
 	RecoveryGroupArn *string `locationName:"recoveryGroupArn" type:"string" required:"true"`
 
-	// The name of the RecoveryGroup
+	// The name of the recovery group.
 	//
 	// RecoveryGroupName is a required field
 	RecoveryGroupName *string `locationName:"recoveryGroupName" type:"string" required:"true"`
 
-	// A collection of tags associated with a resource
+	// The tags associated with the recovery group.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RecoveryGroupOutput_) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RecoveryGroupOutput_) GoString() string {
 	return s.String()
 }
@@ -6065,31 +6600,39 @@ func (s *RecoveryGroupOutput_) SetTags(v map[string]*string) *RecoveryGroupOutpu
 	return s
 }
 
-// The resource element of a ResourceSet
+// The resource element of a resource set.
 type Resource struct {
 	_ struct{} `type:"structure"`
 
-	// The component id of the resource, generated by the service when dnsTargetResource
-	// is used
+	// The component identifier of the resource, generated when DNS target resource
+	// is used.
 	ComponentId *string `locationName:"componentId" type:"string"`
 
-	// A component for DNS/Routing Control Readiness Checks
+	// The DNS target resource.
 	DnsTargetResource *DNSTargetResource `locationName:"dnsTargetResource" type:"structure"`
 
-	// A list of RecoveryGroup ARNs and/or Cell ARNs that this resource is contained
-	// within.
+	// A list of recovery group Amazon Resource Names (ARNs) and cell ARNs that
+	// this resource is contained within.
 	ReadinessScopes []*string `locationName:"readinessScopes" type:"list"`
 
-	// The ARN of the AWS resource, can be skipped if dnsTargetResource is used
+	// The Amazon Resource Name (ARN) of the Amazon Web Services resource.
 	ResourceArn *string `locationName:"resourceArn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Resource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Resource) GoString() string {
 	return s.String()
 }
@@ -6125,12 +6668,20 @@ type ResourceNotFoundException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) GoString() string {
 	return s.String()
 }
@@ -6173,34 +6724,43 @@ func (s *ResourceNotFoundException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Result with status for an individual resource.
+// The result of a successful Resource request, with status for an individual
+// resource.
 type ResourceResult struct {
 	_ struct{} `type:"structure"`
 
-	// The component id of the resource
+	// The component id of the resource.
 	ComponentId *string `locationName:"componentId" type:"string"`
 
-	// The time the resource was last checked for readiness, in ISO-8601 format,
-	// UTC.
+	// The time (UTC) that the resource was last checked for readiness, in ISO-8601
+	// format.
 	//
 	// LastCheckedTimestamp is a required field
 	LastCheckedTimestamp *time.Time `locationName:"lastCheckedTimestamp" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
-	// The readiness of the resource.
+	// The readiness of a resource.
 	//
 	// Readiness is a required field
 	Readiness *string `locationName:"readiness" type:"string" required:"true" enum:"Readiness"`
 
-	// The ARN of the resource
+	// The Amazon Resource Name (ARN) of the resource.
 	ResourceArn *string `locationName:"resourceArn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceResult) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceResult) GoString() string {
 	return s.String()
 }
@@ -6229,40 +6789,56 @@ func (s *ResourceResult) SetResourceArn(v string) *ResourceResult {
 	return s
 }
 
-// A collection of resources of the same type
+// A collection of resources of the same type.
 type ResourceSetOutput_ struct {
 	_ struct{} `type:"structure"`
 
-	// The arn for the ResourceSet
+	// The Amazon Resource Name (ARN) for the resource set.
 	//
 	// ResourceSetArn is a required field
 	ResourceSetArn *string `locationName:"resourceSetArn" type:"string" required:"true"`
 
-	// The name of the ResourceSet
+	// The name of the resource set.
 	//
 	// ResourceSetName is a required field
 	ResourceSetName *string `locationName:"resourceSetName" type:"string" required:"true"`
 
-	// AWS Resource Type of the resources in the ResourceSet
+	// The resource type of the resources in the resource set. Enter one of the
+	// following values for resource type:
+	//
+	// AWS::ApiGateway::Stage, AWS::ApiGatewayV2::Stage, AWS::AutoScaling::AutoScalingGroup,
+	// AWS::CloudWatch::Alarm, AWS::EC2::CustomerGateway, AWS::DynamoDB::Table,
+	// AWS::EC2::Volume, AWS::ElasticLoadBalancing::LoadBalancer, AWS::ElasticLoadBalancingV2::LoadBalancer,
+	// AWS::Lambda::Function, AWS::MSK::Cluster, AWS::RDS::DBCluster, AWS::Route53::HealthCheck,
+	// AWS::SQS::Queue, AWS::SNS::Topic, AWS::SNS::Subscription, AWS::EC2::VPC,
+	// AWS::EC2::VPNConnection, AWS::EC2::VPNGateway, AWS::Route53RecoveryReadiness::DNSTargetResource
 	//
 	// ResourceSetType is a required field
 	ResourceSetType *string `locationName:"resourceSetType" type:"string" required:"true"`
 
-	// A list of Resource objects
+	// A list of resource objects.
 	//
 	// Resources is a required field
 	Resources []*Resource `locationName:"resources" type:"list" required:"true"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceSetOutput_) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceSetOutput_) GoString() string {
 	return s.String()
 }
@@ -6297,7 +6873,7 @@ func (s *ResourceSetOutput_) SetTags(v map[string]*string) *ResourceSetOutput_ {
 	return s
 }
 
-// Result with status for an individual rule..
+// The result of a successful Rule request, with status for an individual rule.
 type RuleResult struct {
 	_ struct{} `type:"structure"`
 
@@ -6307,7 +6883,7 @@ type RuleResult struct {
 	// LastCheckedTimestamp is a required field
 	LastCheckedTimestamp *time.Time `locationName:"lastCheckedTimestamp" type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
-	// Details about the resource's readiness
+	// Details about the resource's readiness.
 	//
 	// Messages is a required field
 	Messages []*Message `locationName:"messages" type:"list" required:"true"`
@@ -6323,12 +6899,20 @@ type RuleResult struct {
 	RuleId *string `locationName:"ruleId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RuleResult) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RuleResult) GoString() string {
 	return s.String()
 }
@@ -6363,18 +6947,26 @@ type TagResourceInput struct {
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resource-arn" type:"string" required:"true"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	//
 	// Tags is a required field
 	Tags map[string]*string `locationName:"tags" type:"map" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) GoString() string {
 	return s.String()
 }
@@ -6414,33 +7006,49 @@ type TagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
 
-// The target resource the R53 record points to
+// The target resource that the Route 53 record points to.
 type TargetResource struct {
 	_ struct{} `type:"structure"`
 
-	// The NLB resource a DNS Target Resource points to
+	// The Network Load Balancer Resource.
 	NLBResource *NLBResource `locationName:"nLBResource" type:"structure"`
 
-	// The Route 53 resource a DNS Target Resource record points to
+	// The Route 53 resource.
 	R53Resource *R53ResourceRecord `locationName:"r53Resource" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TargetResource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TargetResource) GoString() string {
 	return s.String()
 }
@@ -6464,12 +7072,20 @@ type ThrottlingException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) GoString() string {
 	return s.String()
 }
@@ -6513,7 +7129,7 @@ func (s *ThrottlingException) RequestID() string {
 }
 
 type UntagResourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resource-arn" type:"string" required:"true"`
@@ -6522,12 +7138,20 @@ type UntagResourceInput struct {
 	TagKeys []*string `location:"querystring" locationName:"tagKeys" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) GoString() string {
 	return s.String()
 }
@@ -6567,12 +7191,20 @@ type UntagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -6587,12 +7219,20 @@ type UpdateCellInput struct {
 	Cells []*string `locationName:"cells" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateCellInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateCellInput) GoString() string {
 	return s.String()
 }
@@ -6639,16 +7279,24 @@ type UpdateCellOutput struct {
 
 	ParentReadinessScopes []*string `locationName:"parentReadinessScopes" type:"list"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateCellOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateCellOutput) GoString() string {
 	return s.String()
 }
@@ -6693,12 +7341,20 @@ type UpdateReadinessCheckInput struct {
 	ResourceSetName *string `locationName:"resourceSetName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateReadinessCheckInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateReadinessCheckInput) GoString() string {
 	return s.String()
 }
@@ -6743,16 +7399,24 @@ type UpdateReadinessCheckOutput struct {
 
 	ResourceSet *string `locationName:"resourceSet" type:"string"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateReadinessCheckOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateReadinessCheckOutput) GoString() string {
 	return s.String()
 }
@@ -6791,12 +7455,20 @@ type UpdateRecoveryGroupInput struct {
 	RecoveryGroupName *string `location:"uri" locationName:"recoveryGroupName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRecoveryGroupInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRecoveryGroupInput) GoString() string {
 	return s.String()
 }
@@ -6841,16 +7513,24 @@ type UpdateRecoveryGroupOutput struct {
 
 	RecoveryGroupName *string `locationName:"recoveryGroupName" type:"string"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRecoveryGroupOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRecoveryGroupOutput) GoString() string {
 	return s.String()
 }
@@ -6892,12 +7572,20 @@ type UpdateResourceSetInput struct {
 	Resources []*Resource `locationName:"resources" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResourceSetInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResourceSetInput) GoString() string {
 	return s.String()
 }
@@ -6953,16 +7641,24 @@ type UpdateResourceSetOutput struct {
 
 	Resources []*Resource `locationName:"resources" type:"list"`
 
-	// A collection of tags associated with a resource
+	// A collection of tags associated with a resource.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResourceSetOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResourceSetOutput) GoString() string {
 	return s.String()
 }
@@ -7004,12 +7700,20 @@ type ValidationException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) GoString() string {
 	return s.String()
 }
@@ -7052,7 +7756,7 @@ func (s *ValidationException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The readiness of an entire ReadinessCheck or an individual resource ARN.
+// The readiness status.
 const (
 	// ReadinessReady is a Readiness enum value
 	ReadinessReady = "READY"

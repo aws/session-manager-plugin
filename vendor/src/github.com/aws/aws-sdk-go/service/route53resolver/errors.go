@@ -13,10 +13,17 @@ const (
 	//
 	// The current account doesn't have the IAM permissions required to perform
 	// the specified Resolver operation.
+	//
+	// This error can also be thrown when a customer has reached the 5120 character
+	// limit for a resource policy for CloudWatch Logs.
 	ErrCodeAccessDeniedException = "AccessDeniedException"
 
 	// ErrCodeConflictException for service response error code
 	// "ConflictException".
+	//
+	// The requested state transition isn't valid. For example, you can't delete
+	// a firewall domain list if it is in the process of being deleted, or you can't
+	// import domains into a domain list that is in the process of being deleted.
 	ErrCodeConflictException = "ConflictException"
 
 	// ErrCodeInternalServiceErrorException for service response error code
@@ -85,6 +92,12 @@ const (
 	// The specified resource isn't available.
 	ErrCodeResourceUnavailableException = "ResourceUnavailableException"
 
+	// ErrCodeServiceQuotaExceededException for service response error code
+	// "ServiceQuotaExceededException".
+	//
+	// Fulfilling the request would cause one or more quotas to be exceeded.
+	ErrCodeServiceQuotaExceededException = "ServiceQuotaExceededException"
+
 	// ErrCodeThrottlingException for service response error code
 	// "ThrottlingException".
 	//
@@ -99,6 +112,9 @@ const (
 
 	// ErrCodeValidationException for service response error code
 	// "ValidationException".
+	//
+	// You have provided an invalid command. If you ran the UpdateFirewallDomains
+	// request. supported values are ADD, REMOVE, or REPLACE a domain.
 	ErrCodeValidationException = "ValidationException"
 )
 
@@ -116,6 +132,7 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"ResourceInUseException":        newErrorResourceInUseException,
 	"ResourceNotFoundException":     newErrorResourceNotFoundException,
 	"ResourceUnavailableException":  newErrorResourceUnavailableException,
+	"ServiceQuotaExceededException": newErrorServiceQuotaExceededException,
 	"ThrottlingException":           newErrorThrottlingException,
 	"UnknownResourceException":      newErrorUnknownResourceException,
 	"ValidationException":           newErrorValidationException,

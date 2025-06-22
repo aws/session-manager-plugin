@@ -5,6 +5,7 @@
     "endpointPrefix":"appsync",
     "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceAbbreviation":"AWSAppSync",
     "serviceFullName":"AWS AppSync",
     "serviceId":"AppSync",
@@ -13,6 +14,55 @@
     "uid":"appsync-2017-07-25"
   },
   "operations":{
+    "AssociateApi":{
+      "name":"AssociateApi",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/domainnames/{domainName}/apiassociation"
+      },
+      "input":{"shape":"AssociateApiRequest"},
+      "output":{"shape":"AssociateApiResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
+    "AssociateMergedGraphqlApi":{
+      "name":"AssociateMergedGraphqlApi",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/sourceApis/{sourceApiIdentifier}/mergedApiAssociations"
+      },
+      "input":{"shape":"AssociateMergedGraphqlApiRequest"},
+      "output":{"shape":"AssociateMergedGraphqlApiResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "AssociateSourceGraphqlApi":{
+      "name":"AssociateSourceGraphqlApi",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations"
+      },
+      "input":{"shape":"AssociateSourceGraphqlApiRequest"},
+      "output":{"shape":"AssociateSourceGraphqlApiResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
+        {"shape":"LimitExceededException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
     "CreateApiCache":{
       "name":"CreateApiCache",
       "http":{
@@ -64,6 +114,20 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "CreateDomainName":{
+      "name":"CreateDomainName",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/domainnames"
+      },
+      "input":{"shape":"CreateDomainNameRequest"},
+      "output":{"shape":"CreateDomainNameResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
     "CreateFunction":{
       "name":"CreateFunction",
       "http":{
@@ -76,7 +140,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "CreateGraphqlApi":{
@@ -108,7 +173,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "CreateType":{
@@ -174,6 +240,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DeleteDomainName":{
+      "name":"DeleteDomainName",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/domainnames/{domainName}"
+      },
+      "input":{"shape":"DeleteDomainNameRequest"},
+      "output":{"shape":"DeleteDomainNameResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
     "DeleteFunction":{
       "name":"DeleteFunction",
       "http":{
@@ -186,7 +268,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "DeleteGraphqlApi":{
@@ -218,7 +301,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "DeleteType":{
@@ -237,6 +321,82 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "DisassociateApi":{
+      "name":"DisassociateApi",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/domainnames/{domainName}/apiassociation"
+      },
+      "input":{"shape":"DisassociateApiRequest"},
+      "output":{"shape":"DisassociateApiResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
+    "DisassociateMergedGraphqlApi":{
+      "name":"DisassociateMergedGraphqlApi",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/sourceApis/{sourceApiIdentifier}/mergedApiAssociations/{associationId}"
+      },
+      "input":{"shape":"DisassociateMergedGraphqlApiRequest"},
+      "output":{"shape":"DisassociateMergedGraphqlApiResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "DisassociateSourceGraphqlApi":{
+      "name":"DisassociateSourceGraphqlApi",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}"
+      },
+      "input":{"shape":"DisassociateSourceGraphqlApiRequest"},
+      "output":{"shape":"DisassociateSourceGraphqlApiResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConcurrentModificationException"}
+      ]
+    },
+    "EvaluateCode":{
+      "name":"EvaluateCode",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/dataplane-evaluatecode"
+      },
+      "input":{"shape":"EvaluateCodeRequest"},
+      "output":{"shape":"EvaluateCodeResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "EvaluateMappingTemplate":{
+      "name":"EvaluateMappingTemplate",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/dataplane-evaluatetemplate"
+      },
+      "input":{"shape":"EvaluateMappingTemplateRequest"},
+      "output":{"shape":"EvaluateMappingTemplateResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "FlushApiCache":{
       "name":"FlushApiCache",
       "http":{
@@ -251,6 +411,21 @@
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "GetApiAssociation":{
+      "name":"GetApiAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/domainnames/{domainName}/apiassociation"
+      },
+      "input":{"shape":"GetApiAssociationRequest"},
+      "output":{"shape":"GetApiAssociationResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
       ]
     },
     "GetApiCache":{
@@ -285,6 +460,35 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "GetDataSourceIntrospection":{
+      "name":"GetDataSourceIntrospection",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/datasources/introspections/{introspectionId}"
+      },
+      "input":{"shape":"GetDataSourceIntrospectionRequest"},
+      "output":{"shape":"GetDataSourceIntrospectionResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "GetDomainName":{
+      "name":"GetDomainName",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/domainnames/{domainName}"
+      },
+      "input":{"shape":"GetDomainNameRequest"},
+      "output":{"shape":"GetDomainNameResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
     "GetFunction":{
       "name":"GetFunction",
       "http":{
@@ -307,6 +511,22 @@
       },
       "input":{"shape":"GetGraphqlApiRequest"},
       "output":{"shape":"GetGraphqlApiResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "GetGraphqlApiEnvironmentVariables":{
+      "name":"GetGraphqlApiEnvironmentVariables",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/apis/{apiId}/environmentVariables"
+      },
+      "input":{"shape":"GetGraphqlApiEnvironmentVariablesRequest"},
+      "output":{"shape":"GetGraphqlApiEnvironmentVariablesResponse"},
       "errors":[
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
@@ -359,6 +579,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "GetSourceApiAssociation":{
+      "name":"GetSourceApiAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}"
+      },
+      "input":{"shape":"GetSourceApiAssociationRequest"},
+      "output":{"shape":"GetSourceApiAssociationResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
     "GetType":{
       "name":"GetType",
       "http":{
@@ -402,6 +637,20 @@
         {"shape":"BadRequestException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "ListDomainNames":{
+      "name":"ListDomainNames",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/domainnames"
+      },
+      "input":{"shape":"ListDomainNamesRequest"},
+      "output":{"shape":"ListDomainNamesResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
         {"shape":"InternalFailureException"}
       ]
     },
@@ -464,6 +713,21 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListSourceApiAssociations":{
+      "name":"ListSourceApiAssociations",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/apis/{apiId}/sourceApiAssociations"
+      },
+      "input":{"shape":"ListSourceApiAssociationsRequest"},
+      "output":{"shape":"ListSourceApiAssociationsResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
       "http":{
@@ -497,6 +761,54 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "ListTypesByAssociation":{
+      "name":"ListTypesByAssociation",
+      "http":{
+        "method":"GET",
+        "requestUri":"/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}/types"
+      },
+      "input":{"shape":"ListTypesByAssociationRequest"},
+      "output":{"shape":"ListTypesByAssociationResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"}
+      ]
+    },
+    "PutGraphqlApiEnvironmentVariables":{
+      "name":"PutGraphqlApiEnvironmentVariables",
+      "http":{
+        "method":"PUT",
+        "requestUri":"/v1/apis/{apiId}/environmentVariables"
+      },
+      "input":{"shape":"PutGraphqlApiEnvironmentVariablesRequest"},
+      "output":{"shape":"PutGraphqlApiEnvironmentVariablesResponse"},
+      "errors":[
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"AccessDeniedException"}
+      ]
+    },
+    "StartDataSourceIntrospection":{
+      "name":"StartDataSourceIntrospection",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/datasources/introspections"
+      },
+      "input":{"shape":"StartDataSourceIntrospectionRequest"},
+      "output":{"shape":"StartDataSourceIntrospectionResponse"},
+      "errors":[
+        {"shape":"NotFoundException"},
+        {"shape":"UnauthorizedException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
     "StartSchemaCreation":{
       "name":"StartSchemaCreation",
       "http":{
@@ -511,6 +823,22 @@
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
         {"shape":"InternalFailureException"}
+      ]
+    },
+    "StartSchemaMerge":{
+      "name":"StartSchemaMerge",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}/merge"
+      },
+      "input":{"shape":"StartSchemaMergeRequest"},
+      "output":{"shape":"StartSchemaMergeResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "TagResource":{
@@ -596,6 +924,22 @@
         {"shape":"InternalFailureException"}
       ]
     },
+    "UpdateDomainName":{
+      "name":"UpdateDomainName",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/domainnames/{domainName}"
+      },
+      "input":{"shape":"UpdateDomainNameRequest"},
+      "output":{"shape":"UpdateDomainNameResponse"},
+      "errors":[
+        {"shape":"AccessDeniedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"ConcurrentModificationException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"}
+      ]
+    },
     "UpdateFunction":{
       "name":"UpdateFunction",
       "http":{
@@ -608,7 +952,8 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
       ]
     },
     "UpdateGraphqlApi":{
@@ -640,7 +985,24 @@
         {"shape":"ConcurrentModificationException"},
         {"shape":"NotFoundException"},
         {"shape":"UnauthorizedException"},
-        {"shape":"InternalFailureException"}
+        {"shape":"InternalFailureException"},
+        {"shape":"BadRequestException"}
+      ]
+    },
+    "UpdateSourceApiAssociation":{
+      "name":"UpdateSourceApiAssociation",
+      "http":{
+        "method":"POST",
+        "requestUri":"/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}"
+      },
+      "input":{"shape":"UpdateSourceApiAssociationRequest"},
+      "output":{"shape":"UpdateSourceApiAssociationResponse"},
+      "errors":[
+        {"shape":"UnauthorizedException"},
+        {"shape":"BadRequestException"},
+        {"shape":"InternalFailureException"},
+        {"shape":"NotFoundException"},
+        {"shape":"ConcurrentModificationException"}
       ]
     },
     "UpdateType":{
@@ -682,6 +1044,15 @@
       "type":"list",
       "member":{"shape":"AdditionalAuthenticationProvider"}
     },
+    "ApiAssociation":{
+      "type":"structure",
+      "members":{
+        "domainName":{"shape":"DomainName"},
+        "apiId":{"shape":"String"},
+        "associationStatus":{"shape":"AssociationStatus"},
+        "deploymentDetail":{"shape":"String"}
+      }
+    },
     "ApiCache":{
       "type":"structure",
       "members":{
@@ -690,7 +1061,8 @@
         "transitEncryptionEnabled":{"shape":"Boolean"},
         "atRestEncryptionEnabled":{"shape":"Boolean"},
         "type":{"shape":"ApiCacheType"},
-        "status":{"shape":"ApiCacheStatus"}
+        "status":{"shape":"ApiCacheStatus"},
+        "healthMetricsConfig":{"shape":"CacheHealthMetricsConfig"}
       }
     },
     "ApiCacheStatus":{
@@ -767,6 +1139,92 @@
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "AppSyncRuntime":{
+      "type":"structure",
+      "required":[
+        "name",
+        "runtimeVersion"
+      ],
+      "members":{
+        "name":{"shape":"RuntimeName"},
+        "runtimeVersion":{"shape":"String"}
+      }
+    },
+    "AssociateApiRequest":{
+      "type":"structure",
+      "required":[
+        "domainName",
+        "apiId"
+      ],
+      "members":{
+        "domainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"domainName"
+        },
+        "apiId":{"shape":"String"}
+      }
+    },
+    "AssociateApiResponse":{
+      "type":"structure",
+      "members":{
+        "apiAssociation":{"shape":"ApiAssociation"}
+      }
+    },
+    "AssociateMergedGraphqlApiRequest":{
+      "type":"structure",
+      "required":[
+        "sourceApiIdentifier",
+        "mergedApiIdentifier"
+      ],
+      "members":{
+        "sourceApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"sourceApiIdentifier"
+        },
+        "mergedApiIdentifier":{"shape":"String"},
+        "description":{"shape":"String"},
+        "sourceApiAssociationConfig":{"shape":"SourceApiAssociationConfig"}
+      }
+    },
+    "AssociateMergedGraphqlApiResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociation":{"shape":"SourceApiAssociation"}
+      }
+    },
+    "AssociateSourceGraphqlApiRequest":{
+      "type":"structure",
+      "required":[
+        "mergedApiIdentifier",
+        "sourceApiIdentifier"
+      ],
+      "members":{
+        "mergedApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"mergedApiIdentifier"
+        },
+        "sourceApiIdentifier":{"shape":"String"},
+        "description":{"shape":"String"},
+        "sourceApiAssociationConfig":{"shape":"SourceApiAssociationConfig"}
+      }
+    },
+    "AssociateSourceGraphqlApiResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociation":{"shape":"SourceApiAssociation"}
+      }
+    },
+    "AssociationStatus":{
+      "type":"string",
+      "enum":[
+        "PROCESSING",
+        "FAILED",
+        "SUCCESS"
+      ]
+    },
     "AuthenticationType":{
       "type":"string",
       "enum":[
@@ -796,19 +1254,39 @@
         "signingServiceName":{"shape":"String"}
       }
     },
+    "BadRequestDetail":{
+      "type":"structure",
+      "members":{
+        "codeErrors":{"shape":"CodeErrors"}
+      }
+    },
     "BadRequestException":{
       "type":"structure",
       "members":{
-        "message":{"shape":"ErrorMessage"}
+        "message":{"shape":"ErrorMessage"},
+        "reason":{"shape":"BadRequestReason"},
+        "detail":{"shape":"BadRequestDetail"}
       },
       "error":{"httpStatusCode":400},
       "exception":true
     },
+    "BadRequestReason":{
+      "type":"string",
+      "enum":["CODE_ERROR"]
+    },
     "Blob":{"type":"blob"},
     "Boolean":{"type":"boolean"},
     "BooleanValue":{"type":"boolean"},
+    "CacheHealthMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "CachingConfig":{
       "type":"structure",
+      "required":["ttl"],
       "members":{
         "ttl":{"shape":"Long"},
         "cachingKeys":{"shape":"CachingKeys"}
@@ -817,6 +1295,40 @@
     "CachingKeys":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "CertificateArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z-]*:(acm|iam):[a-z0-9-]*:\\d{12}:(certificate|server-certificate)/[0-9A-Za-z_/-]*$"
+    },
+    "Code":{
+      "type":"string",
+      "max":32768,
+      "min":1
+    },
+    "CodeError":{
+      "type":"structure",
+      "members":{
+        "errorType":{"shape":"String"},
+        "value":{"shape":"String"},
+        "location":{"shape":"CodeErrorLocation"}
+      }
+    },
+    "CodeErrorColumn":{"type":"integer"},
+    "CodeErrorLine":{"type":"integer"},
+    "CodeErrorLocation":{
+      "type":"structure",
+      "members":{
+        "line":{"shape":"CodeErrorLine"},
+        "column":{"shape":"CodeErrorColumn"},
+        "span":{"shape":"CodeErrorSpan"}
+      }
+    },
+    "CodeErrorSpan":{"type":"integer"},
+    "CodeErrors":{
+      "type":"list",
+      "member":{"shape":"CodeError"}
     },
     "CognitoUserPoolConfig":{
       "type":"structure",
@@ -854,6 +1366,12 @@
         "NONE"
       ]
     },
+    "Context":{
+      "type":"string",
+      "max":28000,
+      "min":2,
+      "pattern":"^[\\s\\S]*$"
+    },
     "CreateApiCacheRequest":{
       "type":"structure",
       "required":[
@@ -872,7 +1390,8 @@
         "transitEncryptionEnabled":{"shape":"Boolean"},
         "atRestEncryptionEnabled":{"shape":"Boolean"},
         "apiCachingBehavior":{"shape":"ApiCachingBehavior"},
-        "type":{"shape":"ApiCacheType"}
+        "type":{"shape":"ApiCacheType"},
+        "healthMetricsConfig":{"shape":"CacheHealthMetricsConfig"}
       }
     },
     "CreateApiCacheResponse":{
@@ -920,8 +1439,11 @@
         "dynamodbConfig":{"shape":"DynamodbDataSourceConfig"},
         "lambdaConfig":{"shape":"LambdaDataSourceConfig"},
         "elasticsearchConfig":{"shape":"ElasticsearchDataSourceConfig"},
+        "openSearchServiceConfig":{"shape":"OpenSearchServiceDataSourceConfig"},
         "httpConfig":{"shape":"HttpDataSourceConfig"},
-        "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"}
+        "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"},
+        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"},
+        "metricsConfig":{"shape":"DataSourceLevelMetricsConfig"}
       }
     },
     "CreateDataSourceResponse":{
@@ -930,13 +1452,30 @@
         "dataSource":{"shape":"DataSource"}
       }
     },
+    "CreateDomainNameRequest":{
+      "type":"structure",
+      "required":[
+        "domainName",
+        "certificateArn"
+      ],
+      "members":{
+        "domainName":{"shape":"DomainName"},
+        "certificateArn":{"shape":"CertificateArn"},
+        "description":{"shape":"Description"}
+      }
+    },
+    "CreateDomainNameResponse":{
+      "type":"structure",
+      "members":{
+        "domainNameConfig":{"shape":"DomainNameConfig"}
+      }
+    },
     "CreateFunctionRequest":{
       "type":"structure",
       "required":[
         "apiId",
         "name",
-        "dataSourceName",
-        "functionVersion"
+        "dataSourceName"
       ],
       "members":{
         "apiId":{
@@ -950,7 +1489,10 @@
         "requestMappingTemplate":{"shape":"MappingTemplate"},
         "responseMappingTemplate":{"shape":"MappingTemplate"},
         "functionVersion":{"shape":"String"},
-        "syncConfig":{"shape":"SyncConfig"}
+        "syncConfig":{"shape":"SyncConfig"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "runtime":{"shape":"AppSyncRuntime"},
+        "code":{"shape":"Code"}
       }
     },
     "CreateFunctionResponse":{
@@ -974,7 +1516,15 @@
         "tags":{"shape":"TagMap"},
         "additionalAuthenticationProviders":{"shape":"AdditionalAuthenticationProviders"},
         "xrayEnabled":{"shape":"Boolean"},
-        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"},
+        "visibility":{"shape":"GraphQLApiVisibility"},
+        "apiType":{"shape":"GraphQLApiType"},
+        "mergedApiExecutionRoleArn":{"shape":"String"},
+        "ownerContact":{"shape":"String"},
+        "introspectionConfig":{"shape":"GraphQLApiIntrospectionConfig"},
+        "queryDepthLimit":{"shape":"QueryDepthLimit"},
+        "resolverCountLimit":{"shape":"ResolverCountLimit"},
+        "enhancedMetricsConfig":{"shape":"EnhancedMetricsConfig"}
       }
     },
     "CreateGraphqlApiResponse":{
@@ -1008,7 +1558,11 @@
         "kind":{"shape":"ResolverKind"},
         "pipelineConfig":{"shape":"PipelineConfig"},
         "syncConfig":{"shape":"SyncConfig"},
-        "cachingConfig":{"shape":"CachingConfig"}
+        "cachingConfig":{"shape":"CachingConfig"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "runtime":{"shape":"AppSyncRuntime"},
+        "code":{"shape":"Code"},
+        "metricsConfig":{"shape":"ResolverLevelMetricsConfig"}
       }
     },
     "CreateResolverResponse":{
@@ -1051,9 +1605,95 @@
         "dynamodbConfig":{"shape":"DynamodbDataSourceConfig"},
         "lambdaConfig":{"shape":"LambdaDataSourceConfig"},
         "elasticsearchConfig":{"shape":"ElasticsearchDataSourceConfig"},
+        "openSearchServiceConfig":{"shape":"OpenSearchServiceDataSourceConfig"},
         "httpConfig":{"shape":"HttpDataSourceConfig"},
-        "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"}
+        "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"},
+        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"},
+        "metricsConfig":{"shape":"DataSourceLevelMetricsConfig"}
       }
+    },
+    "DataSourceIntrospectionModel":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "fields":{"shape":"DataSourceIntrospectionModelFields"},
+        "primaryKey":{"shape":"DataSourceIntrospectionModelIndex"},
+        "indexes":{"shape":"DataSourceIntrospectionModelIndexes"},
+        "sdl":{"shape":"String"}
+      }
+    },
+    "DataSourceIntrospectionModelField":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "type":{"shape":"DataSourceIntrospectionModelFieldType"},
+        "length":{"shape":"Long"}
+      }
+    },
+    "DataSourceIntrospectionModelFieldType":{
+      "type":"structure",
+      "members":{
+        "kind":{"shape":"String"},
+        "name":{"shape":"String"},
+        "type":{"shape":"DataSourceIntrospectionModelFieldType"},
+        "values":{"shape":"DataSourceIntrospectionModelFieldTypeValues"}
+      }
+    },
+    "DataSourceIntrospectionModelFieldTypeValues":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "DataSourceIntrospectionModelFields":{
+      "type":"list",
+      "member":{"shape":"DataSourceIntrospectionModelField"}
+    },
+    "DataSourceIntrospectionModelIndex":{
+      "type":"structure",
+      "members":{
+        "name":{"shape":"String"},
+        "fields":{"shape":"DataSourceIntrospectionModelIndexFields"}
+      }
+    },
+    "DataSourceIntrospectionModelIndexFields":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
+    "DataSourceIntrospectionModelIndexes":{
+      "type":"list",
+      "member":{"shape":"DataSourceIntrospectionModelIndex"}
+    },
+    "DataSourceIntrospectionModels":{
+      "type":"list",
+      "member":{"shape":"DataSourceIntrospectionModel"}
+    },
+    "DataSourceIntrospectionResult":{
+      "type":"structure",
+      "members":{
+        "models":{"shape":"DataSourceIntrospectionModels"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
+    "DataSourceIntrospectionStatus":{
+      "type":"string",
+      "enum":[
+        "PROCESSING",
+        "FAILED",
+        "SUCCESS"
+      ]
+    },
+    "DataSourceLevelMetricsBehavior":{
+      "type":"string",
+      "enum":[
+        "FULL_REQUEST_DATA_SOURCE_METRICS",
+        "PER_DATA_SOURCE_METRICS"
+      ]
+    },
+    "DataSourceLevelMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
     },
     "DataSourceType":{
       "type":"string",
@@ -1063,13 +1703,16 @@
         "AMAZON_ELASTICSEARCH",
         "NONE",
         "HTTP",
-        "RELATIONAL_DATABASE"
+        "RELATIONAL_DATABASE",
+        "AMAZON_OPENSEARCH_SERVICE",
+        "AMAZON_EVENTBRIDGE"
       ]
     },
     "DataSources":{
       "type":"list",
       "member":{"shape":"DataSource"}
     },
+    "Date":{"type":"timestamp"},
     "DefaultAction":{
       "type":"string",
       "enum":[
@@ -1137,6 +1780,22 @@
       }
     },
     "DeleteDataSourceResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteDomainNameRequest":{
+      "type":"structure",
+      "required":["domainName"],
+      "members":{
+        "domainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"domainName"
+        }
+      }
+    },
+    "DeleteDomainNameResponse":{
       "type":"structure",
       "members":{
       }
@@ -1243,6 +1902,98 @@
         "deltaSyncTableTTL":{"shape":"Long"}
       }
     },
+    "Description":{
+      "type":"string",
+      "max":255,
+      "min":0,
+      "pattern":"^.*$"
+    },
+    "DisassociateApiRequest":{
+      "type":"structure",
+      "required":["domainName"],
+      "members":{
+        "domainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"domainName"
+        }
+      }
+    },
+    "DisassociateApiResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DisassociateMergedGraphqlApiRequest":{
+      "type":"structure",
+      "required":[
+        "sourceApiIdentifier",
+        "associationId"
+      ],
+      "members":{
+        "sourceApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"sourceApiIdentifier"
+        },
+        "associationId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"associationId"
+        }
+      }
+    },
+    "DisassociateMergedGraphqlApiResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociationStatus":{"shape":"SourceApiAssociationStatus"}
+      }
+    },
+    "DisassociateSourceGraphqlApiRequest":{
+      "type":"structure",
+      "required":[
+        "mergedApiIdentifier",
+        "associationId"
+      ],
+      "members":{
+        "mergedApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"mergedApiIdentifier"
+        },
+        "associationId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"associationId"
+        }
+      }
+    },
+    "DisassociateSourceGraphqlApiResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociationStatus":{"shape":"SourceApiAssociationStatus"}
+      }
+    },
+    "DomainName":{
+      "type":"string",
+      "max":253,
+      "min":1,
+      "pattern":"^(\\*[\\w\\d-]*\\.)?([\\w\\d-]+\\.)+[\\w\\d-]+$"
+    },
+    "DomainNameConfig":{
+      "type":"structure",
+      "members":{
+        "domainName":{"shape":"DomainName"},
+        "description":{"shape":"Description"},
+        "certificateArn":{"shape":"CertificateArn"},
+        "appsyncDomainName":{"shape":"String"},
+        "hostedZoneId":{"shape":"String"}
+      }
+    },
+    "DomainNameConfigs":{
+      "type":"list",
+      "member":{"shape":"DomainNameConfig"}
+    },
     "DynamodbDataSourceConfig":{
       "type":"structure",
       "required":[
@@ -1268,7 +2019,105 @@
         "awsRegion":{"shape":"String"}
       }
     },
+    "EnhancedMetricsConfig":{
+      "type":"structure",
+      "required":[
+        "resolverLevelMetricsBehavior",
+        "dataSourceLevelMetricsBehavior",
+        "operationLevelMetricsConfig"
+      ],
+      "members":{
+        "resolverLevelMetricsBehavior":{"shape":"ResolverLevelMetricsBehavior"},
+        "dataSourceLevelMetricsBehavior":{"shape":"DataSourceLevelMetricsBehavior"},
+        "operationLevelMetricsConfig":{"shape":"OperationLevelMetricsConfig"}
+      }
+    },
+    "EnvironmentVariableKey":{
+      "type":"string",
+      "max":64,
+      "min":2,
+      "pattern":"^[A-Za-z]+\\w*$"
+    },
+    "EnvironmentVariableMap":{
+      "type":"map",
+      "key":{"shape":"EnvironmentVariableKey"},
+      "value":{"shape":"EnvironmentVariableValue"},
+      "max":50,
+      "min":0
+    },
+    "EnvironmentVariableValue":{
+      "type":"string",
+      "max":512,
+      "min":0
+    },
+    "ErrorDetail":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"}
+      }
+    },
     "ErrorMessage":{"type":"string"},
+    "EvaluateCodeErrorDetail":{
+      "type":"structure",
+      "members":{
+        "message":{"shape":"ErrorMessage"},
+        "codeErrors":{"shape":"CodeErrors"}
+      }
+    },
+    "EvaluateCodeRequest":{
+      "type":"structure",
+      "required":[
+        "runtime",
+        "code",
+        "context"
+      ],
+      "members":{
+        "runtime":{"shape":"AppSyncRuntime"},
+        "code":{"shape":"Code"},
+        "context":{"shape":"Context"},
+        "function":{"shape":"String"}
+      }
+    },
+    "EvaluateCodeResponse":{
+      "type":"structure",
+      "members":{
+        "evaluationResult":{"shape":"EvaluationResult"},
+        "error":{"shape":"EvaluateCodeErrorDetail"},
+        "logs":{"shape":"Logs"}
+      }
+    },
+    "EvaluateMappingTemplateRequest":{
+      "type":"structure",
+      "required":[
+        "template",
+        "context"
+      ],
+      "members":{
+        "template":{"shape":"Template"},
+        "context":{"shape":"Context"}
+      }
+    },
+    "EvaluateMappingTemplateResponse":{
+      "type":"structure",
+      "members":{
+        "evaluationResult":{"shape":"EvaluationResult"},
+        "error":{"shape":"ErrorDetail"},
+        "logs":{"shape":"Logs"}
+      }
+    },
+    "EvaluationResult":{
+      "type":"string",
+      "max":65536,
+      "min":0,
+      "pattern":"^[\\s\\S]*$"
+    },
+    "EventBridgeDataSourceConfig":{
+      "type":"structure",
+      "required":["eventBusArn"],
+      "members":{
+        "eventBusArn":{"shape":"String"}
+      }
+    },
     "FieldLogLevel":{
       "type":"string",
       "enum":[
@@ -1304,7 +2153,10 @@
         "requestMappingTemplate":{"shape":"MappingTemplate"},
         "responseMappingTemplate":{"shape":"MappingTemplate"},
         "functionVersion":{"shape":"String"},
-        "syncConfig":{"shape":"SyncConfig"}
+        "syncConfig":{"shape":"SyncConfig"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "runtime":{"shape":"AppSyncRuntime"},
+        "code":{"shape":"Code"}
       }
     },
     "Functions":{
@@ -1314,6 +2166,23 @@
     "FunctionsIds":{
       "type":"list",
       "member":{"shape":"String"}
+    },
+    "GetApiAssociationRequest":{
+      "type":"structure",
+      "required":["domainName"],
+      "members":{
+        "domainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"domainName"
+        }
+      }
+    },
+    "GetApiAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "apiAssociation":{"shape":"ApiAssociation"}
+      }
     },
     "GetApiCacheRequest":{
       "type":"structure",
@@ -1330,6 +2199,41 @@
       "type":"structure",
       "members":{
         "apiCache":{"shape":"ApiCache"}
+      }
+    },
+    "GetDataSourceIntrospectionRequest":{
+      "type":"structure",
+      "required":["introspectionId"],
+      "members":{
+        "introspectionId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"introspectionId"
+        },
+        "includeModelsSDL":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"includeModelsSDL"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "GetDataSourceIntrospectionResponse":{
+      "type":"structure",
+      "members":{
+        "introspectionId":{"shape":"String"},
+        "introspectionStatus":{"shape":"DataSourceIntrospectionStatus"},
+        "introspectionStatusDetail":{"shape":"String"},
+        "introspectionResult":{"shape":"DataSourceIntrospectionResult"}
       }
     },
     "GetDataSourceRequest":{
@@ -1357,6 +2261,23 @@
         "dataSource":{"shape":"DataSource"}
       }
     },
+    "GetDomainNameRequest":{
+      "type":"structure",
+      "required":["domainName"],
+      "members":{
+        "domainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"domainName"
+        }
+      }
+    },
+    "GetDomainNameResponse":{
+      "type":"structure",
+      "members":{
+        "domainNameConfig":{"shape":"DomainNameConfig"}
+      }
+    },
     "GetFunctionRequest":{
       "type":"structure",
       "required":[
@@ -1380,6 +2301,23 @@
       "type":"structure",
       "members":{
         "functionConfiguration":{"shape":"FunctionConfiguration"}
+      }
+    },
+    "GetGraphqlApiEnvironmentVariablesRequest":{
+      "type":"structure",
+      "required":["apiId"],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        }
+      }
+    },
+    "GetGraphqlApiEnvironmentVariablesResponse":{
+      "type":"structure",
+      "members":{
+        "environmentVariables":{"shape":"EnvironmentVariableMap"}
       }
     },
     "GetGraphqlApiRequest":{
@@ -1479,6 +2417,31 @@
         "details":{"shape":"String"}
       }
     },
+    "GetSourceApiAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "mergedApiIdentifier",
+        "associationId"
+      ],
+      "members":{
+        "mergedApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"mergedApiIdentifier"
+        },
+        "associationId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"associationId"
+        }
+      }
+    },
+    "GetSourceApiAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociation":{"shape":"SourceApiAssociation"}
+      }
+    },
     "GetTypeRequest":{
       "type":"structure",
       "required":[
@@ -1510,6 +2473,27 @@
         "type":{"shape":"Type"}
       }
     },
+    "GraphQLApiIntrospectionConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
+    "GraphQLApiType":{
+      "type":"string",
+      "enum":[
+        "GRAPHQL",
+        "MERGED"
+      ]
+    },
+    "GraphQLApiVisibility":{
+      "type":"string",
+      "enum":[
+        "GLOBAL",
+        "PRIVATE"
+      ]
+    },
     "GraphQLSchemaException":{
       "type":"structure",
       "members":{
@@ -1533,7 +2517,17 @@
         "additionalAuthenticationProviders":{"shape":"AdditionalAuthenticationProviders"},
         "xrayEnabled":{"shape":"Boolean"},
         "wafWebAclArn":{"shape":"String"},
-        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"},
+        "dns":{"shape":"MapOfStringToString"},
+        "visibility":{"shape":"GraphQLApiVisibility"},
+        "apiType":{"shape":"GraphQLApiType"},
+        "mergedApiExecutionRoleArn":{"shape":"String"},
+        "owner":{"shape":"String"},
+        "ownerContact":{"shape":"String"},
+        "introspectionConfig":{"shape":"GraphQLApiIntrospectionConfig"},
+        "queryDepthLimit":{"shape":"QueryDepthLimit"},
+        "resolverCountLimit":{"shape":"ResolverCountLimit"},
+        "enhancedMetricsConfig":{"shape":"EnhancedMetricsConfig"}
       }
     },
     "GraphqlApis":{
@@ -1642,6 +2636,28 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListDomainNamesRequest":{
+      "type":"structure",
+      "members":{
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListDomainNamesResponse":{
+      "type":"structure",
+      "members":{
+        "domainNameConfigs":{"shape":"DomainNameConfigs"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListFunctionsRequest":{
       "type":"structure",
       "required":["apiId"],
@@ -1682,6 +2698,16 @@
           "shape":"MaxResults",
           "location":"querystring",
           "locationName":"maxResults"
+        },
+        "apiType":{
+          "shape":"GraphQLApiType",
+          "location":"querystring",
+          "locationName":"apiType"
+        },
+        "owner":{
+          "shape":"Ownership",
+          "location":"querystring",
+          "locationName":"owner"
         }
       }
     },
@@ -1764,6 +2790,34 @@
         "nextToken":{"shape":"PaginationToken"}
       }
     },
+    "ListSourceApiAssociationsRequest":{
+      "type":"structure",
+      "required":["apiId"],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListSourceApiAssociationsResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociationSummaries":{"shape":"SourceApiAssociationSummaryList"},
+        "nextToken":{"shape":"PaginationToken"}
+      }
+    },
     "ListTagsForResourceRequest":{
       "type":"structure",
       "required":["resourceArn"],
@@ -1779,6 +2833,48 @@
       "type":"structure",
       "members":{
         "tags":{"shape":"TagMap"}
+      }
+    },
+    "ListTypesByAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "mergedApiIdentifier",
+        "associationId",
+        "format"
+      ],
+      "members":{
+        "mergedApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"mergedApiIdentifier"
+        },
+        "associationId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"associationId"
+        },
+        "format":{
+          "shape":"TypeDefinitionFormat",
+          "location":"querystring",
+          "locationName":"format"
+        },
+        "nextToken":{
+          "shape":"PaginationToken",
+          "location":"querystring",
+          "locationName":"nextToken"
+        },
+        "maxResults":{
+          "shape":"MaxResults",
+          "location":"querystring",
+          "locationName":"maxResults"
+        }
+      }
+    },
+    "ListTypesByAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "types":{"shape":"TypeList"},
+        "nextToken":{"shape":"PaginationToken"}
       }
     },
     "ListTypesRequest":{
@@ -1829,6 +2925,10 @@
         "excludeVerboseContent":{"shape":"Boolean"}
       }
     },
+    "Logs":{
+      "type":"list",
+      "member":{"shape":"String"}
+    },
     "Long":{"type":"long"},
     "MapOfStringToString":{
       "type":"map",
@@ -1838,12 +2938,25 @@
     "MappingTemplate":{
       "type":"string",
       "max":65536,
-      "min":1
+      "min":1,
+      "pattern":"^.*$"
+    },
+    "MaxBatchSize":{
+      "type":"integer",
+      "max":2000,
+      "min":0
     },
     "MaxResults":{
       "type":"integer",
       "max":25,
       "min":0
+    },
+    "MergeType":{
+      "type":"string",
+      "enum":[
+        "MANUAL_MERGE",
+        "AUTO_MERGE"
+      ]
     },
     "NotFoundException":{
       "type":"structure",
@@ -1863,11 +2976,36 @@
         "authTTL":{"shape":"Long"}
       }
     },
+    "OpenSearchServiceDataSourceConfig":{
+      "type":"structure",
+      "required":[
+        "endpoint",
+        "awsRegion"
+      ],
+      "members":{
+        "endpoint":{"shape":"String"},
+        "awsRegion":{"shape":"String"}
+      }
+    },
+    "OperationLevelMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
+      ]
+    },
     "OutputType":{
       "type":"string",
       "enum":[
         "SDL",
         "JSON"
+      ]
+    },
+    "Ownership":{
+      "type":"string",
+      "enum":[
+        "CURRENT_ACCOUNT",
+        "OTHER_ACCOUNTS"
       ]
     },
     "PaginationToken":{
@@ -1881,6 +3019,62 @@
       "members":{
         "functions":{"shape":"FunctionsIds"}
       }
+    },
+    "PutGraphqlApiEnvironmentVariablesRequest":{
+      "type":"structure",
+      "required":[
+        "apiId",
+        "environmentVariables"
+      ],
+      "members":{
+        "apiId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"apiId"
+        },
+        "environmentVariables":{"shape":"EnvironmentVariableMap"}
+      }
+    },
+    "PutGraphqlApiEnvironmentVariablesResponse":{
+      "type":"structure",
+      "members":{
+        "environmentVariables":{"shape":"EnvironmentVariableMap"}
+      }
+    },
+    "QueryDepthLimit":{
+      "type":"integer",
+      "max":75,
+      "min":0
+    },
+    "RdsDataApiConfig":{
+      "type":"structure",
+      "required":[
+        "resourceArn",
+        "secretArn",
+        "databaseName"
+      ],
+      "members":{
+        "resourceArn":{"shape":"RdsDataApiConfigResourceArn"},
+        "secretArn":{"shape":"RdsDataApiConfigSecretArn"},
+        "databaseName":{"shape":"RdsDataApiConfigDatabaseName"}
+      }
+    },
+    "RdsDataApiConfigDatabaseName":{
+      "type":"string",
+      "max":128,
+      "min":1
+    },
+    "RdsDataApiConfigResourceArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z-]*:rds:[a-z0-9-]*:\\d{12}:cluster:[0-9A-Za-z_/-]*$"
+    },
+    "RdsDataApiConfigSecretArn":{
+      "type":"string",
+      "max":2048,
+      "min":20,
+      "pattern":"^arn:[a-z-]*:secretsmanager:[a-z0-9-]*:\\d{12}:secret:[0-9A-Za-z_/+=.@!-]*$"
     },
     "RdsHttpEndpointConfig":{
       "type":"structure",
@@ -1915,14 +3109,37 @@
         "kind":{"shape":"ResolverKind"},
         "pipelineConfig":{"shape":"PipelineConfig"},
         "syncConfig":{"shape":"SyncConfig"},
-        "cachingConfig":{"shape":"CachingConfig"}
+        "cachingConfig":{"shape":"CachingConfig"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "runtime":{"shape":"AppSyncRuntime"},
+        "code":{"shape":"Code"},
+        "metricsConfig":{"shape":"ResolverLevelMetricsConfig"}
       }
+    },
+    "ResolverCountLimit":{
+      "type":"integer",
+      "max":10000,
+      "min":0
     },
     "ResolverKind":{
       "type":"string",
       "enum":[
         "UNIT",
         "PIPELINE"
+      ]
+    },
+    "ResolverLevelMetricsBehavior":{
+      "type":"string",
+      "enum":[
+        "FULL_REQUEST_RESOLVER_METRICS",
+        "PER_RESOLVER_METRICS"
+      ]
+    },
+    "ResolverLevelMetricsConfig":{
+      "type":"string",
+      "enum":[
+        "ENABLED",
+        "DISABLED"
       ]
     },
     "Resolvers":{
@@ -1941,6 +3158,10 @@
       "min":1,
       "pattern":"[_A-Za-z][_0-9A-Za-z]*"
     },
+    "RuntimeName":{
+      "type":"string",
+      "enum":["APPSYNC_JS"]
+    },
     "SchemaStatus":{
       "type":"string",
       "enum":[
@@ -1951,6 +3172,71 @@
         "SUCCESS",
         "NOT_APPLICABLE"
       ]
+    },
+    "SourceApiAssociation":{
+      "type":"structure",
+      "members":{
+        "associationId":{"shape":"String"},
+        "associationArn":{"shape":"String"},
+        "sourceApiId":{"shape":"String"},
+        "sourceApiArn":{"shape":"String"},
+        "mergedApiArn":{"shape":"String"},
+        "mergedApiId":{"shape":"String"},
+        "description":{"shape":"String"},
+        "sourceApiAssociationConfig":{"shape":"SourceApiAssociationConfig"},
+        "sourceApiAssociationStatus":{"shape":"SourceApiAssociationStatus"},
+        "sourceApiAssociationStatusDetail":{"shape":"String"},
+        "lastSuccessfulMergeDate":{"shape":"Date"}
+      }
+    },
+    "SourceApiAssociationConfig":{
+      "type":"structure",
+      "members":{
+        "mergeType":{"shape":"MergeType"}
+      }
+    },
+    "SourceApiAssociationStatus":{
+      "type":"string",
+      "enum":[
+        "MERGE_SCHEDULED",
+        "MERGE_FAILED",
+        "MERGE_SUCCESS",
+        "MERGE_IN_PROGRESS",
+        "AUTO_MERGE_SCHEDULE_FAILED",
+        "DELETION_SCHEDULED",
+        "DELETION_IN_PROGRESS",
+        "DELETION_FAILED"
+      ]
+    },
+    "SourceApiAssociationSummary":{
+      "type":"structure",
+      "members":{
+        "associationId":{"shape":"String"},
+        "associationArn":{"shape":"String"},
+        "sourceApiId":{"shape":"String"},
+        "sourceApiArn":{"shape":"String"},
+        "mergedApiId":{"shape":"String"},
+        "mergedApiArn":{"shape":"String"},
+        "description":{"shape":"String"}
+      }
+    },
+    "SourceApiAssociationSummaryList":{
+      "type":"list",
+      "member":{"shape":"SourceApiAssociationSummary"}
+    },
+    "StartDataSourceIntrospectionRequest":{
+      "type":"structure",
+      "members":{
+        "rdsDataApiConfig":{"shape":"RdsDataApiConfig"}
+      }
+    },
+    "StartDataSourceIntrospectionResponse":{
+      "type":"structure",
+      "members":{
+        "introspectionId":{"shape":"String"},
+        "introspectionStatus":{"shape":"DataSourceIntrospectionStatus"},
+        "introspectionStatusDetail":{"shape":"String"}
+      }
     },
     "StartSchemaCreationRequest":{
       "type":"structure",
@@ -1971,6 +3257,31 @@
       "type":"structure",
       "members":{
         "status":{"shape":"SchemaStatus"}
+      }
+    },
+    "StartSchemaMergeRequest":{
+      "type":"structure",
+      "required":[
+        "associationId",
+        "mergedApiIdentifier"
+      ],
+      "members":{
+        "associationId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"associationId"
+        },
+        "mergedApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"mergedApiIdentifier"
+        }
+      }
+    },
+    "StartSchemaMergeResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociationStatus":{"shape":"SourceApiAssociationStatus"}
       }
     },
     "String":{"type":"string"},
@@ -2028,7 +3339,14 @@
     },
     "TagValue":{
       "type":"string",
-      "max":256
+      "max":256,
+      "pattern":"^[\\s\\w+-=\\.:/@]*$"
+    },
+    "Template":{
+      "type":"string",
+      "max":65536,
+      "min":2,
+      "pattern":"^[\\s\\S]*$"
     },
     "Type":{
       "type":"structure",
@@ -2099,7 +3417,8 @@
         },
         "ttl":{"shape":"Long"},
         "apiCachingBehavior":{"shape":"ApiCachingBehavior"},
-        "type":{"shape":"ApiCacheType"}
+        "type":{"shape":"ApiCacheType"},
+        "healthMetricsConfig":{"shape":"CacheHealthMetricsConfig"}
       }
     },
     "UpdateApiCacheResponse":{
@@ -2159,8 +3478,11 @@
         "dynamodbConfig":{"shape":"DynamodbDataSourceConfig"},
         "lambdaConfig":{"shape":"LambdaDataSourceConfig"},
         "elasticsearchConfig":{"shape":"ElasticsearchDataSourceConfig"},
+        "openSearchServiceConfig":{"shape":"OpenSearchServiceDataSourceConfig"},
         "httpConfig":{"shape":"HttpDataSourceConfig"},
-        "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"}
+        "relationalDatabaseConfig":{"shape":"RelationalDatabaseDataSourceConfig"},
+        "eventBridgeConfig":{"shape":"EventBridgeDataSourceConfig"},
+        "metricsConfig":{"shape":"DataSourceLevelMetricsConfig"}
       }
     },
     "UpdateDataSourceResponse":{
@@ -2169,14 +3491,31 @@
         "dataSource":{"shape":"DataSource"}
       }
     },
+    "UpdateDomainNameRequest":{
+      "type":"structure",
+      "required":["domainName"],
+      "members":{
+        "domainName":{
+          "shape":"DomainName",
+          "location":"uri",
+          "locationName":"domainName"
+        },
+        "description":{"shape":"Description"}
+      }
+    },
+    "UpdateDomainNameResponse":{
+      "type":"structure",
+      "members":{
+        "domainNameConfig":{"shape":"DomainNameConfig"}
+      }
+    },
     "UpdateFunctionRequest":{
       "type":"structure",
       "required":[
         "apiId",
         "name",
         "functionId",
-        "dataSourceName",
-        "functionVersion"
+        "dataSourceName"
       ],
       "members":{
         "apiId":{
@@ -2195,7 +3534,10 @@
         "requestMappingTemplate":{"shape":"MappingTemplate"},
         "responseMappingTemplate":{"shape":"MappingTemplate"},
         "functionVersion":{"shape":"String"},
-        "syncConfig":{"shape":"SyncConfig"}
+        "syncConfig":{"shape":"SyncConfig"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "runtime":{"shape":"AppSyncRuntime"},
+        "code":{"shape":"Code"}
       }
     },
     "UpdateFunctionResponse":{
@@ -2208,7 +3550,8 @@
       "type":"structure",
       "required":[
         "apiId",
-        "name"
+        "name",
+        "authenticationType"
       ],
       "members":{
         "apiId":{
@@ -2223,7 +3566,13 @@
         "openIDConnectConfig":{"shape":"OpenIDConnectConfig"},
         "additionalAuthenticationProviders":{"shape":"AdditionalAuthenticationProviders"},
         "xrayEnabled":{"shape":"Boolean"},
-        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"}
+        "lambdaAuthorizerConfig":{"shape":"LambdaAuthorizerConfig"},
+        "mergedApiExecutionRoleArn":{"shape":"String"},
+        "ownerContact":{"shape":"String"},
+        "introspectionConfig":{"shape":"GraphQLApiIntrospectionConfig"},
+        "queryDepthLimit":{"shape":"QueryDepthLimit"},
+        "resolverCountLimit":{"shape":"ResolverCountLimit"},
+        "enhancedMetricsConfig":{"shape":"EnhancedMetricsConfig"}
       }
     },
     "UpdateGraphqlApiResponse":{
@@ -2261,13 +3610,44 @@
         "kind":{"shape":"ResolverKind"},
         "pipelineConfig":{"shape":"PipelineConfig"},
         "syncConfig":{"shape":"SyncConfig"},
-        "cachingConfig":{"shape":"CachingConfig"}
+        "cachingConfig":{"shape":"CachingConfig"},
+        "maxBatchSize":{"shape":"MaxBatchSize"},
+        "runtime":{"shape":"AppSyncRuntime"},
+        "code":{"shape":"Code"},
+        "metricsConfig":{"shape":"ResolverLevelMetricsConfig"}
       }
     },
     "UpdateResolverResponse":{
       "type":"structure",
       "members":{
         "resolver":{"shape":"Resolver"}
+      }
+    },
+    "UpdateSourceApiAssociationRequest":{
+      "type":"structure",
+      "required":[
+        "associationId",
+        "mergedApiIdentifier"
+      ],
+      "members":{
+        "associationId":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"associationId"
+        },
+        "mergedApiIdentifier":{
+          "shape":"String",
+          "location":"uri",
+          "locationName":"mergedApiIdentifier"
+        },
+        "description":{"shape":"String"},
+        "sourceApiAssociationConfig":{"shape":"SourceApiAssociationConfig"}
+      }
+    },
+    "UpdateSourceApiAssociationResponse":{
+      "type":"structure",
+      "members":{
+        "sourceApiAssociation":{"shape":"SourceApiAssociation"}
       }
     },
     "UpdateTypeRequest":{

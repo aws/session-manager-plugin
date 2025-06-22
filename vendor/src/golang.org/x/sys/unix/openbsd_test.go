@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build openbsd
+//go:build openbsd
 
 // This, on the face of it, bizarre testing mechanism is necessary because
 // the only reliable way to gauge whether or not a pledge(2) call has succeeded
@@ -13,7 +13,6 @@ package unix_test
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -87,11 +86,11 @@ func TestMain(m *testing.M) {
 func init() {
 	testProcs["pledge"] = testProc{
 		func() {
-			fmt.Println(unix.Pledge("", nil))
+			fmt.Println(unix.Pledge("", ""))
 			os.Exit(0)
 		},
 		func() error {
-			files, err := ioutil.ReadDir(".")
+			files, err := os.ReadDir(".")
 			if err != nil {
 				return err
 			}

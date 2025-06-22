@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build !windows
+//go:build !windows && !js && !wasip1
 
 package test
 
 // direct-tcpip and direct-streamlocal functional tests
 
 import (
+	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	"strings"
 	"testing"
@@ -24,7 +24,6 @@ type dialTester interface {
 
 func testDial(t *testing.T, n, listenAddr string, x dialTester) {
 	server := newServer(t)
-	defer server.Shutdown()
 	sshConn := server.Dial(clientConfig())
 	defer sshConn.Close()
 
@@ -48,13 +47,17 @@ func testDial(t *testing.T, n, listenAddr string, x dialTester) {
 		}
 	}()
 
-	conn, err := sshConn.Dial(n, l.Addr().String())
+	ctx, cancel := context.WithCancel(context.Background())
+	conn, err := sshConn.DialContext(ctx, n, l.Addr().String())
+	// Canceling the context after dial should have no effect
+	// on the opened connection.
+	cancel()
 	if err != nil {
 		t.Fatalf("Dial: %v", err)
 	}
 	x.TestClientConn(t, conn)
 	defer conn.Close()
-	b, err := ioutil.ReadAll(conn)
+	b, err := io.ReadAll(conn)
 	if err != nil {
 		t.Fatalf("ReadAll: %v", err)
 	}
@@ -104,8 +107,8 @@ func (x *unixDialTester) TestServerConn(t *testing.T, c net.Conn) {
 	if c.LocalAddr().String() != x.listenAddr {
 		t.Fatalf("expected %q, got %q", x.listenAddr, c.LocalAddr().String())
 	}
-	if c.RemoteAddr().String() != "@" {
-		t.Fatalf("expected \"@\", got %q", c.RemoteAddr().String())
+	if c.RemoteAddr().String() != "@" && c.RemoteAddr().String() != "" {
+		t.Fatalf("expected \"@\" or \"\", got %q", c.RemoteAddr().String())
 	}
 }
 

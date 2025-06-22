@@ -8,11 +8,23 @@ import (
 
 const (
 
+	// ErrCodeEKSRequestThrottledException for service response error code
+	// "EKSRequestThrottledException".
+	//
+	// The request exceeded the Amazon EKS API operation limits.
+	ErrCodeEKSRequestThrottledException = "EKSRequestThrottledException"
+
 	// ErrCodeInternalServerException for service response error code
 	// "InternalServerException".
 	//
 	// This is an internal server exception.
 	ErrCodeInternalServerException = "InternalServerException"
+
+	// ErrCodeRequestThrottledException for service response error code
+	// "RequestThrottledException".
+	//
+	// The request throttled.
+	ErrCodeRequestThrottledException = "RequestThrottledException"
 
 	// ErrCodeResourceNotFoundException for service response error code
 	// "ResourceNotFoundException".
@@ -28,7 +40,9 @@ const (
 )
 
 var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
-	"InternalServerException":   newErrorInternalServerException,
-	"ResourceNotFoundException": newErrorResourceNotFoundException,
-	"ValidationException":       newErrorValidationException,
+	"EKSRequestThrottledException": newErrorEKSRequestThrottledException,
+	"InternalServerException":      newErrorInternalServerException,
+	"RequestThrottledException":    newErrorRequestThrottledException,
+	"ResourceNotFoundException":    newErrorResourceNotFoundException,
+	"ValidationException":          newErrorValidationException,
 }

@@ -1,3 +1,4 @@
+//go:build codegen
 // +build codegen
 
 package api
@@ -5,15 +6,14 @@ package api
 import (
 	"bufio"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"html"
 	"io"
+	"log"
 	"os"
 	"regexp"
 	"strings"
-
-	xhtml "golang.org/x/net/html"
-	"golang.org/x/net/html/atom"
 )
 
 type apiDocumentation struct {
@@ -49,8 +49,7 @@ func (d *apiDocumentation) setup(a *API) error {
 
 	for opName, doc := range d.Operations {
 		if _, ok := a.Operations[opName]; !ok {
-			return fmt.Errorf("%s, doc op %q not found in API op set",
-				a.name, opName)
+			continue
 		}
 		a.Operations[opName].Documentation = docstring(doc)
 	}
@@ -224,12 +223,17 @@ func getLeadingWhitespace(v string) string {
 
 // generateDoc will generate the proper doc string for html encoded or plain text doc entries.
 func generateDoc(htmlSrc string) string {
-	tokenizer := xhtml.NewTokenizer(strings.NewReader(htmlSrc))
-	var builder strings.Builder
-	if err := encodeHTMLToText(&builder, tokenizer); err != nil {
-		panic(fmt.Sprintf("failed to generated docs, %v", err))
-	}
+	tokenizer := xml.NewDecoder(strings.NewReader(htmlSrc))
+	tokenizer.Strict = false
+	tokenizer.AutoClose = xml.HTMLAutoClose
+	tokenizer.Entity = xml.HTMLEntity
 
+	// Some service docstrings are hopelessly malformed. Rather than throwing
+	// up our hands, the converter will map over as much as it can. If it
+	// returns an error, we stop there and go with whatever it was able to
+	// produce.
+	var builder strings.Builder
+	encodeHTMLToText(&builder, tokenizer)
 	return wrap(strings.Trim(builder.String(), "\n"), 72)
 }
 
@@ -240,31 +244,30 @@ type stringWriter interface {
 	WriteString(string) (int, error)
 }
 
-func encodeHTMLToText(w stringWriter, z *xhtml.Tokenizer) error {
+func encodeHTMLToText(w stringWriter, z *xml.Decoder) error {
 	encoder := newHTMLTokenEncoder(w)
 	defer encoder.Flush()
 
 	for {
-		tt := z.Next()
-		if tt == xhtml.ErrorToken {
-			if err := z.Err(); err == io.EOF {
-				return nil
-			} else if err != nil {
-				return err
-			}
+		tt, err := z.Token()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			return err
 		}
 
-		if err := encoder.Encode(z.Token()); err != nil {
+		if err := encoder.Encode(tt); err != nil {
 			return err
 		}
 	}
 }
 
 type htmlTokenHandler interface {
-	OnStartTagToken(xhtml.Token) htmlTokenHandler
-	OnEndTagToken(xhtml.Token, bool)
-	OnSelfClosingTagToken(xhtml.Token)
-	OnTextTagToken(xhtml.Token)
+	OnStartTagToken(xml.StartElement) htmlTokenHandler
+	OnEndTagToken(xml.Token, bool)
+	OnSelfClosingTagToken(xml.Token)
+	OnTextTagToken(xml.CharData)
 }
 
 type htmlTokenEncoder struct {
@@ -292,21 +295,21 @@ func newHTMLTokenEncoder(w stringWriter) *htmlTokenEncoder {
 }
 
 func (e *htmlTokenEncoder) Flush() error {
-	e.baseHandler.handler.OnEndTagToken(xhtml.Token{Type: xhtml.TextToken}, true)
+	e.baseHandler.handler.OnEndTagToken(xml.CharData([]byte{}), true)
 	return nil
 }
 
-func (e *htmlTokenEncoder) Encode(token xhtml.Token) error {
+func (e *htmlTokenEncoder) Encode(token xml.Token) error {
 	h := e.baseHandler
 	if len(e.handlers) != 0 {
 		h = e.handlers[len(e.handlers)-1]
 	}
 
-	switch token.Type {
-	case xhtml.StartTagToken:
+	switch v := token.(type) {
+	case xml.StartElement:
 		e.depth++
 
-		next := h.handler.OnStartTagToken(token)
+		next := h.handler.OnStartTagToken(v)
 		if next != nil {
 			e.handlers = append(e.handlers, tokenHandlerItem{
 				handler: next,
@@ -314,22 +317,23 @@ func (e *htmlTokenEncoder) Encode(token xhtml.Token) error {
 			})
 		}
 
-	case xhtml.EndTagToken:
+	case xml.EndElement:
 		handlerBlockClosing := e.depth == h.depth
 
 		h.handler.OnEndTagToken(token, handlerBlockClosing)
 
 		// Remove all but the root handler as the handler is no longer needed.
-		if handlerBlockClosing {
+		if handlerBlockClosing && len(e.handlers) != 0 {
 			e.handlers = e.handlers[:len(e.handlers)-1]
 		}
 		e.depth--
+		if e.depth < 0 {
+			log.Printf("ignoring unexpected closing tag, %v", token)
+			e.depth = 0
+		}
 
-	case xhtml.SelfClosingTagToken:
-		h.handler.OnSelfClosingTagToken(token)
-
-	case xhtml.TextToken:
-		h.handler.OnTextTagToken(token)
+	case xml.CharData:
+		h.handler.OnTextTagToken(v)
 	}
 
 	return nil
@@ -339,11 +343,11 @@ type baseTokenHandler struct {
 	w stringWriter
 }
 
-func (e *baseTokenHandler) OnStartTagToken(token xhtml.Token) htmlTokenHandler { return nil }
-func (e *baseTokenHandler) OnEndTagToken(token xhtml.Token, blockClosing bool) {}
-func (e *baseTokenHandler) OnSelfClosingTagToken(token xhtml.Token)            {}
-func (e *baseTokenHandler) OnTextTagToken(token xhtml.Token) {
-	e.w.WriteString(token.Data)
+func (e *baseTokenHandler) OnStartTagToken(token xml.StartElement) htmlTokenHandler { return nil }
+func (e *baseTokenHandler) OnEndTagToken(token xml.Token, blockClosing bool)        {}
+func (e *baseTokenHandler) OnSelfClosingTagToken(token xml.Token)                   {}
+func (e *baseTokenHandler) OnTextTagToken(token xml.CharData) {
+	e.w.WriteString(string(token))
 }
 
 type blockTokenHandler struct {
@@ -367,27 +371,27 @@ func newBlockTokenHandler(w stringWriter) *blockTokenHandler {
 		},
 	}
 }
-func (e *blockTokenHandler) OnStartTagToken(token xhtml.Token) htmlTokenHandler {
+func (e *blockTokenHandler) OnStartTagToken(token xml.StartElement) htmlTokenHandler {
 	e.started = true
 	if e.newlineBeforeNextBlock {
 		e.w.WriteString("\n")
 		e.newlineBeforeNextBlock = false
 	}
 
-	switch token.DataAtom {
-	case atom.A:
+	switch token.Name.Local {
+	case "a":
 		return newLinkTokenHandler(e.w, token)
-	case atom.Ul:
+	case "ul":
 		e.w.WriteString("\n")
 		e.newlineBeforeNextBlock = true
 		return newListTokenHandler(e.w)
 
-	case atom.Div, atom.Dt, atom.P, atom.H1, atom.H2, atom.H3, atom.H4, atom.H5, atom.H6:
+	case "div", "dt", "p", "h1", "h2", "h3", "h4", "h5", "h6":
 		e.w.WriteString("\n")
 		e.newlineBeforeNextBlock = true
 		return newBlockTokenHandler(e.w)
 
-	case atom.Pre, atom.Code:
+	case "pre", "code":
 		if e.rootBlock {
 			e.w.WriteString("\n")
 			e.w.WriteString(indent)
@@ -398,7 +402,7 @@ func (e *blockTokenHandler) OnStartTagToken(token xhtml.Token) htmlTokenHandler 
 
 	return nil
 }
-func (e *blockTokenHandler) OnEndTagToken(token xhtml.Token, blockClosing bool) {
+func (e *blockTokenHandler) OnEndTagToken(token xml.Token, blockClosing bool) {
 	if !blockClosing {
 		return
 	}
@@ -412,15 +416,15 @@ func (e *blockTokenHandler) OnEndTagToken(token xhtml.Token, blockClosing bool) 
 	e.strBuilder.Reset()
 }
 
-func (e *blockTokenHandler) OnTextTagToken(token xhtml.Token) {
+func (e *blockTokenHandler) OnTextTagToken(token xml.CharData) {
 	if e.newlineBeforeNextBlock {
 		e.w.WriteString("\n")
 		e.newlineBeforeNextBlock = false
 	}
 	if !e.started {
-		token.Data = strings.TrimLeft(token.Data, " \t\n")
+		token = xml.CharData(strings.TrimLeft(string(token), " \t\n"))
 	}
-	if len(token.Data) != 0 {
+	if len(token) != 0 {
 		e.started = true
 	}
 	e.baseTokenHandler.OnTextTagToken(token)
@@ -428,10 +432,10 @@ func (e *blockTokenHandler) OnTextTagToken(token xhtml.Token) {
 
 type linkTokenHandler struct {
 	baseTokenHandler
-	linkToken xhtml.Token
+	linkToken xml.StartElement
 }
 
-func newLinkTokenHandler(w stringWriter, token xhtml.Token) *linkTokenHandler {
+func newLinkTokenHandler(w stringWriter, token xml.StartElement) *linkTokenHandler {
 	return &linkTokenHandler{
 		baseTokenHandler: baseTokenHandler{
 			w: w,
@@ -439,7 +443,7 @@ func newLinkTokenHandler(w stringWriter, token xhtml.Token) *linkTokenHandler {
 		linkToken: token,
 	}
 }
-func (e *linkTokenHandler) OnEndTagToken(token xhtml.Token, blockClosing bool) {
+func (e *linkTokenHandler) OnEndTagToken(token xml.Token, blockClosing bool) {
 	if !blockClosing {
 		return
 	}
@@ -462,9 +466,9 @@ func newListTokenHandler(w stringWriter) *listTokenHandler {
 		},
 	}
 }
-func (e *listTokenHandler) OnStartTagToken(token xhtml.Token) htmlTokenHandler {
-	switch token.DataAtom {
-	case atom.Li:
+func (e *listTokenHandler) OnStartTagToken(token xml.StartElement) htmlTokenHandler {
+	switch token.Name.Local {
+	case "li":
 		if e.items >= 1 {
 			e.w.WriteString("\n\n")
 		}
@@ -474,7 +478,7 @@ func (e *listTokenHandler) OnStartTagToken(token xhtml.Token) htmlTokenHandler {
 	return nil
 }
 
-func (e *listTokenHandler) OnTextTagToken(token xhtml.Token) {
+func (e *listTokenHandler) OnTextTagToken(token xml.CharData) {
 	// Squash whitespace between list and items
 }
 
@@ -495,14 +499,14 @@ func newListItemTokenHandler(w stringWriter) *listItemTokenHandler {
 		},
 	}
 }
-func (e *listItemTokenHandler) OnStartTagToken(token xhtml.Token) htmlTokenHandler {
-	switch token.DataAtom {
-	case atom.P:
+func (e *listItemTokenHandler) OnStartTagToken(token xml.StartElement) htmlTokenHandler {
+	switch token.Name.Local {
+	case "p":
 		return newBlockTokenHandler(e.w)
 	}
 	return nil
 }
-func (e *listItemTokenHandler) OnEndTagToken(token xhtml.Token, blockClosing bool) {
+func (e *listItemTokenHandler) OnEndTagToken(token xml.Token, blockClosing bool) {
 	if !blockClosing {
 		return
 	}
@@ -528,7 +532,7 @@ func newTrimSpaceTokenHandler(w stringWriter) *trimSpaceTokenHandler {
 		},
 	}
 }
-func (e *trimSpaceTokenHandler) OnEndTagToken(token xhtml.Token, blockClosing bool) {
+func (e *trimSpaceTokenHandler) OnEndTagToken(token xml.Token, blockClosing bool) {
 	if !blockClosing {
 		return
 	}
@@ -536,11 +540,19 @@ func (e *trimSpaceTokenHandler) OnEndTagToken(token xhtml.Token, blockClosing bo
 	e.origWriter.WriteString(strings.TrimSpace(e.strBuilder.String()))
 }
 
-func getHTMLTokenAttr(attr []xhtml.Attribute, name string) (string, bool) {
+func getHTMLTokenAttr(attr []xml.Attr, name string) (string, bool) {
 	for _, a := range attr {
-		if strings.EqualFold(a.Key, name) {
-			return a.Val, true
+		if strings.EqualFold(a.Name.Local, name) {
+			return a.Value, true
 		}
 	}
 	return "", false
+}
+
+func AppendDocstring(base, toAdd string) string {
+	if base != "" {
+		base += "\n//\n"
+	}
+
+	return base + docstring(toAdd)
 }

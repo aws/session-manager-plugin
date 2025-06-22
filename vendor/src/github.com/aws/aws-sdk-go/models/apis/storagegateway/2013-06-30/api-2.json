@@ -5,11 +5,13 @@
     "endpointPrefix":"storagegateway",
     "jsonVersion":"1.1",
     "protocol":"json",
+    "protocols":["json"],
     "serviceFullName":"AWS Storage Gateway",
     "serviceId":"Storage Gateway",
     "signatureVersion":"v4",
     "targetPrefix":"StorageGateway_20130630",
-    "uid":"storagegateway-2013-06-30"
+    "uid":"storagegateway-2013-06-30",
+    "auth":["aws.auth#sigv4"]
   },
   "operations":{
     "ActivateGateway":{
@@ -1132,6 +1134,19 @@
         {"shape":"InternalServerError"}
       ]
     },
+    "UpdateSMBLocalGroups":{
+      "name":"UpdateSMBLocalGroups",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"UpdateSMBLocalGroupsInput"},
+      "output":{"shape":"UpdateSMBLocalGroupsOutput"},
+      "errors":[
+        {"shape":"InvalidGatewayRequestException"},
+        {"shape":"InternalServerError"}
+      ]
+    },
     "UpdateSMBSecurityStrategy":{
       "name":"UpdateSMBSecurityStrategy",
       "http":{
@@ -1392,6 +1407,13 @@
       "max":10,
       "min":1
     },
+    "AutomaticUpdatePolicy":{
+      "type":"string",
+      "enum":[
+        "ALL_VERSIONS",
+        "EMERGENCY_VERSIONS_ONLY"
+      ]
+    },
     "AvailabilityMonitorTestStatus":{
       "type":"string",
       "enum":[
@@ -1594,7 +1616,8 @@
         "CacheAttributes":{"shape":"CacheAttributes"},
         "NotificationPolicy":{"shape":"NotificationPolicy"},
         "VPCEndpointDNSName":{"shape":"DNSHostName"},
-        "BucketRegion":{"shape":"RegionId"}
+        "BucketRegion":{"shape":"RegionId"},
+        "AuditDestinationARN":{"shape":"AuditDestinationARN"}
       }
     },
     "CreateNFSFileShareOutput":{
@@ -2091,7 +2114,9 @@
         "SoftwareUpdatesEndDate":{"shape":"SoftwareUpdatesEndDate"},
         "DeprecationDate":{"shape":"DeprecationDate"},
         "GatewayCapacity":{"shape":"GatewayCapacity"},
-        "SupportedGatewayCapacities":{"shape":"SupportedGatewayCapacities"}
+        "SupportedGatewayCapacities":{"shape":"SupportedGatewayCapacities"},
+        "HostEnvironmentId":{"shape":"HostEnvironmentId"},
+        "SoftwareVersion":{"shape":"SoftwareVersion"}
       }
     },
     "DescribeMaintenanceStartTimeInput":{
@@ -2109,7 +2134,8 @@
         "MinuteOfHour":{"shape":"MinuteOfHour"},
         "DayOfWeek":{"shape":"DayOfWeek"},
         "DayOfMonth":{"shape":"DayOfMonth"},
-        "Timezone":{"shape":"GatewayTimezone"}
+        "Timezone":{"shape":"GatewayTimezone"},
+        "SoftwareUpdatePreferences":{"shape":"SoftwareUpdatePreferences"}
       }
     },
     "DescribeNFSFileSharesInput":{
@@ -2153,7 +2179,8 @@
         "ActiveDirectoryStatus":{"shape":"ActiveDirectoryStatus"},
         "SMBGuestPasswordSet":{"shape":"Boolean"},
         "SMBSecurityStrategy":{"shape":"SMBSecurityStrategy"},
-        "FileSharesVisible":{"shape":"Boolean"}
+        "FileSharesVisible":{"shape":"Boolean"},
+        "SMBLocalGroups":{"shape":"SMBLocalGroups"}
       }
     },
     "DescribeSnapshotScheduleInput":{
@@ -2392,7 +2419,7 @@
       "type":"string",
       "max":1024,
       "min":1,
-      "pattern":"^([a-z0-9]+(-[a-z0-9]+)*\\.)+[a-z]{2,}$"
+      "pattern":"^([a-zA-Z0-9]+[\\\\.-])+([a-zA-Z0-9])+$"
     },
     "DomainUserName":{
       "type":"string",
@@ -2567,7 +2594,8 @@
         "GatewayARN":{"shape":"GatewayARN"},
         "Tags":{"shape":"Tags"},
         "CacheAttributes":{"shape":"CacheAttributes"},
-        "EndpointNetworkConfiguration":{"shape":"EndpointNetworkConfiguration"}
+        "EndpointNetworkConfiguration":{"shape":"EndpointNetworkConfiguration"},
+        "FileSystemAssociationStatusDetails":{"shape":"FileSystemAssociationStatusDetails"}
       }
     },
     "FileSystemAssociationInfoList":{
@@ -2578,6 +2606,16 @@
       "type":"string",
       "max":50,
       "min":3
+    },
+    "FileSystemAssociationStatusDetail":{
+      "type":"structure",
+      "members":{
+        "ErrorCode":{"shape":"FileSystemAssociationSyncErrorCode"}
+      }
+    },
+    "FileSystemAssociationStatusDetails":{
+      "type":"list",
+      "member":{"shape":"FileSystemAssociationStatusDetail"}
     },
     "FileSystemAssociationSummary":{
       "type":"structure",
@@ -2592,6 +2630,7 @@
       "type":"list",
       "member":{"shape":"FileSystemAssociationSummary"}
     },
+    "FileSystemAssociationSyncErrorCode":{"type":"string"},
     "FileSystemLocationARN":{
       "type":"string",
       "max":512,
@@ -2635,7 +2674,11 @@
         "GatewayOperationalState":{"shape":"GatewayOperationalState"},
         "GatewayName":{"shape":"string"},
         "Ec2InstanceId":{"shape":"Ec2InstanceId"},
-        "Ec2InstanceRegion":{"shape":"Ec2InstanceRegion"}
+        "Ec2InstanceRegion":{"shape":"Ec2InstanceRegion"},
+        "HostEnvironment":{"shape":"HostEnvironment"},
+        "HostEnvironmentId":{"shape":"HostEnvironmentId"},
+        "DeprecationDate":{"shape":"DeprecationDate"},
+        "SoftwareVersion":{"shape":"SoftwareVersion"}
       }
     },
     "GatewayName":{
@@ -2685,8 +2728,14 @@
         "HYPER-V",
         "EC2",
         "KVM",
-        "OTHER"
+        "OTHER",
+        "SNOWBALL"
       ]
+    },
+    "HostEnvironmentId":{
+      "type":"string",
+      "max":1024,
+      "min":1
     },
     "Hosts":{
       "type":"list",
@@ -2773,7 +2822,7 @@
       "type":"string",
       "max":2048,
       "min":7,
-      "pattern":"(^arn:(aws|aws-cn|aws-us-gov):kms:([a-zA-Z0-9-]+):([0-9]+):(key|alias)/(\\S+)$)|(^alias/(\\S+)$)"
+      "pattern":"(^arn:(aws(|-cn|-us-gov|-iso[A-Za-z0-9_-]*)):kms:([a-zA-Z0-9-]+):([0-9]+):(key|alias)/(\\S+)$)|(^alias/(\\S+)$)"
     },
     "LastSoftwareUpdate":{
       "type":"string",
@@ -3008,7 +3057,8 @@
         "CacheAttributes":{"shape":"CacheAttributes"},
         "NotificationPolicy":{"shape":"NotificationPolicy"},
         "VPCEndpointDNSName":{"shape":"DNSHostName"},
-        "BucketRegion":{"shape":"RegionId"}
+        "BucketRegion":{"shape":"RegionId"},
+        "AuditDestinationARN":{"shape":"AuditDestinationARN"}
       }
     },
     "NFSFileShareInfoList":{
@@ -3021,7 +3071,8 @@
         "Ipv4Address":{"shape":"string"},
         "MacAddress":{"shape":"string"},
         "Ipv6Address":{"shape":"string"}
-      }
+      },
+      "sensitive":true
     },
     "NetworkInterfaceId":{
       "type":"string",
@@ -3249,7 +3300,7 @@
       "type":"string",
       "max":2048,
       "min":20,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):iam::([0-9]+):role/(\\S+)$"
+      "pattern":"^arn:(aws(|-cn|-us-gov|-iso[A-Za-z0-9_-]*)):iam::([0-9]+):role/(\\S+)$"
     },
     "SMBFileShareInfo":{
       "type":"structure",
@@ -3296,12 +3347,19 @@
       "pattern":"^[ -~]+$",
       "sensitive":true
     },
+    "SMBLocalGroups":{
+      "type":"structure",
+      "members":{
+        "GatewayAdmins":{"shape":"UserList"}
+      }
+    },
     "SMBSecurityStrategy":{
       "type":"string",
       "enum":[
         "ClientSpecified",
         "MandatorySigning",
-        "MandatoryEncryption"
+        "MandatoryEncryption",
+        "MandatoryEncryptionNoAes128"
       ]
     },
     "ServiceUnavailableError":{
@@ -3368,11 +3426,18 @@
       "type":"string",
       "pattern":"\\Asnap-([0-9A-Fa-f]{8}|[0-9A-Fa-f]{17})\\z"
     },
+    "SoftwareUpdatePreferences":{
+      "type":"structure",
+      "members":{
+        "AutomaticUpdatePolicy":{"shape":"AutomaticUpdatePolicy"}
+      }
+    },
     "SoftwareUpdatesEndDate":{
       "type":"string",
       "max":25,
       "min":1
     },
+    "SoftwareVersion":{"type":"string"},
     "Squash":{
       "type":"string",
       "max":15,
@@ -3495,7 +3560,7 @@
       "type":"string",
       "max":500,
       "min":50,
-      "pattern":"^arn:(aws|aws-cn|aws-us-gov):storagegateway:[a-z\\-0-9]+:[0-9]+:tape\\/[0-9A-Z]{7,16}$"
+      "pattern":"arn:(aws(|-cn|-us-gov|-iso[A-Za-z0-9_-]*)):storagegateway:[a-z\\-0-9]+:[0-9]+:tape\\/[0-9A-Z]{5,16}$"
     },
     "TapeARNs":{
       "type":"list",
@@ -3527,7 +3592,7 @@
     "TapeBarcode":{
       "type":"string",
       "max":16,
-      "min":7,
+      "min":5,
       "pattern":"^[A-Z0-9]*$"
     },
     "TapeBarcodePrefix":{
@@ -3723,17 +3788,14 @@
     },
     "UpdateMaintenanceStartTimeInput":{
       "type":"structure",
-      "required":[
-        "GatewayARN",
-        "HourOfDay",
-        "MinuteOfHour"
-      ],
+      "required":["GatewayARN"],
       "members":{
         "GatewayARN":{"shape":"GatewayARN"},
         "HourOfDay":{"shape":"HourOfDay"},
         "MinuteOfHour":{"shape":"MinuteOfHour"},
         "DayOfWeek":{"shape":"DayOfWeek"},
-        "DayOfMonth":{"shape":"DayOfMonth"}
+        "DayOfMonth":{"shape":"DayOfMonth"},
+        "SoftwareUpdatePreferences":{"shape":"SoftwareUpdatePreferences"}
       }
     },
     "UpdateMaintenanceStartTimeOutput":{
@@ -3759,7 +3821,8 @@
         "RequesterPays":{"shape":"Boolean"},
         "FileShareName":{"shape":"FileShareName"},
         "CacheAttributes":{"shape":"CacheAttributes"},
-        "NotificationPolicy":{"shape":"NotificationPolicy"}
+        "NotificationPolicy":{"shape":"NotificationPolicy"},
+        "AuditDestinationARN":{"shape":"AuditDestinationARN"}
       }
     },
     "UpdateNFSFileShareOutput":{
@@ -3811,6 +3874,23 @@
       }
     },
     "UpdateSMBFileShareVisibilityOutput":{
+      "type":"structure",
+      "members":{
+        "GatewayARN":{"shape":"GatewayARN"}
+      }
+    },
+    "UpdateSMBLocalGroupsInput":{
+      "type":"structure",
+      "required":[
+        "GatewayARN",
+        "SMBLocalGroups"
+      ],
+      "members":{
+        "GatewayARN":{"shape":"GatewayARN"},
+        "SMBLocalGroups":{"shape":"SMBLocalGroups"}
+      }
+    },
+    "UpdateSMBLocalGroupsOutput":{
       "type":"structure",
       "members":{
         "GatewayARN":{"shape":"GatewayARN"}

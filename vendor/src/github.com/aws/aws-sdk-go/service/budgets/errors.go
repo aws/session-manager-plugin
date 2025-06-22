@@ -64,6 +64,19 @@ const (
 	// The request was received and recognized by the server, but the server rejected
 	// that particular method for the requested resource.
 	ErrCodeResourceLockedException = "ResourceLockedException"
+
+	// ErrCodeServiceQuotaExceededException for service response error code
+	// "ServiceQuotaExceededException".
+	//
+	// You've reached the limit on the number of tags you can associate with a resource.
+	ErrCodeServiceQuotaExceededException = "ServiceQuotaExceededException"
+
+	// ErrCodeThrottlingException for service response error code
+	// "ThrottlingException".
+	//
+	// The number of API requests has exceeded the maximum allowed API request throttling
+	// limit for the account.
+	ErrCodeThrottlingException = "ThrottlingException"
 )
 
 var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
@@ -76,4 +89,6 @@ var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"InvalidParameterException":      newErrorInvalidParameterException,
 	"NotFoundException":              newErrorNotFoundException,
 	"ResourceLockedException":        newErrorResourceLockedException,
+	"ServiceQuotaExceededException":  newErrorServiceQuotaExceededException,
+	"ThrottlingException":            newErrorThrottlingException,
 }

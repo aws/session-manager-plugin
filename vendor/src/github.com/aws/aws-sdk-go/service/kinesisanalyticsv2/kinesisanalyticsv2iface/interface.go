@@ -23,37 +23,37 @@ import (
 // can be stubbed out for unit testing your code with the SDK without needing
 // to inject custom request handlers into the SDK's request pipeline.
 //
-//    // myFunc uses an SDK service client to make a request to
-//    // Amazon Kinesis Analytics.
-//    func myFunc(svc kinesisanalyticsv2iface.KinesisAnalyticsV2API) bool {
-//        // Make svc.AddApplicationCloudWatchLoggingOption request
-//    }
+//	// myFunc uses an SDK service client to make a request to
+//	// Amazon Kinesis Analytics.
+//	func myFunc(svc kinesisanalyticsv2iface.KinesisAnalyticsV2API) bool {
+//	    // Make svc.AddApplicationCloudWatchLoggingOption request
+//	}
 //
-//    func main() {
-//        sess := session.New()
-//        svc := kinesisanalyticsv2.New(sess)
+//	func main() {
+//	    sess := session.New()
+//	    svc := kinesisanalyticsv2.New(sess)
 //
-//        myFunc(svc)
-//    }
+//	    myFunc(svc)
+//	}
 //
 // In your _test.go file:
 //
-//    // Define a mock struct to be used in your unit tests of myFunc.
-//    type mockKinesisAnalyticsV2Client struct {
-//        kinesisanalyticsv2iface.KinesisAnalyticsV2API
-//    }
-//    func (m *mockKinesisAnalyticsV2Client) AddApplicationCloudWatchLoggingOption(input *kinesisanalyticsv2.AddApplicationCloudWatchLoggingOptionInput) (*kinesisanalyticsv2.AddApplicationCloudWatchLoggingOptionOutput, error) {
-//        // mock response/functionality
-//    }
+//	// Define a mock struct to be used in your unit tests of myFunc.
+//	type mockKinesisAnalyticsV2Client struct {
+//	    kinesisanalyticsv2iface.KinesisAnalyticsV2API
+//	}
+//	func (m *mockKinesisAnalyticsV2Client) AddApplicationCloudWatchLoggingOption(input *kinesisanalyticsv2.AddApplicationCloudWatchLoggingOptionInput) (*kinesisanalyticsv2.AddApplicationCloudWatchLoggingOptionOutput, error) {
+//	    // mock response/functionality
+//	}
 //
-//    func TestMyFunc(t *testing.T) {
-//        // Setup Test
-//        mockSvc := &mockKinesisAnalyticsV2Client{}
+//	func TestMyFunc(t *testing.T) {
+//	    // Setup Test
+//	    mockSvc := &mockKinesisAnalyticsV2Client{}
 //
-//        myfunc(mockSvc)
+//	    myfunc(mockSvc)
 //
-//        // Verify myFunc's functionality
-//    }
+//	    // Verify myFunc's functionality
+//	}
 //
 // It is important to note that this interface will have breaking changes
 // when the service model is updated and adds new API operations, paginators,
@@ -128,6 +128,10 @@ type KinesisAnalyticsV2API interface {
 	DescribeApplicationWithContext(aws.Context, *kinesisanalyticsv2.DescribeApplicationInput, ...request.Option) (*kinesisanalyticsv2.DescribeApplicationOutput, error)
 	DescribeApplicationRequest(*kinesisanalyticsv2.DescribeApplicationInput) (*request.Request, *kinesisanalyticsv2.DescribeApplicationOutput)
 
+	DescribeApplicationOperation(*kinesisanalyticsv2.DescribeApplicationOperationInput) (*kinesisanalyticsv2.DescribeApplicationOperationOutput, error)
+	DescribeApplicationOperationWithContext(aws.Context, *kinesisanalyticsv2.DescribeApplicationOperationInput, ...request.Option) (*kinesisanalyticsv2.DescribeApplicationOperationOutput, error)
+	DescribeApplicationOperationRequest(*kinesisanalyticsv2.DescribeApplicationOperationInput) (*request.Request, *kinesisanalyticsv2.DescribeApplicationOperationOutput)
+
 	DescribeApplicationSnapshot(*kinesisanalyticsv2.DescribeApplicationSnapshotInput) (*kinesisanalyticsv2.DescribeApplicationSnapshotOutput, error)
 	DescribeApplicationSnapshotWithContext(aws.Context, *kinesisanalyticsv2.DescribeApplicationSnapshotInput, ...request.Option) (*kinesisanalyticsv2.DescribeApplicationSnapshotOutput, error)
 	DescribeApplicationSnapshotRequest(*kinesisanalyticsv2.DescribeApplicationSnapshotInput) (*request.Request, *kinesisanalyticsv2.DescribeApplicationSnapshotOutput)
@@ -140,17 +144,33 @@ type KinesisAnalyticsV2API interface {
 	DiscoverInputSchemaWithContext(aws.Context, *kinesisanalyticsv2.DiscoverInputSchemaInput, ...request.Option) (*kinesisanalyticsv2.DiscoverInputSchemaOutput, error)
 	DiscoverInputSchemaRequest(*kinesisanalyticsv2.DiscoverInputSchemaInput) (*request.Request, *kinesisanalyticsv2.DiscoverInputSchemaOutput)
 
+	ListApplicationOperations(*kinesisanalyticsv2.ListApplicationOperationsInput) (*kinesisanalyticsv2.ListApplicationOperationsOutput, error)
+	ListApplicationOperationsWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationOperationsInput, ...request.Option) (*kinesisanalyticsv2.ListApplicationOperationsOutput, error)
+	ListApplicationOperationsRequest(*kinesisanalyticsv2.ListApplicationOperationsInput) (*request.Request, *kinesisanalyticsv2.ListApplicationOperationsOutput)
+
+	ListApplicationOperationsPages(*kinesisanalyticsv2.ListApplicationOperationsInput, func(*kinesisanalyticsv2.ListApplicationOperationsOutput, bool) bool) error
+	ListApplicationOperationsPagesWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationOperationsInput, func(*kinesisanalyticsv2.ListApplicationOperationsOutput, bool) bool, ...request.Option) error
+
 	ListApplicationSnapshots(*kinesisanalyticsv2.ListApplicationSnapshotsInput) (*kinesisanalyticsv2.ListApplicationSnapshotsOutput, error)
 	ListApplicationSnapshotsWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationSnapshotsInput, ...request.Option) (*kinesisanalyticsv2.ListApplicationSnapshotsOutput, error)
 	ListApplicationSnapshotsRequest(*kinesisanalyticsv2.ListApplicationSnapshotsInput) (*request.Request, *kinesisanalyticsv2.ListApplicationSnapshotsOutput)
+
+	ListApplicationSnapshotsPages(*kinesisanalyticsv2.ListApplicationSnapshotsInput, func(*kinesisanalyticsv2.ListApplicationSnapshotsOutput, bool) bool) error
+	ListApplicationSnapshotsPagesWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationSnapshotsInput, func(*kinesisanalyticsv2.ListApplicationSnapshotsOutput, bool) bool, ...request.Option) error
 
 	ListApplicationVersions(*kinesisanalyticsv2.ListApplicationVersionsInput) (*kinesisanalyticsv2.ListApplicationVersionsOutput, error)
 	ListApplicationVersionsWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationVersionsInput, ...request.Option) (*kinesisanalyticsv2.ListApplicationVersionsOutput, error)
 	ListApplicationVersionsRequest(*kinesisanalyticsv2.ListApplicationVersionsInput) (*request.Request, *kinesisanalyticsv2.ListApplicationVersionsOutput)
 
+	ListApplicationVersionsPages(*kinesisanalyticsv2.ListApplicationVersionsInput, func(*kinesisanalyticsv2.ListApplicationVersionsOutput, bool) bool) error
+	ListApplicationVersionsPagesWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationVersionsInput, func(*kinesisanalyticsv2.ListApplicationVersionsOutput, bool) bool, ...request.Option) error
+
 	ListApplications(*kinesisanalyticsv2.ListApplicationsInput) (*kinesisanalyticsv2.ListApplicationsOutput, error)
 	ListApplicationsWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationsInput, ...request.Option) (*kinesisanalyticsv2.ListApplicationsOutput, error)
 	ListApplicationsRequest(*kinesisanalyticsv2.ListApplicationsInput) (*request.Request, *kinesisanalyticsv2.ListApplicationsOutput)
+
+	ListApplicationsPages(*kinesisanalyticsv2.ListApplicationsInput, func(*kinesisanalyticsv2.ListApplicationsOutput, bool) bool) error
+	ListApplicationsPagesWithContext(aws.Context, *kinesisanalyticsv2.ListApplicationsInput, func(*kinesisanalyticsv2.ListApplicationsOutput, bool) bool, ...request.Option) error
 
 	ListTagsForResource(*kinesisanalyticsv2.ListTagsForResourceInput) (*kinesisanalyticsv2.ListTagsForResourceOutput, error)
 	ListTagsForResourceWithContext(aws.Context, *kinesisanalyticsv2.ListTagsForResourceInput, ...request.Option) (*kinesisanalyticsv2.ListTagsForResourceOutput, error)

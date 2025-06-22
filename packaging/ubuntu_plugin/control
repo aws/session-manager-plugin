@@ -3,7 +3,7 @@ Depends: libc6
 Priority: optional
 Copyright: Apache License, Version 2.0
 Suggests: session-manager-plugin-doc
-Maintainer: Amazon.com, Inc. <ssm-runcommand-dev@amazon.com>
+Maintainer: Amazon.com, Inc. <ssm-session-manager-support@amazon.com>
 Description: Amazon Session Manager Plugin for managing Session Manager APIs.
  Please visit the AWS Developer Tools page for additional information.
 

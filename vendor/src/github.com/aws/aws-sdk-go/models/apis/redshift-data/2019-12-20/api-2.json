@@ -38,7 +38,8 @@
       "errors":[
         {"shape":"ValidationException"},
         {"shape":"ResourceNotFoundException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"DatabaseConnectionException"}
       ]
     },
     "DescribeStatement":{
@@ -65,7 +66,8 @@
       "output":{"shape":"DescribeTableResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"DatabaseConnectionException"}
       ]
     },
     "ExecuteStatement":{
@@ -106,7 +108,8 @@
       "output":{"shape":"ListDatabasesResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"DatabaseConnectionException"}
       ]
     },
     "ListSchemas":{
@@ -119,7 +122,8 @@
       "output":{"shape":"ListSchemasResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"DatabaseConnectionException"}
       ]
     },
     "ListStatements":{
@@ -145,7 +149,8 @@
       "output":{"shape":"ListTablesResponse"},
       "errors":[
         {"shape":"ValidationException"},
-        {"shape":"InternalServerException"}
+        {"shape":"InternalServerException"},
+        {"shape":"DatabaseConnectionException"}
       ]
     }
   },
@@ -173,18 +178,22 @@
     "BatchExecuteStatementInput":{
       "type":"structure",
       "required":[
-        "ClusterIdentifier",
         "Database",
         "Sqls"
       ],
       "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "ClusterIdentifier":{"shape":"Location"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "SecretArn":{"shape":"SecretArn"},
         "Sqls":{"shape":"SqlList"},
         "StatementName":{"shape":"StatementNameString"},
-        "WithEvent":{"shape":"Boolean"}
+        "WithEvent":{"shape":"Boolean"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "BatchExecuteStatementOutput":{
@@ -195,7 +204,8 @@
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "Id":{"shape":"StatementId"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "Blob":{"type":"blob"},
@@ -228,6 +238,11 @@
         "Status":{"shape":"Boolean"}
       }
     },
+    "ClientToken":{
+      "type":"string",
+      "max":64,
+      "min":1
+    },
     "ColumnList":{
       "type":"list",
       "member":{"shape":"ColumnMetadata"}
@@ -253,6 +268,15 @@
     "ColumnMetadataList":{
       "type":"list",
       "member":{"shape":"ColumnMetadata"}
+    },
+    "DatabaseConnectionException":{
+      "type":"structure",
+      "required":["Message"],
+      "members":{
+        "Message":{"shape":"String"}
+      },
+      "exception":true,
+      "fault":true
     },
     "DatabaseList":{
       "type":"list",
@@ -286,15 +310,13 @@
         "SecretArn":{"shape":"SecretArn"},
         "Status":{"shape":"StatusString"},
         "SubStatements":{"shape":"SubStatementList"},
-        "UpdatedAt":{"shape":"Timestamp"}
+        "UpdatedAt":{"shape":"Timestamp"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "DescribeTableRequest":{
       "type":"structure",
-      "required":[
-        "ClusterIdentifier",
-        "Database"
-      ],
+      "required":["Database"],
       "members":{
         "ClusterIdentifier":{"shape":"Location"},
         "ConnectedDatabase":{"shape":"String"},
@@ -304,7 +326,8 @@
         "NextToken":{"shape":"String"},
         "Schema":{"shape":"String"},
         "SecretArn":{"shape":"SecretArn"},
-        "Table":{"shape":"String"}
+        "Table":{"shape":"String"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "DescribeTableResponse":{
@@ -331,11 +354,14 @@
     "ExecuteStatementInput":{
       "type":"structure",
       "required":[
-        "ClusterIdentifier",
         "Database",
         "Sql"
       ],
       "members":{
+        "ClientToken":{
+          "shape":"ClientToken",
+          "idempotencyToken":true
+        },
         "ClusterIdentifier":{"shape":"Location"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
@@ -343,7 +369,8 @@
         "SecretArn":{"shape":"SecretArn"},
         "Sql":{"shape":"StatementString"},
         "StatementName":{"shape":"StatementNameString"},
-        "WithEvent":{"shape":"Boolean"}
+        "WithEvent":{"shape":"Boolean"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "ExecuteStatementOutput":{
@@ -354,7 +381,8 @@
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "Id":{"shape":"StatementId"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "Field":{
@@ -403,17 +431,15 @@
     },
     "ListDatabasesRequest":{
       "type":"structure",
-      "required":[
-        "ClusterIdentifier",
-        "Database"
-      ],
+      "required":["Database"],
       "members":{
         "ClusterIdentifier":{"shape":"Location"},
         "Database":{"shape":"String"},
         "DbUser":{"shape":"String"},
         "MaxResults":{"shape":"PageSize"},
         "NextToken":{"shape":"String"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "ListDatabasesResponse":{
@@ -425,10 +451,7 @@
     },
     "ListSchemasRequest":{
       "type":"structure",
-      "required":[
-        "ClusterIdentifier",
-        "Database"
-      ],
+      "required":["Database"],
       "members":{
         "ClusterIdentifier":{"shape":"Location"},
         "ConnectedDatabase":{"shape":"String"},
@@ -437,7 +460,8 @@
         "MaxResults":{"shape":"PageSize"},
         "NextToken":{"shape":"String"},
         "SchemaPattern":{"shape":"String"},
-        "SecretArn":{"shape":"SecretArn"}
+        "SecretArn":{"shape":"SecretArn"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "ListSchemasResponse":{
@@ -472,10 +496,7 @@
     },
     "ListTablesRequest":{
       "type":"structure",
-      "required":[
-        "ClusterIdentifier",
-        "Database"
-      ],
+      "required":["Database"],
       "members":{
         "ClusterIdentifier":{"shape":"Location"},
         "ConnectedDatabase":{"shape":"String"},
@@ -485,7 +506,8 @@
         "NextToken":{"shape":"String"},
         "SchemaPattern":{"shape":"String"},
         "SecretArn":{"shape":"SecretArn"},
-        "TablePattern":{"shape":"String"}
+        "TablePattern":{"shape":"String"},
+        "WorkgroupName":{"shape":"WorkgroupNameString"}
       }
     },
     "ListTablesResponse":{
@@ -651,6 +673,12 @@
         "Message":{"shape":"String"}
       },
       "exception":true
+    },
+    "WorkgroupNameString":{
+      "type":"string",
+      "max":128,
+      "min":3,
+      "pattern":"^(([a-z0-9-]+)|(arn:(aws(-[a-z]+)*):redshift-serverless:[a-z]{2}(-gov)?-[a-z]+-\\d{1}:\\d{12}:workgroup/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}))$"
     },
     "bool":{"type":"boolean"}
   }

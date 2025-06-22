@@ -1,5 +1,45 @@
 Latest
 ================
+- Update Readme for version configuration
+- Upgrade Go version to 1.23 in Dockerfile
+
+1.2.694.0
+================
+- Rollback change on adding credential to OpenDataChannel request
+
+1.2.688.0
+================
+- Add credential to OpenDataChannel request
+- Upgrade dependent packages testify-1.9.0 and objx-0.5.2
+
+1.2.677.0
+================
+- Support passing plugin version with OpenDataChannel request
+
+1.2.650.0
+================
+- Upgrade aws-sdk-go to 1.54.10
+- Reformat comments for gofmt check
+
+1.2.633.0
+================
+- Update dockerfile to use ecr image
+
+1.2.553.0
+================
+- Upgrade aws-sdk-go and dependent Golang packages
+
+1.2.536.0
+================
+- Support reading StartSession API response parameters from environment variable
+- Migrate to use images from ECR repository
+
+1.2.497.0
+================
+- Upgrade Go SDK to v1.44.302
+
+1.2.463.0
+================
 - Support ARM64 for Apple Mac M1
 - Remove unused start/stop steps in packaging scripts
 	  

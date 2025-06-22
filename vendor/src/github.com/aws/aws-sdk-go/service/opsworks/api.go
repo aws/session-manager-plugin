@@ -28,14 +28,13 @@ const opAssignInstance = "AssignInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the AssignInstanceRequest method.
+//	req, resp := client.AssignInstanceRequest(params)
 //
-//    // Example sending a request using the AssignInstanceRequest method.
-//    req, resp := client.AssignInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AssignInstance
 func (c *OpsWorks) AssignInstanceRequest(input *AssignInstanceInput) (req *request.Request, output *AssignInstanceOutput) {
@@ -59,14 +58,14 @@ func (c *OpsWorks) AssignInstanceRequest(input *AssignInstanceInput) (req *reque
 //
 // Assign a registered instance to a layer.
 //
-//    * You can assign registered on-premises instances to any layer type.
+//   - You can assign registered on-premises instances to any layer type.
 //
-//    * You can assign registered Amazon EC2 instances only to custom layers.
+//   - You can assign registered Amazon EC2 instances only to custom layers.
 //
-//    * You cannot use this action with instances that were created with AWS
-//    OpsWorks Stacks.
+//   - You cannot use this action with instances that were created with OpsWorks
+//     Stacks.
 //
-// Required Permissions: To use this action, an AWS Identity and Access Management
+// Required Permissions: To use this action, an Identity and Access Management
 // (IAM) user must have a Manage permissions level for the stack or an attached
 // policy that explicitly grants permissions. For more information on user permissions,
 // see Managing User Permissions (https://docs.aws.amazon.com/opsworks/latest/userguide/opsworks-security-users.html).
@@ -79,11 +78,12 @@ func (c *OpsWorks) AssignInstanceRequest(input *AssignInstanceInput) (req *reque
 // API operation AssignInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AssignInstance
 func (c *OpsWorks) AssignInstance(input *AssignInstanceInput) (*AssignInstanceOutput, error) {
@@ -123,14 +123,13 @@ const opAssignVolume = "AssignVolume"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the AssignVolumeRequest method.
+//	req, resp := client.AssignVolumeRequest(params)
 //
-//    // Example sending a request using the AssignVolumeRequest method.
-//    req, resp := client.AssignVolumeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AssignVolume
 func (c *OpsWorks) AssignVolumeRequest(input *AssignVolumeInput) (req *request.Request, output *AssignVolumeOutput) {
@@ -171,11 +170,12 @@ func (c *OpsWorks) AssignVolumeRequest(input *AssignVolumeInput) (req *request.R
 // API operation AssignVolume for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AssignVolume
 func (c *OpsWorks) AssignVolume(input *AssignVolumeInput) (*AssignVolumeOutput, error) {
@@ -215,14 +215,13 @@ const opAssociateElasticIp = "AssociateElasticIp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the AssociateElasticIpRequest method.
+//	req, resp := client.AssociateElasticIpRequest(params)
 //
-//    // Example sending a request using the AssociateElasticIpRequest method.
-//    req, resp := client.AssociateElasticIpRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AssociateElasticIp
 func (c *OpsWorks) AssociateElasticIpRequest(input *AssociateElasticIpInput) (req *request.Request, output *AssociateElasticIpOutput) {
@@ -261,11 +260,12 @@ func (c *OpsWorks) AssociateElasticIpRequest(input *AssociateElasticIpInput) (re
 // API operation AssociateElasticIp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AssociateElasticIp
 func (c *OpsWorks) AssociateElasticIp(input *AssociateElasticIpInput) (*AssociateElasticIpOutput, error) {
@@ -305,14 +305,13 @@ const opAttachElasticLoadBalancer = "AttachElasticLoadBalancer"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the AttachElasticLoadBalancerRequest method.
+//	req, resp := client.AttachElasticLoadBalancerRequest(params)
 //
-//    // Example sending a request using the AttachElasticLoadBalancerRequest method.
-//    req, resp := client.AttachElasticLoadBalancerRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AttachElasticLoadBalancer
 func (c *OpsWorks) AttachElasticLoadBalancerRequest(input *AttachElasticLoadBalancerInput) (req *request.Request, output *AttachElasticLoadBalancerOutput) {
@@ -334,14 +333,14 @@ func (c *OpsWorks) AttachElasticLoadBalancerRequest(input *AttachElasticLoadBala
 
 // AttachElasticLoadBalancer API operation for AWS OpsWorks.
 //
-// Attaches an Elastic Load Balancing load balancer to a specified layer. AWS
-// OpsWorks Stacks does not support Application Load Balancer. You can only
-// use Classic Load Balancer with AWS OpsWorks Stacks. For more information,
-// see Elastic Load Balancing (https://docs.aws.amazon.com/opsworks/latest/userguide/layers-elb.html).
+// Attaches an Elastic Load Balancing load balancer to a specified layer. OpsWorks
+// Stacks does not support Application Load Balancer. You can only use Classic
+// Load Balancer with OpsWorks Stacks. For more information, see Elastic Load
+// Balancing (https://docs.aws.amazon.com/opsworks/latest/userguide/layers-elb.html).
 //
 // You must create the Elastic Load Balancing instance separately, by using
 // the Elastic Load Balancing console, API, or CLI. For more information, see
-// Elastic Load Balancing Developer Guide (https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/Welcome.html).
+// the Elastic Load Balancing Developer Guide (https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/Welcome.html).
 //
 // Required Permissions: To use this action, an IAM user must have a Manage
 // permissions level for the stack, or an attached policy that explicitly grants
@@ -356,11 +355,12 @@ func (c *OpsWorks) AttachElasticLoadBalancerRequest(input *AttachElasticLoadBala
 // API operation AttachElasticLoadBalancer for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/AttachElasticLoadBalancer
 func (c *OpsWorks) AttachElasticLoadBalancer(input *AttachElasticLoadBalancerInput) (*AttachElasticLoadBalancerOutput, error) {
@@ -400,14 +400,13 @@ const opCloneStack = "CloneStack"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CloneStackRequest method.
+//	req, resp := client.CloneStackRequest(params)
 //
-//    // Example sending a request using the CloneStackRequest method.
-//    req, resp := client.CloneStackRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CloneStack
 func (c *OpsWorks) CloneStackRequest(input *CloneStackInput) (req *request.Request, output *CloneStackOutput) {
@@ -444,11 +443,12 @@ func (c *OpsWorks) CloneStackRequest(input *CloneStackInput) (req *request.Reque
 // API operation CloneStack for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CloneStack
 func (c *OpsWorks) CloneStack(input *CloneStackInput) (*CloneStackOutput, error) {
@@ -488,14 +488,13 @@ const opCreateApp = "CreateApp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateAppRequest method.
+//	req, resp := client.CreateAppRequest(params)
 //
-//    // Example sending a request using the CreateAppRequest method.
-//    req, resp := client.CreateAppRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateApp
 func (c *OpsWorks) CreateAppRequest(input *CreateAppInput) (req *request.Request, output *CreateAppOutput) {
@@ -532,11 +531,12 @@ func (c *OpsWorks) CreateAppRequest(input *CreateAppInput) (req *request.Request
 // API operation CreateApp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateApp
 func (c *OpsWorks) CreateApp(input *CreateAppInput) (*CreateAppOutput, error) {
@@ -576,14 +576,13 @@ const opCreateDeployment = "CreateDeployment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateDeploymentRequest method.
+//	req, resp := client.CreateDeploymentRequest(params)
 //
-//    // Example sending a request using the CreateDeploymentRequest method.
-//    req, resp := client.CreateDeploymentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateDeployment
 func (c *OpsWorks) CreateDeploymentRequest(input *CreateDeploymentInput) (req *request.Request, output *CreateDeploymentOutput) {
@@ -621,11 +620,12 @@ func (c *OpsWorks) CreateDeploymentRequest(input *CreateDeploymentInput) (req *r
 // API operation CreateDeployment for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateDeployment
 func (c *OpsWorks) CreateDeployment(input *CreateDeploymentInput) (*CreateDeploymentOutput, error) {
@@ -665,14 +665,13 @@ const opCreateInstance = "CreateInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateInstanceRequest method.
+//	req, resp := client.CreateInstanceRequest(params)
 //
-//    // Example sending a request using the CreateInstanceRequest method.
-//    req, resp := client.CreateInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateInstance
 func (c *OpsWorks) CreateInstanceRequest(input *CreateInstanceInput) (req *request.Request, output *CreateInstanceOutput) {
@@ -709,11 +708,12 @@ func (c *OpsWorks) CreateInstanceRequest(input *CreateInstanceInput) (req *reque
 // API operation CreateInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateInstance
 func (c *OpsWorks) CreateInstance(input *CreateInstanceInput) (*CreateInstanceOutput, error) {
@@ -753,14 +753,13 @@ const opCreateLayer = "CreateLayer"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateLayerRequest method.
+//	req, resp := client.CreateLayerRequest(params)
 //
-//    // Example sending a request using the CreateLayerRequest method.
-//    req, resp := client.CreateLayerRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateLayer
 func (c *OpsWorks) CreateLayerRequest(input *CreateLayerInput) (req *request.Request, output *CreateLayerOutput) {
@@ -803,11 +802,12 @@ func (c *OpsWorks) CreateLayerRequest(input *CreateLayerInput) (req *request.Req
 // API operation CreateLayer for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateLayer
 func (c *OpsWorks) CreateLayer(input *CreateLayerInput) (*CreateLayerOutput, error) {
@@ -847,14 +847,13 @@ const opCreateStack = "CreateStack"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateStackRequest method.
+//	req, resp := client.CreateStackRequest(params)
 //
-//    // Example sending a request using the CreateStackRequest method.
-//    req, resp := client.CreateStackRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateStack
 func (c *OpsWorks) CreateStackRequest(input *CreateStackInput) (req *request.Request, output *CreateStackOutput) {
@@ -889,8 +888,8 @@ func (c *OpsWorks) CreateStackRequest(input *CreateStackInput) (req *request.Req
 // API operation CreateStack for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
+//   - ValidationException
+//     Indicates that a request was not valid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateStack
 func (c *OpsWorks) CreateStack(input *CreateStackInput) (*CreateStackOutput, error) {
@@ -930,14 +929,13 @@ const opCreateUserProfile = "CreateUserProfile"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateUserProfileRequest method.
+//	req, resp := client.CreateUserProfileRequest(params)
 //
-//    // Example sending a request using the CreateUserProfileRequest method.
-//    req, resp := client.CreateUserProfileRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateUserProfile
 func (c *OpsWorks) CreateUserProfileRequest(input *CreateUserProfileInput) (req *request.Request, output *CreateUserProfileOutput) {
@@ -972,8 +970,8 @@ func (c *OpsWorks) CreateUserProfileRequest(input *CreateUserProfileInput) (req 
 // API operation CreateUserProfile for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
+//   - ValidationException
+//     Indicates that a request was not valid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/CreateUserProfile
 func (c *OpsWorks) CreateUserProfile(input *CreateUserProfileInput) (*CreateUserProfileOutput, error) {
@@ -1013,14 +1011,13 @@ const opDeleteApp = "DeleteApp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteAppRequest method.
+//	req, resp := client.DeleteAppRequest(params)
 //
-//    // Example sending a request using the DeleteAppRequest method.
-//    req, resp := client.DeleteAppRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteApp
 func (c *OpsWorks) DeleteAppRequest(input *DeleteAppInput) (req *request.Request, output *DeleteAppOutput) {
@@ -1057,11 +1054,12 @@ func (c *OpsWorks) DeleteAppRequest(input *DeleteAppInput) (req *request.Request
 // API operation DeleteApp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteApp
 func (c *OpsWorks) DeleteApp(input *DeleteAppInput) (*DeleteAppOutput, error) {
@@ -1101,14 +1099,13 @@ const opDeleteInstance = "DeleteInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteInstanceRequest method.
+//	req, resp := client.DeleteInstanceRequest(params)
 //
-//    // Example sending a request using the DeleteInstanceRequest method.
-//    req, resp := client.DeleteInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteInstance
 func (c *OpsWorks) DeleteInstanceRequest(input *DeleteInstanceInput) (req *request.Request, output *DeleteInstanceOutput) {
@@ -1148,11 +1145,12 @@ func (c *OpsWorks) DeleteInstanceRequest(input *DeleteInstanceInput) (req *reque
 // API operation DeleteInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteInstance
 func (c *OpsWorks) DeleteInstance(input *DeleteInstanceInput) (*DeleteInstanceOutput, error) {
@@ -1192,14 +1190,13 @@ const opDeleteLayer = "DeleteLayer"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteLayerRequest method.
+//	req, resp := client.DeleteLayerRequest(params)
 //
-//    // Example sending a request using the DeleteLayerRequest method.
-//    req, resp := client.DeleteLayerRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteLayer
 func (c *OpsWorks) DeleteLayerRequest(input *DeleteLayerInput) (req *request.Request, output *DeleteLayerOutput) {
@@ -1238,11 +1235,12 @@ func (c *OpsWorks) DeleteLayerRequest(input *DeleteLayerInput) (req *request.Req
 // API operation DeleteLayer for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteLayer
 func (c *OpsWorks) DeleteLayer(input *DeleteLayerInput) (*DeleteLayerOutput, error) {
@@ -1282,14 +1280,13 @@ const opDeleteStack = "DeleteStack"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteStackRequest method.
+//	req, resp := client.DeleteStackRequest(params)
 //
-//    // Example sending a request using the DeleteStackRequest method.
-//    req, resp := client.DeleteStackRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteStack
 func (c *OpsWorks) DeleteStackRequest(input *DeleteStackInput) (req *request.Request, output *DeleteStackOutput) {
@@ -1328,11 +1325,12 @@ func (c *OpsWorks) DeleteStackRequest(input *DeleteStackInput) (req *request.Req
 // API operation DeleteStack for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteStack
 func (c *OpsWorks) DeleteStack(input *DeleteStackInput) (*DeleteStackOutput, error) {
@@ -1372,14 +1370,13 @@ const opDeleteUserProfile = "DeleteUserProfile"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteUserProfileRequest method.
+//	req, resp := client.DeleteUserProfileRequest(params)
 //
-//    // Example sending a request using the DeleteUserProfileRequest method.
-//    req, resp := client.DeleteUserProfileRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteUserProfile
 func (c *OpsWorks) DeleteUserProfileRequest(input *DeleteUserProfileInput) (req *request.Request, output *DeleteUserProfileOutput) {
@@ -1415,11 +1412,12 @@ func (c *OpsWorks) DeleteUserProfileRequest(input *DeleteUserProfileInput) (req 
 // API operation DeleteUserProfile for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeleteUserProfile
 func (c *OpsWorks) DeleteUserProfile(input *DeleteUserProfileInput) (*DeleteUserProfileOutput, error) {
@@ -1459,14 +1457,13 @@ const opDeregisterEcsCluster = "DeregisterEcsCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeregisterEcsClusterRequest method.
+//	req, resp := client.DeregisterEcsClusterRequest(params)
 //
-//    // Example sending a request using the DeregisterEcsClusterRequest method.
-//    req, resp := client.DeregisterEcsClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterEcsCluster
 func (c *OpsWorks) DeregisterEcsClusterRequest(input *DeregisterEcsClusterInput) (req *request.Request, output *DeregisterEcsClusterOutput) {
@@ -1504,11 +1501,12 @@ func (c *OpsWorks) DeregisterEcsClusterRequest(input *DeregisterEcsClusterInput)
 // API operation DeregisterEcsCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterEcsCluster
 func (c *OpsWorks) DeregisterEcsCluster(input *DeregisterEcsClusterInput) (*DeregisterEcsClusterOutput, error) {
@@ -1548,14 +1546,13 @@ const opDeregisterElasticIp = "DeregisterElasticIp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeregisterElasticIpRequest method.
+//	req, resp := client.DeregisterElasticIpRequest(params)
 //
-//    // Example sending a request using the DeregisterElasticIpRequest method.
-//    req, resp := client.DeregisterElasticIpRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterElasticIp
 func (c *OpsWorks) DeregisterElasticIpRequest(input *DeregisterElasticIpInput) (req *request.Request, output *DeregisterElasticIpOutput) {
@@ -1577,8 +1574,9 @@ func (c *OpsWorks) DeregisterElasticIpRequest(input *DeregisterElasticIpInput) (
 
 // DeregisterElasticIp API operation for AWS OpsWorks.
 //
-// Deregisters a specified Elastic IP address. The address can then be registered
-// by another stack. For more information, see Resource Management (https://docs.aws.amazon.com/opsworks/latest/userguide/resources.html).
+// Deregisters a specified Elastic IP address. The address can be registered
+// by another stack after it is deregistered. For more information, see Resource
+// Management (https://docs.aws.amazon.com/opsworks/latest/userguide/resources.html).
 //
 // Required Permissions: To use this action, an IAM user must have a Manage
 // permissions level for the stack, or an attached policy that explicitly grants
@@ -1593,11 +1591,12 @@ func (c *OpsWorks) DeregisterElasticIpRequest(input *DeregisterElasticIpInput) (
 // API operation DeregisterElasticIp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterElasticIp
 func (c *OpsWorks) DeregisterElasticIp(input *DeregisterElasticIpInput) (*DeregisterElasticIpOutput, error) {
@@ -1637,14 +1636,13 @@ const opDeregisterInstance = "DeregisterInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeregisterInstanceRequest method.
+//	req, resp := client.DeregisterInstanceRequest(params)
 //
-//    // Example sending a request using the DeregisterInstanceRequest method.
-//    req, resp := client.DeregisterInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterInstance
 func (c *OpsWorks) DeregisterInstanceRequest(input *DeregisterInstanceInput) (req *request.Request, output *DeregisterInstanceOutput) {
@@ -1666,9 +1664,9 @@ func (c *OpsWorks) DeregisterInstanceRequest(input *DeregisterInstanceInput) (re
 
 // DeregisterInstance API operation for AWS OpsWorks.
 //
-// Deregister a registered Amazon EC2 or on-premises instance. This action removes
-// the instance from the stack and returns it to your control. This action cannot
-// be used with instances that were created with AWS OpsWorks Stacks.
+// Deregister an instance from OpsWorks Stacks. The instance can be a registered
+// instance (Amazon EC2 or on-premises) or an instance created with OpsWorks.
+// This action removes the instance from the stack and returns it to your control.
 //
 // Required Permissions: To use this action, an IAM user must have a Manage
 // permissions level for the stack or an attached policy that explicitly grants
@@ -1683,11 +1681,12 @@ func (c *OpsWorks) DeregisterInstanceRequest(input *DeregisterInstanceInput) (re
 // API operation DeregisterInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterInstance
 func (c *OpsWorks) DeregisterInstance(input *DeregisterInstanceInput) (*DeregisterInstanceOutput, error) {
@@ -1727,14 +1726,13 @@ const opDeregisterRdsDbInstance = "DeregisterRdsDbInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeregisterRdsDbInstanceRequest method.
+//	req, resp := client.DeregisterRdsDbInstanceRequest(params)
 //
-//    // Example sending a request using the DeregisterRdsDbInstanceRequest method.
-//    req, resp := client.DeregisterRdsDbInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterRdsDbInstance
 func (c *OpsWorks) DeregisterRdsDbInstanceRequest(input *DeregisterRdsDbInstanceInput) (req *request.Request, output *DeregisterRdsDbInstanceOutput) {
@@ -1771,11 +1769,12 @@ func (c *OpsWorks) DeregisterRdsDbInstanceRequest(input *DeregisterRdsDbInstance
 // API operation DeregisterRdsDbInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterRdsDbInstance
 func (c *OpsWorks) DeregisterRdsDbInstance(input *DeregisterRdsDbInstanceInput) (*DeregisterRdsDbInstanceOutput, error) {
@@ -1815,14 +1814,13 @@ const opDeregisterVolume = "DeregisterVolume"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeregisterVolumeRequest method.
+//	req, resp := client.DeregisterVolumeRequest(params)
 //
-//    // Example sending a request using the DeregisterVolumeRequest method.
-//    req, resp := client.DeregisterVolumeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterVolume
 func (c *OpsWorks) DeregisterVolumeRequest(input *DeregisterVolumeInput) (req *request.Request, output *DeregisterVolumeOutput) {
@@ -1860,11 +1858,12 @@ func (c *OpsWorks) DeregisterVolumeRequest(input *DeregisterVolumeInput) (req *r
 // API operation DeregisterVolume for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DeregisterVolume
 func (c *OpsWorks) DeregisterVolume(input *DeregisterVolumeInput) (*DeregisterVolumeOutput, error) {
@@ -1904,14 +1903,13 @@ const opDescribeAgentVersions = "DescribeAgentVersions"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeAgentVersionsRequest method.
+//	req, resp := client.DescribeAgentVersionsRequest(params)
 //
-//    // Example sending a request using the DescribeAgentVersionsRequest method.
-//    req, resp := client.DescribeAgentVersionsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeAgentVersions
 func (c *OpsWorks) DescribeAgentVersionsRequest(input *DescribeAgentVersionsInput) (req *request.Request, output *DescribeAgentVersionsOutput) {
@@ -1932,7 +1930,7 @@ func (c *OpsWorks) DescribeAgentVersionsRequest(input *DescribeAgentVersionsInpu
 
 // DescribeAgentVersions API operation for AWS OpsWorks.
 //
-// Describes the available AWS OpsWorks Stacks agent versions. You must specify
+// Describes the available OpsWorks Stacks agent versions. You must specify
 // a stack ID or a configuration manager. DescribeAgentVersions returns a list
 // of available agent versions for the specified stack or configuration manager.
 //
@@ -1944,11 +1942,12 @@ func (c *OpsWorks) DescribeAgentVersionsRequest(input *DescribeAgentVersionsInpu
 // API operation DescribeAgentVersions for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeAgentVersions
 func (c *OpsWorks) DescribeAgentVersions(input *DescribeAgentVersionsInput) (*DescribeAgentVersionsOutput, error) {
@@ -1988,14 +1987,13 @@ const opDescribeApps = "DescribeApps"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeAppsRequest method.
+//	req, resp := client.DescribeAppsRequest(params)
 //
-//    // Example sending a request using the DescribeAppsRequest method.
-//    req, resp := client.DescribeAppsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeApps
 func (c *OpsWorks) DescribeAppsRequest(input *DescribeAppsInput) (req *request.Request, output *DescribeAppsOutput) {
@@ -2033,11 +2031,12 @@ func (c *OpsWorks) DescribeAppsRequest(input *DescribeAppsInput) (req *request.R
 // API operation DescribeApps for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeApps
 func (c *OpsWorks) DescribeApps(input *DescribeAppsInput) (*DescribeAppsOutput, error) {
@@ -2077,14 +2076,13 @@ const opDescribeCommands = "DescribeCommands"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeCommandsRequest method.
+//	req, resp := client.DescribeCommandsRequest(params)
 //
-//    // Example sending a request using the DescribeCommandsRequest method.
-//    req, resp := client.DescribeCommandsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeCommands
 func (c *OpsWorks) DescribeCommandsRequest(input *DescribeCommandsInput) (req *request.Request, output *DescribeCommandsOutput) {
@@ -2122,11 +2120,12 @@ func (c *OpsWorks) DescribeCommandsRequest(input *DescribeCommandsInput) (req *r
 // API operation DescribeCommands for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeCommands
 func (c *OpsWorks) DescribeCommands(input *DescribeCommandsInput) (*DescribeCommandsOutput, error) {
@@ -2166,14 +2165,13 @@ const opDescribeDeployments = "DescribeDeployments"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeDeploymentsRequest method.
+//	req, resp := client.DescribeDeploymentsRequest(params)
 //
-//    // Example sending a request using the DescribeDeploymentsRequest method.
-//    req, resp := client.DescribeDeploymentsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeDeployments
 func (c *OpsWorks) DescribeDeploymentsRequest(input *DescribeDeploymentsInput) (req *request.Request, output *DescribeDeploymentsOutput) {
@@ -2211,11 +2209,12 @@ func (c *OpsWorks) DescribeDeploymentsRequest(input *DescribeDeploymentsInput) (
 // API operation DescribeDeployments for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeDeployments
 func (c *OpsWorks) DescribeDeployments(input *DescribeDeploymentsInput) (*DescribeDeploymentsOutput, error) {
@@ -2255,14 +2254,13 @@ const opDescribeEcsClusters = "DescribeEcsClusters"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeEcsClustersRequest method.
+//	req, resp := client.DescribeEcsClustersRequest(params)
 //
-//    // Example sending a request using the DescribeEcsClustersRequest method.
-//    req, resp := client.DescribeEcsClustersRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeEcsClusters
 func (c *OpsWorks) DescribeEcsClustersRequest(input *DescribeEcsClustersInput) (req *request.Request, output *DescribeEcsClustersOutput) {
@@ -2291,7 +2289,7 @@ func (c *OpsWorks) DescribeEcsClustersRequest(input *DescribeEcsClustersInput) (
 //
 // Describes Amazon ECS clusters that are registered with a stack. If you specify
 // only a stack ID, you can use the MaxResults and NextToken parameters to paginate
-// the response. However, AWS OpsWorks Stacks currently supports only one cluster
+// the response. However, OpsWorks Stacks currently supports only one cluster
 // per layer, so the result set has a maximum of one element.
 //
 // Required Permissions: To use this action, an IAM user must have a Show, Deploy,
@@ -2309,11 +2307,12 @@ func (c *OpsWorks) DescribeEcsClustersRequest(input *DescribeEcsClustersInput) (
 // API operation DescribeEcsClusters for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeEcsClusters
 func (c *OpsWorks) DescribeEcsClusters(input *DescribeEcsClustersInput) (*DescribeEcsClustersOutput, error) {
@@ -2345,15 +2344,14 @@ func (c *OpsWorks) DescribeEcsClustersWithContext(ctx aws.Context, input *Descri
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a DescribeEcsClusters operation.
-//    pageNum := 0
-//    err := client.DescribeEcsClustersPages(params,
-//        func(page *opsworks.DescribeEcsClustersOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a DescribeEcsClusters operation.
+//	pageNum := 0
+//	err := client.DescribeEcsClustersPages(params,
+//	    func(page *opsworks.DescribeEcsClustersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *OpsWorks) DescribeEcsClustersPages(input *DescribeEcsClustersInput, fn func(*DescribeEcsClustersOutput, bool) bool) error {
 	return c.DescribeEcsClustersPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2405,14 +2403,13 @@ const opDescribeElasticIps = "DescribeElasticIps"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeElasticIpsRequest method.
+//	req, resp := client.DescribeElasticIpsRequest(params)
 //
-//    // Example sending a request using the DescribeElasticIpsRequest method.
-//    req, resp := client.DescribeElasticIpsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeElasticIps
 func (c *OpsWorks) DescribeElasticIpsRequest(input *DescribeElasticIpsInput) (req *request.Request, output *DescribeElasticIpsOutput) {
@@ -2450,11 +2447,12 @@ func (c *OpsWorks) DescribeElasticIpsRequest(input *DescribeElasticIpsInput) (re
 // API operation DescribeElasticIps for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeElasticIps
 func (c *OpsWorks) DescribeElasticIps(input *DescribeElasticIpsInput) (*DescribeElasticIpsOutput, error) {
@@ -2494,14 +2492,13 @@ const opDescribeElasticLoadBalancers = "DescribeElasticLoadBalancers"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeElasticLoadBalancersRequest method.
+//	req, resp := client.DescribeElasticLoadBalancersRequest(params)
 //
-//    // Example sending a request using the DescribeElasticLoadBalancersRequest method.
-//    req, resp := client.DescribeElasticLoadBalancersRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeElasticLoadBalancers
 func (c *OpsWorks) DescribeElasticLoadBalancersRequest(input *DescribeElasticLoadBalancersInput) (req *request.Request, output *DescribeElasticLoadBalancersOutput) {
@@ -2539,11 +2536,12 @@ func (c *OpsWorks) DescribeElasticLoadBalancersRequest(input *DescribeElasticLoa
 // API operation DescribeElasticLoadBalancers for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeElasticLoadBalancers
 func (c *OpsWorks) DescribeElasticLoadBalancers(input *DescribeElasticLoadBalancersInput) (*DescribeElasticLoadBalancersOutput, error) {
@@ -2583,14 +2581,13 @@ const opDescribeInstances = "DescribeInstances"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeInstancesRequest method.
+//	req, resp := client.DescribeInstancesRequest(params)
 //
-//    // Example sending a request using the DescribeInstancesRequest method.
-//    req, resp := client.DescribeInstancesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeInstances
 func (c *OpsWorks) DescribeInstancesRequest(input *DescribeInstancesInput) (req *request.Request, output *DescribeInstancesOutput) {
@@ -2628,11 +2625,12 @@ func (c *OpsWorks) DescribeInstancesRequest(input *DescribeInstancesInput) (req 
 // API operation DescribeInstances for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeInstances
 func (c *OpsWorks) DescribeInstances(input *DescribeInstancesInput) (*DescribeInstancesOutput, error) {
@@ -2672,14 +2670,13 @@ const opDescribeLayers = "DescribeLayers"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeLayersRequest method.
+//	req, resp := client.DescribeLayersRequest(params)
 //
-//    // Example sending a request using the DescribeLayersRequest method.
-//    req, resp := client.DescribeLayersRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeLayers
 func (c *OpsWorks) DescribeLayersRequest(input *DescribeLayersInput) (req *request.Request, output *DescribeLayersOutput) {
@@ -2717,11 +2714,12 @@ func (c *OpsWorks) DescribeLayersRequest(input *DescribeLayersInput) (req *reque
 // API operation DescribeLayers for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeLayers
 func (c *OpsWorks) DescribeLayers(input *DescribeLayersInput) (*DescribeLayersOutput, error) {
@@ -2761,14 +2759,13 @@ const opDescribeLoadBasedAutoScaling = "DescribeLoadBasedAutoScaling"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeLoadBasedAutoScalingRequest method.
+//	req, resp := client.DescribeLoadBasedAutoScalingRequest(params)
 //
-//    // Example sending a request using the DescribeLoadBasedAutoScalingRequest method.
-//    req, resp := client.DescribeLoadBasedAutoScalingRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeLoadBasedAutoScaling
 func (c *OpsWorks) DescribeLoadBasedAutoScalingRequest(input *DescribeLoadBasedAutoScalingInput) (req *request.Request, output *DescribeLoadBasedAutoScalingOutput) {
@@ -2806,11 +2803,12 @@ func (c *OpsWorks) DescribeLoadBasedAutoScalingRequest(input *DescribeLoadBasedA
 // API operation DescribeLoadBasedAutoScaling for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeLoadBasedAutoScaling
 func (c *OpsWorks) DescribeLoadBasedAutoScaling(input *DescribeLoadBasedAutoScalingInput) (*DescribeLoadBasedAutoScalingOutput, error) {
@@ -2850,14 +2848,13 @@ const opDescribeMyUserProfile = "DescribeMyUserProfile"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeMyUserProfileRequest method.
+//	req, resp := client.DescribeMyUserProfileRequest(params)
 //
-//    // Example sending a request using the DescribeMyUserProfileRequest method.
-//    req, resp := client.DescribeMyUserProfileRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeMyUserProfile
 func (c *OpsWorks) DescribeMyUserProfileRequest(input *DescribeMyUserProfileInput) (req *request.Request, output *DescribeMyUserProfileOutput) {
@@ -2928,14 +2925,13 @@ const opDescribeOperatingSystems = "DescribeOperatingSystems"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeOperatingSystemsRequest method.
+//	req, resp := client.DescribeOperatingSystemsRequest(params)
 //
-//    // Example sending a request using the DescribeOperatingSystemsRequest method.
-//    req, resp := client.DescribeOperatingSystemsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeOperatingSystems
 func (c *OpsWorks) DescribeOperatingSystemsRequest(input *DescribeOperatingSystemsInput) (req *request.Request, output *DescribeOperatingSystemsOutput) {
@@ -2956,7 +2952,7 @@ func (c *OpsWorks) DescribeOperatingSystemsRequest(input *DescribeOperatingSyste
 
 // DescribeOperatingSystems API operation for AWS OpsWorks.
 //
-// Describes the operating systems that are supported by AWS OpsWorks Stacks.
+// Describes the operating systems that are supported by OpsWorks Stacks.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3002,14 +2998,13 @@ const opDescribePermissions = "DescribePermissions"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribePermissionsRequest method.
+//	req, resp := client.DescribePermissionsRequest(params)
 //
-//    // Example sending a request using the DescribePermissionsRequest method.
-//    req, resp := client.DescribePermissionsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribePermissions
 func (c *OpsWorks) DescribePermissionsRequest(input *DescribePermissionsInput) (req *request.Request, output *DescribePermissionsOutput) {
@@ -3045,11 +3040,12 @@ func (c *OpsWorks) DescribePermissionsRequest(input *DescribePermissionsInput) (
 // API operation DescribePermissions for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribePermissions
 func (c *OpsWorks) DescribePermissions(input *DescribePermissionsInput) (*DescribePermissionsOutput, error) {
@@ -3089,14 +3085,13 @@ const opDescribeRaidArrays = "DescribeRaidArrays"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeRaidArraysRequest method.
+//	req, resp := client.DescribeRaidArraysRequest(params)
 //
-//    // Example sending a request using the DescribeRaidArraysRequest method.
-//    req, resp := client.DescribeRaidArraysRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeRaidArrays
 func (c *OpsWorks) DescribeRaidArraysRequest(input *DescribeRaidArraysInput) (req *request.Request, output *DescribeRaidArraysOutput) {
@@ -3134,11 +3129,12 @@ func (c *OpsWorks) DescribeRaidArraysRequest(input *DescribeRaidArraysInput) (re
 // API operation DescribeRaidArrays for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeRaidArrays
 func (c *OpsWorks) DescribeRaidArrays(input *DescribeRaidArraysInput) (*DescribeRaidArraysOutput, error) {
@@ -3178,14 +3174,13 @@ const opDescribeRdsDbInstances = "DescribeRdsDbInstances"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeRdsDbInstancesRequest method.
+//	req, resp := client.DescribeRdsDbInstancesRequest(params)
 //
-//    // Example sending a request using the DescribeRdsDbInstancesRequest method.
-//    req, resp := client.DescribeRdsDbInstancesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeRdsDbInstances
 func (c *OpsWorks) DescribeRdsDbInstancesRequest(input *DescribeRdsDbInstancesInput) (req *request.Request, output *DescribeRdsDbInstancesOutput) {
@@ -3223,11 +3218,12 @@ func (c *OpsWorks) DescribeRdsDbInstancesRequest(input *DescribeRdsDbInstancesIn
 // API operation DescribeRdsDbInstances for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeRdsDbInstances
 func (c *OpsWorks) DescribeRdsDbInstances(input *DescribeRdsDbInstancesInput) (*DescribeRdsDbInstancesOutput, error) {
@@ -3267,14 +3263,13 @@ const opDescribeServiceErrors = "DescribeServiceErrors"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeServiceErrorsRequest method.
+//	req, resp := client.DescribeServiceErrorsRequest(params)
 //
-//    // Example sending a request using the DescribeServiceErrorsRequest method.
-//    req, resp := client.DescribeServiceErrorsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeServiceErrors
 func (c *OpsWorks) DescribeServiceErrorsRequest(input *DescribeServiceErrorsInput) (req *request.Request, output *DescribeServiceErrorsOutput) {
@@ -3295,7 +3290,7 @@ func (c *OpsWorks) DescribeServiceErrorsRequest(input *DescribeServiceErrorsInpu
 
 // DescribeServiceErrors API operation for AWS OpsWorks.
 //
-// Describes AWS OpsWorks Stacks service errors.
+// Describes OpsWorks Stacks service errors.
 //
 // Required Permissions: To use this action, an IAM user must have a Show, Deploy,
 // or Manage permissions level for the stack, or an attached policy that explicitly
@@ -3312,11 +3307,12 @@ func (c *OpsWorks) DescribeServiceErrorsRequest(input *DescribeServiceErrorsInpu
 // API operation DescribeServiceErrors for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeServiceErrors
 func (c *OpsWorks) DescribeServiceErrors(input *DescribeServiceErrorsInput) (*DescribeServiceErrorsOutput, error) {
@@ -3356,14 +3352,13 @@ const opDescribeStackProvisioningParameters = "DescribeStackProvisioningParamete
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeStackProvisioningParametersRequest method.
+//	req, resp := client.DescribeStackProvisioningParametersRequest(params)
 //
-//    // Example sending a request using the DescribeStackProvisioningParametersRequest method.
-//    req, resp := client.DescribeStackProvisioningParametersRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeStackProvisioningParameters
 func (c *OpsWorks) DescribeStackProvisioningParametersRequest(input *DescribeStackProvisioningParametersInput) (req *request.Request, output *DescribeStackProvisioningParametersOutput) {
@@ -3399,11 +3394,12 @@ func (c *OpsWorks) DescribeStackProvisioningParametersRequest(input *DescribeSta
 // API operation DescribeStackProvisioningParameters for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeStackProvisioningParameters
 func (c *OpsWorks) DescribeStackProvisioningParameters(input *DescribeStackProvisioningParametersInput) (*DescribeStackProvisioningParametersOutput, error) {
@@ -3443,14 +3439,13 @@ const opDescribeStackSummary = "DescribeStackSummary"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeStackSummaryRequest method.
+//	req, resp := client.DescribeStackSummaryRequest(params)
 //
-//    // Example sending a request using the DescribeStackSummaryRequest method.
-//    req, resp := client.DescribeStackSummaryRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeStackSummary
 func (c *OpsWorks) DescribeStackSummaryRequest(input *DescribeStackSummaryInput) (req *request.Request, output *DescribeStackSummaryOutput) {
@@ -3487,11 +3482,12 @@ func (c *OpsWorks) DescribeStackSummaryRequest(input *DescribeStackSummaryInput)
 // API operation DescribeStackSummary for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeStackSummary
 func (c *OpsWorks) DescribeStackSummary(input *DescribeStackSummaryInput) (*DescribeStackSummaryOutput, error) {
@@ -3531,14 +3527,13 @@ const opDescribeStacks = "DescribeStacks"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeStacksRequest method.
+//	req, resp := client.DescribeStacksRequest(params)
 //
-//    // Example sending a request using the DescribeStacksRequest method.
-//    req, resp := client.DescribeStacksRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeStacks
 func (c *OpsWorks) DescribeStacksRequest(input *DescribeStacksInput) (req *request.Request, output *DescribeStacksOutput) {
@@ -3574,11 +3569,12 @@ func (c *OpsWorks) DescribeStacksRequest(input *DescribeStacksInput) (req *reque
 // API operation DescribeStacks for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeStacks
 func (c *OpsWorks) DescribeStacks(input *DescribeStacksInput) (*DescribeStacksOutput, error) {
@@ -3618,14 +3614,13 @@ const opDescribeTimeBasedAutoScaling = "DescribeTimeBasedAutoScaling"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeTimeBasedAutoScalingRequest method.
+//	req, resp := client.DescribeTimeBasedAutoScalingRequest(params)
 //
-//    // Example sending a request using the DescribeTimeBasedAutoScalingRequest method.
-//    req, resp := client.DescribeTimeBasedAutoScalingRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeTimeBasedAutoScaling
 func (c *OpsWorks) DescribeTimeBasedAutoScalingRequest(input *DescribeTimeBasedAutoScalingInput) (req *request.Request, output *DescribeTimeBasedAutoScalingOutput) {
@@ -3663,11 +3658,12 @@ func (c *OpsWorks) DescribeTimeBasedAutoScalingRequest(input *DescribeTimeBasedA
 // API operation DescribeTimeBasedAutoScaling for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeTimeBasedAutoScaling
 func (c *OpsWorks) DescribeTimeBasedAutoScaling(input *DescribeTimeBasedAutoScalingInput) (*DescribeTimeBasedAutoScalingOutput, error) {
@@ -3707,14 +3703,13 @@ const opDescribeUserProfiles = "DescribeUserProfiles"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeUserProfilesRequest method.
+//	req, resp := client.DescribeUserProfilesRequest(params)
 //
-//    // Example sending a request using the DescribeUserProfilesRequest method.
-//    req, resp := client.DescribeUserProfilesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeUserProfiles
 func (c *OpsWorks) DescribeUserProfilesRequest(input *DescribeUserProfilesInput) (req *request.Request, output *DescribeUserProfilesOutput) {
@@ -3749,11 +3744,12 @@ func (c *OpsWorks) DescribeUserProfilesRequest(input *DescribeUserProfilesInput)
 // API operation DescribeUserProfiles for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeUserProfiles
 func (c *OpsWorks) DescribeUserProfiles(input *DescribeUserProfilesInput) (*DescribeUserProfilesOutput, error) {
@@ -3793,14 +3789,13 @@ const opDescribeVolumes = "DescribeVolumes"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeVolumesRequest method.
+//	req, resp := client.DescribeVolumesRequest(params)
 //
-//    // Example sending a request using the DescribeVolumesRequest method.
-//    req, resp := client.DescribeVolumesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeVolumes
 func (c *OpsWorks) DescribeVolumesRequest(input *DescribeVolumesInput) (req *request.Request, output *DescribeVolumesOutput) {
@@ -3838,11 +3833,12 @@ func (c *OpsWorks) DescribeVolumesRequest(input *DescribeVolumesInput) (req *req
 // API operation DescribeVolumes for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DescribeVolumes
 func (c *OpsWorks) DescribeVolumes(input *DescribeVolumesInput) (*DescribeVolumesOutput, error) {
@@ -3882,14 +3878,13 @@ const opDetachElasticLoadBalancer = "DetachElasticLoadBalancer"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DetachElasticLoadBalancerRequest method.
+//	req, resp := client.DetachElasticLoadBalancerRequest(params)
 //
-//    // Example sending a request using the DetachElasticLoadBalancerRequest method.
-//    req, resp := client.DetachElasticLoadBalancerRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DetachElasticLoadBalancer
 func (c *OpsWorks) DetachElasticLoadBalancerRequest(input *DetachElasticLoadBalancerInput) (req *request.Request, output *DetachElasticLoadBalancerOutput) {
@@ -3926,8 +3921,8 @@ func (c *OpsWorks) DetachElasticLoadBalancerRequest(input *DetachElasticLoadBala
 // API operation DetachElasticLoadBalancer for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DetachElasticLoadBalancer
 func (c *OpsWorks) DetachElasticLoadBalancer(input *DetachElasticLoadBalancerInput) (*DetachElasticLoadBalancerOutput, error) {
@@ -3967,14 +3962,13 @@ const opDisassociateElasticIp = "DisassociateElasticIp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DisassociateElasticIpRequest method.
+//	req, resp := client.DisassociateElasticIpRequest(params)
 //
-//    // Example sending a request using the DisassociateElasticIpRequest method.
-//    req, resp := client.DisassociateElasticIpRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DisassociateElasticIp
 func (c *OpsWorks) DisassociateElasticIpRequest(input *DisassociateElasticIpInput) (req *request.Request, output *DisassociateElasticIpOutput) {
@@ -4013,11 +4007,12 @@ func (c *OpsWorks) DisassociateElasticIpRequest(input *DisassociateElasticIpInpu
 // API operation DisassociateElasticIp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/DisassociateElasticIp
 func (c *OpsWorks) DisassociateElasticIp(input *DisassociateElasticIpInput) (*DisassociateElasticIpOutput, error) {
@@ -4057,14 +4052,13 @@ const opGetHostnameSuggestion = "GetHostnameSuggestion"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetHostnameSuggestionRequest method.
+//	req, resp := client.GetHostnameSuggestionRequest(params)
 //
-//    // Example sending a request using the GetHostnameSuggestionRequest method.
-//    req, resp := client.GetHostnameSuggestionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/GetHostnameSuggestion
 func (c *OpsWorks) GetHostnameSuggestionRequest(input *GetHostnameSuggestionInput) (req *request.Request, output *GetHostnameSuggestionOutput) {
@@ -4101,11 +4095,12 @@ func (c *OpsWorks) GetHostnameSuggestionRequest(input *GetHostnameSuggestionInpu
 // API operation GetHostnameSuggestion for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/GetHostnameSuggestion
 func (c *OpsWorks) GetHostnameSuggestion(input *GetHostnameSuggestionInput) (*GetHostnameSuggestionOutput, error) {
@@ -4145,14 +4140,13 @@ const opGrantAccess = "GrantAccess"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GrantAccessRequest method.
+//	req, resp := client.GrantAccessRequest(params)
 //
-//    // Example sending a request using the GrantAccessRequest method.
-//    req, resp := client.GrantAccessRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/GrantAccess
 func (c *OpsWorks) GrantAccessRequest(input *GrantAccessInput) (req *request.Request, output *GrantAccessOutput) {
@@ -4173,7 +4167,6 @@ func (c *OpsWorks) GrantAccessRequest(input *GrantAccessInput) (req *request.Req
 
 // GrantAccess API operation for AWS OpsWorks.
 //
-//
 // This action can be used only with Windows stacks.
 //
 // Grants RDP access to a Windows instance for a specified time period.
@@ -4186,11 +4179,12 @@ func (c *OpsWorks) GrantAccessRequest(input *GrantAccessInput) (req *request.Req
 // API operation GrantAccess for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/GrantAccess
 func (c *OpsWorks) GrantAccess(input *GrantAccessInput) (*GrantAccessOutput, error) {
@@ -4230,14 +4224,13 @@ const opListTags = "ListTags"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListTagsRequest method.
+//	req, resp := client.ListTagsRequest(params)
 //
-//    // Example sending a request using the ListTagsRequest method.
-//    req, resp := client.ListTagsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/ListTags
 func (c *OpsWorks) ListTagsRequest(input *ListTagsInput) (req *request.Request, output *ListTagsOutput) {
@@ -4268,11 +4261,12 @@ func (c *OpsWorks) ListTagsRequest(input *ListTagsInput) (req *request.Request, 
 // API operation ListTags for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/ListTags
 func (c *OpsWorks) ListTags(input *ListTagsInput) (*ListTagsOutput, error) {
@@ -4312,14 +4306,13 @@ const opRebootInstance = "RebootInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RebootInstanceRequest method.
+//	req, resp := client.RebootInstanceRequest(params)
 //
-//    // Example sending a request using the RebootInstanceRequest method.
-//    req, resp := client.RebootInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RebootInstance
 func (c *OpsWorks) RebootInstanceRequest(input *RebootInstanceInput) (req *request.Request, output *RebootInstanceOutput) {
@@ -4357,11 +4350,12 @@ func (c *OpsWorks) RebootInstanceRequest(input *RebootInstanceInput) (req *reque
 // API operation RebootInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RebootInstance
 func (c *OpsWorks) RebootInstance(input *RebootInstanceInput) (*RebootInstanceOutput, error) {
@@ -4401,14 +4395,13 @@ const opRegisterEcsCluster = "RegisterEcsCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RegisterEcsClusterRequest method.
+//	req, resp := client.RegisterEcsClusterRequest(params)
 //
-//    // Example sending a request using the RegisterEcsClusterRequest method.
-//    req, resp := client.RegisterEcsClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterEcsCluster
 func (c *OpsWorks) RegisterEcsClusterRequest(input *RegisterEcsClusterInput) (req *request.Request, output *RegisterEcsClusterOutput) {
@@ -4446,11 +4439,12 @@ func (c *OpsWorks) RegisterEcsClusterRequest(input *RegisterEcsClusterInput) (re
 // API operation RegisterEcsCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterEcsCluster
 func (c *OpsWorks) RegisterEcsCluster(input *RegisterEcsClusterInput) (*RegisterEcsClusterOutput, error) {
@@ -4490,14 +4484,13 @@ const opRegisterElasticIp = "RegisterElasticIp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RegisterElasticIpRequest method.
+//	req, resp := client.RegisterElasticIpRequest(params)
 //
-//    // Example sending a request using the RegisterElasticIpRequest method.
-//    req, resp := client.RegisterElasticIpRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterElasticIp
 func (c *OpsWorks) RegisterElasticIpRequest(input *RegisterElasticIpInput) (req *request.Request, output *RegisterElasticIpOutput) {
@@ -4536,11 +4529,12 @@ func (c *OpsWorks) RegisterElasticIpRequest(input *RegisterElasticIpInput) (req 
 // API operation RegisterElasticIp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterElasticIp
 func (c *OpsWorks) RegisterElasticIp(input *RegisterElasticIpInput) (*RegisterElasticIpOutput, error) {
@@ -4580,14 +4574,13 @@ const opRegisterInstance = "RegisterInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RegisterInstanceRequest method.
+//	req, resp := client.RegisterInstanceRequest(params)
 //
-//    // Example sending a request using the RegisterInstanceRequest method.
-//    req, resp := client.RegisterInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterInstance
 func (c *OpsWorks) RegisterInstanceRequest(input *RegisterInstanceInput) (req *request.Request, output *RegisterInstanceOutput) {
@@ -4608,15 +4601,15 @@ func (c *OpsWorks) RegisterInstanceRequest(input *RegisterInstanceInput) (req *r
 
 // RegisterInstance API operation for AWS OpsWorks.
 //
-// Registers instances that were created outside of AWS OpsWorks Stacks with
-// a specified stack.
+// Registers instances that were created outside of OpsWorks Stacks with a specified
+// stack.
 //
 // We do not recommend using this action to register instances. The complete
-// registration operation includes two tasks: installing the AWS OpsWorks Stacks
+// registration operation includes two tasks: installing the OpsWorks Stacks
 // agent on the instance, and registering the instance with the stack. RegisterInstance
-// handles only the second step. You should instead use the AWS CLI register
-// command, which performs the entire registration operation. For more information,
-// see Registering an Instance with an AWS OpsWorks Stacks Stack (https://docs.aws.amazon.com/opsworks/latest/userguide/registered-instances-register.html).
+// handles only the second step. You should instead use the CLI register command,
+// which performs the entire registration operation. For more information, see
+// Registering an Instance with an OpsWorks Stacks Stack (https://docs.aws.amazon.com/opsworks/latest/userguide/registered-instances-register.html).
 //
 // Registered instances have the same requirements as instances that are created
 // by using the CreateInstance API. For example, registered instances must be
@@ -4637,11 +4630,12 @@ func (c *OpsWorks) RegisterInstanceRequest(input *RegisterInstanceInput) (req *r
 // API operation RegisterInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterInstance
 func (c *OpsWorks) RegisterInstance(input *RegisterInstanceInput) (*RegisterInstanceOutput, error) {
@@ -4681,14 +4675,13 @@ const opRegisterRdsDbInstance = "RegisterRdsDbInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RegisterRdsDbInstanceRequest method.
+//	req, resp := client.RegisterRdsDbInstanceRequest(params)
 //
-//    // Example sending a request using the RegisterRdsDbInstanceRequest method.
-//    req, resp := client.RegisterRdsDbInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterRdsDbInstance
 func (c *OpsWorks) RegisterRdsDbInstanceRequest(input *RegisterRdsDbInstanceInput) (req *request.Request, output *RegisterRdsDbInstanceOutput) {
@@ -4725,11 +4718,12 @@ func (c *OpsWorks) RegisterRdsDbInstanceRequest(input *RegisterRdsDbInstanceInpu
 // API operation RegisterRdsDbInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterRdsDbInstance
 func (c *OpsWorks) RegisterRdsDbInstance(input *RegisterRdsDbInstanceInput) (*RegisterRdsDbInstanceOutput, error) {
@@ -4769,14 +4763,13 @@ const opRegisterVolume = "RegisterVolume"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RegisterVolumeRequest method.
+//	req, resp := client.RegisterVolumeRequest(params)
 //
-//    // Example sending a request using the RegisterVolumeRequest method.
-//    req, resp := client.RegisterVolumeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterVolume
 func (c *OpsWorks) RegisterVolumeRequest(input *RegisterVolumeInput) (req *request.Request, output *RegisterVolumeOutput) {
@@ -4815,11 +4808,12 @@ func (c *OpsWorks) RegisterVolumeRequest(input *RegisterVolumeInput) (req *reque
 // API operation RegisterVolume for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/RegisterVolume
 func (c *OpsWorks) RegisterVolume(input *RegisterVolumeInput) (*RegisterVolumeOutput, error) {
@@ -4859,14 +4853,13 @@ const opSetLoadBasedAutoScaling = "SetLoadBasedAutoScaling"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the SetLoadBasedAutoScalingRequest method.
+//	req, resp := client.SetLoadBasedAutoScalingRequest(params)
 //
-//    // Example sending a request using the SetLoadBasedAutoScalingRequest method.
-//    req, resp := client.SetLoadBasedAutoScalingRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/SetLoadBasedAutoScaling
 func (c *OpsWorks) SetLoadBasedAutoScalingRequest(input *SetLoadBasedAutoScalingInput) (req *request.Request, output *SetLoadBasedAutoScalingOutput) {
@@ -4910,11 +4903,12 @@ func (c *OpsWorks) SetLoadBasedAutoScalingRequest(input *SetLoadBasedAutoScaling
 // API operation SetLoadBasedAutoScaling for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/SetLoadBasedAutoScaling
 func (c *OpsWorks) SetLoadBasedAutoScaling(input *SetLoadBasedAutoScalingInput) (*SetLoadBasedAutoScalingOutput, error) {
@@ -4954,14 +4948,13 @@ const opSetPermission = "SetPermission"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the SetPermissionRequest method.
+//	req, resp := client.SetPermissionRequest(params)
 //
-//    // Example sending a request using the SetPermissionRequest method.
-//    req, resp := client.SetPermissionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/SetPermission
 func (c *OpsWorks) SetPermissionRequest(input *SetPermissionInput) (req *request.Request, output *SetPermissionOutput) {
@@ -4999,11 +4992,12 @@ func (c *OpsWorks) SetPermissionRequest(input *SetPermissionInput) (req *request
 // API operation SetPermission for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/SetPermission
 func (c *OpsWorks) SetPermission(input *SetPermissionInput) (*SetPermissionOutput, error) {
@@ -5043,14 +5037,13 @@ const opSetTimeBasedAutoScaling = "SetTimeBasedAutoScaling"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the SetTimeBasedAutoScalingRequest method.
+//	req, resp := client.SetTimeBasedAutoScalingRequest(params)
 //
-//    // Example sending a request using the SetTimeBasedAutoScalingRequest method.
-//    req, resp := client.SetTimeBasedAutoScalingRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/SetTimeBasedAutoScaling
 func (c *OpsWorks) SetTimeBasedAutoScalingRequest(input *SetTimeBasedAutoScalingInput) (req *request.Request, output *SetTimeBasedAutoScalingOutput) {
@@ -5089,11 +5082,12 @@ func (c *OpsWorks) SetTimeBasedAutoScalingRequest(input *SetTimeBasedAutoScaling
 // API operation SetTimeBasedAutoScaling for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/SetTimeBasedAutoScaling
 func (c *OpsWorks) SetTimeBasedAutoScaling(input *SetTimeBasedAutoScalingInput) (*SetTimeBasedAutoScalingOutput, error) {
@@ -5133,14 +5127,13 @@ const opStartInstance = "StartInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the StartInstanceRequest method.
+//	req, resp := client.StartInstanceRequest(params)
 //
-//    // Example sending a request using the StartInstanceRequest method.
-//    req, resp := client.StartInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StartInstance
 func (c *OpsWorks) StartInstanceRequest(input *StartInstanceInput) (req *request.Request, output *StartInstanceOutput) {
@@ -5178,11 +5171,12 @@ func (c *OpsWorks) StartInstanceRequest(input *StartInstanceInput) (req *request
 // API operation StartInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StartInstance
 func (c *OpsWorks) StartInstance(input *StartInstanceInput) (*StartInstanceOutput, error) {
@@ -5222,14 +5216,13 @@ const opStartStack = "StartStack"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the StartStackRequest method.
+//	req, resp := client.StartStackRequest(params)
 //
-//    // Example sending a request using the StartStackRequest method.
-//    req, resp := client.StartStackRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StartStack
 func (c *OpsWorks) StartStackRequest(input *StartStackInput) (req *request.Request, output *StartStackOutput) {
@@ -5266,11 +5259,12 @@ func (c *OpsWorks) StartStackRequest(input *StartStackInput) (req *request.Reque
 // API operation StartStack for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StartStack
 func (c *OpsWorks) StartStack(input *StartStackInput) (*StartStackOutput, error) {
@@ -5310,14 +5304,13 @@ const opStopInstance = "StopInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the StopInstanceRequest method.
+//	req, resp := client.StopInstanceRequest(params)
 //
-//    // Example sending a request using the StopInstanceRequest method.
-//    req, resp := client.StopInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StopInstance
 func (c *OpsWorks) StopInstanceRequest(input *StopInstanceInput) (req *request.Request, output *StopInstanceOutput) {
@@ -5357,11 +5350,12 @@ func (c *OpsWorks) StopInstanceRequest(input *StopInstanceInput) (req *request.R
 // API operation StopInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StopInstance
 func (c *OpsWorks) StopInstance(input *StopInstanceInput) (*StopInstanceOutput, error) {
@@ -5401,14 +5395,13 @@ const opStopStack = "StopStack"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the StopStackRequest method.
+//	req, resp := client.StopStackRequest(params)
 //
-//    // Example sending a request using the StopStackRequest method.
-//    req, resp := client.StopStackRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StopStack
 func (c *OpsWorks) StopStackRequest(input *StopStackInput) (req *request.Request, output *StopStackOutput) {
@@ -5445,11 +5438,12 @@ func (c *OpsWorks) StopStackRequest(input *StopStackInput) (req *request.Request
 // API operation StopStack for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/StopStack
 func (c *OpsWorks) StopStack(input *StopStackInput) (*StopStackOutput, error) {
@@ -5489,14 +5483,13 @@ const opTagResource = "TagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the TagResourceRequest method.
+//	req, resp := client.TagResourceRequest(params)
 //
-//    // Example sending a request using the TagResourceRequest method.
-//    req, resp := client.TagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/TagResource
 func (c *OpsWorks) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
@@ -5518,9 +5511,9 @@ func (c *OpsWorks) TagResourceRequest(input *TagResourceInput) (req *request.Req
 
 // TagResource API operation for AWS OpsWorks.
 //
-// Apply cost-allocation tags to a specified stack or layer in AWS OpsWorks
-// Stacks. For more information about how tagging works, see Tags (https://docs.aws.amazon.com/opsworks/latest/userguide/tagging.html)
-// in the AWS OpsWorks User Guide.
+// Apply cost-allocation tags to a specified stack or layer in OpsWorks Stacks.
+// For more information about how tagging works, see Tags (https://docs.aws.amazon.com/opsworks/latest/userguide/tagging.html)
+// in the OpsWorks User Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5530,11 +5523,12 @@ func (c *OpsWorks) TagResourceRequest(input *TagResourceInput) (req *request.Req
 // API operation TagResource for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/TagResource
 func (c *OpsWorks) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -5574,14 +5568,13 @@ const opUnassignInstance = "UnassignInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UnassignInstanceRequest method.
+//	req, resp := client.UnassignInstanceRequest(params)
 //
-//    // Example sending a request using the UnassignInstanceRequest method.
-//    req, resp := client.UnassignInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UnassignInstance
 func (c *OpsWorks) UnassignInstanceRequest(input *UnassignInstanceInput) (req *request.Request, output *UnassignInstanceOutput) {
@@ -5606,7 +5599,7 @@ func (c *OpsWorks) UnassignInstanceRequest(input *UnassignInstanceInput) (req *r
 // Unassigns a registered instance from all layers that are using the instance.
 // The instance remains in the stack as an unassigned instance, and can be assigned
 // to another layer as needed. You cannot use this action with instances that
-// were created with AWS OpsWorks Stacks.
+// were created with OpsWorks Stacks.
 //
 // Required Permissions: To use this action, an IAM user must have a Manage
 // permissions level for the stack or an attached policy that explicitly grants
@@ -5621,11 +5614,12 @@ func (c *OpsWorks) UnassignInstanceRequest(input *UnassignInstanceInput) (req *r
 // API operation UnassignInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UnassignInstance
 func (c *OpsWorks) UnassignInstance(input *UnassignInstanceInput) (*UnassignInstanceOutput, error) {
@@ -5665,14 +5659,13 @@ const opUnassignVolume = "UnassignVolume"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UnassignVolumeRequest method.
+//	req, resp := client.UnassignVolumeRequest(params)
 //
-//    // Example sending a request using the UnassignVolumeRequest method.
-//    req, resp := client.UnassignVolumeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UnassignVolume
 func (c *OpsWorks) UnassignVolumeRequest(input *UnassignVolumeInput) (req *request.Request, output *UnassignVolumeOutput) {
@@ -5710,11 +5703,12 @@ func (c *OpsWorks) UnassignVolumeRequest(input *UnassignVolumeInput) (req *reque
 // API operation UnassignVolume for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UnassignVolume
 func (c *OpsWorks) UnassignVolume(input *UnassignVolumeInput) (*UnassignVolumeOutput, error) {
@@ -5754,14 +5748,13 @@ const opUntagResource = "UntagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UntagResourceRequest method.
+//	req, resp := client.UntagResourceRequest(params)
 //
-//    // Example sending a request using the UntagResourceRequest method.
-//    req, resp := client.UntagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UntagResource
 func (c *OpsWorks) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
@@ -5793,11 +5786,12 @@ func (c *OpsWorks) UntagResourceRequest(input *UntagResourceInput) (req *request
 // API operation UntagResource for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UntagResource
 func (c *OpsWorks) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -5837,14 +5831,13 @@ const opUpdateApp = "UpdateApp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateAppRequest method.
+//	req, resp := client.UpdateAppRequest(params)
 //
-//    // Example sending a request using the UpdateAppRequest method.
-//    req, resp := client.UpdateAppRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateApp
 func (c *OpsWorks) UpdateAppRequest(input *UpdateAppInput) (req *request.Request, output *UpdateAppOutput) {
@@ -5881,11 +5874,12 @@ func (c *OpsWorks) UpdateAppRequest(input *UpdateAppInput) (req *request.Request
 // API operation UpdateApp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateApp
 func (c *OpsWorks) UpdateApp(input *UpdateAppInput) (*UpdateAppOutput, error) {
@@ -5925,14 +5919,13 @@ const opUpdateElasticIp = "UpdateElasticIp"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateElasticIpRequest method.
+//	req, resp := client.UpdateElasticIpRequest(params)
 //
-//    // Example sending a request using the UpdateElasticIpRequest method.
-//    req, resp := client.UpdateElasticIpRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateElasticIp
 func (c *OpsWorks) UpdateElasticIpRequest(input *UpdateElasticIpInput) (req *request.Request, output *UpdateElasticIpOutput) {
@@ -5970,11 +5963,12 @@ func (c *OpsWorks) UpdateElasticIpRequest(input *UpdateElasticIpInput) (req *req
 // API operation UpdateElasticIp for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateElasticIp
 func (c *OpsWorks) UpdateElasticIp(input *UpdateElasticIpInput) (*UpdateElasticIpOutput, error) {
@@ -6014,14 +6008,13 @@ const opUpdateInstance = "UpdateInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateInstanceRequest method.
+//	req, resp := client.UpdateInstanceRequest(params)
 //
-//    // Example sending a request using the UpdateInstanceRequest method.
-//    req, resp := client.UpdateInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateInstance
 func (c *OpsWorks) UpdateInstanceRequest(input *UpdateInstanceInput) (req *request.Request, output *UpdateInstanceOutput) {
@@ -6058,11 +6051,12 @@ func (c *OpsWorks) UpdateInstanceRequest(input *UpdateInstanceInput) (req *reque
 // API operation UpdateInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateInstance
 func (c *OpsWorks) UpdateInstance(input *UpdateInstanceInput) (*UpdateInstanceOutput, error) {
@@ -6102,14 +6096,13 @@ const opUpdateLayer = "UpdateLayer"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateLayerRequest method.
+//	req, resp := client.UpdateLayerRequest(params)
 //
-//    // Example sending a request using the UpdateLayerRequest method.
-//    req, resp := client.UpdateLayerRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateLayer
 func (c *OpsWorks) UpdateLayerRequest(input *UpdateLayerInput) (req *request.Request, output *UpdateLayerOutput) {
@@ -6146,11 +6139,12 @@ func (c *OpsWorks) UpdateLayerRequest(input *UpdateLayerInput) (req *request.Req
 // API operation UpdateLayer for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateLayer
 func (c *OpsWorks) UpdateLayer(input *UpdateLayerInput) (*UpdateLayerOutput, error) {
@@ -6190,14 +6184,13 @@ const opUpdateMyUserProfile = "UpdateMyUserProfile"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateMyUserProfileRequest method.
+//	req, resp := client.UpdateMyUserProfileRequest(params)
 //
-//    // Example sending a request using the UpdateMyUserProfileRequest method.
-//    req, resp := client.UpdateMyUserProfileRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateMyUserProfile
 func (c *OpsWorks) UpdateMyUserProfileRequest(input *UpdateMyUserProfileInput) (req *request.Request, output *UpdateMyUserProfileOutput) {
@@ -6233,8 +6226,8 @@ func (c *OpsWorks) UpdateMyUserProfileRequest(input *UpdateMyUserProfileInput) (
 // API operation UpdateMyUserProfile for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
+//   - ValidationException
+//     Indicates that a request was not valid.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateMyUserProfile
 func (c *OpsWorks) UpdateMyUserProfile(input *UpdateMyUserProfileInput) (*UpdateMyUserProfileOutput, error) {
@@ -6274,14 +6267,13 @@ const opUpdateRdsDbInstance = "UpdateRdsDbInstance"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateRdsDbInstanceRequest method.
+//	req, resp := client.UpdateRdsDbInstanceRequest(params)
 //
-//    // Example sending a request using the UpdateRdsDbInstanceRequest method.
-//    req, resp := client.UpdateRdsDbInstanceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateRdsDbInstance
 func (c *OpsWorks) UpdateRdsDbInstanceRequest(input *UpdateRdsDbInstanceInput) (req *request.Request, output *UpdateRdsDbInstanceOutput) {
@@ -6318,11 +6310,12 @@ func (c *OpsWorks) UpdateRdsDbInstanceRequest(input *UpdateRdsDbInstanceInput) (
 // API operation UpdateRdsDbInstance for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateRdsDbInstance
 func (c *OpsWorks) UpdateRdsDbInstance(input *UpdateRdsDbInstanceInput) (*UpdateRdsDbInstanceOutput, error) {
@@ -6362,14 +6355,13 @@ const opUpdateStack = "UpdateStack"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateStackRequest method.
+//	req, resp := client.UpdateStackRequest(params)
 //
-//    // Example sending a request using the UpdateStackRequest method.
-//    req, resp := client.UpdateStackRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateStack
 func (c *OpsWorks) UpdateStackRequest(input *UpdateStackInput) (req *request.Request, output *UpdateStackOutput) {
@@ -6406,11 +6398,12 @@ func (c *OpsWorks) UpdateStackRequest(input *UpdateStackInput) (req *request.Req
 // API operation UpdateStack for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateStack
 func (c *OpsWorks) UpdateStack(input *UpdateStackInput) (*UpdateStackOutput, error) {
@@ -6450,14 +6443,13 @@ const opUpdateUserProfile = "UpdateUserProfile"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateUserProfileRequest method.
+//	req, resp := client.UpdateUserProfileRequest(params)
 //
-//    // Example sending a request using the UpdateUserProfileRequest method.
-//    req, resp := client.UpdateUserProfileRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateUserProfile
 func (c *OpsWorks) UpdateUserProfileRequest(input *UpdateUserProfileInput) (req *request.Request, output *UpdateUserProfileOutput) {
@@ -6493,11 +6485,12 @@ func (c *OpsWorks) UpdateUserProfileRequest(input *UpdateUserProfileInput) (req 
 // API operation UpdateUserProfile for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateUserProfile
 func (c *OpsWorks) UpdateUserProfile(input *UpdateUserProfileInput) (*UpdateUserProfileOutput, error) {
@@ -6537,14 +6530,13 @@ const opUpdateVolume = "UpdateVolume"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateVolumeRequest method.
+//	req, resp := client.UpdateVolumeRequest(params)
 //
-//    // Example sending a request using the UpdateVolumeRequest method.
-//    req, resp := client.UpdateVolumeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateVolume
 func (c *OpsWorks) UpdateVolumeRequest(input *UpdateVolumeInput) (req *request.Request, output *UpdateVolumeOutput) {
@@ -6582,11 +6574,12 @@ func (c *OpsWorks) UpdateVolumeRequest(input *UpdateVolumeInput) (req *request.R
 // API operation UpdateVolume for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   Indicates that a request was not valid.
 //
-//   * ResourceNotFoundException
-//   Indicates that a resource was not found.
+//   - ValidationException
+//     Indicates that a request was not valid.
+//
+//   - ResourceNotFoundException
+//     Indicates that a resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/opsworks-2013-02-18/UpdateVolume
 func (c *OpsWorks) UpdateVolume(input *UpdateVolumeInput) (*UpdateVolumeOutput, error) {
@@ -6621,12 +6614,20 @@ type AgentVersion struct {
 	Version *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AgentVersion) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AgentVersion) GoString() string {
 	return s.String()
 }
@@ -6701,12 +6702,20 @@ type App struct {
 	Type *string `type:"string" enum:"AppType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s App) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s App) GoString() string {
 	return s.String()
 }
@@ -6810,12 +6819,20 @@ type AssignInstanceInput struct {
 	LayerIds []*string `type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignInstanceInput) GoString() string {
 	return s.String()
 }
@@ -6852,12 +6869,20 @@ type AssignInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -6874,12 +6899,20 @@ type AssignVolumeInput struct {
 	VolumeId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignVolumeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignVolumeInput) GoString() string {
 	return s.String()
 }
@@ -6913,12 +6946,20 @@ type AssignVolumeOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignVolumeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssignVolumeOutput) GoString() string {
 	return s.String()
 }
@@ -6935,12 +6976,20 @@ type AssociateElasticIpInput struct {
 	InstanceId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateElasticIpInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateElasticIpInput) GoString() string {
 	return s.String()
 }
@@ -6974,12 +7023,20 @@ type AssociateElasticIpOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateElasticIpOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateElasticIpOutput) GoString() string {
 	return s.String()
 }
@@ -6999,12 +7056,20 @@ type AttachElasticLoadBalancerInput struct {
 	LayerId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AttachElasticLoadBalancerInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AttachElasticLoadBalancerInput) GoString() string {
 	return s.String()
 }
@@ -7041,43 +7106,51 @@ type AttachElasticLoadBalancerOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AttachElasticLoadBalancerOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AttachElasticLoadBalancerOutput) GoString() string {
 	return s.String()
 }
 
 // Describes a load-based auto scaling upscaling or downscaling threshold configuration,
-// which specifies when AWS OpsWorks Stacks starts or stops load-based instances.
+// which specifies when OpsWorks Stacks starts or stops load-based instances.
 type AutoScalingThresholds struct {
 	_ struct{} `type:"structure"`
 
-	// Custom Cloudwatch auto scaling alarms, to be used as thresholds. This parameter
+	// Custom CloudWatch auto scaling alarms, to be used as thresholds. This parameter
 	// takes a list of up to five alarm names, which are case sensitive and must
 	// be in the same region as the stack.
 	//
 	// To use custom alarms, you must update your service role to allow cloudwatch:DescribeAlarms.
-	// You can either have AWS OpsWorks Stacks update the role for you when you
-	// first use this feature or you can edit the role manually. For more information,
-	// see Allowing AWS OpsWorks Stacks to Act on Your Behalf (https://docs.aws.amazon.com/opsworks/latest/userguide/opsworks-security-servicerole.html).
+	// You can either have OpsWorks Stacks update the role for you when you first
+	// use this feature or you can edit the role manually. For more information,
+	// see Allowing OpsWorks Stacks to Act on Your Behalf (https://docs.aws.amazon.com/opsworks/latest/userguide/opsworks-security-servicerole.html).
 	Alarms []*string `type:"list"`
 
 	// The CPU utilization threshold, as a percent of the available CPU. A value
 	// of -1 disables the threshold.
 	CpuThreshold *float64 `type:"double"`
 
-	// The amount of time (in minutes) after a scaling event occurs that AWS OpsWorks
+	// The amount of time (in minutes) after a scaling event occurs that OpsWorks
 	// Stacks should ignore metrics and suppress additional scaling events. For
-	// example, AWS OpsWorks Stacks adds new instances following an upscaling event
+	// example, OpsWorks Stacks adds new instances following an upscaling event
 	// but the instances won't start reducing the load until they have been booted
 	// and configured. There is no point in raising additional scaling events during
 	// that operation, which typically takes several minutes. IgnoreMetricsTime
-	// allows you to direct AWS OpsWorks Stacks to suppress scaling events long
-	// enough to get the new instances online.
+	// allows you to direct OpsWorks Stacks to suppress scaling events long enough
+	// to get the new instances online.
 	IgnoreMetricsTime *int64 `min:"1" type:"integer"`
 
 	// The number of instances to add or remove when the load exceeds a threshold.
@@ -7096,12 +7169,20 @@ type AutoScalingThresholds struct {
 	ThresholdsWaitTime *int64 `min:"1" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AutoScalingThresholds) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AutoScalingThresholds) GoString() string {
 	return s.String()
 }
@@ -7172,7 +7253,7 @@ type BlockDeviceMapping struct {
 
 	// The device name that is exposed to the instance, such as /dev/sdh. For the
 	// root device, you can use the explicit device name or you can set this parameter
-	// to ROOT_DEVICE and AWS OpsWorks Stacks will provide the correct device name.
+	// to ROOT_DEVICE and OpsWorks Stacks will provide the correct device name.
 	DeviceName *string `type:"string"`
 
 	// An EBSBlockDevice that defines how to configure an Amazon EBS volume when
@@ -7186,12 +7267,20 @@ type BlockDeviceMapping struct {
 	VirtualName *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BlockDeviceMapping) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BlockDeviceMapping) GoString() string {
 	return s.String()
 }
@@ -7231,12 +7320,20 @@ type ChefConfiguration struct {
 	ManageBerkshelf *bool `type:"boolean"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ChefConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ChefConfiguration) GoString() string {
 	return s.String()
 }
@@ -7256,16 +7353,16 @@ func (s *ChefConfiguration) SetManageBerkshelf(v bool) *ChefConfiguration {
 type CloneStackInput struct {
 	_ struct{} `type:"structure"`
 
-	// The default AWS OpsWorks Stacks agent version. You have the following options:
+	// The default OpsWorks Stacks agent version. You have the following options:
 	//
-	//    * Auto-update - Set this parameter to LATEST. AWS OpsWorks Stacks automatically
+	//    * Auto-update - Set this parameter to LATEST. OpsWorks Stacks automatically
 	//    installs new agent versions on the stack's instances as soon as they are
 	//    available.
 	//
 	//    * Fixed version - Set this parameter to your preferred agent version.
 	//    To update the agent version, you must edit the stack configuration and
-	//    specify a new version. AWS OpsWorks Stacks then automatically installs
-	//    that version on the stack's instances.
+	//    specify a new version. OpsWorks Stacks automatically installs that version
+	//    on the stack's instances.
 	//
 	// The default setting is LATEST. To specify an agent version, you must use
 	// the complete version number, not the abbreviated number shown on the console.
@@ -7326,12 +7423,12 @@ type CloneStackInput struct {
 	// The stack's operating system, which must be set to one of the following.
 	//
 	//    * A supported Linux operating system: An Amazon Linux version, such as
-	//    Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux 2017.03, Amazon
-	//    Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09, or Amazon Linux
-	//    2015.03.
+	//    Amazon Linux 2, Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux
+	//    2017.03, Amazon Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09,
+	//    or Amazon Linux 2015.03.
 	//
-	//    * A supported Ubuntu operating system, such as Ubuntu 16.04 LTS, Ubuntu
-	//    14.04 LTS, or Ubuntu 12.04 LTS.
+	//    * A supported Ubuntu operating system, such as Ubuntu 18.04 LTS, Ubuntu
+	//    16.04 LTS, Ubuntu 14.04 LTS, or Ubuntu 12.04 LTS.
 	//
 	//    * CentOS Linux 7
 	//
@@ -7345,9 +7442,9 @@ type CloneStackInput struct {
 	//    you create instances. For more information about how to use custom AMIs
 	//    with OpsWorks, see Using Custom AMIs (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-custom-ami.html).
 	//
-	// The default option is the parent stack's operating system. For more information
-	// about supported operating systems, see AWS OpsWorks Stacks Operating Systems
-	// (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
+	// The default option is the parent stack's operating system. Not all operating
+	// systems are supported with all versions of Chef. For more information about
+	// supported operating systems, see OpsWorks Stacks Operating Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
 	//
 	// You can specify a different Linux operating system for the cloned stack,
 	// but you cannot change from Linux to Windows or Windows to Linux.
@@ -7359,9 +7456,9 @@ type CloneStackInput struct {
 	DefaultRootDeviceType *string `type:"string" enum:"RootDeviceType"`
 
 	// A default Amazon EC2 key pair name. The default value is none. If you specify
-	// a key pair name, AWS OpsWorks installs the public key on the instance and
-	// you can use the private key with an SSH client to log in to the instance.
-	// For more information, see Using SSH to Communicate with an Instance (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-ssh.html)
+	// a key pair name, OpsWorks installs the public key on the instance and you
+	// can use the private key with an SSH client to log in to the instance. For
+	// more information, see Using SSH to Communicate with an Instance (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-ssh.html)
 	// and Managing SSH Access (https://docs.aws.amazon.com/opsworks/latest/userguide/security-ssh-access.html).
 	// You can override this setting by specifying a different key pair, or no key
 	// pair, when you create an instance (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-add.html).
@@ -7406,18 +7503,19 @@ type CloneStackInput struct {
 	// a host name based on the current theme.
 	HostnameTheme *string `type:"string"`
 
-	// The cloned stack name.
+	// The cloned stack name. Stack names can be a maximum of 64 characters.
 	Name *string `type:"string"`
 
-	// The cloned stack AWS region, such as "ap-northeast-2". For more information
-	// about AWS regions, see Regions and Endpoints (https://docs.aws.amazon.com/general/latest/gr/rande.html).
+	// The cloned stack Amazon Web Services Region, such as ap-northeast-2. For
+	// more information about Amazon Web Services Regions, see Regions and Endpoints
+	// (https://docs.aws.amazon.com/general/latest/gr/rande.html).
 	Region *string `type:"string"`
 
-	// The stack AWS Identity and Access Management (IAM) role, which allows AWS
-	// OpsWorks Stacks to work with AWS resources on your behalf. You must set this
-	// parameter to the Amazon Resource Name (ARN) for an existing IAM role. If
-	// you create a stack by using the AWS OpsWorks Stacks console, it creates the
-	// role for you. You can obtain an existing stack's IAM ARN programmatically
+	// The stack Identity and Access Management (IAM) role, which allows OpsWorks
+	// Stacks to work with Amazon Web Services resources on your behalf. You must
+	// set this parameter to the Amazon Resource Name (ARN) for an existing IAM
+	// role. If you create a stack by using the OpsWorkss Stacks console, it creates
+	// the role for you. You can obtain an existing stack's IAM ARN programmatically
 	// by calling DescribePermissions. For more information about IAM ARNs, see
 	// Using Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html).
 	//
@@ -7436,25 +7534,25 @@ type CloneStackInput struct {
 	// Whether to use custom cookbooks.
 	UseCustomCookbooks *bool `type:"boolean"`
 
-	// Whether to associate the AWS OpsWorks Stacks built-in security groups with
-	// the stack's layers.
+	// Whether to associate the OpsWorks Stacks built-in security groups with the
+	// stack's layers.
 	//
-	// AWS OpsWorks Stacks provides a standard set of built-in security groups,
-	// one for each layer, which are associated with layers by default. With UseOpsworksSecurityGroups
+	// OpsWorks Stacks provides a standard set of security groups, one for each
+	// layer, which are associated with layers by default. With UseOpsworksSecurityGroups
 	// you can instead provide your own custom security groups. UseOpsworksSecurityGroups
 	// has the following settings:
 	//
-	//    * True - AWS OpsWorks Stacks automatically associates the appropriate
-	//    built-in security group with each layer (default setting). You can associate
-	//    additional security groups with a layer after you create it but you cannot
-	//    delete the built-in security group.
+	//    * True - OpsWorks Stacks automatically associates the appropriate built-in
+	//    security group with each layer (default setting). You can associate additional
+	//    security groups with a layer after you create it but you cannot delete
+	//    the built-in security group.
 	//
-	//    * False - AWS OpsWorks Stacks does not associate built-in security groups
-	//    with layers. You must create appropriate Amazon Elastic Compute Cloud
-	//    (Amazon EC2) security groups and associate a security group with each
-	//    layer that you create. However, you can still manually associate a built-in
-	//    security group with a layer on creation; custom security groups are required
-	//    only for those layers that need custom settings.
+	//    * False - OpsWorks Stacks does not associate built-in security groups
+	//    with layers. You must create appropriate Amazon EC2 security groups and
+	//    associate a security group with each layer that you create. However, you
+	//    can still manually associate a built-in security group with a layer on
+	//    creation; custom security groups are required only for those layers that
+	//    need custom settings.
 	//
 	// For more information, see Create a New Stack (https://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-creating.html).
 	UseOpsworksSecurityGroups *bool `type:"boolean"`
@@ -7469,11 +7567,10 @@ type CloneStackInput struct {
 	//    default VPC for the specified region.
 	//
 	// If the VPC ID corresponds to a default VPC and you have specified either
-	// the DefaultAvailabilityZone or the DefaultSubnetId parameter only, AWS OpsWorks
+	// the DefaultAvailabilityZone or the DefaultSubnetId parameter only, OpsWorks
 	// Stacks infers the value of the other parameter. If you specify neither parameter,
-	// AWS OpsWorks Stacks sets these parameters to the first valid Availability
-	// Zone for the specified region and the corresponding default VPC subnet ID,
-	// respectively.
+	// OpsWorks Stacks sets these parameters to the first valid Availability Zone
+	// for the specified region and the corresponding default VPC subnet ID, respectively.
 	//
 	// If you specify a nondefault VPC ID, note the following:
 	//
@@ -7481,19 +7578,27 @@ type CloneStackInput struct {
 	//
 	//    * You must specify a value for DefaultSubnetId.
 	//
-	// For more information about how to use AWS OpsWorks Stacks with a VPC, see
-	// Running a Stack in a VPC (https://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-vpc.html).
+	// For more information about how to use OpsWorks Stacks with a VPC, see Running
+	// a Stack in a VPC (https://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-vpc.html).
 	// For more information about default VPC and EC2 Classic, see Supported Platforms
 	// (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-platforms.html).
 	VpcId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloneStackInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloneStackInput) GoString() string {
 	return s.String()
 }
@@ -7654,12 +7759,20 @@ type CloneStackOutput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloneStackOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloneStackOutput) GoString() string {
 	return s.String()
 }
@@ -7670,7 +7783,7 @@ func (s *CloneStackOutput) SetStackId(v string) *CloneStackOutput {
 	return s
 }
 
-// Describes the Amazon CloudWatch logs configuration for a layer.
+// Describes the Amazon CloudWatch Logs configuration for a layer.
 type CloudWatchLogsConfiguration struct {
 	_ struct{} `type:"structure"`
 
@@ -7681,12 +7794,20 @@ type CloudWatchLogsConfiguration struct {
 	LogStreams []*CloudWatchLogsLogStream `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudWatchLogsConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudWatchLogsConfiguration) GoString() string {
 	return s.String()
 }
@@ -7703,9 +7824,9 @@ func (s *CloudWatchLogsConfiguration) SetLogStreams(v []*CloudWatchLogsLogStream
 	return s
 }
 
-// Describes the Amazon CloudWatch logs configuration for a layer. For detailed
-// information about members of this data type, see the CloudWatch Logs Agent
-// Reference (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AgentReference.html).
+// Describes the CloudWatch Logs configuration for a layer. For detailed information
+// about members of this data type, see the CloudWatch Logs Agent Reference
+// (https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/AgentReference.html).
 type CloudWatchLogsLogStream struct {
 	_ struct{} `type:"structure"`
 
@@ -7771,12 +7892,20 @@ type CloudWatchLogsLogStream struct {
 	TimeZone *string `type:"string" enum:"CloudWatchLogsTimeZone"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudWatchLogsLogStream) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudWatchLogsLogStream) GoString() string {
 	return s.String()
 }
@@ -7914,12 +8043,20 @@ type Command struct {
 	Type *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Command) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Command) GoString() string {
 	return s.String()
 }
@@ -8038,21 +8175,29 @@ type CreateAppInput struct {
 	StackId *string `type:"string" required:"true"`
 
 	// The app type. Each supported type is associated with a particular layer.
-	// For example, PHP applications are associated with a PHP layer. AWS OpsWorks
-	// Stacks deploys an application to those instances that are members of the
-	// corresponding layer. If your app isn't one of the standard types, or you
-	// prefer to implement your own Deploy recipes, specify other.
+	// For example, PHP applications are associated with a PHP layer. OpsWorks Stacks
+	// deploys an application to those instances that are members of the corresponding
+	// layer. If your app isn't one of the standard types, or you prefer to implement
+	// your own Deploy recipes, specify other.
 	//
 	// Type is a required field
 	Type *string `type:"string" required:"true" enum:"AppType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAppInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAppInput) GoString() string {
 	return s.String()
 }
@@ -8171,12 +8316,20 @@ type CreateAppOutput struct {
 	AppId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAppOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAppOutput) GoString() string {
 	return s.String()
 }
@@ -8226,12 +8379,20 @@ type CreateDeploymentInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentInput) GoString() string {
 	return s.String()
 }
@@ -8308,12 +8469,20 @@ type CreateDeploymentOutput struct {
 	DeploymentId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentOutput) GoString() string {
 	return s.String()
 }
@@ -8327,14 +8496,14 @@ func (s *CreateDeploymentOutput) SetDeploymentId(v string) *CreateDeploymentOutp
 type CreateInstanceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The default AWS OpsWorks Stacks agent version. You have the following options:
+	// The default OpsWorks Stacks agent version. You have the following options:
 	//
 	//    * INHERIT - Use the stack's default agent version setting.
 	//
 	//    * version_number - Use the specified agent version. This value overrides
 	//    the stack's default setting. To update the agent version, edit the instance
-	//    configuration and specify a new version. AWS OpsWorks Stacks then automatically
-	//    installs that version on the instance.
+	//    configuration and specify a new version. OpsWorks Stacks installs that
+	//    version on the instance.
 	//
 	// The default setting is INHERIT. To specify an agent version, you must use
 	// the complete version number, not the abbreviated number shown on the console.
@@ -8371,7 +8540,12 @@ type CreateInstanceInput struct {
 	// Whether to create an Amazon EBS-optimized instance.
 	EbsOptimized *bool `type:"boolean"`
 
-	// The instance host name.
+	// The instance host name. The following are character limits for instance host
+	// names.
+	//
+	//    * Linux-based instances: 63 characters
+	//
+	//    * Windows-based instances: 15 characters
 	Hostname *string `type:"string"`
 
 	// Whether to install operating system and package updates when the instance
@@ -8402,12 +8576,12 @@ type CreateInstanceInput struct {
 	// The instance's operating system, which must be set to one of the following.
 	//
 	//    * A supported Linux operating system: An Amazon Linux version, such as
-	//    Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux 2017.03, Amazon
-	//    Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09, or Amazon Linux
-	//    2015.03.
+	//    Amazon Linux 2, Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux
+	//    2017.03, Amazon Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09,
+	//    or Amazon Linux 2015.03.
 	//
-	//    * A supported Ubuntu operating system, such as Ubuntu 16.04 LTS, Ubuntu
-	//    14.04 LTS, or Ubuntu 12.04 LTS.
+	//    * A supported Ubuntu operating system, such as Ubuntu 18.04 LTS, Ubuntu
+	//    16.04 LTS, Ubuntu 14.04 LTS, or Ubuntu 12.04 LTS.
 	//
 	//    * CentOS Linux 7
 	//
@@ -8420,16 +8594,15 @@ type CreateInstanceInput struct {
 	//
 	//    * A custom AMI: Custom.
 	//
-	// For more information about the supported operating systems, see AWS OpsWorks
-	// Stacks Operating Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
+	// Not all operating systems are supported with all versions of Chef. For more
+	// information about the supported operating systems, see OpsWorks Stacks Operating
+	// Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
 	//
 	// The default option is the current Amazon Linux version. If you set this parameter
 	// to Custom, you must use the CreateInstance action's AmiId parameter to specify
 	// the custom AMI that you want to use. Block device mappings are not supported
-	// if the value is Custom. For more information about supported operating systems,
-	// see Operating Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html)For
-	// more information about how to use custom AMIs with AWS OpsWorks Stacks, see
-	// Using Custom AMIs (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-custom-ami.html).
+	// if the value is Custom. For more information about how to use custom AMIs
+	// with OpsWorks Stacks, see Using Custom AMIs (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-custom-ami.html).
 	Os *string `type:"string"`
 
 	// The instance root device type. For more information, see Storage for the
@@ -8446,7 +8619,7 @@ type CreateInstanceInput struct {
 
 	// The ID of the instance's subnet. If the stack is running in a VPC, you can
 	// use this parameter to override the stack's default subnet ID value and direct
-	// AWS OpsWorks Stacks to launch the instance in a different subnet.
+	// OpsWorks Stacks to launch the instance in a different subnet.
 	SubnetId *string `type:"string"`
 
 	// The instance's tenancy option. The default option is no tenancy, or if the
@@ -8465,12 +8638,20 @@ type CreateInstanceInput struct {
 	VirtualizationType *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateInstanceInput) GoString() string {
 	return s.String()
 }
@@ -8610,12 +8791,20 @@ type CreateInstanceOutput struct {
 	InstanceId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -8655,7 +8844,7 @@ type CreateLayerInput struct {
 	// A JSON-formatted string containing custom stack configuration and deployment
 	// attributes to be installed on the layer's instances. For more information,
 	// see Using Custom JSON (https://docs.aws.amazon.com/opsworks/latest/userguide/workingcookbook-json-override.html).
-	// This feature is supported as of version 1.7.42 of the AWS CLI.
+	// This feature is supported as of version 1.7.42 of the CLI.
 	CustomJson *string `type:"string"`
 
 	// A LayerCustomRecipes object that specifies the layer custom recipes.
@@ -8682,7 +8871,8 @@ type CreateLayerInput struct {
 	// Balancer connection draining.
 	LifecycleEventConfiguration *LifecycleEventConfiguration `type:"structure"`
 
-	// The layer name, which is used by the console.
+	// The layer name, which is used by the console. Layer names can be a maximum
+	// of 32 characters.
 	//
 	// Name is a required field
 	Name *string `type:"string" required:"true"`
@@ -8691,13 +8881,13 @@ type CreateLayerInput struct {
 	Packages []*string `type:"list"`
 
 	// For custom layers only, use this parameter to specify the layer's short name,
-	// which is used internally by AWS OpsWorks Stacks and by Chef recipes. The
-	// short name is also used as the name for the directory where your app files
-	// are installed. It can have a maximum of 200 characters, which are limited
-	// to the alphanumeric characters, '-', '_', and '.'.
+	// which is used internally by OpsWorks Stacks and by Chef recipes. The short
+	// name is also used as the name for the directory where your app files are
+	// installed. It can have a maximum of 32 characters, which are limited to the
+	// alphanumeric characters, '-', '_', and '.'.
 	//
-	// The built-in layers' short names are defined by AWS OpsWorks Stacks. For
-	// more information, see the Layer Reference (https://docs.aws.amazon.com/opsworks/latest/userguide/layers.html).
+	// Built-in layer short names are defined by OpsWorks Stacks. For more information,
+	// see the Layer Reference (https://docs.aws.amazon.com/opsworks/latest/userguide/layers.html).
 	//
 	// Shortname is a required field
 	Shortname *string `type:"string" required:"true"`
@@ -8721,12 +8911,20 @@ type CreateLayerInput struct {
 	VolumeConfigurations []*VolumeConfiguration `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateLayerInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateLayerInput) GoString() string {
 	return s.String()
 }
@@ -8879,12 +9077,20 @@ type CreateLayerOutput struct {
 	LayerId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateLayerOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateLayerOutput) GoString() string {
 	return s.String()
 }
@@ -8898,16 +9104,16 @@ func (s *CreateLayerOutput) SetLayerId(v string) *CreateLayerOutput {
 type CreateStackInput struct {
 	_ struct{} `type:"structure"`
 
-	// The default AWS OpsWorks Stacks agent version. You have the following options:
+	// The default OpsWorks Stacks agent version. You have the following options:
 	//
-	//    * Auto-update - Set this parameter to LATEST. AWS OpsWorks Stacks automatically
+	//    * Auto-update - Set this parameter to LATEST. OpsWorks Stacks automatically
 	//    installs new agent versions on the stack's instances as soon as they are
 	//    available.
 	//
 	//    * Fixed version - Set this parameter to your preferred agent version.
 	//    To update the agent version, you must edit the stack configuration and
-	//    specify a new version. AWS OpsWorks Stacks then automatically installs
-	//    that version on the stack's instances.
+	//    specify a new version. OpsWorks Stacks installs that version on the stack's
+	//    instances.
 	//
 	// The default setting is the most recent release of the agent. To specify an
 	// agent version, you must use the complete version number, not the abbreviated
@@ -8965,12 +9171,12 @@ type CreateStackInput struct {
 	// You can specify one of the following.
 	//
 	//    * A supported Linux operating system: An Amazon Linux version, such as
-	//    Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux 2017.03, Amazon
-	//    Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09, or Amazon Linux
-	//    2015.03.
+	//    Amazon Linux 2, Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux
+	//    2017.03, Amazon Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09,
+	//    or Amazon Linux 2015.03.
 	//
-	//    * A supported Ubuntu operating system, such as Ubuntu 16.04 LTS, Ubuntu
-	//    14.04 LTS, or Ubuntu 12.04 LTS.
+	//    * A supported Ubuntu operating system, such as Ubuntu 18.04 LTS, Ubuntu
+	//    16.04 LTS, Ubuntu 14.04 LTS, or Ubuntu 12.04 LTS.
 	//
 	//    * CentOS Linux 7
 	//
@@ -8984,9 +9190,9 @@ type CreateStackInput struct {
 	//    * A custom AMI: Custom. You specify the custom AMI you want to use when
 	//    you create instances. For more information, see Using Custom AMIs (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-custom-ami.html).
 	//
-	// The default option is the current Amazon Linux version. For more information
-	// about supported operating systems, see AWS OpsWorks Stacks Operating Systems
-	// (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
+	// The default option is the current Amazon Linux version. Not all operating
+	// systems are supported with all versions of Chef. For more information about
+	// supported operating systems, see OpsWorks Stacks Operating Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
 	DefaultOs *string `type:"string"`
 
 	// The default root device type. This value is the default for all instances
@@ -8996,9 +9202,9 @@ type CreateStackInput struct {
 	DefaultRootDeviceType *string `type:"string" enum:"RootDeviceType"`
 
 	// A default Amazon EC2 key pair name. The default value is none. If you specify
-	// a key pair name, AWS OpsWorks installs the public key on the instance and
-	// you can use the private key with an SSH client to log in to the instance.
-	// For more information, see Using SSH to Communicate with an Instance (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-ssh.html)
+	// a key pair name, OpsWorks installs the public key on the instance and you
+	// can use the private key with an SSH client to log in to the instance. For
+	// more information, see Using SSH to Communicate with an Instance (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-ssh.html)
 	// and Managing SSH Access (https://docs.aws.amazon.com/opsworks/latest/userguide/security-ssh-access.html).
 	// You can override this setting by specifying a different key pair, or no key
 	// pair, when you create an instance (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-add.html).
@@ -9043,37 +9249,37 @@ type CreateStackInput struct {
 	// a host name based on the current theme.
 	HostnameTheme *string `type:"string"`
 
-	// The stack name.
+	// The stack name. Stack names can be a maximum of 64 characters.
 	//
 	// Name is a required field
 	Name *string `type:"string" required:"true"`
 
-	// The stack's AWS region, such as ap-south-1. For more information about Amazon
-	// regions, see Regions and Endpoints (https://docs.aws.amazon.com/general/latest/gr/rande.html).
+	// The stack's Amazon Web Services Region, such as ap-south-1. For more information
+	// about Amazon Web Services Regions, see Regions and Endpoints (https://docs.aws.amazon.com/general/latest/gr/rande.html).
 	//
-	// In the AWS CLI, this API maps to the --stack-region parameter. If the --stack-region
-	// parameter and the AWS CLI common parameter --region are set to the same value,
+	// In the CLI, this API maps to the --stack-region parameter. If the --stack-region
+	// parameter and the CLI common parameter --region are set to the same value,
 	// the stack uses a regional endpoint. If the --stack-region parameter is not
-	// set, but the AWS CLI --region parameter is, this also results in a stack
-	// with a regional endpoint. However, if the --region parameter is set to us-east-1,
+	// set, but the CLI --region parameter is, this also results in a stack with
+	// a regional endpoint. However, if the --region parameter is set to us-east-1,
 	// and the --stack-region parameter is set to one of the following, then the
 	// stack uses a legacy or classic region: us-west-1, us-west-2, sa-east-1, eu-central-1,
 	// eu-west-1, ap-northeast-1, ap-southeast-1, ap-southeast-2. In this case,
 	// the actual API endpoint of the stack is in us-east-1. Only the preceding
 	// regions are supported as classic regions in the us-east-1 API endpoint. Because
 	// it is a best practice to choose the regional endpoint that is closest to
-	// where you manage AWS, we recommend that you use regional endpoints for new
-	// stacks. The AWS CLI common --region parameter always specifies a regional
-	// API endpoint; it cannot be used to specify a classic AWS OpsWorks Stacks
-	// region.
+	// where you manage Amazon Web Services, we recommend that you use regional
+	// endpoints for new stacks. The CLI common --region parameter always specifies
+	// a regional API endpoint; it cannot be used to specify a classic OpsWorks
+	// Stacks region.
 	//
 	// Region is a required field
 	Region *string `type:"string" required:"true"`
 
-	// The stack's AWS Identity and Access Management (IAM) role, which allows AWS
-	// OpsWorks Stacks to work with AWS resources on your behalf. You must set this
-	// parameter to the Amazon Resource Name (ARN) for an existing IAM role. For
-	// more information about IAM ARNs, see Using Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html).
+	// The stack's IAM role, which allows OpsWorks Stacks to work with Amazon Web
+	// Services resources on your behalf. You must set this parameter to the Amazon
+	// Resource Name (ARN) for an existing IAM role. For more information about
+	// IAM ARNs, see Using Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html).
 	//
 	// ServiceRoleArn is a required field
 	ServiceRoleArn *string `type:"string" required:"true"`
@@ -9081,20 +9287,20 @@ type CreateStackInput struct {
 	// Whether the stack uses custom cookbooks.
 	UseCustomCookbooks *bool `type:"boolean"`
 
-	// Whether to associate the AWS OpsWorks Stacks built-in security groups with
-	// the stack's layers.
+	// Whether to associate the OpsWorks Stacks built-in security groups with the
+	// stack's layers.
 	//
-	// AWS OpsWorks Stacks provides a standard set of built-in security groups,
-	// one for each layer, which are associated with layers by default. With UseOpsworksSecurityGroups
+	// OpsWorks Stacks provides a standard set of built-in security groups, one
+	// for each layer, which are associated with layers by default. With UseOpsworksSecurityGroups
 	// you can instead provide your own custom security groups. UseOpsworksSecurityGroups
 	// has the following settings:
 	//
-	//    * True - AWS OpsWorks Stacks automatically associates the appropriate
-	//    built-in security group with each layer (default setting). You can associate
-	//    additional security groups with a layer after you create it, but you cannot
-	//    delete the built-in security group.
+	//    * True - OpsWorks Stacks automatically associates the appropriate built-in
+	//    security group with each layer (default setting). You can associate additional
+	//    security groups with a layer after you create it, but you cannot delete
+	//    the built-in security group.
 	//
-	//    * False - AWS OpsWorks Stacks does not associate built-in security groups
+	//    * False - OpsWorks Stacks does not associate built-in security groups
 	//    with layers. You must create appropriate EC2 security groups and associate
 	//    a security group with each layer that you create. However, you can still
 	//    manually associate a built-in security group with a layer on creation;
@@ -9114,11 +9320,10 @@ type CreateStackInput struct {
 	//    default VPC for the specified region.
 	//
 	// If the VPC ID corresponds to a default VPC and you have specified either
-	// the DefaultAvailabilityZone or the DefaultSubnetId parameter only, AWS OpsWorks
+	// the DefaultAvailabilityZone or the DefaultSubnetId parameter only, OpsWorks
 	// Stacks infers the value of the other parameter. If you specify neither parameter,
-	// AWS OpsWorks Stacks sets these parameters to the first valid Availability
-	// Zone for the specified region and the corresponding default VPC subnet ID,
-	// respectively.
+	// OpsWorks Stacks sets these parameters to the first valid Availability Zone
+	// for the specified region and the corresponding default VPC subnet ID, respectively.
 	//
 	// If you specify a nondefault VPC ID, note the following:
 	//
@@ -9126,19 +9331,27 @@ type CreateStackInput struct {
 	//
 	//    * You must specify a value for DefaultSubnetId.
 	//
-	// For more information about how to use AWS OpsWorks Stacks with a VPC, see
-	// Running a Stack in a VPC (https://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-vpc.html).
+	// For more information about how to use OpsWorks Stacks with a VPC, see Running
+	// a Stack in a VPC (https://docs.aws.amazon.com/opsworks/latest/userguide/workingstacks-vpc.html).
 	// For more information about default VPC and EC2-Classic, see Supported Platforms
 	// (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-platforms.html).
 	VpcId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateStackInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateStackInput) GoString() string {
 	return s.String()
 }
@@ -9288,12 +9501,20 @@ type CreateStackOutput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateStackOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateStackOutput) GoString() string {
 	return s.String()
 }
@@ -9320,19 +9541,27 @@ type CreateUserProfileInput struct {
 	SshPublicKey *string `type:"string"`
 
 	// The user's SSH user name. The allowable characters are [a-z], [A-Z], [0-9],
-	// '-', and '_'. If the specified name includes other punctuation marks, AWS
-	// OpsWorks Stacks removes them. For example, my.name will be changed to myname.
-	// If you do not specify an SSH user name, AWS OpsWorks Stacks generates one
-	// from the IAM user name.
+	// '-', and '_'. If the specified name includes other punctuation marks, OpsWorks
+	// Stacks removes them. For example, my.name is changed to myname. If you do
+	// not specify an SSH user name, OpsWorks Stacks generates one from the IAM
+	// user name.
 	SshUsername *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateUserProfileInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateUserProfileInput) GoString() string {
 	return s.String()
 }
@@ -9382,12 +9611,20 @@ type CreateUserProfileOutput struct {
 	IamUserArn *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateUserProfileOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateUserProfileOutput) GoString() string {
 	return s.String()
 }
@@ -9413,12 +9650,20 @@ type DataSource struct {
 	Type *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DataSource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DataSource) GoString() string {
 	return s.String()
 }
@@ -9450,12 +9695,20 @@ type DeleteAppInput struct {
 	AppId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAppInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAppInput) GoString() string {
 	return s.String()
 }
@@ -9483,12 +9736,20 @@ type DeleteAppOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAppOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAppOutput) GoString() string {
 	return s.String()
 }
@@ -9508,12 +9769,20 @@ type DeleteInstanceInput struct {
 	InstanceId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteInstanceInput) GoString() string {
 	return s.String()
 }
@@ -9553,12 +9822,20 @@ type DeleteInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -9572,12 +9849,20 @@ type DeleteLayerInput struct {
 	LayerId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteLayerInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteLayerInput) GoString() string {
 	return s.String()
 }
@@ -9605,12 +9890,20 @@ type DeleteLayerOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteLayerOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteLayerOutput) GoString() string {
 	return s.String()
 }
@@ -9624,12 +9917,20 @@ type DeleteStackInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteStackInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteStackInput) GoString() string {
 	return s.String()
 }
@@ -9657,12 +9958,20 @@ type DeleteStackOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteStackOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteStackOutput) GoString() string {
 	return s.String()
 }
@@ -9676,12 +9985,20 @@ type DeleteUserProfileInput struct {
 	IamUserArn *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteUserProfileInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteUserProfileInput) GoString() string {
 	return s.String()
 }
@@ -9709,12 +10026,20 @@ type DeleteUserProfileOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteUserProfileOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteUserProfileOutput) GoString() string {
 	return s.String()
 }
@@ -9773,12 +10098,20 @@ type Deployment struct {
 	Status *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Deployment) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Deployment) GoString() string {
 	return s.String()
 }
@@ -9867,18 +10200,18 @@ type DeploymentCommand struct {
 	//
 	// The update_dependencies command takes two arguments:
 	//
-	//    * upgrade_os_to - Specifies the desired Amazon Linux version for instances
-	//    whose OS you want to upgrade, such as Amazon Linux 2016.09. You must also
-	//    set the allow_reboot argument to true.
+	//    * upgrade_os_to - Specifies the Amazon Linux version that you want instances
+	//    to run, such as Amazon Linux 2. You must also set the allow_reboot argument
+	//    to true.
 	//
-	//    * allow_reboot - Specifies whether to allow AWS OpsWorks Stacks to reboot
+	//    * allow_reboot - Specifies whether to allow OpsWorks Stacks to reboot
 	//    the instances if necessary, after installing the updates. This argument
 	//    can be set to either true or false. The default value is false.
 	//
-	// For example, to upgrade an instance to Amazon Linux 2016.09, set Args to
+	// For example, to upgrade an instance to Amazon Linux 2018.03, set Args to
 	// the following.
 	//
-	// { "upgrade_os_to":["Amazon Linux 2016.09"], "allow_reboot":["true"] }
+	// { "upgrade_os_to":["Amazon Linux 2018.03"], "allow_reboot":["true"] }
 	Args map[string][]*string `type:"map"`
 
 	// Specifies the operation. You can specify only one command.
@@ -9906,9 +10239,9 @@ type DeploymentCommand struct {
 	//    The default setting is {"migrate":["false"]}.
 	//
 	//    * rollback Roll the app back to the previous version. When you update
-	//    an app, AWS OpsWorks Stacks stores the previous version, up to a maximum
-	//    of five versions. You can use this command to roll an app back as many
-	//    as four versions.
+	//    an app, OpsWorks Stacks stores the previous version, up to a maximum of
+	//    five versions. You can use this command to roll an app back as many as
+	//    four versions.
 	//
 	//    * start: Start the app's web or application server.
 	//
@@ -9922,12 +10255,20 @@ type DeploymentCommand struct {
 	Name *string `type:"string" required:"true" enum:"DeploymentCommandName"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentCommand) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentCommand) GoString() string {
 	return s.String()
 }
@@ -9966,12 +10307,20 @@ type DeregisterEcsClusterInput struct {
 	EcsClusterArn *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterEcsClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterEcsClusterInput) GoString() string {
 	return s.String()
 }
@@ -9999,12 +10348,20 @@ type DeregisterEcsClusterOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterEcsClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterEcsClusterOutput) GoString() string {
 	return s.String()
 }
@@ -10018,12 +10375,20 @@ type DeregisterElasticIpInput struct {
 	ElasticIp *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterElasticIpInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterElasticIpInput) GoString() string {
 	return s.String()
 }
@@ -10051,12 +10416,20 @@ type DeregisterElasticIpOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterElasticIpOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterElasticIpOutput) GoString() string {
 	return s.String()
 }
@@ -10070,12 +10443,20 @@ type DeregisterInstanceInput struct {
 	InstanceId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterInstanceInput) GoString() string {
 	return s.String()
 }
@@ -10103,12 +10484,20 @@ type DeregisterInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -10122,12 +10511,20 @@ type DeregisterRdsDbInstanceInput struct {
 	RdsDbInstanceArn *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterRdsDbInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterRdsDbInstanceInput) GoString() string {
 	return s.String()
 }
@@ -10155,12 +10552,20 @@ type DeregisterRdsDbInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterRdsDbInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterRdsDbInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -10168,20 +10573,28 @@ func (s DeregisterRdsDbInstanceOutput) GoString() string {
 type DeregisterVolumeInput struct {
 	_ struct{} `type:"structure"`
 
-	// The AWS OpsWorks Stacks volume ID, which is the GUID that AWS OpsWorks Stacks
-	// assigned to the instance when you registered the volume with the stack, not
-	// the Amazon EC2 volume ID.
+	// The OpsWorks Stacks volume ID, which is the GUID that OpsWorks Stacks assigned
+	// to the instance when you registered the volume with the stack, not the Amazon
+	// EC2 volume ID.
 	//
 	// VolumeId is a required field
 	VolumeId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterVolumeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterVolumeInput) GoString() string {
 	return s.String()
 }
@@ -10209,12 +10622,20 @@ type DeregisterVolumeOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterVolumeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterVolumeOutput) GoString() string {
 	return s.String()
 }
@@ -10229,12 +10650,20 @@ type DescribeAgentVersionsInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAgentVersionsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAgentVersionsInput) GoString() string {
 	return s.String()
 }
@@ -10261,12 +10690,20 @@ type DescribeAgentVersionsOutput struct {
 	AgentVersions []*AgentVersion `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAgentVersionsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAgentVersionsOutput) GoString() string {
 	return s.String()
 }
@@ -10290,12 +10727,20 @@ type DescribeAppsInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAppsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAppsInput) GoString() string {
 	return s.String()
 }
@@ -10320,12 +10765,20 @@ type DescribeAppsOutput struct {
 	Apps []*App `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAppsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeAppsOutput) GoString() string {
 	return s.String()
 }
@@ -10353,12 +10806,20 @@ type DescribeCommandsInput struct {
 	InstanceId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeCommandsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeCommandsInput) GoString() string {
 	return s.String()
 }
@@ -10389,12 +10850,20 @@ type DescribeCommandsOutput struct {
 	Commands []*Command `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeCommandsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeCommandsOutput) GoString() string {
 	return s.String()
 }
@@ -10422,12 +10891,20 @@ type DescribeDeploymentsInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeDeploymentsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeDeploymentsInput) GoString() string {
 	return s.String()
 }
@@ -10458,12 +10935,20 @@ type DescribeDeploymentsOutput struct {
 	Deployments []*Deployment `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeDeploymentsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeDeploymentsOutput) GoString() string {
 	return s.String()
 }
@@ -10499,12 +10984,20 @@ type DescribeEcsClustersInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeEcsClustersInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeEcsClustersInput) GoString() string {
 	return s.String()
 }
@@ -10547,12 +11040,20 @@ type DescribeEcsClustersOutput struct {
 	NextToken *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeEcsClustersOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeEcsClustersOutput) GoString() string {
 	return s.String()
 }
@@ -10586,12 +11087,20 @@ type DescribeElasticIpsInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticIpsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticIpsInput) GoString() string {
 	return s.String()
 }
@@ -10622,12 +11131,20 @@ type DescribeElasticIpsOutput struct {
 	ElasticIps []*ElasticIp `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticIpsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticIpsOutput) GoString() string {
 	return s.String()
 }
@@ -10649,12 +11166,20 @@ type DescribeElasticLoadBalancersInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticLoadBalancersInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticLoadBalancersInput) GoString() string {
 	return s.String()
 }
@@ -10680,12 +11205,20 @@ type DescribeElasticLoadBalancersOutput struct {
 	ElasticLoadBalancers []*ElasticLoadBalancer `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticLoadBalancersOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeElasticLoadBalancersOutput) GoString() string {
 	return s.String()
 }
@@ -10713,12 +11246,20 @@ type DescribeInstancesInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeInstancesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeInstancesInput) GoString() string {
 	return s.String()
 }
@@ -10749,12 +11290,20 @@ type DescribeInstancesOutput struct {
 	Instances []*Instance `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeInstancesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeInstancesOutput) GoString() string {
 	return s.String()
 }
@@ -10777,12 +11326,20 @@ type DescribeLayersInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLayersInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLayersInput) GoString() string {
 	return s.String()
 }
@@ -10807,12 +11364,20 @@ type DescribeLayersOutput struct {
 	Layers []*Layer `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLayersOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLayersOutput) GoString() string {
 	return s.String()
 }
@@ -10832,12 +11397,20 @@ type DescribeLoadBasedAutoScalingInput struct {
 	LayerIds []*string `type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLoadBasedAutoScalingInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLoadBasedAutoScalingInput) GoString() string {
 	return s.String()
 }
@@ -10870,12 +11443,20 @@ type DescribeLoadBasedAutoScalingOutput struct {
 	LoadBasedAutoScalingConfigurations []*LoadBasedAutoScalingConfiguration `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLoadBasedAutoScalingOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeLoadBasedAutoScalingOutput) GoString() string {
 	return s.String()
 }
@@ -10890,12 +11471,20 @@ type DescribeMyUserProfileInput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeMyUserProfileInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeMyUserProfileInput) GoString() string {
 	return s.String()
 }
@@ -10908,12 +11497,20 @@ type DescribeMyUserProfileOutput struct {
 	UserProfile *SelfUserProfile `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeMyUserProfileOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeMyUserProfileOutput) GoString() string {
 	return s.String()
 }
@@ -10928,12 +11525,20 @@ type DescribeOperatingSystemsInput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeOperatingSystemsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeOperatingSystemsInput) GoString() string {
 	return s.String()
 }
@@ -10946,12 +11551,20 @@ type DescribeOperatingSystemsOutput struct {
 	OperatingSystems []*OperatingSystem `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeOperatingSystemsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeOperatingSystemsOutput) GoString() string {
 	return s.String()
 }
@@ -10973,12 +11586,20 @@ type DescribePermissionsInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribePermissionsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribePermissionsInput) GoString() string {
 	return s.String()
 }
@@ -11013,12 +11634,20 @@ type DescribePermissionsOutput struct {
 	Permissions []*Permission `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribePermissionsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribePermissionsOutput) GoString() string {
 	return s.String()
 }
@@ -11045,12 +11674,20 @@ type DescribeRaidArraysInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRaidArraysInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRaidArraysInput) GoString() string {
 	return s.String()
 }
@@ -11081,12 +11718,20 @@ type DescribeRaidArraysOutput struct {
 	RaidArrays []*RaidArray `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRaidArraysOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRaidArraysOutput) GoString() string {
 	return s.String()
 }
@@ -11110,12 +11755,20 @@ type DescribeRdsDbInstancesInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRdsDbInstancesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRdsDbInstancesInput) GoString() string {
 	return s.String()
 }
@@ -11153,12 +11806,20 @@ type DescribeRdsDbInstancesOutput struct {
 	RdsDbInstances []*RdsDbInstance `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRdsDbInstancesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRdsDbInstancesOutput) GoString() string {
 	return s.String()
 }
@@ -11186,12 +11847,20 @@ type DescribeServiceErrorsInput struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeServiceErrorsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeServiceErrorsInput) GoString() string {
 	return s.String()
 }
@@ -11222,12 +11891,20 @@ type DescribeServiceErrorsOutput struct {
 	ServiceErrors []*ServiceError `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeServiceErrorsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeServiceErrorsOutput) GoString() string {
 	return s.String()
 }
@@ -11247,12 +11924,20 @@ type DescribeStackProvisioningParametersInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackProvisioningParametersInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackProvisioningParametersInput) GoString() string {
 	return s.String()
 }
@@ -11280,19 +11965,27 @@ func (s *DescribeStackProvisioningParametersInput) SetStackId(v string) *Describ
 type DescribeStackProvisioningParametersOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The AWS OpsWorks Stacks agent installer's URL.
+	// The OpsWorks Stacks agent installer's URL.
 	AgentInstallerUrl *string `type:"string"`
 
 	// An embedded object that contains the provisioning parameters.
 	Parameters map[string]*string `type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackProvisioningParametersOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackProvisioningParametersOutput) GoString() string {
 	return s.String()
 }
@@ -11318,12 +12011,20 @@ type DescribeStackSummaryInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackSummaryInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackSummaryInput) GoString() string {
 	return s.String()
 }
@@ -11355,12 +12056,20 @@ type DescribeStackSummaryOutput struct {
 	StackSummary *StackSummary `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackSummaryOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStackSummaryOutput) GoString() string {
 	return s.String()
 }
@@ -11375,16 +12084,29 @@ type DescribeStacksInput struct {
 	_ struct{} `type:"structure"`
 
 	// An array of stack IDs that specify the stacks to be described. If you omit
-	// this parameter, DescribeStacks returns a description of every stack.
+	// this parameter, and have permissions to get information about all stacks,
+	// DescribeStacks returns a description of every stack. If the IAM policy that
+	// is attached to an IAM user limits the DescribeStacks action to specific stack
+	// ARNs, this parameter is required, and the user must specify a stack ARN that
+	// is allowed by the policy. Otherwise, DescribeStacks returns an AccessDenied
+	// error.
 	StackIds []*string `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStacksInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStacksInput) GoString() string {
 	return s.String()
 }
@@ -11403,12 +12125,20 @@ type DescribeStacksOutput struct {
 	Stacks []*Stack `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStacksOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeStacksOutput) GoString() string {
 	return s.String()
 }
@@ -11428,12 +12158,20 @@ type DescribeTimeBasedAutoScalingInput struct {
 	InstanceIds []*string `type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeTimeBasedAutoScalingInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeTimeBasedAutoScalingInput) GoString() string {
 	return s.String()
 }
@@ -11466,12 +12204,20 @@ type DescribeTimeBasedAutoScalingOutput struct {
 	TimeBasedAutoScalingConfigurations []*TimeBasedAutoScalingConfiguration `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeTimeBasedAutoScalingOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeTimeBasedAutoScalingOutput) GoString() string {
 	return s.String()
 }
@@ -11489,12 +12235,20 @@ type DescribeUserProfilesInput struct {
 	IamUserArns []*string `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeUserProfilesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeUserProfilesInput) GoString() string {
 	return s.String()
 }
@@ -11513,12 +12267,20 @@ type DescribeUserProfilesOutput struct {
 	UserProfiles []*UserProfile `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeUserProfilesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeUserProfilesOutput) GoString() string {
 	return s.String()
 }
@@ -11549,12 +12311,20 @@ type DescribeVolumesInput struct {
 	VolumeIds []*string `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVolumesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVolumesInput) GoString() string {
 	return s.String()
 }
@@ -11591,12 +12361,20 @@ type DescribeVolumesOutput struct {
 	Volumes []*Volume `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVolumesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVolumesOutput) GoString() string {
 	return s.String()
 }
@@ -11622,12 +12400,20 @@ type DetachElasticLoadBalancerInput struct {
 	LayerId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DetachElasticLoadBalancerInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DetachElasticLoadBalancerInput) GoString() string {
 	return s.String()
 }
@@ -11664,12 +12450,20 @@ type DetachElasticLoadBalancerOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DetachElasticLoadBalancerOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DetachElasticLoadBalancerOutput) GoString() string {
 	return s.String()
 }
@@ -11683,12 +12477,20 @@ type DisassociateElasticIpInput struct {
 	ElasticIp *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateElasticIpInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateElasticIpInput) GoString() string {
 	return s.String()
 }
@@ -11716,12 +12518,20 @@ type DisassociateElasticIpOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateElasticIpOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateElasticIpOutput) GoString() string {
 	return s.String()
 }
@@ -11751,17 +12561,25 @@ type EbsBlockDevice struct {
 	//
 	// If you specify the io1 volume type, you must also specify a value for the
 	// Iops attribute. The maximum ratio of provisioned IOPS to requested volume
-	// size (in GiB) is 50:1. AWS uses the default volume size (in GiB) specified
-	// in the AMI attributes to set IOPS to 50 x (volume size).
+	// size (in GiB) is 50:1. Amazon Web Services uses the default volume size (in
+	// GiB) specified in the AMI attributes to set IOPS to 50 x (volume size).
 	VolumeType *string `type:"string" enum:"VolumeType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EbsBlockDevice) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EbsBlockDevice) GoString() string {
 	return s.String()
 }
@@ -11813,12 +12631,20 @@ type EcsCluster struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EcsCluster) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EcsCluster) GoString() string {
 	return s.String()
 }
@@ -11860,19 +12686,28 @@ type ElasticIp struct {
 	// The IP address.
 	Ip *string `type:"string"`
 
-	// The name.
+	// The name, which can be a maximum of 32 characters.
 	Name *string `type:"string"`
 
-	// The AWS region. For more information, see Regions and Endpoints (https://docs.aws.amazon.com/general/latest/gr/rande.html).
+	// The Amazon Web Services Region. For more information, see Regions and Endpoints
+	// (https://docs.aws.amazon.com/general/latest/gr/rande.html).
 	Region *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ElasticIp) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ElasticIp) GoString() string {
 	return s.String()
 }
@@ -11917,20 +12752,20 @@ type ElasticLoadBalancer struct {
 	// The instance's public DNS name.
 	DnsName *string `type:"string"`
 
-	// A list of the EC2 instances that the Elastic Load Balancing instance is managing
-	// traffic for.
+	// A list of the EC2 instances for which the Elastic Load Balancing instance
+	// is managing traffic.
 	Ec2InstanceIds []*string `type:"list"`
 
-	// The Elastic Load Balancing instance's name.
+	// The Elastic Load Balancing instance name.
 	ElasticLoadBalancerName *string `type:"string"`
 
-	// The ID of the layer that the instance is attached to.
+	// The ID of the layer to which the instance is attached.
 	LayerId *string `type:"string"`
 
-	// The instance's AWS region.
+	// The instance's Amazon Web Services Region.
 	Region *string `type:"string"`
 
-	// The ID of the stack that the instance is associated with.
+	// The ID of the stack with which the instance is associated.
 	StackId *string `type:"string"`
 
 	// A list of subnet IDs, if the stack is running in a VPC.
@@ -11940,12 +12775,20 @@ type ElasticLoadBalancer struct {
 	VpcId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ElasticLoadBalancer) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ElasticLoadBalancer) GoString() string {
 	return s.String()
 }
@@ -12016,10 +12859,10 @@ type EnvironmentVariable struct {
 	// Key is a required field
 	Key *string `type:"string" required:"true"`
 
-	// (Optional) Whether the variable's value will be returned by the DescribeApps
-	// action. To conceal an environment variable's value, set Secure to true. DescribeApps
-	// then returns *****FILTERED***** instead of the actual value. The default
-	// value for Secure is false.
+	// (Optional) Whether the variable's value is returned by the DescribeApps action.
+	// To hide an environment variable's value, set Secure to true. DescribeApps
+	// returns *****FILTERED***** instead of the actual value. The default value
+	// for Secure is false.
 	Secure *bool `type:"boolean"`
 
 	// (Optional) The environment variable's value, which can be left empty. If
@@ -12030,12 +12873,20 @@ type EnvironmentVariable struct {
 	Value *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EnvironmentVariable) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EnvironmentVariable) GoString() string {
 	return s.String()
 }
@@ -12083,12 +12934,20 @@ type GetHostnameSuggestionInput struct {
 	LayerId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetHostnameSuggestionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetHostnameSuggestionInput) GoString() string {
 	return s.String()
 }
@@ -12123,12 +12982,20 @@ type GetHostnameSuggestionOutput struct {
 	LayerId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetHostnameSuggestionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetHostnameSuggestionOutput) GoString() string {
 	return s.String()
 }
@@ -12148,24 +13015,31 @@ func (s *GetHostnameSuggestionOutput) SetLayerId(v string) *GetHostnameSuggestio
 type GrantAccessInput struct {
 	_ struct{} `type:"structure"`
 
-	// The instance's AWS OpsWorks Stacks ID.
+	// The instance's OpsWorks Stacks ID.
 	//
 	// InstanceId is a required field
 	InstanceId *string `type:"string" required:"true"`
 
 	// The length of time (in minutes) that the grant is valid. When the grant expires
 	// at the end of this period, the user will no longer be able to use the credentials
-	// to log in. If the user is logged in at the time, he or she automatically
-	// will be logged out.
+	// to log in. If the user is logged in at the time, they are logged out.
 	ValidForInMinutes *int64 `min:"60" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GrantAccessInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GrantAccessInput) GoString() string {
 	return s.String()
 }
@@ -12207,12 +13081,20 @@ type GrantAccessOutput struct {
 	TemporaryCredential *TemporaryCredential `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GrantAccessOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GrantAccessOutput) GoString() string {
 	return s.String()
 }
@@ -12270,7 +13152,12 @@ type Instance struct {
 	// The instance Elastic IP address (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html).
 	ElasticIp *string `type:"string"`
 
-	// The instance host name.
+	// The instance host name. The following are character limits for instance host
+	// names.
+	//
+	//    * Linux-based instances: 63 characters
+	//
+	//    * Windows-based instances: 15 characters
 	Hostname *string `type:"string"`
 
 	// For registered instances, the infrastructure class: ec2 or on-premises.
@@ -12278,11 +13165,11 @@ type Instance struct {
 
 	// Whether to install operating system and package updates when the instance
 	// boots. The default value is true. If this value is set to false, you must
-	// then update your instances manually by using CreateDeployment to run the
-	// update_dependencies stack command or by manually running yum (Amazon Linux)
-	// or apt-get (Ubuntu) on the instances.
+	// update instances manually by using CreateDeployment to run the update_dependencies
+	// stack command or by manually running yum (Amazon Linux) or apt-get (Ubuntu)
+	// on the instances.
 	//
-	// We strongly recommend using the default value of true, to ensure that your
+	// We strongly recommend using the default value of true to ensure that your
 	// instances have the latest security updates.
 	InstallUpdatesOnBoot *bool `type:"boolean"`
 
@@ -12323,7 +13210,7 @@ type Instance struct {
 	// For registered instances, who performed the registration.
 	RegisteredBy *string `type:"string"`
 
-	// The instance's reported AWS OpsWorks Stacks agent version.
+	// The instance's reported OpsWorks Stacks agent version.
 	ReportedAgentVersion *string `type:"string"`
 
 	// For registered instances, the reported operating system.
@@ -12394,12 +13281,20 @@ type Instance struct {
 	VirtualizationType *string `type:"string" enum:"VirtualizationType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Instance) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Instance) GoString() string {
 	return s.String()
 }
@@ -12662,12 +13557,20 @@ type InstanceIdentity struct {
 	Signature *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InstanceIdentity) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InstanceIdentity) GoString() string {
 	return s.String()
 }
@@ -12749,12 +13652,20 @@ type InstancesCount struct {
 	Unassigning *int64 `type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InstancesCount) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InstancesCount) GoString() string {
 	return s.String()
 }
@@ -12889,10 +13800,10 @@ type Layer struct {
 	// The layer attributes.
 	//
 	// For the HaproxyStatsPassword, MysqlRootPassword, and GangliaPassword attributes,
-	// AWS OpsWorks Stacks returns *****FILTERED***** instead of the actual value
+	// OpsWorks Stacks returns *****FILTERED***** instead of the actual value
 	//
-	// For an ECS Cluster layer, AWS OpsWorks Stacks the EcsClusterArn attribute
-	// is set to the cluster's ARN.
+	// For an ECS Cluster layer, OpsWorks Stacks the EcsClusterArn attribute is
+	// set to the cluster's ARN.
 	Attributes map[string]*string `type:"map"`
 
 	// Whether to automatically assign an Elastic IP address (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
@@ -12924,12 +13835,12 @@ type Layer struct {
 	// An array containing the layer's custom security group IDs.
 	CustomSecurityGroupIds []*string `type:"list"`
 
-	// AWS OpsWorks Stacks supports five lifecycle events: setup, configuration,
-	// deploy, undeploy, and shutdown. For each layer, AWS OpsWorks Stacks runs
-	// a set of standard recipes for each event. You can also provide custom recipes
-	// for any or all layers and events. AWS OpsWorks Stacks runs custom event recipes
-	// after the standard recipes. LayerCustomRecipes specifies the custom recipes
-	// for a particular layer to be run in response to each of the five events.
+	// OpsWorks Stacks supports five lifecycle events: setup, configuration, deploy,
+	// undeploy, and shutdown. For each layer, OpsWorks Stacks runs a set of standard
+	// recipes for each event. You can also provide custom recipes for any or all
+	// layers and events. OpsWorks Stacks runs custom event recipes after the standard
+	// recipes. LayerCustomRecipes specifies the custom recipes for a particular
+	// layer to be run in response to each of the five events.
 	//
 	// To specify a recipe, use the cookbook's directory name in the repository
 	// followed by two colons and the recipe name, which is the recipe's file name
@@ -12959,7 +13870,7 @@ type Layer struct {
 	// A LifeCycleEventConfiguration object that specifies the Shutdown event configuration.
 	LifecycleEventConfiguration *LifecycleEventConfiguration `type:"structure"`
 
-	// The layer name.
+	// The layer name. Layer names can be a maximum of 32 characters.
 	Name *string `type:"string"`
 
 	// An array of Package objects that describe the layer's packages.
@@ -12981,12 +13892,20 @@ type Layer struct {
 	VolumeConfigurations []*VolumeConfiguration `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Layer) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Layer) GoString() string {
 	return s.String()
 }
@@ -13137,12 +14056,20 @@ type LifecycleEventConfiguration struct {
 	Shutdown *ShutdownEventConfiguration `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LifecycleEventConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LifecycleEventConfiguration) GoString() string {
 	return s.String()
 }
@@ -13170,12 +14097,20 @@ type ListTagsInput struct {
 	ResourceArn *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsInput) GoString() string {
 	return s.String()
 }
@@ -13226,12 +14161,20 @@ type ListTagsOutput struct {
 	Tags map[string]*string `type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsOutput) GoString() string {
 	return s.String()
 }
@@ -13253,7 +14196,7 @@ type LoadBasedAutoScalingConfiguration struct {
 	_ struct{} `type:"structure"`
 
 	// An AutoScalingThresholds object that describes the downscaling configuration,
-	// which defines how and when AWS OpsWorks Stacks reduces the number of instances.
+	// which defines how and when OpsWorks Stacks reduces the number of instances.
 	DownScaling *AutoScalingThresholds `type:"structure"`
 
 	// Whether load-based auto scaling is enabled for the layer.
@@ -13263,16 +14206,24 @@ type LoadBasedAutoScalingConfiguration struct {
 	LayerId *string `type:"string"`
 
 	// An AutoScalingThresholds object that describes the upscaling configuration,
-	// which defines how and when AWS OpsWorks Stacks increases the number of instances.
+	// which defines how and when OpsWorks Stacks increases the number of instances.
 	UpScaling *AutoScalingThresholds `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LoadBasedAutoScalingConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LoadBasedAutoScalingConfiguration) GoString() string {
 	return s.String()
 }
@@ -13301,18 +14252,18 @@ func (s *LoadBasedAutoScalingConfiguration) SetUpScaling(v *AutoScalingThreshold
 	return s
 }
 
-// Describes supported operating systems in AWS OpsWorks Stacks.
+// Describes supported operating systems in OpsWorks Stacks.
 type OperatingSystem struct {
 	_ struct{} `type:"structure"`
 
-	// Supported configuration manager name and versions for an AWS OpsWorks Stacks
+	// Supported configuration manager name and versions for an OpsWorks Stacks
 	// operating system.
 	ConfigurationManagers []*OperatingSystemConfigurationManager `type:"list"`
 
-	// The ID of a supported operating system, such as Amazon Linux 2018.03.
+	// The ID of a supported operating system, such as Amazon Linux 2.
 	Id *string `type:"string"`
 
-	// The name of the operating system, such as Amazon Linux 2018.03.
+	// The name of the operating system, such as Amazon Linux 2.
 	Name *string `type:"string"`
 
 	// A short name for the operating system manufacturer.
@@ -13329,12 +14280,20 @@ type OperatingSystem struct {
 	Type *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s OperatingSystem) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s OperatingSystem) GoString() string {
 	return s.String()
 }
@@ -13395,12 +14354,20 @@ type OperatingSystemConfigurationManager struct {
 	Version *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s OperatingSystemConfigurationManager) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s OperatingSystemConfigurationManager) GoString() string {
 	return s.String()
 }
@@ -13427,8 +14394,8 @@ type Permission struct {
 	// Whether the user can use sudo.
 	AllowSudo *bool `type:"boolean"`
 
-	// The Amazon Resource Name (ARN) for an AWS Identity and Access Management
-	// (IAM) role. For more information about IAM ARNs, see Using Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html).
+	// The Amazon Resource Name (ARN) for an Identity and Access Management (IAM)
+	// role. For more information about IAM ARNs, see Using Identifiers (https://docs.aws.amazon.com/IAM/latest/UserGuide/Using_Identifiers.html).
 	IamUserArn *string `type:"string"`
 
 	// The user's permission level, which must be the following:
@@ -13451,12 +14418,20 @@ type Permission struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Permission) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Permission) GoString() string {
 	return s.String()
 }
@@ -13536,12 +14511,20 @@ type RaidArray struct {
 	VolumeType *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RaidArray) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RaidArray) GoString() string {
 	return s.String()
 }
@@ -13631,10 +14614,10 @@ type RdsDbInstance struct {
 	// The instance's address.
 	Address *string `type:"string"`
 
-	// The DB instance identifier.
+	// The database instance identifier.
 	DbInstanceIdentifier *string `type:"string"`
 
-	// AWS OpsWorks Stacks returns *****FILTERED***** instead of the actual value.
+	// OpsWorks Stacks returns *****FILTERED***** instead of the actual value.
 	DbPassword *string `type:"string"`
 
 	// The master user name.
@@ -13643,28 +14626,35 @@ type RdsDbInstance struct {
 	// The instance's database engine.
 	Engine *string `type:"string"`
 
-	// Set to true if AWS OpsWorks Stacks is unable to discover the Amazon RDS instance.
-	// AWS OpsWorks Stacks attempts to discover the instance only once. If this
-	// value is set to true, you must deregister the instance, and then register
-	// it again.
+	// Set to true if OpsWorks Stacks is unable to discover the Amazon RDS instance.
+	// OpsWorks Stacks attempts to discover the instance only once. If this value
+	// is set to true, you must deregister the instance, and then register it again.
 	MissingOnRds *bool `type:"boolean"`
 
 	// The instance's ARN.
 	RdsDbInstanceArn *string `type:"string"`
 
-	// The instance's AWS region.
+	// The instance's Amazon Web Services Region.
 	Region *string `type:"string"`
 
 	// The ID of the stack with which the instance is registered.
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RdsDbInstance) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RdsDbInstance) GoString() string {
 	return s.String()
 }
@@ -13732,12 +14722,20 @@ type RebootInstanceInput struct {
 	InstanceId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RebootInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RebootInstanceInput) GoString() string {
 	return s.String()
 }
@@ -13765,23 +14763,30 @@ type RebootInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RebootInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RebootInstanceOutput) GoString() string {
 	return s.String()
 }
 
-// AWS OpsWorks Stacks supports five lifecycle events: setup, configuration,
-// deploy, undeploy, and shutdown. For each layer, AWS OpsWorks Stacks runs
-// a set of standard recipes for each event. In addition, you can provide custom
-// recipes for any or all layers and events. AWS OpsWorks Stacks runs custom
-// event recipes after the standard recipes. LayerCustomRecipes specifies the
-// custom recipes for a particular layer to be run in response to each of the
-// five events.
+// OpsWorks Stacks supports five lifecycle events: setup, configuration, deploy,
+// undeploy, and shutdown. For each layer, OpsWorks Stacks runs a set of standard
+// recipes for each event. In addition, you can provide custom recipes for any
+// or all layers and events. OpsWorks Stacks runs custom event recipes after
+// the standard recipes. LayerCustomRecipes specifies the custom recipes for
+// a particular layer to be run in response to each of the five events.
 //
 // To specify a recipe, use the cookbook's directory name in the repository
 // followed by two colons and the recipe name, which is the recipe's file name
@@ -13806,12 +14811,20 @@ type Recipes struct {
 	Undeploy []*string `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Recipes) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Recipes) GoString() string {
 	return s.String()
 }
@@ -13860,12 +14873,20 @@ type RegisterEcsClusterInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterEcsClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterEcsClusterInput) GoString() string {
 	return s.String()
 }
@@ -13906,12 +14927,20 @@ type RegisterEcsClusterOutput struct {
 	EcsClusterArn *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterEcsClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterEcsClusterOutput) GoString() string {
 	return s.String()
 }
@@ -13936,12 +14965,20 @@ type RegisterElasticIpInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterElasticIpInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterElasticIpInput) GoString() string {
 	return s.String()
 }
@@ -13982,12 +15019,20 @@ type RegisterElasticIpOutput struct {
 	ElasticIp *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterElasticIpOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterElasticIpOutput) GoString() string {
 	return s.String()
 }
@@ -14001,7 +15046,12 @@ func (s *RegisterElasticIpOutput) SetElasticIp(v string) *RegisterElasticIpOutpu
 type RegisterInstanceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The instance's hostname.
+	// The instance's host name. The following are character limits for instance
+	// host names.
+	//
+	//    * Linux-based instances: 63 characters
+	//
+	//    * Windows-based instances: 15 characters
 	Hostname *string `type:"string"`
 
 	// An InstanceIdentity object that contains the instance's identity.
@@ -14026,12 +15076,20 @@ type RegisterInstanceInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterInstanceInput) GoString() string {
 	return s.String()
 }
@@ -14095,16 +15153,24 @@ func (s *RegisterInstanceInput) SetStackId(v string) *RegisterInstanceInput {
 type RegisterInstanceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The registered instance's AWS OpsWorks Stacks ID.
+	// The registered instance's OpsWorks Stacks ID.
 	InstanceId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -14139,12 +15205,20 @@ type RegisterRdsDbInstanceInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterRdsDbInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterRdsDbInstanceInput) GoString() string {
 	return s.String()
 }
@@ -14199,12 +15273,20 @@ type RegisterRdsDbInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterRdsDbInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterRdsDbInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -14221,12 +15303,20 @@ type RegisterVolumeInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterVolumeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterVolumeInput) GoString() string {
 	return s.String()
 }
@@ -14264,12 +15354,20 @@ type RegisterVolumeOutput struct {
 	VolumeId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterVolumeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterVolumeOutput) GoString() string {
 	return s.String()
 }
@@ -14294,12 +15392,20 @@ type ReportedOs struct {
 	Version *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ReportedOs) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ReportedOs) GoString() string {
 	return s.String()
 }
@@ -14331,12 +15437,20 @@ type ResourceNotFoundException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) GoString() string {
 	return s.String()
 }
@@ -14396,12 +15510,20 @@ type SelfUserProfile struct {
 	SshUsername *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SelfUserProfile) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SelfUserProfile) GoString() string {
 	return s.String()
 }
@@ -14430,7 +15552,7 @@ func (s *SelfUserProfile) SetSshUsername(v string) *SelfUserProfile {
 	return s
 }
 
-// Describes an AWS OpsWorks Stacks service error.
+// Describes an OpsWorks Stacks service error.
 type ServiceError struct {
 	_ struct{} `type:"structure"`
 
@@ -14453,12 +15575,20 @@ type ServiceError struct {
 	Type *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceError) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceError) GoString() string {
 	return s.String()
 }
@@ -14504,7 +15634,7 @@ type SetLoadBasedAutoScalingInput struct {
 
 	// An AutoScalingThresholds object with the downscaling threshold configuration.
 	// If the load falls below these thresholds for a specified amount of time,
-	// AWS OpsWorks Stacks stops a specified number of instances.
+	// OpsWorks Stacks stops a specified number of instances.
 	DownScaling *AutoScalingThresholds `type:"structure"`
 
 	// Enables load-based auto scaling for the layer.
@@ -14516,17 +15646,25 @@ type SetLoadBasedAutoScalingInput struct {
 	LayerId *string `type:"string" required:"true"`
 
 	// An AutoScalingThresholds object with the upscaling threshold configuration.
-	// If the load exceeds these thresholds for a specified amount of time, AWS
-	// OpsWorks Stacks starts a specified number of instances.
+	// If the load exceeds these thresholds for a specified amount of time, OpsWorks
+	// Stacks starts a specified number of instances.
 	UpScaling *AutoScalingThresholds `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetLoadBasedAutoScalingInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetLoadBasedAutoScalingInput) GoString() string {
 	return s.String()
 }
@@ -14582,12 +15720,20 @@ type SetLoadBasedAutoScalingOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetLoadBasedAutoScalingOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetLoadBasedAutoScalingOutput) GoString() string {
 	return s.String()
 }
@@ -14629,12 +15775,20 @@ type SetPermissionInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetPermissionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetPermissionInput) GoString() string {
 	return s.String()
 }
@@ -14689,12 +15843,20 @@ type SetPermissionOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetPermissionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetPermissionOutput) GoString() string {
 	return s.String()
 }
@@ -14711,12 +15873,20 @@ type SetTimeBasedAutoScalingInput struct {
 	InstanceId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetTimeBasedAutoScalingInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetTimeBasedAutoScalingInput) GoString() string {
 	return s.String()
 }
@@ -14750,12 +15920,20 @@ type SetTimeBasedAutoScalingOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetTimeBasedAutoScalingOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SetTimeBasedAutoScalingOutput) GoString() string {
 	return s.String()
 }
@@ -14768,17 +15946,25 @@ type ShutdownEventConfiguration struct {
 	// see Connection Draining (https://docs.aws.amazon.com/ElasticLoadBalancing/latest/DeveloperGuide/TerminologyandKeyConcepts.html#conn-drain)
 	DelayUntilElbConnectionsDrained *bool `type:"boolean"`
 
-	// The time, in seconds, that AWS OpsWorks Stacks will wait after triggering
-	// a Shutdown event before shutting down an instance.
+	// The time, in seconds, that OpsWorks Stacks waits after triggering a Shutdown
+	// event before shutting down an instance.
 	ExecutionTimeout *int64 `type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ShutdownEventConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ShutdownEventConfiguration) GoString() string {
 	return s.String()
 }
@@ -14811,20 +15997,20 @@ type Source struct {
 	// For more information on how to safely handle IAM credentials, see https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html
 	// (https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html).
 	//
-	// In responses, AWS OpsWorks Stacks returns *****FILTERED***** instead of the
-	// actual value.
+	// In responses, OpsWorks Stacks returns *****FILTERED***** instead of the actual
+	// value.
 	Password *string `type:"string"`
 
-	// The application's version. AWS OpsWorks Stacks enables you to easily deploy
-	// new versions of an application. One of the simplest approaches is to have
-	// branches or revisions in your repository that represent different versions
-	// that can potentially be deployed.
+	// The application's version. OpsWorks Stacks enables you to easily deploy new
+	// versions of an application. One of the simplest approaches is to have branches
+	// or revisions in your repository that represent different versions that can
+	// potentially be deployed.
 	Revision *string `type:"string"`
 
 	// In requests, the repository's SSH key.
 	//
-	// In responses, AWS OpsWorks Stacks returns *****FILTERED***** instead of the
-	// actual value.
+	// In responses, OpsWorks Stacks returns *****FILTERED***** instead of the actual
+	// value.
 	SshKey *string `type:"string"`
 
 	// The repository type.
@@ -14843,12 +16029,20 @@ type Source struct {
 	Username *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Source) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Source) GoString() string {
 	return s.String()
 }
@@ -14908,12 +16102,20 @@ type SslConfiguration struct {
 	PrivateKey *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SslConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SslConfiguration) GoString() string {
 	return s.String()
 }
@@ -15019,14 +16221,14 @@ type Stack struct {
 	// The stack host name theme, with spaces replaced by underscores.
 	HostnameTheme *string `type:"string"`
 
-	// The stack name.
+	// The stack name. Stack names can be a maximum of 64 characters.
 	Name *string `type:"string"`
 
-	// The stack AWS region, such as "ap-northeast-2". For more information about
-	// AWS regions, see Regions and Endpoints (https://docs.aws.amazon.com/general/latest/gr/rande.html).
+	// The stack Amazon Web Services Region, such as ap-northeast-2. For more information
+	// about Amazon Web Services Regions, see Regions and Endpoints (https://docs.aws.amazon.com/general/latest/gr/rande.html).
 	Region *string `type:"string"`
 
-	// The stack AWS Identity and Access Management (IAM) role.
+	// The stack Identity and Access Management (IAM) role.
 	ServiceRoleArn *string `type:"string"`
 
 	// The stack ID.
@@ -15035,20 +16237,28 @@ type Stack struct {
 	// Whether the stack uses custom cookbooks.
 	UseCustomCookbooks *bool `type:"boolean"`
 
-	// Whether the stack automatically associates the AWS OpsWorks Stacks built-in
-	// security groups with the stack's layers.
+	// Whether the stack automatically associates the OpsWorks Stacks built-in security
+	// groups with the stack's layers.
 	UseOpsworksSecurityGroups *bool `type:"boolean"`
 
 	// The VPC ID; applicable only if the stack is running in a VPC.
 	VpcId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Stack) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Stack) GoString() string {
 	return s.String()
 }
@@ -15189,21 +16399,29 @@ func (s *Stack) SetVpcId(v string) *Stack {
 type StackConfigurationManager struct {
 	_ struct{} `type:"structure"`
 
-	// The name. This parameter must be set to "Chef".
+	// The name. This parameter must be set to Chef.
 	Name *string `type:"string"`
 
 	// The Chef version. This parameter must be set to 12, 11.10, or 11.4 for Linux
 	// stacks, and to 12.2 for Windows stacks. The default value for Linux stacks
-	// is 11.4.
+	// is 12.
 	Version *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StackConfigurationManager) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StackConfigurationManager) GoString() string {
 	return s.String()
 }
@@ -15243,12 +16461,20 @@ type StackSummary struct {
 	StackId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StackSummary) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StackSummary) GoString() string {
 	return s.String()
 }
@@ -15298,12 +16524,20 @@ type StartInstanceInput struct {
 	InstanceId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartInstanceInput) GoString() string {
 	return s.String()
 }
@@ -15331,12 +16565,20 @@ type StartInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -15350,12 +16592,20 @@ type StartStackInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartStackInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartStackInput) GoString() string {
 	return s.String()
 }
@@ -15383,12 +16633,20 @@ type StartStackOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartStackOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartStackOutput) GoString() string {
 	return s.String()
 }
@@ -15398,10 +16656,10 @@ type StopInstanceInput struct {
 
 	// Specifies whether to force an instance to stop. If the instance's root device
 	// type is ebs, or EBS-backed, adding the Force parameter to the StopInstances
-	// API call disassociates the AWS OpsWorks Stacks instance from EC2, and forces
+	// API call disassociates the OpsWorks Stacks instance from EC2, and forces
 	// deletion of only the OpsWorks Stacks instance. You must also delete the formerly-associated
-	// instance in EC2 after troubleshooting and replacing the AWS OpsWorks Stacks
-	// instance with a new one.
+	// instance in EC2 after troubleshooting and replacing the OpsWorks Stacks instance
+	// with a new one.
 	Force *bool `type:"boolean"`
 
 	// The instance ID.
@@ -15410,12 +16668,20 @@ type StopInstanceInput struct {
 	InstanceId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopInstanceInput) GoString() string {
 	return s.String()
 }
@@ -15449,12 +16715,20 @@ type StopInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -15468,12 +16742,20 @@ type StopStackInput struct {
 	StackId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopStackInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopStackInput) GoString() string {
 	return s.String()
 }
@@ -15501,12 +16783,20 @@ type StopStackOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopStackOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StopStackOutput) GoString() string {
 	return s.String()
 }
@@ -15541,12 +16831,20 @@ type TagResourceInput struct {
 	Tags map[string]*string `type:"map" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) GoString() string {
 	return s.String()
 }
@@ -15583,12 +16881,20 @@ type TagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -15598,7 +16904,7 @@ func (s TagResourceOutput) GoString() string {
 type TemporaryCredential struct {
 	_ struct{} `type:"structure"`
 
-	// The instance's AWS OpsWorks Stacks ID.
+	// The instance's OpsWorks Stacks ID.
 	InstanceId *string `type:"string"`
 
 	// The password.
@@ -15609,17 +16915,25 @@ type TemporaryCredential struct {
 
 	// The length of time (in minutes) that the grant is valid. When the grant expires,
 	// at the end of this period, the user will no longer be able to use the credentials
-	// to log in. If they are logged in at the time, they will be automatically
-	// logged out.
+	// to log in. If they are logged in at the time, they are automatically logged
+	// out.
 	ValidForInMinutes *int64 `type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TemporaryCredential) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TemporaryCredential) GoString() string {
 	return s.String()
 }
@@ -15659,12 +16973,20 @@ type TimeBasedAutoScalingConfiguration struct {
 	InstanceId *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TimeBasedAutoScalingConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TimeBasedAutoScalingConfiguration) GoString() string {
 	return s.String()
 }
@@ -15690,12 +17012,20 @@ type UnassignInstanceInput struct {
 	InstanceId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignInstanceInput) GoString() string {
 	return s.String()
 }
@@ -15723,12 +17053,20 @@ type UnassignInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -15742,12 +17080,20 @@ type UnassignVolumeInput struct {
 	VolumeId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignVolumeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignVolumeInput) GoString() string {
 	return s.String()
 }
@@ -15775,12 +17121,20 @@ type UnassignVolumeOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignVolumeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnassignVolumeOutput) GoString() string {
 	return s.String()
 }
@@ -15799,12 +17153,20 @@ type UntagResourceInput struct {
 	TagKeys []*string `type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) GoString() string {
 	return s.String()
 }
@@ -15841,12 +17203,20 @@ type UntagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -15903,12 +17273,20 @@ type UpdateAppInput struct {
 	Type *string `type:"string" enum:"AppType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAppInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAppInput) GoString() string {
 	return s.String()
 }
@@ -16011,12 +17389,20 @@ type UpdateAppOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAppOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAppOutput) GoString() string {
 	return s.String()
 }
@@ -16029,16 +17415,24 @@ type UpdateElasticIpInput struct {
 	// ElasticIp is a required field
 	ElasticIp *string `type:"string" required:"true"`
 
-	// The new name.
+	// The new name, which can be a maximum of 32 characters.
 	Name *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateElasticIpInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateElasticIpInput) GoString() string {
 	return s.String()
 }
@@ -16072,12 +17466,20 @@ type UpdateElasticIpOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateElasticIpOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateElasticIpOutput) GoString() string {
 	return s.String()
 }
@@ -16085,14 +17487,14 @@ func (s UpdateElasticIpOutput) GoString() string {
 type UpdateInstanceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The default AWS OpsWorks Stacks agent version. You have the following options:
+	// The default OpsWorks Stacks agent version. You have the following options:
 	//
 	//    * INHERIT - Use the stack's default agent version setting.
 	//
 	//    * version_number - Use the specified agent version. This value overrides
 	//    the stack's default setting. To update the agent version, you must edit
-	//    the instance configuration and specify a new version. AWS OpsWorks Stacks
-	//    then automatically installs that version on the instance.
+	//    the instance configuration and specify a new version. OpsWorks Stacks
+	//    installs that version on the instance.
 	//
 	// The default setting is INHERIT. To specify an agent version, you must use
 	// the complete version number, not the abbreviated number shown on the console.
@@ -16119,7 +17521,12 @@ type UpdateInstanceInput struct {
 	// This property cannot be updated.
 	EbsOptimized *bool `type:"boolean"`
 
-	// The instance host name.
+	// The instance host name. The following are character limits for instance host
+	// names.
+	//
+	//    * Linux-based instances: 63 characters
+	//
+	//    * Windows-based instances: 15 characters
 	Hostname *string `type:"string"`
 
 	// Whether to install operating system and package updates when the instance
@@ -16152,12 +17559,12 @@ type UpdateInstanceInput struct {
 	// You cannot update an instance that is using a custom AMI.
 	//
 	//    * A supported Linux operating system: An Amazon Linux version, such as
-	//    Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux 2017.03, Amazon
-	//    Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09, or Amazon Linux
-	//    2015.03.
+	//    Amazon Linux 2, Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux
+	//    2017.03, Amazon Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09,
+	//    or Amazon Linux 2015.03.
 	//
-	//    * A supported Ubuntu operating system, such as Ubuntu 16.04 LTS, Ubuntu
-	//    14.04 LTS, or Ubuntu 12.04 LTS.
+	//    * A supported Ubuntu operating system, such as Ubuntu 18.04 LTS, Ubuntu
+	//    16.04 LTS, Ubuntu 14.04 LTS, or Ubuntu 12.04 LTS.
 	//
 	//    * CentOS Linux 7
 	//
@@ -16168,15 +17575,14 @@ type UpdateInstanceInput struct {
 	//    Microsoft Windows Server 2012 R2 with SQL Server Standard, or Microsoft
 	//    Windows Server 2012 R2 with SQL Server Web.
 	//
-	// For more information about supported operating systems, see AWS OpsWorks
-	// Stacks Operating Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
+	// Not all operating systems are supported with all versions of Chef. For more
+	// information about supported operating systems, see OpsWorks Stacks Operating
+	// Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
 	//
 	// The default option is the current Amazon Linux version. If you set this parameter
 	// to Custom, you must use the AmiId parameter to specify the custom AMI that
-	// you want to use. For more information about supported operating systems,
-	// see Operating Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
-	// For more information about how to use custom AMIs with OpsWorks, see Using
-	// Custom AMIs (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-custom-ami.html).
+	// you want to use. For more information about how to use custom AMIs with OpsWorks,
+	// see Using Custom AMIs (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-custom-ami.html).
 	//
 	// You can specify a different Linux operating system for the updated stack,
 	// but you cannot change from Linux to Windows or Windows to Linux.
@@ -16186,12 +17592,20 @@ type UpdateInstanceInput struct {
 	SshKeyName *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateInstanceInput) GoString() string {
 	return s.String()
 }
@@ -16285,12 +17699,20 @@ type UpdateInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -16350,20 +17772,22 @@ type UpdateLayerInput struct {
 	// Specifies the lifecycle event configuration
 	LifecycleEventConfiguration *LifecycleEventConfiguration `type:"structure"`
 
-	// The layer name, which is used by the console.
+	// The layer name, which is used by the console. Layer names can be a maximum
+	// of 32 characters.
 	Name *string `type:"string"`
 
 	// An array of Package objects that describe the layer's packages.
 	Packages []*string `type:"list"`
 
 	// For custom layers only, use this parameter to specify the layer's short name,
-	// which is used internally by AWS OpsWorks Stacks and by Chef. The short name
-	// is also used as the name for the directory where your app files are installed.
-	// It can have a maximum of 200 characters and must be in the following format:
+	// which is used internally by OpsWorks Stacks and by Chef. The short name is
+	// also used as the name for the directory where your app files are installed.
+	// It can have a maximum of 32 characters and must be in the following format:
 	// /\A[a-z0-9\-\_\.]+\Z/.
 	//
-	// The built-in layers' short names are defined by AWS OpsWorks Stacks. For
-	// more information, see the Layer Reference (https://docs.aws.amazon.com/opsworks/latest/userguide/layers.html)
+	// Built-in layer short names are defined by OpsWorks Stacks. For more information,
+	// see the Layer reference (https://docs.aws.amazon.com/opsworks/latest/userguide/layers.html)
+	// in the OpsWorks User Guide.
 	Shortname *string `type:"string"`
 
 	// Whether to use Amazon EBS-optimized instances.
@@ -16373,12 +17797,20 @@ type UpdateLayerInput struct {
 	VolumeConfigurations []*VolumeConfiguration `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateLayerInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateLayerInput) GoString() string {
 	return s.String()
 }
@@ -16512,12 +17944,20 @@ type UpdateLayerOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateLayerOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateLayerOutput) GoString() string {
 	return s.String()
 }
@@ -16529,12 +17969,20 @@ type UpdateMyUserProfileInput struct {
 	SshPublicKey *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateMyUserProfileInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateMyUserProfileInput) GoString() string {
 	return s.String()
 }
@@ -16549,12 +17997,20 @@ type UpdateMyUserProfileOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateMyUserProfileOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateMyUserProfileOutput) GoString() string {
 	return s.String()
 }
@@ -16574,12 +18030,20 @@ type UpdateRdsDbInstanceInput struct {
 	RdsDbInstanceArn *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRdsDbInstanceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRdsDbInstanceInput) GoString() string {
 	return s.String()
 }
@@ -16619,12 +18083,20 @@ type UpdateRdsDbInstanceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRdsDbInstanceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRdsDbInstanceOutput) GoString() string {
 	return s.String()
 }
@@ -16632,16 +18104,16 @@ func (s UpdateRdsDbInstanceOutput) GoString() string {
 type UpdateStackInput struct {
 	_ struct{} `type:"structure"`
 
-	// The default AWS OpsWorks Stacks agent version. You have the following options:
+	// The default OpsWorks Stacks agent version. You have the following options:
 	//
-	//    * Auto-update - Set this parameter to LATEST. AWS OpsWorks Stacks automatically
+	//    * Auto-update - Set this parameter to LATEST. OpsWorks Stacks automatically
 	//    installs new agent versions on the stack's instances as soon as they are
 	//    available.
 	//
 	//    * Fixed version - Set this parameter to your preferred agent version.
 	//    To update the agent version, you must edit the stack configuration and
-	//    specify a new version. AWS OpsWorks Stacks then automatically installs
-	//    that version on the stack's instances.
+	//    specify a new version. OpsWorks Stacks installs that version on the stack's
+	//    instances.
 	//
 	// The default setting is LATEST. To specify an agent version, you must use
 	// the complete version number, not the abbreviated number shown on the console.
@@ -16695,12 +18167,12 @@ type UpdateStackInput struct {
 	// The stack's operating system, which must be set to one of the following:
 	//
 	//    * A supported Linux operating system: An Amazon Linux version, such as
-	//    Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux 2017.03, Amazon
-	//    Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09, or Amazon Linux
-	//    2015.03.
+	//    Amazon Linux 2, Amazon Linux 2018.03, Amazon Linux 2017.09, Amazon Linux
+	//    2017.03, Amazon Linux 2016.09, Amazon Linux 2016.03, Amazon Linux 2015.09,
+	//    or Amazon Linux 2015.03.
 	//
-	//    * A supported Ubuntu operating system, such as Ubuntu 16.04 LTS, Ubuntu
-	//    14.04 LTS, or Ubuntu 12.04 LTS.
+	//    * A supported Ubuntu operating system, such as Ubuntu 18.04 LTS, Ubuntu
+	//    16.04 LTS, Ubuntu 14.04 LTS, or Ubuntu 12.04 LTS.
 	//
 	//    * CentOS Linux 7
 	//
@@ -16715,9 +18187,9 @@ type UpdateStackInput struct {
 	//    you create instances. For more information about how to use custom AMIs
 	//    with OpsWorks, see Using Custom AMIs (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-custom-ami.html).
 	//
-	// The default option is the stack's current operating system. For more information
-	// about supported operating systems, see AWS OpsWorks Stacks Operating Systems
-	// (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
+	// The default option is the stack's current operating system. Not all operating
+	// systems are supported with all versions of Chef. For more information about
+	// supported operating systems, see OpsWorks Stacks Operating Systems (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-os.html).
 	DefaultOs *string `type:"string"`
 
 	// The default root device type. This value is used by default for all instances
@@ -16726,7 +18198,7 @@ type UpdateStackInput struct {
 	DefaultRootDeviceType *string `type:"string" enum:"RootDeviceType"`
 
 	// A default Amazon EC2 key-pair name. The default value is none. If you specify
-	// a key-pair name, AWS OpsWorks Stacks installs the public key on the instance
+	// a key-pair name, OpsWorks Stacks installs the public key on the instance
 	// and you can use the private key with an SSH client to log in to the instance.
 	// For more information, see Using SSH to Communicate with an Instance (https://docs.aws.amazon.com/opsworks/latest/userguide/workinginstances-ssh.html)
 	// and Managing SSH Access (https://docs.aws.amazon.com/opsworks/latest/userguide/security-ssh-access.html).
@@ -16773,7 +18245,7 @@ type UpdateStackInput struct {
 	// a host name based on the current theme.
 	HostnameTheme *string `type:"string"`
 
-	// The stack's new name.
+	// The stack's new name. Stack names can be a maximum of 64 characters.
 	Name *string `type:"string"`
 
 	// Do not use this parameter. You cannot update a stack's service role.
@@ -16787,20 +18259,20 @@ type UpdateStackInput struct {
 	// Whether the stack uses custom cookbooks.
 	UseCustomCookbooks *bool `type:"boolean"`
 
-	// Whether to associate the AWS OpsWorks Stacks built-in security groups with
-	// the stack's layers.
+	// Whether to associate the OpsWorks Stacks built-in security groups with the
+	// stack's layers.
 	//
-	// AWS OpsWorks Stacks provides a standard set of built-in security groups,
-	// one for each layer, which are associated with layers by default. UseOpsworksSecurityGroups
+	// OpsWorks Stacks provides a standard set of built-in security groups, one
+	// for each layer, which are associated with layers by default. UseOpsworksSecurityGroups
 	// allows you to provide your own custom security groups instead of using the
 	// built-in groups. UseOpsworksSecurityGroups has the following settings:
 	//
-	//    * True - AWS OpsWorks Stacks automatically associates the appropriate
-	//    built-in security group with each layer (default setting). You can associate
-	//    additional security groups with a layer after you create it, but you cannot
-	//    delete the built-in security group.
+	//    * True - OpsWorks Stacks automatically associates the appropriate built-in
+	//    security group with each layer (default setting). You can associate additional
+	//    security groups with a layer after you create it, but you cannot delete
+	//    the built-in security group.
 	//
-	//    * False - AWS OpsWorks Stacks does not associate built-in security groups
+	//    * False - OpsWorks Stacks does not associate built-in security groups
 	//    with layers. You must create appropriate EC2 security groups and associate
 	//    a security group with each layer that you create. However, you can still
 	//    manually associate a built-in security group with a layer on. Custom security
@@ -16810,12 +18282,20 @@ type UpdateStackInput struct {
 	UseOpsworksSecurityGroups *bool `type:"boolean"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateStackInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateStackInput) GoString() string {
 	return s.String()
 }
@@ -16945,12 +18425,20 @@ type UpdateStackOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateStackOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateStackOutput) GoString() string {
 	return s.String()
 }
@@ -16971,19 +18459,27 @@ type UpdateUserProfileInput struct {
 	SshPublicKey *string `type:"string"`
 
 	// The user's SSH user name. The allowable characters are [a-z], [A-Z], [0-9],
-	// '-', and '_'. If the specified name includes other punctuation marks, AWS
-	// OpsWorks Stacks removes them. For example, my.name will be changed to myname.
-	// If you do not specify an SSH user name, AWS OpsWorks Stacks generates one
-	// from the IAM user name.
+	// '-', and '_'. If the specified name includes other punctuation marks, OpsWorks
+	// Stacks removes them. For example, my.name will be changed to myname. If you
+	// do not specify an SSH user name, OpsWorks Stacks generates one from the IAM
+	// user name.
 	SshUsername *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateUserProfileInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateUserProfileInput) GoString() string {
 	return s.String()
 }
@@ -17029,12 +18525,20 @@ type UpdateUserProfileOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateUserProfileOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateUserProfileOutput) GoString() string {
 	return s.String()
 }
@@ -17045,7 +18549,7 @@ type UpdateVolumeInput struct {
 	// The new mount point.
 	MountPoint *string `type:"string"`
 
-	// The new name.
+	// The new name. Volume names can be a maximum of 128 characters.
 	Name *string `type:"string"`
 
 	// The volume ID.
@@ -17054,12 +18558,20 @@ type UpdateVolumeInput struct {
 	VolumeId *string `type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateVolumeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateVolumeInput) GoString() string {
 	return s.String()
 }
@@ -17099,12 +18611,20 @@ type UpdateVolumeOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateVolumeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateVolumeOutput) GoString() string {
 	return s.String()
 }
@@ -17130,12 +18650,20 @@ type UserProfile struct {
 	SshUsername *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UserProfile) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UserProfile) GoString() string {
 	return s.String()
 }
@@ -17179,12 +18707,20 @@ type ValidationException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) GoString() string {
 	return s.String()
 }
@@ -17254,14 +18790,14 @@ type Volume struct {
 	// The volume mount point. For example, "/mnt/disk1".
 	MountPoint *string `type:"string"`
 
-	// The volume name.
+	// The volume name. Volume names are a maximum of 128 characters.
 	Name *string `type:"string"`
 
 	// The RAID array ID.
 	RaidArrayId *string `type:"string"`
 
-	// The AWS region. For more information about AWS regions, see Regions and Endpoints
-	// (https://docs.aws.amazon.com/general/latest/gr/rande.html).
+	// The Amazon Web Services Region. For more information about Amazon Web Services
+	// Regions, see Regions and Endpoints (https://docs.aws.amazon.com/general/latest/gr/rande.html).
 	Region *string `type:"string"`
 
 	// The volume size.
@@ -17285,20 +18821,28 @@ type Volume struct {
 	//    size of 1 GiB and a maximum size of 16384 GiB.
 	//
 	//    * st1 - Throughput Optimized hard disk drive (HDD). Throughput optimized
-	//    HDD volumes must have a minimum size of 500 GiB and a maximum size of
+	//    HDD volumes must have a minimum size of 125 GiB and a maximum size of
 	//    16384 GiB.
 	//
-	//    * sc1 - Cold HDD. Cold HDD volumes must have a minimum size of 500 GiB
+	//    * sc1 - Cold HDD. Cold HDD volumes must have a minimum size of 125 GiB
 	//    and a maximum size of 16384 GiB.
 	VolumeType *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Volume) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Volume) GoString() string {
 	return s.String()
 }
@@ -17428,20 +18972,28 @@ type VolumeConfiguration struct {
 	//    size of 1 GiB and a maximum size of 16384 GiB.
 	//
 	//    * st1 - Throughput Optimized hard disk drive (HDD). Throughput optimized
-	//    HDD volumes must have a minimum size of 500 GiB and a maximum size of
+	//    HDD volumes must have a minimum size of 125 GiB and a maximum size of
 	//    16384 GiB.
 	//
-	//    * sc1 - Cold HDD. Cold HDD volumes must have a minimum size of 500 GiB
+	//    * sc1 - Cold HDD. Cold HDD volumes must have a minimum size of 125 GiB
 	//    and a maximum size of 16384 GiB.
 	VolumeType *string `type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s VolumeConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s VolumeConfiguration) GoString() string {
 	return s.String()
 }
@@ -17510,11 +19062,11 @@ func (s *VolumeConfiguration) SetVolumeType(v string) *VolumeConfiguration {
 // Describes a time-based instance's auto scaling schedule. The schedule consists
 // of a set of key-value pairs.
 //
-//    * The key is the time period (a UTC hour) and must be an integer from
-//    0 - 23.
+//   - The key is the time period (a UTC hour) and must be an integer from
+//     0 - 23.
 //
-//    * The value indicates whether the instance should be online or offline
-//    for the specified period, and must be set to "on" or "off"
+//   - The value indicates whether the instance should be online or offline
+//     for the specified period, and must be set to "on" or "off"
 //
 // The default setting for all time periods is off, so you use the following
 // parameters primarily to specify the online periods. You don't have to explicitly
@@ -17550,12 +19102,20 @@ type WeeklyAutoScalingSchedule struct {
 	Wednesday map[string]*string `type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s WeeklyAutoScalingSchedule) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s WeeklyAutoScalingSchedule) GoString() string {
 	return s.String()
 }

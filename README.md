@@ -19,6 +19,18 @@ For information about starting a session using the AWS CLI, see [Starting a sess
 
 For information about troubleshooting, see [Troubleshooting Session Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-troubleshooting.html).
 
+### Version Compatibility
+
+The default compiled version is 1.2.0.0. We strongly recommend you manually update to version 1.3.0.0 before you compile. This step is crucial to ensure you have access to the latest features and functionality.
+
+To update the version:
+1. Locate the version information in the following files:
+    - `src/version/version.go`
+    - `VERSION`
+2. In both files, update the version number from 1.2.0.0 to 1.3.0.0.
+3. Save the changes and recompile the plugin with the updated version number.
+
+By taking this extra step, you'll avoid potential feature limitations or functionality issues that may arise from using an outdated version. This practice ensures that you're working with the most up-to-date capabilities of the Session Manager Plugin.
 
 ### Working with Docker
 

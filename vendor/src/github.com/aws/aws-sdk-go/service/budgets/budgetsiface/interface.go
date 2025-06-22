@@ -23,37 +23,37 @@ import (
 // can be stubbed out for unit testing your code with the SDK without needing
 // to inject custom request handlers into the SDK's request pipeline.
 //
-//    // myFunc uses an SDK service client to make a request to
-//    // AWS Budgets.
-//    func myFunc(svc budgetsiface.BudgetsAPI) bool {
-//        // Make svc.CreateBudget request
-//    }
+//	// myFunc uses an SDK service client to make a request to
+//	// AWS Budgets.
+//	func myFunc(svc budgetsiface.BudgetsAPI) bool {
+//	    // Make svc.CreateBudget request
+//	}
 //
-//    func main() {
-//        sess := session.New()
-//        svc := budgets.New(sess)
+//	func main() {
+//	    sess := session.New()
+//	    svc := budgets.New(sess)
 //
-//        myFunc(svc)
-//    }
+//	    myFunc(svc)
+//	}
 //
 // In your _test.go file:
 //
-//    // Define a mock struct to be used in your unit tests of myFunc.
-//    type mockBudgetsClient struct {
-//        budgetsiface.BudgetsAPI
-//    }
-//    func (m *mockBudgetsClient) CreateBudget(input *budgets.CreateBudgetInput) (*budgets.CreateBudgetOutput, error) {
-//        // mock response/functionality
-//    }
+//	// Define a mock struct to be used in your unit tests of myFunc.
+//	type mockBudgetsClient struct {
+//	    budgetsiface.BudgetsAPI
+//	}
+//	func (m *mockBudgetsClient) CreateBudget(input *budgets.CreateBudgetInput) (*budgets.CreateBudgetOutput, error) {
+//	    // mock response/functionality
+//	}
 //
-//    func TestMyFunc(t *testing.T) {
-//        // Setup Test
-//        mockSvc := &mockBudgetsClient{}
+//	func TestMyFunc(t *testing.T) {
+//	    // Setup Test
+//	    mockSvc := &mockBudgetsClient{}
 //
-//        myfunc(mockSvc)
+//	    myfunc(mockSvc)
 //
-//        // Verify myFunc's functionality
-//    }
+//	    // Verify myFunc's functionality
+//	}
 //
 // It is important to note that this interface will have breaking changes
 // when the service model is updated and adds new API operations, paginators,
@@ -121,6 +121,13 @@ type BudgetsAPI interface {
 	DescribeBudgetActionsForBudgetPages(*budgets.DescribeBudgetActionsForBudgetInput, func(*budgets.DescribeBudgetActionsForBudgetOutput, bool) bool) error
 	DescribeBudgetActionsForBudgetPagesWithContext(aws.Context, *budgets.DescribeBudgetActionsForBudgetInput, func(*budgets.DescribeBudgetActionsForBudgetOutput, bool) bool, ...request.Option) error
 
+	DescribeBudgetNotificationsForAccount(*budgets.DescribeBudgetNotificationsForAccountInput) (*budgets.DescribeBudgetNotificationsForAccountOutput, error)
+	DescribeBudgetNotificationsForAccountWithContext(aws.Context, *budgets.DescribeBudgetNotificationsForAccountInput, ...request.Option) (*budgets.DescribeBudgetNotificationsForAccountOutput, error)
+	DescribeBudgetNotificationsForAccountRequest(*budgets.DescribeBudgetNotificationsForAccountInput) (*request.Request, *budgets.DescribeBudgetNotificationsForAccountOutput)
+
+	DescribeBudgetNotificationsForAccountPages(*budgets.DescribeBudgetNotificationsForAccountInput, func(*budgets.DescribeBudgetNotificationsForAccountOutput, bool) bool) error
+	DescribeBudgetNotificationsForAccountPagesWithContext(aws.Context, *budgets.DescribeBudgetNotificationsForAccountInput, func(*budgets.DescribeBudgetNotificationsForAccountOutput, bool) bool, ...request.Option) error
+
 	DescribeBudgetPerformanceHistory(*budgets.DescribeBudgetPerformanceHistoryInput) (*budgets.DescribeBudgetPerformanceHistoryOutput, error)
 	DescribeBudgetPerformanceHistoryWithContext(aws.Context, *budgets.DescribeBudgetPerformanceHistoryInput, ...request.Option) (*budgets.DescribeBudgetPerformanceHistoryOutput, error)
 	DescribeBudgetPerformanceHistoryRequest(*budgets.DescribeBudgetPerformanceHistoryInput) (*request.Request, *budgets.DescribeBudgetPerformanceHistoryOutput)
@@ -152,6 +159,18 @@ type BudgetsAPI interface {
 	ExecuteBudgetAction(*budgets.ExecuteBudgetActionInput) (*budgets.ExecuteBudgetActionOutput, error)
 	ExecuteBudgetActionWithContext(aws.Context, *budgets.ExecuteBudgetActionInput, ...request.Option) (*budgets.ExecuteBudgetActionOutput, error)
 	ExecuteBudgetActionRequest(*budgets.ExecuteBudgetActionInput) (*request.Request, *budgets.ExecuteBudgetActionOutput)
+
+	ListTagsForResource(*budgets.ListTagsForResourceInput) (*budgets.ListTagsForResourceOutput, error)
+	ListTagsForResourceWithContext(aws.Context, *budgets.ListTagsForResourceInput, ...request.Option) (*budgets.ListTagsForResourceOutput, error)
+	ListTagsForResourceRequest(*budgets.ListTagsForResourceInput) (*request.Request, *budgets.ListTagsForResourceOutput)
+
+	TagResource(*budgets.TagResourceInput) (*budgets.TagResourceOutput, error)
+	TagResourceWithContext(aws.Context, *budgets.TagResourceInput, ...request.Option) (*budgets.TagResourceOutput, error)
+	TagResourceRequest(*budgets.TagResourceInput) (*request.Request, *budgets.TagResourceOutput)
+
+	UntagResource(*budgets.UntagResourceInput) (*budgets.UntagResourceOutput, error)
+	UntagResourceWithContext(aws.Context, *budgets.UntagResourceInput, ...request.Option) (*budgets.UntagResourceOutput, error)
+	UntagResourceRequest(*budgets.UntagResourceInput) (*request.Request, *budgets.UntagResourceOutput)
 
 	UpdateBudget(*budgets.UpdateBudgetInput) (*budgets.UpdateBudgetOutput, error)
 	UpdateBudgetWithContext(aws.Context, *budgets.UpdateBudgetInput, ...request.Option) (*budgets.UpdateBudgetOutput, error)

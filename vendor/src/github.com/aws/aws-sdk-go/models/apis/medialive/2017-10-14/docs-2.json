@@ -8,6 +8,7 @@
     "BatchStop": "Stops running resources",
     "BatchUpdateSchedule": "Update a channel schedule",
     "CancelInputDeviceTransfer": "Cancel an input device transfer that you have requested.",
+    "ClaimDevice": "Send a request to claim an AWS Elemental device that you have purchased from a third-party vendor. After the request succeeds, you will own the device.",
     "CreateChannel": "Creates a new channel",
     "CreateInput": "Create an input",
     "CreateInputSecurityGroup": "Creates a Input Security Group",
@@ -23,6 +24,7 @@
     "DeleteReservation": "Delete an expired reservation.",
     "DeleteSchedule": "Delete all schedule actions on a channel.",
     "DeleteTags": "Removes tags for a resource",
+    "DescribeAccountConfiguration": "Describe account configuration",
     "DescribeChannel": "Gets details about a channel",
     "DescribeInput": "Produces details about an input",
     "DescribeInputDevice": "Gets the details for the input device",
@@ -33,6 +35,7 @@
     "DescribeOffering": "Get details for an offering.",
     "DescribeReservation": "Get details for a reservation.",
     "DescribeSchedule": "Get a channel schedule",
+    "DescribeThumbnails": "Describe the latest thumbnails data.",
     "ListChannels": "Produces list of channels that have been created",
     "ListInputDeviceTransfers": "List input devices that are currently being transferred. List input devices that you are transferring from your AWS account or input devices that another AWS account is transferring to you.",
     "ListInputDevices": "List input devices",
@@ -44,12 +47,17 @@
     "ListReservations": "List purchased reservations.",
     "ListTagsForResource": "Produces list of tags that have been created for a resource",
     "PurchaseOffering": "Purchase an offering and create a reservation.",
+    "RebootInputDevice": "Send a reboot command to the specified input device. The device will begin rebooting within a few seconds of sending the command. When the reboot is complete, the device\u2019s connection status will change to connected.",
     "RejectInputDeviceTransfer": "Reject the transfer of the specified input device to your AWS account.",
     "StartChannel": "Starts an existing channel",
+    "StartInputDevice": "Start an input device that is attached to a MediaConnect flow. (There is no need to start a device that is attached to a MediaLive input; MediaLive starts the device when the channel starts.)",
+    "StartInputDeviceMaintenanceWindow": "Start a maintenance window for the specified input device. Starting a maintenance window will give the device up to two hours to install software. If the device was streaming prior to the maintenance, it will resume streaming when the software is fully installed. Devices automatically install updates while they are powered on and their MediaLive channels are stopped. A maintenance window allows you to update a device without having to stop MediaLive channels that use the device. The device must remain powered on and connected to the internet for the duration of the maintenance.",
     "StartMultiplex": "Start (run) the multiplex. Starting the multiplex does not start the channels. You must explicitly start each channel.",
     "StopChannel": "Stops a running channel",
+    "StopInputDevice": "Stop an input device that is attached to a MediaConnect flow. (There is no need to stop a device that is attached to a MediaLive input; MediaLive automatically stops the device when the channel stops.)",
     "StopMultiplex": "Stops a running multiplex. If the multiplex isn't running, this action has no effect.",
     "TransferInputDevice": "Start an input device transfer to another AWS account. After you make the request, the other account must accept or reject the transfer.",
+    "UpdateAccountConfiguration": "Update account configuration",
     "UpdateChannel": "Updates a channel.",
     "UpdateChannelClass": "Changes the class of the channel.",
     "UpdateInput": "Updates an input.",
@@ -57,7 +65,35 @@
     "UpdateInputSecurityGroup": "Update an Input Security Group's Whilelists.",
     "UpdateMultiplex": "Updates a multiplex.",
     "UpdateMultiplexProgram": "Update a program in a multiplex.",
-    "UpdateReservation": "Update reservation."
+    "UpdateReservation": "Update reservation.",
+    "RestartChannelPipelines": "Restart pipelines in one channel that is currently running.",
+    "CreateCloudWatchAlarmTemplate": "Creates a cloudwatch alarm template to dynamically generate cloudwatch metric alarms on targeted resource types.",
+    "CreateCloudWatchAlarmTemplateGroup": "Creates a cloudwatch alarm template group to group your cloudwatch alarm templates and to attach to signal maps for dynamically creating alarms.",
+    "CreateEventBridgeRuleTemplate": "Creates an eventbridge rule template to monitor events and send notifications to your targeted resources.",
+    "CreateEventBridgeRuleTemplateGroup": "Creates an eventbridge rule template group to group your eventbridge rule templates and to attach to signal maps for dynamically creating notification rules.",
+    "CreateSignalMap": "Initiates the creation of a new signal map. Will discover a new mediaResourceMap based on the provided discoveryEntryPointArn.",
+    "DeleteCloudWatchAlarmTemplate": "Deletes a cloudwatch alarm template.",
+    "DeleteCloudWatchAlarmTemplateGroup": "Deletes a cloudwatch alarm template group. You must detach this group from all signal maps and ensure its existing templates are moved to another group or deleted.",
+    "DeleteEventBridgeRuleTemplate": "Deletes an eventbridge rule template.",
+    "DeleteEventBridgeRuleTemplateGroup": "Deletes an eventbridge rule template group. You must detach this group from all signal maps and ensure its existing templates are moved to another group or deleted.",
+    "DeleteSignalMap": "Deletes the specified signal map.",
+    "GetCloudWatchAlarmTemplate": "Retrieves the specified cloudwatch alarm template.",
+    "GetCloudWatchAlarmTemplateGroup": "Retrieves the specified cloudwatch alarm template group.",
+    "GetEventBridgeRuleTemplate": "Retrieves the specified eventbridge rule template.",
+    "GetEventBridgeRuleTemplateGroup": "Retrieves the specified eventbridge rule template group.",
+    "GetSignalMap": "Retrieves the specified signal map.",
+    "ListCloudWatchAlarmTemplateGroups": "Lists cloudwatch alarm template groups.",
+    "ListCloudWatchAlarmTemplates": "Lists cloudwatch alarm templates.",
+    "ListEventBridgeRuleTemplateGroups": "Lists eventbridge rule template groups.",
+    "ListEventBridgeRuleTemplates": "Lists eventbridge rule templates.",
+    "ListSignalMaps": "Lists signal maps.",
+    "StartDeleteMonitorDeployment": "Initiates a deployment to delete the monitor of the specified signal map.",
+    "StartMonitorDeployment": "Initiates a deployment to deploy the latest monitor of the specified signal map.",
+    "StartUpdateSignalMap": "Initiates an update for the specified signal map. Will discover a new signal map if a changed discoveryEntryPointArn is provided.",
+    "UpdateCloudWatchAlarmTemplate": "Updates the specified cloudwatch alarm template.",
+    "UpdateCloudWatchAlarmTemplateGroup": "Updates the specified cloudwatch alarm template group.",
+    "UpdateEventBridgeRuleTemplate": "Updates the specified eventbridge rule template.",
+    "UpdateEventBridgeRuleTemplateGroup": "Updates the specified eventbridge rule template group."
   },
   "shapes": {
     "AacCodingMode": {
@@ -108,6 +144,12 @@
         "AacSettings$VbrQuality": "VBR Quality Level - Only used if rateControlMode is VBR."
       }
     },
+    "Ac3AttenuationControl": {
+      "base": "Ac3 Attenuation Control",
+      "refs": {
+        "Ac3Settings$AttenuationControl": "Applies a 3 dB attenuation to the surround channels. Applies only when the coding mode parameter is CODING_MODE_3_2_LFE."
+      }
+    },
     "Ac3BitstreamMode": {
       "base": "Ac3 Bitstream Mode",
       "refs": {
@@ -147,6 +189,20 @@
     "AccessDenied": {
       "base": null,
       "refs": {
+      }
+    },
+    "AccessibilityType": {
+      "base": "Accessibility Type",
+      "refs": {
+        "CaptionDescription$Accessibility": "Indicates whether the caption track implements accessibility features such as written descriptions of spoken dialog, music, and sounds. This signaling is added to HLS output group and MediaPackage output group."
+      }
+    },
+    "AccountConfiguration": {
+      "base": null,
+      "refs": {
+        "DescribeAccountConfigurationResultModel$AccountConfiguration": null,
+        "UpdateAccountConfigurationRequestModel$AccountConfiguration": null,
+        "UpdateAccountConfigurationResultModel$AccountConfiguration": null
       }
     },
     "AfdSignaling": {
@@ -190,7 +246,7 @@
     "ArchiveS3LogUploads": {
       "base": "Archive S3 Log Uploads",
       "refs": {
-        "ArchiveS3Settings$LogUploads": "When set to enabled, each upload to CDN or server will be logged."
+        "ArchiveS3Settings$LogUploads": "This field is unused and deprecated."
       }
     },
     "ArchiveS3Settings": {
@@ -239,6 +295,12 @@
       "base": "Audio Description Language Code Control",
       "refs": {
         "AudioDescription$LanguageCodeControl": "Choosing followInput will cause the ISO 639 language code of the output to follow the ISO 639 language code of the input. The languageCode will be used when useConfigured is set, or when followInput is selected but there is no ISO 639 language code specified by the input."
+      }
+    },
+    "AudioDolbyEDecode": {
+      "base": "Audio Dolby EDecode",
+      "refs": {
+        "AudioTrackSelection$DolbyEDecode": "Configure decoding options for Dolby E streams - these should be Dolby E frames carried in PCM streams tagged with SMPTE-337"
       }
     },
     "AudioHlsRenditionSelection": {
@@ -337,6 +399,12 @@
         "AudioDescription$AudioType": "Applies only if audioTypeControl is useConfigured. The values for audioType are defined in ISO-IEC 13818-1."
       }
     },
+    "AudioWatermarkSettings": {
+      "base": "Audio Watermark Settings",
+      "refs": {
+        "AudioDescription$AudioWatermarkingSettings": "Settings to configure one or more solutions that insert audio watermarks in the audio encode"
+      }
+    },
     "AuthenticationScheme": {
       "base": "Authentication Scheme",
       "refs": {
@@ -370,7 +438,7 @@
     "AvailSettings": {
       "base": "Avail Settings",
       "refs": {
-        "AvailConfiguration$AvailSettings": "Ad avail settings."
+        "AvailConfiguration$AvailSettings": "Controls how SCTE-35 messages create cues. Splice Insert mode treats all segmentation signals traditionally. With Time Signal APOS mode only Time Signal Placement Opportunity and Break messages create segment breaks. With ESAM mode, signals are forwarded to an ESAM server for possible update."
       }
     },
     "BadGatewayException": {
@@ -544,7 +612,7 @@
       }
     },
     "CaptionSelector": {
-      "base": "Output groups for this Live Event. Output groups contain information about where streams should be distributed.",
+      "base": "Caption Selector",
       "refs": {
         "__listOfCaptionSelector$member": null
       }
@@ -556,7 +624,7 @@
       }
     },
     "CdiInputResolution": {
-      "base": "Maximum CDI input resolution; SD is 480i and 576i up to 30 frames-per-second (fps), HD is 720p up to 60 fps / 1080i up to 30 fps, FHD is 1080p up to 60 fps, UHD is 2160p up to 60 fps\n",
+      "base": "Maximum CDI input resolution; SD is 480i and 576i up to 30 frames-per-second (fps), HD is 720p up to 60 fps / 1080i up to 30 fps, FHD is 1080p up to 60 fps, UHD is 2160p up to 60 fps",
       "refs": {
         "CdiInputSpecification$Resolution": "Maximum CDI input resolution"
       }
@@ -609,6 +677,30 @@
       "base": null,
       "refs": {
         "__listOfChannelSummary$member": null
+      }
+    },
+    "ClaimDeviceRequest": {
+      "base": "Request to claim an AWS Elemental device that you have purchased from a third-party vendor.",
+      "refs": {
+      }
+    },
+    "ColorCorrection": {
+      "base": "Property of ColorCorrectionSettings. Used for custom color space conversion. The object identifies one 3D LUT file and specifies the input/output color space combination that the file will be used for.",
+      "refs": {
+        "__listOfColorCorrection$member": null
+      }
+    },
+    "ColorCorrectionSettings": {
+      "base": "Property of encoderSettings. Controls color conversion when you are using 3D LUT files to perform color conversion on video.",
+      "refs": {
+        "EncoderSettings$ColorCorrectionSettings": "Color Correction Settings"
+      }
+    },
+    "ColorSpace": {
+      "base": "Property of colorCorrections. When you are using 3D LUT files to perform color conversion on video, these are the supported color spaces.",
+      "refs": {
+        "ColorCorrection$InputColorSpace": "The color space of the input.",
+        "ColorCorrection$OutputColorSpace": "The color space of the output."
       }
     },
     "ColorSpacePassthroughSettings": {
@@ -678,6 +770,16 @@
       "refs": {
       }
     },
+    "DescribeAccountConfigurationResultModel": {
+      "base": "The account's configuration.",
+      "refs": {
+      }
+    },
+    "DescribeThumbnailsResultModel": {
+      "base": "Thumbnail details for all the pipelines of a running channel.",
+      "refs": {
+      }
+    },
     "DeviceSettingsSyncState": {
       "base": "The status of the action to synchronize the device configuration. If you change the configuration of the input device (for example, the maximum bitrate), MediaLive sends the new data to the device. The device might not update itself immediately. SYNCED means the device has updated its configuration. SYNCING means that it has not updated its configuration.",
       "refs": {
@@ -690,6 +792,18 @@
       "refs": {
         "InputDevice$DeviceUpdateStatus": "The status of software on the input device.",
         "InputDeviceSummary$DeviceUpdateStatus": "The status of software on the input device."
+      }
+    },
+    "DolbyEProgramSelection": {
+      "base": "Dolby EProgram Selection",
+      "refs": {
+        "AudioDolbyEDecode$ProgramSelection": "Applies only to Dolby E. Enter the program ID (according to the metadata in the audio) of the Dolby E program to extract from the specified track. One program extracted per audio selector. To select multiple programs, create multiple selectors with the same Track and different Program numbers. \u201cAll channels\u201d means to ignore the program IDs and include all the channels in this selector; useful if metadata is known to be incorrect."
+      }
+    },
+    "DolbyVision81Settings": {
+      "base": "Dolby Vision81 Settings",
+      "refs": {
+        "H265ColorSpaceSettings$DolbyVision81Settings": null
       }
     },
     "DvbNitSettings": {
@@ -768,6 +882,30 @@
       "base": "DVB Time and Date Table (SDT)",
       "refs": {
         "M2tsSettings$DvbTdtSettings": "Inserts DVB Time and Date Table (TDT) at the specified table repetition interval."
+      }
+    },
+    "Eac3AtmosCodingMode": {
+      "base": "Eac3 Atmos Coding Mode",
+      "refs": {
+        "Eac3AtmosSettings$CodingMode": "Dolby Digital Plus with Dolby Atmos coding mode. Determines number of channels."
+      }
+    },
+    "Eac3AtmosDrcLine": {
+      "base": "Eac3 Atmos Drc Line",
+      "refs": {
+        "Eac3AtmosSettings$DrcLine": "Sets the Dolby dynamic range compression profile."
+      }
+    },
+    "Eac3AtmosDrcRf": {
+      "base": "Eac3 Atmos Drc Rf",
+      "refs": {
+        "Eac3AtmosSettings$DrcRf": "Sets the profile for heavy Dolby dynamic range compression, ensures that the instantaneous signal peaks do not exceed specified levels."
+      }
+    },
+    "Eac3AtmosSettings": {
+      "base": "Eac3 Atmos Settings",
+      "refs": {
+        "AudioCodecSettings$Eac3AtmosSettings": null
       }
     },
     "Eac3AttenuationControl": {
@@ -921,6 +1059,18 @@
         "UpdateChannel$EncoderSettings": "The encoder settings for this channel."
       }
     },
+    "EpochLockingSettings": {
+      "base": "Epoch Locking Settings",
+      "refs": {
+        "OutputLockingSettings$EpochLockingSettings": null
+      }
+    },
+    "Esam": {
+      "base": "Esam",
+      "refs": {
+        "AvailSettings$Esam": null
+      }
+    },
     "FailoverCondition": {
       "base": "Failover Condition settings. There can be multiple failover conditions inside AutomaticInputFailoverSettings.",
       "refs": {
@@ -943,6 +1093,12 @@
       "base": "Feature Activations Input Prepare Schedule Actions",
       "refs": {
         "FeatureActivations$InputPrepareScheduleActions": "Enables the Input Prepare feature. You can create Input Prepare actions in the schedule only if this feature is enabled.\nIf you disable the feature on an existing schedule, make sure that you first delete all input prepare actions from the schedule."
+      }
+    },
+    "FeatureActivationsOutputStaticImageOverlayScheduleActions": {
+      "base": "Feature Activations Output Static Image Overlay Schedule Actions",
+      "refs": {
+        "FeatureActivations$OutputStaticImageOverlayScheduleActions": "Enables the output static image overlay feature. Enabling this feature allows you to send channel schedule updates\nto display/clear/modify image overlays on an output-by-output bases."
       }
     },
     "FecOutputIncludeFec": {
@@ -1039,7 +1195,7 @@
     "FrameCaptureS3LogUploads": {
       "base": "Frame Capture S3 Log Uploads",
       "refs": {
-        "FrameCaptureS3Settings$LogUploads": "When set to enabled, each upload to CDN or server will be logged."
+        "FrameCaptureS3Settings$LogUploads": "This field is unused and deprecated."
       }
     },
     "FrameCaptureS3Settings": {
@@ -1495,7 +1651,13 @@
     "HlsProgramDateTime": {
       "base": "Hls Program Date Time",
       "refs": {
-        "HlsGroupSettings$ProgramDateTime": "Includes or excludes EXT-X-PROGRAM-DATE-TIME tag in .m3u8 manifest files. The value is calculated as follows: either the program date and time are initialized using the input timecode source, or the time is initialized using the input timecode source and the date is initialized using the timestampOffset."
+        "HlsGroupSettings$ProgramDateTime": "Includes or excludes EXT-X-PROGRAM-DATE-TIME tag in .m3u8 manifest files. The value is calculated using the program date time clock."
+      }
+    },
+    "HlsProgramDateTimeClock": {
+      "base": "Hls Program Date Time Clock",
+      "refs": {
+        "HlsGroupSettings$ProgramDateTimeClock": "Specifies the algorithm used to drive the HLS EXT-X-PROGRAM-DATE-TIME clock. Options include:\n\nINITIALIZE_FROM_OUTPUT_TIMECODE: The PDT clock is initialized as a function of the first output timecode, then incremented by the EXTINF duration of each encoded segment.\n\nSYSTEM_CLOCK: The PDT clock is initialized as a function of the UTC wall clock, then incremented by the EXTINF duration of each encoded segment. If the PDT clock diverges from the wall clock by more than 500ms, it is resynchronized to the wall clock."
       }
     },
     "HlsRedundantManifest": {
@@ -1507,7 +1669,7 @@
     "HlsS3LogUploads": {
       "base": "Hls S3 Log Uploads",
       "refs": {
-        "HlsS3Settings$LogUploads": "When set to enabled, each fragment upload to CDN or server will be logged."
+        "HlsS3Settings$LogUploads": "This field is unused and deprecated."
       }
     },
     "HlsS3Settings": {
@@ -1588,6 +1750,12 @@
         "ScheduleActionStartSettings$ImmediateModeScheduleActionStartSettings": "Option for specifying an action that should be applied immediately."
       }
     },
+    "IncludeFillerNalUnits": {
+      "base": "Include Filler Nal Units",
+      "refs": {
+        "RtmpGroupSettings$IncludeFillerNalUnits": "Applies only when the rate control mode (in the codec settings) is CBR (constant bit rate). Controls whether the RTMP output stream is padded (with FILL NAL units) in order to achieve a constant bit rate that is truly constant. When there is no padding, the bandwidth varies (up to the bitrate value in the codec settings). We recommend that you choose Auto."
+      }
+    },
     "Input": {
       "base": null,
       "refs": {
@@ -1612,7 +1780,7 @@
     "InputClass": {
       "base": "A standard input has two sources and a single pipeline input only has one.",
       "refs": {
-        "Input$InputClass": "STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second source will always be ignored, even if the first source fails.\nSINGLE_PIPELINE - You can connect only one source to this input. If the ChannelClass is also  SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD, this value is not valid because the channel requires two sources in the input.\n"
+        "Input$InputClass": "STANDARD - MediaLive expects two sources to be connected to this input. If the channel is also STANDARD, both sources will be ingested. If the channel is SINGLE_PIPELINE, only the first source will be ingested; the second source will always be ignored, even if the first source fails.\nSINGLE_PIPELINE - You can connect only one source to this input. If the ChannelClass is also  SINGLE_PIPELINE, this value is valid. If the ChannelClass is STANDARD, this value is not valid because the channel requires two sources in the input."
       }
     },
     "InputClippingSettings": {
@@ -1670,6 +1838,13 @@
         "InputDeviceUhdSettings$ActiveInput": "If you specified Auto as the configured input, specifies which of the sources is currently active (SDI or HDMI)."
       }
     },
+    "InputDeviceCodec": {
+      "base": "The codec to use on the video that the device produces.",
+      "refs": {
+        "InputDeviceConfigurableSettings$Codec": "Choose the codec for the video that the device produces. Only UHD devices can specify this parameter.",
+        "InputDeviceUhdSettings$Codec": "The codec for the video that the device produces."
+      }
+    },
     "InputDeviceConfigurableSettings": {
       "base": "Configurable settings for the input device.",
       "refs": {
@@ -1710,11 +1885,30 @@
         "InputDeviceNetworkSettings$IpScheme": "Specifies whether the input device has been configured (outside of MediaLive) to use a dynamic IP address assignment (DHCP) or a static IP address."
       }
     },
+    "InputDeviceMediaConnectConfigurableSettings": {
+      "base": "Parameters required to attach a MediaConnect flow to the device.",
+      "refs": {
+        "InputDeviceConfigurableSettings$MediaconnectSettings": "To attach this device to a MediaConnect flow, specify these parameters. To detach an existing flow, enter {} for the value of mediaconnectSettings. Only UHD devices can specify this parameter."
+      }
+    },
+    "InputDeviceMediaConnectSettings": {
+      "base": "Information about the MediaConnect flow attached to the device.",
+      "refs": {
+        "InputDeviceUhdSettings$MediaconnectSettings": "Information about the MediaConnect flow attached to the device. Returned only if the outputType is MEDIACONNECT_FLOW."
+      }
+    },
     "InputDeviceNetworkSettings": {
       "base": "The network settings for the input device.",
       "refs": {
         "InputDevice$NetworkSettings": "The network settings for the input device.",
         "InputDeviceSummary$NetworkSettings": "Network settings for the input device."
+      }
+    },
+    "InputDeviceOutputType": {
+      "base": "The output attachment type of the input device.",
+      "refs": {
+        "InputDevice$OutputType": "The output attachment type of the input device. Specifies MEDIACONNECT_FLOW if this device is the source for a MediaConnect flow. Specifies MEDIALIVE_INPUT if this device is the source for a MediaLive input.",
+        "InputDeviceSummary$OutputType": "The output attachment type of the input device. Specifies MEDIACONNECT_FLOW if this device is the source for a MediaConnect flow. Specifies MEDIALIVE_INPUT if this device is the source for a MediaLive input."
       }
     },
     "InputDeviceRequest": {
@@ -1786,6 +1980,7 @@
         "DvbSubDestinationSettings$Font": "External font file used for caption burn-in. File extension must be 'ttf' or 'tte'.  Although the user can select output fonts for many different types of input captions, embedded, STL and teletext sources use a strict grid system. Using external fonts with these caption sources could cause unexpected display of proportional fonts.  All burn-in and DVB-Sub font settings must match.",
         "InputLossBehavior$InputLossImageSlate": "When input loss image type is \"slate\" these fields specify the parameters for accessing the slate.",
         "StaticImageActivateScheduleActionSettings$Image": "The location and filename of the image file to overlay on the video. The file must be a 32-bit BMP, PNG, or TGA file, and must not be larger (in pixels) than the input video.",
+        "StaticImageOutputActivateScheduleActionSettings$Image": "The location and filename of the image file to overlay on the video. The file must be a 32-bit BMP, PNG, or TGA file, and must not be larger (in pixels) than the input video.",
         "StaticKeySettings$KeyProviderServer": "The URL of the license server used for protecting content."
       }
     },
@@ -1838,7 +2033,7 @@
       }
     },
     "InputPreference": {
-      "base": "Input preference when deciding which input to make active when a previously failed input has recovered.\nIf \\\"EQUAL_INPUT_PREFERENCE\\\", then the active input will stay active as long as it is healthy.\nIf \\\"PRIMARY_INPUT_PREFERRED\\\", then always switch back to the primary input when it is healthy.\n",
+      "base": "Input preference when deciding which input to make active when a previously failed input has recovered.\nIf \\\"EQUAL_INPUT_PREFERENCE\\\", then the active input will stay active as long as it is healthy.\nIf \\\"PRIMARY_INPUT_PREFERRED\\\", then always switch back to the primary input when it is healthy.",
       "refs": {
         "AutomaticInputFailoverSettings$InputPreference": "Input preference when deciding which input to make active when a previously failed input has recovered."
       }
@@ -1850,7 +2045,7 @@
       }
     },
     "InputResolution": {
-      "base": "Input resolution based on lines of vertical resolution in the input; SD is less than 720 lines, HD is 720 to 1080 lines, UHD is greater than 1080 lines\n",
+      "base": "Input resolution based on lines of vertical resolution in the input; SD is less than 720 lines, HD is 720 to 1080 lines, UHD is greater than 1080 lines",
       "refs": {
         "InputSpecification$Resolution": "Input resolution, categorized coarsely"
       }
@@ -1899,9 +2094,9 @@
       }
     },
     "InputSourceType": {
-      "base": "There are two types of input sources, static and dynamic. If an input source is dynamic you can\nchange the source url of the input dynamically using an input switch action. However, the only input type\nto support a dynamic url at this time is MP4_FILE. By default all input sources are static.\n",
+      "base": "There are two types of input sources, static and dynamic. If an input source is dynamic you can\nchange the source url of the input dynamically using an input switch action. Currently, two input types\nsupport a dynamic url at this time, MP4_FILE and TS_FILE. By default all input sources are static.",
       "refs": {
-        "Input$InputSourceType": "Certain pull input sources can be dynamic, meaning that they can have their URL's dynamically changes\nduring input switch actions. Presently, this functionality only works with MP4_FILE inputs.\n"
+        "Input$InputSourceType": "Certain pull input sources can be dynamic, meaning that they can have their URL's dynamically changes\nduring input switch actions. Presently, this functionality only works with MP4_FILE and TS_FILE inputs."
       }
     },
     "InputSpecification": {
@@ -1932,14 +2127,14 @@
       }
     },
     "InputType": {
-      "base": null,
+      "base": "The different types of inputs that AWS Elemental MediaLive supports.",
       "refs": {
         "CreateInput$Type": null,
         "Input$Type": null
       }
     },
     "InputVpcRequest": {
-      "base": "Settings for a private VPC Input.\nWhen this property is specified, the input destination addresses will be created in a VPC rather than with public Internet addresses.\nThis property requires setting the roleArn property on Input creation.\nNot compatible with the inputSecurityGroups property.\n",
+      "base": "Settings for a private VPC Input.\nWhen this property is specified, the input destination addresses will be created in a VPC rather than with public Internet addresses.\nThis property requires setting the roleArn property on Input creation.\nNot compatible with the inputSecurityGroups property.",
       "refs": {
         "CreateInput$Vpc": null
       }
@@ -2163,6 +2358,12 @@
         "M2tsSettings$TimedMetadataBehavior": "When set to passthrough, timed metadata will be passed through from input to output."
       }
     },
+    "M3u8KlvBehavior": {
+      "base": "M3u8 Klv Behavior",
+      "refs": {
+        "M3u8Settings$KlvBehavior": "If set to passthrough, passes any KLV data from the input source to this output."
+      }
+    },
     "M3u8NielsenId3Behavior": {
       "base": "M3u8 Nielsen Id3 Behavior",
       "refs": {
@@ -2191,6 +2392,33 @@
       "base": "M3u8 Timed Metadata Behavior",
       "refs": {
         "M3u8Settings$TimedMetadataBehavior": "When set to passthrough, timed metadata is passed through from input to output."
+      }
+    },
+    "MaintenanceCreateSettings": {
+      "base": null,
+      "refs": {
+        "CreateChannel$Maintenance": "Maintenance settings for this channel."
+      }
+    },
+    "MaintenanceDay": {
+      "base": "The currently selected maintenance day.",
+      "refs": {
+        "MaintenanceCreateSettings$MaintenanceDay": "Choose one day of the week for maintenance. The chosen day is used for all future maintenance windows.",
+        "MaintenanceStatus$MaintenanceDay": "The currently selected maintenance day.",
+        "MaintenanceUpdateSettings$MaintenanceDay": "Choose one day of the week for maintenance. The chosen day is used for all future maintenance windows."
+      }
+    },
+    "MaintenanceStatus": {
+      "base": null,
+      "refs": {
+        "Channel$Maintenance": "Maintenance settings for this channel.",
+        "ChannelSummary$Maintenance": "Maintenance settings for this channel."
+      }
+    },
+    "MaintenanceUpdateSettings": {
+      "base": null,
+      "refs": {
+        "UpdateChannel$Maintenance": "Maintenance settings for this channel."
       }
     },
     "MediaConnectFlow": {
@@ -2475,16 +2703,52 @@
         "InputSettings$NetworkInputSettings": "Input settings."
       }
     },
+    "NielsenCBET": {
+      "base": "Nielsen CBET",
+      "refs": {
+        "NielsenWatermarksSettings$NielsenCbetSettings": "Complete these fields only if you want to insert watermarks of type Nielsen CBET"
+      }
+    },
     "NielsenConfiguration": {
       "base": "Nielsen Configuration",
       "refs": {
         "EncoderSettings$NielsenConfiguration": "Nielsen configuration settings."
       }
     },
+    "NielsenNaesIiNw": {
+      "base": "Nielsen Naes Ii Nw",
+      "refs": {
+        "NielsenWatermarksSettings$NielsenNaesIiNwSettings": "Complete these fields only if you want to insert watermarks of type Nielsen NAES II (N2) and Nielsen NAES VI (NW)."
+      }
+    },
     "NielsenPcmToId3TaggingState": {
       "base": "State of Nielsen PCM to ID3 tagging",
       "refs": {
         "NielsenConfiguration$NielsenPcmToId3Tagging": "Enables Nielsen PCM to ID3 tagging"
+      }
+    },
+    "NielsenWatermarkTimezones": {
+      "base": "Nielsen Watermark Timezones",
+      "refs": {
+        "NielsenNaesIiNw$Timezone": "Choose the timezone for the time stamps in the watermark. If not provided,\nthe timestamps will be in Coordinated Universal Time (UTC)"
+      }
+    },
+    "NielsenWatermarksCbetStepaside": {
+      "base": "Nielsen Watermarks Cbet Stepaside",
+      "refs": {
+        "NielsenCBET$CbetStepaside": "Determines the method of CBET insertion mode when prior encoding is detected on the same layer."
+      }
+    },
+    "NielsenWatermarksDistributionTypes": {
+      "base": "Nielsen Watermarks Distribution Types",
+      "refs": {
+        "NielsenWatermarksSettings$NielsenDistributionType": "Choose the distribution types that you want to assign to the watermarks:\n- PROGRAM_CONTENT\n- FINAL_DISTRIBUTOR"
+      }
+    },
+    "NielsenWatermarksSettings": {
+      "base": "Nielsen Watermarks Settings",
+      "refs": {
+        "AudioWatermarkSettings$NielsenWatermarksSettings": "Settings to configure Nielsen Watermarks in the audio encode"
       }
     },
     "NotFoundException": {
@@ -2552,7 +2816,14 @@
         "MsSmoothGroupSettings$Destination": "Smooth Streaming publish point on an IIS server. Elemental Live acts as a \"Push\" encoder to IIS.",
         "MultiplexOutputSettings$Destination": "Destination is a Multiplex.",
         "RtmpOutputSettings$Destination": "The RTMP endpoint excluding the stream name (eg. rtmp://host/appname). For connection to Akamai, a username and password must be supplied. URI fields accept format identifiers.",
-        "UdpOutputSettings$Destination": "Destination address and port number for RTP or UDP packets. Can be unicast or multicast RTP or UDP (eg. rtp://239.10.10.10:5001 or udp://10.100.100.100:5002)."
+        "UdpOutputSettings$Destination": "Destination address and port number for RTP or UDP packets. Can be unicast or multicast RTP or UDP (eg. rtp://239.10.10.10:5001 or udp://10.100.100.100:5002).",
+        "CmafIngestGroupSettings$Destination": "A HTTP destination for the tracks"
+      }
+    },
+    "OutputLockingSettings": {
+      "base": "Output Locking Settings",
+      "refs": {
+        "GlobalConfiguration$OutputLockingSettings": "Advanced output locking settings"
       }
     },
     "OutputSettings": {
@@ -2585,6 +2856,12 @@
         "PipelinePauseStateSettings$PipelineId": "Pipeline ID to pause (\"PIPELINE_0\" or \"PIPELINE_1\")."
       }
     },
+    "PipelineLockingSettings": {
+      "base": "Pipeline Locking Settings",
+      "refs": {
+        "OutputLockingSettings$PipelineLockingSettings": null
+      }
+    },
     "PipelinePauseStateSettings": {
       "base": "Settings for pausing a pipeline.",
       "refs": {
@@ -2592,7 +2869,7 @@
       }
     },
     "PreferredChannelPipeline": {
-      "base": "Indicates which pipeline is preferred by the multiplex for program ingest.\nIf set to \\\"PIPELINE_0\\\" or \\\"PIPELINE_1\\\" and an unhealthy ingest causes the multiplex to switch to the non-preferred pipeline,\nit will switch back once that ingest is healthy again. If set to \\\"CURRENTLY_ACTIVE\\\",\nit will not switch back to the other pipeline based on it recovering to a healthy state,\nit will only switch if the active pipeline becomes unhealthy.\n",
+      "base": "Indicates which pipeline is preferred by the multiplex for program ingest.\nIf set to \\\"PIPELINE_0\\\" or \\\"PIPELINE_1\\\" and an unhealthy ingest causes the multiplex to switch to the non-preferred pipeline,\nit will switch back once that ingest is healthy again. If set to \\\"CURRENTLY_ACTIVE\\\",\nit will not switch back to the other pipeline based on it recovering to a healthy state,\nit will only switch if the active pipeline becomes unhealthy.",
       "refs": {
         "MultiplexProgramSettings$PreferredChannelPipeline": "Indicates which pipeline is preferred by the multiplex for program ingest."
       }
@@ -2611,6 +2888,17 @@
       "base": "Raw Settings",
       "refs": {
         "ArchiveContainerSettings$RawSettings": null
+      }
+    },
+    "RebootInputDevice": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "RebootInputDeviceForce": {
+      "base": "Whether or not to force reboot the input device.",
+      "refs": {
+        "RebootInputDevice$Force": "Force a reboot of an input device. If the device is streaming, it will stop streaming and begin rebooting within a few seconds of sending the command. If the device was streaming prior to the reboot, the device will resume streaming when the reboot completes."
       }
     },
     "Rec601Settings": {
@@ -2633,12 +2921,26 @@
         "AudioDescription$RemixSettings": "Settings that control how input audio channels are remixed into the output audio channels."
       }
     },
+    "RenewalSettings": {
+      "base": "The Renewal settings for Reservations",
+      "refs": {
+        "PurchaseOffering$RenewalSettings": "Renewal settings for the reservation",
+        "Reservation$RenewalSettings": "Renewal settings for the reservation",
+        "UpdateReservation$RenewalSettings": "Renewal settings for the reservation"
+      }
+    },
     "Reservation": {
       "base": "Reserved resources available to use",
       "refs": {
         "PurchaseOfferingResultModel$Reservation": null,
         "UpdateReservationResultModel$Reservation": null,
         "__listOfReservation$member": null
+      }
+    },
+    "ReservationAutomaticRenewal": {
+      "base": "Automatic Renewal Status for Reservation",
+      "refs": {
+        "RenewalSettings$AutomaticRenewal": "Automatic renewal status for the reservation"
       }
     },
     "ReservationCodec": {
@@ -2660,7 +2962,7 @@
       }
     },
     "ReservationResolution": {
-      "base": "Resolution based on lines of vertical resolution; SD is less than 720 lines, HD is 720 to 1080 lines, FHD is 1080 lines, UHD is greater than 1080 lines\n",
+      "base": "Resolution based on lines of vertical resolution; SD is less than 720 lines, HD is 720 to 1080 lines, FHD is 1080 lines, UHD is greater than 1080 lines",
       "refs": {
         "ReservationResourceSpecification$Resolution": "Resolution, e.g. 'HD'"
       }
@@ -2862,6 +3164,18 @@
         "Scte35DeliveryRestrictions$DeviceRestrictions": "Corresponds to SCTE-35 device_restrictions parameter."
       }
     },
+    "Scte35InputMode": {
+      "base": "Whether the SCTE-35 input should be the active input or a fixed input.",
+      "refs": {
+        "Scte35InputScheduleActionSettings$Mode": "Whether the SCTE-35 input should be the active input or a fixed input."
+      }
+    },
+    "Scte35InputScheduleActionSettings": {
+      "base": "Scte35Input Schedule Action Settings",
+      "refs": {
+        "ScheduleActionSettings$Scte35InputSettings": "Action to specify scte35 input"
+      }
+    },
     "Scte35NoRegionalBlackoutFlag": {
       "base": "Corresponds to the no_regional_blackout_flag parameter. A value of REGIONAL_BLACKOUT corresponds to 0 (false) in the SCTE-35 specification. If you include one of the \"restriction\" flags then you must include all four of them.",
       "refs": {
@@ -2887,7 +3201,7 @@
       }
     },
     "Scte35SpliceInsert": {
-      "base": "Scte35 Splice Insert",
+      "base": "Typical configuration that applies breaks on splice inserts in addition to time signal placement opportunities, breaks, and advertisements.",
       "refs": {
         "AvailSettings$Scte35SpliceInsert": null
       }
@@ -2911,7 +3225,7 @@
       }
     },
     "Scte35TimeSignalApos": {
-      "base": "Scte35 Time Signal Apos",
+      "base": "Atypical configuration that applies segment breaks only on SCTE-35 time signal placement opportunities and breaks.",
       "refs": {
         "AvailSettings$Scte35TimeSignalApos": null
       }
@@ -3012,6 +3326,18 @@
         "ScheduleActionSettings$StaticImageDeactivateSettings": "Action to deactivate a static image overlay"
       }
     },
+    "StaticImageOutputActivateScheduleActionSettings": {
+      "base": "Settings for the action to activate a static image.",
+      "refs": {
+        "ScheduleActionSettings$StaticImageOutputActivateSettings": "Action to activate a static image overlay in one or more specified outputs"
+      }
+    },
+    "StaticImageOutputDeactivateScheduleActionSettings": {
+      "base": "Settings for the action to deactivate the image in a specific layer.",
+      "refs": {
+        "ScheduleActionSettings$StaticImageOutputDeactivateSettings": "Action to deactivate a static image overlay in one or more specified outputs"
+      }
+    },
     "StaticKeySettings": {
       "base": "Static Key Settings",
       "refs": {
@@ -3034,6 +3360,8 @@
         "CreateMultiplex$Tags": "A collection of key-value pairs.",
         "CreatePartnerInput$Tags": "A collection of key-value pairs.",
         "Input$Tags": "A collection of key-value pairs.",
+        "InputDevice$Tags": "A collection of key-value pairs.",
+        "InputDeviceSummary$Tags": "A collection of key-value pairs.",
         "InputSecurityGroup$Tags": "A collection of key-value pairs.",
         "InputSecurityGroupWhitelistRequest$Tags": "A collection of key-value pairs.",
         "Multiplex$Tags": "A collection of key-value pairs.",
@@ -3080,9 +3408,65 @@
         "TemporalFilterSettings$Strength": "Choose a filter strength. We recommend a strength of 1 or 2. A higher strength might take out good information, resulting in an image that is overly soft."
       }
     },
+    "Thumbnail": {
+      "base": "Details of a single thumbnail",
+      "refs": {
+        "__listOfThumbnail$member": null
+      }
+    },
+    "ThumbnailConfiguration": {
+      "base": "Thumbnail Configuration",
+      "refs": {
+        "EncoderSettings$ThumbnailConfiguration": "Thumbnail configuration settings."
+      }
+    },
     "ThumbnailData": {
       "base": "The binary data for the thumbnail that the Link device has most recently sent to MediaLive.",
       "refs": {
+      }
+    },
+    "ThumbnailDetail": {
+      "base": "Thumbnail details for one pipeline of a running channel.",
+      "refs": {
+        "__listOfThumbnailDetail$member": null
+      }
+    },
+    "ThumbnailNoData": {
+      "base": "Response when thumbnail has no data. It should have no message.",
+      "refs": {
+      }
+    },
+    "ThumbnailState": {
+      "base": "Thumbnail State",
+      "refs": {
+        "ThumbnailConfiguration$State": "Enables the thumbnail feature. The feature generates thumbnails of the incoming video in each pipeline in the channel. AUTO turns the feature on, DISABLE turns the feature off."
+      }
+    },
+    "ThumbnailType": {
+      "base": "Thumbnail type.",
+      "refs": {
+        "Thumbnail$ThumbnailType": "Thumbnail Type"
+      }
+    },
+    "TimecodeBurninFontSize": {
+      "base": "Timecode Burnin Font Size",
+      "refs": {
+        "TimecodeBurninSettings$FontSize": "Choose a timecode burn-in font size"
+      }
+    },
+    "TimecodeBurninPosition": {
+      "base": "Timecode Burnin Position",
+      "refs": {
+        "TimecodeBurninSettings$Position": "Choose a timecode burn-in output position"
+      }
+    },
+    "TimecodeBurninSettings": {
+      "base": "Timecode Burnin Settings",
+      "refs": {
+        "FrameCaptureSettings$TimecodeBurninSettings": "Timecode burn-in settings",
+        "H264Settings$TimecodeBurninSettings": "Timecode burn-in settings",
+        "H265Settings$TimecodeBurninSettings": "Timecode burn-in settings",
+        "Mpeg2Settings$TimecodeBurninSettings": "Timecode burn-in settings"
       }
     },
     "TimecodeConfig": {
@@ -3122,7 +3506,7 @@
     "TtmlDestinationStyleControl": {
       "base": "Ttml Destination Style Control",
       "refs": {
-        "TtmlDestinationSettings$StyleControl": "When set to passthrough, passes through style and position information from a TTML-like input source (TTML, SMPTE-TT, CFF-TT) to the CFF-TT output or TTML output."
+        "TtmlDestinationSettings$StyleControl": "This field is not currently supported and will not affect the output styling. Leave the default value."
       }
     },
     "UdpContainerSettings": {
@@ -3151,6 +3535,16 @@
     },
     "UnprocessableEntityException": {
       "base": null,
+      "refs": {
+      }
+    },
+    "UpdateAccountConfigurationRequestModel": {
+      "base": "The desired new account configuration.",
+      "refs": {
+      }
+    },
+    "UpdateAccountConfigurationResultModel": {
+      "base": "The account's updated configuration.",
       "refs": {
       }
     },
@@ -3298,16 +3692,16 @@
       }
     },
     "VpcOutputSettings": {
-      "base": "The properties for a private VPC Output\nWhen this property is specified, the output egress addresses will be created in a user specified VPC\n",
+      "base": "The properties for a private VPC Output\nWhen this property is specified, the output egress addresses will be created in a user specified VPC",
       "refs": {
-        "CreateChannel$Vpc": "Settings for VPC output"
+        "CreateChannel$Vpc": "Settings for the VPC outputs"
       }
     },
     "VpcOutputSettingsDescription": {
-      "base": "The properties for a private VPC Output\n",
+      "base": "The properties for a private VPC Output",
       "refs": {
         "Channel$Vpc": "Settings for VPC output",
-        "ChannelSummary$Vpc": "Settings for VPC output"
+        "ChannelSummary$Vpc": "Settings for any VPC outputs."
       }
     },
     "WavCodingMode": {
@@ -3337,6 +3731,13 @@
     "__boolean": {
       "base": null,
       "refs": {
+        "CreateSignalMapResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed.",
+        "GetSignalMapResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed.",
+        "StartDeleteMonitorDeploymentResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed.",
+        "StartMonitorDeploymentRequestContent$DryRun": null,
+        "StartMonitorDeploymentResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed.",
+        "StartUpdateSignalMapRequestContent$ForceRediscovery": "If true, will force a rediscovery of a signal map if an unchanged discoveryEntryPointArn is provided.",
+        "StartUpdateSignalMapResponseContent$MonitorChangesPendingDeployment": "If true, there are pending monitor changes for this signal map that can be deployed."
       }
     },
     "__double": {
@@ -3345,6 +3746,9 @@
         "AacSettings$Bitrate": "Average bitrate in bits/second. Valid values depend on rate control mode and profile.",
         "AacSettings$SampleRate": "Sample rate in Hz. Valid values depend on rate control mode and profile.",
         "Ac3Settings$Bitrate": "Average bitrate in bits/second. Valid bitrates depend on the coding mode.",
+        "Eac3AtmosSettings$Bitrate": "Average bitrate in bits/second. Valid bitrates depend on the coding mode.\n//  * @affectsRightSizing true",
+        "Eac3AtmosSettings$HeightTrim": "Height dimensional trim. Sets the maximum amount to attenuate the height channels when the downstream player isn??t configured to handle Dolby Digital Plus with Dolby Atmos and must remix the channels.",
+        "Eac3AtmosSettings$SurroundTrim": "Surround dimensional trim. Sets the maximum amount to attenuate the surround channels when the downstream player isn't configured to handle Dolby Digital Plus with Dolby Atmos and must remix the channels.",
         "Eac3Settings$Bitrate": "Average bitrate in bits/second. Valid bitrates depend on the coding mode.",
         "Eac3Settings$LoRoCenterMixLevel": "Left only/Right only center mix level. Only used for 3/2 coding mode.",
         "Eac3Settings$LoRoSurroundMixLevel": "Left only/Right only surround mix level. Only used for 3/2 coding mode.",
@@ -3362,7 +3766,13 @@
         "Reservation$FixedPrice": "One-time charge for each reserved resource, e.g. '0.0' for a NO_UPFRONT offering",
         "Reservation$UsagePrice": "Recurring usage charge for each reserved resource, e.g. '157.0'",
         "WavSettings$BitDepth": "Bits per sample.",
-        "WavSettings$SampleRate": "Sample rate in Hz."
+        "WavSettings$SampleRate": "Sample rate in Hz.",
+        "CloudWatchAlarmTemplateSummary$Threshold": "The threshold value to compare with the specified statistic.",
+        "CreateCloudWatchAlarmTemplateRequestContent$Threshold": "The threshold value to compare with the specified statistic.",
+        "CreateCloudWatchAlarmTemplateResponseContent$Threshold": "The threshold value to compare with the specified statistic.",
+        "GetCloudWatchAlarmTemplateResponseContent$Threshold": "The threshold value to compare with the specified statistic.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$Threshold": "The threshold value to compare with the specified statistic.",
+        "UpdateCloudWatchAlarmTemplateResponseContent$Threshold": "The threshold value to compare with the specified statistic."
       }
     },
     "__doubleMin0": {
@@ -3387,10 +3797,40 @@
         "CaptionRectangle$Width": "See the description in leftOffset.\nFor width, specify the entire width of the rectangle as a percentage of the underlying frame width. For example, \\\"80\\\" means the rectangle width is 80% of the underlying frame width. The leftOffset and rectangleWidth must add up to 100% or less.\nThis field corresponds to tts:extent - X in the TTML standard."
       }
     },
+    "__doubleMin0Max5000": {
+      "base": null,
+      "refs": {
+        "M2tsSettings$Scte35PrerollPullupMilliseconds": "Defines the amount SCTE-35 preroll will be increased (in milliseconds) on the output. Preroll is the amount of time between the presence of a SCTE-35 indication in a transport stream and the PTS of the video frame it references. Zero means don't add pullup (it doesn't mean set the preroll to zero). Negative pullup is not supported, which means that you can't make the preroll shorter. Be aware that latency in the output will increase by the pullup amount."
+      }
+    },
     "__doubleMin1": {
       "base": null,
       "refs": {
         "M2tsSettings$SegmentationTime": "The length in seconds of each segment. Required unless markers is set to _none_."
+      }
+    },
+    "__doubleMin1Max65535": {
+      "base": null,
+      "refs": {
+        "NielsenNaesIiNw$Sid": "Enter the Nielsen Source ID (SID) to include in the watermark"
+      }
+    },
+    "__doubleMin250Max5000": {
+      "base": null,
+      "refs": {
+        "AbWatermarkingCustomProfile$EmbeddingFrequency": "The frequency with which watermarks will be embedded, in milliseconds."
+      }
+    },
+    "__doubleMin32Max46": {
+      "base": null,
+      "refs": {
+        "AbWatermarkingCustomProfile$TargetPsnr": "The target PSNR of the watermarked frame"
+      }
+    },
+    "__doubleMinNegative1Max5": {
+      "base": null,
+      "refs": {
+        "AbWatermarkingCustomProfile$SceneCut": "The number of frames after scene-cut to embed the watermark"
       }
     },
     "__doubleMinNegative59Max0": {
@@ -3408,11 +3848,14 @@
         "ChannelSummary$PipelinesRunningCount": "The number of currently healthy pipelines.",
         "DvbSubDestinationSettings$ShadowXOffset": "Specifies the horizontal offset of the shadow relative to the captions in pixels. A value of -2 would result in a shadow offset 2 pixels to the left.  All burn-in and DVB-Sub font settings must match.",
         "DvbSubDestinationSettings$ShadowYOffset": "Specifies the vertical offset of the shadow relative to the captions in pixels. A value of -2 would result in a shadow offset 2 pixels above the text.  All burn-in and DVB-Sub font settings must match.",
+        "InputDeviceConfigurableSettings$LatencyMs": "The Link device's buffer size (latency) in milliseconds (ms).",
         "InputDeviceConfigurableSettings$MaxBitrate": "The maximum bitrate in bits per second. Set a value here to throttle the bitrate of the source video.",
         "InputDeviceHdSettings$Height": "The height of the video source, in pixels.",
+        "InputDeviceHdSettings$LatencyMs": "The Link device's buffer size (latency) in milliseconds (ms). You can specify this value.",
         "InputDeviceHdSettings$MaxBitrate": "The current maximum bitrate for ingesting this source, in bits per second. You can specify this maximum.",
         "InputDeviceHdSettings$Width": "The width of the video source, in pixels.",
         "InputDeviceUhdSettings$Height": "The height of the video source, in pixels.",
+        "InputDeviceUhdSettings$LatencyMs": "The Link device's buffer size (latency) in milliseconds (ms). You can specify this value.",
         "InputDeviceUhdSettings$MaxBitrate": "The current maximum bitrate for ingesting this source, in bits per second. You can specify this maximum.",
         "InputDeviceUhdSettings$Width": "The width of the video source, in pixels.",
         "Multiplex$PipelinesRunningCount": "The number of currently healthy pipelines.",
@@ -3433,7 +3876,11 @@
         "Reservation$Duration": "Lease duration, e.g. '12'",
         "VideoDescription$Height": "Output video height, in pixels. Must be an even number. For most codecs, you can leave this field and width blank in order to use the height and width (resolution) from the source. Note, however, that leaving blank is not recommended. For the Frame Capture codec, height and width are required.",
         "VideoDescription$Width": "Output video width, in pixels. Must be an even number. For most codecs, you can leave this field and height blank in order to use the height and width (resolution) from the source. Note, however, that leaving blank is not recommended. For the Frame Capture codec, height and width are required.",
-        "__listOf__integer$member": null
+        "__listOf__integer$member": null,
+        "InputDeviceConfigurableAudioChannelPairConfig$Id": "The ID for one audio pair configuration, a value from 1 to 8.",
+        "InputDeviceUhdAudioChannelPairConfig$Id": "The ID for one audio pair configuration, a value from 1 to 8.",
+        "CloudWatchAlarmTemplateGroupSummary$TemplateCount": "The number of templates in a group.",
+        "EventBridgeRuleTemplateGroupSummary$TemplateCount": "The number of templates in a group."
       }
     },
     "__integerMin0": {
@@ -3447,10 +3894,10 @@
         "H264Settings$GopClosedCadence": "Frequency of closed GOPs. In streaming applications, it is recommended that this be set to 1 so a decoder joining mid-stream will receive an IDR frame as quickly as possible. Setting this value to 0 will break output segmenting.",
         "H265Settings$GopClosedCadence": "Frequency of closed GOPs. In streaming applications, it is recommended that this be set to 1 so a decoder joining mid-stream will receive an IDR frame as quickly as possible. Setting this value to 0 will break output segmenting.",
         "HlsAkamaiSettings$ConnectionRetryInterval": "Number of seconds to wait before retrying connection to the CDN if the connection is lost.",
-        "HlsAkamaiSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state.",
+        "HlsAkamaiSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state. Applies only if the CDN destination URI begins with \"s3\" or \"mediastore\". For other URIs, the value is always 3.",
         "HlsBasicPutSettings$ConnectionRetryInterval": "Number of seconds to wait before retrying connection to the CDN if the connection is lost.",
-        "HlsBasicPutSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state.",
-        "HlsGroupSettings$MinSegmentLength": "When set, minimumSegmentLength is enforced by looking ahead and back within the specified range for a nearby avail and extending the segment size if needed.",
+        "HlsBasicPutSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state. Applies only if the CDN destination URI begins with \"s3\" or \"mediastore\". For other URIs, the value is always 3.",
+        "HlsGroupSettings$MinSegmentLength": "Minimum length of MPEG-2 Transport Stream segments in seconds. When set, minimum segment length is enforced by looking ahead and back within the specified range for a nearby avail and extending the segment size if needed.",
         "HlsGroupSettings$TimedMetadataId3Period": "Timed Metadata interval in seconds.",
         "HlsGroupSettings$TimestampDeltaMilliseconds": "Provides an extra millisecond delta offset to fine tune the timestamps.",
         "HlsInputSettings$Bandwidth": "When specified the HLS stream with the m3u8 BANDWIDTH that most closely matches this value will be chosen, otherwise the highest bandwidth stream in the m3u8 will be chosen.  The bitrate is specified in bits per second, as in an HLS manifest.",
@@ -3458,9 +3905,9 @@
         "HlsInputSettings$Retries": "The number of consecutive times that attempts to read a manifest or segment must fail before the input is considered unavailable.",
         "HlsInputSettings$RetryInterval": "The number of seconds between retries when an attempt to read a manifest or segment fails.",
         "HlsMediaStoreSettings$ConnectionRetryInterval": "Number of seconds to wait before retrying connection to the CDN if the connection is lost.",
-        "HlsMediaStoreSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state.",
+        "HlsMediaStoreSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state. Applies only if the CDN destination URI begins with \"s3\" or \"mediastore\". For other URIs, the value is always 3.",
         "HlsWebdavSettings$ConnectionRetryInterval": "Number of seconds to wait before retrying connection to the CDN if the connection is lost.",
-        "HlsWebdavSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state.",
+        "HlsWebdavSettings$NumRetries": "Number of retry attempts that will be made before the Live Event is put into an error state. Applies only if the CDN destination URI begins with \"s3\" or \"mediastore\". For other URIs, the value is always 3.",
         "M2tsSettings$AudioFramesPerPes": "The number of audio frames to insert for each PES packet.",
         "M2tsSettings$Bitrate": "The output bitrate of the transport stream in bits per second. Setting to 0 lets the muxer automatically determine the appropriate bitrate.",
         "M3u8Settings$AudioFramesPerPes": "The number of audio frames to insert for each PES packet.",
@@ -3477,6 +3924,12 @@
         "StaticImageActivateScheduleActionSettings$ImageX": "Placement of the left edge of the overlay relative to the left edge of the video frame, in pixels. 0 (the default) is the left edge of the frame. If the placement causes the overlay to extend beyond the right edge of the underlying video, then the overlay is cropped on the right.",
         "StaticImageActivateScheduleActionSettings$ImageY": "Placement of the top edge of the overlay relative to the top edge of the video frame, in pixels. 0 (the default) is the top edge of the frame. If the placement causes the overlay to extend beyond the bottom edge of the underlying video, then the overlay is cropped on the bottom.",
         "StaticImageDeactivateScheduleActionSettings$FadeOut": "The time in milliseconds for the image to fade out. Default is 0 (no fade-out).",
+        "StaticImageOutputActivateScheduleActionSettings$Duration": "The duration in milliseconds for the image to remain on the video. If omitted or set to 0 the duration is unlimited and the image will remain until it is explicitly deactivated.",
+        "StaticImageOutputActivateScheduleActionSettings$FadeIn": "The time in milliseconds for the image to fade in. The fade-in starts at the start time of the overlay. Default is 0 (no fade-in).",
+        "StaticImageOutputActivateScheduleActionSettings$FadeOut": "Applies only if a duration is specified. The time in milliseconds for the image to fade out. The fade-out starts when the duration time is hit, so it effectively extends the duration. Default is 0 (no fade-out).",
+        "StaticImageOutputActivateScheduleActionSettings$ImageX": "Placement of the left edge of the overlay relative to the left edge of the video frame, in pixels. 0 (the default) is the left edge of the frame. If the placement causes the overlay to extend beyond the right edge of the underlying video, then the overlay is cropped on the right.",
+        "StaticImageOutputActivateScheduleActionSettings$ImageY": "Placement of the top edge of the overlay relative to the top edge of the video frame, in pixels. 0 (the default) is the top edge of the frame. If the placement causes the overlay to extend beyond the bottom edge of the underlying video, then the overlay is cropped on the bottom.",
+        "StaticImageOutputDeactivateScheduleActionSettings$FadeOut": "The time in milliseconds for the image to fade out. Default is 0 (no fade-out).",
         "UdpGroupSettings$TimedMetadataId3Period": "Timed Metadata interval in seconds."
       }
     },
@@ -3492,6 +3945,7 @@
       "refs": {
         "H264Settings$BufFillPct": "Percentage of the buffer that should initially be filled (HRD buffer model).",
         "StaticImageActivateScheduleActionSettings$Opacity": "Opacity of image where 0 is transparent and 100 is fully opaque. Default is 100.",
+        "StaticImageOutputActivateScheduleActionSettings$Opacity": "Opacity of image where 0 is transparent and 100 is fully opaque. Default is 100.",
         "VideoDescription$Sharpness": "Changes the strength of the anti-alias filter used for scaling. 0 is the softest setting, 100 is the sharpest. A setting of 50 is recommended for most content."
       }
     },
@@ -3539,6 +3993,12 @@
         "HlsMediaStoreSettings$RestartDelay": "If a streaming output fails, number of seconds to wait until a restart is initiated. A value of 0 means never restart.",
         "HlsWebdavSettings$RestartDelay": "If a streaming output fails, number of seconds to wait until a restart is initiated. A value of 0 means never restart.",
         "InputChannelLevel$InputChannel": "The index of the input channel used as a source."
+      }
+    },
+    "__integerMin0Max2000": {
+      "base": null,
+      "refs": {
+        "CmafIngestGroupSettings$SendDelayMs": "Number of milliseconds to delay the output from the second pipeline."
       }
     },
     "__integerMin0Max255": {
@@ -3619,7 +4079,9 @@
         "H264Settings$GopNumBFrames": "Number of B-frames between reference frames.",
         "Mpeg2Settings$GopNumBFrames": "Relates to the GOP structure. The number of B-frames between reference frames. If you do not know what a B-frame is, use the default.",
         "StaticImageActivateScheduleActionSettings$Layer": "The number of the layer, 0 to 7. There are 8 layers that can be overlaid on the video, each layer with a different image. The layers are in Z order, which means that overlays with higher values of layer are inserted on top of overlays with lower values of layer. Default is 0.",
-        "StaticImageDeactivateScheduleActionSettings$Layer": "The image overlay layer to deactivate, 0 to 7. Default is 0."
+        "StaticImageDeactivateScheduleActionSettings$Layer": "The image overlay layer to deactivate, 0 to 7. Default is 0.",
+        "StaticImageOutputActivateScheduleActionSettings$Layer": "The number of the layer, 0 to 7. There are 8 layers that can be overlaid on the video, each layer with a different image. The layers are in Z order, which means that overlays with higher values of layer are inserted on top of overlays with lower values of layer. Default is 0.",
+        "StaticImageOutputDeactivateScheduleActionSettings$Layer": "The image overlay layer to deactivate, 0 to 7. Default is 0."
       }
     },
     "__integerMin0Max8191": {
@@ -3644,16 +4106,32 @@
         "H265Settings$ParDenominator": "Pixel Aspect Ratio denominator.",
         "H265Settings$ParNumerator": "Pixel Aspect Ratio numerator.",
         "HlsGroupSettings$KeepSegments": "Applies only if Mode field is LIVE.\n\nSpecifies the number of media segments to retain in the destination directory. This number should be bigger than indexNSegments (Num segments). We recommend (value = (2 x indexNsegments) + 1).\n\nIf this \"keep segments\" number is too low, the following might happen: the player is still reading a media manifest file that lists this segment, but that segment has been removed from the destination directory (as directed by indexNSegments). This situation would result in a 404 HTTP error on the player.",
-        "HlsGroupSettings$SegmentLength": "Length of MPEG-2 Transport Stream segments to create (in seconds). Note that segments will end on the next keyframe after this number of seconds, so actual segment length may be longer.",
+        "HlsGroupSettings$SegmentLength": "Length of MPEG-2 Transport Stream segments to create in seconds. Note that segments will end on the next keyframe after this duration, so actual segment length may be longer.",
         "HlsGroupSettings$SegmentsPerSubdirectory": "Number of segments to write to a subdirectory before starting a new one. directoryStructure must be subdirectoryPerStream for this setting to have an effect.",
         "Mpeg2Settings$FramerateDenominator": "description\": \"The framerate denominator. For example, 1001. The framerate is the numerator divided by the denominator. For example, 24000 / 1001 = 23.976 FPS.",
         "Mpeg2Settings$FramerateNumerator": "The framerate numerator. For example, 24000. The framerate is the numerator divided by the denominator. For example, 24000 / 1001 = 23.976 FPS.",
         "MsSmoothGroupSettings$FragmentLength": "Length of mp4 fragments to generate (in seconds). Fragment length must be compatible with GOP size and framerate.",
         "PurchaseOffering$Count": "Number of resources",
+        "RenewalSettings$RenewalCount": "Count for the reservation renewal",
         "RtmpOutputSettings$ConnectionRetryInterval": "Number of seconds to wait before retrying a connection to the Flash Media server if the connection is lost.",
         "Scte27SourceSettings$Pid": "The pid field is used in conjunction with the caption selector languageCode field as follows:\n  - Specify PID and Language: Extracts captions from that PID; the language is \"informational\".\n  - Specify PID and omit Language: Extracts the specified PID.\n  - Omit PID and specify Language: Extracts the specified language, whichever PID that happens to be.\n  - Omit PID and omit Language: Valid only if source is DVB-Sub that is being passed through; all languages will be passed through.",
         "StaticImageActivateScheduleActionSettings$Height": "The height of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified height. Leave blank to use the native height of the overlay.",
-        "StaticImageActivateScheduleActionSettings$Width": "The width of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified width. Leave blank to use the native width of the overlay."
+        "StaticImageActivateScheduleActionSettings$Width": "The width of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified width. Leave blank to use the native width of the overlay.",
+        "StaticImageOutputActivateScheduleActionSettings$Height": "The height of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified height. Leave blank to use the native height of the overlay.",
+        "StaticImageOutputActivateScheduleActionSettings$Width": "The width of the image when inserted into the video, in pixels. The overlay will be scaled up or down to the specified width. Leave blank to use the native width of the overlay.",
+        "CmafIngestGroupSettings$SegmentLength": "The nominal duration of segments. The units are specified in SegmentLengthUnits. The segments will end on the next keyframe after the specified duration, so the actual segment length might be longer, and it might be a fraction of the units.",
+        "CloudWatchAlarmTemplateSummary$DatapointsToAlarm": "The number of datapoints within the evaluation period that must be breaching to trigger the alarm.",
+        "CloudWatchAlarmTemplateSummary$EvaluationPeriods": "The number of periods over which data is compared to the specified threshold.",
+        "CreateCloudWatchAlarmTemplateRequestContent$DatapointsToAlarm": "The number of datapoints within the evaluation period that must be breaching to trigger the alarm.",
+        "CreateCloudWatchAlarmTemplateRequestContent$EvaluationPeriods": "The number of periods over which data is compared to the specified threshold.",
+        "CreateCloudWatchAlarmTemplateResponseContent$DatapointsToAlarm": "The number of datapoints within the evaluation period that must be breaching to trigger the alarm.",
+        "CreateCloudWatchAlarmTemplateResponseContent$EvaluationPeriods": "The number of periods over which data is compared to the specified threshold.",
+        "GetCloudWatchAlarmTemplateResponseContent$DatapointsToAlarm": "The number of datapoints within the evaluation period that must be breaching to trigger the alarm.",
+        "GetCloudWatchAlarmTemplateResponseContent$EvaluationPeriods": "The number of periods over which data is compared to the specified threshold.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$DatapointsToAlarm": "The number of datapoints within the evaluation period that must be breaching to trigger the alarm.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$EvaluationPeriods": "The number of periods over which data is compared to the specified threshold.",
+        "UpdateCloudWatchAlarmTemplateResponseContent$DatapointsToAlarm": "The number of datapoints within the evaluation period that must be breaching to trigger the alarm.",
+        "UpdateCloudWatchAlarmTemplateResponseContent$EvaluationPeriods": "The number of periods over which data is compared to the specified threshold."
       }
     },
     "__integerMin100": {
@@ -3741,6 +4219,7 @@
       "base": null,
       "refs": {
         "Ac3Settings$Dialnorm": "Sets the dialnorm for the output. If excluded and input audio is Dolby Digital, dialnorm will be passed through.",
+        "Eac3AtmosSettings$Dialnorm": "Sets the dialnorm for the output. Default 23.",
         "Eac3Settings$Dialnorm": "Sets the dialnorm for the output. If blank and input audio is Dolby Digital Plus, dialnorm will be passed through."
       }
     },
@@ -3808,6 +4287,12 @@
         "RtmpGroupSettings$CacheLength": "Cache length, in seconds, is used to calculate buffer size."
       }
     },
+    "__integerMin32Max8191": {
+      "base": null,
+      "refs": {
+        "InputSettings$Scte35Pid": "PID from which to read SCTE-35 messages. If left undefined, EML will select the first SCTE-35 PID found in the input."
+      }
+    },
     "__integerMin4Max20": {
       "base": null,
       "refs": {
@@ -3830,6 +4315,7 @@
     "__integerMinNegative1000Max1000": {
       "base": null,
       "refs": {
+        "Esam$AdAvailOffset": "When specified, this offset (in milliseconds) is added to the input Ad Avail PTS time. This only applies to embedded SCTE 104/35 messages and does not apply to OOB messages.",
         "Scte35SpliceInsert$AdAvailOffset": "When specified, this offset (in milliseconds) is added to the input Ad Avail PTS time. This only applies to embedded SCTE 104/35 messages and does not apply to OOB messages.",
         "Scte35TimeSignalApos$AdAvailOffset": "When specified, this offset (in milliseconds) is added to the input Ad Avail PTS time. This only applies to embedded SCTE 104/35 messages and does not apply to OOB messages."
       }
@@ -3923,6 +4409,12 @@
         "ListChannelsResultModel$Channels": null
       }
     },
+    "__listOfColorCorrection": {
+      "base": null,
+      "refs": {
+        "ColorCorrectionSettings$GlobalColorCorrections": "An array of colorCorrections that applies when you are using 3D LUT files to perform color conversion on video. Each colorCorrection contains one 3D LUT file (that defines the color mapping for converting an input color space to an output color space), and the input/output combination that this 3D LUT file applies to. MediaLive reads the color space in the input metadata, determines the color space that you have specified for the output, and finds and uses the LUT file that applies to this combination."
+      }
+    },
     "__listOfFailoverCondition": {
       "base": null,
       "refs": {
@@ -4003,8 +4495,8 @@
     "__listOfInputSourceRequest": {
       "base": null,
       "refs": {
-        "CreateInput$Sources": "The source URLs for a PULL-type input. Every PULL type input needs\nexactly two source URLs for redundancy.\nOnly specify sources for PULL type Inputs. Leave Destinations empty.\n",
-        "UpdateInput$Sources": "The source URLs for a PULL-type input. Every PULL type input needs\nexactly two source URLs for redundancy.\nOnly specify sources for PULL type Inputs. Leave Destinations empty.\n"
+        "CreateInput$Sources": "The source URLs for a PULL-type input. Every PULL type input needs\nexactly two source URLs for redundancy.\nOnly specify sources for PULL type Inputs. Leave Destinations empty.",
+        "UpdateInput$Sources": "The source URLs for a PULL-type input. Every PULL type input needs\nexactly two source URLs for redundancy.\nOnly specify sources for PULL type Inputs. Leave Destinations empty."
       }
     },
     "__listOfInputWhitelistRule": {
@@ -4028,8 +4520,8 @@
     "__listOfMediaConnectFlowRequest": {
       "base": null,
       "refs": {
-        "CreateInput$MediaConnectFlows": "A list of the MediaConnect Flows that you want to use in this input. You can specify as few as one\nFlow and presently, as many as two. The only requirement is when you have more than one is that each Flow is in a\nseparate Availability Zone as this ensures your EML input is redundant to AZ issues.\n",
-        "UpdateInput$MediaConnectFlows": "A list of the MediaConnect Flow ARNs that you want to use as the source of the input. You can specify as few as one\nFlow and presently, as many as two. The only requirement is when you have more than one is that each Flow is in a\nseparate Availability Zone as this ensures your EML input is redundant to AZ issues.\n"
+        "CreateInput$MediaConnectFlows": "A list of the MediaConnect Flows that you want to use in this input. You can specify as few as one\nFlow and presently, as many as two. The only requirement is when you have more than one is that each Flow is in a\nseparate Availability Zone as this ensures your EML input is redundant to AZ issues.",
+        "UpdateInput$MediaConnectFlows": "A list of the MediaConnect Flow ARNs that you want to use as the source of the input. You can specify as few as one\nFlow and presently, as many as two. The only requirement is when you have more than one is that each Flow is in a\nseparate Availability Zone as this ensures your EML input is redundant to AZ issues."
       }
     },
     "__listOfMediaPackageOutputDestinationSettings": {
@@ -4077,8 +4569,8 @@
     "__listOfOutputDestination": {
       "base": null,
       "refs": {
-        "Channel$Destinations": "A list of destinations of the channel. For UDP outputs, there is one\ndestination per output. For other types (HLS, for example), there is\none destination per packager.\n",
-        "ChannelSummary$Destinations": "A list of destinations of the channel. For UDP outputs, there is one\ndestination per output. For other types (HLS, for example), there is\none destination per packager.\n",
+        "Channel$Destinations": "A list of destinations of the channel. For UDP outputs, there is one\ndestination per output. For other types (HLS, for example), there is\none destination per packager.",
+        "ChannelSummary$Destinations": "A list of destinations of the channel. For UDP outputs, there is one\ndestination per output. For other types (HLS, for example), there is\none destination per packager.",
         "CreateChannel$Destinations": null,
         "UpdateChannel$Destinations": "A list of output destinations for this channel.",
         "UpdateChannelClass$Destinations": "A list of output destinations for this channel."
@@ -4135,6 +4627,18 @@
         "Scte35TimeSignalScheduleActionSettings$Scte35Descriptors": "The list of SCTE-35 descriptors accompanying the SCTE-35 time_signal."
       }
     },
+    "__listOfThumbnail": {
+      "base": null,
+      "refs": {
+        "ThumbnailDetail$Thumbnails": "thumbnails of a single pipeline"
+      }
+    },
+    "__listOfThumbnailDetail": {
+      "base": null,
+      "refs": {
+        "DescribeThumbnailsResultModel$ThumbnailDetails": null
+      }
+    },
     "__listOfTransferringInputDeviceSummary": {
       "base": null,
       "refs": {
@@ -4181,24 +4685,29 @@
         "Input$AttachedChannels": "A list of channel IDs that that input is attached to (currently an input can only be attached to one channel).",
         "Input$InputPartnerIds": "A list of IDs for all Inputs which are partners of this one.",
         "Input$SecurityGroups": "A list of IDs for all the Input Security Groups attached to the input.",
+        "InputDevice$MedialiveInputArns": "An array of the ARNs for the MediaLive inputs attached to the device. Returned only if the outputType is MEDIALIVE_INPUT.",
+        "InputDeviceAttachmentConfiguration$Inputs": "The ARN of each input attached to the device. Only present when state is ATTACHED_EML_INPUT",
         "InputDeviceNetworkSettings$DnsAddresses": "The DNS addresses of the input device.",
+        "InputDeviceSummary$MedialiveInputArns": "An array of the ARNs for the MediaLive inputs attached to the device. Returned only if the outputType is MEDIALIVE_INPUT.",
         "InputPrepareScheduleActionSettings$UrlPath": "The value for the variable portion of the URL for the dynamic input, for this instance of the input. Each time you use the same dynamic input in an input switch action, you can provide a different value, in order to connect the input to a different content source.",
         "InputSecurityGroup$Inputs": "The list of inputs currently using this Input Security Group.",
         "InputSwitchScheduleActionSettings$UrlPath": "The value for the variable portion of the URL for the dynamic input, for this instance of the input. Each time you use the same dynamic input in an input switch action, you can provide a different value, in order to connect the input to a different content source.",
-        "InputVpcRequest$SecurityGroupIds": "A list of up to 5 EC2 VPC security group IDs to attach to the Input VPC network interfaces.\nRequires subnetIds. If none are specified then the VPC default security group will be used.\n",
-        "InputVpcRequest$SubnetIds": "A list of 2 VPC subnet IDs from the same VPC.\nSubnet IDs must be mapped to two unique availability zones (AZ).\n",
+        "InputVpcRequest$SecurityGroupIds": "A list of up to 5 EC2 VPC security group IDs to attach to the Input VPC network interfaces.\nRequires subnetIds. If none are specified then the VPC default security group will be used.",
+        "InputVpcRequest$SubnetIds": "A list of 2 VPC subnet IDs from the same VPC.\nSubnet IDs must be mapped to two unique availability zones (AZ).",
         "Multiplex$AvailabilityZones": "A list of availability zones for the multiplex.",
         "MultiplexSummary$AvailabilityZones": "A list of availability zones for the multiplex.",
         "Output$AudioDescriptionNames": "The names of the AudioDescriptions used as audio sources for this output.",
         "Output$CaptionDescriptionNames": "The names of the CaptionDescriptions used as caption sources for this output.",
+        "StaticImageOutputActivateScheduleActionSettings$OutputNames": "The name(s) of the output(s) the activation should apply to.",
+        "StaticImageOutputDeactivateScheduleActionSettings$OutputNames": "The name(s) of the output(s) the deactivation should apply to.",
         "UpdateInput$InputSecurityGroups": "A list of security groups referenced by IDs to attach to the input.",
-        "VpcOutputSettings$PublicAddressAllocationIds": "List of public address allocation ids to associate with ENIs that will be created in Output VPC.\nMust specify one for SINGLE_PIPELINE, two for STANDARD channels\n",
-        "VpcOutputSettings$SecurityGroupIds": "A list of up to 5 EC2 VPC security group IDs to attach to the Output VPC network interfaces.\nIf none are specified then the VPC default security group will be used\n",
-        "VpcOutputSettings$SubnetIds": "A list of VPC subnet IDs from the same VPC.\nIf STANDARD channel, subnet IDs must be mapped to two unique availability zones (AZ).\n",
-        "VpcOutputSettingsDescription$AvailabilityZones": "The Availability Zones where the vpc subnets are located.\nThe first Availability Zone applies to the first subnet in the list of subnets.\nThe second Availability Zone applies to the second subnet.\n",
-        "VpcOutputSettingsDescription$NetworkInterfaceIds": "A list of Elastic Network Interfaces created by MediaLive in the customer's VPC\n",
-        "VpcOutputSettingsDescription$SecurityGroupIds": "A list of up EC2 VPC security group IDs attached to the Output VPC network interfaces.\n",
-        "VpcOutputSettingsDescription$SubnetIds": "A list of VPC subnet IDs from the same VPC.\nIf STANDARD channel, subnet IDs must be mapped to two unique availability zones (AZ).\n"
+        "VpcOutputSettings$PublicAddressAllocationIds": "List of public address allocation ids to associate with ENIs that will be created in Output VPC.\nMust specify one for SINGLE_PIPELINE, two for STANDARD channels",
+        "VpcOutputSettings$SecurityGroupIds": "A list of up to 5 EC2 VPC security group IDs to attach to the Output VPC network interfaces.\nIf none are specified then the VPC default security group will be used",
+        "VpcOutputSettings$SubnetIds": "A list of VPC subnet IDs from the same VPC.\nIf STANDARD channel, subnet IDs must be mapped to two unique availability zones (AZ).",
+        "VpcOutputSettingsDescription$AvailabilityZones": "The Availability Zones where the vpc subnets are located.\nThe first Availability Zone applies to the first subnet in the list of subnets.\nThe second Availability Zone applies to the second subnet.",
+        "VpcOutputSettingsDescription$NetworkInterfaceIds": "A list of Elastic Network Interfaces created by MediaLive in the customer's VPC",
+        "VpcOutputSettingsDescription$SecurityGroupIds": "A list of up EC2 VPC security group IDs attached to the Output VPC network interfaces.",
+        "VpcOutputSettingsDescription$SubnetIds": "A list of VPC subnet IDs from the same VPC.\nIf STANDARD channel, subnet IDs must be mapped to two unique availability zones (AZ)."
       }
     },
     "__longMin0Max1099511627775": {
@@ -4231,10 +4740,10 @@
       "base": null,
       "refs": {
         "AccessDenied$Message": null,
+        "AccountConfiguration$KmsKeyId": "Specifies the KMS key to use for all features that use key encryption. Specify the ARN of a KMS key that you have created. Or leave blank to use the key that MediaLive creates and manages for you.",
         "ArchiveOutputSettings$Extension": "Output file extension. If excluded, this will be auto-selected from the container type.",
         "ArchiveOutputSettings$NameModifier": "String concatenated to the end of the destination filename.  Required for multiple outputs of the same type.",
         "AudioDescription$AudioSelectorName": "The name of the AudioSelector used as the source for this AudioDescription.",
-        "AudioDescription$Name": "The name of this AudioDescription. Outputs will use this name to uniquely identify this AudioDescription.  Description names should be unique within this Live Event.",
         "AudioDescription$StreamName": "Used for MS Smooth and Apple HLS outputs. Indicates the name displayed by the player (eg. English, or Director Commentary).",
         "AudioLanguageSelection$LanguageCode": "Selects a specific three-letter language code from within an audio source.",
         "AudioOnlyHlsSettings$AudioGroupId": "Specifies the group to which the audio Rendition belongs.",
@@ -4256,28 +4765,36 @@
         "CaptionSelector$LanguageCode": "When specified this field indicates the three letter language code of the caption track to extract from the source.",
         "Channel$Arn": "The unique arn of the channel.",
         "Channel$Id": "The unique id of the channel.",
+        "Channel$MaintenanceStatus": "The time in milliseconds by when the PVRE restart must occur.",
         "Channel$Name": "The name of the channel. (user-mutable)",
         "Channel$RoleArn": "The Amazon Resource Name (ARN) of the role assumed when running the Channel.",
         "ChannelConfigurationValidationError$Message": null,
         "ChannelEgressEndpoint$SourceIp": "Public IP of where a channel's output comes from",
         "ChannelSummary$Arn": "The unique arn of the channel.",
         "ChannelSummary$Id": "The unique id of the channel.",
+        "ChannelSummary$MaintenanceStatus": "The time in milliseconds when the PVRE maintenance must occur by.",
         "ChannelSummary$Name": "The name of the channel. (user-mutable)",
         "ChannelSummary$RoleArn": "The Amazon Resource Name (ARN) of the role assumed when running the Channel.",
+        "ClaimDeviceRequest$Id": "The id of the device you want to claim.",
+        "ColorCorrection$Uri": "The URI of the 3D LUT file. The protocol must be 's3:' or 's3ssl:':.",
         "CreateChannel$Name": "Name of channel.",
-        "CreateChannel$RequestId": "Unique request ID to be specified. This is needed to prevent retries from\ncreating multiple resources.\n",
+        "CreateChannel$RequestId": "Unique request ID to be specified. This is needed to prevent retries from\ncreating multiple resources.",
         "CreateChannel$Reserved": "Deprecated field that's only usable by whitelisted customers.",
         "CreateChannel$RoleArn": "An optional Amazon Resource Name (ARN) of the role to assume when running the Channel.",
         "CreateInput$Name": "Name of the input.",
-        "CreateInput$RequestId": "Unique identifier of the request to ensure the request is handled\nexactly once in case of retries.\n",
+        "CreateInput$RequestId": "Unique identifier of the request to ensure the request is handled\nexactly once in case of retries.",
         "CreateInput$RoleArn": "The Amazon Resource Name (ARN) of the role this input assumes during and after creation.",
         "CreateMultiplex$Name": "Name of multiplex.",
-        "CreateMultiplex$RequestId": "Unique request ID. This prevents retries from creating multiple\nresources.\n",
+        "CreateMultiplex$RequestId": "Unique request ID. This prevents retries from creating multiple\nresources.",
         "CreateMultiplexProgram$ProgramName": "Name of multiplex program.",
-        "CreateMultiplexProgram$RequestId": "Unique request ID. This prevents retries from creating multiple\nresources.\n",
-        "CreatePartnerInput$RequestId": "Unique identifier of the request to ensure the request is handled\nexactly once in case of retries.\n",
+        "CreateMultiplexProgram$RequestId": "Unique request ID. This prevents retries from creating multiple\nresources.",
+        "CreatePartnerInput$RequestId": "Unique identifier of the request to ensure the request is handled\nexactly once in case of retries.",
         "DvbSubDestinationSettings$FontSize": "When set to auto fontSize will scale depending on the size of the output.  Giving a positive integer will specify the exact font size in points.  All burn-in and DVB-Sub font settings must match.",
         "EbuTtDDestinationSettings$FontFamily": "Specifies the font family to include in the font data attached to the EBU-TT captions. Valid only if styleControl is set to include. If you leave this field empty, the font family is set to \"monospaced\". (If styleControl is set to exclude, the font family is always set to \"monospaced\".)\n\nYou specify only the font family. All other style information (color, bold, position and so on) is copied from the input captions. The size is always set to 100% to allow the downstream player to choose the size.\n\n- Enter a list of font families, as a comma-separated list of font names, in order of preference. The name can be a font family (such as \u201cArial\u201d), or a generic font family (such as \u201cserif\u201d), or \u201cdefault\u201d (to let the downstream player choose the font).\n- Leave blank to set the family to \u201cmonospace\u201d.",
+        "EpochLockingSettings$CustomEpoch": "Optional. Enter a value here to use a custom epoch, instead of the standard epoch (which started at 1970-01-01T00:00:00 UTC). Specify the start time of the custom epoch, in YYYY-MM-DDTHH:MM:SS in UTC. The time must be 2000-01-01T00:00:00 or later. Always set the MM:SS portion to 00:00.",
+        "EpochLockingSettings$JamSyncTime": "Optional. Enter a time for the jam sync. The default is midnight UTC. When epoch locking is enabled, MediaLive performs a daily jam sync on every output encode to ensure timecodes don\u2019t diverge from the wall clock. The jam sync applies only to encodes with frame rate of 29.97 or 59.94 FPS. To override, enter a time in HH:MM:SS in UTC. Always set the MM:SS portion to 00:00.",
+        "Esam$PasswordParam": "Reference to an AWS parameter store name from which the password can be retrieved if credentials are required to access the POIS endpoint.  AWS Parameter store format: \"ssm://<parameter name>\"",
+        "Esam$Username": "Username if credentials are required to access the POIS endpoint.  This can be either a plaintext username, or a reference to an AWS parameter store name from which the username can be retrieved.  AWS Parameter store format: \"ssm://<parameter name>\"",
         "FixedModeScheduleActionStartSettings$Time": "Start time for the action to start in the channel. (Not the time for the action to be added to the schedule: actions are always added to the schedule immediately.) UTC format: yyyy-mm-ddThh:mm:ss.nnnZ. All the letters are digits (for example, mm might be 01) except for the two constants \"T\" for time and \"Z\" for \"UTC format\".",
         "Fmp4HlsSettings$AudioRenditionSets": "List all the audio groups that are used with the video output stream. Input all the audio GROUP-IDs that are associated to the video, separate by ','.",
         "FollowModeScheduleActionStartSettings$ReferenceActionName": "The action name of another action that this one refers to.",
@@ -4291,6 +4808,7 @@
         "HlsGroupSettings$BaseUrlManifest1": "Optional. One value per output group.\n\nComplete this field only if you are completing Base URL manifest A, and the downstream system has notified you that the child manifest files for pipeline 1 of all outputs are in a location different from the child manifest files for pipeline 0.",
         "HlsGroupSettings$KeyFormat": "The value specifies how the key is represented in the resource identified by the URI.  If parameter is absent, an implicit value of \"identity\" is used.  A reverse DNS string can also be given.",
         "HlsGroupSettings$KeyFormatVersions": "Either a single positive integer version value or a slash delimited list of version values (1/2/3).",
+        "HlsId3SegmentTaggingScheduleActionSettings$Id3": "Base64 string formatted according to the ID3 specification: http://id3.org/id3v2.4.0-structure",
         "HlsId3SegmentTaggingScheduleActionSettings$Tag": "ID3 tag to insert into each segment. Supports special keyword identifiers to substitute in segment-related values.\\nSupported keyword identifiers: https://docs.aws.amazon.com/medialive/latest/ug/variable-data-identifiers.html",
         "HlsOutputSettings$SegmentModifier": "String concatenated to end of segment filenames.",
         "HlsTimedMetadataScheduleActionSettings$Id3": "Base64 string formatted according to the ID3 specification: http://id3.org/id3v2.4.0-structure",
@@ -4300,39 +4818,62 @@
         "Input$RoleArn": "The Amazon Resource Name (ARN) of the role this input assumes during and after creation.",
         "InputAttachment$InputAttachmentName": "User-specified name for the attachment. This is required if the user wants to use this input in an input switch action.",
         "InputAttachment$InputId": "The ID of the input",
-        "InputDestination$Ip": "The system-generated static IP address of endpoint.\nIt remains fixed for the lifetime of the input.\n",
+        "InputDestination$Ip": "The system-generated static IP address of endpoint.\nIt remains fixed for the lifetime of the input.",
         "InputDestination$Port": "The port number for the input.",
-        "InputDestination$Url": "This represents the endpoint that the customer stream will be\npushed to.\n",
-        "InputDestinationRequest$StreamName": "A unique name for the location the RTMP stream is being pushed\nto.\n",
-        "InputDestinationVpc$AvailabilityZone": "The availability zone of the Input destination.\n",
-        "InputDestinationVpc$NetworkInterfaceId": "The network interface ID of the Input destination in the VPC.\n",
+        "InputDestination$Url": "This represents the endpoint that the customer stream will be\npushed to.",
+        "InputDestinationRequest$StreamName": "A unique name for the location the RTMP stream is being pushed\nto.",
+        "InputDestinationVpc$AvailabilityZone": "The availability zone of the Input destination.",
+        "InputDestinationVpc$NetworkInterfaceId": "The network interface ID of the Input destination in the VPC.",
         "InputDevice$Arn": "The unique ARN of the input device.",
+        "InputDevice$AvailabilityZone": "The Availability Zone associated with this input device.",
         "InputDevice$Id": "The unique ID of the input device.",
         "InputDevice$MacAddress": "The network MAC address of the input device.",
         "InputDevice$Name": "A name that you specify for the input device.",
         "InputDevice$SerialNumber": "The unique serial number of the input device.",
+        "InputDeviceConfigurableFlowSettings$FlowArn": "The unique ARN of the flow.",
+        "InputDeviceConfigurableFlowSettings$RoleArn": "The ARN of the role used to access EMX and Secrets Manager on behalf of the customer.",
+        "InputDeviceConfigurableFlowSettings$SecretArn": "The ARN of the secret used to encrypt the stream.",
+        "InputDeviceConfigurableFlowSettings$SourceName": "The name of the flow source to stream to.",
+        "InputDeviceConfigurableSettings$InputResolution": "Choose the resolution of the Link device's source (HD or UHD). Make sure the resolution matches the current source from the device. This value determines MediaLive resource allocation and billing for this input. Only UHD devices can specify this parameter.",
         "InputDeviceConfigurationValidationError$Message": "The error message.",
+        "InputDeviceFlowSettings$EncryptedSecret": "The secret used to encrypt the stream.",
+        "InputDeviceFlowSettings$EndpointUri": "The endpoint to stream to.",
+        "InputDeviceFlowSettings$FlowArn": "The unique ARN of the flow.",
+        "InputDeviceFlowSettings$RoleArn": "The ARN of the role used to access EMX and Secrets Manager on behalf of the customer.",
+        "InputDeviceFlowSettings$SecretArn": "The ARN of the secret used to encrypt the stream.",
+        "InputDeviceFlowSettings$SourceName": "The name of the flow source to stream to.",
+        "InputDeviceFlowSettings$StreamId": "The id of the stream.",
+        "InputDeviceMediaConnectConfigurableSettings$FlowArn": "The ARN of the MediaConnect flow to attach this device to.",
+        "InputDeviceMediaConnectConfigurableSettings$RoleArn": "The ARN for the role that MediaLive assumes to access the attached flow and secret. For more information about how to create this role, see the MediaLive user guide.",
+        "InputDeviceMediaConnectConfigurableSettings$SecretArn": "The ARN for the secret that holds the encryption key to encrypt the content output by the device.",
+        "InputDeviceMediaConnectConfigurableSettings$SourceName": "The name of the MediaConnect Flow source to stream to.",
+        "InputDeviceMediaConnectSettings$FlowArn": "The ARN of the MediaConnect flow.",
+        "InputDeviceMediaConnectSettings$RoleArn": "The ARN for the role that MediaLive assumes to access the attached flow and secret.",
+        "InputDeviceMediaConnectSettings$SecretArn": "The ARN of the secret used to encrypt the stream.",
+        "InputDeviceMediaConnectSettings$SourceName": "The name of the MediaConnect flow source.",
         "InputDeviceNetworkSettings$Gateway": "The network gateway IP address.",
         "InputDeviceNetworkSettings$IpAddress": "The IP address of the input device.",
         "InputDeviceNetworkSettings$SubnetMask": "The subnet mask of the input device.",
         "InputDeviceRequest$Id": "The unique ID for the device.",
+        "InputDeviceSettings$AvailabilityZone": "The currently assigned availability zone of the input device.",
         "InputDeviceSettings$Id": "The unique ID for the device.",
         "InputDeviceSummary$Arn": "The unique ARN of the input device.",
+        "InputDeviceSummary$AvailabilityZone": "The Availability Zone associated with this input device.",
         "InputDeviceSummary$Id": "The unique ID of the input device.",
         "InputDeviceSummary$MacAddress": "The network MAC address of the input device.",
         "InputDeviceSummary$Name": "A name that you specify for the input device.",
         "InputDeviceSummary$SerialNumber": "The unique serial number of the input device.",
+        "InputDeviceUhdSettings$InputResolution": "The resolution of the Link device's source (HD or UHD). This value determines MediaLive resource allocation and billing for this input.",
         "InputLocation$PasswordParam": "key used to extract the password from EC2 Parameter store",
-        "InputLocation$Uri": "Uniform Resource Identifier - This should be a path to a file accessible to the Live system (eg. a http:// URI) depending on the output type. For example, a RTMP destination should have a uri simliar to: \"rtmp://fmsserver/live\".",
         "InputLocation$Username": "Username if credentials are required to access a file or publishing point.  This can be either a plaintext username, or a reference to an AWS parameter store name from which the username can be retrieved.  AWS Parameter store format: \"ssm://<parameter name>\"",
         "InputPrepareScheduleActionSettings$InputAttachmentNameReference": "The name of the input attachment that should be prepared by this action. If no name is provided, the action will stop the most recent prepare (if any) when activated.",
         "InputSecurityGroup$Arn": "Unique ARN of Input Security Group",
         "InputSecurityGroup$Id": "The Id of the Input Security Group",
         "InputSource$PasswordParam": "The key used to extract the password from EC2 Parameter store.",
-        "InputSource$Url": "This represents the customer's source URL where stream is\npulled from.\n",
+        "InputSource$Url": "This represents the customer's source URL where stream is\npulled from.",
         "InputSource$Username": "The username for the input source.",
         "InputSourceRequest$PasswordParam": "The key used to extract the password from EC2 Parameter store.",
-        "InputSourceRequest$Url": "This represents the customer's source URL where stream is\npulled from.\n",
+        "InputSourceRequest$Url": "This represents the customer's source URL where stream is\npulled from.",
         "InputSourceRequest$Username": "The username for the input source.",
         "InputSwitchScheduleActionSettings$InputAttachmentNameReference": "The name of the input attachment (not the name of the input!) to switch to. The name is specified in the channel configuration.",
         "InputWhitelistRule$Cidr": "The IPv4 CIDR that's whitelisted.",
@@ -4365,11 +4906,16 @@
         "M2tsSettings$VideoPid": "Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a decimal or hexadecimal value.  Valid values are 32 (or 0x20)..8182 (or 0x1ff6).",
         "M3u8Settings$AudioPids": "Packet Identifier (PID) of the elementary audio stream(s) in the transport stream. Multiple values are accepted, and can be entered in ranges and/or by comma separation. Can be entered as decimal or hexadecimal values.",
         "M3u8Settings$EcmPid": "This parameter is unused and deprecated.",
+        "M3u8Settings$KlvDataPids": "Packet Identifier (PID) for input source KLV data to this output. Multiple values are accepted, and can be entered in ranges and/or by comma separation. Can be entered as decimal or hexadecimal values.  Each PID specified must be in the range of 32 (or 0x20)..8182 (or 0x1ff6).",
         "M3u8Settings$PcrPid": "Packet Identifier (PID) of the Program Clock Reference (PCR) in the transport stream. When no value is given, the encoder will assign the same value as the Video PID. Can be entered as a decimal or hexadecimal value.",
         "M3u8Settings$PmtPid": "Packet Identifier (PID) for the Program Map Table (PMT) in the transport stream. Can be entered as a decimal or hexadecimal value.",
         "M3u8Settings$Scte35Pid": "Packet Identifier (PID) of the SCTE-35 stream in the transport stream. Can be entered as a decimal or hexadecimal value.",
         "M3u8Settings$TimedMetadataPid": "Packet Identifier (PID) of the timed metadata stream in the transport stream. Can be entered as a decimal or hexadecimal value.  Valid values are 32 (or 0x20)..8182 (or 0x1ff6).",
         "M3u8Settings$VideoPid": "Packet Identifier (PID) of the elementary video stream in the transport stream. Can be entered as a decimal or hexadecimal value.",
+        "MaintenanceStatus$MaintenanceDeadline": "Maintenance is required by the displayed date and time. Date and time is in ISO.",
+        "MaintenanceStatus$MaintenanceScheduledDate": "The currently scheduled maintenance date and time. Date and time is in ISO.",
+        "MaintenanceStatus$MaintenanceStartTime": "The currently selected maintenance start time. Time is in UTC.",
+        "MaintenanceUpdateSettings$MaintenanceScheduledDate": "Choose a specific date for maintenance to occur. The chosen date is used for the next maintenance window only.",
         "MediaConnectFlow$FlowArn": "The unique ARN of the MediaConnect Flow being used as a source.",
         "MediaConnectFlowRequest$FlowArn": "The ARN of the MediaConnect Flow that you want to use as a source.",
         "MotionGraphicsActivateScheduleActionSettings$PasswordParam": "Key used to extract the password from EC2 Parameter store",
@@ -4379,6 +4925,7 @@
         "MsSmoothGroupSettings$EventId": "MS Smooth event ID to be sent to the IIS server.\n\nShould only be specified if eventIdMode is set to useConfigured.",
         "MsSmoothGroupSettings$TimestampOffset": "Timestamp offset for the event.  Only used if timestampOffsetMode is set to useConfiguredOffset.",
         "MsSmoothOutputSettings$NameModifier": "String concatenated to the end of the destination filename.  Required for multiple outputs of the same type.",
+        "MulticastInputSettings$SourceIpAddress": "Optionally, a source ip address to filter by for Source-specific Multicast (SSM)",
         "Multiplex$Arn": "The unique arn of the multiplex.",
         "Multiplex$Id": "The unique id of the multiplex.",
         "Multiplex$Name": "The name of the multiplex.",
@@ -4426,13 +4973,17 @@
         "ResourceNotFound$Message": null,
         "ScheduleAction$ActionName": "The name of the action, must be unique within the schedule. This name provides the main reference to an action once it is added to the schedule. A name is unique if it is no longer in the schedule. The schedule is automatically cleaned up to remove actions with a start time of more than 1 hour ago (approximately) so at that point a name can be reused.",
         "ScheduleDescribeResultModel$NextToken": "The next token; for use in pagination.",
+        "Scte35InputScheduleActionSettings$InputAttachmentNameReference": "In fixed mode, enter the name of the input attachment that you want to use as a SCTE-35 input. (Don't enter the ID of the input.)\"",
         "Scte35SegmentationDescriptor$SegmentationUpid": "Corresponds to SCTE-35 segmentation_upid. Enter a string containing the hexadecimal representation of the characters that make up the SCTE-35 segmentation_upid value. Must contain an even number of hex characters. Do not include spaces between each hex pair. For example, the ASCII \"ADS Information\" becomes hex \"41445320496e666f726d6174696f6e.",
         "StandardHlsSettings$AudioRenditionSets": "List all the audio groups that are used with the video output stream. Input all the audio GROUP-IDs that are associated to the video, separate by ','.",
         "StartTimecode$Timecode": "The timecode for the frame where you want to start the clip. Optional; if not specified, the clip starts at first frame in the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF.",
         "StopTimecode$Timecode": "The timecode for the frame where you want to stop the clip. Optional; if not specified, the clip continues to the end of the file. Enter the timecode as HH:MM:SS:FF or HH:MM:SS;FF.",
         "Tags$member": null,
         "TeletextSourceSettings$PageNumber": "Specifies the teletext page number within the data stream from which to extract captions. Range of 0x100 (256) to 0x8FF (2303). Unused for passthrough. Should be specified as a hexadecimal string with no \"0x\" prefix.",
+        "Thumbnail$Body": "The binary data for the latest thumbnail.",
+        "Thumbnail$ContentType": "The content type for the latest thumbnail.",
         "ThumbnailData$Body": "The binary data for the thumbnail that the Link device has most recently sent to MediaLive.",
+        "ThumbnailDetail$PipelineId": "Pipeline ID",
         "TransferInputDevice$TargetCustomerId": "The AWS account ID (12 digits) for the recipient of the device transfer.",
         "TransferInputDevice$TargetRegion": "The target AWS region to transfer the device.",
         "TransferInputDevice$TransferMessage": "An optional message for the recipient. Maximum 280 characters.",
@@ -4443,24 +4994,49 @@
         "UpdateChannel$RoleArn": "An optional Amazon Resource Name (ARN) of the role to assume when running the Channel. If you do not specify this on an update call but the role was previously set that role will be removed.",
         "UpdateInput$Name": "Name of the input.",
         "UpdateInput$RoleArn": "The Amazon Resource Name (ARN) of the role this input assumes during and after creation.",
+        "UpdateInputDevice$AvailabilityZone": "The Availability Zone you want associated with this input device.",
         "UpdateInputDevice$Name": "The name that you assigned to this input device (not the unique ID).",
         "UpdateMultiplex$Name": "Name of the multiplex.",
         "UpdateReservation$Name": "Name of the reservation",
         "ValidationError$ElementPath": "Path to the source of the error.",
         "ValidationError$ErrorMessage": "The error message.",
         "VideoDescription$Name": "The name of this VideoDescription. Outputs will use this name to uniquely identify this Description.  Description names should be unique within this Live Event.",
-        "__listOf__string$member": null
+        "__listOf__string$member": null,
+        "CmafIngestOutputSettings$NameModifier": "String concatenated to the end of the destination filename.  Required for multiple outputs of the same type.",
+        "BadRequestExceptionResponseContent$Message": "Exception error message.",
+        "ConflictExceptionResponseContent$Message": "Exception error message.",
+        "ForbiddenExceptionResponseContent$Message": "Exception error message.",
+        "InternalServerErrorExceptionResponseContent$Message": "Exception error message.",
+        "NotFoundExceptionResponseContent$Message": "Exception error message.",
+        "TagMap$member": null,
+        "TooManyRequestsExceptionResponseContent$Message": "Exception error message."
       }
     },
     "__stringMax1000": {
       "base": null,
       "refs": {
-        "EbuTtDDestinationSettings$CopyrightHolder": "Applies only if you plan to convert these source captions to EBU-TT-D or TTML in an output. Complete this field if you want to include the name of the copyright holder in the copyright metadata tag in the TTML"
+        "EbuTtDDestinationSettings$CopyrightHolder": "Complete this field if you want to include the name of the copyright holder in the copyright tag in the captions metadata."
+      }
+    },
+    "__stringMax2048": {
+      "base": null,
+      "refs": {
+        "Esam$PoisEndpoint": "The URL of the signal conditioner endpoint on the Placement Opportunity Information System (POIS). MediaLive sends SignalProcessingEvents here when SCTE-35 messages are read.",
+        "InputLocation$Uri": "Uniform Resource Identifier - This should be a path to a file accessible to the Live system (eg. a http:// URI) depending on the output type. For example, a RTMP destination should have a uri simliar to: \"rtmp://fmsserver/live\"."
+      }
+    },
+    "__stringMax255": {
+      "base": null,
+      "refs": {
+        "AudioDescription$Name": "The name of this AudioDescription. Outputs will use this name to uniquely identify this AudioDescription.  Description names should be unique within this Live Event.",
+        "TimecodeBurninSettings$Prefix": "Create a timecode burn-in prefix (optional)"
       }
     },
     "__stringMax256": {
       "base": null,
       "refs": {
+        "Esam$AcquisitionPointId": "Sent as acquisitionPointIdentity to identify the MediaLive channel to the POIS.",
+        "Esam$ZoneIdentity": "Optional data sent as zoneIdentity to identify the MediaLive channel to the POIS.",
         "MultiplexProgramServiceDescriptor$ProviderName": "Name of the provider.",
         "MultiplexProgramServiceDescriptor$ServiceName": "Name of the service."
       }
@@ -4468,7 +5044,7 @@
     "__stringMax32": {
       "base": null,
       "refs": {
-        "OutputGroup$Name": "Custom output group name optionally defined by the user.  Only letters, numbers, and the underscore character allowed; only 32 characters allowed."
+        "OutputGroup$Name": "Custom output group name optionally defined by the user."
       }
     },
     "__stringMin1": {
@@ -4497,13 +5073,28 @@
       "refs": {
         "DvbNitSettings$NetworkName": "The network name text placed in the networkNameDescriptor inside the Network Information Table. Maximum length is 256 characters.",
         "DvbSdtSettings$ServiceName": "The service name placed in the serviceDescriptor in the Service Description Table. Maximum length is 256 characters.",
-        "DvbSdtSettings$ServiceProviderName": "The service provider name placed in the serviceDescriptor in the Service Description Table. Maximum length is 256 characters."
+        "DvbSdtSettings$ServiceProviderName": "The service provider name placed in the serviceDescriptor in the Service Description Table. Maximum length is 256 characters.",
+        "MediaResource$Name": "The logical name of an AWS media resource.",
+        "MediaResourceNeighbor$Name": "The logical name of an AWS media resource."
       }
     },
     "__stringMin1Max35": {
       "base": null,
       "refs": {
         "AudioDescription$LanguageCode": "RFC 5646 language code representing the language of the audio output track. Only used if languageControlMode is useConfigured, or there is no ISO 639 language code specified in the input."
+      }
+    },
+    "__stringMin1Max7": {
+      "base": null,
+      "refs": {
+        "NielsenCBET$Csid": "Enter the CBET Source ID (CSID) to use in the watermark"
+      }
+    },
+    "__stringMin2Max2": {
+      "base": null,
+      "refs": {
+        "NielsenCBET$CbetCheckDigitString": "Enter the CBET check digits to use in the watermark.",
+        "NielsenNaesIiNw$CheckDigitString": "Enter the check digit string for the watermark"
       }
     },
     "__stringMin32Max32": {
@@ -4530,6 +5121,856 @@
       "refs": {
         "InputLossBehavior$InputLossImageColor": "When input loss image type is \"color\" this field specifies the color to use. Value: 6 hex characters representing the values of RGB."
       }
+    },
+    "__stringPattern010920300": {
+      "base": null,
+      "refs": {
+        "MaintenanceCreateSettings$MaintenanceStartTime": "Choose the hour that maintenance will start. The chosen time is used for all future maintenance windows.",
+        "MaintenanceUpdateSettings$MaintenanceStartTime": "Choose the hour that maintenance will start. The chosen time is used for all future maintenance windows."
+      }
+    },
+    "InputDeviceConfigurableAudioChannelPairConfig": {
+      "base": "One audio configuration that specifies the format for one audio pair that the device produces as output.",
+      "refs": {
+        "__listOfInputDeviceConfigurableAudioChannelPairConfig$member": null
+      }
+    },
+    "InputDeviceConfigurableAudioChannelPairProfile": {
+      "base": "Property of InputDeviceConfigurableAudioChannelPairConfig, which configures one audio channel that the device produces.",
+      "refs": {
+        "InputDeviceConfigurableAudioChannelPairConfig$Profile": "The profile to set for one audio pair configuration. Choose an enumeration value. Each value describes one audio configuration using the format (rate control algorithm)-(codec)_(quality)-(bitrate in bytes). For example, CBR-AAC_HQ-192000. Or choose DISABLED, in which case the device won't produce audio for this pair."
+      }
+    },
+    "InputDeviceUhdAudioChannelPairConfig": {
+      "base": "One audio configuration that specifies the format for one audio pair that the device produces as output.",
+      "refs": {
+        "__listOfInputDeviceUhdAudioChannelPairConfig$member": null
+      }
+    },
+    "InputDeviceUhdAudioChannelPairProfile": {
+      "base": "Property of InputDeviceUhdAudioChannelPairConfig, which describes one audio channel that the device is configured to produce.",
+      "refs": {
+        "InputDeviceUhdAudioChannelPairConfig$Profile": "The profile for one audio pair configuration. This property describes one audio configuration in the format (rate control algorithm)-(codec)_(quality)-(bitrate in bytes). For example, CBR-AAC_HQ-192000. Or DISABLED, in which case the device won't produce audio for this pair."
+      }
+    },
+    "__listOfInputDeviceConfigurableAudioChannelPairConfig": {
+      "base": null,
+      "refs": {
+        "InputDeviceConfigurableSettings$AudioChannelPairs": "An array of eight audio configurations, one for each audio pair in the source. Set up each audio configuration either to exclude the pair, or to format it and include it in the output from the device. This parameter applies only to UHD devices, and only when the device is configured as the source for a MediaConnect flow. For an HD device, you configure the audio by setting up audio selectors in the channel configuration."
+      }
+    },
+    "__listOfInputDeviceUhdAudioChannelPairConfig": {
+      "base": null,
+      "refs": {
+        "InputDeviceUhdSettings$AudioChannelPairs": "An array of eight audio configurations, one for each audio pair in the source. Each audio configuration specifies either to exclude the pair, or to format it and include it in the output from the UHD device. Applies only when the device is configured as the source for a MediaConnect flow."
+      }
+    },
+    "ChannelPipelineIdToRestart": {
+      "base": "Property of RestartChannelPipelinesRequest",
+      "refs": {
+        "__listOfChannelPipelineIdToRestart$member": null
+      }
+    },
+    "RestartChannelPipelinesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "__listOfChannelPipelineIdToRestart": {
+      "base": null,
+      "refs": {
+        "RestartChannelPipelinesRequest$PipelineIds": "An array of pipelines to restart in this channel. Format PIPELINE_0 or PIPELINE_1."
+      }
+    },
+    "H265MvOverPictureBoundaries": {
+      "base": "H265 Mv Over Picture Boundaries",
+      "refs": {
+        "H265Settings$MvOverPictureBoundaries": "If you are setting up the picture as a tile, you must set this to \"disabled\". In all other configurations, you typically enter \"enabled\"."
+      }
+    },
+    "H265MvTemporalPredictor": {
+      "base": "H265 Mv Temporal Predictor",
+      "refs": {
+        "H265Settings$MvTemporalPredictor": "If you are setting up the picture as a tile, you must set this to \"disabled\". In other configurations, you typically enter \"enabled\"."
+      }
+    },
+    "H265TilePadding": {
+      "base": "H265 Tile Padding",
+      "refs": {
+        "H265Settings$TilePadding": "Set to \"padded\" to force MediaLive to add padding to the frame, to obtain a frame that is a whole multiple of the tile size.\nIf you are setting up the picture as a tile, you must enter \"padded\".\nIn all other configurations, you typically enter \"none\"."
+      }
+    },
+    "H265TreeblockSize": {
+      "base": "H265 Treeblock Size",
+      "refs": {
+        "H265Settings$TreeblockSize": "Select the tree block size used for encoding. If you enter \"auto\", the encoder will pick the best size. If you are setting up the picture as a tile, you must set this to 32x32. In all other configurations, you typically enter \"auto\"."
+      }
+    },
+    "__integerMin256Max3840": {
+      "base": null,
+      "refs": {
+        "H265Settings$TileWidth": "Set this field to set up the picture as a tile. See tileHeight for more information."
+      }
+    },
+    "__integerMin64Max2160": {
+      "base": null,
+      "refs": {
+        "H265Settings$TileHeight": "Set this field to set up the picture as a tile. You must also set tileWidth.\nThe tile height must result in 22 or fewer rows in the frame. The tile width\nmust result in 20 or fewer columns in the frame. And finally, the product of the\ncolumn count and row count must be 64 of less.\nIf the tile width and height are specified, MediaLive will override the video\ncodec slices field with a value that MediaLive calculates"
+      }
+    },
+    "CmafIngestGroupSettings": {
+      "base": "Cmaf Ingest Group Settings",
+      "refs": {
+        "OutputGroupSettings$CmafIngestGroupSettings": null
+      }
+    },
+    "CmafIngestOutputSettings": {
+      "base": "Cmaf Ingest Output Settings",
+      "refs": {
+        "OutputSettings$CmafIngestOutputSettings": null
+      }
+    },
+    "CmafIngestSegmentLengthUnits": {
+      "base": "Cmaf Ingest Segment Length Units",
+      "refs": {
+        "CmafIngestGroupSettings$SegmentLengthUnits": "Time unit for segment length parameter."
+      }
+    },
+    "CmafNielsenId3Behavior": {
+      "base": "Cmaf Nielsen Id3 Behavior",
+      "refs": {
+        "CmafIngestGroupSettings$NielsenId3Behavior": "If set to passthrough, Nielsen inaudible tones for media tracking will be detected in the input audio and an equivalent ID3 tag will be inserted in the output."
+      }
+    },
+    "DashRoleAudio": {
+      "base": "Dash Role Audio",
+      "refs": {
+        "__listOfDashRoleAudio$member": null
+      }
+    },
+    "DashRoleCaption": {
+      "base": "Dash Role Caption",
+      "refs": {
+        "__listOfDashRoleCaption$member": null
+      }
+    },
+    "DvbDashAccessibility": {
+      "base": "Dvb Dash Accessibility",
+      "refs": {
+        "AudioDescription$DvbDashAccessibility": "Identifies DVB DASH accessibility signaling in this audio output. Used in Microsoft Smooth Streaming outputs to signal accessibility information to packagers.",
+        "CaptionDescription$DvbDashAccessibility": "Identifies DVB DASH accessibility signaling in this captions output. Used in Microsoft Smooth Streaming outputs to signal accessibility information to packagers."
+      }
+    },
+    "__listOfDashRoleAudio": {
+      "base": null,
+      "refs": {
+        "AudioDescription$AudioDashRoles": "Identifies the DASH roles to assign to this audio output. Applies only when the audio output is configured for DVB DASH accessibility signaling."
+      }
+    },
+    "__listOfDashRoleCaption": {
+      "base": null,
+      "refs": {
+        "CaptionDescription$CaptionDashRoles": "Identifies the DASH roles to assign to this captions output. Applies only when the captions output is configured for DVB DASH accessibility signaling."
+      }
+    },
+    "Scte35Type": {
+      "base": "Scte35 Type",
+      "refs": {
+        "CmafIngestGroupSettings$Scte35Type": "Type of scte35 track to add. none or scte35WithoutSegmentation"
+      }
+    },
+    "BadRequestExceptionResponseContent": {
+      "base": "The input fails to satisfy the constraints specified by an AWS service.",
+      "refs": {
+      }
+    },
+    "CloudWatchAlarmTemplateComparisonOperator": {
+      "base": "The comparison operator used to compare the specified statistic and the threshold.",
+      "refs": {
+        "CloudWatchAlarmTemplateSummary$ComparisonOperator": null,
+        "CreateCloudWatchAlarmTemplateRequestContent$ComparisonOperator": null,
+        "CreateCloudWatchAlarmTemplateResponseContent$ComparisonOperator": null,
+        "GetCloudWatchAlarmTemplateResponseContent$ComparisonOperator": null,
+        "UpdateCloudWatchAlarmTemplateRequestContent$ComparisonOperator": null,
+        "UpdateCloudWatchAlarmTemplateResponseContent$ComparisonOperator": null
+      }
+    },
+    "CloudWatchAlarmTemplateGroupSummary": {
+      "base": null,
+      "refs": {
+        "__listOfCloudWatchAlarmTemplateGroupSummary$member": null
+      }
+    },
+    "CloudWatchAlarmTemplateStatistic": {
+      "base": "The statistic to apply to the alarm's metric data.",
+      "refs": {
+        "CloudWatchAlarmTemplateSummary$Statistic": null,
+        "CreateCloudWatchAlarmTemplateRequestContent$Statistic": null,
+        "CreateCloudWatchAlarmTemplateResponseContent$Statistic": null,
+        "GetCloudWatchAlarmTemplateResponseContent$Statistic": null,
+        "UpdateCloudWatchAlarmTemplateRequestContent$Statistic": null,
+        "UpdateCloudWatchAlarmTemplateResponseContent$Statistic": null
+      }
+    },
+    "CloudWatchAlarmTemplateSummary": {
+      "base": null,
+      "refs": {
+        "__listOfCloudWatchAlarmTemplateSummary$member": null
+      }
+    },
+    "CloudWatchAlarmTemplateTargetResourceType": {
+      "base": "The resource type this template should dynamically generate cloudwatch metric alarms for.",
+      "refs": {
+        "CloudWatchAlarmTemplateSummary$TargetResourceType": null,
+        "CreateCloudWatchAlarmTemplateRequestContent$TargetResourceType": null,
+        "CreateCloudWatchAlarmTemplateResponseContent$TargetResourceType": null,
+        "GetCloudWatchAlarmTemplateResponseContent$TargetResourceType": null,
+        "UpdateCloudWatchAlarmTemplateRequestContent$TargetResourceType": null,
+        "UpdateCloudWatchAlarmTemplateResponseContent$TargetResourceType": null
+      }
+    },
+    "CloudWatchAlarmTemplateTreatMissingData": {
+      "base": "Specifies how missing data points are treated when evaluating the alarm's condition.",
+      "refs": {
+        "CloudWatchAlarmTemplateSummary$TreatMissingData": null,
+        "CreateCloudWatchAlarmTemplateRequestContent$TreatMissingData": null,
+        "CreateCloudWatchAlarmTemplateResponseContent$TreatMissingData": null,
+        "GetCloudWatchAlarmTemplateResponseContent$TreatMissingData": null,
+        "UpdateCloudWatchAlarmTemplateRequestContent$TreatMissingData": null,
+        "UpdateCloudWatchAlarmTemplateResponseContent$TreatMissingData": null
+      }
+    },
+    "ConflictExceptionResponseContent": {
+      "base": "Updating or deleting a resource can cause an inconsistent state.",
+      "refs": {
+      }
+    },
+    "CreateCloudWatchAlarmTemplateGroupRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCloudWatchAlarmTemplateGroupResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCloudWatchAlarmTemplateRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateCloudWatchAlarmTemplateResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateEventBridgeRuleTemplateGroupRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateEventBridgeRuleTemplateGroupResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateEventBridgeRuleTemplateRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateEventBridgeRuleTemplateResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSignalMapRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSignalMapResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "EventBridgeRuleTemplateEventType": {
+      "base": "The type of event to match with the rule.",
+      "refs": {
+        "CreateEventBridgeRuleTemplateRequestContent$EventType": null,
+        "CreateEventBridgeRuleTemplateResponseContent$EventType": null,
+        "EventBridgeRuleTemplateSummary$EventType": null,
+        "GetEventBridgeRuleTemplateResponseContent$EventType": null,
+        "UpdateEventBridgeRuleTemplateRequestContent$EventType": null,
+        "UpdateEventBridgeRuleTemplateResponseContent$EventType": null
+      }
+    },
+    "EventBridgeRuleTemplateGroupSummary": {
+      "base": null,
+      "refs": {
+        "__listOfEventBridgeRuleTemplateGroupSummary$member": null
+      }
+    },
+    "EventBridgeRuleTemplateSummary": {
+      "base": null,
+      "refs": {
+        "__listOfEventBridgeRuleTemplateSummary$member": null
+      }
+    },
+    "EventBridgeRuleTemplateTarget": {
+      "base": "The target to which to send matching events.",
+      "refs": {
+        "__listOfEventBridgeRuleTemplateTarget$member": null
+      }
+    },
+    "FailedMediaResourceMap": {
+      "base": "A map representing an incomplete AWS media workflow as a graph.",
+      "refs": {
+        "CreateSignalMapResponseContent$FailedMediaResourceMap": null,
+        "GetSignalMapResponseContent$FailedMediaResourceMap": null,
+        "StartDeleteMonitorDeploymentResponseContent$FailedMediaResourceMap": null,
+        "StartMonitorDeploymentResponseContent$FailedMediaResourceMap": null,
+        "StartUpdateSignalMapResponseContent$FailedMediaResourceMap": null
+      }
+    },
+    "ForbiddenExceptionResponseContent": {
+      "base": "User does not have sufficient access to perform this action.",
+      "refs": {
+      }
+    },
+    "GetCloudWatchAlarmTemplateGroupResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetCloudWatchAlarmTemplateResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEventBridgeRuleTemplateGroupResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetEventBridgeRuleTemplateResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetSignalMapResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "InternalServerErrorExceptionResponseContent": {
+      "base": "Unexpected error during processing of request.",
+      "refs": {
+      }
+    },
+    "ListCloudWatchAlarmTemplateGroupsResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListCloudWatchAlarmTemplatesResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListEventBridgeRuleTemplateGroupsResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListEventBridgeRuleTemplatesResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSignalMapsResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "MediaResource": {
+      "base": "An AWS resource used in media workflows.",
+      "refs": {
+        "FailedMediaResourceMap$member": null,
+        "MediaResourceMap$member": null
+      }
+    },
+    "MediaResourceMap": {
+      "base": "A map representing an AWS media workflow as a graph.",
+      "refs": {
+        "CreateSignalMapResponseContent$MediaResourceMap": null,
+        "GetSignalMapResponseContent$MediaResourceMap": null,
+        "StartDeleteMonitorDeploymentResponseContent$MediaResourceMap": null,
+        "StartMonitorDeploymentResponseContent$MediaResourceMap": null,
+        "StartUpdateSignalMapResponseContent$MediaResourceMap": null
+      }
+    },
+    "MediaResourceNeighbor": {
+      "base": "A direct source or destination neighbor to an AWS media resource.",
+      "refs": {
+        "__listOfMediaResourceNeighbor$member": null
+      }
+    },
+    "MonitorDeployment": {
+      "base": "Represents the latest monitor deployment of a signal map.",
+      "refs": {
+        "CreateSignalMapResponseContent$MonitorDeployment": null,
+        "GetSignalMapResponseContent$MonitorDeployment": null,
+        "StartDeleteMonitorDeploymentResponseContent$MonitorDeployment": null,
+        "StartMonitorDeploymentResponseContent$MonitorDeployment": null,
+        "StartUpdateSignalMapResponseContent$MonitorDeployment": null
+      }
+    },
+    "NotFoundExceptionResponseContent": {
+      "base": "Request references a resource which does not exist.",
+      "refs": {
+      }
+    },
+    "SignalMapMonitorDeploymentStatus": {
+      "base": "A signal map's monitor deployment status.",
+      "refs": {
+        "MonitorDeployment$Status": null,
+        "SignalMapSummary$MonitorDeploymentStatus": null,
+        "SuccessfulMonitorDeployment$Status": null
+      }
+    },
+    "SignalMapStatus": {
+      "base": "A signal map's current status which is dependent on its lifecycle actions or associated jobs.",
+      "refs": {
+        "CreateSignalMapResponseContent$Status": null,
+        "GetSignalMapResponseContent$Status": null,
+        "SignalMapSummary$Status": null,
+        "StartDeleteMonitorDeploymentResponseContent$Status": null,
+        "StartMonitorDeploymentResponseContent$Status": null,
+        "StartUpdateSignalMapResponseContent$Status": null
+      }
+    },
+    "SignalMapSummary": {
+      "base": null,
+      "refs": {
+        "__listOfSignalMapSummary$member": null
+      }
+    },
+    "StartDeleteMonitorDeploymentResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartMonitorDeploymentRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartMonitorDeploymentResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartUpdateSignalMapRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "StartUpdateSignalMapResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "SuccessfulMonitorDeployment": {
+      "base": "Represents the latest successful monitor deployment of a signal map.",
+      "refs": {
+        "CreateSignalMapResponseContent$LastSuccessfulMonitorDeployment": null,
+        "GetSignalMapResponseContent$LastSuccessfulMonitorDeployment": null,
+        "StartDeleteMonitorDeploymentResponseContent$LastSuccessfulMonitorDeployment": null,
+        "StartMonitorDeploymentResponseContent$LastSuccessfulMonitorDeployment": null,
+        "StartUpdateSignalMapResponseContent$LastSuccessfulMonitorDeployment": null
+      }
+    },
+    "TagMap": {
+      "base": "Represents the tags associated with a resource.",
+      "refs": {
+        "CloudWatchAlarmTemplateGroupSummary$Tags": null,
+        "CloudWatchAlarmTemplateSummary$Tags": null,
+        "CreateCloudWatchAlarmTemplateGroupRequestContent$Tags": null,
+        "CreateCloudWatchAlarmTemplateGroupResponseContent$Tags": null,
+        "CreateCloudWatchAlarmTemplateRequestContent$Tags": null,
+        "CreateCloudWatchAlarmTemplateResponseContent$Tags": null,
+        "CreateEventBridgeRuleTemplateGroupRequestContent$Tags": null,
+        "CreateEventBridgeRuleTemplateGroupResponseContent$Tags": null,
+        "CreateEventBridgeRuleTemplateRequestContent$Tags": null,
+        "CreateEventBridgeRuleTemplateResponseContent$Tags": null,
+        "CreateSignalMapRequestContent$Tags": null,
+        "CreateSignalMapResponseContent$Tags": null,
+        "EventBridgeRuleTemplateGroupSummary$Tags": null,
+        "EventBridgeRuleTemplateSummary$Tags": null,
+        "GetCloudWatchAlarmTemplateGroupResponseContent$Tags": null,
+        "GetCloudWatchAlarmTemplateResponseContent$Tags": null,
+        "GetEventBridgeRuleTemplateGroupResponseContent$Tags": null,
+        "GetEventBridgeRuleTemplateResponseContent$Tags": null,
+        "GetSignalMapResponseContent$Tags": null,
+        "SignalMapSummary$Tags": null,
+        "StartDeleteMonitorDeploymentResponseContent$Tags": null,
+        "StartMonitorDeploymentResponseContent$Tags": null,
+        "StartUpdateSignalMapResponseContent$Tags": null,
+        "UpdateCloudWatchAlarmTemplateGroupResponseContent$Tags": null,
+        "UpdateCloudWatchAlarmTemplateResponseContent$Tags": null,
+        "UpdateEventBridgeRuleTemplateGroupResponseContent$Tags": null,
+        "UpdateEventBridgeRuleTemplateResponseContent$Tags": null
+      }
+    },
+    "TooManyRequestsExceptionResponseContent": {
+      "base": "Request was denied due to request throttling.",
+      "refs": {
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateGroupRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateGroupResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateCloudWatchAlarmTemplateResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateEventBridgeRuleTemplateGroupRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateEventBridgeRuleTemplateGroupResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateEventBridgeRuleTemplateRequestContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "UpdateEventBridgeRuleTemplateResponseContent": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "__integerMax5": {
+      "base": null,
+      "refs": {
+        "EventBridgeRuleTemplateSummary$EventTargetCount": "The number of targets configured to send matching events."
+      }
+    },
+    "__integerMin10Max86400": {
+      "base": null,
+      "refs": {
+        "CloudWatchAlarmTemplateSummary$Period": "The period, in seconds, over which the specified statistic is applied.",
+        "CreateCloudWatchAlarmTemplateRequestContent$Period": "The period, in seconds, over which the specified statistic is applied.",
+        "CreateCloudWatchAlarmTemplateResponseContent$Period": "The period, in seconds, over which the specified statistic is applied.",
+        "GetCloudWatchAlarmTemplateResponseContent$Period": "The period, in seconds, over which the specified statistic is applied.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$Period": "The period, in seconds, over which the specified statistic is applied.",
+        "UpdateCloudWatchAlarmTemplateResponseContent$Period": "The period, in seconds, over which the specified statistic is applied."
+      }
+    },
+    "__listOfCloudWatchAlarmTemplateGroupSummary": {
+      "base": null,
+      "refs": {
+        "ListCloudWatchAlarmTemplateGroupsResponseContent$CloudWatchAlarmTemplateGroups": null
+      }
+    },
+    "__listOfCloudWatchAlarmTemplateSummary": {
+      "base": null,
+      "refs": {
+        "ListCloudWatchAlarmTemplatesResponseContent$CloudWatchAlarmTemplates": null
+      }
+    },
+    "__listOfEventBridgeRuleTemplateGroupSummary": {
+      "base": null,
+      "refs": {
+        "ListEventBridgeRuleTemplateGroupsResponseContent$EventBridgeRuleTemplateGroups": null
+      }
+    },
+    "__listOfEventBridgeRuleTemplateSummary": {
+      "base": null,
+      "refs": {
+        "ListEventBridgeRuleTemplatesResponseContent$EventBridgeRuleTemplates": null
+      }
+    },
+    "__listOfEventBridgeRuleTemplateTarget": {
+      "base": null,
+      "refs": {
+        "CreateEventBridgeRuleTemplateRequestContent$EventTargets": null,
+        "CreateEventBridgeRuleTemplateResponseContent$EventTargets": null,
+        "GetEventBridgeRuleTemplateResponseContent$EventTargets": null,
+        "UpdateEventBridgeRuleTemplateRequestContent$EventTargets": null,
+        "UpdateEventBridgeRuleTemplateResponseContent$EventTargets": null
+      }
+    },
+    "__listOfMediaResourceNeighbor": {
+      "base": null,
+      "refs": {
+        "MediaResource$Destinations": null,
+        "MediaResource$Sources": null
+      }
+    },
+    "__listOfSignalMapSummary": {
+      "base": null,
+      "refs": {
+        "ListSignalMapsResponseContent$SignalMaps": null
+      }
+    },
+    "__listOf__stringMin7Max11PatternAws097": {
+      "base": null,
+      "refs": {
+        "CreateSignalMapResponseContent$CloudWatchAlarmTemplateGroupIds": null,
+        "CreateSignalMapResponseContent$EventBridgeRuleTemplateGroupIds": null,
+        "GetSignalMapResponseContent$CloudWatchAlarmTemplateGroupIds": null,
+        "GetSignalMapResponseContent$EventBridgeRuleTemplateGroupIds": null,
+        "StartDeleteMonitorDeploymentResponseContent$CloudWatchAlarmTemplateGroupIds": null,
+        "StartDeleteMonitorDeploymentResponseContent$EventBridgeRuleTemplateGroupIds": null,
+        "StartMonitorDeploymentResponseContent$CloudWatchAlarmTemplateGroupIds": null,
+        "StartMonitorDeploymentResponseContent$EventBridgeRuleTemplateGroupIds": null,
+        "StartUpdateSignalMapResponseContent$CloudWatchAlarmTemplateGroupIds": null,
+        "StartUpdateSignalMapResponseContent$EventBridgeRuleTemplateGroupIds": null
+      }
+    },
+    "__listOf__stringPatternS": {
+      "base": null,
+      "refs": {
+        "CreateSignalMapRequestContent$CloudWatchAlarmTemplateGroupIdentifiers": null,
+        "CreateSignalMapRequestContent$EventBridgeRuleTemplateGroupIdentifiers": null,
+        "StartUpdateSignalMapRequestContent$CloudWatchAlarmTemplateGroupIdentifiers": null,
+        "StartUpdateSignalMapRequestContent$EventBridgeRuleTemplateGroupIdentifiers": null
+      }
+    },
+    "__stringMax64": {
+      "base": null,
+      "refs": {
+        "CloudWatchAlarmTemplateSummary$MetricName": "The name of the metric associated with the alarm. Must be compatible with targetResourceType.",
+        "CreateCloudWatchAlarmTemplateRequestContent$MetricName": "The name of the metric associated with the alarm. Must be compatible with targetResourceType.",
+        "CreateCloudWatchAlarmTemplateResponseContent$MetricName": "The name of the metric associated with the alarm. Must be compatible with targetResourceType.",
+        "GetCloudWatchAlarmTemplateResponseContent$MetricName": "The name of the metric associated with the alarm. Must be compatible with targetResourceType.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$MetricName": "The name of the metric associated with the alarm. Must be compatible with targetResourceType.",
+        "UpdateCloudWatchAlarmTemplateResponseContent$MetricName": "The name of the metric associated with the alarm. Must be compatible with targetResourceType."
+      }
+    },
+    "__stringMin0Max1024": {
+      "base": null,
+      "refs": {
+        "CloudWatchAlarmTemplateGroupSummary$Description": "A resource's optional description.",
+        "CloudWatchAlarmTemplateSummary$Description": "A resource's optional description.",
+        "CreateCloudWatchAlarmTemplateGroupRequestContent$Description": "A resource's optional description.",
+        "CreateCloudWatchAlarmTemplateGroupResponseContent$Description": "A resource's optional description.",
+        "CreateCloudWatchAlarmTemplateRequestContent$Description": "A resource's optional description.",
+        "CreateCloudWatchAlarmTemplateResponseContent$Description": "A resource's optional description.",
+        "CreateEventBridgeRuleTemplateGroupRequestContent$Description": "A resource's optional description.",
+        "CreateEventBridgeRuleTemplateGroupResponseContent$Description": "A resource's optional description.",
+        "CreateEventBridgeRuleTemplateRequestContent$Description": "A resource's optional description.",
+        "CreateEventBridgeRuleTemplateResponseContent$Description": "A resource's optional description.",
+        "CreateSignalMapRequestContent$Description": "A resource's optional description.",
+        "CreateSignalMapResponseContent$Description": "A resource's optional description.",
+        "EventBridgeRuleTemplateGroupSummary$Description": "A resource's optional description.",
+        "EventBridgeRuleTemplateSummary$Description": "A resource's optional description.",
+        "GetCloudWatchAlarmTemplateGroupResponseContent$Description": "A resource's optional description.",
+        "GetCloudWatchAlarmTemplateResponseContent$Description": "A resource's optional description.",
+        "GetEventBridgeRuleTemplateGroupResponseContent$Description": "A resource's optional description.",
+        "GetEventBridgeRuleTemplateResponseContent$Description": "A resource's optional description.",
+        "GetSignalMapResponseContent$Description": "A resource's optional description.",
+        "SignalMapSummary$Description": "A resource's optional description.",
+        "StartDeleteMonitorDeploymentResponseContent$Description": "A resource's optional description.",
+        "StartMonitorDeploymentResponseContent$Description": "A resource's optional description.",
+        "StartUpdateSignalMapRequestContent$Description": "A resource's optional description.",
+        "StartUpdateSignalMapResponseContent$Description": "A resource's optional description.",
+        "UpdateCloudWatchAlarmTemplateGroupRequestContent$Description": "A resource's optional description.",
+        "UpdateCloudWatchAlarmTemplateGroupResponseContent$Description": "A resource's optional description.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$Description": "A resource's optional description.",
+        "UpdateCloudWatchAlarmTemplateResponseContent$Description": "A resource's optional description.",
+        "UpdateEventBridgeRuleTemplateGroupRequestContent$Description": "A resource's optional description.",
+        "UpdateEventBridgeRuleTemplateGroupResponseContent$Description": "A resource's optional description.",
+        "UpdateEventBridgeRuleTemplateRequestContent$Description": "A resource's optional description.",
+        "UpdateEventBridgeRuleTemplateResponseContent$Description": "A resource's optional description."
+      }
+    },
+    "__stringMin1Max2048": {
+      "base": null,
+      "refs": {
+        "CreateSignalMapRequestContent$DiscoveryEntryPointArn": "A top-level supported AWS resource ARN to discovery a signal map from.",
+        "CreateSignalMapResponseContent$DiscoveryEntryPointArn": "A top-level supported AWS resource ARN to discovery a signal map from.",
+        "CreateSignalMapResponseContent$ErrorMessage": "Error message associated with a failed creation or failed update attempt of a signal map.",
+        "GetSignalMapResponseContent$DiscoveryEntryPointArn": "A top-level supported AWS resource ARN to discovery a signal map from.",
+        "GetSignalMapResponseContent$ErrorMessage": "Error message associated with a failed creation or failed update attempt of a signal map.",
+        "ListCloudWatchAlarmTemplateGroupsResponseContent$NextToken": "A token used to retrieve the next set of results in paginated list responses.",
+        "ListCloudWatchAlarmTemplatesResponseContent$NextToken": "A token used to retrieve the next set of results in paginated list responses.",
+        "ListEventBridgeRuleTemplateGroupsResponseContent$NextToken": "A token used to retrieve the next set of results in paginated list responses.",
+        "ListEventBridgeRuleTemplatesResponseContent$NextToken": "A token used to retrieve the next set of results in paginated list responses.",
+        "ListSignalMapsResponseContent$NextToken": "A token used to retrieve the next set of results in paginated list responses.",
+        "MonitorDeployment$DetailsUri": "URI associated with a signal map's monitor deployment.",
+        "MonitorDeployment$ErrorMessage": "Error message associated with a failed monitor deployment of a signal map.",
+        "StartDeleteMonitorDeploymentResponseContent$DiscoveryEntryPointArn": "A top-level supported AWS resource ARN to discovery a signal map from.",
+        "StartDeleteMonitorDeploymentResponseContent$ErrorMessage": "Error message associated with a failed creation or failed update attempt of a signal map.",
+        "StartMonitorDeploymentResponseContent$DiscoveryEntryPointArn": "A top-level supported AWS resource ARN to discovery a signal map from.",
+        "StartMonitorDeploymentResponseContent$ErrorMessage": "Error message associated with a failed creation or failed update attempt of a signal map.",
+        "StartUpdateSignalMapRequestContent$DiscoveryEntryPointArn": "A top-level supported AWS resource ARN to discovery a signal map from.",
+        "StartUpdateSignalMapResponseContent$DiscoveryEntryPointArn": "A top-level supported AWS resource ARN to discovery a signal map from.",
+        "StartUpdateSignalMapResponseContent$ErrorMessage": "Error message associated with a failed creation or failed update attempt of a signal map.",
+        "SuccessfulMonitorDeployment$DetailsUri": "URI associated with a signal map's monitor deployment."
+      }
+    },
+    "__stringMin1Max2048PatternArn": {
+      "base": null,
+      "refs": {
+        "EventBridgeRuleTemplateTarget$Arn": "Target ARNs must be either an SNS topic or CloudWatch log group.",
+        "MediaResourceNeighbor$Arn": "The ARN of a resource used in AWS media workflows."
+      }
+    },
+    "__stringMin1Max255PatternS": {
+      "base": null,
+      "refs": {
+        "CloudWatchAlarmTemplateGroupSummary$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CloudWatchAlarmTemplateSummary$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateCloudWatchAlarmTemplateGroupRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateCloudWatchAlarmTemplateGroupResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateCloudWatchAlarmTemplateRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateCloudWatchAlarmTemplateResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateEventBridgeRuleTemplateGroupRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateEventBridgeRuleTemplateGroupResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateEventBridgeRuleTemplateRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateEventBridgeRuleTemplateResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateSignalMapRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "CreateSignalMapResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "EventBridgeRuleTemplateGroupSummary$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "EventBridgeRuleTemplateSummary$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "GetCloudWatchAlarmTemplateGroupResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "GetCloudWatchAlarmTemplateResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "GetEventBridgeRuleTemplateGroupResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "GetEventBridgeRuleTemplateResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "GetSignalMapResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "SignalMapSummary$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "StartDeleteMonitorDeploymentResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "StartMonitorDeploymentResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "StartUpdateSignalMapRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "StartUpdateSignalMapResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "UpdateCloudWatchAlarmTemplateGroupResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "UpdateCloudWatchAlarmTemplateResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "UpdateEventBridgeRuleTemplateGroupResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "UpdateEventBridgeRuleTemplateRequestContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region.",
+        "UpdateEventBridgeRuleTemplateResponseContent$Name": "A resource's name. Names must be unique within the scope of a resource type in a specific region."
+      }
+    },
+    "__stringMin7Max11PatternAws097": {
+      "base": null,
+      "refs": {
+        "CloudWatchAlarmTemplateGroupSummary$Id": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "CloudWatchAlarmTemplateSummary$GroupId": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "CloudWatchAlarmTemplateSummary$Id": "A cloudwatch alarm template's id. AWS provided templates have ids that start with `aws-`",
+        "CreateCloudWatchAlarmTemplateGroupResponseContent$Id": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "CreateCloudWatchAlarmTemplateResponseContent$GroupId": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "CreateCloudWatchAlarmTemplateResponseContent$Id": "A cloudwatch alarm template's id. AWS provided templates have ids that start with `aws-`",
+        "CreateEventBridgeRuleTemplateGroupResponseContent$Id": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "CreateEventBridgeRuleTemplateResponseContent$GroupId": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "CreateEventBridgeRuleTemplateResponseContent$Id": "An eventbridge rule template's id. AWS provided templates have ids that start with `aws-`",
+        "CreateSignalMapResponseContent$Id": "A signal map's id.",
+        "EventBridgeRuleTemplateGroupSummary$Id": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "EventBridgeRuleTemplateSummary$GroupId": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "EventBridgeRuleTemplateSummary$Id": "An eventbridge rule template's id. AWS provided templates have ids that start with `aws-`",
+        "GetCloudWatchAlarmTemplateGroupResponseContent$Id": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "GetCloudWatchAlarmTemplateResponseContent$GroupId": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "GetCloudWatchAlarmTemplateResponseContent$Id": "A cloudwatch alarm template's id. AWS provided templates have ids that start with `aws-`",
+        "GetEventBridgeRuleTemplateGroupResponseContent$Id": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "GetEventBridgeRuleTemplateResponseContent$GroupId": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "GetEventBridgeRuleTemplateResponseContent$Id": "An eventbridge rule template's id. AWS provided templates have ids that start with `aws-`",
+        "GetSignalMapResponseContent$Id": "A signal map's id.",
+        "SignalMapSummary$Id": "A signal map's id.",
+        "StartDeleteMonitorDeploymentResponseContent$Id": "A signal map's id.",
+        "StartMonitorDeploymentResponseContent$Id": "A signal map's id.",
+        "StartUpdateSignalMapResponseContent$Id": "A signal map's id.",
+        "UpdateCloudWatchAlarmTemplateGroupResponseContent$Id": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "UpdateCloudWatchAlarmTemplateResponseContent$GroupId": "A cloudwatch alarm template group's id. AWS provided template groups have ids that start with `aws-`",
+        "UpdateCloudWatchAlarmTemplateResponseContent$Id": "A cloudwatch alarm template's id. AWS provided templates have ids that start with `aws-`",
+        "UpdateEventBridgeRuleTemplateGroupResponseContent$Id": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "UpdateEventBridgeRuleTemplateResponseContent$GroupId": "An eventbridge rule template group's id. AWS provided template groups have ids that start with `aws-`",
+        "UpdateEventBridgeRuleTemplateResponseContent$Id": "An eventbridge rule template's id. AWS provided templates have ids that start with `aws-`",
+        "__listOf__stringMin7Max11PatternAws097$member": null
+      }
+    },
+    "__stringPatternArnMedialiveCloudwatchAlarmTemplate": {
+      "base": null,
+      "refs": {
+        "CloudWatchAlarmTemplateSummary$Arn": "A cloudwatch alarm template's ARN (Amazon Resource Name)",
+        "CreateCloudWatchAlarmTemplateResponseContent$Arn": "A cloudwatch alarm template's ARN (Amazon Resource Name)",
+        "GetCloudWatchAlarmTemplateResponseContent$Arn": "A cloudwatch alarm template's ARN (Amazon Resource Name)",
+        "UpdateCloudWatchAlarmTemplateResponseContent$Arn": "A cloudwatch alarm template's ARN (Amazon Resource Name)"
+      }
+    },
+    "__stringPatternArnMedialiveCloudwatchAlarmTemplateGroup": {
+      "base": null,
+      "refs": {
+        "CloudWatchAlarmTemplateGroupSummary$Arn": "A cloudwatch alarm template group's ARN (Amazon Resource Name)",
+        "CreateCloudWatchAlarmTemplateGroupResponseContent$Arn": "A cloudwatch alarm template group's ARN (Amazon Resource Name)",
+        "GetCloudWatchAlarmTemplateGroupResponseContent$Arn": "A cloudwatch alarm template group's ARN (Amazon Resource Name)",
+        "UpdateCloudWatchAlarmTemplateGroupResponseContent$Arn": "A cloudwatch alarm template group's ARN (Amazon Resource Name)"
+      }
+    },
+    "__stringPatternArnMedialiveEventbridgeRuleTemplate": {
+      "base": null,
+      "refs": {
+        "CreateEventBridgeRuleTemplateResponseContent$Arn": "An eventbridge rule template's ARN (Amazon Resource Name)",
+        "EventBridgeRuleTemplateSummary$Arn": "An eventbridge rule template's ARN (Amazon Resource Name)",
+        "GetEventBridgeRuleTemplateResponseContent$Arn": "An eventbridge rule template's ARN (Amazon Resource Name)",
+        "UpdateEventBridgeRuleTemplateResponseContent$Arn": "An eventbridge rule template's ARN (Amazon Resource Name)"
+      }
+    },
+    "__stringPatternArnMedialiveEventbridgeRuleTemplateGroup": {
+      "base": null,
+      "refs": {
+        "CreateEventBridgeRuleTemplateGroupResponseContent$Arn": "An eventbridge rule template group's ARN (Amazon Resource Name)",
+        "EventBridgeRuleTemplateGroupSummary$Arn": "An eventbridge rule template group's ARN (Amazon Resource Name)",
+        "GetEventBridgeRuleTemplateGroupResponseContent$Arn": "An eventbridge rule template group's ARN (Amazon Resource Name)",
+        "UpdateEventBridgeRuleTemplateGroupResponseContent$Arn": "An eventbridge rule template group's ARN (Amazon Resource Name)"
+      }
+    },
+    "__stringPatternArnMedialiveSignalMap": {
+      "base": null,
+      "refs": {
+        "CreateSignalMapResponseContent$Arn": "A signal map's ARN (Amazon Resource Name)",
+        "GetSignalMapResponseContent$Arn": "A signal map's ARN (Amazon Resource Name)",
+        "SignalMapSummary$Arn": "A signal map's ARN (Amazon Resource Name)",
+        "StartDeleteMonitorDeploymentResponseContent$Arn": "A signal map's ARN (Amazon Resource Name)",
+        "StartMonitorDeploymentResponseContent$Arn": "A signal map's ARN (Amazon Resource Name)",
+        "StartUpdateSignalMapResponseContent$Arn": "A signal map's ARN (Amazon Resource Name)"
+      }
+    },
+    "__stringPatternS": {
+      "base": null,
+      "refs": {
+        "CreateCloudWatchAlarmTemplateRequestContent$GroupIdentifier": "A cloudwatch alarm template group's identifier. Can be either be its id or current name.",
+        "CreateEventBridgeRuleTemplateRequestContent$GroupIdentifier": "An eventbridge rule template group's identifier. Can be either be its id or current name.",
+        "UpdateCloudWatchAlarmTemplateRequestContent$GroupIdentifier": "A cloudwatch alarm template group's identifier. Can be either be its id or current name.",
+        "UpdateEventBridgeRuleTemplateRequestContent$GroupIdentifier": "An eventbridge rule template group's identifier. Can be either be its id or current name.",
+        "__listOf__stringPatternS$member": null
+      }
+    },
+    "Scte35SegmentationScope": {
+      "base": "Scte35 Segmentation Scope",
+      "refs": {
+        "AvailConfiguration$Scte35SegmentationScope": "Configures whether SCTE 35 passthrough triggers segment breaks in all output groups that use segmented outputs. Insertion of a SCTE 35 message typically results in a segment break, in addition to the regular cadence of breaks. The segment breaks appear in video outputs, audio outputs, and captions outputs (if any).\n\nALL_OUTPUT_GROUPS: Default. Insert the segment break in in all output groups that have segmented outputs. This is the legacy behavior.\nSCTE35_ENABLED_OUTPUT_GROUPS: Insert the segment break only in output groups that have SCTE 35 passthrough enabled. This is the recommended value, because it reduces unnecessary segment breaks."
+      }
     }
-  }
+  },
+  "documentation": "API for AWS Elemental MediaLive"
 }

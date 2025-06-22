@@ -395,6 +395,28 @@
         }
       ]
     },
+    "GetResourcePolicy": {
+      "name": "GetResourcePolicy",
+      "http": {
+        "method": "GET",
+        "requestUri": "/resourcePolicy/{ResourceArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "GetResourcePolicyRequest"
+      },
+      "output": {
+        "shape": "GetResourcePolicyResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "InternalServerException"
+        }
+      ]
+    },
     "ListAssociatedRoute53HealthChecks": {
       "name": "ListAssociatedRoute53HealthChecks",
       "http": {
@@ -544,6 +566,81 @@
         }
       ]
     },
+    "ListTagsForResource": {
+      "name": "ListTagsForResource",
+      "http": {
+        "method": "GET",
+        "requestUri": "/tags/{ResourceArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "ListTagsForResourceRequest"
+      },
+      "output": {
+        "shape": "ListTagsForResourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        }
+      ]
+    },
+    "TagResource": {
+      "name": "TagResource",
+      "http": {
+        "method": "POST",
+        "requestUri": "/tags/{ResourceArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "TagResourceRequest"
+      },
+      "output": {
+        "shape": "TagResourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        }
+      ]
+    },
+    "UntagResource": {
+      "name": "UntagResource",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/tags/{ResourceArn}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UntagResourceRequest"
+      },
+      "output": {
+        "shape": "UntagResourceResponse"
+      },
+      "errors": [
+        {
+          "shape": "ResourceNotFoundException"
+        },
+        {
+          "shape": "ValidationException"
+        },
+        {
+          "shape": "InternalServerException"
+        }
+      ]
+    },
     "UpdateControlPanel": {
       "name": "UpdateControlPanel",
       "http": {
@@ -659,10 +756,10 @@
       "type": "structure",
       "members": {
         "AssertedControls": {
-          "shape": "__listOf__string"
+          "shape": "__listOf__stringMin1Max256PatternAZaZ09"
         },
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "Name": {
           "shape": "__stringMin1Max64PatternS"
@@ -671,13 +768,16 @@
           "shape": "RuleConfig"
         },
         "SafetyRuleArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "Status": {
           "shape": "Status"
         },
         "WaitPeriodMs": {
           "shape": "__integer"
+        },
+        "Owner": {
+          "shape": "__stringMin12Max12PatternD12"
         }
       },
       "required": [
@@ -697,7 +797,7 @@
           "shape": "__stringMin1Max64PatternS"
         },
         "SafetyRuleArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "WaitPeriodMs": {
           "shape": "__integer"
@@ -713,7 +813,7 @@
       "type": "structure",
       "members": {
         "ClusterArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "ClusterEndpoints": {
           "shape": "__listOfClusterEndpoint"
@@ -723,6 +823,9 @@
         },
         "Status": {
           "shape": "Status"
+        },
+        "Owner": {
+          "shape": "__stringMin12Max12PatternD12"
         }
       }
     },
@@ -730,10 +833,10 @@
       "type": "structure",
       "members": {
         "Endpoint": {
-          "shape": "__stringMin1Max128"
+          "shape": "__stringMin1Max128PatternAZaZ09"
         },
         "Region": {
-          "shape": "__stringMin1Max32"
+          "shape": "__stringMin1Max32PatternS"
         }
       }
     },
@@ -757,10 +860,10 @@
       "type": "structure",
       "members": {
         "ClusterArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "DefaultControlPanel": {
           "shape": "__boolean"
@@ -773,6 +876,9 @@
         },
         "Status": {
           "shape": "Status"
+        },
+        "Owner": {
+          "shape": "__stringMin12Max12PatternD12"
         }
       }
     },
@@ -780,11 +886,14 @@
       "type": "structure",
       "members": {
         "ClientToken": {
-          "shape": "__stringMax64",
+          "shape": "__stringMin1Max64PatternS",
           "idempotencyToken": true
         },
         "ClusterName": {
           "shape": "__stringMin1Max64PatternS"
+        },
+        "Tags": {
+          "shape": "__mapOf__stringMin0Max256PatternS"
         }
       },
       "required": [
@@ -803,14 +912,17 @@
       "type": "structure",
       "members": {
         "ClientToken": {
-          "shape": "__stringMax64",
+          "shape": "__stringMin1Max64PatternS",
           "idempotencyToken": true
         },
         "ClusterArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "ControlPanelName": {
           "shape": "__stringMin1Max64PatternS"
+        },
+        "Tags": {
+          "shape": "__mapOf__stringMin0Max256PatternS"
         }
       },
       "required": [
@@ -830,14 +942,14 @@
       "type": "structure",
       "members": {
         "ClientToken": {
-          "shape": "__stringMax64",
+          "shape": "__stringMin1Max64PatternS",
           "idempotencyToken": true
         },
         "ClusterArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "RoutingControlName": {
           "shape": "__stringMin1Max64PatternS"
@@ -863,11 +975,14 @@
           "shape": "NewAssertionRule"
         },
         "ClientToken": {
-          "shape": "__stringMax64",
+          "shape": "__stringMin1Max64PatternS",
           "idempotencyToken": true
         },
         "GatingRule": {
           "shape": "NewGatingRule"
+        },
+        "Tags": {
+          "shape": "__mapOf__stringMin0Max256PatternS"
         }
       }
     },
@@ -1041,10 +1156,10 @@
       "type": "structure",
       "members": {
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "GatingControls": {
-          "shape": "__listOf__string"
+          "shape": "__listOf__stringMin1Max256PatternAZaZ09"
         },
         "Name": {
           "shape": "__stringMin1Max64PatternS"
@@ -1053,16 +1168,19 @@
           "shape": "RuleConfig"
         },
         "SafetyRuleArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "Status": {
           "shape": "Status"
         },
         "TargetControls": {
-          "shape": "__listOf__string"
+          "shape": "__listOf__stringMin1Max256PatternAZaZ09"
         },
         "WaitPeriodMs": {
           "shape": "__integer"
+        },
+        "Owner": {
+          "shape": "__stringMin12Max12PatternD12"
         }
       },
       "required": [
@@ -1083,7 +1201,7 @@
           "shape": "__stringMin1Max64PatternS"
         },
         "SafetyRuleArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "WaitPeriodMs": {
           "shape": "__integer"
@@ -1094,6 +1212,27 @@
         "WaitPeriodMs",
         "Name"
       ]
+    },
+    "GetResourcePolicyRequest": {
+      "type": "structure",
+      "members": {
+        "ResourceArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "ResourceArn"
+        }
+      },
+      "required": [
+        "ResourceArn"
+      ]
+    },
+    "GetResourcePolicyResponse": {
+      "type": "structure",
+      "members": {
+        "Policy": {
+          "shape": "__policy"
+        }
+      }
     },
     "InternalServerException": {
       "type": "structure",
@@ -1138,10 +1277,10 @@
       "type": "structure",
       "members": {
         "HealthCheckIds": {
-          "shape": "__listOf__string"
+          "shape": "__listOf__stringMax36PatternS"
         },
         "NextToken": {
-          "shape": "__stringMax8096"
+          "shape": "__stringMin1Max8096PatternS"
         }
       }
     },
@@ -1167,7 +1306,7 @@
           "shape": "__listOfCluster"
         },
         "NextToken": {
-          "shape": "__stringMax8096"
+          "shape": "__stringMin1Max8096PatternS"
         }
       }
     },
@@ -1198,7 +1337,7 @@
           "shape": "__listOfControlPanel"
         },
         "NextToken": {
-          "shape": "__stringMax8096"
+          "shape": "__stringMin1Max8096PatternS"
         }
       }
     },
@@ -1229,7 +1368,7 @@
       "type": "structure",
       "members": {
         "NextToken": {
-          "shape": "__stringMax8096"
+          "shape": "__stringMin1Max8096PatternS"
         },
         "RoutingControls": {
           "shape": "__listOfRoutingControl"
@@ -1263,10 +1402,31 @@
       "type": "structure",
       "members": {
         "NextToken": {
-          "shape": "__stringMax8096"
+          "shape": "__stringMin1Max8096PatternS"
         },
         "SafetyRules": {
           "shape": "__listOfRule"
+        }
+      }
+    },
+    "ListTagsForResourceRequest": {
+      "type": "structure",
+      "members": {
+        "ResourceArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "ResourceArn"
+        }
+      },
+      "required": [
+        "ResourceArn"
+      ]
+    },
+    "ListTagsForResourceResponse": {
+      "type": "structure",
+      "members": {
+        "Tags": {
+          "shape": "__mapOf__stringMin0Max256PatternS"
         }
       }
     },
@@ -1279,10 +1439,10 @@
       "type": "structure",
       "members": {
         "AssertedControls": {
-          "shape": "__listOf__string"
+          "shape": "__listOf__stringMin1Max256PatternAZaZ09"
         },
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "Name": {
           "shape": "__stringMin1Max64PatternS"
@@ -1306,10 +1466,10 @@
       "type": "structure",
       "members": {
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "GatingControls": {
-          "shape": "__listOf__string"
+          "shape": "__listOf__stringMin1Max256PatternAZaZ09"
         },
         "Name": {
           "shape": "__stringMin1Max64PatternS"
@@ -1318,7 +1478,7 @@
           "shape": "RuleConfig"
         },
         "TargetControls": {
-          "shape": "__listOf__string"
+          "shape": "__listOf__stringMin1Max256PatternAZaZ09"
         },
         "WaitPeriodMs": {
           "shape": "__integer"
@@ -1353,16 +1513,19 @@
       "type": "structure",
       "members": {
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "Name": {
           "shape": "__stringMin1Max64PatternS"
         },
         "RoutingControlArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "Status": {
           "shape": "Status"
+        },
+        "Owner": {
+          "shape": "__stringMin12Max12PatternD12"
         }
       }
     },
@@ -1428,6 +1591,27 @@
         "PENDING_DELETION"
       ]
     },
+    "TagResourceRequest": {
+      "type": "structure",
+      "members": {
+        "ResourceArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "ResourceArn"
+        },
+        "Tags": {
+          "shape": "__mapOf__stringMin0Max256PatternS"
+        }
+      },
+      "required": [
+        "ResourceArn",
+        "Tags"
+      ]
+    },
+    "TagResourceResponse": {
+      "type": "structure",
+      "members": {}
+    },
     "ThrottlingException": {
       "type": "structure",
       "members": {
@@ -1444,11 +1628,34 @@
         "httpStatusCode": 429
       }
     },
+    "UntagResourceRequest": {
+      "type": "structure",
+      "members": {
+        "ResourceArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "ResourceArn"
+        },
+        "TagKeys": {
+          "shape": "__listOf__string",
+          "location": "querystring",
+          "locationName": "TagKeys"
+        }
+      },
+      "required": [
+        "ResourceArn",
+        "TagKeys"
+      ]
+    },
+    "UntagResourceResponse": {
+      "type": "structure",
+      "members": {}
+    },
     "UpdateControlPanelRequest": {
       "type": "structure",
       "members": {
         "ControlPanelArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "ControlPanelName": {
           "shape": "__stringMin1Max64PatternS"
@@ -1471,7 +1678,7 @@
       "type": "structure",
       "members": {
         "RoutingControlArn": {
-          "shape": "__string"
+          "shape": "__stringMin1Max256PatternAZaZ09"
         },
         "RoutingControlName": {
           "shape": "__stringMin1Max64PatternS"
@@ -1573,35 +1780,85 @@
         "shape": "__string"
       }
     },
+    "__listOf__stringMax36PatternS": {
+      "type": "list",
+      "member": {
+        "shape": "__stringMax36PatternS"
+      }
+    },
+    "__listOf__stringMin1Max256PatternAZaZ09": {
+      "type": "list",
+      "member": {
+        "shape": "__stringMin1Max256PatternAZaZ09"
+      }
+    },
     "__long": {
       "type": "long"
+    },
+    "__mapOf__stringMin0Max256PatternS": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "__stringMin0Max256PatternS"
+      }
     },
     "__string": {
       "type": "string"
     },
-    "__stringMax64": {
+    "__stringMax36PatternS": {
       "type": "string",
-      "max": 64
+      "max": 36,
+      "pattern": "^\\S+$"
     },
-    "__stringMax8096": {
+    "__stringMin0Max256PatternS": {
       "type": "string",
-      "max": 8096
+      "min": 0,
+      "max": 256,
+      "pattern": "^\\S+$"
     },
-    "__stringMin1Max128": {
+    "__stringMin12Max12PatternD12": {
+      "type": "string",
+      "min": 12,
+      "max": 12,
+      "pattern": "^\\d{12}$"
+    },
+    "__stringMin1Max128PatternAZaZ09": {
       "type": "string",
       "min": 1,
-      "max": 128
+      "max": 128,
+      "pattern": "^[A-Za-z0-9:.\\/_-]*$"
     },
-    "__stringMin1Max32": {
+    "__stringMin1Max256PatternAZaZ09": {
       "type": "string",
       "min": 1,
-      "max": 32
+      "max": 256,
+      "pattern": "^[A-Za-z0-9:\\/_-]*$"
+    },
+    "__stringMin1Max32PatternS": {
+      "type": "string",
+      "min": 1,
+      "max": 32,
+      "pattern": "^\\S+$"
     },
     "__stringMin1Max64PatternS": {
       "type": "string",
       "min": 1,
       "max": 64,
       "pattern": "^\\S+$"
+    },
+    "__stringMin1Max8096PatternS": {
+      "type": "string",
+      "min": 1,
+      "max": 8096,
+      "pattern": "[\\S]*"
+    },
+    "__policy": {
+      "type": "string",
+      "min": 2,
+      "max": 10240,
+      "pattern": "[\\u0009\\u000A\\u000D\\u0020-\\u007E\\u00A1-\\u00FF]+"
     },
     "__timestampIso8601": {
       "type": "timestamp",

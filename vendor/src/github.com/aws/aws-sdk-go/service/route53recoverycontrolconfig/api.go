@@ -28,14 +28,13 @@ const opCreateCluster = "CreateCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateClusterRequest method.
+//	req, resp := client.CreateClusterRequest(params)
 //
-//    // Example sending a request using the CreateClusterRequest method.
-//    req, resp := client.CreateClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateCluster
 func (c *Route53RecoveryControlConfig) CreateClusterRequest(input *CreateClusterInput) (req *request.Request, output *CreateClusterOutput) {
@@ -60,8 +59,8 @@ func (c *Route53RecoveryControlConfig) CreateClusterRequest(input *CreateCluster
 // against which you can run API calls to update or get the state of one or
 // more routing controls. Each cluster has a name, status, Amazon Resource Name
 // (ARN), and an array of the five cluster endpoints (one for each supported
-// Amazon Web Services Region) that you can use with API calls to the Amazon
-// Route 53 Application Recovery Controller cluster data plane.
+// Amazon Web Services Region) that you can use with API calls to the cluster
+// data plane.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -71,29 +70,31 @@ func (c *Route53RecoveryControlConfig) CreateClusterRequest(input *CreateCluster
 // API operation CreateCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * ServiceQuotaExceededException
-//   402 response
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - ServiceQuotaExceededException
+//     402 response - You attempted to create more resources than the service allows
+//     based on service quotas.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateCluster
 func (c *Route53RecoveryControlConfig) CreateCluster(input *CreateClusterInput) (*CreateClusterOutput, error) {
@@ -133,14 +134,13 @@ const opCreateControlPanel = "CreateControlPanel"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateControlPanelRequest method.
+//	req, resp := client.CreateControlPanelRequest(params)
 //
-//    // Example sending a request using the CreateControlPanelRequest method.
-//    req, resp := client.CreateControlPanelRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateControlPanel
 func (c *Route53RecoveryControlConfig) CreateControlPanelRequest(input *CreateControlPanelInput) (req *request.Request, output *CreateControlPanelOutput) {
@@ -165,7 +165,7 @@ func (c *Route53RecoveryControlConfig) CreateControlPanelRequest(input *CreateCo
 // controls that can be changed together in a single transaction. You can use
 // a control panel to centrally view the operational status of applications
 // across your organization, and trigger multi-app failovers in a single transaction,
-// for example, to fail over an Availability Zone or AWS Region.
+// for example, to fail over an Availability Zone or Amazon Web Services Region.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -175,29 +175,31 @@ func (c *Route53RecoveryControlConfig) CreateControlPanelRequest(input *CreateCo
 // API operation CreateControlPanel for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * ServiceQuotaExceededException
-//   402 response
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - ServiceQuotaExceededException
+//     402 response - You attempted to create more resources than the service allows
+//     based on service quotas.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateControlPanel
 func (c *Route53RecoveryControlConfig) CreateControlPanel(input *CreateControlPanelInput) (*CreateControlPanelOutput, error) {
@@ -237,14 +239,13 @@ const opCreateRoutingControl = "CreateRoutingControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateRoutingControlRequest method.
+//	req, resp := client.CreateRoutingControlRequest(params)
 //
-//    // Example sending a request using the CreateRoutingControlRequest method.
-//    req, resp := client.CreateRoutingControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateRoutingControl
 func (c *Route53RecoveryControlConfig) CreateRoutingControlRequest(input *CreateRoutingControlInput) (req *request.Request, output *CreateRoutingControlOutput) {
@@ -282,29 +283,31 @@ func (c *Route53RecoveryControlConfig) CreateRoutingControlRequest(input *Create
 // API operation CreateRoutingControl for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * ServiceQuotaExceededException
-//   402 response
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - ServiceQuotaExceededException
+//     402 response - You attempted to create more resources than the service allows
+//     based on service quotas.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateRoutingControl
 func (c *Route53RecoveryControlConfig) CreateRoutingControl(input *CreateRoutingControlInput) (*CreateRoutingControlOutput, error) {
@@ -344,14 +347,13 @@ const opCreateSafetyRule = "CreateSafetyRule"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateSafetyRuleRequest method.
+//	req, resp := client.CreateSafetyRuleRequest(params)
 //
-//    // Example sending a request using the CreateSafetyRuleRequest method.
-//    req, resp := client.CreateSafetyRuleRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateSafetyRule
 func (c *Route53RecoveryControlConfig) CreateSafetyRuleRequest(input *CreateSafetyRuleInput) (req *request.Request, output *CreateSafetyRuleOutput) {
@@ -373,20 +375,24 @@ func (c *Route53RecoveryControlConfig) CreateSafetyRuleRequest(input *CreateSafe
 // CreateSafetyRule API operation for AWS Route53 Recovery Control Config.
 //
 // Creates a safety rule in a control panel. Safety rules let you add safeguards
-// around enabling and disabling routing controls, to help prevent unexpected
-// outcomes.
+// around changing routing control states, and for enabling and disabling routing
+// controls, to help prevent unexpected outcomes.
 //
 // There are two types of safety rules: assertion rules and gating rules.
 //
-// Assertion rule: An assertion rule enforces that, when a routing control state
-// is changed, the criteria set by the rule configuration is met. Otherwise,
-// the change to the routing control is not accepted.
+// Assertion rule: An assertion rule enforces that, when you change a routing
+// control state, that a certain criteria is met. For example, the criteria
+// might be that at least one routing control state is On after the transaction
+// so that traffic continues to flow to at least one cell for the application.
+// This ensures that you avoid a fail-open scenario.
 //
-// Gating rule: A gating rule verifies that a set of gating controls evaluates
-// as true, based on a rule configuration that you specify. If the gating rule
-// evaluates to true, Amazon Route 53 Application Recovery Controller allows
-// a set of routing control state changes to run and complete against the set
-// of target controls.
+// Gating rule: A gating rule lets you configure a gating routing control as
+// an overall "on/off" switch for a group of routing controls. Or, you can configure
+// more complex gating scenarios, for example by configuring multiple gating
+// routing controls.
+//
+// For more information, see Safety rules (https://docs.aws.amazon.com/r53recovery/latest/dg/routing-control.safety-rules.html)
+// in the Amazon Route 53 Application Recovery Controller Developer Guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -396,13 +402,14 @@ func (c *Route53RecoveryControlConfig) CreateSafetyRuleRequest(input *CreateSafe
 // API operation CreateSafetyRule for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/CreateSafetyRule
 func (c *Route53RecoveryControlConfig) CreateSafetyRule(input *CreateSafetyRuleInput) (*CreateSafetyRuleOutput, error) {
@@ -442,14 +449,13 @@ const opDeleteCluster = "DeleteCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteClusterRequest method.
+//	req, resp := client.DeleteClusterRequest(params)
 //
-//    // Example sending a request using the DeleteClusterRequest method.
-//    req, resp := client.DeleteClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteCluster
 func (c *Route53RecoveryControlConfig) DeleteClusterRequest(input *DeleteClusterInput) (req *request.Request, output *DeleteClusterOutput) {
@@ -481,26 +487,27 @@ func (c *Route53RecoveryControlConfig) DeleteClusterRequest(input *DeleteCluster
 // API operation DeleteCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteCluster
 func (c *Route53RecoveryControlConfig) DeleteCluster(input *DeleteClusterInput) (*DeleteClusterOutput, error) {
@@ -540,14 +547,13 @@ const opDeleteControlPanel = "DeleteControlPanel"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteControlPanelRequest method.
+//	req, resp := client.DeleteControlPanelRequest(params)
 //
-//    // Example sending a request using the DeleteControlPanelRequest method.
-//    req, resp := client.DeleteControlPanelRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteControlPanel
 func (c *Route53RecoveryControlConfig) DeleteControlPanelRequest(input *DeleteControlPanelInput) (req *request.Request, output *DeleteControlPanelOutput) {
@@ -579,26 +585,27 @@ func (c *Route53RecoveryControlConfig) DeleteControlPanelRequest(input *DeleteCo
 // API operation DeleteControlPanel for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteControlPanel
 func (c *Route53RecoveryControlConfig) DeleteControlPanel(input *DeleteControlPanelInput) (*DeleteControlPanelOutput, error) {
@@ -638,14 +645,13 @@ const opDeleteRoutingControl = "DeleteRoutingControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteRoutingControlRequest method.
+//	req, resp := client.DeleteRoutingControlRequest(params)
 //
-//    // Example sending a request using the DeleteRoutingControlRequest method.
-//    req, resp := client.DeleteRoutingControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteRoutingControl
 func (c *Route53RecoveryControlConfig) DeleteRoutingControlRequest(input *DeleteRoutingControlInput) (req *request.Request, output *DeleteRoutingControlOutput) {
@@ -677,26 +683,27 @@ func (c *Route53RecoveryControlConfig) DeleteRoutingControlRequest(input *Delete
 // API operation DeleteRoutingControl for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteRoutingControl
 func (c *Route53RecoveryControlConfig) DeleteRoutingControl(input *DeleteRoutingControlInput) (*DeleteRoutingControlOutput, error) {
@@ -736,14 +743,13 @@ const opDeleteSafetyRule = "DeleteSafetyRule"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteSafetyRuleRequest method.
+//	req, resp := client.DeleteSafetyRuleRequest(params)
 //
-//    // Example sending a request using the DeleteSafetyRuleRequest method.
-//    req, resp := client.DeleteSafetyRuleRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteSafetyRule
 func (c *Route53RecoveryControlConfig) DeleteSafetyRuleRequest(input *DeleteSafetyRuleInput) (req *request.Request, output *DeleteSafetyRuleOutput) {
@@ -776,16 +782,18 @@ func (c *Route53RecoveryControlConfig) DeleteSafetyRuleRequest(input *DeleteSafe
 // API operation DeleteSafetyRule for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
 //
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DeleteSafetyRule
 func (c *Route53RecoveryControlConfig) DeleteSafetyRule(input *DeleteSafetyRuleInput) (*DeleteSafetyRuleOutput, error) {
@@ -825,14 +833,13 @@ const opDescribeCluster = "DescribeCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeClusterRequest method.
+//	req, resp := client.DescribeClusterRequest(params)
 //
-//    // Example sending a request using the DescribeClusterRequest method.
-//    req, resp := client.DescribeClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeCluster
 func (c *Route53RecoveryControlConfig) DescribeClusterRequest(input *DescribeClusterInput) (req *request.Request, output *DescribeClusterOutput) {
@@ -864,26 +871,27 @@ func (c *Route53RecoveryControlConfig) DescribeClusterRequest(input *DescribeClu
 // API operation DescribeCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeCluster
 func (c *Route53RecoveryControlConfig) DescribeCluster(input *DescribeClusterInput) (*DescribeClusterOutput, error) {
@@ -923,14 +931,13 @@ const opDescribeControlPanel = "DescribeControlPanel"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeControlPanelRequest method.
+//	req, resp := client.DescribeControlPanelRequest(params)
 //
-//    // Example sending a request using the DescribeControlPanelRequest method.
-//    req, resp := client.DescribeControlPanelRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeControlPanel
 func (c *Route53RecoveryControlConfig) DescribeControlPanelRequest(input *DescribeControlPanelInput) (req *request.Request, output *DescribeControlPanelOutput) {
@@ -961,26 +968,27 @@ func (c *Route53RecoveryControlConfig) DescribeControlPanelRequest(input *Descri
 // API operation DescribeControlPanel for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeControlPanel
 func (c *Route53RecoveryControlConfig) DescribeControlPanel(input *DescribeControlPanelInput) (*DescribeControlPanelOutput, error) {
@@ -1020,14 +1028,13 @@ const opDescribeRoutingControl = "DescribeRoutingControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeRoutingControlRequest method.
+//	req, resp := client.DescribeRoutingControlRequest(params)
 //
-//    // Example sending a request using the DescribeRoutingControlRequest method.
-//    req, resp := client.DescribeRoutingControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeRoutingControl
 func (c *Route53RecoveryControlConfig) DescribeRoutingControlRequest(input *DescribeRoutingControlInput) (req *request.Request, output *DescribeRoutingControlOutput) {
@@ -1063,26 +1070,27 @@ func (c *Route53RecoveryControlConfig) DescribeRoutingControlRequest(input *Desc
 // API operation DescribeRoutingControl for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeRoutingControl
 func (c *Route53RecoveryControlConfig) DescribeRoutingControl(input *DescribeRoutingControlInput) (*DescribeRoutingControlOutput, error) {
@@ -1122,14 +1130,13 @@ const opDescribeSafetyRule = "DescribeSafetyRule"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeSafetyRuleRequest method.
+//	req, resp := client.DescribeSafetyRuleRequest(params)
 //
-//    // Example sending a request using the DescribeSafetyRuleRequest method.
-//    req, resp := client.DescribeSafetyRuleRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeSafetyRule
 func (c *Route53RecoveryControlConfig) DescribeSafetyRuleRequest(input *DescribeSafetyRuleInput) (req *request.Request, output *DescribeSafetyRuleOutput) {
@@ -1150,8 +1157,7 @@ func (c *Route53RecoveryControlConfig) DescribeSafetyRuleRequest(input *Describe
 
 // DescribeSafetyRule API operation for AWS Route53 Recovery Control Config.
 //
-// Describes the safety rules (that is, the assertion rules and gating rules)
-// for the routing controls in a control panel.
+// Returns information about a safety rule.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1161,13 +1167,15 @@ func (c *Route53RecoveryControlConfig) DescribeSafetyRuleRequest(input *Describe
 // API operation DescribeSafetyRule for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/DescribeSafetyRule
 func (c *Route53RecoveryControlConfig) DescribeSafetyRule(input *DescribeSafetyRuleInput) (*DescribeSafetyRuleOutput, error) {
@@ -1191,6 +1199,89 @@ func (c *Route53RecoveryControlConfig) DescribeSafetyRuleWithContext(ctx aws.Con
 	return out, req.Send()
 }
 
+const opGetResourcePolicy = "GetResourcePolicy"
+
+// GetResourcePolicyRequest generates a "aws/request.Request" representing the
+// client's request for the GetResourcePolicy operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetResourcePolicy for more information on using the GetResourcePolicy
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetResourcePolicyRequest method.
+//	req, resp := client.GetResourcePolicyRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/GetResourcePolicy
+func (c *Route53RecoveryControlConfig) GetResourcePolicyRequest(input *GetResourcePolicyInput) (req *request.Request, output *GetResourcePolicyOutput) {
+	op := &request.Operation{
+		Name:       opGetResourcePolicy,
+		HTTPMethod: "GET",
+		HTTPPath:   "/resourcePolicy/{ResourceArn}",
+	}
+
+	if input == nil {
+		input = &GetResourcePolicyInput{}
+	}
+
+	output = &GetResourcePolicyOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetResourcePolicy API operation for AWS Route53 Recovery Control Config.
+//
+// Get information about the resource policy for a cluster.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Route53 Recovery Control Config's
+// API operation GetResourcePolicy for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/GetResourcePolicy
+func (c *Route53RecoveryControlConfig) GetResourcePolicy(input *GetResourcePolicyInput) (*GetResourcePolicyOutput, error) {
+	req, out := c.GetResourcePolicyRequest(input)
+	return out, req.Send()
+}
+
+// GetResourcePolicyWithContext is the same as GetResourcePolicy with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetResourcePolicy for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Route53RecoveryControlConfig) GetResourcePolicyWithContext(ctx aws.Context, input *GetResourcePolicyInput, opts ...request.Option) (*GetResourcePolicyOutput, error) {
+	req, out := c.GetResourcePolicyRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opListAssociatedRoute53HealthChecks = "ListAssociatedRoute53HealthChecks"
 
 // ListAssociatedRoute53HealthChecksRequest generates a "aws/request.Request" representing the
@@ -1207,14 +1298,13 @@ const opListAssociatedRoute53HealthChecks = "ListAssociatedRoute53HealthChecks"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListAssociatedRoute53HealthChecksRequest method.
+//	req, resp := client.ListAssociatedRoute53HealthChecksRequest(params)
 //
-//    // Example sending a request using the ListAssociatedRoute53HealthChecksRequest method.
-//    req, resp := client.ListAssociatedRoute53HealthChecksRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListAssociatedRoute53HealthChecks
 func (c *Route53RecoveryControlConfig) ListAssociatedRoute53HealthChecksRequest(input *ListAssociatedRoute53HealthChecksInput) (req *request.Request, output *ListAssociatedRoute53HealthChecksOutput) {
@@ -1252,16 +1342,18 @@ func (c *Route53RecoveryControlConfig) ListAssociatedRoute53HealthChecksRequest(
 // API operation ListAssociatedRoute53HealthChecks for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
 //
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListAssociatedRoute53HealthChecks
 func (c *Route53RecoveryControlConfig) ListAssociatedRoute53HealthChecks(input *ListAssociatedRoute53HealthChecksInput) (*ListAssociatedRoute53HealthChecksOutput, error) {
@@ -1293,15 +1385,14 @@ func (c *Route53RecoveryControlConfig) ListAssociatedRoute53HealthChecksWithCont
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListAssociatedRoute53HealthChecks operation.
-//    pageNum := 0
-//    err := client.ListAssociatedRoute53HealthChecksPages(params,
-//        func(page *route53recoverycontrolconfig.ListAssociatedRoute53HealthChecksOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListAssociatedRoute53HealthChecks operation.
+//	pageNum := 0
+//	err := client.ListAssociatedRoute53HealthChecksPages(params,
+//	    func(page *route53recoverycontrolconfig.ListAssociatedRoute53HealthChecksOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryControlConfig) ListAssociatedRoute53HealthChecksPages(input *ListAssociatedRoute53HealthChecksInput, fn func(*ListAssociatedRoute53HealthChecksOutput, bool) bool) error {
 	return c.ListAssociatedRoute53HealthChecksPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1353,14 +1444,13 @@ const opListClusters = "ListClusters"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListClustersRequest method.
+//	req, resp := client.ListClustersRequest(params)
 //
-//    // Example sending a request using the ListClustersRequest method.
-//    req, resp := client.ListClustersRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListClusters
 func (c *Route53RecoveryControlConfig) ListClustersRequest(input *ListClustersInput) (req *request.Request, output *ListClustersOutput) {
@@ -1397,23 +1487,24 @@ func (c *Route53RecoveryControlConfig) ListClustersRequest(input *ListClustersIn
 // API operation ListClusters for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListClusters
 func (c *Route53RecoveryControlConfig) ListClusters(input *ListClustersInput) (*ListClustersOutput, error) {
@@ -1445,15 +1536,14 @@ func (c *Route53RecoveryControlConfig) ListClustersWithContext(ctx aws.Context, 
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListClusters operation.
-//    pageNum := 0
-//    err := client.ListClustersPages(params,
-//        func(page *route53recoverycontrolconfig.ListClustersOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListClusters operation.
+//	pageNum := 0
+//	err := client.ListClustersPages(params,
+//	    func(page *route53recoverycontrolconfig.ListClustersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryControlConfig) ListClustersPages(input *ListClustersInput, fn func(*ListClustersOutput, bool) bool) error {
 	return c.ListClustersPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1505,14 +1595,13 @@ const opListControlPanels = "ListControlPanels"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListControlPanelsRequest method.
+//	req, resp := client.ListControlPanelsRequest(params)
 //
-//    // Example sending a request using the ListControlPanelsRequest method.
-//    req, resp := client.ListControlPanelsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListControlPanels
 func (c *Route53RecoveryControlConfig) ListControlPanelsRequest(input *ListControlPanelsInput) (req *request.Request, output *ListControlPanelsOutput) {
@@ -1539,7 +1628,7 @@ func (c *Route53RecoveryControlConfig) ListControlPanelsRequest(input *ListContr
 
 // ListControlPanels API operation for AWS Route53 Recovery Control Config.
 //
-// Returns an array of control panels for a cluster.
+// Returns an array of control panels in an account or in a cluster.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1549,23 +1638,24 @@ func (c *Route53RecoveryControlConfig) ListControlPanelsRequest(input *ListContr
 // API operation ListControlPanels for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListControlPanels
 func (c *Route53RecoveryControlConfig) ListControlPanels(input *ListControlPanelsInput) (*ListControlPanelsOutput, error) {
@@ -1597,15 +1687,14 @@ func (c *Route53RecoveryControlConfig) ListControlPanelsWithContext(ctx aws.Cont
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListControlPanels operation.
-//    pageNum := 0
-//    err := client.ListControlPanelsPages(params,
-//        func(page *route53recoverycontrolconfig.ListControlPanelsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListControlPanels operation.
+//	pageNum := 0
+//	err := client.ListControlPanelsPages(params,
+//	    func(page *route53recoverycontrolconfig.ListControlPanelsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryControlConfig) ListControlPanelsPages(input *ListControlPanelsInput, fn func(*ListControlPanelsOutput, bool) bool) error {
 	return c.ListControlPanelsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1657,14 +1746,13 @@ const opListRoutingControls = "ListRoutingControls"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListRoutingControlsRequest method.
+//	req, resp := client.ListRoutingControlsRequest(params)
 //
-//    // Example sending a request using the ListRoutingControlsRequest method.
-//    req, resp := client.ListRoutingControlsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListRoutingControls
 func (c *Route53RecoveryControlConfig) ListRoutingControlsRequest(input *ListRoutingControlsInput) (req *request.Request, output *ListRoutingControlsOutput) {
@@ -1704,23 +1792,24 @@ func (c *Route53RecoveryControlConfig) ListRoutingControlsRequest(input *ListRou
 // API operation ListRoutingControls for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListRoutingControls
 func (c *Route53RecoveryControlConfig) ListRoutingControls(input *ListRoutingControlsInput) (*ListRoutingControlsOutput, error) {
@@ -1752,15 +1841,14 @@ func (c *Route53RecoveryControlConfig) ListRoutingControlsWithContext(ctx aws.Co
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListRoutingControls operation.
-//    pageNum := 0
-//    err := client.ListRoutingControlsPages(params,
-//        func(page *route53recoverycontrolconfig.ListRoutingControlsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListRoutingControls operation.
+//	pageNum := 0
+//	err := client.ListRoutingControlsPages(params,
+//	    func(page *route53recoverycontrolconfig.ListRoutingControlsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryControlConfig) ListRoutingControlsPages(input *ListRoutingControlsInput, fn func(*ListRoutingControlsOutput, bool) bool) error {
 	return c.ListRoutingControlsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1812,14 +1900,13 @@ const opListSafetyRules = "ListSafetyRules"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListSafetyRulesRequest method.
+//	req, resp := client.ListSafetyRulesRequest(params)
 //
-//    // Example sending a request using the ListSafetyRulesRequest method.
-//    req, resp := client.ListSafetyRulesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListSafetyRules
 func (c *Route53RecoveryControlConfig) ListSafetyRulesRequest(input *ListSafetyRulesInput) (req *request.Request, output *ListSafetyRulesOutput) {
@@ -1857,23 +1944,24 @@ func (c *Route53RecoveryControlConfig) ListSafetyRulesRequest(input *ListSafetyR
 // API operation ListSafetyRules for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListSafetyRules
 func (c *Route53RecoveryControlConfig) ListSafetyRules(input *ListSafetyRulesInput) (*ListSafetyRulesOutput, error) {
@@ -1905,15 +1993,14 @@ func (c *Route53RecoveryControlConfig) ListSafetyRulesWithContext(ctx aws.Contex
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListSafetyRules operation.
-//    pageNum := 0
-//    err := client.ListSafetyRulesPages(params,
-//        func(page *route53recoverycontrolconfig.ListSafetyRulesOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListSafetyRules operation.
+//	pageNum := 0
+//	err := client.ListSafetyRulesPages(params,
+//	    func(page *route53recoverycontrolconfig.ListSafetyRulesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *Route53RecoveryControlConfig) ListSafetyRulesPages(input *ListSafetyRulesInput, fn func(*ListSafetyRulesOutput, bool) bool) error {
 	return c.ListSafetyRulesPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1949,6 +2036,272 @@ func (c *Route53RecoveryControlConfig) ListSafetyRulesPagesWithContext(ctx aws.C
 	return p.Err()
 }
 
+const opListTagsForResource = "ListTagsForResource"
+
+// ListTagsForResourceRequest generates a "aws/request.Request" representing the
+// client's request for the ListTagsForResource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListTagsForResource for more information on using the ListTagsForResource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListTagsForResourceRequest method.
+//	req, resp := client.ListTagsForResourceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListTagsForResource
+func (c *Route53RecoveryControlConfig) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *request.Request, output *ListTagsForResourceOutput) {
+	op := &request.Operation{
+		Name:       opListTagsForResource,
+		HTTPMethod: "GET",
+		HTTPPath:   "/tags/{ResourceArn}",
+	}
+
+	if input == nil {
+		input = &ListTagsForResourceInput{}
+	}
+
+	output = &ListTagsForResourceOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListTagsForResource API operation for AWS Route53 Recovery Control Config.
+//
+// Lists the tags for a resource.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Route53 Recovery Control Config's
+// API operation ListTagsForResource for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
+//
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/ListTagsForResource
+func (c *Route53RecoveryControlConfig) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
+	req, out := c.ListTagsForResourceRequest(input)
+	return out, req.Send()
+}
+
+// ListTagsForResourceWithContext is the same as ListTagsForResource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListTagsForResource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Route53RecoveryControlConfig) ListTagsForResourceWithContext(ctx aws.Context, input *ListTagsForResourceInput, opts ...request.Option) (*ListTagsForResourceOutput, error) {
+	req, out := c.ListTagsForResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opTagResource = "TagResource"
+
+// TagResourceRequest generates a "aws/request.Request" representing the
+// client's request for the TagResource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See TagResource for more information on using the TagResource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the TagResourceRequest method.
+//	req, resp := client.TagResourceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/TagResource
+func (c *Route53RecoveryControlConfig) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
+	op := &request.Operation{
+		Name:       opTagResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/tags/{ResourceArn}",
+	}
+
+	if input == nil {
+		input = &TagResourceInput{}
+	}
+
+	output = &TagResourceOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// TagResource API operation for AWS Route53 Recovery Control Config.
+//
+// Adds a tag to a resource.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Route53 Recovery Control Config's
+// API operation TagResource for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
+//
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/TagResource
+func (c *Route53RecoveryControlConfig) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
+	req, out := c.TagResourceRequest(input)
+	return out, req.Send()
+}
+
+// TagResourceWithContext is the same as TagResource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See TagResource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Route53RecoveryControlConfig) TagResourceWithContext(ctx aws.Context, input *TagResourceInput, opts ...request.Option) (*TagResourceOutput, error) {
+	req, out := c.TagResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opUntagResource = "UntagResource"
+
+// UntagResourceRequest generates a "aws/request.Request" representing the
+// client's request for the UntagResource operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UntagResource for more information on using the UntagResource
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UntagResourceRequest method.
+//	req, resp := client.UntagResourceRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UntagResource
+func (c *Route53RecoveryControlConfig) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
+	op := &request.Operation{
+		Name:       opUntagResource,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/tags/{ResourceArn}",
+	}
+
+	if input == nil {
+		input = &UntagResourceInput{}
+	}
+
+	output = &UntagResourceOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// UntagResource API operation for AWS Route53 Recovery Control Config.
+//
+// Removes a tag from a resource.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Route53 Recovery Control Config's
+// API operation UntagResource for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
+//
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UntagResource
+func (c *Route53RecoveryControlConfig) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
+	req, out := c.UntagResourceRequest(input)
+	return out, req.Send()
+}
+
+// UntagResourceWithContext is the same as UntagResource with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UntagResource for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *Route53RecoveryControlConfig) UntagResourceWithContext(ctx aws.Context, input *UntagResourceInput, opts ...request.Option) (*UntagResourceOutput, error) {
+	req, out := c.UntagResourceRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateControlPanel = "UpdateControlPanel"
 
 // UpdateControlPanelRequest generates a "aws/request.Request" representing the
@@ -1965,14 +2318,13 @@ const opUpdateControlPanel = "UpdateControlPanel"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateControlPanelRequest method.
+//	req, resp := client.UpdateControlPanelRequest(params)
 //
-//    // Example sending a request using the UpdateControlPanelRequest method.
-//    req, resp := client.UpdateControlPanelRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UpdateControlPanel
 func (c *Route53RecoveryControlConfig) UpdateControlPanelRequest(input *UpdateControlPanelInput) (req *request.Request, output *UpdateControlPanelOutput) {
@@ -2004,26 +2356,27 @@ func (c *Route53RecoveryControlConfig) UpdateControlPanelRequest(input *UpdateCo
 // API operation UpdateControlPanel for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UpdateControlPanel
 func (c *Route53RecoveryControlConfig) UpdateControlPanel(input *UpdateControlPanelInput) (*UpdateControlPanelOutput, error) {
@@ -2063,14 +2416,13 @@ const opUpdateRoutingControl = "UpdateRoutingControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateRoutingControlRequest method.
+//	req, resp := client.UpdateRoutingControlRequest(params)
 //
-//    // Example sending a request using the UpdateRoutingControlRequest method.
-//    req, resp := client.UpdateRoutingControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UpdateRoutingControl
 func (c *Route53RecoveryControlConfig) UpdateRoutingControlRequest(input *UpdateRoutingControlInput) (req *request.Request, output *UpdateRoutingControlOutput) {
@@ -2103,26 +2455,27 @@ func (c *Route53RecoveryControlConfig) UpdateRoutingControlRequest(input *Update
 // API operation UpdateRoutingControl for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
 //
-//   * AccessDeniedException
-//   403 response - AccessDeniedException. You do not have sufficient access to
-//   perform this action.
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
+//   - AccessDeniedException
+//     403 response - You do not have sufficient access to perform this action.
 //
-//   * ThrottlingException
-//   429 response - ThrottlingException.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * ConflictException
-//   409 response - ConflictException.
+//   - ThrottlingException
+//     429 response - LimitExceededException or TooManyRequestsException.
+//
+//   - ConflictException
+//     409 response - ConflictException. You might be using a predefined variable.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UpdateRoutingControl
 func (c *Route53RecoveryControlConfig) UpdateRoutingControl(input *UpdateRoutingControlInput) (*UpdateRoutingControlOutput, error) {
@@ -2162,14 +2515,13 @@ const opUpdateSafetyRule = "UpdateSafetyRule"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateSafetyRuleRequest method.
+//	req, resp := client.UpdateSafetyRuleRequest(params)
 //
-//    // Example sending a request using the UpdateSafetyRuleRequest method.
-//    req, resp := client.UpdateSafetyRuleRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UpdateSafetyRule
 func (c *Route53RecoveryControlConfig) UpdateSafetyRuleRequest(input *UpdateSafetyRuleInput) (req *request.Request, output *UpdateSafetyRuleOutput) {
@@ -2190,10 +2542,9 @@ func (c *Route53RecoveryControlConfig) UpdateSafetyRuleRequest(input *UpdateSafe
 
 // UpdateSafetyRule API operation for AWS Route53 Recovery Control Config.
 //
-// Update a safety rule (an assertion rule or gating rule) for the routing controls
-// in a control panel. You can only update the name and the waiting period for
-// a safety rule. To make other updates, delete the safety rule and create a
-// new safety rule.
+// Update a safety rule (an assertion rule or gating rule). You can only update
+// the name and the waiting period for a safety rule. To make other updates,
+// delete the safety rule and create a new one.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2203,16 +2554,18 @@ func (c *Route53RecoveryControlConfig) UpdateSafetyRuleRequest(input *UpdateSafe
 // API operation UpdateSafetyRule for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   404 response - The query string contains a syntax error or resource not found.
 //
-//   * ValidationException
-//   400 response - Multiple causes. For example, you might have a malformed query
-//   string and input parameter might be out of range, or you used parameters
-//   together incorrectly.
+//   - ResourceNotFoundException
+//     404 response - MalformedQueryString. The query string contains a syntax error
+//     or resource not found.
 //
-//   * InternalServerException
-//   500 response - InternalServiceError. Temporary service error. Retry the request.
+//   - ValidationException
+//     400 response - Multiple causes. For example, you might have a malformed query
+//     string and input parameter might be out of range, or you might have used
+//     parameters together incorrectly.
+//
+//   - InternalServerException
+//     500 response - InternalServiceError. Temporary service error. Retry the request.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/route53-recovery-control-config-2020-11-02/UpdateSafetyRule
 func (c *Route53RecoveryControlConfig) UpdateSafetyRule(input *UpdateSafetyRuleInput) (*UpdateSafetyRuleOutput, error) {
@@ -2236,8 +2589,7 @@ func (c *Route53RecoveryControlConfig) UpdateSafetyRuleWithContext(ctx aws.Conte
 	return out, req.Send()
 }
 
-// 403 response - AccessDeniedException. You do not have sufficient access to
-// perform this action.
+// 403 response - You do not have sufficient access to perform this action.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -2245,12 +2597,20 @@ type AccessDeniedException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) GoString() string {
 	return s.String()
 }
@@ -2293,9 +2653,12 @@ func (s *AccessDeniedException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// An assertion rule enforces that, when a routing control state is changed,
-// the criteria set by the rule configuration is met. Otherwise, the change
-// to the routing control is not accepted.
+// An assertion rule enforces that, when you change a routing control state,
+// that the criteria that you set in the rule configuration is met. Otherwise,
+// the change to the routing control is not accepted. For example, the criteria
+// might be that at least one routing control state is On after the transaction
+// so that traffic continues to flow to at least one cell for the application.
+// This ensures that you avoid a fail-open scenario.
 type AssertionRule struct {
 	_ struct{} `type:"structure"`
 
@@ -2310,7 +2673,7 @@ type AssertionRule struct {
 	// The Amazon Resource Name (ARN) of the control panel.
 	//
 	// ControlPanelArn is a required field
-	ControlPanelArn *string `type:"string" required:"true"`
+	ControlPanelArn *string `min:"1" type:"string" required:"true"`
 
 	// Name of the assertion rule. You can use any non-white space character in
 	// the name.
@@ -2318,11 +2681,15 @@ type AssertionRule struct {
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The criteria that you set for specific assertion controls (routing controls)
-	// that designate how many controls must be enabled as the result of a transaction.
-	// For example, if you have three assertion controls, you might specify atleast
-	// 2 for your rule configuration. This means that at least two assertion controls
-	// must be enabled, so that at least two Amazon Web Services Regions are enabled.
+	// The Amazon Web Services account ID of the assertion rule owner.
+	Owner *string `min:"12" type:"string"`
+
+	// The criteria that you set for specific assertion routing controls (AssertedControls)
+	// that designate how many routing control states must be ON as the result of
+	// a transaction. For example, if you have three assertion routing controls,
+	// you might specify ATLEAST 2 for your rule configuration. This means that
+	// at least two assertion routing control states must be ON, so that at least
+	// two Amazon Web Services Regions have traffic flowing to them.
 	//
 	// RuleConfig is a required field
 	RuleConfig *RuleConfig `type:"structure" required:"true"`
@@ -2330,7 +2697,7 @@ type AssertionRule struct {
 	// The Amazon Resource Name (ARN) of the assertion rule.
 	//
 	// SafetyRuleArn is a required field
-	SafetyRuleArn *string `type:"string" required:"true"`
+	SafetyRuleArn *string `min:"1" type:"string" required:"true"`
 
 	// The deployment status of an assertion rule. Status can be one of the following:
 	// PENDING, DEPLOYED, PENDING_DELETION.
@@ -2346,12 +2713,20 @@ type AssertionRule struct {
 	WaitPeriodMs *int64 `type:"integer" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssertionRule) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssertionRule) GoString() string {
 	return s.String()
 }
@@ -2371,6 +2746,12 @@ func (s *AssertionRule) SetControlPanelArn(v string) *AssertionRule {
 // SetName sets the Name field's value.
 func (s *AssertionRule) SetName(v string) *AssertionRule {
 	s.Name = &v
+	return s
+}
+
+// SetOwner sets the Owner field's value.
+func (s *AssertionRule) SetOwner(v string) *AssertionRule {
+	s.Owner = &v
 	return s
 }
 
@@ -2413,7 +2794,7 @@ type AssertionRuleUpdate struct {
 	// The Amazon Resource Name (ARN) of the assertion rule.
 	//
 	// SafetyRuleArn is a required field
-	SafetyRuleArn *string `type:"string" required:"true"`
+	SafetyRuleArn *string `min:"1" type:"string" required:"true"`
 
 	// An evaluation period, in milliseconds (ms), during which any request against
 	// the target routing controls will fail. This helps prevent "flapping" of state.
@@ -2423,12 +2804,20 @@ type AssertionRuleUpdate struct {
 	WaitPeriodMs *int64 `type:"integer" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssertionRuleUpdate) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssertionRuleUpdate) GoString() string {
 	return s.String()
 }
@@ -2444,6 +2833,9 @@ func (s *AssertionRuleUpdate) Validate() error {
 	}
 	if s.SafetyRuleArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("SafetyRuleArn"))
+	}
+	if s.SafetyRuleArn != nil && len(*s.SafetyRuleArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SafetyRuleArn", 1))
 	}
 	if s.WaitPeriodMs == nil {
 		invalidParams.Add(request.NewErrParamRequired("WaitPeriodMs"))
@@ -2473,36 +2865,47 @@ func (s *AssertionRuleUpdate) SetWaitPeriodMs(v int64) *AssertionRuleUpdate {
 	return s
 }
 
-// A cluster is a set of five consensus-forming Regional endpoints that represent
-// the infrastructure that hosts your routing controls. Typically, you host
-// together on one cluster all of the routing controls for your applications.
+// A set of five redundant Regional endpoints against which you can execute
+// API calls to update or get the state of routing controls. You can host multiple
+// control panels and routing controls on one cluster.
 type Cluster struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the cluster.
-	ClusterArn *string `type:"string"`
+	ClusterArn *string `min:"1" type:"string"`
 
 	// Endpoints for a cluster. Specify one of these endpoints when you want to
 	// set or retrieve a routing control state in the cluster.
 	//
 	// To get or update the routing control state, see the Amazon Route 53 Application
-	// Recovery Controller Cluster (Data Plane) Actions.
+	// Recovery Controller Routing Control Actions.
 	ClusterEndpoints []*ClusterEndpoint `type:"list"`
 
 	// The name of the cluster.
 	Name *string `min:"1" type:"string"`
+
+	// The Amazon Web Services account ID of the cluster owner.
+	Owner *string `min:"12" type:"string"`
 
 	// Deployment status of a resource. Status can be one of the following: PENDING,
 	// DEPLOYED, PENDING_DELETION.
 	Status *string `type:"string" enum:"Status"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Cluster) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Cluster) GoString() string {
 	return s.String()
 }
@@ -2525,6 +2928,12 @@ func (s *Cluster) SetName(v string) *Cluster {
 	return s
 }
 
+// SetOwner sets the Owner field's value.
+func (s *Cluster) SetOwner(v string) *Cluster {
+	s.Owner = &v
+	return s
+}
+
 // SetStatus sets the Status field's value.
 func (s *Cluster) SetStatus(v string) *Cluster {
 	s.Status = &v
@@ -2540,19 +2949,27 @@ type ClusterEndpoint struct {
 	// you want to set or retrieve a routing control state in the cluster.
 	//
 	// To get or update the routing control state, see the Amazon Route 53 Application
-	// Recovery Controller Cluster (Data Plane) Actions.
+	// Recovery Controller Routing Control Actions.
 	Endpoint *string `min:"1" type:"string"`
 
 	// The Amazon Web Services Region for a cluster endpoint.
 	Region *string `min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ClusterEndpoint) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ClusterEndpoint) GoString() string {
 	return s.String()
 }
@@ -2569,7 +2986,7 @@ func (s *ClusterEndpoint) SetRegion(v string) *ClusterEndpoint {
 	return s
 }
 
-// 409 response - ConflictException.
+// 409 response - ConflictException. You might be using a predefined variable.
 type ConflictException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -2577,12 +2994,20 @@ type ConflictException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) GoString() string {
 	return s.String()
 }
@@ -2631,10 +3056,10 @@ type ControlPanel struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the cluster that includes the control panel.
-	ClusterArn *string `type:"string"`
+	ClusterArn *string `min:"1" type:"string"`
 
 	// The Amazon Resource Name (ARN) of the control panel.
-	ControlPanelArn *string `type:"string"`
+	ControlPanelArn *string `min:"1" type:"string"`
 
 	// A flag that Amazon Route 53 Application Recovery Controller sets to true
 	// to designate the default control panel for a cluster. When you create a cluster,
@@ -2647,6 +3072,9 @@ type ControlPanel struct {
 	// in the name.
 	Name *string `min:"1" type:"string"`
 
+	// The Amazon Web Services account ID of the control panel owner.
+	Owner *string `min:"12" type:"string"`
+
 	// The number of routing controls in the control panel.
 	RoutingControlCount *int64 `type:"integer"`
 
@@ -2655,12 +3083,20 @@ type ControlPanel struct {
 	Status *string `type:"string" enum:"Status"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlPanel) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlPanel) GoString() string {
 	return s.String()
 }
@@ -2689,6 +3125,12 @@ func (s *ControlPanel) SetName(v string) *ControlPanel {
 	return s
 }
 
+// SetOwner sets the Owner field's value.
+func (s *ControlPanel) SetOwner(v string) *ControlPanel {
+	s.Owner = &v
+	return s
+}
+
 // SetRoutingControlCount sets the RoutingControlCount field's value.
 func (s *ControlPanel) SetRoutingControlCount(v int64) *ControlPanel {
 	s.RoutingControlCount = &v
@@ -2705,21 +3147,33 @@ func (s *ControlPanel) SetStatus(v string) *ControlPanel {
 type CreateClusterInput struct {
 	_ struct{} `type:"structure"`
 
-	// Unique client idempotency token.
-	ClientToken *string `type:"string" idempotencyToken:"true"`
+	// A unique, case-sensitive string of up to 64 ASCII characters. To make an
+	// idempotent API request with an action, specify a client token in the request.
+	ClientToken *string `min:"1" type:"string" idempotencyToken:"true"`
 
 	// The name of the cluster.
 	//
 	// ClusterName is a required field
 	ClusterName *string `min:"1" type:"string" required:"true"`
+
+	// The tags associated with the cluster.
+	Tags map[string]*string `type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateClusterInput) GoString() string {
 	return s.String()
 }
@@ -2727,6 +3181,9 @@ func (s CreateClusterInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateClusterInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateClusterInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
 	if s.ClusterName == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClusterName"))
 	}
@@ -2752,6 +3209,12 @@ func (s *CreateClusterInput) SetClusterName(v string) *CreateClusterInput {
 	return s
 }
 
+// SetTags sets the Tags field's value.
+func (s *CreateClusterInput) SetTags(v map[string]*string) *CreateClusterInput {
+	s.Tags = v
+	return s
+}
+
 // The result of a successful CreateCluster request.
 type CreateClusterOutput struct {
 	_ struct{} `type:"structure"`
@@ -2760,12 +3223,20 @@ type CreateClusterOutput struct {
 	Cluster *Cluster `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateClusterOutput) GoString() string {
 	return s.String()
 }
@@ -2780,26 +3251,38 @@ func (s *CreateClusterOutput) SetCluster(v *Cluster) *CreateClusterOutput {
 type CreateControlPanelInput struct {
 	_ struct{} `type:"structure"`
 
-	// Unique client idempotency token.
-	ClientToken *string `type:"string" idempotencyToken:"true"`
+	// A unique, case-sensitive string of up to 64 ASCII characters. To make an
+	// idempotent API request with an action, specify a client token in the request.
+	ClientToken *string `min:"1" type:"string" idempotencyToken:"true"`
 
 	// The Amazon Resource Name (ARN) of the cluster for the control panel.
 	//
 	// ClusterArn is a required field
-	ClusterArn *string `type:"string" required:"true"`
+	ClusterArn *string `min:"1" type:"string" required:"true"`
 
 	// The name of the control panel.
 	//
 	// ControlPanelName is a required field
 	ControlPanelName *string `min:"1" type:"string" required:"true"`
+
+	// The tags associated with the control panel.
+	Tags map[string]*string `type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlPanelInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlPanelInput) GoString() string {
 	return s.String()
 }
@@ -2807,8 +3290,14 @@ func (s CreateControlPanelInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateControlPanelInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateControlPanelInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
 	if s.ClusterArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClusterArn"))
+	}
+	if s.ClusterArn != nil && len(*s.ClusterArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClusterArn", 1))
 	}
 	if s.ControlPanelName == nil {
 		invalidParams.Add(request.NewErrParamRequired("ControlPanelName"))
@@ -2841,6 +3330,12 @@ func (s *CreateControlPanelInput) SetControlPanelName(v string) *CreateControlPa
 	return s
 }
 
+// SetTags sets the Tags field's value.
+func (s *CreateControlPanelInput) SetTags(v map[string]*string) *CreateControlPanelInput {
+	s.Tags = v
+	return s
+}
+
 // The result of a successful CreateControlPanel request.
 type CreateControlPanelOutput struct {
 	_ struct{} `type:"structure"`
@@ -2849,12 +3344,20 @@ type CreateControlPanelOutput struct {
 	ControlPanel *ControlPanel `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlPanelOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlPanelOutput) GoString() string {
 	return s.String()
 }
@@ -2871,17 +3374,18 @@ func (s *CreateControlPanelOutput) SetControlPanel(v *ControlPanel) *CreateContr
 type CreateRoutingControlInput struct {
 	_ struct{} `type:"structure"`
 
-	// Unique client idempotency token.
-	ClientToken *string `type:"string" idempotencyToken:"true"`
+	// A unique, case-sensitive string of up to 64 ASCII characters. To make an
+	// idempotent API request with an action, specify a client token in the request.
+	ClientToken *string `min:"1" type:"string" idempotencyToken:"true"`
 
 	// The Amazon Resource Name (ARN) of the cluster that includes the routing control.
 	//
 	// ClusterArn is a required field
-	ClusterArn *string `type:"string" required:"true"`
+	ClusterArn *string `min:"1" type:"string" required:"true"`
 
 	// The Amazon Resource Name (ARN) of the control panel that includes the routing
 	// control.
-	ControlPanelArn *string `type:"string"`
+	ControlPanelArn *string `min:"1" type:"string"`
 
 	// The name of the routing control.
 	//
@@ -2889,12 +3393,20 @@ type CreateRoutingControlInput struct {
 	RoutingControlName *string `min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRoutingControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRoutingControlInput) GoString() string {
 	return s.String()
 }
@@ -2902,8 +3414,17 @@ func (s CreateRoutingControlInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateRoutingControlInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateRoutingControlInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
 	if s.ClusterArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("ClusterArn"))
+	}
+	if s.ClusterArn != nil && len(*s.ClusterArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClusterArn", 1))
+	}
+	if s.ControlPanelArn != nil && len(*s.ControlPanelArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlPanelArn", 1))
 	}
 	if s.RoutingControlName == nil {
 		invalidParams.Add(request.NewErrParamRequired("RoutingControlName"))
@@ -2950,12 +3471,20 @@ type CreateRoutingControlOutput struct {
 	RoutingControl *RoutingControl `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRoutingControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateRoutingControlOutput) GoString() string {
 	return s.String()
 }
@@ -2971,22 +3500,34 @@ func (s *CreateRoutingControlOutput) SetRoutingControl(v *RoutingControl) *Creat
 type CreateSafetyRuleInput struct {
 	_ struct{} `type:"structure"`
 
-	// A new assertion rule for a control panel.
+	// The assertion rule requested.
 	AssertionRule *NewAssertionRule `type:"structure"`
 
-	// Unique client idempotency token.
-	ClientToken *string `type:"string" idempotencyToken:"true"`
+	// A unique, case-sensitive string of up to 64 ASCII characters. To make an
+	// idempotent API request with an action, specify a client token in the request.
+	ClientToken *string `min:"1" type:"string" idempotencyToken:"true"`
 
-	// A new gating rule for a control panel.
+	// The gating rule requested.
 	GatingRule *NewGatingRule `type:"structure"`
+
+	// The tags associated with the safety rule.
+	Tags map[string]*string `type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateSafetyRuleInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateSafetyRuleInput) GoString() string {
 	return s.String()
 }
@@ -2994,6 +3535,9 @@ func (s CreateSafetyRuleInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateSafetyRuleInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateSafetyRuleInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
 	if s.AssertionRule != nil {
 		if err := s.AssertionRule.Validate(); err != nil {
 			invalidParams.AddNested("AssertionRule", err.(request.ErrInvalidParams))
@@ -3029,28 +3573,37 @@ func (s *CreateSafetyRuleInput) SetGatingRule(v *NewGatingRule) *CreateSafetyRul
 	return s
 }
 
+// SetTags sets the Tags field's value.
+func (s *CreateSafetyRuleInput) SetTags(v map[string]*string) *CreateSafetyRuleInput {
+	s.Tags = v
+	return s
+}
+
 // The result of a successful CreateSafetyRule request.
 type CreateSafetyRuleOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An assertion rule enforces that, when a routing control state is changed,
-	// the criteria set by the rule configuration is met. Otherwise, the change
-	// to the routing control is not accepted.
+	// The assertion rule created.
 	AssertionRule *AssertionRule `type:"structure"`
 
-	// A gating rule verifies that a set of gating controls evaluates as true, based
-	// on a rule configuration that you specify. If the gating rule evaluates to
-	// true, Amazon Route 53 Application Recovery Controller allows a set of routing
-	// control state changes to run and complete against the set of target controls.
+	// The gating rule created.
 	GatingRule *GatingRule `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateSafetyRuleOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateSafetyRuleOutput) GoString() string {
 	return s.String()
 }
@@ -3068,18 +3621,26 @@ func (s *CreateSafetyRuleOutput) SetGatingRule(v *GatingRule) *CreateSafetyRuleO
 }
 
 type DeleteClusterInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ClusterArn is a required field
 	ClusterArn *string `location:"uri" locationName:"ClusterArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteClusterInput) GoString() string {
 	return s.String()
 }
@@ -3111,29 +3672,45 @@ type DeleteClusterOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteClusterOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteControlPanelInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ControlPanelArn is a required field
 	ControlPanelArn *string `location:"uri" locationName:"ControlPanelArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlPanelInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlPanelInput) GoString() string {
 	return s.String()
 }
@@ -3165,29 +3742,45 @@ type DeleteControlPanelOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlPanelOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlPanelOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteRoutingControlInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// RoutingControlArn is a required field
 	RoutingControlArn *string `location:"uri" locationName:"RoutingControlArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRoutingControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRoutingControlInput) GoString() string {
 	return s.String()
 }
@@ -3219,29 +3812,45 @@ type DeleteRoutingControlOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRoutingControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteRoutingControlOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteSafetyRuleInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// SafetyRuleArn is a required field
 	SafetyRuleArn *string `location:"uri" locationName:"SafetyRuleArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteSafetyRuleInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteSafetyRuleInput) GoString() string {
 	return s.String()
 }
@@ -3274,29 +3883,45 @@ type DeleteSafetyRuleOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteSafetyRuleOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteSafetyRuleOutput) GoString() string {
 	return s.String()
 }
 
 type DescribeClusterInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ClusterArn is a required field
 	ClusterArn *string `location:"uri" locationName:"ClusterArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeClusterInput) GoString() string {
 	return s.String()
 }
@@ -3331,12 +3956,20 @@ type DescribeClusterOutput struct {
 	Cluster *Cluster `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeClusterOutput) GoString() string {
 	return s.String()
 }
@@ -3348,18 +3981,26 @@ func (s *DescribeClusterOutput) SetCluster(v *Cluster) *DescribeClusterOutput {
 }
 
 type DescribeControlPanelInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ControlPanelArn is a required field
 	ControlPanelArn *string `location:"uri" locationName:"ControlPanelArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeControlPanelInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeControlPanelInput) GoString() string {
 	return s.String()
 }
@@ -3394,12 +4035,20 @@ type DescribeControlPanelOutput struct {
 	ControlPanel *ControlPanel `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeControlPanelOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeControlPanelOutput) GoString() string {
 	return s.String()
 }
@@ -3411,18 +4060,26 @@ func (s *DescribeControlPanelOutput) SetControlPanel(v *ControlPanel) *DescribeC
 }
 
 type DescribeRoutingControlInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// RoutingControlArn is a required field
 	RoutingControlArn *string `location:"uri" locationName:"RoutingControlArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRoutingControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRoutingControlInput) GoString() string {
 	return s.String()
 }
@@ -3457,12 +4114,20 @@ type DescribeRoutingControlOutput struct {
 	RoutingControl *RoutingControl `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRoutingControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeRoutingControlOutput) GoString() string {
 	return s.String()
 }
@@ -3474,18 +4139,26 @@ func (s *DescribeRoutingControlOutput) SetRoutingControl(v *RoutingControl) *Des
 }
 
 type DescribeSafetyRuleInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// SafetyRuleArn is a required field
 	SafetyRuleArn *string `location:"uri" locationName:"SafetyRuleArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeSafetyRuleInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeSafetyRuleInput) GoString() string {
 	return s.String()
 }
@@ -3516,24 +4189,27 @@ func (s *DescribeSafetyRuleInput) SetSafetyRuleArn(v string) *DescribeSafetyRule
 type DescribeSafetyRuleOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An assertion rule enforces that, when a routing control state is changed,
-	// the criteria set by the rule configuration is met. Otherwise, the change
-	// to the routing control is not accepted.
+	// The assertion rule in the response.
 	AssertionRule *AssertionRule `type:"structure"`
 
-	// A gating rule verifies that a set of gating controls evaluates as true, based
-	// on a rule configuration that you specify. If the gating rule evaluates to
-	// true, Amazon Route 53 Application Recovery Controller allows a set of routing
-	// control state changes to run and complete against the set of target controls.
+	// The gating rule in the response.
 	GatingRule *GatingRule `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeSafetyRuleOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeSafetyRuleOutput) GoString() string {
 	return s.String()
 }
@@ -3550,32 +4226,44 @@ func (s *DescribeSafetyRuleOutput) SetGatingRule(v *GatingRule) *DescribeSafetyR
 	return s
 }
 
-// A gating rule verifies that a set of gating controls evaluates as true, based
-// on a rule configuration that you specify. If the gating rule evaluates to
-// true, Amazon Route 53 Application Recovery Controller allows a set of routing
-// control state changes to run and complete against the set of target controls.
+// A gating rule verifies that a gating routing control or set of gating routing
+// controls, evaluates as true, based on a rule configuration that you specify,
+// which allows a set of routing control state changes to complete.
+//
+// For example, if you specify one gating routing control and you set the Type
+// in the rule configuration to OR, that indicates that you must set the gating
+// routing control to On for the rule to evaluate as true; that is, for the
+// gating control "switch" to be "On". When you do that, then you can update
+// the routing control states for the target routing controls that you specify
+// in the gating rule.
 type GatingRule struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the control panel.
 	//
 	// ControlPanelArn is a required field
-	ControlPanelArn *string `type:"string" required:"true"`
+	ControlPanelArn *string `min:"1" type:"string" required:"true"`
 
-	// The gating controls for the gating rule. That is, routing controls that are
-	// evaluated by the rule configuration that you specify.
+	// An array of gating routing control Amazon Resource Names (ARNs). For a simple
+	// "on/off" switch, specify the ARN for one routing control. The gating routing
+	// controls are evaluated by the rule configuration that you specify to determine
+	// if the target routing control states can be changed.
 	//
 	// GatingControls is a required field
 	GatingControls []*string `type:"list" required:"true"`
 
-	// The name for the gating rule.
+	// The name for the gating rule. You can use any non-white space character in
+	// the name.
 	//
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
 
-	// The criteria that you set for specific gating controls (routing controls)
-	// that designates how many controls must be enabled to allow you to change
-	// (set or unset) the target controls.
+	// The Amazon Web Services account ID of the gating rule owner.
+	Owner *string `min:"12" type:"string"`
+
+	// The criteria that you set for gating routing controls that designate how
+	// many of the routing control states must be ON to allow you to update target
+	// routing control states.
 	//
 	// RuleConfig is a required field
 	RuleConfig *RuleConfig `type:"structure" required:"true"`
@@ -3583,7 +4271,7 @@ type GatingRule struct {
 	// The Amazon Resource Name (ARN) of the gating rule.
 	//
 	// SafetyRuleArn is a required field
-	SafetyRuleArn *string `type:"string" required:"true"`
+	SafetyRuleArn *string `min:"1" type:"string" required:"true"`
 
 	// The deployment status of a gating rule. Status can be one of the following:
 	// PENDING, DEPLOYED, PENDING_DELETION.
@@ -3591,16 +4279,12 @@ type GatingRule struct {
 	// Status is a required field
 	Status *string `type:"string" required:"true" enum:"Status"`
 
-	// Routing controls that can only be set or unset if the specified RuleConfig
-	// evaluates to true for the specified GatingControls. For example, say you
-	// have three gating controls, one for each of three Amazon Web Services Regions.
-	// Now you specify ATLEAST 2 as your RuleConfig. With these settings, you can
-	// only change (set or unset) the routing controls that you have specified as
-	// TargetControls if that rule evaluates to true.
-	//
-	// In other words, your ability to change the routing controls that you have
-	// specified as TargetControls is gated by the rule that you set for the routing
-	// controls in GatingControls.
+	// An array of target routing control Amazon Resource Names (ARNs) for which
+	// the states can only be updated if the rule configuration that you specify
+	// evaluates to true for the gating routing control. As a simple example, if
+	// you have a single gating control, it acts as an overall "on/off" switch for
+	// a set of target routing controls. You can use this to manually override automated
+	// failover, for example.
 	//
 	// TargetControls is a required field
 	TargetControls []*string `type:"list" required:"true"`
@@ -3613,12 +4297,20 @@ type GatingRule struct {
 	WaitPeriodMs *int64 `type:"integer" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GatingRule) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GatingRule) GoString() string {
 	return s.String()
 }
@@ -3638,6 +4330,12 @@ func (s *GatingRule) SetGatingControls(v []*string) *GatingRule {
 // SetName sets the Name field's value.
 func (s *GatingRule) SetName(v string) *GatingRule {
 	s.Name = &v
+	return s
+}
+
+// SetOwner sets the Owner field's value.
+func (s *GatingRule) SetOwner(v string) *GatingRule {
+	s.Owner = &v
 	return s
 }
 
@@ -3677,7 +4375,8 @@ func (s *GatingRule) SetWaitPeriodMs(v int64) *GatingRule {
 type GatingRuleUpdate struct {
 	_ struct{} `type:"structure"`
 
-	// The name for the gating rule.
+	// The name for the gating rule. You can use any non-white space character in
+	// the name.
 	//
 	// Name is a required field
 	Name *string `min:"1" type:"string" required:"true"`
@@ -3685,7 +4384,7 @@ type GatingRuleUpdate struct {
 	// The Amazon Resource Name (ARN) of the gating rule.
 	//
 	// SafetyRuleArn is a required field
-	SafetyRuleArn *string `type:"string" required:"true"`
+	SafetyRuleArn *string `min:"1" type:"string" required:"true"`
 
 	// An evaluation period, in milliseconds (ms), during which any request against
 	// the target routing controls will fail. This helps prevent "flapping" of state.
@@ -3695,12 +4394,20 @@ type GatingRuleUpdate struct {
 	WaitPeriodMs *int64 `type:"integer" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GatingRuleUpdate) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GatingRuleUpdate) GoString() string {
 	return s.String()
 }
@@ -3716,6 +4423,9 @@ func (s *GatingRuleUpdate) Validate() error {
 	}
 	if s.SafetyRuleArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("SafetyRuleArn"))
+	}
+	if s.SafetyRuleArn != nil && len(*s.SafetyRuleArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SafetyRuleArn", 1))
 	}
 	if s.WaitPeriodMs == nil {
 		invalidParams.Add(request.NewErrParamRequired("WaitPeriodMs"))
@@ -3745,6 +4455,86 @@ func (s *GatingRuleUpdate) SetWaitPeriodMs(v int64) *GatingRuleUpdate {
 	return s
 }
 
+type GetResourcePolicyInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// ResourceArn is a required field
+	ResourceArn *string `location:"uri" locationName:"ResourceArn" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetResourcePolicyInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetResourcePolicyInput"}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+	if s.ResourceArn != nil && len(*s.ResourceArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ResourceArn", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *GetResourcePolicyInput) SetResourceArn(v string) *GetResourcePolicyInput {
+	s.ResourceArn = &v
+	return s
+}
+
+// Returns the current Amazon Resource Access Manager resource policy for a
+// cluster.
+type GetResourcePolicyOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The resource policy.
+	Policy *string `min:"2" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetResourcePolicyOutput) GoString() string {
+	return s.String()
+}
+
+// SetPolicy sets the Policy field's value.
+func (s *GetResourcePolicyOutput) SetPolicy(v string) *GetResourcePolicyOutput {
+	s.Policy = &v
+	return s
+}
+
 // 500 response - InternalServiceError. Temporary service error. Retry the request.
 type InternalServerException struct {
 	_            struct{}                  `type:"structure"`
@@ -3753,12 +4543,20 @@ type InternalServerException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) GoString() string {
 	return s.String()
 }
@@ -3802,7 +4600,7 @@ func (s *InternalServerException) RequestID() string {
 }
 
 type ListAssociatedRoute53HealthChecksInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"MaxResults" min:"1" type:"integer"`
 
@@ -3812,12 +4610,20 @@ type ListAssociatedRoute53HealthChecksInput struct {
 	RoutingControlArn *string `location:"uri" locationName:"RoutingControlArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssociatedRoute53HealthChecksInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssociatedRoute53HealthChecksInput) GoString() string {
 	return s.String()
 }
@@ -3866,16 +4672,24 @@ type ListAssociatedRoute53HealthChecksOutput struct {
 	// Identifiers for the health checks.
 	HealthCheckIds []*string `type:"list"`
 
-	// The token that identifies which batch of results you want to see.
-	NextToken *string `type:"string"`
+	// Next token for listing health checks.
+	NextToken *string `min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssociatedRoute53HealthChecksOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssociatedRoute53HealthChecksOutput) GoString() string {
 	return s.String()
 }
@@ -3893,19 +4707,27 @@ func (s *ListAssociatedRoute53HealthChecksOutput) SetNextToken(v string) *ListAs
 }
 
 type ListClustersInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	MaxResults *int64 `location:"querystring" locationName:"MaxResults" min:"1" type:"integer"`
 
 	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClustersInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClustersInput) GoString() string {
 	return s.String()
 }
@@ -3943,15 +4765,23 @@ type ListClustersOutput struct {
 	Clusters []*Cluster `type:"list"`
 
 	// The token that identifies which batch of results you want to see.
-	NextToken *string `type:"string"`
+	NextToken *string `min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClustersOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClustersOutput) GoString() string {
 	return s.String()
 }
@@ -3969,7 +4799,7 @@ func (s *ListClustersOutput) SetNextToken(v string) *ListClustersOutput {
 }
 
 type ListControlPanelsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	ClusterArn *string `location:"querystring" locationName:"ClusterArn" type:"string"`
 
@@ -3978,12 +4808,20 @@ type ListControlPanelsInput struct {
 	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlPanelsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlPanelsInput) GoString() string {
 	return s.String()
 }
@@ -4027,15 +4865,23 @@ type ListControlPanelsOutput struct {
 	ControlPanels []*ControlPanel `type:"list"`
 
 	// The token that identifies which batch of results you want to see.
-	NextToken *string `type:"string"`
+	NextToken *string `min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlPanelsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlPanelsOutput) GoString() string {
 	return s.String()
 }
@@ -4053,7 +4899,7 @@ func (s *ListControlPanelsOutput) SetNextToken(v string) *ListControlPanelsOutpu
 }
 
 type ListRoutingControlsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ControlPanelArn is a required field
 	ControlPanelArn *string `location:"uri" locationName:"ControlPanelArn" type:"string" required:"true"`
@@ -4063,12 +4909,20 @@ type ListRoutingControlsInput struct {
 	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRoutingControlsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRoutingControlsInput) GoString() string {
 	return s.String()
 }
@@ -4115,18 +4969,26 @@ type ListRoutingControlsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// The token that identifies which batch of results you want to see.
-	NextToken *string `type:"string"`
+	NextToken *string `min:"1" type:"string"`
 
 	// An array of routing controls.
 	RoutingControls []*RoutingControl `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRoutingControlsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListRoutingControlsOutput) GoString() string {
 	return s.String()
 }
@@ -4144,7 +5006,7 @@ func (s *ListRoutingControlsOutput) SetRoutingControls(v []*RoutingControl) *Lis
 }
 
 type ListSafetyRulesInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// ControlPanelArn is a required field
 	ControlPanelArn *string `location:"uri" locationName:"ControlPanelArn" type:"string" required:"true"`
@@ -4154,12 +5016,20 @@ type ListSafetyRulesInput struct {
 	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListSafetyRulesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListSafetyRulesInput) GoString() string {
 	return s.String()
 }
@@ -4206,18 +5076,26 @@ type ListSafetyRulesOutput struct {
 	_ struct{} `type:"structure"`
 
 	// The token that identifies which batch of results you want to see.
-	NextToken *string `type:"string"`
+	NextToken *string `min:"1" type:"string"`
 
 	// The list of safety rules in a control panel.
 	SafetyRules []*Rule `type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListSafetyRulesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListSafetyRulesOutput) GoString() string {
 	return s.String()
 }
@@ -4231,6 +5109,85 @@ func (s *ListSafetyRulesOutput) SetNextToken(v string) *ListSafetyRulesOutput {
 // SetSafetyRules sets the SafetyRules field's value.
 func (s *ListSafetyRulesOutput) SetSafetyRules(v []*Rule) *ListSafetyRulesOutput {
 	s.SafetyRules = v
+	return s
+}
+
+type ListTagsForResourceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// ResourceArn is a required field
+	ResourceArn *string `location:"uri" locationName:"ResourceArn" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTagsForResourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTagsForResourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListTagsForResourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListTagsForResourceInput"}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+	if s.ResourceArn != nil && len(*s.ResourceArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ResourceArn", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *ListTagsForResourceInput) SetResourceArn(v string) *ListTagsForResourceInput {
+	s.ResourceArn = &v
+	return s
+}
+
+// The result of a successful ListTagsForResource request.
+type ListTagsForResourceOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The tags associated with the resource.
+	Tags map[string]*string `type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTagsForResourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTagsForResourceOutput) GoString() string {
+	return s.String()
+}
+
+// SetTags sets the Tags field's value.
+func (s *ListTagsForResourceOutput) SetTags(v map[string]*string) *ListTagsForResourceOutput {
+	s.Tags = v
 	return s
 }
 
@@ -4249,7 +5206,7 @@ type NewAssertionRule struct {
 	// The Amazon Resource Name (ARN) for the control panel.
 	//
 	// ControlPanelArn is a required field
-	ControlPanelArn *string `type:"string" required:"true"`
+	ControlPanelArn *string `min:"1" type:"string" required:"true"`
 
 	// The name of the assertion rule. You can use any non-white space character
 	// in the name.
@@ -4258,10 +5215,11 @@ type NewAssertionRule struct {
 	Name *string `min:"1" type:"string" required:"true"`
 
 	// The criteria that you set for specific assertion controls (routing controls)
-	// that designate how many controls must be enabled as the result of a transaction.
-	// For example, if you have three assertion controls, you might specify atleast
+	// that designate how many control states must be ON as the result of a transaction.
+	// For example, if you have three assertion controls, you might specify ATLEAST
 	// 2 for your rule configuration. This means that at least two assertion controls
-	// must be enabled, so that at least two Amazon Web Services Regions are enabled.
+	// must be ON, so that at least two Amazon Web Services Regions have traffic
+	// flowing to them.
 	//
 	// RuleConfig is a required field
 	RuleConfig *RuleConfig `type:"structure" required:"true"`
@@ -4274,12 +5232,20 @@ type NewAssertionRule struct {
 	WaitPeriodMs *int64 `type:"integer" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NewAssertionRule) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NewAssertionRule) GoString() string {
 	return s.String()
 }
@@ -4292,6 +5258,9 @@ func (s *NewAssertionRule) Validate() error {
 	}
 	if s.ControlPanelArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("ControlPanelArn"))
+	}
+	if s.ControlPanelArn != nil && len(*s.ControlPanelArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlPanelArn", 1))
 	}
 	if s.Name == nil {
 		invalidParams.Add(request.NewErrParamRequired("Name"))
@@ -4354,7 +5323,7 @@ type NewGatingRule struct {
 	// The Amazon Resource Name (ARN) of the control panel.
 	//
 	// ControlPanelArn is a required field
-	ControlPanelArn *string `type:"string" required:"true"`
+	ControlPanelArn *string `min:"1" type:"string" required:"true"`
 
 	// The gating controls for the new gating rule. That is, routing controls that
 	// are evaluated by the rule configuration that you specify.
@@ -4368,8 +5337,8 @@ type NewGatingRule struct {
 	Name *string `min:"1" type:"string" required:"true"`
 
 	// The criteria that you set for specific gating controls (routing controls)
-	// that designates how many controls must be enabled to allow you to change
-	// (set or unset) the target controls.
+	// that designate how many control states must be ON to allow you to change
+	// (set or unset) the target control states.
 	//
 	// RuleConfig is a required field
 	RuleConfig *RuleConfig `type:"structure" required:"true"`
@@ -4377,7 +5346,7 @@ type NewGatingRule struct {
 	// Routing controls that can only be set or unset if the specified RuleConfig
 	// evaluates to true for the specified GatingControls. For example, say you
 	// have three gating controls, one for each of three Amazon Web Services Regions.
-	// Now you specify AtLeast 2 as your RuleConfig. With these settings, you can
+	// Now you specify ATLEAST 2 as your RuleConfig. With these settings, you can
 	// only change (set or unset) the routing controls that you have specified as
 	// TargetControls if that rule evaluates to true.
 	//
@@ -4396,12 +5365,20 @@ type NewGatingRule struct {
 	WaitPeriodMs *int64 `type:"integer" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NewGatingRule) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NewGatingRule) GoString() string {
 	return s.String()
 }
@@ -4411,6 +5388,9 @@ func (s *NewGatingRule) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "NewGatingRule"}
 	if s.ControlPanelArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("ControlPanelArn"))
+	}
+	if s.ControlPanelArn != nil && len(*s.ControlPanelArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlPanelArn", 1))
 	}
 	if s.GatingControls == nil {
 		invalidParams.Add(request.NewErrParamRequired("GatingControls"))
@@ -4478,7 +5458,8 @@ func (s *NewGatingRule) SetWaitPeriodMs(v int64) *NewGatingRule {
 	return s
 }
 
-// 404 response - The query string contains a syntax error or resource not found.
+// 404 response - MalformedQueryString. The query string contains a syntax error
+// or resource not found.
 type ResourceNotFoundException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -4486,12 +5467,20 @@ type ResourceNotFoundException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) GoString() string {
 	return s.String()
 }
@@ -4542,25 +5531,36 @@ type RoutingControl struct {
 
 	// The Amazon Resource Name (ARN) of the control panel that includes the routing
 	// control.
-	ControlPanelArn *string `type:"string"`
+	ControlPanelArn *string `min:"1" type:"string"`
 
 	// The name of the routing control.
 	Name *string `min:"1" type:"string"`
 
+	// The Amazon Web Services account ID of the routing control owner.
+	Owner *string `min:"12" type:"string"`
+
 	// The Amazon Resource Name (ARN) of the routing control.
-	RoutingControlArn *string `type:"string"`
+	RoutingControlArn *string `min:"1" type:"string"`
 
 	// The deployment status of a routing control. Status can be one of the following:
 	// PENDING, DEPLOYED, PENDING_DELETION.
 	Status *string `type:"string" enum:"Status"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RoutingControl) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RoutingControl) GoString() string {
 	return s.String()
 }
@@ -4574,6 +5574,12 @@ func (s *RoutingControl) SetControlPanelArn(v string) *RoutingControl {
 // SetName sets the Name field's value.
 func (s *RoutingControl) SetName(v string) *RoutingControl {
 	s.Name = &v
+	return s
+}
+
+// SetOwner sets the Owner field's value.
+func (s *RoutingControl) SetOwner(v string) *RoutingControl {
+	s.Owner = &v
 	return s
 }
 
@@ -4595,22 +5601,39 @@ type Rule struct {
 
 	// An assertion rule enforces that, when a routing control state is changed,
 	// the criteria set by the rule configuration is met. Otherwise, the change
-	// to the routing control is not accepted.
+	// to the routing control state is not accepted. For example, the criteria might
+	// be that at least one routing control state is On after the transaction so
+	// that traffic continues to flow to at least one cell for the application.
+	// This ensures that you avoid a fail-open scenario.
 	ASSERTION *AssertionRule `type:"structure"`
 
-	// A gating rule verifies that a set of gating controls evaluates as true, based
-	// on a rule configuration that you specify. If the gating rule evaluates to
-	// true, Amazon Route 53 Application Recovery Controller allows a set of routing
-	// control state changes to run and complete against the set of target controls.
+	// A gating rule verifies that a gating routing control or set of gating routing
+	// controls, evaluates as true, based on a rule configuration that you specify,
+	// which allows a set of routing control state changes to complete.
+	//
+	// For example, if you specify one gating routing control and you set the Type
+	// in the rule configuration to OR, that indicates that you must set the gating
+	// routing control to On for the rule to evaluate as true; that is, for the
+	// gating control "switch" to be "On". When you do that, then you can update
+	// the routing control states for the target routing controls that you specify
+	// in the gating rule.
 	GATING *GatingRule `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Rule) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Rule) GoString() string {
 	return s.String()
 }
@@ -4629,7 +5652,7 @@ func (s *Rule) SetGATING(v *GatingRule) *Rule {
 
 // The rule configuration for an assertion rule. That is, the criteria that
 // you set for specific assertion controls (routing controls) that specify how
-// many controls must be enabled after a transaction completes.
+// many control states must be ON after a transaction completes.
 type RuleConfig struct {
 	_ struct{} `type:"structure"`
 
@@ -4651,12 +5674,20 @@ type RuleConfig struct {
 	Type *string `type:"string" required:"true" enum:"RuleType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RuleConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RuleConfig) GoString() string {
 	return s.String()
 }
@@ -4698,7 +5729,8 @@ func (s *RuleConfig) SetType(v string) *RuleConfig {
 	return s
 }
 
-// 402 response
+// 402 response - You attempted to create more resources than the service allows
+// based on service quotas.
 type ServiceQuotaExceededException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -4706,12 +5738,20 @@ type ServiceQuotaExceededException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceQuotaExceededException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceQuotaExceededException) GoString() string {
 	return s.String()
 }
@@ -4754,7 +5794,92 @@ func (s *ServiceQuotaExceededException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// 429 response - ThrottlingException.
+// Request to tag a resource.
+type TagResourceInput struct {
+	_ struct{} `type:"structure"`
+
+	// ResourceArn is a required field
+	ResourceArn *string `location:"uri" locationName:"ResourceArn" type:"string" required:"true"`
+
+	// The tags associated with the resource.
+	//
+	// Tags is a required field
+	Tags map[string]*string `type:"map" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagResourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagResourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TagResourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TagResourceInput"}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+	if s.ResourceArn != nil && len(*s.ResourceArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ResourceArn", 1))
+	}
+	if s.Tags == nil {
+		invalidParams.Add(request.NewErrParamRequired("Tags"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *TagResourceInput) SetResourceArn(v string) *TagResourceInput {
+	s.ResourceArn = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *TagResourceInput) SetTags(v map[string]*string) *TagResourceInput {
+	s.Tags = v
+	return s
+}
+
+// The result of a successful TagResource request.
+type TagResourceOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagResourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TagResourceOutput) GoString() string {
+	return s.String()
+}
+
+// 429 response - LimitExceededException or TooManyRequestsException.
 type ThrottlingException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -4762,12 +5887,20 @@ type ThrottlingException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) GoString() string {
 	return s.String()
 }
@@ -4810,6 +5943,88 @@ func (s *ThrottlingException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+type UntagResourceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// ResourceArn is a required field
+	ResourceArn *string `location:"uri" locationName:"ResourceArn" type:"string" required:"true"`
+
+	// TagKeys is a required field
+	TagKeys []*string `location:"querystring" locationName:"TagKeys" type:"list" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UntagResourceInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UntagResourceInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UntagResourceInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UntagResourceInput"}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+	if s.ResourceArn != nil && len(*s.ResourceArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ResourceArn", 1))
+	}
+	if s.TagKeys == nil {
+		invalidParams.Add(request.NewErrParamRequired("TagKeys"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *UntagResourceInput) SetResourceArn(v string) *UntagResourceInput {
+	s.ResourceArn = &v
+	return s
+}
+
+// SetTagKeys sets the TagKeys field's value.
+func (s *UntagResourceInput) SetTagKeys(v []*string) *UntagResourceInput {
+	s.TagKeys = v
+	return s
+}
+
+// The result of a successful UntagResource request.
+type UntagResourceOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UntagResourceOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UntagResourceOutput) GoString() string {
+	return s.String()
+}
+
 // Updates an existing control panel.
 type UpdateControlPanelInput struct {
 	_ struct{} `type:"structure"`
@@ -4817,7 +6032,7 @@ type UpdateControlPanelInput struct {
 	// The Amazon Resource Name (ARN) of the control panel.
 	//
 	// ControlPanelArn is a required field
-	ControlPanelArn *string `type:"string" required:"true"`
+	ControlPanelArn *string `min:"1" type:"string" required:"true"`
 
 	// The name of the control panel.
 	//
@@ -4825,12 +6040,20 @@ type UpdateControlPanelInput struct {
 	ControlPanelName *string `min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlPanelInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlPanelInput) GoString() string {
 	return s.String()
 }
@@ -4840,6 +6063,9 @@ func (s *UpdateControlPanelInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UpdateControlPanelInput"}
 	if s.ControlPanelArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("ControlPanelArn"))
+	}
+	if s.ControlPanelArn != nil && len(*s.ControlPanelArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlPanelArn", 1))
 	}
 	if s.ControlPanelName == nil {
 		invalidParams.Add(request.NewErrParamRequired("ControlPanelName"))
@@ -4874,12 +6100,20 @@ type UpdateControlPanelOutput struct {
 	ControlPanel *ControlPanel `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlPanelOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlPanelOutput) GoString() string {
 	return s.String()
 }
@@ -4897,7 +6131,7 @@ type UpdateRoutingControlInput struct {
 	// The Amazon Resource Name (ARN) of the routing control.
 	//
 	// RoutingControlArn is a required field
-	RoutingControlArn *string `type:"string" required:"true"`
+	RoutingControlArn *string `min:"1" type:"string" required:"true"`
 
 	// The name of the routing control.
 	//
@@ -4905,12 +6139,20 @@ type UpdateRoutingControlInput struct {
 	RoutingControlName *string `min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlInput) GoString() string {
 	return s.String()
 }
@@ -4920,6 +6162,9 @@ func (s *UpdateRoutingControlInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UpdateRoutingControlInput"}
 	if s.RoutingControlArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("RoutingControlArn"))
+	}
+	if s.RoutingControlArn != nil && len(*s.RoutingControlArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("RoutingControlArn", 1))
 	}
 	if s.RoutingControlName == nil {
 		invalidParams.Add(request.NewErrParamRequired("RoutingControlName"))
@@ -4954,12 +6199,20 @@ type UpdateRoutingControlOutput struct {
 	RoutingControl *RoutingControl `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateRoutingControlOutput) GoString() string {
 	return s.String()
 }
@@ -4975,23 +6228,27 @@ func (s *UpdateRoutingControlOutput) SetRoutingControl(v *RoutingControl) *Updat
 type UpdateSafetyRuleInput struct {
 	_ struct{} `type:"structure"`
 
-	// An update to an assertion rule. You can update the name or the evaluation
-	// period (wait period). If you don't specify one of the items to update, the
-	// item is unchanged.
+	// The assertion rule to update.
 	AssertionRuleUpdate *AssertionRuleUpdate `type:"structure"`
 
-	// Update to a gating rule. You can update the name or the evaluation period
-	// (wait period). If you don't specify one of the items to update, the item
-	// is unchanged.
+	// The gating rule to update.
 	GatingRuleUpdate *GatingRuleUpdate `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSafetyRuleInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSafetyRuleInput) GoString() string {
 	return s.String()
 }
@@ -5032,24 +6289,27 @@ func (s *UpdateSafetyRuleInput) SetGatingRuleUpdate(v *GatingRuleUpdate) *Update
 type UpdateSafetyRuleOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An assertion rule enforces that, when a routing control state is changed,
-	// the criteria set by the rule configuration is met. Otherwise, the change
-	// to the routing control is not accepted.
+	// The assertion rule updated.
 	AssertionRule *AssertionRule `type:"structure"`
 
-	// A gating rule verifies that a set of gating controls evaluates as true, based
-	// on a rule configuration that you specify. If the gating rule evaluates to
-	// true, Amazon Route 53 Application Recovery Controller allows a set of routing
-	// control state changes to run and complete against the set of target controls.
+	// The gating rule updated.
 	GatingRule *GatingRule `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSafetyRuleOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSafetyRuleOutput) GoString() string {
 	return s.String()
 }
@@ -5067,8 +6327,8 @@ func (s *UpdateSafetyRuleOutput) SetGatingRule(v *GatingRule) *UpdateSafetyRuleO
 }
 
 // 400 response - Multiple causes. For example, you might have a malformed query
-// string and input parameter might be out of range, or you used parameters
-// together incorrectly.
+// string and input parameter might be out of range, or you might have used
+// parameters together incorrectly.
 type ValidationException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -5076,12 +6336,20 @@ type ValidationException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) GoString() string {
 	return s.String()
 }

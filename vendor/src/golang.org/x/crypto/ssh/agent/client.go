@@ -8,13 +8,15 @@
 // ssh-agent process using the sample server.
 //
 // References:
-//  [PROTOCOL.agent]: https://tools.ietf.org/html/draft-miller-ssh-agent-00
+//
+//	[PROTOCOL.agent]: https://tools.ietf.org/html/draft-miller-ssh-agent-00
 package agent // import "golang.org/x/crypto/ssh/agent"
 
 import (
 	"bytes"
 	"crypto/dsa"
 	"crypto/ecdsa"
+	"crypto/ed25519"
 	"crypto/elliptic"
 	"crypto/rsa"
 	"encoding/base64"
@@ -25,8 +27,18 @@ import (
 	"math/big"
 	"sync"
 
-	"golang.org/x/crypto/ed25519"
 	"golang.org/x/crypto/ssh"
+)
+
+// SignatureFlags represent additional flags that can be passed to the signature
+// requests an defined in [PROTOCOL.agent] section 4.5.1.
+type SignatureFlags uint32
+
+// SignatureFlag values as defined in [PROTOCOL.agent] section 5.3.
+const (
+	SignatureFlagReserved SignatureFlags = 1 << iota
+	SignatureFlagRsaSha256
+	SignatureFlagRsaSha512
 )
 
 // Agent represents the capabilities of an ssh-agent.
@@ -57,11 +69,31 @@ type Agent interface {
 	Signers() ([]ssh.Signer, error)
 }
 
+type ExtendedAgent interface {
+	Agent
+
+	// SignWithFlags signs like Sign, but allows for additional flags to be sent/received
+	SignWithFlags(key ssh.PublicKey, data []byte, flags SignatureFlags) (*ssh.Signature, error)
+
+	// Extension processes a custom extension request. Standard-compliant agents are not
+	// required to support any extensions, but this method allows agents to implement
+	// vendor-specific methods or add experimental features. See [PROTOCOL.agent] section 4.7.
+	// If agent extensions are unsupported entirely this method MUST return an
+	// ErrExtensionUnsupported error. Similarly, if just the specific extensionType in
+	// the request is unsupported by the agent then ErrExtensionUnsupported MUST be
+	// returned.
+	//
+	// In the case of success, since [PROTOCOL.agent] section 4.7 specifies that the contents
+	// of the response are unspecified (including the type of the message), the complete
+	// response will be returned as a []byte slice, including the "type" byte of the message.
+	Extension(extensionType string, contents []byte) ([]byte, error)
+}
+
 // ConstraintExtension describes an optional constraint defined by users.
 type ConstraintExtension struct {
 	// ExtensionName consist of a UTF-8 string suffixed by the
 	// implementation domain following the naming scheme defined
-	// in Section 4.2 of [RFC4251], e.g.  "foo@example.com".
+	// in Section 4.2 of RFC 4251, e.g.  "foo@example.com".
 	ExtensionName string
 	// ExtensionDetails contains the actual content of the extended
 	// constraint.
@@ -70,8 +102,9 @@ type ConstraintExtension struct {
 
 // AddedKey describes an SSH key to be added to an Agent.
 type AddedKey struct {
-	// PrivateKey must be a *rsa.PrivateKey, *dsa.PrivateKey or
-	// *ecdsa.PrivateKey, which will be inserted into the agent.
+	// PrivateKey must be a *rsa.PrivateKey, *dsa.PrivateKey,
+	// ed25519.PrivateKey or *ecdsa.PrivateKey, which will be inserted into the
+	// agent.
 	PrivateKey interface{}
 	// Certificate, if not nil, is communicated to the agent and will be
 	// stored with the key.
@@ -108,9 +141,14 @@ const (
 	agentAddSmartcardKeyConstrained = 26
 
 	// 3.7 Key constraint identifiers
-	agentConstrainLifetime  = 1
-	agentConstrainConfirm   = 2
-	agentConstrainExtension = 3
+	agentConstrainLifetime = 1
+	agentConstrainConfirm  = 2
+	// Constraint extension identifier up to version 2 of the protocol. A
+	// backward incompatible change will be required if we want to add support
+	// for SSH_AGENT_CONSTRAIN_MAXSIGN which uses the same ID.
+	agentConstrainExtensionV00 = 3
+	// Constraint extension identifier in version 3 and later of the protocol.
+	agentConstrainExtension = 255
 )
 
 // maxAgentResponseBytes is the maximum agent reply size that is accepted. This
@@ -172,11 +210,30 @@ type constrainLifetimeAgentMsg struct {
 }
 
 type constrainExtensionAgentMsg struct {
-	ExtensionName    string `sshtype:"3"`
+	ExtensionName    string `sshtype:"255|3"`
 	ExtensionDetails []byte
 
 	// Rest is a field used for parsing, not part of message
 	Rest []byte `ssh:"rest"`
+}
+
+// See [PROTOCOL.agent], section 4.7
+const agentExtension = 27
+const agentExtensionFailure = 28
+
+// ErrExtensionUnsupported indicates that an extension defined in
+// [PROTOCOL.agent] section 4.7 is unsupported by the agent. Specifically this
+// error indicates that the agent returned a standard SSH_AGENT_FAILURE message
+// as the result of a SSH_AGENTC_EXTENSION request. Note that the protocol
+// specification (and therefore this error) does not distinguish between a
+// specific extension being unsupported and extensions being unsupported entirely.
+var ErrExtensionUnsupported = errors.New("agent: extension unsupported")
+
+type extensionAgentMsg struct {
+	ExtensionType string `sshtype:"27"`
+	// NOTE: this matches OpenSSH's PROTOCOL.agent, not the IETF draft [PROTOCOL.agent],
+	// so that it matches what OpenSSH actually implements in the wild.
+	Contents []byte `ssh:"rest"`
 }
 
 // Key represents a protocol 2 public key as defined in
@@ -260,7 +317,7 @@ type client struct {
 
 // NewClient returns an Agent that talks to an ssh-agent process over
 // the given connection.
-func NewClient(rw io.ReadWriter) Agent {
+func NewClient(rw io.ReadWriter) ExtendedAgent {
 	return &client{conn: rw}
 }
 
@@ -268,6 +325,21 @@ func NewClient(rw io.ReadWriter) Agent {
 // unmarshaled into reply and replyType is set to the first byte of
 // the reply, which contains the type of the message.
 func (c *client) call(req []byte) (reply interface{}, err error) {
+	buf, err := c.callRaw(req)
+	if err != nil {
+		return nil, err
+	}
+	reply, err = unmarshal(buf)
+	if err != nil {
+		return nil, clientErr(err)
+	}
+	return reply, nil
+}
+
+// callRaw sends an RPC to the agent. On success, the raw
+// bytes of the response are returned; no unmarshalling is
+// performed on the response.
+func (c *client) callRaw(req []byte) (reply []byte, err error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
@@ -284,18 +356,14 @@ func (c *client) call(req []byte) (reply interface{}, err error) {
 	}
 	respSize := binary.BigEndian.Uint32(respSizeBuf[:])
 	if respSize > maxAgentResponseBytes {
-		return nil, clientErr(err)
+		return nil, clientErr(errors.New("response too large"))
 	}
 
 	buf := make([]byte, respSize)
 	if _, err = io.ReadFull(c.conn, buf); err != nil {
 		return nil, clientErr(err)
 	}
-	reply, err = unmarshal(buf)
-	if err != nil {
-		return nil, clientErr(err)
-	}
-	return reply, err
+	return buf, nil
 }
 
 func (c *client) simpleCall(req []byte) error {
@@ -369,9 +437,14 @@ func (c *client) List() ([]*Key, error) {
 // Sign has the agent sign the data using a protocol 2 key as defined
 // in [PROTOCOL.agent] section 2.6.2.
 func (c *client) Sign(key ssh.PublicKey, data []byte) (*ssh.Signature, error) {
+	return c.SignWithFlags(key, data, 0)
+}
+
+func (c *client) SignWithFlags(key ssh.PublicKey, data []byte, flags SignatureFlags) (*ssh.Signature, error) {
 	req := ssh.Marshal(signRequestAgentMsg{
 		KeyBlob: key.Marshal(),
 		Data:    data,
+		Flags:   uint32(flags),
 	})
 
 	msg, err := c.call(req)
@@ -501,6 +574,17 @@ func (c *client) insertKey(s interface{}, comment string, constraints []byte) er
 			Comments:    comment,
 			Constraints: constraints,
 		})
+	case ed25519.PrivateKey:
+		req = ssh.Marshal(ed25519KeyMsg{
+			Type:        ssh.KeyAlgoED25519,
+			Pub:         []byte(k)[32:],
+			Priv:        []byte(k),
+			Comments:    comment,
+			Constraints: constraints,
+		})
+	// This function originally supported only *ed25519.PrivateKey, however the
+	// general idiom is to pass ed25519.PrivateKey by value, not by pointer.
+	// We still support the pointer variant for backwards compatibility.
 	case *ed25519.PrivateKey:
 		req = ssh.Marshal(ed25519KeyMsg{
 			Type:        ssh.KeyAlgoED25519,
@@ -618,6 +702,18 @@ func (c *client) insertCert(s interface{}, cert *ssh.Certificate, comment string
 			Comments:    comment,
 			Constraints: constraints,
 		})
+	case ed25519.PrivateKey:
+		req = ssh.Marshal(ed25519CertMsg{
+			Type:        cert.Type(),
+			CertBytes:   cert.Marshal(),
+			Pub:         []byte(k)[32:],
+			Priv:        []byte(k),
+			Comments:    comment,
+			Constraints: constraints,
+		})
+	// This function originally supported only *ed25519.PrivateKey, however the
+	// general idiom is to pass ed25519.PrivateKey by value, not by pointer.
+	// We still support the pointer variant for backwards compatibility.
 	case *ed25519.PrivateKey:
 		req = ssh.Marshal(ed25519CertMsg{
 			Type:        cert.Type(),
@@ -640,7 +736,7 @@ func (c *client) insertCert(s interface{}, cert *ssh.Certificate, comment string
 	if err != nil {
 		return err
 	}
-	if bytes.Compare(cert.Key.Marshal(), signer.PublicKey().Marshal()) != 0 {
+	if !bytes.Equal(cert.Key.Marshal(), signer.PublicKey().Marshal()) {
 		return errors.New("agent: signer and cert have different public key")
 	}
 
@@ -680,4 +776,79 @@ func (s *agentKeyringSigner) PublicKey() ssh.PublicKey {
 func (s *agentKeyringSigner) Sign(rand io.Reader, data []byte) (*ssh.Signature, error) {
 	// The agent has its own entropy source, so the rand argument is ignored.
 	return s.agent.Sign(s.pub, data)
+}
+
+func (s *agentKeyringSigner) SignWithAlgorithm(rand io.Reader, data []byte, algorithm string) (*ssh.Signature, error) {
+	if algorithm == "" || algorithm == underlyingAlgo(s.pub.Type()) {
+		return s.Sign(rand, data)
+	}
+
+	var flags SignatureFlags
+	switch algorithm {
+	case ssh.KeyAlgoRSASHA256:
+		flags = SignatureFlagRsaSha256
+	case ssh.KeyAlgoRSASHA512:
+		flags = SignatureFlagRsaSha512
+	default:
+		return nil, fmt.Errorf("agent: unsupported algorithm %q", algorithm)
+	}
+
+	return s.agent.SignWithFlags(s.pub, data, flags)
+}
+
+var _ ssh.AlgorithmSigner = &agentKeyringSigner{}
+
+// certKeyAlgoNames is a mapping from known certificate algorithm names to the
+// corresponding public key signature algorithm.
+//
+// This map must be kept in sync with the one in certs.go.
+var certKeyAlgoNames = map[string]string{
+	ssh.CertAlgoRSAv01:        ssh.KeyAlgoRSA,
+	ssh.CertAlgoRSASHA256v01:  ssh.KeyAlgoRSASHA256,
+	ssh.CertAlgoRSASHA512v01:  ssh.KeyAlgoRSASHA512,
+	ssh.CertAlgoDSAv01:        ssh.KeyAlgoDSA,
+	ssh.CertAlgoECDSA256v01:   ssh.KeyAlgoECDSA256,
+	ssh.CertAlgoECDSA384v01:   ssh.KeyAlgoECDSA384,
+	ssh.CertAlgoECDSA521v01:   ssh.KeyAlgoECDSA521,
+	ssh.CertAlgoSKECDSA256v01: ssh.KeyAlgoSKECDSA256,
+	ssh.CertAlgoED25519v01:    ssh.KeyAlgoED25519,
+	ssh.CertAlgoSKED25519v01:  ssh.KeyAlgoSKED25519,
+}
+
+// underlyingAlgo returns the signature algorithm associated with algo (which is
+// an advertised or negotiated public key or host key algorithm). These are
+// usually the same, except for certificate algorithms.
+func underlyingAlgo(algo string) string {
+	if a, ok := certKeyAlgoNames[algo]; ok {
+		return a
+	}
+	return algo
+}
+
+// Calls an extension method. It is up to the agent implementation as to whether or not
+// any particular extension is supported and may always return an error. Because the
+// type of the response is up to the implementation, this returns the bytes of the
+// response and does not attempt any type of unmarshalling.
+func (c *client) Extension(extensionType string, contents []byte) ([]byte, error) {
+	req := ssh.Marshal(extensionAgentMsg{
+		ExtensionType: extensionType,
+		Contents:      contents,
+	})
+	buf, err := c.callRaw(req)
+	if err != nil {
+		return nil, err
+	}
+	if len(buf) == 0 {
+		return nil, errors.New("agent: failure; empty response")
+	}
+	// [PROTOCOL.agent] section 4.7 indicates that an SSH_AGENT_FAILURE message
+	// represents an agent that does not support the extension
+	if buf[0] == agentFailure {
+		return nil, ErrExtensionUnsupported
+	}
+	if buf[0] == agentExtensionFailure {
+		return nil, errors.New("agent: generic extension failure")
+	}
+
+	return buf, nil
 }

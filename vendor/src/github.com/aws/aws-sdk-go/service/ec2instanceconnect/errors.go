@@ -21,12 +21,26 @@ const (
 	// The specified instance was not found.
 	ErrCodeEC2InstanceNotFoundException = "EC2InstanceNotFoundException"
 
+	// ErrCodeEC2InstanceStateInvalidException for service response error code
+	// "EC2InstanceStateInvalidException".
+	//
+	// Unable to connect because the instance is not in a valid state. Connecting
+	// to a stopped or terminated instance is not supported. If the instance is
+	// stopped, start your instance, and try to connect again.
+	ErrCodeEC2InstanceStateInvalidException = "EC2InstanceStateInvalidException"
+
 	// ErrCodeEC2InstanceTypeInvalidException for service response error code
 	// "EC2InstanceTypeInvalidException".
 	//
 	// The instance type is not supported for connecting via the serial console.
 	// Only Nitro instance types are currently supported.
 	ErrCodeEC2InstanceTypeInvalidException = "EC2InstanceTypeInvalidException"
+
+	// ErrCodeEC2InstanceUnavailableException for service response error code
+	// "EC2InstanceUnavailableException".
+	//
+	// The instance is currently unavailable. Wait a few minutes and try again.
+	ErrCodeEC2InstanceUnavailableException = "EC2InstanceUnavailableException"
 
 	// ErrCodeInvalidArgsException for service response error code
 	// "InvalidArgsException".
@@ -56,6 +70,13 @@ const (
 	// Unable to start a serial console session. Please try again.
 	ErrCodeSerialConsoleSessionUnavailableException = "SerialConsoleSessionUnavailableException"
 
+	// ErrCodeSerialConsoleSessionUnsupportedException for service response error code
+	// "SerialConsoleSessionUnsupportedException".
+	//
+	// Your instance's BIOS version is unsupported for serial console connection.
+	// Reboot your instance to update its BIOS, and then try again to connect.
+	ErrCodeSerialConsoleSessionUnsupportedException = "SerialConsoleSessionUnsupportedException"
+
 	// ErrCodeServiceException for service response error code
 	// "ServiceException".
 	//
@@ -75,11 +96,14 @@ const (
 var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"AuthException":                              newErrorAuthException,
 	"EC2InstanceNotFoundException":               newErrorEC2InstanceNotFoundException,
+	"EC2InstanceStateInvalidException":           newErrorEC2InstanceStateInvalidException,
 	"EC2InstanceTypeInvalidException":            newErrorEC2InstanceTypeInvalidException,
+	"EC2InstanceUnavailableException":            newErrorEC2InstanceUnavailableException,
 	"InvalidArgsException":                       newErrorInvalidArgsException,
 	"SerialConsoleAccessDisabledException":       newErrorSerialConsoleAccessDisabledException,
 	"SerialConsoleSessionLimitExceededException": newErrorSerialConsoleSessionLimitExceededException,
 	"SerialConsoleSessionUnavailableException":   newErrorSerialConsoleSessionUnavailableException,
+	"SerialConsoleSessionUnsupportedException":   newErrorSerialConsoleSessionUnsupportedException,
 	"ServiceException":                           newErrorServiceException,
 	"ThrottlingException":                        newErrorThrottlingException,
 }

@@ -13,6 +13,97 @@ import (
 	"github.com/aws/aws-sdk-go/private/protocol/restjson"
 )
 
+const opAssociateServiceRoleToAccount = "AssociateServiceRoleToAccount"
+
+// AssociateServiceRoleToAccountRequest generates a "aws/request.Request" representing the
+// client's request for the AssociateServiceRoleToAccount operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssociateServiceRoleToAccount for more information on using the AssociateServiceRoleToAccount
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the AssociateServiceRoleToAccountRequest method.
+//	req, resp := client.AssociateServiceRoleToAccountRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/AssociateServiceRoleToAccount
+func (c *GreengrassV2) AssociateServiceRoleToAccountRequest(input *AssociateServiceRoleToAccountInput) (req *request.Request, output *AssociateServiceRoleToAccountOutput) {
+	op := &request.Operation{
+		Name:       opAssociateServiceRoleToAccount,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/greengrass/servicerole",
+	}
+
+	if input == nil {
+		input = &AssociateServiceRoleToAccountInput{}
+	}
+
+	output = &AssociateServiceRoleToAccountOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// AssociateServiceRoleToAccount API operation for AWS IoT Greengrass V2.
+//
+// Associates a Greengrass service role with IoT Greengrass for your Amazon
+// Web Services account in this Amazon Web Services Region. IoT Greengrass uses
+// this role to verify the identity of client devices and manage core device
+// connectivity information. The role must include the AWSGreengrassResourceAccessRolePolicy
+// (https://console.aws.amazon.com/iam/home#/policies/arn:awsiam::aws:policy/service-role/AWSGreengrassResourceAccessRolePolicy)
+// managed policy or a custom policy that defines equivalent permissions for
+// the IoT Greengrass features that you use. For more information, see Greengrass
+// service role (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-service-role.html)
+// in the IoT Greengrass Version 2 Developer Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS IoT Greengrass V2's
+// API operation AssociateServiceRoleToAccount for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/AssociateServiceRoleToAccount
+func (c *GreengrassV2) AssociateServiceRoleToAccount(input *AssociateServiceRoleToAccountInput) (*AssociateServiceRoleToAccountOutput, error) {
+	req, out := c.AssociateServiceRoleToAccountRequest(input)
+	return out, req.Send()
+}
+
+// AssociateServiceRoleToAccountWithContext is the same as AssociateServiceRoleToAccount with the addition of
+// the ability to pass a context and additional request options.
+//
+// See AssociateServiceRoleToAccount for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GreengrassV2) AssociateServiceRoleToAccountWithContext(ctx aws.Context, input *AssociateServiceRoleToAccountInput, opts ...request.Option) (*AssociateServiceRoleToAccountOutput, error) {
+	req, out := c.AssociateServiceRoleToAccountRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opBatchAssociateClientDeviceWithCoreDevice = "BatchAssociateClientDeviceWithCoreDevice"
 
 // BatchAssociateClientDeviceWithCoreDeviceRequest generates a "aws/request.Request" representing the
@@ -29,14 +120,13 @@ const opBatchAssociateClientDeviceWithCoreDevice = "BatchAssociateClientDeviceWi
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the BatchAssociateClientDeviceWithCoreDeviceRequest method.
+//	req, resp := client.BatchAssociateClientDeviceWithCoreDeviceRequest(params)
 //
-//    // Example sending a request using the BatchAssociateClientDeviceWithCoreDeviceRequest method.
-//    req, resp := client.BatchAssociateClientDeviceWithCoreDeviceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/BatchAssociateClientDeviceWithCoreDevice
 func (c *GreengrassV2) BatchAssociateClientDeviceWithCoreDeviceRequest(input *BatchAssociateClientDeviceWithCoreDeviceInput) (req *request.Request, output *BatchAssociateClientDeviceWithCoreDeviceOutput) {
@@ -57,7 +147,7 @@ func (c *GreengrassV2) BatchAssociateClientDeviceWithCoreDeviceRequest(input *Ba
 
 // BatchAssociateClientDeviceWithCoreDevice API operation for AWS IoT Greengrass V2.
 //
-// Associate a list of client devices with a core device. Use this API operation
+// Associates a list of client devices with a core device. Use this API operation
 // to specify which client devices can discover a core device through cloud
 // discovery. With cloud discovery, client devices connect to IoT Greengrass
 // to retrieve associated core devices' connectivity information and certificates.
@@ -79,23 +169,24 @@ func (c *GreengrassV2) BatchAssociateClientDeviceWithCoreDeviceRequest(input *Ba
 // API operation BatchAssociateClientDeviceWithCoreDevice for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/BatchAssociateClientDeviceWithCoreDevice
 func (c *GreengrassV2) BatchAssociateClientDeviceWithCoreDevice(input *BatchAssociateClientDeviceWithCoreDeviceInput) (*BatchAssociateClientDeviceWithCoreDeviceOutput, error) {
@@ -135,14 +226,13 @@ const opBatchDisassociateClientDeviceFromCoreDevice = "BatchDisassociateClientDe
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the BatchDisassociateClientDeviceFromCoreDeviceRequest method.
+//	req, resp := client.BatchDisassociateClientDeviceFromCoreDeviceRequest(params)
 //
-//    // Example sending a request using the BatchDisassociateClientDeviceFromCoreDeviceRequest method.
-//    req, resp := client.BatchDisassociateClientDeviceFromCoreDeviceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/BatchDisassociateClientDeviceFromCoreDevice
 func (c *GreengrassV2) BatchDisassociateClientDeviceFromCoreDeviceRequest(input *BatchDisassociateClientDeviceFromCoreDeviceInput) (req *request.Request, output *BatchDisassociateClientDeviceFromCoreDeviceOutput) {
@@ -163,7 +253,7 @@ func (c *GreengrassV2) BatchDisassociateClientDeviceFromCoreDeviceRequest(input 
 
 // BatchDisassociateClientDeviceFromCoreDevice API operation for AWS IoT Greengrass V2.
 //
-// Disassociate a list of client devices from a core device. After you disassociate
+// Disassociates a list of client devices from a core device. After you disassociate
 // a client device from a core device, the client device won't be able to use
 // cloud discovery to retrieve the core device's connectivity information and
 // certificates.
@@ -176,23 +266,24 @@ func (c *GreengrassV2) BatchDisassociateClientDeviceFromCoreDeviceRequest(input 
 // API operation BatchDisassociateClientDeviceFromCoreDevice for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/BatchDisassociateClientDeviceFromCoreDevice
 func (c *GreengrassV2) BatchDisassociateClientDeviceFromCoreDevice(input *BatchDisassociateClientDeviceFromCoreDeviceInput) (*BatchDisassociateClientDeviceFromCoreDeviceOutput, error) {
@@ -232,14 +323,13 @@ const opCancelDeployment = "CancelDeployment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CancelDeploymentRequest method.
+//	req, resp := client.CancelDeploymentRequest(params)
 //
-//    // Example sending a request using the CancelDeploymentRequest method.
-//    req, resp := client.CancelDeploymentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/CancelDeployment
 func (c *GreengrassV2) CancelDeploymentRequest(input *CancelDeploymentInput) (req *request.Request, output *CancelDeploymentOutput) {
@@ -272,27 +362,28 @@ func (c *GreengrassV2) CancelDeploymentRequest(input *CancelDeploymentInput) (re
 // API operation CancelDeployment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
 //
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ConflictException
-//   Your request has conflicting operations. This can occur if you're trying
-//   to perform more than one operation on the same resource at the same time.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ConflictException
+//     Your request has conflicting operations. This can occur if you're trying
+//     to perform more than one operation on the same resource at the same time.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/CancelDeployment
 func (c *GreengrassV2) CancelDeployment(input *CancelDeploymentInput) (*CancelDeploymentOutput, error) {
@@ -332,14 +423,13 @@ const opCreateComponentVersion = "CreateComponentVersion"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateComponentVersionRequest method.
+//	req, resp := client.CreateComponentVersionRequest(params)
 //
-//    // Example sending a request using the CreateComponentVersionRequest method.
-//    req, resp := client.CreateComponentVersionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/CreateComponentVersion
 func (c *GreengrassV2) CreateComponentVersionRequest(input *CreateComponentVersionInput) (req *request.Request, output *CreateComponentVersionOutput) {
@@ -367,22 +457,23 @@ func (c *GreengrassV2) CreateComponentVersionRequest(input *CreateComponentVersi
 //
 // You can use this operation to do the following:
 //
-//    * Create components from recipes Create a component from a recipe, which
-//    is a file that defines the component's metadata, parameters, dependencies,
-//    lifecycle, artifacts, and platform capability. For more information, see
-//    IoT Greengrass component recipe reference (https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html)
-//    in the IoT Greengrass V2 Developer Guide. To create a component from a
-//    recipe, specify inlineRecipe when you call this operation.
+//   - Create components from recipes Create a component from a recipe, which
+//     is a file that defines the component's metadata, parameters, dependencies,
+//     lifecycle, artifacts, and platform capability. For more information, see
+//     IoT Greengrass component recipe reference (https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html)
+//     in the IoT Greengrass V2 Developer Guide. To create a component from a
+//     recipe, specify inlineRecipe when you call this operation.
 //
-//    * Create components from Lambda functions Create a component from an Lambda
-//    function that runs on IoT Greengrass. This creates a recipe and artifacts
-//    from the Lambda function's deployment package. You can use this operation
-//    to migrate Lambda functions from IoT Greengrass V1 to IoT Greengrass V2.
-//    This function only accepts Lambda functions that use the following runtimes:
-//    Python 2.7 – python2.7 Python 3.7 – python3.7 Python 3.8 – python3.8
-//    Java 8 – java8 Node.js 10 – nodejs10.x Node.js 12 – nodejs12.x To
-//    create a component from a Lambda function, specify lambdaFunction when
-//    you call this operation.
+//   - Create components from Lambda functions Create a component from an Lambda
+//     function that runs on IoT Greengrass. This creates a recipe and artifacts
+//     from the Lambda function's deployment package. You can use this operation
+//     to migrate Lambda functions from IoT Greengrass V1 to IoT Greengrass V2.
+//     This function accepts Lambda functions in all supported versions of Python,
+//     Node.js, and Java runtimes. IoT Greengrass doesn't apply any additional
+//     restrictions on deprecated Lambda runtime versions. To create a component
+//     from a Lambda function, specify lambdaFunction when you call this operation.
+//     IoT Greengrass currently supports Lambda functions on only Linux core
+//     devices.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -392,33 +483,34 @@ func (c *GreengrassV2) CreateComponentVersionRequest(input *CreateComponentVersi
 // API operation CreateComponentVersion for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ServiceQuotaExceededException
-//   Your request exceeds a service quota. For example, you might have the maximum
-//   number of components that you can create.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ServiceQuotaExceededException
+//     Your request exceeds a service quota. For example, you might have the maximum
+//     number of components that you can create.
 //
-//   * ConflictException
-//   Your request has conflicting operations. This can occur if you're trying
-//   to perform more than one operation on the same resource at the same time.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ConflictException
+//     Your request has conflicting operations. This can occur if you're trying
+//     to perform more than one operation on the same resource at the same time.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
-//   * RequestAlreadyInProgressException
-//   The request is already in progress. This exception occurs when you use a
-//   client token for multiple requests while IoT Greengrass is still processing
-//   an earlier request that uses the same client token.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - RequestAlreadyInProgressException
+//     The request is already in progress. This exception occurs when you use a
+//     client token for multiple requests while IoT Greengrass is still processing
+//     an earlier request that uses the same client token.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/CreateComponentVersion
 func (c *GreengrassV2) CreateComponentVersion(input *CreateComponentVersionInput) (*CreateComponentVersionOutput, error) {
@@ -458,14 +550,13 @@ const opCreateDeployment = "CreateDeployment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateDeploymentRequest method.
+//	req, resp := client.CreateDeploymentRequest(params)
 //
-//    // Example sending a request using the CreateDeploymentRequest method.
-//    req, resp := client.CreateDeploymentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/CreateDeployment
 func (c *GreengrassV2) CreateDeploymentRequest(input *CreateDeploymentInput) (req *request.Request, output *CreateDeploymentOutput) {
@@ -497,8 +588,7 @@ func (c *GreengrassV2) CreateDeploymentRequest(input *CreateDeploymentInput) (re
 //
 // Every deployment has a revision number that indicates how many deployment
 // revisions you define for a target. Use this operation to create a new revision
-// of an existing deployment. This operation returns the revision number of
-// the new deployment when you create it.
+// of an existing deployment.
 //
 // For more information, see the Create deployments (https://docs.aws.amazon.com/greengrass/v2/developerguide/create-deployments.html)
 // in the IoT Greengrass V2 Developer Guide.
@@ -511,28 +601,33 @@ func (c *GreengrassV2) CreateDeploymentRequest(input *CreateDeploymentInput) (re
 // API operation CreateDeployment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
 //
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
-//   * RequestAlreadyInProgressException
-//   The request is already in progress. This exception occurs when you use a
-//   client token for multiple requests while IoT Greengrass is still processing
-//   an earlier request that uses the same client token.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ConflictException
+//     Your request has conflicting operations. This can occur if you're trying
+//     to perform more than one operation on the same resource at the same time.
+//
+//   - RequestAlreadyInProgressException
+//     The request is already in progress. This exception occurs when you use a
+//     client token for multiple requests while IoT Greengrass is still processing
+//     an earlier request that uses the same client token.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/CreateDeployment
 func (c *GreengrassV2) CreateDeployment(input *CreateDeploymentInput) (*CreateDeploymentOutput, error) {
@@ -572,14 +667,13 @@ const opDeleteComponent = "DeleteComponent"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteComponentRequest method.
+//	req, resp := client.DeleteComponentRequest(params)
 //
-//    // Example sending a request using the DeleteComponentRequest method.
-//    req, resp := client.DeleteComponentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DeleteComponent
 func (c *GreengrassV2) DeleteComponentRequest(input *DeleteComponentInput) (req *request.Request, output *DeleteComponentOutput) {
@@ -616,27 +710,28 @@ func (c *GreengrassV2) DeleteComponentRequest(input *DeleteComponentInput) (req 
 // API operation DeleteComponent for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ConflictException
-//   Your request has conflicting operations. This can occur if you're trying
-//   to perform more than one operation on the same resource at the same time.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ConflictException
+//     Your request has conflicting operations. This can occur if you're trying
+//     to perform more than one operation on the same resource at the same time.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DeleteComponent
 func (c *GreengrassV2) DeleteComponent(input *DeleteComponentInput) (*DeleteComponentOutput, error) {
@@ -676,14 +771,13 @@ const opDeleteCoreDevice = "DeleteCoreDevice"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteCoreDeviceRequest method.
+//	req, resp := client.DeleteCoreDeviceRequest(params)
 //
-//    // Example sending a request using the DeleteCoreDeviceRequest method.
-//    req, resp := client.DeleteCoreDeviceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DeleteCoreDevice
 func (c *GreengrassV2) DeleteCoreDeviceRequest(input *DeleteCoreDeviceInput) (req *request.Request, output *DeleteCoreDeviceOutput) {
@@ -719,27 +813,28 @@ func (c *GreengrassV2) DeleteCoreDeviceRequest(input *DeleteCoreDeviceInput) (re
 // API operation DeleteCoreDevice for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ConflictException
-//   Your request has conflicting operations. This can occur if you're trying
-//   to perform more than one operation on the same resource at the same time.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - ConflictException
+//     Your request has conflicting operations. This can occur if you're trying
+//     to perform more than one operation on the same resource at the same time.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DeleteCoreDevice
 func (c *GreengrassV2) DeleteCoreDevice(input *DeleteCoreDeviceInput) (*DeleteCoreDeviceOutput, error) {
@@ -763,6 +858,111 @@ func (c *GreengrassV2) DeleteCoreDeviceWithContext(ctx aws.Context, input *Delet
 	return out, req.Send()
 }
 
+const opDeleteDeployment = "DeleteDeployment"
+
+// DeleteDeploymentRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteDeployment operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteDeployment for more information on using the DeleteDeployment
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteDeploymentRequest method.
+//	req, resp := client.DeleteDeploymentRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DeleteDeployment
+func (c *GreengrassV2) DeleteDeploymentRequest(input *DeleteDeploymentInput) (req *request.Request, output *DeleteDeploymentOutput) {
+	op := &request.Operation{
+		Name:       opDeleteDeployment,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/greengrass/v2/deployments/{deploymentId}",
+	}
+
+	if input == nil {
+		input = &DeleteDeploymentInput{}
+	}
+
+	output = &DeleteDeploymentOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteDeployment API operation for AWS IoT Greengrass V2.
+//
+// Deletes a deployment. To delete an active deployment, you must first cancel
+// it. For more information, see CancelDeployment (https://docs.aws.amazon.com/iot/latest/apireference/API_CancelDeployment.html).
+//
+// Deleting a deployment doesn't affect core devices that run that deployment,
+// because core devices store the deployment's configuration on the device.
+// Additionally, core devices can roll back to a previous deployment that has
+// been deleted.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS IoT Greengrass V2's
+// API operation DeleteDeployment for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
+//
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
+//
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ConflictException
+//     Your request has conflicting operations. This can occur if you're trying
+//     to perform more than one operation on the same resource at the same time.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DeleteDeployment
+func (c *GreengrassV2) DeleteDeployment(input *DeleteDeploymentInput) (*DeleteDeploymentOutput, error) {
+	req, out := c.DeleteDeploymentRequest(input)
+	return out, req.Send()
+}
+
+// DeleteDeploymentWithContext is the same as DeleteDeployment with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteDeployment for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GreengrassV2) DeleteDeploymentWithContext(ctx aws.Context, input *DeleteDeploymentInput, opts ...request.Option) (*DeleteDeploymentOutput, error) {
+	req, out := c.DeleteDeploymentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDescribeComponent = "DescribeComponent"
 
 // DescribeComponentRequest generates a "aws/request.Request" representing the
@@ -779,14 +979,13 @@ const opDescribeComponent = "DescribeComponent"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeComponentRequest method.
+//	req, resp := client.DescribeComponentRequest(params)
 //
-//    // Example sending a request using the DescribeComponentRequest method.
-//    req, resp := client.DescribeComponentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DescribeComponent
 func (c *GreengrassV2) DescribeComponentRequest(input *DescribeComponentInput) (req *request.Request, output *DescribeComponentOutput) {
@@ -817,23 +1016,24 @@ func (c *GreengrassV2) DescribeComponentRequest(input *DescribeComponentInput) (
 // API operation DescribeComponent for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DescribeComponent
 func (c *GreengrassV2) DescribeComponent(input *DescribeComponentInput) (*DescribeComponentOutput, error) {
@@ -857,6 +1057,89 @@ func (c *GreengrassV2) DescribeComponentWithContext(ctx aws.Context, input *Desc
 	return out, req.Send()
 }
 
+const opDisassociateServiceRoleFromAccount = "DisassociateServiceRoleFromAccount"
+
+// DisassociateServiceRoleFromAccountRequest generates a "aws/request.Request" representing the
+// client's request for the DisassociateServiceRoleFromAccount operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisassociateServiceRoleFromAccount for more information on using the DisassociateServiceRoleFromAccount
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DisassociateServiceRoleFromAccountRequest method.
+//	req, resp := client.DisassociateServiceRoleFromAccountRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DisassociateServiceRoleFromAccount
+func (c *GreengrassV2) DisassociateServiceRoleFromAccountRequest(input *DisassociateServiceRoleFromAccountInput) (req *request.Request, output *DisassociateServiceRoleFromAccountOutput) {
+	op := &request.Operation{
+		Name:       opDisassociateServiceRoleFromAccount,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/greengrass/servicerole",
+	}
+
+	if input == nil {
+		input = &DisassociateServiceRoleFromAccountInput{}
+	}
+
+	output = &DisassociateServiceRoleFromAccountOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DisassociateServiceRoleFromAccount API operation for AWS IoT Greengrass V2.
+//
+// Disassociates the Greengrass service role from IoT Greengrass for your Amazon
+// Web Services account in this Amazon Web Services Region. Without a service
+// role, IoT Greengrass can't verify the identity of client devices or manage
+// core device connectivity information. For more information, see Greengrass
+// service role (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-service-role.html)
+// in the IoT Greengrass Version 2 Developer Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS IoT Greengrass V2's
+// API operation DisassociateServiceRoleFromAccount for usage and error information.
+//
+// Returned Error Types:
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/DisassociateServiceRoleFromAccount
+func (c *GreengrassV2) DisassociateServiceRoleFromAccount(input *DisassociateServiceRoleFromAccountInput) (*DisassociateServiceRoleFromAccountOutput, error) {
+	req, out := c.DisassociateServiceRoleFromAccountRequest(input)
+	return out, req.Send()
+}
+
+// DisassociateServiceRoleFromAccountWithContext is the same as DisassociateServiceRoleFromAccount with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DisassociateServiceRoleFromAccount for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GreengrassV2) DisassociateServiceRoleFromAccountWithContext(ctx aws.Context, input *DisassociateServiceRoleFromAccountInput, opts ...request.Option) (*DisassociateServiceRoleFromAccountOutput, error) {
+	req, out := c.DisassociateServiceRoleFromAccountRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetComponent = "GetComponent"
 
 // GetComponentRequest generates a "aws/request.Request" representing the
@@ -873,14 +1156,13 @@ const opGetComponent = "GetComponent"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetComponentRequest method.
+//	req, resp := client.GetComponentRequest(params)
 //
-//    // Example sending a request using the GetComponentRequest method.
-//    req, resp := client.GetComponentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetComponent
 func (c *GreengrassV2) GetComponentRequest(input *GetComponentInput) (req *request.Request, output *GetComponentOutput) {
@@ -901,8 +1183,7 @@ func (c *GreengrassV2) GetComponentRequest(input *GetComponentInput) (req *reque
 
 // GetComponent API operation for AWS IoT Greengrass V2.
 //
-// Gets the recipe for a version of a component. Core devices can call this
-// operation to identify the artifacts and requirements to install a component.
+// Gets the recipe for a version of a component.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -912,23 +1193,24 @@ func (c *GreengrassV2) GetComponentRequest(input *GetComponentInput) (req *reque
 // API operation GetComponent for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetComponent
 func (c *GreengrassV2) GetComponent(input *GetComponentInput) (*GetComponentOutput, error) {
@@ -968,14 +1250,13 @@ const opGetComponentVersionArtifact = "GetComponentVersionArtifact"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetComponentVersionArtifactRequest method.
+//	req, resp := client.GetComponentVersionArtifactRequest(params)
 //
-//    // Example sending a request using the GetComponentVersionArtifactRequest method.
-//    req, resp := client.GetComponentVersionArtifactRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetComponentVersionArtifact
 func (c *GreengrassV2) GetComponentVersionArtifactRequest(input *GetComponentVersionArtifactInput) (req *request.Request, output *GetComponentVersionArtifactOutput) {
@@ -996,9 +1277,9 @@ func (c *GreengrassV2) GetComponentVersionArtifactRequest(input *GetComponentVer
 
 // GetComponentVersionArtifact API operation for AWS IoT Greengrass V2.
 //
-// Gets the pre-signed URL to download a public component artifact. Core devices
-// call this operation to identify the URL that they can use to download an
-// artifact to install.
+// Gets the pre-signed URL to download a public or a Lambda component artifact.
+// Core devices call this operation to identify the URL that they can use to
+// download an artifact to install.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1008,23 +1289,24 @@ func (c *GreengrassV2) GetComponentVersionArtifactRequest(input *GetComponentVer
 // API operation GetComponentVersionArtifact for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetComponentVersionArtifact
 func (c *GreengrassV2) GetComponentVersionArtifact(input *GetComponentVersionArtifactInput) (*GetComponentVersionArtifactOutput, error) {
@@ -1048,6 +1330,97 @@ func (c *GreengrassV2) GetComponentVersionArtifactWithContext(ctx aws.Context, i
 	return out, req.Send()
 }
 
+const opGetConnectivityInfo = "GetConnectivityInfo"
+
+// GetConnectivityInfoRequest generates a "aws/request.Request" representing the
+// client's request for the GetConnectivityInfo operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetConnectivityInfo for more information on using the GetConnectivityInfo
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetConnectivityInfoRequest method.
+//	req, resp := client.GetConnectivityInfoRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetConnectivityInfo
+func (c *GreengrassV2) GetConnectivityInfoRequest(input *GetConnectivityInfoInput) (req *request.Request, output *GetConnectivityInfoOutput) {
+	op := &request.Operation{
+		Name:       opGetConnectivityInfo,
+		HTTPMethod: "GET",
+		HTTPPath:   "/greengrass/things/{thingName}/connectivityInfo",
+	}
+
+	if input == nil {
+		input = &GetConnectivityInfoInput{}
+	}
+
+	output = &GetConnectivityInfoOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetConnectivityInfo API operation for AWS IoT Greengrass V2.
+//
+// Retrieves connectivity information for a Greengrass core device.
+//
+// Connectivity information includes endpoints and ports where client devices
+// can connect to an MQTT broker on the core device. When a client device calls
+// the IoT Greengrass discovery API (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-discover-api.html),
+// IoT Greengrass returns connectivity information for all of the core devices
+// where the client device can connect. For more information, see Connect client
+// devices to core devices (https://docs.aws.amazon.com/greengrass/v2/developerguide/connect-client-devices.html)
+// in the IoT Greengrass Version 2 Developer Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS IoT Greengrass V2's
+// API operation GetConnectivityInfo for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetConnectivityInfo
+func (c *GreengrassV2) GetConnectivityInfo(input *GetConnectivityInfoInput) (*GetConnectivityInfoOutput, error) {
+	req, out := c.GetConnectivityInfoRequest(input)
+	return out, req.Send()
+}
+
+// GetConnectivityInfoWithContext is the same as GetConnectivityInfo with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetConnectivityInfo for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GreengrassV2) GetConnectivityInfoWithContext(ctx aws.Context, input *GetConnectivityInfoInput, opts ...request.Option) (*GetConnectivityInfoOutput, error) {
+	req, out := c.GetConnectivityInfoRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetCoreDevice = "GetCoreDevice"
 
 // GetCoreDeviceRequest generates a "aws/request.Request" representing the
@@ -1064,14 +1437,13 @@ const opGetCoreDevice = "GetCoreDevice"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetCoreDeviceRequest method.
+//	req, resp := client.GetCoreDeviceRequest(params)
 //
-//    // Example sending a request using the GetCoreDeviceRequest method.
-//    req, resp := client.GetCoreDeviceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetCoreDevice
 func (c *GreengrassV2) GetCoreDeviceRequest(input *GetCoreDeviceInput) (req *request.Request, output *GetCoreDeviceOutput) {
@@ -1094,6 +1466,27 @@ func (c *GreengrassV2) GetCoreDeviceRequest(input *GetCoreDeviceInput) (req *req
 //
 // Retrieves metadata for a Greengrass core device.
 //
+// IoT Greengrass relies on individual devices to send status updates to the
+// Amazon Web Services Cloud. If the IoT Greengrass Core software isn't running
+// on the device, or if device isn't connected to the Amazon Web Services Cloud,
+// then the reported status of that device might not reflect its current status.
+// The status timestamp indicates when the device status was last updated.
+//
+// Core devices send status updates at the following times:
+//
+//   - When the IoT Greengrass Core software starts
+//
+//   - When the core device receives a deployment from the Amazon Web Services
+//     Cloud
+//
+//   - When the status of any component on the core device becomes BROKEN
+//
+//   - At a regular interval that you can configure (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-fss),
+//     which defaults to 24 hours
+//
+//   - For IoT Greengrass Core v2.7.0, the core device sends status updates
+//     upon local deployment and cloud deployment
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -1102,23 +1495,24 @@ func (c *GreengrassV2) GetCoreDeviceRequest(input *GetCoreDeviceInput) (req *req
 // API operation GetCoreDevice for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetCoreDevice
 func (c *GreengrassV2) GetCoreDevice(input *GetCoreDeviceInput) (*GetCoreDeviceOutput, error) {
@@ -1158,14 +1552,13 @@ const opGetDeployment = "GetDeployment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetDeploymentRequest method.
+//	req, resp := client.GetDeploymentRequest(params)
 //
-//    // Example sending a request using the GetDeploymentRequest method.
-//    req, resp := client.GetDeploymentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetDeployment
 func (c *GreengrassV2) GetDeploymentRequest(input *GetDeploymentInput) (req *request.Request, output *GetDeploymentOutput) {
@@ -1197,23 +1590,24 @@ func (c *GreengrassV2) GetDeploymentRequest(input *GetDeploymentInput) (req *req
 // API operation GetDeployment for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetDeployment
 func (c *GreengrassV2) GetDeployment(input *GetDeploymentInput) (*GetDeploymentOutput, error) {
@@ -1237,6 +1631,89 @@ func (c *GreengrassV2) GetDeploymentWithContext(ctx aws.Context, input *GetDeplo
 	return out, req.Send()
 }
 
+const opGetServiceRoleForAccount = "GetServiceRoleForAccount"
+
+// GetServiceRoleForAccountRequest generates a "aws/request.Request" representing the
+// client's request for the GetServiceRoleForAccount operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetServiceRoleForAccount for more information on using the GetServiceRoleForAccount
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetServiceRoleForAccountRequest method.
+//	req, resp := client.GetServiceRoleForAccountRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetServiceRoleForAccount
+func (c *GreengrassV2) GetServiceRoleForAccountRequest(input *GetServiceRoleForAccountInput) (req *request.Request, output *GetServiceRoleForAccountOutput) {
+	op := &request.Operation{
+		Name:       opGetServiceRoleForAccount,
+		HTTPMethod: "GET",
+		HTTPPath:   "/greengrass/servicerole",
+	}
+
+	if input == nil {
+		input = &GetServiceRoleForAccountInput{}
+	}
+
+	output = &GetServiceRoleForAccountOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetServiceRoleForAccount API operation for AWS IoT Greengrass V2.
+//
+// Gets the service role associated with IoT Greengrass for your Amazon Web
+// Services account in this Amazon Web Services Region. IoT Greengrass uses
+// this role to verify the identity of client devices and manage core device
+// connectivity information. For more information, see Greengrass service role
+// (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-service-role.html)
+// in the IoT Greengrass Version 2 Developer Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS IoT Greengrass V2's
+// API operation GetServiceRoleForAccount for usage and error information.
+//
+// Returned Error Types:
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/GetServiceRoleForAccount
+func (c *GreengrassV2) GetServiceRoleForAccount(input *GetServiceRoleForAccountInput) (*GetServiceRoleForAccountOutput, error) {
+	req, out := c.GetServiceRoleForAccountRequest(input)
+	return out, req.Send()
+}
+
+// GetServiceRoleForAccountWithContext is the same as GetServiceRoleForAccount with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetServiceRoleForAccount for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GreengrassV2) GetServiceRoleForAccountWithContext(ctx aws.Context, input *GetServiceRoleForAccountInput, opts ...request.Option) (*GetServiceRoleForAccountOutput, error) {
+	req, out := c.GetServiceRoleForAccountRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opListClientDevicesAssociatedWithCoreDevice = "ListClientDevicesAssociatedWithCoreDevice"
 
 // ListClientDevicesAssociatedWithCoreDeviceRequest generates a "aws/request.Request" representing the
@@ -1253,14 +1730,13 @@ const opListClientDevicesAssociatedWithCoreDevice = "ListClientDevicesAssociated
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListClientDevicesAssociatedWithCoreDeviceRequest method.
+//	req, resp := client.ListClientDevicesAssociatedWithCoreDeviceRequest(params)
 //
-//    // Example sending a request using the ListClientDevicesAssociatedWithCoreDeviceRequest method.
-//    req, resp := client.ListClientDevicesAssociatedWithCoreDeviceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListClientDevicesAssociatedWithCoreDevice
 func (c *GreengrassV2) ListClientDevicesAssociatedWithCoreDeviceRequest(input *ListClientDevicesAssociatedWithCoreDeviceInput) (req *request.Request, output *ListClientDevicesAssociatedWithCoreDeviceOutput) {
@@ -1298,23 +1774,24 @@ func (c *GreengrassV2) ListClientDevicesAssociatedWithCoreDeviceRequest(input *L
 // API operation ListClientDevicesAssociatedWithCoreDevice for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListClientDevicesAssociatedWithCoreDevice
 func (c *GreengrassV2) ListClientDevicesAssociatedWithCoreDevice(input *ListClientDevicesAssociatedWithCoreDeviceInput) (*ListClientDevicesAssociatedWithCoreDeviceOutput, error) {
@@ -1346,15 +1823,14 @@ func (c *GreengrassV2) ListClientDevicesAssociatedWithCoreDeviceWithContext(ctx 
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListClientDevicesAssociatedWithCoreDevice operation.
-//    pageNum := 0
-//    err := client.ListClientDevicesAssociatedWithCoreDevicePages(params,
-//        func(page *greengrassv2.ListClientDevicesAssociatedWithCoreDeviceOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListClientDevicesAssociatedWithCoreDevice operation.
+//	pageNum := 0
+//	err := client.ListClientDevicesAssociatedWithCoreDevicePages(params,
+//	    func(page *greengrassv2.ListClientDevicesAssociatedWithCoreDeviceOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *GreengrassV2) ListClientDevicesAssociatedWithCoreDevicePages(input *ListClientDevicesAssociatedWithCoreDeviceInput, fn func(*ListClientDevicesAssociatedWithCoreDeviceOutput, bool) bool) error {
 	return c.ListClientDevicesAssociatedWithCoreDevicePagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1406,14 +1882,13 @@ const opListComponentVersions = "ListComponentVersions"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListComponentVersionsRequest method.
+//	req, resp := client.ListComponentVersionsRequest(params)
 //
-//    // Example sending a request using the ListComponentVersionsRequest method.
-//    req, resp := client.ListComponentVersionsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListComponentVersions
 func (c *GreengrassV2) ListComponentVersionsRequest(input *ListComponentVersionsInput) (req *request.Request, output *ListComponentVersionsOutput) {
@@ -1451,23 +1926,24 @@ func (c *GreengrassV2) ListComponentVersionsRequest(input *ListComponentVersions
 // API operation ListComponentVersions for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListComponentVersions
 func (c *GreengrassV2) ListComponentVersions(input *ListComponentVersionsInput) (*ListComponentVersionsOutput, error) {
@@ -1499,15 +1975,14 @@ func (c *GreengrassV2) ListComponentVersionsWithContext(ctx aws.Context, input *
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListComponentVersions operation.
-//    pageNum := 0
-//    err := client.ListComponentVersionsPages(params,
-//        func(page *greengrassv2.ListComponentVersionsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListComponentVersions operation.
+//	pageNum := 0
+//	err := client.ListComponentVersionsPages(params,
+//	    func(page *greengrassv2.ListComponentVersionsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *GreengrassV2) ListComponentVersionsPages(input *ListComponentVersionsInput, fn func(*ListComponentVersionsOutput, bool) bool) error {
 	return c.ListComponentVersionsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1559,14 +2034,13 @@ const opListComponents = "ListComponents"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListComponentsRequest method.
+//	req, resp := client.ListComponentsRequest(params)
 //
-//    // Example sending a request using the ListComponentsRequest method.
-//    req, resp := client.ListComponentsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListComponents
 func (c *GreengrassV2) ListComponentsRequest(input *ListComponentsInput) (req *request.Request, output *ListComponentsOutput) {
@@ -1604,20 +2078,24 @@ func (c *GreengrassV2) ListComponentsRequest(input *ListComponentsInput) (req *r
 // API operation ListComponents for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListComponents
 func (c *GreengrassV2) ListComponents(input *ListComponentsInput) (*ListComponentsOutput, error) {
@@ -1649,15 +2127,14 @@ func (c *GreengrassV2) ListComponentsWithContext(ctx aws.Context, input *ListCom
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListComponents operation.
-//    pageNum := 0
-//    err := client.ListComponentsPages(params,
-//        func(page *greengrassv2.ListComponentsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListComponents operation.
+//	pageNum := 0
+//	err := client.ListComponentsPages(params,
+//	    func(page *greengrassv2.ListComponentsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *GreengrassV2) ListComponentsPages(input *ListComponentsInput, fn func(*ListComponentsOutput, bool) bool) error {
 	return c.ListComponentsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1709,14 +2186,13 @@ const opListCoreDevices = "ListCoreDevices"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListCoreDevicesRequest method.
+//	req, resp := client.ListCoreDevicesRequest(params)
 //
-//    // Example sending a request using the ListCoreDevicesRequest method.
-//    req, resp := client.ListCoreDevicesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListCoreDevices
 func (c *GreengrassV2) ListCoreDevicesRequest(input *ListCoreDevicesInput) (req *request.Request, output *ListCoreDevicesOutput) {
@@ -1745,6 +2221,27 @@ func (c *GreengrassV2) ListCoreDevicesRequest(input *ListCoreDevicesInput) (req 
 //
 // Retrieves a paginated list of Greengrass core devices.
 //
+// IoT Greengrass relies on individual devices to send status updates to the
+// Amazon Web Services Cloud. If the IoT Greengrass Core software isn't running
+// on the device, or if device isn't connected to the Amazon Web Services Cloud,
+// then the reported status of that device might not reflect its current status.
+// The status timestamp indicates when the device status was last updated.
+//
+// Core devices send status updates at the following times:
+//
+//   - When the IoT Greengrass Core software starts
+//
+//   - When the core device receives a deployment from the Amazon Web Services
+//     Cloud
+//
+//   - When the status of any component on the core device becomes BROKEN
+//
+//   - At a regular interval that you can configure (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-fss),
+//     which defaults to 24 hours
+//
+//   - For IoT Greengrass Core v2.7.0, the core device sends status updates
+//     upon local deployment and cloud deployment
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -1753,20 +2250,21 @@ func (c *GreengrassV2) ListCoreDevicesRequest(input *ListCoreDevicesInput) (req 
 // API operation ListCoreDevices for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListCoreDevices
 func (c *GreengrassV2) ListCoreDevices(input *ListCoreDevicesInput) (*ListCoreDevicesOutput, error) {
@@ -1798,15 +2296,14 @@ func (c *GreengrassV2) ListCoreDevicesWithContext(ctx aws.Context, input *ListCo
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListCoreDevices operation.
-//    pageNum := 0
-//    err := client.ListCoreDevicesPages(params,
-//        func(page *greengrassv2.ListCoreDevicesOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListCoreDevices operation.
+//	pageNum := 0
+//	err := client.ListCoreDevicesPages(params,
+//	    func(page *greengrassv2.ListCoreDevicesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *GreengrassV2) ListCoreDevicesPages(input *ListCoreDevicesInput, fn func(*ListCoreDevicesOutput, bool) bool) error {
 	return c.ListCoreDevicesPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1858,14 +2355,13 @@ const opListDeployments = "ListDeployments"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListDeploymentsRequest method.
+//	req, resp := client.ListDeploymentsRequest(params)
 //
-//    // Example sending a request using the ListDeploymentsRequest method.
-//    req, resp := client.ListDeploymentsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListDeployments
 func (c *GreengrassV2) ListDeploymentsRequest(input *ListDeploymentsInput) (req *request.Request, output *ListDeploymentsOutput) {
@@ -1902,20 +2398,21 @@ func (c *GreengrassV2) ListDeploymentsRequest(input *ListDeploymentsInput) (req 
 // API operation ListDeployments for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListDeployments
 func (c *GreengrassV2) ListDeployments(input *ListDeploymentsInput) (*ListDeploymentsOutput, error) {
@@ -1947,15 +2444,14 @@ func (c *GreengrassV2) ListDeploymentsWithContext(ctx aws.Context, input *ListDe
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListDeployments operation.
-//    pageNum := 0
-//    err := client.ListDeploymentsPages(params,
-//        func(page *greengrassv2.ListDeploymentsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListDeployments operation.
+//	pageNum := 0
+//	err := client.ListDeploymentsPages(params,
+//	    func(page *greengrassv2.ListDeploymentsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *GreengrassV2) ListDeploymentsPages(input *ListDeploymentsInput, fn func(*ListDeploymentsOutput, bool) bool) error {
 	return c.ListDeploymentsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2007,14 +2503,13 @@ const opListEffectiveDeployments = "ListEffectiveDeployments"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListEffectiveDeploymentsRequest method.
+//	req, resp := client.ListEffectiveDeploymentsRequest(params)
 //
-//    // Example sending a request using the ListEffectiveDeploymentsRequest method.
-//    req, resp := client.ListEffectiveDeploymentsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListEffectiveDeployments
 func (c *GreengrassV2) ListEffectiveDeploymentsRequest(input *ListEffectiveDeploymentsInput) (req *request.Request, output *ListEffectiveDeploymentsOutput) {
@@ -2052,23 +2547,24 @@ func (c *GreengrassV2) ListEffectiveDeploymentsRequest(input *ListEffectiveDeplo
 // API operation ListEffectiveDeployments for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListEffectiveDeployments
 func (c *GreengrassV2) ListEffectiveDeployments(input *ListEffectiveDeploymentsInput) (*ListEffectiveDeploymentsOutput, error) {
@@ -2100,15 +2596,14 @@ func (c *GreengrassV2) ListEffectiveDeploymentsWithContext(ctx aws.Context, inpu
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListEffectiveDeployments operation.
-//    pageNum := 0
-//    err := client.ListEffectiveDeploymentsPages(params,
-//        func(page *greengrassv2.ListEffectiveDeploymentsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListEffectiveDeployments operation.
+//	pageNum := 0
+//	err := client.ListEffectiveDeploymentsPages(params,
+//	    func(page *greengrassv2.ListEffectiveDeploymentsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *GreengrassV2) ListEffectiveDeploymentsPages(input *ListEffectiveDeploymentsInput, fn func(*ListEffectiveDeploymentsOutput, bool) bool) error {
 	return c.ListEffectiveDeploymentsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2160,14 +2655,13 @@ const opListInstalledComponents = "ListInstalledComponents"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListInstalledComponentsRequest method.
+//	req, resp := client.ListInstalledComponentsRequest(params)
 //
-//    // Example sending a request using the ListInstalledComponentsRequest method.
-//    req, resp := client.ListInstalledComponentsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListInstalledComponents
 func (c *GreengrassV2) ListInstalledComponentsRequest(input *ListInstalledComponentsInput) (req *request.Request, output *ListInstalledComponentsOutput) {
@@ -2195,7 +2689,30 @@ func (c *GreengrassV2) ListInstalledComponentsRequest(input *ListInstalledCompon
 // ListInstalledComponents API operation for AWS IoT Greengrass V2.
 //
 // Retrieves a paginated list of the components that a Greengrass core device
-// runs.
+// runs. By default, this list doesn't include components that are deployed
+// as dependencies of other components. To include dependencies in the response,
+// set the topologyFilter parameter to ALL.
+//
+// IoT Greengrass relies on individual devices to send status updates to the
+// Amazon Web Services Cloud. If the IoT Greengrass Core software isn't running
+// on the device, or if device isn't connected to the Amazon Web Services Cloud,
+// then the reported status of that device might not reflect its current status.
+// The status timestamp indicates when the device status was last updated.
+//
+// Core devices send status updates at the following times:
+//
+//   - When the IoT Greengrass Core software starts
+//
+//   - When the core device receives a deployment from the Amazon Web Services
+//     Cloud
+//
+//   - When the status of any component on the core device becomes BROKEN
+//
+//   - At a regular interval that you can configure (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-fss),
+//     which defaults to 24 hours
+//
+//   - For IoT Greengrass Core v2.7.0, the core device sends status updates
+//     upon local deployment and cloud deployment
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2205,23 +2722,24 @@ func (c *GreengrassV2) ListInstalledComponentsRequest(input *ListInstalledCompon
 // API operation ListInstalledComponents for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListInstalledComponents
 func (c *GreengrassV2) ListInstalledComponents(input *ListInstalledComponentsInput) (*ListInstalledComponentsOutput, error) {
@@ -2253,15 +2771,14 @@ func (c *GreengrassV2) ListInstalledComponentsWithContext(ctx aws.Context, input
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListInstalledComponents operation.
-//    pageNum := 0
-//    err := client.ListInstalledComponentsPages(params,
-//        func(page *greengrassv2.ListInstalledComponentsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListInstalledComponents operation.
+//	pageNum := 0
+//	err := client.ListInstalledComponentsPages(params,
+//	    func(page *greengrassv2.ListInstalledComponentsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *GreengrassV2) ListInstalledComponentsPages(input *ListInstalledComponentsInput, fn func(*ListInstalledComponentsOutput, bool) bool) error {
 	return c.ListInstalledComponentsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2313,14 +2830,13 @@ const opListTagsForResource = "ListTagsForResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListTagsForResourceRequest method.
+//	req, resp := client.ListTagsForResourceRequest(params)
 //
-//    // Example sending a request using the ListTagsForResourceRequest method.
-//    req, resp := client.ListTagsForResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListTagsForResource
 func (c *GreengrassV2) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *request.Request, output *ListTagsForResourceOutput) {
@@ -2351,15 +2867,16 @@ func (c *GreengrassV2) ListTagsForResourceRequest(input *ListTagsForResourceInpu
 // API operation ListTagsForResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
+//
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ListTagsForResource
 func (c *GreengrassV2) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
@@ -2399,14 +2916,13 @@ const opResolveComponentCandidates = "ResolveComponentCandidates"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ResolveComponentCandidatesRequest method.
+//	req, resp := client.ResolveComponentCandidatesRequest(params)
 //
-//    // Example sending a request using the ResolveComponentCandidatesRequest method.
-//    req, resp := client.ResolveComponentCandidatesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ResolveComponentCandidates
 func (c *GreengrassV2) ResolveComponentCandidatesRequest(input *ResolveComponentCandidatesInput) (req *request.Request, output *ResolveComponentCandidatesOutput) {
@@ -2454,27 +2970,28 @@ func (c *GreengrassV2) ResolveComponentCandidatesRequest(input *ResolveComponent
 // API operation ResolveComponentCandidates for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
 //
-//   * AccessDeniedException
-//   You don't have permission to perform the action.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - AccessDeniedException
+//     You don't have permission to perform the action.
 //
-//   * ThrottlingException
-//   Your request exceeded a request rate quota. For example, you might have exceeded
-//   the amount of times that you can retrieve device or deployment status per
-//   second.
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
+//   - ConflictException
+//     Your request has conflicting operations. This can occur if you're trying
+//     to perform more than one operation on the same resource at the same time.
 //
-//   * ConflictException
-//   Your request has conflicting operations. This can occur if you're trying
-//   to perform more than one operation on the same resource at the same time.
+//   - ThrottlingException
+//     Your request exceeded a request rate quota. For example, you might have exceeded
+//     the amount of times that you can retrieve device or deployment status per
+//     second.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/ResolveComponentCandidates
 func (c *GreengrassV2) ResolveComponentCandidates(input *ResolveComponentCandidatesInput) (*ResolveComponentCandidatesOutput, error) {
@@ -2514,14 +3031,13 @@ const opTagResource = "TagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the TagResourceRequest method.
+//	req, resp := client.TagResourceRequest(params)
 //
-//    // Example sending a request using the TagResourceRequest method.
-//    req, resp := client.TagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/TagResource
 func (c *GreengrassV2) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
@@ -2554,15 +3070,16 @@ func (c *GreengrassV2) TagResourceRequest(input *TagResourceInput) (req *request
 // API operation TagResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
+//
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/TagResource
 func (c *GreengrassV2) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -2602,14 +3119,13 @@ const opUntagResource = "UntagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UntagResourceRequest method.
+//	req, resp := client.UntagResourceRequest(params)
 //
-//    // Example sending a request using the UntagResourceRequest method.
-//    req, resp := client.UntagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/UntagResource
 func (c *GreengrassV2) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
@@ -2641,15 +3157,16 @@ func (c *GreengrassV2) UntagResourceRequest(input *UntagResourceInput) (req *req
 // API operation UntagResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ValidationException
-//   The request isn't valid. This can occur if your request contains malformed
-//   JSON or unsupported characters.
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
 //
-//   * ResourceNotFoundException
-//   The requested resource can't be found.
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
+//
+//   - ResourceNotFoundException
+//     The requested resource can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/UntagResource
 func (c *GreengrassV2) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -2673,6 +3190,97 @@ func (c *GreengrassV2) UntagResourceWithContext(ctx aws.Context, input *UntagRes
 	return out, req.Send()
 }
 
+const opUpdateConnectivityInfo = "UpdateConnectivityInfo"
+
+// UpdateConnectivityInfoRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateConnectivityInfo operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateConnectivityInfo for more information on using the UpdateConnectivityInfo
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateConnectivityInfoRequest method.
+//	req, resp := client.UpdateConnectivityInfoRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/UpdateConnectivityInfo
+func (c *GreengrassV2) UpdateConnectivityInfoRequest(input *UpdateConnectivityInfoInput) (req *request.Request, output *UpdateConnectivityInfoOutput) {
+	op := &request.Operation{
+		Name:       opUpdateConnectivityInfo,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/greengrass/things/{thingName}/connectivityInfo",
+	}
+
+	if input == nil {
+		input = &UpdateConnectivityInfoInput{}
+	}
+
+	output = &UpdateConnectivityInfoOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateConnectivityInfo API operation for AWS IoT Greengrass V2.
+//
+// Updates connectivity information for a Greengrass core device.
+//
+// Connectivity information includes endpoints and ports where client devices
+// can connect to an MQTT broker on the core device. When a client device calls
+// the IoT Greengrass discovery API (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-discover-api.html),
+// IoT Greengrass returns connectivity information for all of the core devices
+// where the client device can connect. For more information, see Connect client
+// devices to core devices (https://docs.aws.amazon.com/greengrass/v2/developerguide/connect-client-devices.html)
+// in the IoT Greengrass Version 2 Developer Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS IoT Greengrass V2's
+// API operation UpdateConnectivityInfo for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request isn't valid. This can occur if your request contains malformed
+//     JSON or unsupported characters.
+//
+//   - InternalServerException
+//     IoT Greengrass can't process your request right now. Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/greengrassv2-2020-11-30/UpdateConnectivityInfo
+func (c *GreengrassV2) UpdateConnectivityInfo(input *UpdateConnectivityInfoInput) (*UpdateConnectivityInfoOutput, error) {
+	req, out := c.UpdateConnectivityInfoRequest(input)
+	return out, req.Send()
+}
+
+// UpdateConnectivityInfoWithContext is the same as UpdateConnectivityInfo with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateConnectivityInfo for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *GreengrassV2) UpdateConnectivityInfoWithContext(ctx aws.Context, input *UpdateConnectivityInfoInput, opts ...request.Option) (*UpdateConnectivityInfoOutput, error) {
+	req, out := c.UpdateConnectivityInfoRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 // You don't have permission to perform the action.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
@@ -2681,12 +3289,20 @@ type AccessDeniedException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) GoString() string {
 	return s.String()
 }
@@ -2741,12 +3357,20 @@ type AssociateClientDeviceWithCoreDeviceEntry struct {
 	ThingName *string `locationName:"thingName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateClientDeviceWithCoreDeviceEntry) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateClientDeviceWithCoreDeviceEntry) GoString() string {
 	return s.String()
 }
@@ -2789,12 +3413,20 @@ type AssociateClientDeviceWithCoreDeviceErrorEntry struct {
 	ThingName *string `locationName:"thingName" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateClientDeviceWithCoreDeviceErrorEntry) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateClientDeviceWithCoreDeviceErrorEntry) GoString() string {
 	return s.String()
 }
@@ -2817,6 +3449,86 @@ func (s *AssociateClientDeviceWithCoreDeviceErrorEntry) SetThingName(v string) *
 	return s
 }
 
+type AssociateServiceRoleToAccountInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the service role to associate with IoT
+	// Greengrass for your Amazon Web Services account in this Amazon Web Services
+	// Region.
+	//
+	// RoleArn is a required field
+	RoleArn *string `locationName:"RoleArn" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateServiceRoleToAccountInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateServiceRoleToAccountInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssociateServiceRoleToAccountInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssociateServiceRoleToAccountInput"}
+	if s.RoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *AssociateServiceRoleToAccountInput) SetRoleArn(v string) *AssociateServiceRoleToAccountInput {
+	s.RoleArn = &v
+	return s
+}
+
+type AssociateServiceRoleToAccountOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The time when the service role was associated with IoT Greengrass for your
+	// Amazon Web Services account in this Amazon Web Services Region.
+	AssociatedAt *string `locationName:"AssociatedAt" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateServiceRoleToAccountOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateServiceRoleToAccountOutput) GoString() string {
+	return s.String()
+}
+
+// SetAssociatedAt sets the AssociatedAt field's value.
+func (s *AssociateServiceRoleToAccountOutput) SetAssociatedAt(v string) *AssociateServiceRoleToAccountOutput {
+	s.AssociatedAt = &v
+	return s
+}
+
 // Contains information about a client device that is associated to a core device
 // for cloud discovery.
 type AssociatedClientDevice struct {
@@ -2829,12 +3541,20 @@ type AssociatedClientDevice struct {
 	ThingName *string `locationName:"thingName" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociatedClientDevice) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociatedClientDevice) GoString() string {
 	return s.String()
 }
@@ -2863,12 +3583,20 @@ type BatchAssociateClientDeviceWithCoreDeviceInput struct {
 	Entries []*AssociateClientDeviceWithCoreDeviceEntry `locationName:"entries" min:"1" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateClientDeviceWithCoreDeviceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateClientDeviceWithCoreDeviceInput) GoString() string {
 	return s.String()
 }
@@ -2919,15 +3647,23 @@ type BatchAssociateClientDeviceWithCoreDeviceOutput struct {
 
 	// The list of any errors for the entries in the request. Each error entry contains
 	// the name of the IoT thing that failed to associate.
-	ErrorEntries []*AssociateClientDeviceWithCoreDeviceErrorEntry `locationName:"errorEntries" min:"1" type:"list"`
+	ErrorEntries []*AssociateClientDeviceWithCoreDeviceErrorEntry `locationName:"errorEntries" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateClientDeviceWithCoreDeviceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateClientDeviceWithCoreDeviceOutput) GoString() string {
 	return s.String()
 }
@@ -2950,12 +3686,20 @@ type BatchDisassociateClientDeviceFromCoreDeviceInput struct {
 	Entries []*DisassociateClientDeviceFromCoreDeviceEntry `locationName:"entries" min:"1" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateClientDeviceFromCoreDeviceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateClientDeviceFromCoreDeviceInput) GoString() string {
 	return s.String()
 }
@@ -3004,17 +3748,25 @@ func (s *BatchDisassociateClientDeviceFromCoreDeviceInput) SetEntries(v []*Disas
 type BatchDisassociateClientDeviceFromCoreDeviceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of errors (if any) for the entries in the request. Each error entry
-	// contains the name of the IoT thing that failed to disassociate.
-	ErrorEntries []*DisassociateClientDeviceFromCoreDeviceErrorEntry `locationName:"errorEntries" min:"1" type:"list"`
+	// The list of any errors for the entries in the request. Each error entry contains
+	// the name of the IoT thing that failed to disassociate.
+	ErrorEntries []*DisassociateClientDeviceFromCoreDeviceErrorEntry `locationName:"errorEntries" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateClientDeviceFromCoreDeviceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateClientDeviceFromCoreDeviceOutput) GoString() string {
 	return s.String()
 }
@@ -3026,7 +3778,7 @@ func (s *BatchDisassociateClientDeviceFromCoreDeviceOutput) SetErrorEntries(v []
 }
 
 type CancelDeploymentInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ID of the deployment.
 	//
@@ -3034,12 +3786,20 @@ type CancelDeploymentInput struct {
 	DeploymentId *string `location:"uri" locationName:"deploymentId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelDeploymentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelDeploymentInput) GoString() string {
 	return s.String()
 }
@@ -3073,12 +3833,20 @@ type CancelDeploymentOutput struct {
 	Message *string `locationName:"message" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelDeploymentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelDeploymentOutput) GoString() string {
 	return s.String()
 }
@@ -3089,30 +3857,58 @@ func (s *CancelDeploymentOutput) SetMessage(v string) *CancelDeploymentOutput {
 	return s
 }
 
-// Contains the status of a component in the IoT Greengrass service.
+// Contains the status of a component version in the IoT Greengrass service.
 type CloudComponentStatus struct {
 	_ struct{} `type:"structure"`
 
-	// The state of the component.
+	// The state of the component version.
 	ComponentState *string `locationName:"componentState" type:"string" enum:"CloudComponentState"`
 
-	// A dictionary of errors that communicate why the component is in an error
-	// state. For example, if IoT Greengrass can't access an artifact for the component,
-	// then errors contains the artifact's URI as a key, and the error message as
-	// the value for that key.
+	// A dictionary of errors that communicate why the component version is in an
+	// error state. For example, if IoT Greengrass can't access an artifact for
+	// the component version, then errors contains the artifact's URI as a key,
+	// and the error message as the value for that key.
 	Errors map[string]*string `locationName:"errors" type:"map"`
 
 	// A message that communicates details, such as errors, about the status of
-	// the component.
+	// the component version.
 	Message *string `locationName:"message" min:"1" type:"string"`
+
+	// The vendor guidance state for the component version. This state indicates
+	// whether the component version has any issues that you should consider before
+	// you deploy it. The vendor guidance state can be:
+	//
+	//    * ACTIVE – This component version is available and recommended for use.
+	//
+	//    * DISCONTINUED – This component version has been discontinued by its
+	//    publisher. You can deploy this component version, but we recommend that
+	//    you use a different version of this component.
+	//
+	//    * DELETED – This component version has been deleted by its publisher,
+	//    so you can't deploy it. If you have any existing deployments that specify
+	//    this component version, those deployments will fail.
+	VendorGuidance *string `locationName:"vendorGuidance" type:"string" enum:"VendorGuidance"`
+
+	// A message that communicates details about the vendor guidance state of the
+	// component version. This message communicates why a component version is discontinued
+	// or deleted.
+	VendorGuidanceMessage *string `locationName:"vendorGuidanceMessage" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudComponentStatus) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudComponentStatus) GoString() string {
 	return s.String()
 }
@@ -3135,6 +3931,18 @@ func (s *CloudComponentStatus) SetMessage(v string) *CloudComponentStatus {
 	return s
 }
 
+// SetVendorGuidance sets the VendorGuidance field's value.
+func (s *CloudComponentStatus) SetVendorGuidance(v string) *CloudComponentStatus {
+	s.VendorGuidance = &v
+	return s
+}
+
+// SetVendorGuidanceMessage sets the VendorGuidanceMessage field's value.
+func (s *CloudComponentStatus) SetVendorGuidanceMessage(v string) *CloudComponentStatus {
+	s.VendorGuidanceMessage = &v
+	return s
+}
+
 // Contains information about a component.
 type Component struct {
 	_ struct{} `type:"structure"`
@@ -3150,12 +3958,20 @@ type Component struct {
 	LatestVersion *ComponentLatestVersion `locationName:"latestVersion" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Component) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Component) GoString() string {
 	return s.String()
 }
@@ -3197,12 +4013,20 @@ type ComponentCandidate struct {
 	VersionRequirements map[string]*string `locationName:"versionRequirements" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentCandidate) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentCandidate) GoString() string {
 	return s.String()
 }
@@ -3267,12 +4091,20 @@ type ComponentConfigurationUpdate struct {
 	Reset []*string `locationName:"reset" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentConfigurationUpdate) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentConfigurationUpdate) GoString() string {
 	return s.String()
 }
@@ -3322,12 +4154,20 @@ type ComponentDependencyRequirement struct {
 	VersionRequirement *string `locationName:"versionRequirement" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentDependencyRequirement) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentDependencyRequirement) GoString() string {
 	return s.String()
 }
@@ -3362,7 +4202,9 @@ type ComponentDeploymentSpecification struct {
 	_ struct{} `type:"structure"`
 
 	// The version of the component.
-	ComponentVersion *string `locationName:"componentVersion" min:"1" type:"string"`
+	//
+	// ComponentVersion is a required field
+	ComponentVersion *string `locationName:"componentVersion" min:"1" type:"string" required:"true"`
 
 	// The configuration updates to deploy for the component. You can define reset
 	// updates and merge updates. A reset updates the keys that you specify to the
@@ -3382,12 +4224,20 @@ type ComponentDeploymentSpecification struct {
 	RunWith *ComponentRunWith `locationName:"runWith" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentDeploymentSpecification) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentDeploymentSpecification) GoString() string {
 	return s.String()
 }
@@ -3395,6 +4245,9 @@ func (s ComponentDeploymentSpecification) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *ComponentDeploymentSpecification) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "ComponentDeploymentSpecification"}
+	if s.ComponentVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("ComponentVersion"))
+	}
 	if s.ComponentVersion != nil && len(*s.ComponentVersion) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ComponentVersion", 1))
 	}
@@ -3457,12 +4310,20 @@ type ComponentLatestVersion struct {
 	Publisher *string `locationName:"publisher" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentLatestVersion) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentLatestVersion) GoString() string {
 	return s.String()
 }
@@ -3508,7 +4369,7 @@ type ComponentPlatform struct {
 	_ struct{} `type:"structure"`
 
 	// A dictionary of attributes for the platform. The IoT Greengrass Core software
-	// defines the os and platform by default. You can specify additional platform
+	// defines the os and architecture by default. You can specify additional platform
 	// attributes for a core device when you deploy the Greengrass nucleus component.
 	// For more information, see the Greengrass nucleus component (https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html)
 	// in the IoT Greengrass V2 Developer Guide.
@@ -3521,12 +4382,20 @@ type ComponentPlatform struct {
 	Name *string `locationName:"name" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentPlatform) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentPlatform) GoString() string {
 	return s.String()
 }
@@ -3563,10 +4432,11 @@ func (s *ComponentPlatform) SetName(v string) *ComponentPlatform {
 type ComponentRunWith struct {
 	_ struct{} `type:"structure"`
 
-	// The POSIX system user and (optional) group to use to run this component.
-	// Specify the user and group separated by a colon (:) in the following format:
-	// user:group. The group is optional. If you don't specify a group, the IoT
-	// Greengrass Core software uses the primary user for the group.
+	// The POSIX system user and, optionally, group to use to run this component
+	// on Linux core devices. The user, and group if specified, must exist on each
+	// Linux core device. Specify the user and group separated by a colon (:) in
+	// the following format: user:group. The group is optional. If you don't specify
+	// a group, the IoT Greengrass Core software uses the primary user for the group.
 	//
 	// If you omit this parameter, the IoT Greengrass Core software uses the default
 	// system user and group that you configure on the Greengrass nucleus component.
@@ -3575,21 +4445,39 @@ type ComponentRunWith struct {
 	PosixUser *string `locationName:"posixUser" min:"1" type:"string"`
 
 	// The system resource limits to apply to this component's process on the core
-	// device.
+	// device. IoT Greengrass currently supports this feature on only Linux core
+	// devices.
 	//
 	// If you omit this parameter, the IoT Greengrass Core software uses the default
 	// system resource limits that you configure on the Greengrass nucleus component.
 	// For more information, see Configure system resource limits for components
 	// (https://docs.aws.amazon.com/greengrass/v2/developerguide/configure-greengrass-core-v2.html#configure-component-system-resource-limits).
 	SystemResourceLimits *SystemResourceLimits `locationName:"systemResourceLimits" type:"structure"`
+
+	// The Windows user to use to run this component on Windows core devices. The
+	// user must exist on each Windows core device, and its name and password must
+	// be in the LocalSystem account's Credentials Manager instance.
+	//
+	// If you omit this parameter, the IoT Greengrass Core software uses the default
+	// Windows user that you configure on the Greengrass nucleus component. For
+	// more information, see Configure the user and group that run components (https://docs.aws.amazon.com/greengrass/v2/developerguide/configure-greengrass-core-v2.html#configure-component-user).
+	WindowsUser *string `locationName:"windowsUser" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentRunWith) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentRunWith) GoString() string {
 	return s.String()
 }
@@ -3599,6 +4487,9 @@ func (s *ComponentRunWith) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "ComponentRunWith"}
 	if s.PosixUser != nil && len(*s.PosixUser) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("PosixUser", 1))
+	}
+	if s.WindowsUser != nil && len(*s.WindowsUser) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("WindowsUser", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -3619,6 +4510,12 @@ func (s *ComponentRunWith) SetSystemResourceLimits(v *SystemResourceLimits) *Com
 	return s
 }
 
+// SetWindowsUser sets the WindowsUser field's value.
+func (s *ComponentRunWith) SetWindowsUser(v string) *ComponentRunWith {
+	s.WindowsUser = &v
+	return s
+}
+
 // Contains information about a component version in a list.
 type ComponentVersionListItem struct {
 	_ struct{} `type:"structure"`
@@ -3634,12 +4531,20 @@ type ComponentVersionListItem struct {
 	ComponentVersion *string `locationName:"componentVersion" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentVersionListItem) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ComponentVersionListItem) GoString() string {
 	return s.String()
 }
@@ -3681,12 +4586,20 @@ type ConflictException struct {
 	ResourceType *string `locationName:"resourceType" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConflictException) GoString() string {
 	return s.String()
 }
@@ -3729,6 +4642,70 @@ func (s *ConflictException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// Contains information about an endpoint and port where client devices can
+// connect to an MQTT broker on a Greengrass core device.
+type ConnectivityInfo struct {
+	_ struct{} `type:"structure"`
+
+	// The IP address or DNS address where client devices can connect to an MQTT
+	// broker on the Greengrass core device.
+	HostAddress *string `locationName:"HostAddress" type:"string"`
+
+	// An ID for the connectivity information.
+	Id *string `locationName:"Id" type:"string"`
+
+	// Additional metadata to provide to client devices that connect to this core
+	// device.
+	Metadata *string `locationName:"Metadata" type:"string"`
+
+	// The port where the MQTT broker operates on the core device. This port is
+	// typically 8883, which is the default port for the MQTT broker component that
+	// runs on core devices.
+	PortNumber *int64 `locationName:"PortNumber" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectivityInfo) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ConnectivityInfo) GoString() string {
+	return s.String()
+}
+
+// SetHostAddress sets the HostAddress field's value.
+func (s *ConnectivityInfo) SetHostAddress(v string) *ConnectivityInfo {
+	s.HostAddress = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *ConnectivityInfo) SetId(v string) *ConnectivityInfo {
+	s.Id = &v
+	return s
+}
+
+// SetMetadata sets the Metadata field's value.
+func (s *ConnectivityInfo) SetMetadata(v string) *ConnectivityInfo {
+	s.Metadata = &v
+	return s
+}
+
+// SetPortNumber sets the PortNumber field's value.
+func (s *ConnectivityInfo) SetPortNumber(v int64) *ConnectivityInfo {
+	s.PortNumber = &v
+	return s
+}
+
 // Contains information about a Greengrass core device, which is an IoT thing
 // that runs the IoT Greengrass Core software.
 type CoreDevice struct {
@@ -3751,12 +4728,20 @@ type CoreDevice struct {
 	Status *string `locationName:"status" type:"string" enum:"CoreDeviceStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CoreDevice) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CoreDevice) GoString() string {
 	return s.String()
 }
@@ -3795,7 +4780,6 @@ type CreateComponentVersionInput struct {
 	// metadata, parameters, dependencies, lifecycle, artifacts, and platform compatibility.
 	//
 	// You must specify either inlineRecipe or lambdaFunction.
-	//
 	// InlineRecipe is automatically base64 encoded/decoded by the SDK.
 	InlineRecipe []byte `locationName:"inlineRecipe" type:"blob"`
 
@@ -3810,12 +4794,20 @@ type CreateComponentVersionInput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateComponentVersionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateComponentVersionInput) GoString() string {
 	return s.String()
 }
@@ -3894,12 +4886,20 @@ type CreateComponentVersionOutput struct {
 	Status *CloudComponentStatus `locationName:"status" type:"structure" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateComponentVersionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateComponentVersionOutput) GoString() string {
 	return s.String()
 }
@@ -3963,24 +4963,37 @@ type CreateDeploymentInput struct {
 	// configuration.
 	IotJobConfiguration *DeploymentIoTJobConfiguration `locationName:"iotJobConfiguration" type:"structure"`
 
+	// The parent deployment's target ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
+	// within a subdeployment.
+	ParentTargetArn *string `locationName:"parentTargetArn" type:"string"`
+
 	// A list of key-value pairs that contain metadata for the resource. For more
 	// information, see Tag your resources (https://docs.aws.amazon.com/greengrass/v2/developerguide/tag-resources.html)
 	// in the IoT Greengrass V2 Developer Guide.
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
-	// of the target IoT thing or thing group.
+	// of the target IoT thing or thing group. When creating a subdeployment, the
+	// targetARN can only be a thing group.
 	//
 	// TargetArn is a required field
 	TargetArn *string `locationName:"targetArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentInput) GoString() string {
 	return s.String()
 }
@@ -4052,6 +5065,12 @@ func (s *CreateDeploymentInput) SetIotJobConfiguration(v *DeploymentIoTJobConfig
 	return s
 }
 
+// SetParentTargetArn sets the ParentTargetArn field's value.
+func (s *CreateDeploymentInput) SetParentTargetArn(v string) *CreateDeploymentInput {
+	s.ParentTargetArn = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *CreateDeploymentInput) SetTags(v map[string]*string) *CreateDeploymentInput {
 	s.Tags = v
@@ -4078,12 +5097,20 @@ type CreateDeploymentOutput struct {
 	IotJobId *string `locationName:"iotJobId" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDeploymentOutput) GoString() string {
 	return s.String()
 }
@@ -4107,7 +5134,7 @@ func (s *CreateDeploymentOutput) SetIotJobId(v string) *CreateDeploymentOutput {
 }
 
 type DeleteComponentInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the component version.
@@ -4116,12 +5143,20 @@ type DeleteComponentInput struct {
 	Arn *string `location:"uri" locationName:"arn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteComponentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteComponentInput) GoString() string {
 	return s.String()
 }
@@ -4152,18 +5187,26 @@ type DeleteComponentOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteComponentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteComponentOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteCoreDeviceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The name of the core device. This is also the name of the IoT thing.
 	//
@@ -4171,12 +5214,20 @@ type DeleteCoreDeviceInput struct {
 	CoreDeviceThingName *string `location:"uri" locationName:"coreDeviceThingName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCoreDeviceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCoreDeviceInput) GoString() string {
 	return s.String()
 }
@@ -4207,13 +5258,92 @@ type DeleteCoreDeviceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCoreDeviceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteCoreDeviceOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteDeploymentInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the deployment.
+	//
+	// DeploymentId is a required field
+	DeploymentId *string `location:"uri" locationName:"deploymentId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDeploymentInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDeploymentInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteDeploymentInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteDeploymentInput"}
+	if s.DeploymentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("DeploymentId"))
+	}
+	if s.DeploymentId != nil && len(*s.DeploymentId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DeploymentId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDeploymentId sets the DeploymentId field's value.
+func (s *DeleteDeploymentInput) SetDeploymentId(v string) *DeleteDeploymentInput {
+	s.DeploymentId = &v
+	return s
+}
+
+type DeleteDeploymentOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDeploymentOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDeploymentOutput) GoString() string {
 	return s.String()
 }
 
@@ -4236,20 +5366,33 @@ type Deployment struct {
 	// Whether or not the deployment is the latest revision for its target.
 	IsLatestForTarget *bool `locationName:"isLatestForTarget" type:"boolean"`
 
+	// The parent deployment's target ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
+	// within a subdeployment.
+	ParentTargetArn *string `locationName:"parentTargetArn" type:"string"`
+
 	// The revision number of the deployment.
 	RevisionId *string `locationName:"revisionId" min:"1" type:"string"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
-	// of the target IoT thing or thing group.
+	// of the target IoT thing or thing group. When creating a subdeployment, the
+	// targetARN can only be a thing group.
 	TargetArn *string `locationName:"targetArn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Deployment) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Deployment) GoString() string {
 	return s.String()
 }
@@ -4281,6 +5424,12 @@ func (s *Deployment) SetDeploymentStatus(v string) *Deployment {
 // SetIsLatestForTarget sets the IsLatestForTarget field's value.
 func (s *Deployment) SetIsLatestForTarget(v bool) *Deployment {
 	s.IsLatestForTarget = &v
+	return s
+}
+
+// SetParentTargetArn sets the ParentTargetArn field's value.
+func (s *Deployment) SetParentTargetArn(v string) *Deployment {
+	s.ParentTargetArn = &v
 	return s
 }
 
@@ -4332,12 +5481,20 @@ type DeploymentComponentUpdatePolicy struct {
 	TimeoutInSeconds *int64 `locationName:"timeoutInSeconds" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentComponentUpdatePolicy) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentComponentUpdatePolicy) GoString() string {
 	return s.String()
 }
@@ -4373,12 +5530,20 @@ type DeploymentConfigurationValidationPolicy struct {
 	TimeoutInSeconds *int64 `locationName:"timeoutInSeconds" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentConfigurationValidationPolicy) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentConfigurationValidationPolicy) GoString() string {
 	return s.String()
 }
@@ -4406,12 +5571,20 @@ type DeploymentIoTJobConfiguration struct {
 	TimeoutConfig *IoTJobTimeoutConfig `locationName:"timeoutConfig" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentIoTJobConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentIoTJobConfiguration) GoString() string {
 	return s.String()
 }
@@ -4474,12 +5647,20 @@ type DeploymentPolicies struct {
 	FailureHandlingPolicy *string `locationName:"failureHandlingPolicy" type:"string" enum:"DeploymentFailureHandlingPolicy"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentPolicies) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeploymentPolicies) GoString() string {
 	return s.String()
 }
@@ -4503,7 +5684,7 @@ func (s *DeploymentPolicies) SetFailureHandlingPolicy(v string) *DeploymentPolic
 }
 
 type DescribeComponentInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the component version.
@@ -4512,12 +5693,20 @@ type DescribeComponentInput struct {
 	Arn *string `location:"uri" locationName:"arn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeComponentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeComponentInput) GoString() string {
 	return s.String()
 }
@@ -4579,12 +5768,20 @@ type DescribeComponentOutput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeComponentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeComponentOutput) GoString() string {
 	return s.String()
 }
@@ -4655,12 +5852,20 @@ type DisassociateClientDeviceFromCoreDeviceEntry struct {
 	ThingName *string `locationName:"thingName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateClientDeviceFromCoreDeviceEntry) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateClientDeviceFromCoreDeviceEntry) GoString() string {
 	return s.String()
 }
@@ -4703,12 +5908,20 @@ type DisassociateClientDeviceFromCoreDeviceErrorEntry struct {
 	ThingName *string `locationName:"thingName" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateClientDeviceFromCoreDeviceErrorEntry) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateClientDeviceFromCoreDeviceErrorEntry) GoString() string {
 	return s.String()
 }
@@ -4731,12 +5944,84 @@ func (s *DisassociateClientDeviceFromCoreDeviceErrorEntry) SetThingName(v string
 	return s
 }
 
+type DisassociateServiceRoleFromAccountInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateServiceRoleFromAccountInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateServiceRoleFromAccountInput) GoString() string {
+	return s.String()
+}
+
+type DisassociateServiceRoleFromAccountOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The time when the service role was disassociated from IoT Greengrass for
+	// your Amazon Web Services account in this Amazon Web Services Region.
+	DisassociatedAt *string `locationName:"DisassociatedAt" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateServiceRoleFromAccountOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateServiceRoleFromAccountOutput) GoString() string {
+	return s.String()
+}
+
+// SetDisassociatedAt sets the DisassociatedAt field's value.
+func (s *DisassociateServiceRoleFromAccountOutput) SetDisassociatedAt(v string) *DisassociateServiceRoleFromAccountOutput {
+	s.DisassociatedAt = &v
+	return s
+}
+
 // Contains information about a deployment job that IoT Greengrass sends to
 // a Greengrass core device.
 type EffectiveDeployment struct {
 	_ struct{} `type:"structure"`
 
 	// The status of the deployment job on the Greengrass core device.
+	//
+	//    * IN_PROGRESS – The deployment job is running.
+	//
+	//    * QUEUED – The deployment job is in the job queue and waiting to run.
+	//
+	//    * FAILED – The deployment failed. For more information, see the statusDetails
+	//    field.
+	//
+	//    * COMPLETED – The deployment to an IoT thing was completed successfully.
+	//
+	//    * TIMED_OUT – The deployment didn't complete in the allotted time.
+	//
+	//    * CANCELED – The deployment was canceled by the user.
+	//
+	//    * REJECTED – The deployment was rejected. For more information, see
+	//    the statusDetails field.
+	//
+	//    * SUCCEEDED – The deployment to an IoT thing group was completed successfully.
 	//
 	// CoreDeviceExecutionStatus is a required field
 	CoreDeviceExecutionStatus *string `locationName:"coreDeviceExecutionStatus" type:"string" required:"true" enum:"EffectiveDeploymentExecutionStatus"`
@@ -4775,6 +6060,10 @@ type EffectiveDeployment struct {
 	// The reason code for the update, if the job was updated.
 	Reason *string `locationName:"reason" type:"string"`
 
+	// The status details that explain why a deployment has an error. This response
+	// will be null if the deployment is in a success state.
+	StatusDetails *EffectiveDeploymentStatusDetails `locationName:"statusDetails" type:"structure"`
+
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the target IoT thing or thing group.
 	//
@@ -4782,12 +6071,20 @@ type EffectiveDeployment struct {
 	TargetArn *string `locationName:"targetArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EffectiveDeployment) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EffectiveDeployment) GoString() string {
 	return s.String()
 }
@@ -4846,14 +6143,71 @@ func (s *EffectiveDeployment) SetReason(v string) *EffectiveDeployment {
 	return s
 }
 
+// SetStatusDetails sets the StatusDetails field's value.
+func (s *EffectiveDeployment) SetStatusDetails(v *EffectiveDeploymentStatusDetails) *EffectiveDeployment {
+	s.StatusDetails = v
+	return s
+}
+
 // SetTargetArn sets the TargetArn field's value.
 func (s *EffectiveDeployment) SetTargetArn(v string) *EffectiveDeployment {
 	s.TargetArn = &v
 	return s
 }
 
-type GetComponentInput struct {
+// Contains all error-related information for the deployment record. The status
+// details will be null if the deployment is in a success state.
+//
+// Greengrass nucleus v2.8.0 or later is required to get an accurate errorStack
+// and errorTypes response. This field will not be returned for earlier Greengrass
+// nucleus versions.
+type EffectiveDeploymentStatusDetails struct {
 	_ struct{} `type:"structure"`
+
+	// Contains an ordered list of short error codes that range from the most generic
+	// error to the most specific one. The error codes describe the reason for failure
+	// whenever the coreDeviceExecutionStatus is in a failed state. The response
+	// will be an empty list if there is no error.
+	ErrorStack []*string `locationName:"errorStack" type:"list"`
+
+	// Contains tags which describe the error. You can use the error types to classify
+	// errors to assist with remediating the failure. The response will be an empty
+	// list if there is no error.
+	ErrorTypes []*string `locationName:"errorTypes" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EffectiveDeploymentStatusDetails) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EffectiveDeploymentStatusDetails) GoString() string {
+	return s.String()
+}
+
+// SetErrorStack sets the ErrorStack field's value.
+func (s *EffectiveDeploymentStatusDetails) SetErrorStack(v []*string) *EffectiveDeploymentStatusDetails {
+	s.ErrorStack = v
+	return s
+}
+
+// SetErrorTypes sets the ErrorTypes field's value.
+func (s *EffectiveDeploymentStatusDetails) SetErrorTypes(v []*string) *EffectiveDeploymentStatusDetails {
+	s.ErrorTypes = v
+	return s
+}
+
+type GetComponentInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the component version.
@@ -4865,12 +6219,20 @@ type GetComponentInput struct {
 	RecipeOutputFormat *string `location:"querystring" locationName:"recipeOutputFormat" type:"string" enum:"RecipeOutputFormat"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentInput) GoString() string {
 	return s.String()
 }
@@ -4907,7 +6269,6 @@ type GetComponentOutput struct {
 	_ struct{} `type:"structure"`
 
 	// The recipe of the component version.
-	//
 	// Recipe is automatically base64 encoded/decoded by the SDK.
 	//
 	// Recipe is a required field
@@ -4924,12 +6285,20 @@ type GetComponentOutput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentOutput) GoString() string {
 	return s.String()
 }
@@ -4953,10 +6322,11 @@ func (s *GetComponentOutput) SetTags(v map[string]*string) *GetComponentOutput {
 }
 
 type GetComponentVersionArtifactInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
-	// of the component version. Specify the ARN of a public component version.
+	// of the component version. Specify the ARN of a public or a Lambda component
+	// version.
 	//
 	// Arn is a required field
 	Arn *string `location:"uri" locationName:"arn" type:"string" required:"true"`
@@ -4971,14 +6341,35 @@ type GetComponentVersionArtifactInput struct {
 	//
 	// ArtifactName is a required field
 	ArtifactName *string `location:"uri" locationName:"artifactName" min:"1" type:"string" required:"true"`
+
+	// Determines if the Amazon S3 URL returned is a FIPS pre-signed URL endpoint.
+	// Specify fips if you want the returned Amazon S3 pre-signed URL to point to
+	// an Amazon S3 FIPS endpoint. If you don't specify a value, the default is
+	// standard.
+	IotEndpointType *string `location:"header" locationName:"x-amz-iot-endpoint-type" type:"string" enum:"IotEndpointType"`
+
+	// Specifies the endpoint to use when getting Amazon S3 pre-signed URLs.
+	//
+	// All Amazon Web Services Regions except US East (N. Virginia) use REGIONAL
+	// in all cases. In the US East (N. Virginia) Region the default is GLOBAL,
+	// but you can change it to REGIONAL with this parameter.
+	S3EndpointType *string `location:"querystring" locationName:"s3EndpointType" type:"string" enum:"S3EndpointType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentVersionArtifactInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentVersionArtifactInput) GoString() string {
 	return s.String()
 }
@@ -5017,6 +6408,18 @@ func (s *GetComponentVersionArtifactInput) SetArtifactName(v string) *GetCompone
 	return s
 }
 
+// SetIotEndpointType sets the IotEndpointType field's value.
+func (s *GetComponentVersionArtifactInput) SetIotEndpointType(v string) *GetComponentVersionArtifactInput {
+	s.IotEndpointType = &v
+	return s
+}
+
+// SetS3EndpointType sets the S3EndpointType field's value.
+func (s *GetComponentVersionArtifactInput) SetS3EndpointType(v string) *GetComponentVersionArtifactInput {
+	s.S3EndpointType = &v
+	return s
+}
+
 type GetComponentVersionArtifactOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -5026,12 +6429,20 @@ type GetComponentVersionArtifactOutput struct {
 	PreSignedUrl *string `locationName:"preSignedUrl" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentVersionArtifactOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetComponentVersionArtifactOutput) GoString() string {
 	return s.String()
 }
@@ -5042,8 +6453,97 @@ func (s *GetComponentVersionArtifactOutput) SetPreSignedUrl(v string) *GetCompon
 	return s
 }
 
-type GetCoreDeviceInput struct {
+type GetConnectivityInfoInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The name of the core device. This is also the name of the IoT thing.
+	//
+	// ThingName is a required field
+	ThingName *string `location:"uri" locationName:"thingName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetConnectivityInfoInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetConnectivityInfoInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetConnectivityInfoInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetConnectivityInfoInput"}
+	if s.ThingName == nil {
+		invalidParams.Add(request.NewErrParamRequired("ThingName"))
+	}
+	if s.ThingName != nil && len(*s.ThingName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ThingName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetThingName sets the ThingName field's value.
+func (s *GetConnectivityInfoInput) SetThingName(v string) *GetConnectivityInfoInput {
+	s.ThingName = &v
+	return s
+}
+
+type GetConnectivityInfoOutput struct {
 	_ struct{} `type:"structure"`
+
+	// The connectivity information for the core device.
+	ConnectivityInfo []*ConnectivityInfo `locationName:"ConnectivityInfo" type:"list"`
+
+	// A message about the connectivity information request.
+	Message *string `locationName:"Message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetConnectivityInfoOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetConnectivityInfoOutput) GoString() string {
+	return s.String()
+}
+
+// SetConnectivityInfo sets the ConnectivityInfo field's value.
+func (s *GetConnectivityInfoOutput) SetConnectivityInfo(v []*ConnectivityInfo) *GetConnectivityInfoOutput {
+	s.ConnectivityInfo = v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *GetConnectivityInfoOutput) SetMessage(v string) *GetConnectivityInfoOutput {
+	s.Message = &v
+	return s
+}
+
+type GetCoreDeviceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The name of the core device. This is also the name of the IoT thing.
 	//
@@ -5051,12 +6551,20 @@ type GetCoreDeviceInput struct {
 	CoreDeviceThingName *string `location:"uri" locationName:"coreDeviceThingName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCoreDeviceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCoreDeviceInput) GoString() string {
 	return s.String()
 }
@@ -5121,12 +6629,20 @@ type GetCoreDeviceOutput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCoreDeviceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetCoreDeviceOutput) GoString() string {
 	return s.String()
 }
@@ -5174,7 +6690,7 @@ func (s *GetCoreDeviceOutput) SetTags(v map[string]*string) *GetCoreDeviceOutput
 }
 
 type GetDeploymentInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ID of the deployment.
 	//
@@ -5182,12 +6698,20 @@ type GetDeploymentInput struct {
 	DeploymentId *string `location:"uri" locationName:"deploymentId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDeploymentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDeploymentInput) GoString() string {
 	return s.String()
 }
@@ -5253,6 +6777,10 @@ type GetDeploymentOutput struct {
 	// Whether or not the deployment is the latest revision for its target.
 	IsLatestForTarget *bool `locationName:"isLatestForTarget" type:"boolean"`
 
+	// The parent deployment's target ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
+	// within a subdeployment.
+	ParentTargetArn *string `locationName:"parentTargetArn" type:"string"`
+
 	// The revision number of the deployment.
 	RevisionId *string `locationName:"revisionId" min:"1" type:"string"`
 
@@ -5266,12 +6794,20 @@ type GetDeploymentOutput struct {
 	TargetArn *string `locationName:"targetArn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDeploymentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDeploymentOutput) GoString() string {
 	return s.String()
 }
@@ -5336,6 +6872,12 @@ func (s *GetDeploymentOutput) SetIsLatestForTarget(v bool) *GetDeploymentOutput 
 	return s
 }
 
+// SetParentTargetArn sets the ParentTargetArn field's value.
+func (s *GetDeploymentOutput) SetParentTargetArn(v string) *GetDeploymentOutput {
+	s.ParentTargetArn = &v
+	return s
+}
+
 // SetRevisionId sets the RevisionId field's value.
 func (s *GetDeploymentOutput) SetRevisionId(v string) *GetDeploymentOutput {
 	s.RevisionId = &v
@@ -5354,6 +6896,70 @@ func (s *GetDeploymentOutput) SetTargetArn(v string) *GetDeploymentOutput {
 	return s
 }
 
+type GetServiceRoleForAccountInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetServiceRoleForAccountInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetServiceRoleForAccountInput) GoString() string {
+	return s.String()
+}
+
+type GetServiceRoleForAccountOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The time when the service role was associated with IoT Greengrass for your
+	// Amazon Web Services account in this Amazon Web Services Region.
+	AssociatedAt *string `locationName:"AssociatedAt" type:"string"`
+
+	// The ARN of the service role that is associated with IoT Greengrass for your
+	// Amazon Web Services account in this Amazon Web Services Region.
+	RoleArn *string `locationName:"RoleArn" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetServiceRoleForAccountOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetServiceRoleForAccountOutput) GoString() string {
+	return s.String()
+}
+
+// SetAssociatedAt sets the AssociatedAt field's value.
+func (s *GetServiceRoleForAccountOutput) SetAssociatedAt(v string) *GetServiceRoleForAccountOutput {
+	s.AssociatedAt = &v
+	return s
+}
+
+// SetRoleArn sets the RoleArn field's value.
+func (s *GetServiceRoleForAccountOutput) SetRoleArn(v string) *GetServiceRoleForAccountOutput {
+	s.RoleArn = &v
+	return s
+}
+
 // Contains information about a component on a Greengrass core device.
 type InstalledComponent struct {
 	_ struct{} `type:"structure"`
@@ -5367,19 +6973,58 @@ type InstalledComponent struct {
 	// Whether or not the component is a root component.
 	IsRoot *bool `locationName:"isRoot" type:"boolean"`
 
+	// The most recent deployment source that brought the component to the Greengrass
+	// core device. For a thing group deployment or thing deployment, the source
+	// will be the ID of the last deployment that contained the component. For local
+	// deployments it will be LOCAL.
+	//
+	// Any deployment will attempt to reinstall currently broken components on the
+	// device, which will update the last installation source.
+	LastInstallationSource *string `locationName:"lastInstallationSource" min:"1" type:"string"`
+
+	// The last time the Greengrass core device sent a message containing a component's
+	// state to the Amazon Web Services Cloud.
+	//
+	// A component does not need to see a state change for this field to update.
+	LastReportedTimestamp *time.Time `locationName:"lastReportedTimestamp" type:"timestamp"`
+
+	// The status of how current the data is.
+	//
+	// This response is based off of component state changes. The status reflects
+	// component disruptions and deployments. If a component only sees a configuration
+	// update during a deployment, it might not undergo a state change and this
+	// status would not be updated.
+	LastStatusChangeTimestamp *time.Time `locationName:"lastStatusChangeTimestamp" type:"timestamp"`
+
 	// The lifecycle state of the component.
 	LifecycleState *string `locationName:"lifecycleState" type:"string" enum:"InstalledComponentLifecycleState"`
 
-	// The details about the lifecycle state of the component.
+	// A detailed response about the lifecycle state of the component that explains
+	// the reason why a component has an error or is broken.
 	LifecycleStateDetails *string `locationName:"lifecycleStateDetails" min:"1" type:"string"`
+
+	// The status codes that indicate the reason for failure whenever the lifecycleState
+	// has an error or is in a broken state.
+	//
+	// Greengrass nucleus v2.8.0 or later is required to get an accurate lifecycleStatusCodes
+	// response. This response can be inaccurate in earlier Greengrass nucleus versions.
+	LifecycleStatusCodes []*string `locationName:"lifecycleStatusCodes" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InstalledComponent) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InstalledComponent) GoString() string {
 	return s.String()
 }
@@ -5402,6 +7047,24 @@ func (s *InstalledComponent) SetIsRoot(v bool) *InstalledComponent {
 	return s
 }
 
+// SetLastInstallationSource sets the LastInstallationSource field's value.
+func (s *InstalledComponent) SetLastInstallationSource(v string) *InstalledComponent {
+	s.LastInstallationSource = &v
+	return s
+}
+
+// SetLastReportedTimestamp sets the LastReportedTimestamp field's value.
+func (s *InstalledComponent) SetLastReportedTimestamp(v time.Time) *InstalledComponent {
+	s.LastReportedTimestamp = &v
+	return s
+}
+
+// SetLastStatusChangeTimestamp sets the LastStatusChangeTimestamp field's value.
+func (s *InstalledComponent) SetLastStatusChangeTimestamp(v time.Time) *InstalledComponent {
+	s.LastStatusChangeTimestamp = &v
+	return s
+}
+
 // SetLifecycleState sets the LifecycleState field's value.
 func (s *InstalledComponent) SetLifecycleState(v string) *InstalledComponent {
 	s.LifecycleState = &v
@@ -5411,6 +7074,12 @@ func (s *InstalledComponent) SetLifecycleState(v string) *InstalledComponent {
 // SetLifecycleStateDetails sets the LifecycleStateDetails field's value.
 func (s *InstalledComponent) SetLifecycleStateDetails(v string) *InstalledComponent {
 	s.LifecycleStateDetails = &v
+	return s
+}
+
+// SetLifecycleStatusCodes sets the LifecycleStatusCodes field's value.
+func (s *InstalledComponent) SetLifecycleStatusCodes(v []*string) *InstalledComponent {
+	s.LifecycleStatusCodes = v
 	return s
 }
 
@@ -5425,12 +7094,20 @@ type InternalServerException struct {
 	RetryAfterSeconds *int64 `location:"header" locationName:"Retry-After" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) GoString() string {
 	return s.String()
 }
@@ -5485,12 +7162,20 @@ type IoTJobAbortConfig struct {
 	CriteriaList []*IoTJobAbortCriteria `locationName:"criteriaList" min:"1" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobAbortConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobAbortConfig) GoString() string {
 	return s.String()
 }
@@ -5563,12 +7248,20 @@ type IoTJobAbortCriteria struct {
 	ThresholdPercentage *float64 `locationName:"thresholdPercentage" type:"double" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobAbortCriteria) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobAbortCriteria) GoString() string {
 	return s.String()
 }
@@ -5636,12 +7329,20 @@ type IoTJobExecutionsRolloutConfig struct {
 	MaximumPerMinute *int64 `locationName:"maximumPerMinute" min:"1" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobExecutionsRolloutConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobExecutionsRolloutConfig) GoString() string {
 	return s.String()
 }
@@ -5702,12 +7403,20 @@ type IoTJobExponentialRolloutRate struct {
 	RateIncreaseCriteria *IoTJobRateIncreaseCriteria `locationName:"rateIncreaseCriteria" type:"structure" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobExponentialRolloutRate) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobExponentialRolloutRate) GoString() string {
 	return s.String()
 }
@@ -5774,12 +7483,20 @@ type IoTJobRateIncreaseCriteria struct {
 	NumberOfSucceededThings *int64 `locationName:"numberOfSucceededThings" min:"1" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobRateIncreaseCriteria) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobRateIncreaseCriteria) GoString() string {
 	return s.String()
 }
@@ -5825,12 +7542,20 @@ type IoTJobTimeoutConfig struct {
 	InProgressTimeoutInMinutes *int64 `locationName:"inProgressTimeoutInMinutes" type:"long"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobTimeoutConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s IoTJobTimeoutConfig) GoString() string {
 	return s.String()
 }
@@ -5864,12 +7589,20 @@ type LambdaContainerParams struct {
 	Volumes []*LambdaVolumeMount `locationName:"volumes" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaContainerParams) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaContainerParams) GoString() string {
 	return s.String()
 }
@@ -5949,12 +7682,20 @@ type LambdaDeviceMount struct {
 	Permission *string `locationName:"permission" type:"string" enum:"LambdaFilesystemPermission"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaDeviceMount) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaDeviceMount) GoString() string {
 	return s.String()
 }
@@ -6015,12 +7756,20 @@ type LambdaEventSource struct {
 	Type *string `locationName:"type" type:"string" required:"true" enum:"LambdaEventSourceType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaEventSource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaEventSource) GoString() string {
 	return s.String()
 }
@@ -6113,12 +7862,20 @@ type LambdaExecutionParameters struct {
 	TimeoutInSeconds *int64 `locationName:"timeoutInSeconds" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaExecutionParameters) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaExecutionParameters) GoString() string {
 	return s.String()
 }
@@ -6244,15 +8001,23 @@ type LambdaFunctionRecipeSource struct {
 	// to import. You can't use version aliases like $LATEST.
 	//
 	// LambdaArn is a required field
-	LambdaArn *string `locationName:"lambdaArn" type:"string" required:"true"`
+	LambdaArn *string `locationName:"lambdaArn" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaFunctionRecipeSource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaFunctionRecipeSource) GoString() string {
 	return s.String()
 }
@@ -6268,6 +8033,9 @@ func (s *LambdaFunctionRecipeSource) Validate() error {
 	}
 	if s.LambdaArn == nil {
 		invalidParams.Add(request.NewErrParamRequired("LambdaArn"))
+	}
+	if s.LambdaArn != nil && len(*s.LambdaArn) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LambdaArn", 1))
 	}
 	if s.ComponentDependencies != nil {
 		for i, v := range s.ComponentDependencies {
@@ -6352,12 +8120,20 @@ type LambdaLinuxProcessParams struct {
 	IsolationMode *string `locationName:"isolationMode" type:"string" enum:"LambdaIsolationMode"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaLinuxProcessParams) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaLinuxProcessParams) GoString() string {
 	return s.String()
 }
@@ -6416,12 +8192,20 @@ type LambdaVolumeMount struct {
 	SourcePath *string `locationName:"sourcePath" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaVolumeMount) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaVolumeMount) GoString() string {
 	return s.String()
 }
@@ -6467,7 +8251,7 @@ func (s *LambdaVolumeMount) SetSourcePath(v string) *LambdaVolumeMount {
 }
 
 type ListClientDevicesAssociatedWithCoreDeviceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The name of the core device. This is also the name of the IoT thing.
 	//
@@ -6481,12 +8265,20 @@ type ListClientDevicesAssociatedWithCoreDeviceInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClientDevicesAssociatedWithCoreDeviceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClientDevicesAssociatedWithCoreDeviceInput) GoString() string {
 	return s.String()
 }
@@ -6540,12 +8332,20 @@ type ListClientDevicesAssociatedWithCoreDeviceOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClientDevicesAssociatedWithCoreDeviceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListClientDevicesAssociatedWithCoreDeviceOutput) GoString() string {
 	return s.String()
 }
@@ -6563,10 +8363,10 @@ func (s *ListClientDevicesAssociatedWithCoreDeviceOutput) SetNextToken(v string)
 }
 
 type ListComponentVersionsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
-	// of the component version.
+	// of the component.
 	//
 	// Arn is a required field
 	Arn *string `location:"uri" locationName:"arn" type:"string" required:"true"`
@@ -6578,12 +8378,20 @@ type ListComponentVersionsInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentVersionsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentVersionsInput) GoString() string {
 	return s.String()
 }
@@ -6636,12 +8444,20 @@ type ListComponentVersionsOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentVersionsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentVersionsOutput) GoString() string {
 	return s.String()
 }
@@ -6659,7 +8475,7 @@ func (s *ListComponentVersionsOutput) SetNextToken(v string) *ListComponentVersi
 }
 
 type ListComponentsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The maximum number of results to be returned per paginated request.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
@@ -6673,12 +8489,20 @@ type ListComponentsInput struct {
 	Scope *string `location:"querystring" locationName:"scope" type:"string" enum:"ComponentVisibilityScope"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentsInput) GoString() string {
 	return s.String()
 }
@@ -6725,12 +8549,20 @@ type ListComponentsOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListComponentsOutput) GoString() string {
 	return s.String()
 }
@@ -6748,7 +8580,7 @@ func (s *ListComponentsOutput) SetNextToken(v string) *ListComponentsOutput {
 }
 
 type ListCoreDevicesInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The maximum number of results to be returned per paginated request.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
@@ -6769,16 +8601,26 @@ type ListCoreDevicesInput struct {
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the IoT thing group by which to filter. If you specify this parameter,
-	// the list includes only core devices that are members of this thing group.
+	// the list includes only core devices that have successfully deployed a deployment
+	// that targets the thing group. When you remove a core device from a thing
+	// group, the list continues to include that core device.
 	ThingGroupArn *string `location:"querystring" locationName:"thingGroupArn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCoreDevicesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCoreDevicesInput) GoString() string {
 	return s.String()
 }
@@ -6831,12 +8673,20 @@ type ListCoreDevicesOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCoreDevicesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListCoreDevicesOutput) GoString() string {
 	return s.String()
 }
@@ -6854,7 +8704,7 @@ func (s *ListCoreDevicesOutput) SetNextToken(v string) *ListCoreDevicesOutput {
 }
 
 type ListDeploymentsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The filter for the list of deployments. Choose one of the following options:
 	//
@@ -6866,22 +8716,36 @@ type ListDeploymentsInput struct {
 	HistoryFilter *string `location:"querystring" locationName:"historyFilter" type:"string" enum:"DeploymentHistoryFilter"`
 
 	// The maximum number of results to be returned per paginated request.
+	//
+	// Default: 50
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	// The token to be used for the next set of paginated results.
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
+
+	// The parent deployment's target ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
+	// within a subdeployment.
+	ParentTargetArn *string `location:"querystring" locationName:"parentTargetArn" type:"string"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the target IoT thing or thing group.
 	TargetArn *string `location:"querystring" locationName:"targetArn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDeploymentsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDeploymentsInput) GoString() string {
 	return s.String()
 }
@@ -6917,6 +8781,12 @@ func (s *ListDeploymentsInput) SetNextToken(v string) *ListDeploymentsInput {
 	return s
 }
 
+// SetParentTargetArn sets the ParentTargetArn field's value.
+func (s *ListDeploymentsInput) SetParentTargetArn(v string) *ListDeploymentsInput {
+	s.ParentTargetArn = &v
+	return s
+}
+
 // SetTargetArn sets the TargetArn field's value.
 func (s *ListDeploymentsInput) SetTargetArn(v string) *ListDeploymentsInput {
 	s.TargetArn = &v
@@ -6934,12 +8804,20 @@ type ListDeploymentsOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDeploymentsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDeploymentsOutput) GoString() string {
 	return s.String()
 }
@@ -6957,7 +8835,7 @@ func (s *ListDeploymentsOutput) SetNextToken(v string) *ListDeploymentsOutput {
 }
 
 type ListEffectiveDeploymentsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The name of the core device. This is also the name of the IoT thing.
 	//
@@ -6971,12 +8849,20 @@ type ListEffectiveDeploymentsInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListEffectiveDeploymentsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListEffectiveDeploymentsInput) GoString() string {
 	return s.String()
 }
@@ -7029,12 +8915,20 @@ type ListEffectiveDeploymentsOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListEffectiveDeploymentsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListEffectiveDeploymentsOutput) GoString() string {
 	return s.String()
 }
@@ -7052,7 +8946,7 @@ func (s *ListEffectiveDeploymentsOutput) SetNextToken(v string) *ListEffectiveDe
 }
 
 type ListInstalledComponentsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The name of the core device. This is also the name of the IoT thing.
 	//
@@ -7064,14 +8958,34 @@ type ListInstalledComponentsInput struct {
 
 	// The token to be used for the next set of paginated results.
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
+
+	// The filter for the list of components. Choose from the following options:
+	//
+	//    * ALL – The list includes all components installed on the core device.
+	//
+	//    * ROOT – The list includes only root components, which are components
+	//    that you specify in a deployment. When you choose this option, the list
+	//    doesn't include components that the core device installs as dependencies
+	//    of other components.
+	//
+	// Default: ROOT
+	TopologyFilter *string `location:"querystring" locationName:"topologyFilter" type:"string" enum:"InstalledComponentTopologyFilter"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListInstalledComponentsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListInstalledComponentsInput) GoString() string {
 	return s.String()
 }
@@ -7113,10 +9027,23 @@ func (s *ListInstalledComponentsInput) SetNextToken(v string) *ListInstalledComp
 	return s
 }
 
+// SetTopologyFilter sets the TopologyFilter field's value.
+func (s *ListInstalledComponentsInput) SetTopologyFilter(v string) *ListInstalledComponentsInput {
+	s.TopologyFilter = &v
+	return s
+}
+
 type ListInstalledComponentsOutput struct {
 	_ struct{} `type:"structure"`
 
 	// A list that summarizes each component on the core device.
+	//
+	// Greengrass nucleus v2.7.0 or later is required to get an accurate lastStatusChangeTimestamp
+	// response. This response can be inaccurate in earlier Greengrass nucleus versions.
+	//
+	// Greengrass nucleus v2.8.0 or later is required to get an accurate lastInstallationSource
+	// and lastReportedTimestamp response. This response can be inaccurate or null
+	// in earlier Greengrass nucleus versions.
 	InstalledComponents []*InstalledComponent `locationName:"installedComponents" type:"list"`
 
 	// The token for the next set of results, or null if there are no additional
@@ -7124,12 +9051,20 @@ type ListInstalledComponentsOutput struct {
 	NextToken *string `locationName:"nextToken" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListInstalledComponentsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListInstalledComponentsOutput) GoString() string {
 	return s.String()
 }
@@ -7147,7 +9082,7 @@ func (s *ListInstalledComponentsOutput) SetNextToken(v string) *ListInstalledCom
 }
 
 type ListTagsForResourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the resource.
@@ -7156,12 +9091,20 @@ type ListTagsForResourceInput struct {
 	ResourceArn *string `location:"uri" locationName:"resourceArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) GoString() string {
 	return s.String()
 }
@@ -7197,12 +9140,20 @@ type ListTagsForResourceOutput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) GoString() string {
 	return s.String()
 }
@@ -7223,12 +9174,20 @@ type RequestAlreadyInProgressException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RequestAlreadyInProgressException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RequestAlreadyInProgressException) GoString() string {
 	return s.String()
 }
@@ -7275,22 +9234,26 @@ type ResolveComponentCandidatesInput struct {
 	_ struct{} `type:"structure"`
 
 	// The list of components to resolve.
-	//
-	// ComponentCandidates is a required field
-	ComponentCandidates []*ComponentCandidate `locationName:"componentCandidates" type:"list" required:"true"`
+	ComponentCandidates []*ComponentCandidate `locationName:"componentCandidates" type:"list"`
 
 	// The platform to use to resolve compatible components.
-	//
-	// Platform is a required field
-	Platform *ComponentPlatform `locationName:"platform" type:"structure" required:"true"`
+	Platform *ComponentPlatform `locationName:"platform" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResolveComponentCandidatesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResolveComponentCandidatesInput) GoString() string {
 	return s.String()
 }
@@ -7298,12 +9261,6 @@ func (s ResolveComponentCandidatesInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *ResolveComponentCandidatesInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "ResolveComponentCandidatesInput"}
-	if s.ComponentCandidates == nil {
-		invalidParams.Add(request.NewErrParamRequired("ComponentCandidates"))
-	}
-	if s.Platform == nil {
-		invalidParams.Add(request.NewErrParamRequired("Platform"))
-	}
 	if s.ComponentCandidates != nil {
 		for i, v := range s.ComponentCandidates {
 			if v == nil {
@@ -7347,12 +9304,20 @@ type ResolveComponentCandidatesOutput struct {
 	ResolvedComponentVersions []*ResolvedComponentVersion `locationName:"resolvedComponentVersions" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResolveComponentCandidatesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResolveComponentCandidatesOutput) GoString() string {
 	return s.String()
 }
@@ -7378,18 +9343,45 @@ type ResolvedComponentVersion struct {
 	// The version of the component.
 	ComponentVersion *string `locationName:"componentVersion" min:"1" type:"string"`
 
+	// A message that communicates details about the vendor guidance state of the
+	// component version. This message communicates why a component version is discontinued
+	// or deleted.
+	Message *string `locationName:"message" min:"1" type:"string"`
+
 	// The recipe of the component version.
-	//
 	// Recipe is automatically base64 encoded/decoded by the SDK.
 	Recipe []byte `locationName:"recipe" type:"blob"`
+
+	// The vendor guidance state for the component version. This state indicates
+	// whether the component version has any issues that you should consider before
+	// you deploy it. The vendor guidance state can be:
+	//
+	//    * ACTIVE – This component version is available and recommended for use.
+	//
+	//    * DISCONTINUED – This component version has been discontinued by its
+	//    publisher. You can deploy this component version, but we recommend that
+	//    you use a different version of this component.
+	//
+	//    * DELETED – This component version has been deleted by its publisher,
+	//    so you can't deploy it. If you have any existing deployments that specify
+	//    this component version, those deployments will fail.
+	VendorGuidance *string `locationName:"vendorGuidance" type:"string" enum:"VendorGuidance"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResolvedComponentVersion) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResolvedComponentVersion) GoString() string {
 	return s.String()
 }
@@ -7412,9 +9404,21 @@ func (s *ResolvedComponentVersion) SetComponentVersion(v string) *ResolvedCompon
 	return s
 }
 
+// SetMessage sets the Message field's value.
+func (s *ResolvedComponentVersion) SetMessage(v string) *ResolvedComponentVersion {
+	s.Message = &v
+	return s
+}
+
 // SetRecipe sets the Recipe field's value.
 func (s *ResolvedComponentVersion) SetRecipe(v []byte) *ResolvedComponentVersion {
 	s.Recipe = v
+	return s
+}
+
+// SetVendorGuidance sets the VendorGuidance field's value.
+func (s *ResolvedComponentVersion) SetVendorGuidance(v string) *ResolvedComponentVersion {
+	s.VendorGuidance = &v
 	return s
 }
 
@@ -7436,12 +9440,20 @@ type ResourceNotFoundException struct {
 	ResourceType *string `locationName:"resourceType" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) GoString() string {
 	return s.String()
 }
@@ -7509,12 +9521,20 @@ type ServiceQuotaExceededException struct {
 	ServiceCode *string `locationName:"serviceCode" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceQuotaExceededException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceQuotaExceededException) GoString() string {
 	return s.String()
 }
@@ -7578,12 +9598,20 @@ type SystemResourceLimits struct {
 	Memory *int64 `locationName:"memory" type:"long"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SystemResourceLimits) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SystemResourceLimits) GoString() string {
 	return s.String()
 }
@@ -7617,12 +9645,20 @@ type TagResourceInput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) GoString() string {
 	return s.String()
 }
@@ -7665,12 +9701,20 @@ type TagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -7694,12 +9738,20 @@ type ThrottlingException struct {
 	ServiceCode *string `locationName:"serviceCode" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ThrottlingException) GoString() string {
 	return s.String()
 }
@@ -7743,7 +9795,7 @@ func (s *ThrottlingException) RequestID() string {
 }
 
 type UntagResourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html)
 	// of the resource to untag.
@@ -7757,12 +9809,20 @@ type UntagResourceInput struct {
 	TagKeys []*string `location:"querystring" locationName:"tagKeys" min:"1" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) GoString() string {
 	return s.String()
 }
@@ -7805,14 +9865,125 @@ type UntagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) GoString() string {
 	return s.String()
+}
+
+type UpdateConnectivityInfoInput struct {
+	_ struct{} `type:"structure"`
+
+	// The connectivity information for the core device.
+	//
+	// ConnectivityInfo is a required field
+	ConnectivityInfo []*ConnectivityInfo `locationName:"ConnectivityInfo" type:"list" required:"true"`
+
+	// The name of the core device. This is also the name of the IoT thing.
+	//
+	// ThingName is a required field
+	ThingName *string `location:"uri" locationName:"thingName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateConnectivityInfoInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateConnectivityInfoInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateConnectivityInfoInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateConnectivityInfoInput"}
+	if s.ConnectivityInfo == nil {
+		invalidParams.Add(request.NewErrParamRequired("ConnectivityInfo"))
+	}
+	if s.ThingName == nil {
+		invalidParams.Add(request.NewErrParamRequired("ThingName"))
+	}
+	if s.ThingName != nil && len(*s.ThingName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ThingName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetConnectivityInfo sets the ConnectivityInfo field's value.
+func (s *UpdateConnectivityInfoInput) SetConnectivityInfo(v []*ConnectivityInfo) *UpdateConnectivityInfoInput {
+	s.ConnectivityInfo = v
+	return s
+}
+
+// SetThingName sets the ThingName field's value.
+func (s *UpdateConnectivityInfoInput) SetThingName(v string) *UpdateConnectivityInfoInput {
+	s.ThingName = &v
+	return s
+}
+
+type UpdateConnectivityInfoOutput struct {
+	_ struct{} `type:"structure"`
+
+	// A message about the connectivity information update request.
+	Message *string `locationName:"Message" type:"string"`
+
+	// The new version of the connectivity information for the core device.
+	Version *string `locationName:"Version" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateConnectivityInfoOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateConnectivityInfoOutput) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *UpdateConnectivityInfoOutput) SetMessage(v string) *UpdateConnectivityInfoOutput {
+	s.Message = &v
+	return s
+}
+
+// SetVersion sets the Version field's value.
+func (s *UpdateConnectivityInfoOutput) SetVersion(v string) *UpdateConnectivityInfoOutput {
+	s.Version = &v
+	return s
 }
 
 // The request isn't valid. This can occur if your request contains malformed
@@ -7830,12 +10001,20 @@ type ValidationException struct {
 	Reason *string `locationName:"reason" type:"string" enum:"ValidationExceptionReason"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) GoString() string {
 	return s.String()
 }
@@ -7893,12 +10072,20 @@ type ValidationExceptionField struct {
 	Name *string `locationName:"name" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationExceptionField) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationExceptionField) GoString() string {
 	return s.String()
 }
@@ -8088,6 +10275,9 @@ const (
 
 	// EffectiveDeploymentExecutionStatusRejected is a EffectiveDeploymentExecutionStatus enum value
 	EffectiveDeploymentExecutionStatusRejected = "REJECTED"
+
+	// EffectiveDeploymentExecutionStatusSucceeded is a EffectiveDeploymentExecutionStatus enum value
+	EffectiveDeploymentExecutionStatusSucceeded = "SUCCEEDED"
 )
 
 // EffectiveDeploymentExecutionStatus_Values returns all elements of the EffectiveDeploymentExecutionStatus enum
@@ -8100,6 +10290,7 @@ func EffectiveDeploymentExecutionStatus_Values() []string {
 		EffectiveDeploymentExecutionStatusTimedOut,
 		EffectiveDeploymentExecutionStatusCanceled,
 		EffectiveDeploymentExecutionStatusRejected,
+		EffectiveDeploymentExecutionStatusSucceeded,
 	}
 }
 
@@ -8144,6 +10335,22 @@ func InstalledComponentLifecycleState_Values() []string {
 }
 
 const (
+	// InstalledComponentTopologyFilterAll is a InstalledComponentTopologyFilter enum value
+	InstalledComponentTopologyFilterAll = "ALL"
+
+	// InstalledComponentTopologyFilterRoot is a InstalledComponentTopologyFilter enum value
+	InstalledComponentTopologyFilterRoot = "ROOT"
+)
+
+// InstalledComponentTopologyFilter_Values returns all elements of the InstalledComponentTopologyFilter enum
+func InstalledComponentTopologyFilter_Values() []string {
+	return []string{
+		InstalledComponentTopologyFilterAll,
+		InstalledComponentTopologyFilterRoot,
+	}
+}
+
+const (
 	// IoTJobAbortActionCancel is a IoTJobAbortAction enum value
 	IoTJobAbortActionCancel = "CANCEL"
 )
@@ -8176,6 +10383,22 @@ func IoTJobExecutionFailureType_Values() []string {
 		IoTJobExecutionFailureTypeRejected,
 		IoTJobExecutionFailureTypeTimedOut,
 		IoTJobExecutionFailureTypeAll,
+	}
+}
+
+const (
+	// IotEndpointTypeFips is a IotEndpointType enum value
+	IotEndpointTypeFips = "fips"
+
+	// IotEndpointTypeStandard is a IotEndpointType enum value
+	IotEndpointTypeStandard = "standard"
+)
+
+// IotEndpointType_Values returns all elements of the IotEndpointType enum
+func IotEndpointType_Values() []string {
+	return []string{
+		IotEndpointTypeFips,
+		IotEndpointTypeStandard,
 	}
 }
 
@@ -8260,6 +10483,22 @@ func RecipeOutputFormat_Values() []string {
 }
 
 const (
+	// S3EndpointTypeRegional is a S3EndpointType enum value
+	S3EndpointTypeRegional = "REGIONAL"
+
+	// S3EndpointTypeGlobal is a S3EndpointType enum value
+	S3EndpointTypeGlobal = "GLOBAL"
+)
+
+// S3EndpointType_Values returns all elements of the S3EndpointType enum
+func S3EndpointType_Values() []string {
+	return []string{
+		S3EndpointTypeRegional,
+		S3EndpointTypeGlobal,
+	}
+}
+
+const (
 	// ValidationExceptionReasonUnknownOperation is a ValidationExceptionReason enum value
 	ValidationExceptionReasonUnknownOperation = "UNKNOWN_OPERATION"
 
@@ -8280,5 +10519,25 @@ func ValidationExceptionReason_Values() []string {
 		ValidationExceptionReasonCannotParse,
 		ValidationExceptionReasonFieldValidationFailed,
 		ValidationExceptionReasonOther,
+	}
+}
+
+const (
+	// VendorGuidanceActive is a VendorGuidance enum value
+	VendorGuidanceActive = "ACTIVE"
+
+	// VendorGuidanceDiscontinued is a VendorGuidance enum value
+	VendorGuidanceDiscontinued = "DISCONTINUED"
+
+	// VendorGuidanceDeleted is a VendorGuidance enum value
+	VendorGuidanceDeleted = "DELETED"
+)
+
+// VendorGuidance_Values returns all elements of the VendorGuidance enum
+func VendorGuidance_Values() []string {
+	return []string{
+		VendorGuidanceActive,
+		VendorGuidanceDiscontinued,
+		VendorGuidanceDeleted,
 	}
 }

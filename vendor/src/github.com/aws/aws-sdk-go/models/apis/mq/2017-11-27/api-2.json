@@ -1,2826 +1,3384 @@
 {
-  "metadata" : {
-    "apiVersion" : "2017-11-27",
-    "endpointPrefix" : "mq",
-    "signingName" : "mq",
-    "serviceFullName" : "AmazonMQ",
-    "serviceId" : "mq",
-    "protocol" : "rest-json",
-    "jsonVersion" : "1.1",
-    "uid" : "mq-2017-11-27",
-    "signatureVersion" : "v4"
+  "metadata": {
+    "apiVersion": "2017-11-27",
+    "endpointPrefix": "mq",
+    "signingName": "mq",
+    "serviceFullName": "AmazonMQ",
+    "serviceId": "mq",
+    "protocol": "rest-json",
+    "jsonVersion": "1.1",
+    "uid": "mq-2017-11-27",
+    "signatureVersion": "v4",
+    "auth": [
+      "aws.auth#sigv4"
+    ]
   },
-  "operations" : {
-    "CreateBroker" : {
-      "name" : "CreateBroker",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/v1/brokers",
-        "responseCode" : 200
+  "operations": {
+    "CreateBroker": {
+      "name": "CreateBroker",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/brokers",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "CreateBrokerRequest"
+      "input": {
+        "shape": "CreateBrokerRequest"
       },
-      "output" : {
-        "shape" : "CreateBrokerResponse"
+      "output": {
+        "shape": "CreateBrokerResponse"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "UnauthorizedException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "UnauthorizedException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "CreateConfiguration" : {
-      "name" : "CreateConfiguration",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/v1/configurations",
-        "responseCode" : 200
+    "CreateConfiguration": {
+      "name": "CreateConfiguration",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/configurations",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "CreateConfigurationRequest"
+      "input": {
+        "shape": "CreateConfigurationRequest"
       },
-      "output" : {
-        "shape" : "CreateConfigurationResponse"
+      "output": {
+        "shape": "CreateConfigurationResponse"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "CreateTags" : {
-      "name" : "CreateTags",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/v1/tags/{resource-arn}",
-        "responseCode" : 204
+    "CreateTags": {
+      "name": "CreateTags",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/tags/{resource-arn}",
+        "responseCode": 204
       },
-      "input" : {
-        "shape" : "CreateTagsRequest"
+      "input": {
+        "shape": "CreateTagsRequest"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "CreateUser" : {
-      "name" : "CreateUser",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/v1/brokers/{broker-id}/users/{username}",
-        "responseCode" : 200
+    "CreateUser": {
+      "name": "CreateUser",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/brokers/{broker-id}/users/{username}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "CreateUserRequest"
+      "input": {
+        "shape": "CreateUserRequest"
       },
-      "output" : {
-        "shape" : "CreateUserResponse"
+      "output": {
+        "shape": "CreateUserResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DeleteBroker" : {
-      "name" : "DeleteBroker",
-      "http" : {
-        "method" : "DELETE",
-        "requestUri" : "/v1/brokers/{broker-id}",
-        "responseCode" : 200
+    "DeleteBroker": {
+      "name": "DeleteBroker",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v1/brokers/{broker-id}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DeleteBrokerRequest"
+      "input": {
+        "shape": "DeleteBrokerRequest"
       },
-      "output" : {
-        "shape" : "DeleteBrokerResponse"
+      "output": {
+        "shape": "DeleteBrokerResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DeleteTags" : {
-      "name" : "DeleteTags",
-      "http" : {
-        "method" : "DELETE",
-        "requestUri" : "/v1/tags/{resource-arn}",
-        "responseCode" : 204
+    "DeleteTags": {
+      "name": "DeleteTags",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v1/tags/{resource-arn}",
+        "responseCode": 204
       },
-      "input" : {
-        "shape" : "DeleteTagsRequest"
+      "input": {
+        "shape": "DeleteTagsRequest"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DeleteUser" : {
-      "name" : "DeleteUser",
-      "http" : {
-        "method" : "DELETE",
-        "requestUri" : "/v1/brokers/{broker-id}/users/{username}",
-        "responseCode" : 200
+    "DeleteUser": {
+      "name": "DeleteUser",
+      "http": {
+        "method": "DELETE",
+        "requestUri": "/v1/brokers/{broker-id}/users/{username}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DeleteUserRequest"
+      "input": {
+        "shape": "DeleteUserRequest"
       },
-      "output" : {
-        "shape" : "DeleteUserResponse"
+      "output": {
+        "shape": "DeleteUserResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DescribeBroker" : {
-      "name" : "DescribeBroker",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/brokers/{broker-id}",
-        "responseCode" : 200
+    "DescribeBroker": {
+      "name": "DescribeBroker",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/brokers/{broker-id}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DescribeBrokerRequest"
+      "input": {
+        "shape": "DescribeBrokerRequest"
       },
-      "output" : {
-        "shape" : "DescribeBrokerResponse"
+      "output": {
+        "shape": "DescribeBrokerResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DescribeBrokerEngineTypes" : {
-      "name" : "DescribeBrokerEngineTypes",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/broker-engine-types",
-        "responseCode" : 200
+    "DescribeBrokerEngineTypes": {
+      "name": "DescribeBrokerEngineTypes",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/broker-engine-types",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DescribeBrokerEngineTypesRequest"
+      "input": {
+        "shape": "DescribeBrokerEngineTypesRequest"
       },
-      "output" : {
-        "shape" : "DescribeBrokerEngineTypesResponse"
+      "output": {
+        "shape": "DescribeBrokerEngineTypesResponse"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DescribeBrokerInstanceOptions" : {
-      "name" : "DescribeBrokerInstanceOptions",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/broker-instance-options",
-        "responseCode" : 200
+    "DescribeBrokerInstanceOptions": {
+      "name": "DescribeBrokerInstanceOptions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/broker-instance-options",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DescribeBrokerInstanceOptionsRequest"
+      "input": {
+        "shape": "DescribeBrokerInstanceOptionsRequest"
       },
-      "output" : {
-        "shape" : "DescribeBrokerInstanceOptionsResponse"
+      "output": {
+        "shape": "DescribeBrokerInstanceOptionsResponse"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DescribeConfiguration" : {
-      "name" : "DescribeConfiguration",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/configurations/{configuration-id}",
-        "responseCode" : 200
+    "DescribeConfiguration": {
+      "name": "DescribeConfiguration",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/configurations/{configuration-id}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DescribeConfigurationRequest"
+      "input": {
+        "shape": "DescribeConfigurationRequest"
       },
-      "output" : {
-        "shape" : "DescribeConfigurationResponse"
+      "output": {
+        "shape": "DescribeConfigurationResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DescribeConfigurationRevision" : {
-      "name" : "DescribeConfigurationRevision",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/configurations/{configuration-id}/revisions/{configuration-revision}",
-        "responseCode" : 200
+    "DescribeConfigurationRevision": {
+      "name": "DescribeConfigurationRevision",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/configurations/{configuration-id}/revisions/{configuration-revision}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DescribeConfigurationRevisionRequest"
+      "input": {
+        "shape": "DescribeConfigurationRevisionRequest"
       },
-      "output" : {
-        "shape" : "DescribeConfigurationRevisionResponse"
+      "output": {
+        "shape": "DescribeConfigurationRevisionResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "DescribeUser" : {
-      "name" : "DescribeUser",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/brokers/{broker-id}/users/{username}",
-        "responseCode" : 200
+    "DescribeUser": {
+      "name": "DescribeUser",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/brokers/{broker-id}/users/{username}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "DescribeUserRequest"
+      "input": {
+        "shape": "DescribeUserRequest"
       },
-      "output" : {
-        "shape" : "DescribeUserResponse"
+      "output": {
+        "shape": "DescribeUserResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListBrokers" : {
-      "name" : "ListBrokers",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/brokers",
-        "responseCode" : 200
+    "ListBrokers": {
+      "name": "ListBrokers",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/brokers",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListBrokersRequest"
+      "input": {
+        "shape": "ListBrokersRequest"
       },
-      "output" : {
-        "shape" : "ListBrokersResponse"
+      "output": {
+        "shape": "ListBrokersResponse"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListConfigurationRevisions" : {
-      "name" : "ListConfigurationRevisions",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/configurations/{configuration-id}/revisions",
-        "responseCode" : 200
+    "ListConfigurationRevisions": {
+      "name": "ListConfigurationRevisions",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/configurations/{configuration-id}/revisions",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListConfigurationRevisionsRequest"
+      "input": {
+        "shape": "ListConfigurationRevisionsRequest"
       },
-      "output" : {
-        "shape" : "ListConfigurationRevisionsResponse"
+      "output": {
+        "shape": "ListConfigurationRevisionsResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListConfigurations" : {
-      "name" : "ListConfigurations",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/configurations",
-        "responseCode" : 200
+    "ListConfigurations": {
+      "name": "ListConfigurations",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/configurations",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListConfigurationsRequest"
+      "input": {
+        "shape": "ListConfigurationsRequest"
       },
-      "output" : {
-        "shape" : "ListConfigurationsResponse"
+      "output": {
+        "shape": "ListConfigurationsResponse"
       },
-      "errors" : [ {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListTags" : {
-      "name" : "ListTags",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/tags/{resource-arn}",
-        "responseCode" : 200
+    "ListTags": {
+      "name": "ListTags",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/tags/{resource-arn}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListTagsRequest"
+      "input": {
+        "shape": "ListTagsRequest"
       },
-      "output" : {
-        "shape" : "ListTagsResponse"
+      "output": {
+        "shape": "ListTagsResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "ListUsers" : {
-      "name" : "ListUsers",
-      "http" : {
-        "method" : "GET",
-        "requestUri" : "/v1/brokers/{broker-id}/users",
-        "responseCode" : 200
+    "ListUsers": {
+      "name": "ListUsers",
+      "http": {
+        "method": "GET",
+        "requestUri": "/v1/brokers/{broker-id}/users",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "ListUsersRequest"
+      "input": {
+        "shape": "ListUsersRequest"
       },
-      "output" : {
-        "shape" : "ListUsersResponse"
+      "output": {
+        "shape": "ListUsersResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "RebootBroker" : {
-      "name" : "RebootBroker",
-      "http" : {
-        "method" : "POST",
-        "requestUri" : "/v1/brokers/{broker-id}/reboot",
-        "responseCode" : 200
+    "Promote": {
+      "name": "Promote",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/brokers/{broker-id}/promote",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "RebootBrokerRequest"
+      "input": {
+        "shape": "PromoteRequest"
       },
-      "output" : {
-        "shape" : "RebootBrokerResponse"
+      "output": {
+        "shape": "PromoteResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "UpdateBroker" : {
-      "name" : "UpdateBroker",
-      "http" : {
-        "method" : "PUT",
-        "requestUri" : "/v1/brokers/{broker-id}",
-        "responseCode" : 200
+    "RebootBroker": {
+      "name": "RebootBroker",
+      "http": {
+        "method": "POST",
+        "requestUri": "/v1/brokers/{broker-id}/reboot",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "UpdateBrokerRequest"
+      "input": {
+        "shape": "RebootBrokerRequest"
       },
-      "output" : {
-        "shape" : "UpdateBrokerResponse"
+      "output": {
+        "shape": "RebootBrokerResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "UpdateConfiguration" : {
-      "name" : "UpdateConfiguration",
-      "http" : {
-        "method" : "PUT",
-        "requestUri" : "/v1/configurations/{configuration-id}",
-        "responseCode" : 200
+    "UpdateBroker": {
+      "name": "UpdateBroker",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/v1/brokers/{broker-id}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "UpdateConfigurationRequest"
+      "input": {
+        "shape": "UpdateBrokerRequest"
       },
-      "output" : {
-        "shape" : "UpdateConfigurationResponse"
+      "output": {
+        "shape": "UpdateBrokerResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     },
-    "UpdateUser" : {
-      "name" : "UpdateUser",
-      "http" : {
-        "method" : "PUT",
-        "requestUri" : "/v1/brokers/{broker-id}/users/{username}",
-        "responseCode" : 200
+    "UpdateConfiguration": {
+      "name": "UpdateConfiguration",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/v1/configurations/{configuration-id}",
+        "responseCode": 200
       },
-      "input" : {
-        "shape" : "UpdateUserRequest"
+      "input": {
+        "shape": "UpdateConfigurationRequest"
       },
-      "output" : {
-        "shape" : "UpdateUserResponse"
+      "output": {
+        "shape": "UpdateConfigurationResponse"
       },
-      "errors" : [ {
-        "shape" : "NotFoundException"
-      }, {
-        "shape" : "BadRequestException"
-      }, {
-        "shape" : "InternalServerErrorException"
-      }, {
-        "shape" : "ConflictException"
-      }, {
-        "shape" : "ForbiddenException"
-      } ]
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
+    },
+    "UpdateUser": {
+      "name": "UpdateUser",
+      "http": {
+        "method": "PUT",
+        "requestUri": "/v1/brokers/{broker-id}/users/{username}",
+        "responseCode": 200
+      },
+      "input": {
+        "shape": "UpdateUserRequest"
+      },
+      "output": {
+        "shape": "UpdateUserResponse"
+      },
+      "errors": [
+        {
+          "shape": "NotFoundException"
+        },
+        {
+          "shape": "BadRequestException"
+        },
+        {
+          "shape": "InternalServerErrorException"
+        },
+        {
+          "shape": "ConflictException"
+        },
+        {
+          "shape": "ForbiddenException"
+        }
+      ]
     }
   },
-  "shapes" : {
-    "AuthenticationStrategy" : {
-      "type" : "string",
-      "enum" : [ "SIMPLE", "LDAP" ]
-    },
-    "AvailabilityZone" : {
-      "type" : "structure",
-      "members" : {
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+  "shapes": {
+    "ActionRequired": {
+      "type": "structure",
+      "members": {
+        "ActionRequiredCode": {
+          "shape": "__string",
+          "locationName": "actionRequiredCode"
+        },
+        "ActionRequiredInfo": {
+          "shape": "__string",
+          "locationName": "actionRequiredInfo"
         }
       }
     },
-    "BadRequestException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorAttribute" : {
-          "shape" : "__string",
-          "locationName" : "errorAttribute"
+    "AuthenticationStrategy": {
+      "type": "string",
+      "enum": [
+        "SIMPLE",
+        "LDAP"
+      ]
+    },
+    "AvailabilityZone": {
+      "type": "structure",
+      "members": {
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        }
+      }
+    },
+    "BadRequestException": {
+      "type": "structure",
+      "members": {
+        "ErrorAttribute": {
+          "shape": "__string",
+          "locationName": "errorAttribute"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 400
+      "exception": true,
+      "error": {
+        "httpStatusCode": 400
       }
     },
-    "BrokerEngineType" : {
-      "type" : "structure",
-      "members" : {
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+    "BrokerEngineType": {
+      "type": "structure",
+      "members": {
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "EngineVersions" : {
-          "shape" : "__listOfEngineVersion",
-          "locationName" : "engineVersions"
+        "EngineVersions": {
+          "shape": "__listOfEngineVersion",
+          "locationName": "engineVersions"
         }
       }
     },
-    "BrokerEngineTypeOutput" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerEngineTypes" : {
-          "shape" : "__listOfBrokerEngineType",
-          "locationName" : "brokerEngineTypes"
+    "BrokerEngineTypeOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerEngineTypes": {
+          "shape": "__listOfBrokerEngineType",
+          "locationName": "brokerEngineTypes"
         },
-        "MaxResults" : {
-          "shape" : "__integerMin5Max100",
-          "locationName" : "maxResults"
+        "MaxResults": {
+          "shape": "__integerMin5Max100",
+          "locationName": "maxResults"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         }
       },
-      "required" : [ "MaxResults" ]
+      "required": [
+        "MaxResults"
+      ]
     },
-    "BrokerInstance" : {
-      "type" : "structure",
-      "members" : {
-        "ConsoleURL" : {
-          "shape" : "__string",
-          "locationName" : "consoleURL"
+    "BrokerInstance": {
+      "type": "structure",
+      "members": {
+        "ConsoleURL": {
+          "shape": "__string",
+          "locationName": "consoleURL"
         },
-        "Endpoints" : {
-          "shape" : "__listOf__string",
-          "locationName" : "endpoints"
+        "Endpoints": {
+          "shape": "__listOf__string",
+          "locationName": "endpoints"
         },
-        "IpAddress" : {
-          "shape" : "__string",
-          "locationName" : "ipAddress"
+        "IpAddress": {
+          "shape": "__string",
+          "locationName": "ipAddress"
         }
       }
     },
-    "BrokerInstanceOption" : {
-      "type" : "structure",
-      "members" : {
-        "AvailabilityZones" : {
-          "shape" : "__listOfAvailabilityZone",
-          "locationName" : "availabilityZones"
+    "BrokerInstanceOption": {
+      "type": "structure",
+      "members": {
+        "AvailabilityZones": {
+          "shape": "__listOfAvailabilityZone",
+          "locationName": "availabilityZones"
         },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
         },
-        "StorageType" : {
-          "shape" : "BrokerStorageType",
-          "locationName" : "storageType"
+        "StorageType": {
+          "shape": "BrokerStorageType",
+          "locationName": "storageType"
         },
-        "SupportedDeploymentModes" : {
-          "shape" : "__listOfDeploymentMode",
-          "locationName" : "supportedDeploymentModes"
+        "SupportedDeploymentModes": {
+          "shape": "__listOfDeploymentMode",
+          "locationName": "supportedDeploymentModes"
         },
-        "SupportedEngineVersions" : {
-          "shape" : "__listOf__string",
-          "locationName" : "supportedEngineVersions"
+        "SupportedEngineVersions": {
+          "shape": "__listOf__string",
+          "locationName": "supportedEngineVersions"
         }
       }
     },
-    "BrokerInstanceOptionsOutput" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerInstanceOptions" : {
-          "shape" : "__listOfBrokerInstanceOption",
-          "locationName" : "brokerInstanceOptions"
+    "BrokerInstanceOptionsOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerInstanceOptions": {
+          "shape": "__listOfBrokerInstanceOption",
+          "locationName": "brokerInstanceOptions"
         },
-        "MaxResults" : {
-          "shape" : "__integerMin5Max100",
-          "locationName" : "maxResults"
+        "MaxResults": {
+          "shape": "__integerMin5Max100",
+          "locationName": "maxResults"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         }
       },
-      "required" : [ "MaxResults" ]
+      "required": [
+        "MaxResults"
+      ]
     },
-    "BrokerState" : {
-      "type" : "string",
-      "enum" : [ "CREATION_IN_PROGRESS", "CREATION_FAILED", "DELETION_IN_PROGRESS", "RUNNING", "REBOOT_IN_PROGRESS" ]
+    "BrokerState": {
+      "type": "string",
+      "enum": [
+        "CREATION_IN_PROGRESS",
+        "CREATION_FAILED",
+        "DELETION_IN_PROGRESS",
+        "RUNNING",
+        "REBOOT_IN_PROGRESS",
+        "CRITICAL_ACTION_REQUIRED",
+        "REPLICA"
+      ]
     },
-    "BrokerStorageType" : {
-      "type" : "string",
-      "enum" : [ "EBS", "EFS" ]
+    "BrokerStorageType": {
+      "type": "string",
+      "enum": [
+        "EBS",
+        "EFS"
+      ]
     },
-    "BrokerSummary" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerArn" : {
-          "shape" : "__string",
-          "locationName" : "brokerArn"
+    "BrokerSummary": {
+      "type": "structure",
+      "members": {
+        "BrokerArn": {
+          "shape": "__string",
+          "locationName": "brokerArn"
         },
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
         },
-        "BrokerName" : {
-          "shape" : "__string",
-          "locationName" : "brokerName"
+        "BrokerName": {
+          "shape": "__string",
+          "locationName": "brokerName"
         },
-        "BrokerState" : {
-          "shape" : "BrokerState",
-          "locationName" : "brokerState"
+        "BrokerState": {
+          "shape": "BrokerState",
+          "locationName": "brokerState"
         },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "DeploymentMode" : {
-          "shape" : "DeploymentMode",
-          "locationName" : "deploymentMode"
+        "DeploymentMode": {
+          "shape": "DeploymentMode",
+          "locationName": "deploymentMode"
         },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
         }
       },
-      "required" : [ "DeploymentMode", "EngineType" ]
+      "required": [
+        "DeploymentMode",
+        "EngineType"
+      ]
     },
-    "ChangeType" : {
-      "type" : "string",
-      "enum" : [ "CREATE", "UPDATE", "DELETE" ]
+    "ChangeType": {
+      "type": "string",
+      "enum": [
+        "CREATE",
+        "UPDATE",
+        "DELETE"
+      ]
     },
-    "Configuration" : {
-      "type" : "structure",
-      "members" : {
-        "Arn" : {
-          "shape" : "__string",
-          "locationName" : "arn"
+    "Configuration": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
         },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
         },
-        "Id" : {
-          "shape" : "__string",
-          "locationName" : "id"
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
         },
-        "LatestRevision" : {
-          "shape" : "ConfigurationRevision",
-          "locationName" : "latestRevision"
+        "LatestRevision": {
+          "shape": "ConfigurationRevision",
+          "locationName": "latestRevision"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         }
       },
-      "required" : [ "Description", "EngineVersion", "LatestRevision", "AuthenticationStrategy", "EngineType", "Id", "Arn", "Name", "Created" ]
+      "required": [
+        "Description",
+        "EngineVersion",
+        "LatestRevision",
+        "AuthenticationStrategy",
+        "EngineType",
+        "Id",
+        "Arn",
+        "Name",
+        "Created"
+      ]
     },
-    "ConfigurationId" : {
-      "type" : "structure",
-      "members" : {
-        "Id" : {
-          "shape" : "__string",
-          "locationName" : "id"
+    "ConfigurationId": {
+      "type": "structure",
+      "members": {
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
         },
-        "Revision" : {
-          "shape" : "__integer",
-          "locationName" : "revision"
+        "Revision": {
+          "shape": "__integer",
+          "locationName": "revision"
         }
       },
-      "required" : [ "Id" ]
+      "required": [
+        "Id"
+      ]
     },
-    "ConfigurationRevision" : {
-      "type" : "structure",
-      "members" : {
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
+    "ConfigurationRevision": {
+      "type": "structure",
+      "members": {
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         },
-        "Revision" : {
-          "shape" : "__integer",
-          "locationName" : "revision"
+        "Revision": {
+          "shape": "__integer",
+          "locationName": "revision"
         }
       },
-      "required" : [ "Revision", "Created" ]
+      "required": [
+        "Revision",
+        "Created"
+      ]
     },
-    "Configurations" : {
-      "type" : "structure",
-      "members" : {
-        "Current" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "current"
+    "Configurations": {
+      "type": "structure",
+      "members": {
+        "Current": {
+          "shape": "ConfigurationId",
+          "locationName": "current"
         },
-        "History" : {
-          "shape" : "__listOfConfigurationId",
-          "locationName" : "history"
+        "History": {
+          "shape": "__listOfConfigurationId",
+          "locationName": "history"
         },
-        "Pending" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "pending"
+        "Pending": {
+          "shape": "ConfigurationId",
+          "locationName": "pending"
         }
       }
     },
-    "ConflictException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorAttribute" : {
-          "shape" : "__string",
-          "locationName" : "errorAttribute"
+    "ConflictException": {
+      "type": "structure",
+      "members": {
+        "ErrorAttribute": {
+          "shape": "__string",
+          "locationName": "errorAttribute"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 409
+      "exception": true,
+      "error": {
+        "httpStatusCode": 409
       }
     },
-    "CreateBrokerInput" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "CreateBrokerInput": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
         },
-        "BrokerName" : {
-          "shape" : "__string",
-          "locationName" : "brokerName"
+        "BrokerName": {
+          "shape": "__string",
+          "locationName": "brokerName"
         },
-        "Configuration" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "configuration"
+        "Configuration": {
+          "shape": "ConfigurationId",
+          "locationName": "configuration"
         },
-        "CreatorRequestId" : {
-          "shape" : "__string",
-          "locationName" : "creatorRequestId",
-          "idempotencyToken" : true
+        "CreatorRequestId": {
+          "shape": "__string",
+          "locationName": "creatorRequestId",
+          "idempotencyToken": true
         },
-        "DeploymentMode" : {
-          "shape" : "DeploymentMode",
-          "locationName" : "deploymentMode"
+        "DeploymentMode": {
+          "shape": "DeploymentMode",
+          "locationName": "deploymentMode"
         },
-        "EncryptionOptions" : {
-          "shape" : "EncryptionOptions",
-          "locationName" : "encryptionOptions"
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
         },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+        "DataReplicationPrimaryBrokerArn": {
+          "shape": "__string",
+          "locationName": "dataReplicationPrimaryBrokerArn"
         },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
+        "EncryptionOptions": {
+          "shape": "EncryptionOptions",
+          "locationName": "encryptionOptions"
         },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
         },
-        "Logs" : {
-          "shape" : "Logs",
-          "locationName" : "logs"
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
         },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataInput",
+          "locationName": "ldapServerMetadata"
         },
-        "PubliclyAccessible" : {
-          "shape" : "__boolean",
-          "locationName" : "publiclyAccessible"
+        "Logs": {
+          "shape": "Logs",
+          "locationName": "logs"
         },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
         },
-        "StorageType" : {
-          "shape" : "BrokerStorageType",
-          "locationName" : "storageType"
+        "PubliclyAccessible": {
+          "shape": "__boolean",
+          "locationName": "publiclyAccessible"
         },
-        "SubnetIds" : {
-          "shape" : "__listOf__string",
-          "locationName" : "subnetIds"
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
         },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
+        "StorageType": {
+          "shape": "BrokerStorageType",
+          "locationName": "storageType"
         },
-        "Users" : {
-          "shape" : "__listOfUser",
-          "locationName" : "users"
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        },
+        "Users": {
+          "shape": "__listOfUser",
+          "locationName": "users"
         }
       },
-      "required" : [ "EngineVersion", "HostInstanceType", "AutoMinorVersionUpgrade", "Users", "BrokerName", "DeploymentMode", "EngineType", "PubliclyAccessible" ]
+      "required": [
+        "HostInstanceType",
+        "Users",
+        "BrokerName",
+        "DeploymentMode",
+        "EngineType",
+        "PubliclyAccessible"
+      ]
     },
-    "CreateBrokerOutput" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerArn" : {
-          "shape" : "__string",
-          "locationName" : "brokerArn"
+    "CreateBrokerOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerArn": {
+          "shape": "__string",
+          "locationName": "brokerArn"
         },
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
         }
       }
     },
-    "CreateBrokerRequest" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "CreateBrokerRequest": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
         },
-        "BrokerName" : {
-          "shape" : "__string",
-          "locationName" : "brokerName"
+        "BrokerName": {
+          "shape": "__string",
+          "locationName": "brokerName"
         },
-        "Configuration" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "configuration"
+        "Configuration": {
+          "shape": "ConfigurationId",
+          "locationName": "configuration"
         },
-        "CreatorRequestId" : {
-          "shape" : "__string",
-          "locationName" : "creatorRequestId",
-          "idempotencyToken" : true
+        "CreatorRequestId": {
+          "shape": "__string",
+          "locationName": "creatorRequestId",
+          "idempotencyToken": true
         },
-        "DeploymentMode" : {
-          "shape" : "DeploymentMode",
-          "locationName" : "deploymentMode"
+        "DeploymentMode": {
+          "shape": "DeploymentMode",
+          "locationName": "deploymentMode"
         },
-        "EncryptionOptions" : {
-          "shape" : "EncryptionOptions",
-          "locationName" : "encryptionOptions"
+        "EncryptionOptions": {
+          "shape": "EncryptionOptions",
+          "locationName": "encryptionOptions"
         },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
         },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
         },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataInput",
+          "locationName": "ldapServerMetadata"
         },
-        "Logs" : {
-          "shape" : "Logs",
-          "locationName" : "logs"
+        "Logs": {
+          "shape": "Logs",
+          "locationName": "logs"
         },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
         },
-        "PubliclyAccessible" : {
-          "shape" : "__boolean",
-          "locationName" : "publiclyAccessible"
+        "PubliclyAccessible": {
+          "shape": "__boolean",
+          "locationName": "publiclyAccessible"
         },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
         },
-        "StorageType" : {
-          "shape" : "BrokerStorageType",
-          "locationName" : "storageType"
+        "StorageType": {
+          "shape": "BrokerStorageType",
+          "locationName": "storageType"
         },
-        "SubnetIds" : {
-          "shape" : "__listOf__string",
-          "locationName" : "subnetIds"
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
         },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         },
-        "Users" : {
-          "shape" : "__listOfUser",
-          "locationName" : "users"
+        "Users": {
+          "shape": "__listOfUser",
+          "locationName": "users"
+        },
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
+        },
+        "DataReplicationPrimaryBrokerArn": {
+          "shape": "__string",
+          "locationName": "dataReplicationPrimaryBrokerArn"
         }
       },
-      "required" : [ "EngineVersion", "HostInstanceType", "AutoMinorVersionUpgrade", "Users", "BrokerName", "DeploymentMode", "EngineType", "PubliclyAccessible" ]
+      "required": [
+        "HostInstanceType",
+        "Users",
+        "BrokerName",
+        "DeploymentMode",
+        "EngineType",
+        "PubliclyAccessible"
+      ]
     },
-    "CreateBrokerResponse" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerArn" : {
-          "shape" : "__string",
-          "locationName" : "brokerArn"
+    "CreateBrokerResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerArn": {
+          "shape": "__string",
+          "locationName": "brokerArn"
         },
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
         }
       }
     },
-    "CreateConfigurationInput" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "CreateConfigurationInput": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         }
       },
-      "required" : [ "EngineVersion", "EngineType", "Name" ]
+      "required": [
+        "EngineType",
+        "Name"
+      ]
     },
-    "CreateConfigurationOutput" : {
-      "type" : "structure",
-      "members" : {
-        "Arn" : {
-          "shape" : "__string",
-          "locationName" : "arn"
+    "CreateConfigurationOutput": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
         },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "Id" : {
-          "shape" : "__string",
-          "locationName" : "id"
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
         },
-        "LatestRevision" : {
-          "shape" : "ConfigurationRevision",
-          "locationName" : "latestRevision"
+        "LatestRevision": {
+          "shape": "ConfigurationRevision",
+          "locationName": "latestRevision"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         }
       },
-      "required" : [ "AuthenticationStrategy", "Id", "Arn", "Name", "Created" ]
+      "required": [
+        "AuthenticationStrategy",
+        "Id",
+        "Arn",
+        "Name",
+        "Created"
+      ]
     },
-    "CreateConfigurationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "CreateConfigurationRequest": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
         },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         }
       },
-      "required" : [ "EngineVersion", "EngineType", "Name" ]
+      "required": [
+        "EngineType",
+        "Name"
+      ]
     },
-    "CreateConfigurationResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Arn" : {
-          "shape" : "__string",
-          "locationName" : "arn"
+    "CreateConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
         },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "Id" : {
-          "shape" : "__string",
-          "locationName" : "id"
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
         },
-        "LatestRevision" : {
-          "shape" : "ConfigurationRevision",
-          "locationName" : "latestRevision"
+        "LatestRevision": {
+          "shape": "ConfigurationRevision",
+          "locationName": "latestRevision"
         },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
         }
       }
     },
-    "CreateTagsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ResourceArn" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "resource-arn"
+    "CreateTagsRequest": {
+      "type": "structure",
+      "members": {
+        "ResourceArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "resource-arn"
         },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         }
       },
-      "required" : [ "ResourceArn" ]
+      "required": [
+        "ResourceArn"
+      ]
     },
-    "CreateUserInput" : {
-      "type" : "structure",
-      "members" : {
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
+    "CreateUserInput": {
+      "type": "structure",
+      "members": {
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
         },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
         },
-        "Password" : {
-          "shape" : "__string",
-          "locationName" : "password"
+        "Password": {
+          "shape": "__string",
+          "locationName": "password"
+        },
+        "ReplicationUser": {
+          "shape": "__boolean",
+          "locationName": "replicationUser"
         }
       },
-      "required" : [ "Password" ]
+      "required": [
+        "Password"
+      ]
     },
-    "CreateUserRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
+    "CreateUserRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
         },
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
         },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
         },
-        "Password" : {
-          "shape" : "__string",
-          "locationName" : "password"
+        "Password": {
+          "shape": "__string",
+          "locationName": "password"
         },
-        "Username" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "username"
+        "Username": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "username"
+        },
+        "ReplicationUser": {
+          "shape": "__boolean",
+          "locationName": "replicationUser"
         }
       },
-      "required" : [ "Username", "BrokerId", "Password" ]
+      "required": [
+        "Username",
+        "BrokerId",
+        "Password"
+      ]
     },
-    "CreateUserResponse" : {
-      "type" : "structure",
-      "members" : { }
-    },
-    "DayOfWeek" : {
-      "type" : "string",
-      "enum" : [ "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY" ]
-    },
-    "DeleteBrokerOutput" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
-        }
+    "CreateUserResponse": {
+      "type": "structure",
+      "members": {
       }
     },
-    "DeleteBrokerRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
+    "DataReplicationCounterpart": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        },
+        "Region": {
+          "shape": "__string",
+          "locationName": "region"
         }
       },
-      "required" : [ "BrokerId" ]
+      "required": [
+        "BrokerId",
+        "Region"
+      ]
     },
-    "DeleteBrokerResponse" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
-        }
-      }
-    },
-    "DeleteTagsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ResourceArn" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "resource-arn"
+    "DataReplicationMetadataOutput": {
+      "type": "structure",
+      "members": {
+        "DataReplicationCounterpart": {
+          "shape": "DataReplicationCounterpart",
+          "locationName": "dataReplicationCounterpart"
         },
-        "TagKeys" : {
-          "shape" : "__listOf__string",
-          "location" : "querystring",
-          "locationName" : "tagKeys"
+        "DataReplicationRole": {
+          "shape": "__string",
+          "locationName": "dataReplicationRole"
         }
       },
-      "required" : [ "TagKeys", "ResourceArn" ]
+      "required": [
+        "DataReplicationRole"
+      ]
     },
-    "DeleteUserRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
-        },
-        "Username" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "username"
+    "DataReplicationMode": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "CRDR"
+      ]
+    },
+    "DayOfWeek": {
+      "type": "string",
+      "enum": [
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY",
+        "SUNDAY"
+      ]
+    },
+    "DeleteBrokerOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        }
+      }
+    },
+    "DeleteBrokerRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
         }
       },
-      "required" : [ "Username", "BrokerId" ]
+      "required": [
+        "BrokerId"
+      ]
     },
-    "DeleteUserResponse" : {
-      "type" : "structure",
-      "members" : { }
-    },
-    "DeploymentMode" : {
-      "type" : "string",
-      "enum" : [ "SINGLE_INSTANCE", "ACTIVE_STANDBY_MULTI_AZ", "CLUSTER_MULTI_AZ" ]
-    },
-    "DescribeBrokerEngineTypesRequest" : {
-      "type" : "structure",
-      "members" : {
-        "EngineType" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "engineType"
-        },
-        "MaxResults" : {
-          "shape" : "MaxResults",
-          "location" : "querystring",
-          "locationName" : "maxResults"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
+    "DeleteBrokerResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
         }
       }
     },
-    "DescribeBrokerEngineTypesResponse" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerEngineTypes" : {
-          "shape" : "__listOfBrokerEngineType",
-          "locationName" : "brokerEngineTypes"
+    "DeleteTagsRequest": {
+      "type": "structure",
+      "members": {
+        "ResourceArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "resource-arn"
         },
-        "MaxResults" : {
-          "shape" : "__integerMin5Max100",
-          "locationName" : "maxResults"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "DescribeBrokerInstanceOptionsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "EngineType" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "engineType"
-        },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "hostInstanceType"
-        },
-        "MaxResults" : {
-          "shape" : "MaxResults",
-          "location" : "querystring",
-          "locationName" : "maxResults"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
-        },
-        "StorageType" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "storageType"
-        }
-      }
-    },
-    "DescribeBrokerInstanceOptionsResponse" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerInstanceOptions" : {
-          "shape" : "__listOfBrokerInstanceOption",
-          "locationName" : "brokerInstanceOptions"
-        },
-        "MaxResults" : {
-          "shape" : "__integerMin5Max100",
-          "locationName" : "maxResults"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "DescribeBrokerOutput" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
-        },
-        "BrokerArn" : {
-          "shape" : "__string",
-          "locationName" : "brokerArn"
-        },
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
-        },
-        "BrokerInstances" : {
-          "shape" : "__listOfBrokerInstance",
-          "locationName" : "brokerInstances"
-        },
-        "BrokerName" : {
-          "shape" : "__string",
-          "locationName" : "brokerName"
-        },
-        "BrokerState" : {
-          "shape" : "BrokerState",
-          "locationName" : "brokerState"
-        },
-        "Configurations" : {
-          "shape" : "Configurations",
-          "locationName" : "configurations"
-        },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
-        },
-        "DeploymentMode" : {
-          "shape" : "DeploymentMode",
-          "locationName" : "deploymentMode"
-        },
-        "EncryptionOptions" : {
-          "shape" : "EncryptionOptions",
-          "locationName" : "encryptionOptions"
-        },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
-        },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
-        },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
-        },
-        "Logs" : {
-          "shape" : "LogsSummary",
-          "locationName" : "logs"
-        },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
-        },
-        "PendingAuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "pendingAuthenticationStrategy"
-        },
-        "PendingEngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "pendingEngineVersion"
-        },
-        "PendingHostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "pendingHostInstanceType"
-        },
-        "PendingLdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "pendingLdapServerMetadata"
-        },
-        "PendingSecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "pendingSecurityGroups"
-        },
-        "PubliclyAccessible" : {
-          "shape" : "__boolean",
-          "locationName" : "publiclyAccessible"
-        },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
-        },
-        "StorageType" : {
-          "shape" : "BrokerStorageType",
-          "locationName" : "storageType"
-        },
-        "SubnetIds" : {
-          "shape" : "__listOf__string",
-          "locationName" : "subnetIds"
-        },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
-        },
-        "Users" : {
-          "shape" : "__listOfUserSummary",
-          "locationName" : "users"
+        "TagKeys": {
+          "shape": "__listOf__string",
+          "location": "querystring",
+          "locationName": "tagKeys"
         }
       },
-      "required" : [ "DeploymentMode", "EngineType", "AutoMinorVersionUpgrade", "PubliclyAccessible" ]
+      "required": [
+        "TagKeys",
+        "ResourceArn"
+      ]
     },
-    "DescribeBrokerRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
+    "DeleteUserRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
+        },
+        "Username": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "username"
         }
       },
-      "required" : [ "BrokerId" ]
+      "required": [
+        "Username",
+        "BrokerId"
+      ]
     },
-    "DescribeBrokerResponse" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "DeleteUserResponse": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "DeploymentMode": {
+      "type": "string",
+      "enum": [
+        "SINGLE_INSTANCE",
+        "ACTIVE_STANDBY_MULTI_AZ",
+        "CLUSTER_MULTI_AZ"
+      ]
+    },
+    "DescribeBrokerEngineTypesRequest": {
+      "type": "structure",
+      "members": {
+        "EngineType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "engineType"
         },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
         },
-        "BrokerArn" : {
-          "shape" : "__string",
-          "locationName" : "brokerArn"
-        },
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
-        },
-        "BrokerInstances" : {
-          "shape" : "__listOfBrokerInstance",
-          "locationName" : "brokerInstances"
-        },
-        "BrokerName" : {
-          "shape" : "__string",
-          "locationName" : "brokerName"
-        },
-        "BrokerState" : {
-          "shape" : "BrokerState",
-          "locationName" : "brokerState"
-        },
-        "Configurations" : {
-          "shape" : "Configurations",
-          "locationName" : "configurations"
-        },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
-        },
-        "DeploymentMode" : {
-          "shape" : "DeploymentMode",
-          "locationName" : "deploymentMode"
-        },
-        "EncryptionOptions" : {
-          "shape" : "EncryptionOptions",
-          "locationName" : "encryptionOptions"
-        },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
-        },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
-        },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
-        },
-        "Logs" : {
-          "shape" : "LogsSummary",
-          "locationName" : "logs"
-        },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
-        },
-        "PendingAuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "pendingAuthenticationStrategy"
-        },
-        "PendingEngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "pendingEngineVersion"
-        },
-        "PendingHostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "pendingHostInstanceType"
-        },
-        "PendingLdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "pendingLdapServerMetadata"
-        },
-        "PendingSecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "pendingSecurityGroups"
-        },
-        "PubliclyAccessible" : {
-          "shape" : "__boolean",
-          "locationName" : "publiclyAccessible"
-        },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
-        },
-        "StorageType" : {
-          "shape" : "BrokerStorageType",
-          "locationName" : "storageType"
-        },
-        "SubnetIds" : {
-          "shape" : "__listOf__string",
-          "locationName" : "subnetIds"
-        },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
-        },
-        "Users" : {
-          "shape" : "__listOfUserSummary",
-          "locationName" : "users"
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
         }
       }
     },
-    "DescribeConfigurationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "configuration-id"
+    "DescribeBrokerEngineTypesResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerEngineTypes": {
+          "shape": "__listOfBrokerEngineType",
+          "locationName": "brokerEngineTypes"
+        },
+        "MaxResults": {
+          "shape": "__integerMin5Max100",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "DescribeBrokerInstanceOptionsRequest": {
+      "type": "structure",
+      "members": {
+        "EngineType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "engineType"
+        },
+        "HostInstanceType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "hostInstanceType"
+        },
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        },
+        "StorageType": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "storageType"
+        }
+      }
+    },
+    "DescribeBrokerInstanceOptionsResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerInstanceOptions": {
+          "shape": "__listOfBrokerInstanceOption",
+          "locationName": "brokerInstanceOptions"
+        },
+        "MaxResults": {
+          "shape": "__integerMin5Max100",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "DescribeBrokerOutput": {
+      "type": "structure",
+      "members": {
+        "ActionsRequired": {
+          "shape": "__listOfActionRequired",
+          "locationName": "actionsRequired"
+        },
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
+        },
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
+        },
+        "BrokerArn": {
+          "shape": "__string",
+          "locationName": "brokerArn"
+        },
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        },
+        "BrokerInstances": {
+          "shape": "__listOfBrokerInstance",
+          "locationName": "brokerInstances"
+        },
+        "BrokerName": {
+          "shape": "__string",
+          "locationName": "brokerName"
+        },
+        "BrokerState": {
+          "shape": "BrokerState",
+          "locationName": "brokerState"
+        },
+        "Configurations": {
+          "shape": "Configurations",
+          "locationName": "configurations"
+        },
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
+        },
+        "DeploymentMode": {
+          "shape": "DeploymentMode",
+          "locationName": "deploymentMode"
+        },
+        "DataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "dataReplicationMetadata"
+        },
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
+        },
+        "EncryptionOptions": {
+          "shape": "EncryptionOptions",
+          "locationName": "encryptionOptions"
+        },
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
+        },
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
+        },
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
+        },
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataOutput",
+          "locationName": "ldapServerMetadata"
+        },
+        "Logs": {
+          "shape": "LogsSummary",
+          "locationName": "logs"
+        },
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
+        },
+        "PendingAuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "pendingAuthenticationStrategy"
+        },
+        "PendingDataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "pendingDataReplicationMetadata"
+        },
+        "PendingDataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "pendingDataReplicationMode"
+        },
+        "PendingEngineVersion": {
+          "shape": "__string",
+          "locationName": "pendingEngineVersion"
+        },
+        "PendingHostInstanceType": {
+          "shape": "__string",
+          "locationName": "pendingHostInstanceType"
+        },
+        "PendingLdapServerMetadata": {
+          "shape": "LdapServerMetadataOutput",
+          "locationName": "pendingLdapServerMetadata"
+        },
+        "PendingSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "pendingSecurityGroups"
+        },
+        "PubliclyAccessible": {
+          "shape": "__boolean",
+          "locationName": "publiclyAccessible"
+        },
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
+        },
+        "StorageType": {
+          "shape": "BrokerStorageType",
+          "locationName": "storageType"
+        },
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        },
+        "Users": {
+          "shape": "__listOfUserSummary",
+          "locationName": "users"
         }
       },
-      "required" : [ "ConfigurationId" ]
+      "required": [
+        "DeploymentMode",
+        "EngineType",
+        "AutoMinorVersionUpgrade",
+        "PubliclyAccessible"
+      ]
     },
-    "DescribeConfigurationResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Arn" : {
-          "shape" : "__string",
-          "locationName" : "arn"
-        },
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
-        },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
-        },
-        "EngineType" : {
-          "shape" : "EngineType",
-          "locationName" : "engineType"
-        },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
-        },
-        "Id" : {
-          "shape" : "__string",
-          "locationName" : "id"
-        },
-        "LatestRevision" : {
-          "shape" : "ConfigurationRevision",
-          "locationName" : "latestRevision"
-        },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
-        },
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
-        }
-      }
-    },
-    "DescribeConfigurationRevisionOutput" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "locationName" : "configurationId"
-        },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
-        },
-        "Data" : {
-          "shape" : "__string",
-          "locationName" : "data"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+    "DescribeBrokerRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
         }
       },
-      "required" : [ "Data", "ConfigurationId", "Created" ]
+      "required": [
+        "BrokerId"
+      ]
     },
-    "DescribeConfigurationRevisionRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "configuration-id"
+    "DescribeBrokerResponse": {
+      "type": "structure",
+      "members": {
+        "ActionsRequired": {
+          "shape": "__listOfActionRequired",
+          "locationName": "actionsRequired"
         },
-        "ConfigurationRevision" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "configuration-revision"
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
+        },
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
+        },
+        "BrokerArn": {
+          "shape": "__string",
+          "locationName": "brokerArn"
+        },
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        },
+        "BrokerInstances": {
+          "shape": "__listOfBrokerInstance",
+          "locationName": "brokerInstances"
+        },
+        "BrokerName": {
+          "shape": "__string",
+          "locationName": "brokerName"
+        },
+        "BrokerState": {
+          "shape": "BrokerState",
+          "locationName": "brokerState"
+        },
+        "Configurations": {
+          "shape": "Configurations",
+          "locationName": "configurations"
+        },
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
+        },
+        "DeploymentMode": {
+          "shape": "DeploymentMode",
+          "locationName": "deploymentMode"
+        },
+        "EncryptionOptions": {
+          "shape": "EncryptionOptions",
+          "locationName": "encryptionOptions"
+        },
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
+        },
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
+        },
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
+        },
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataOutput",
+          "locationName": "ldapServerMetadata"
+        },
+        "Logs": {
+          "shape": "LogsSummary",
+          "locationName": "logs"
+        },
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
+        },
+        "PendingAuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "pendingAuthenticationStrategy"
+        },
+        "PendingEngineVersion": {
+          "shape": "__string",
+          "locationName": "pendingEngineVersion"
+        },
+        "PendingHostInstanceType": {
+          "shape": "__string",
+          "locationName": "pendingHostInstanceType"
+        },
+        "PendingLdapServerMetadata": {
+          "shape": "LdapServerMetadataOutput",
+          "locationName": "pendingLdapServerMetadata"
+        },
+        "PendingSecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "pendingSecurityGroups"
+        },
+        "PubliclyAccessible": {
+          "shape": "__boolean",
+          "locationName": "publiclyAccessible"
+        },
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
+        },
+        "StorageType": {
+          "shape": "BrokerStorageType",
+          "locationName": "storageType"
+        },
+        "SubnetIds": {
+          "shape": "__listOf__string",
+          "locationName": "subnetIds"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        },
+        "Users": {
+          "shape": "__listOfUserSummary",
+          "locationName": "users"
+        },
+        "DataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "dataReplicationMetadata"
+        },
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
+        },
+        "PendingDataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "pendingDataReplicationMetadata"
+        },
+        "PendingDataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "pendingDataReplicationMode"
+        }
+      }
+    },
+    "DescribeConfigurationRequest": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "configuration-id"
         }
       },
-      "required" : [ "ConfigurationRevision", "ConfigurationId" ]
+      "required": [
+        "ConfigurationId"
+      ]
     },
-    "DescribeConfigurationRevisionResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "locationName" : "configurationId"
+    "DescribeConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
         },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "Data" : {
-          "shape" : "__string",
-          "locationName" : "data"
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
+        },
+        "EngineType": {
+          "shape": "EngineType",
+          "locationName": "engineType"
+        },
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "LatestRevision": {
+          "shape": "ConfigurationRevision",
+          "locationName": "latestRevision"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         }
       }
     },
-    "DescribeUserOutput" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
+    "DescribeConfigurationRevisionOutput": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "locationName": "configurationId"
         },
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
+        "Data": {
+          "shape": "__string",
+          "locationName": "data"
         },
-        "Pending" : {
-          "shape" : "UserPendingChanges",
-          "locationName" : "pending"
-        },
-        "Username" : {
-          "shape" : "__string",
-          "locationName" : "username"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         }
       },
-      "required" : [ "Username", "BrokerId" ]
+      "required": [
+        "Data",
+        "ConfigurationId",
+        "Created"
+      ]
     },
-    "DescribeUserRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
+    "DescribeConfigurationRevisionRequest": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "configuration-id"
         },
-        "Username" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "username"
+        "ConfigurationRevision": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "configuration-revision"
         }
       },
-      "required" : [ "Username", "BrokerId" ]
+      "required": [
+        "ConfigurationRevision",
+        "ConfigurationId"
+      ]
     },
-    "DescribeUserResponse" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
+    "DescribeConfigurationRevisionResponse": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "locationName": "configurationId"
         },
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
         },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
+        "Data": {
+          "shape": "__string",
+          "locationName": "data"
         },
-        "Pending" : {
-          "shape" : "UserPendingChanges",
-          "locationName" : "pending"
-        },
-        "Username" : {
-          "shape" : "__string",
-          "locationName" : "username"
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         }
       }
     },
-    "EncryptionOptions" : {
-      "type" : "structure",
-      "members" : {
-        "KmsKeyId" : {
-          "shape" : "__string",
-          "locationName" : "kmsKeyId"
+    "DescribeUserOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
         },
-        "UseAwsOwnedKey" : {
-          "shape" : "__boolean",
-          "locationName" : "useAwsOwnedKey"
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
+        },
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
+        },
+        "Pending": {
+          "shape": "UserPendingChanges",
+          "locationName": "pending"
+        },
+        "ReplicationUser": {
+          "shape": "__boolean",
+          "locationName": "replicationUser"
+        },
+        "Username": {
+          "shape": "__string",
+          "locationName": "username"
         }
       },
-      "required" : [ "UseAwsOwnedKey" ]
+      "required": [
+        "Username",
+        "BrokerId"
+      ]
     },
-    "EngineType" : {
-      "type" : "string",
-      "enum" : [ "ACTIVEMQ", "RABBITMQ" ]
-    },
-    "EngineVersion" : {
-      "type" : "structure",
-      "members" : {
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
-        }
-      }
-    },
-    "Error" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorAttribute" : {
-          "shape" : "__string",
-          "locationName" : "errorAttribute"
+    "DescribeUserRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
-        }
-      }
-    },
-    "ForbiddenException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorAttribute" : {
-          "shape" : "__string",
-          "locationName" : "errorAttribute"
-        },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "Username": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "username"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 403
+      "required": [
+        "Username",
+        "BrokerId"
+      ]
+    },
+    "DescribeUserResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        },
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
+        },
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
+        },
+        "Pending": {
+          "shape": "UserPendingChanges",
+          "locationName": "pending"
+        },
+        "Username": {
+          "shape": "__string",
+          "locationName": "username"
+        },
+        "ReplicationUser": {
+          "shape": "__boolean",
+          "locationName": "replicationUser"
+        }
       }
     },
-    "InternalServerErrorException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorAttribute" : {
-          "shape" : "__string",
-          "locationName" : "errorAttribute"
+    "EncryptionOptions": {
+      "type": "structure",
+      "members": {
+        "KmsKeyId": {
+          "shape": "__string",
+          "locationName": "kmsKeyId"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "UseAwsOwnedKey": {
+          "shape": "__boolean",
+          "locationName": "useAwsOwnedKey"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 500
+      "required": [
+        "UseAwsOwnedKey"
+      ]
+    },
+    "EngineType": {
+      "type": "string",
+      "enum": [
+        "ACTIVEMQ",
+        "RABBITMQ"
+      ]
+    },
+    "EngineVersion": {
+      "type": "structure",
+      "members": {
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        }
       }
     },
-    "LdapServerMetadataInput" : {
-      "type" : "structure",
-      "members" : {
-        "Hosts" : {
-          "shape" : "__listOf__string",
-          "locationName" : "hosts"
+    "Error": {
+      "type": "structure",
+      "members": {
+        "ErrorAttribute": {
+          "shape": "__string",
+          "locationName": "errorAttribute"
         },
-        "RoleBase" : {
-          "shape" : "__string",
-          "locationName" : "roleBase"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
+        }
+      }
+    },
+    "ForbiddenException": {
+      "type": "structure",
+      "members": {
+        "ErrorAttribute": {
+          "shape": "__string",
+          "locationName": "errorAttribute"
         },
-        "RoleName" : {
-          "shape" : "__string",
-          "locationName" : "roleName"
-        },
-        "RoleSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "roleSearchMatching"
-        },
-        "RoleSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "roleSearchSubtree"
-        },
-        "ServiceAccountPassword" : {
-          "shape" : "__string",
-          "locationName" : "serviceAccountPassword"
-        },
-        "ServiceAccountUsername" : {
-          "shape" : "__string",
-          "locationName" : "serviceAccountUsername"
-        },
-        "UserBase" : {
-          "shape" : "__string",
-          "locationName" : "userBase"
-        },
-        "UserRoleName" : {
-          "shape" : "__string",
-          "locationName" : "userRoleName"
-        },
-        "UserSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "userSearchMatching"
-        },
-        "UserSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "userSearchSubtree"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "Hosts", "UserSearchMatching", "UserBase", "RoleSearchMatching", "ServiceAccountUsername", "RoleBase", "ServiceAccountPassword" ]
+      "exception": true,
+      "error": {
+        "httpStatusCode": 403
+      }
     },
-    "LdapServerMetadataOutput" : {
-      "type" : "structure",
-      "members" : {
-        "Hosts" : {
-          "shape" : "__listOf__string",
-          "locationName" : "hosts"
+    "InternalServerErrorException": {
+      "type": "structure",
+      "members": {
+        "ErrorAttribute": {
+          "shape": "__string",
+          "locationName": "errorAttribute"
         },
-        "RoleBase" : {
-          "shape" : "__string",
-          "locationName" : "roleBase"
-        },
-        "RoleName" : {
-          "shape" : "__string",
-          "locationName" : "roleName"
-        },
-        "RoleSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "roleSearchMatching"
-        },
-        "RoleSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "roleSearchSubtree"
-        },
-        "ServiceAccountUsername" : {
-          "shape" : "__string",
-          "locationName" : "serviceAccountUsername"
-        },
-        "UserBase" : {
-          "shape" : "__string",
-          "locationName" : "userBase"
-        },
-        "UserRoleName" : {
-          "shape" : "__string",
-          "locationName" : "userRoleName"
-        },
-        "UserSearchMatching" : {
-          "shape" : "__string",
-          "locationName" : "userSearchMatching"
-        },
-        "UserSearchSubtree" : {
-          "shape" : "__boolean",
-          "locationName" : "userSearchSubtree"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "Hosts", "UserSearchMatching", "UserBase", "RoleSearchMatching", "ServiceAccountUsername", "RoleBase" ]
-    },
-    "ListBrokersOutput" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerSummaries" : {
-          "shape" : "__listOfBrokerSummary",
-          "locationName" : "brokerSummaries"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        }
+      "exception": true,
+      "error": {
+        "httpStatusCode": 500
       }
     },
-    "ListBrokersRequest" : {
-      "type" : "structure",
-      "members" : {
-        "MaxResults" : {
-          "shape" : "MaxResults",
-          "location" : "querystring",
-          "locationName" : "maxResults"
+    "LdapServerMetadataInput": {
+      "type": "structure",
+      "members": {
+        "Hosts": {
+          "shape": "__listOf__string",
+          "locationName": "hosts"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "ListBrokersResponse" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerSummaries" : {
-          "shape" : "__listOfBrokerSummary",
-          "locationName" : "brokerSummaries"
+        "RoleBase": {
+          "shape": "__string",
+          "locationName": "roleBase"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "ListConfigurationRevisionsOutput" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "locationName" : "configurationId"
+        "RoleName": {
+          "shape": "__string",
+          "locationName": "roleName"
         },
-        "MaxResults" : {
-          "shape" : "__integer",
-          "locationName" : "maxResults"
+        "RoleSearchMatching": {
+          "shape": "__string",
+          "locationName": "roleSearchMatching"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+        "RoleSearchSubtree": {
+          "shape": "__boolean",
+          "locationName": "roleSearchSubtree"
         },
-        "Revisions" : {
-          "shape" : "__listOfConfigurationRevision",
-          "locationName" : "revisions"
-        }
-      }
-    },
-    "ListConfigurationRevisionsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "configuration-id"
+        "ServiceAccountPassword": {
+          "shape": "__string",
+          "locationName": "serviceAccountPassword"
         },
-        "MaxResults" : {
-          "shape" : "MaxResults",
-          "location" : "querystring",
-          "locationName" : "maxResults"
+        "ServiceAccountUsername": {
+          "shape": "__string",
+          "locationName": "serviceAccountUsername"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
+        "UserBase": {
+          "shape": "__string",
+          "locationName": "userBase"
+        },
+        "UserRoleName": {
+          "shape": "__string",
+          "locationName": "userRoleName"
+        },
+        "UserSearchMatching": {
+          "shape": "__string",
+          "locationName": "userSearchMatching"
+        },
+        "UserSearchSubtree": {
+          "shape": "__boolean",
+          "locationName": "userSearchSubtree"
         }
       },
-      "required" : [ "ConfigurationId" ]
+      "required": [
+        "Hosts",
+        "UserSearchMatching",
+        "UserBase",
+        "RoleSearchMatching",
+        "ServiceAccountUsername",
+        "RoleBase",
+        "ServiceAccountPassword"
+      ]
     },
-    "ListConfigurationRevisionsResponse" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "locationName" : "configurationId"
+    "LdapServerMetadataOutput": {
+      "type": "structure",
+      "members": {
+        "Hosts": {
+          "shape": "__listOf__string",
+          "locationName": "hosts"
         },
-        "MaxResults" : {
-          "shape" : "__integer",
-          "locationName" : "maxResults"
+        "RoleBase": {
+          "shape": "__string",
+          "locationName": "roleBase"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
+        "RoleName": {
+          "shape": "__string",
+          "locationName": "roleName"
         },
-        "Revisions" : {
-          "shape" : "__listOfConfigurationRevision",
-          "locationName" : "revisions"
-        }
-      }
-    },
-    "ListConfigurationsOutput" : {
-      "type" : "structure",
-      "members" : {
-        "Configurations" : {
-          "shape" : "__listOfConfiguration",
-          "locationName" : "configurations"
+        "RoleSearchMatching": {
+          "shape": "__string",
+          "locationName": "roleSearchMatching"
         },
-        "MaxResults" : {
-          "shape" : "__integer",
-          "locationName" : "maxResults"
+        "RoleSearchSubtree": {
+          "shape": "__boolean",
+          "locationName": "roleSearchSubtree"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "ListConfigurationsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "MaxResults" : {
-          "shape" : "MaxResults",
-          "location" : "querystring",
-          "locationName" : "maxResults"
+        "ServiceAccountUsername": {
+          "shape": "__string",
+          "locationName": "serviceAccountUsername"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "ListConfigurationsResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Configurations" : {
-          "shape" : "__listOfConfiguration",
-          "locationName" : "configurations"
+        "UserBase": {
+          "shape": "__string",
+          "locationName": "userBase"
         },
-        "MaxResults" : {
-          "shape" : "__integer",
-          "locationName" : "maxResults"
+        "UserRoleName": {
+          "shape": "__string",
+          "locationName": "userRoleName"
         },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        }
-      }
-    },
-    "ListTagsRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ResourceArn" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "resource-arn"
+        "UserSearchMatching": {
+          "shape": "__string",
+          "locationName": "userSearchMatching"
+        },
+        "UserSearchSubtree": {
+          "shape": "__boolean",
+          "locationName": "userSearchSubtree"
         }
       },
-      "required" : [ "ResourceArn" ]
+      "required": [
+        "Hosts",
+        "UserSearchMatching",
+        "UserBase",
+        "RoleSearchMatching",
+        "ServiceAccountUsername",
+        "RoleBase"
+      ]
     },
-    "ListTagsResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
+    "ListBrokersOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerSummaries": {
+          "shape": "__listOfBrokerSummary",
+          "locationName": "brokerSummaries"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         }
       }
     },
-    "ListUsersOutput" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
+    "ListBrokersRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
         },
-        "MaxResults" : {
-          "shape" : "__integerMin5Max100",
-          "locationName" : "maxResults"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        },
-        "Users" : {
-          "shape" : "__listOfUserSummary",
-          "locationName" : "users"
-        }
-      },
-      "required" : [ "BrokerId", "MaxResults", "Users" ]
-    },
-    "ListUsersRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
-        },
-        "MaxResults" : {
-          "shape" : "MaxResults",
-          "location" : "querystring",
-          "locationName" : "maxResults"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "location" : "querystring",
-          "locationName" : "nextToken"
-        }
-      },
-      "required" : [ "BrokerId" ]
-    },
-    "ListUsersResponse" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
-        },
-        "MaxResults" : {
-          "shape" : "__integerMin5Max100",
-          "locationName" : "maxResults"
-        },
-        "NextToken" : {
-          "shape" : "__string",
-          "locationName" : "nextToken"
-        },
-        "Users" : {
-          "shape" : "__listOfUserSummary",
-          "locationName" : "users"
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
         }
       }
     },
-    "Logs" : {
-      "type" : "structure",
-      "members" : {
-        "Audit" : {
-          "shape" : "__boolean",
-          "locationName" : "audit"
+    "ListBrokersResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerSummaries": {
+          "shape": "__listOfBrokerSummary",
+          "locationName": "brokerSummaries"
         },
-        "General" : {
-          "shape" : "__boolean",
-          "locationName" : "general"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         }
       }
     },
-    "LogsSummary" : {
-      "type" : "structure",
-      "members" : {
-        "Audit" : {
-          "shape" : "__boolean",
-          "locationName" : "audit"
+    "ListConfigurationRevisionsOutput": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "locationName": "configurationId"
         },
-        "AuditLogGroup" : {
-          "shape" : "__string",
-          "locationName" : "auditLogGroup"
+        "MaxResults": {
+          "shape": "__integer",
+          "locationName": "maxResults"
         },
-        "General" : {
-          "shape" : "__boolean",
-          "locationName" : "general"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         },
-        "GeneralLogGroup" : {
-          "shape" : "__string",
-          "locationName" : "generalLogGroup"
+        "Revisions": {
+          "shape": "__listOfConfigurationRevision",
+          "locationName": "revisions"
+        }
+      }
+    },
+    "ListConfigurationRevisionsRequest": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "configuration-id"
         },
-        "Pending" : {
-          "shape" : "PendingLogs",
-          "locationName" : "pending"
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
         }
       },
-      "required" : [ "GeneralLogGroup", "General" ]
+      "required": [
+        "ConfigurationId"
+      ]
     },
-    "MaxResults" : {
-      "type" : "integer",
-      "min" : 1,
-      "max" : 100
-    },
-    "NotFoundException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorAttribute" : {
-          "shape" : "__string",
-          "locationName" : "errorAttribute"
+    "ListConfigurationRevisionsResponse": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "locationName": "configurationId"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "MaxResults": {
+          "shape": "__integer",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "Revisions": {
+          "shape": "__listOfConfigurationRevision",
+          "locationName": "revisions"
+        }
+      }
+    },
+    "ListConfigurationsOutput": {
+      "type": "structure",
+      "members": {
+        "Configurations": {
+          "shape": "__listOfConfiguration",
+          "locationName": "configurations"
+        },
+        "MaxResults": {
+          "shape": "__integer",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListConfigurationsRequest": {
+      "type": "structure",
+      "members": {
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListConfigurationsResponse": {
+      "type": "structure",
+      "members": {
+        "Configurations": {
+          "shape": "__listOfConfiguration",
+          "locationName": "configurations"
+        },
+        "MaxResults": {
+          "shape": "__integer",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        }
+      }
+    },
+    "ListTagsRequest": {
+      "type": "structure",
+      "members": {
+        "ResourceArn": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "resource-arn"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 404
-      }
+      "required": [
+        "ResourceArn"
+      ]
     },
-    "PendingLogs" : {
-      "type" : "structure",
-      "members" : {
-        "Audit" : {
-          "shape" : "__boolean",
-          "locationName" : "audit"
-        },
-        "General" : {
-          "shape" : "__boolean",
-          "locationName" : "general"
+    "ListTagsResponse": {
+      "type": "structure",
+      "members": {
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
         }
       }
     },
-    "RebootBrokerRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
-        }
-      },
-      "required" : [ "BrokerId" ]
-    },
-    "RebootBrokerResponse" : {
-      "type" : "structure",
-      "members" : { }
-    },
-    "SanitizationWarning" : {
-      "type" : "structure",
-      "members" : {
-        "AttributeName" : {
-          "shape" : "__string",
-          "locationName" : "attributeName"
+    "ListUsersOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
         },
-        "ElementName" : {
-          "shape" : "__string",
-          "locationName" : "elementName"
+        "MaxResults": {
+          "shape": "__integerMin5Max100",
+          "locationName": "maxResults"
         },
-        "Reason" : {
-          "shape" : "SanitizationWarningReason",
-          "locationName" : "reason"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
+        },
+        "Users": {
+          "shape": "__listOfUserSummary",
+          "locationName": "users"
         }
       },
-      "required" : [ "Reason" ]
+      "required": [
+        "BrokerId",
+        "MaxResults",
+        "Users"
+      ]
     },
-    "SanitizationWarningReason" : {
-      "type" : "string",
-      "enum" : [ "DISALLOWED_ELEMENT_REMOVED", "DISALLOWED_ATTRIBUTE_REMOVED", "INVALID_ATTRIBUTE_VALUE_REMOVED" ]
-    },
-    "Tags" : {
-      "type" : "structure",
-      "members" : {
-        "Tags" : {
-          "shape" : "__mapOf__string",
-          "locationName" : "tags"
-        }
-      }
-    },
-    "UnauthorizedException" : {
-      "type" : "structure",
-      "members" : {
-        "ErrorAttribute" : {
-          "shape" : "__string",
-          "locationName" : "errorAttribute"
+    "ListUsersRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
         },
-        "Message" : {
-          "shape" : "__string",
-          "locationName" : "message"
+        "MaxResults": {
+          "shape": "MaxResults",
+          "location": "querystring",
+          "locationName": "maxResults"
+        },
+        "NextToken": {
+          "shape": "__string",
+          "location": "querystring",
+          "locationName": "nextToken"
         }
       },
-      "exception" : true,
-      "error" : {
-        "httpStatusCode" : 401
-      }
+      "required": [
+        "BrokerId"
+      ]
     },
-    "UpdateBrokerInput" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "ListUsersResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
         },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
+        "MaxResults": {
+          "shape": "__integerMin5Max100",
+          "locationName": "maxResults"
         },
-        "Configuration" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "configuration"
+        "NextToken": {
+          "shape": "__string",
+          "locationName": "nextToken"
         },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
-        },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
-        },
-        "Logs" : {
-          "shape" : "Logs",
-          "locationName" : "logs"
-        },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
-        },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
+        "Users": {
+          "shape": "__listOfUserSummary",
+          "locationName": "users"
         }
       }
     },
-    "UpdateBrokerOutput" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "Logs": {
+      "type": "structure",
+      "members": {
+        "Audit": {
+          "shape": "__boolean",
+          "locationName": "audit"
         },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
+        "General": {
+          "shape": "__boolean",
+          "locationName": "general"
+        }
+      }
+    },
+    "LogsSummary": {
+      "type": "structure",
+      "members": {
+        "Audit": {
+          "shape": "__boolean",
+          "locationName": "audit"
         },
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
+        "AuditLogGroup": {
+          "shape": "__string",
+          "locationName": "auditLogGroup"
         },
-        "Configuration" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "configuration"
+        "General": {
+          "shape": "__boolean",
+          "locationName": "general"
         },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
+        "GeneralLogGroup": {
+          "shape": "__string",
+          "locationName": "generalLogGroup"
         },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
-        },
-        "Logs" : {
-          "shape" : "Logs",
-          "locationName" : "logs"
-        },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
-        },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
+        "Pending": {
+          "shape": "PendingLogs",
+          "locationName": "pending"
         }
       },
-      "required" : [ "BrokerId" ]
+      "required": [
+        "GeneralLogGroup",
+        "General"
+      ]
     },
-    "UpdateBrokerRequest" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "MaxResults": {
+      "type": "integer",
+      "min": 1,
+      "max": 100
+    },
+    "NotFoundException": {
+      "type": "structure",
+      "members": {
+        "ErrorAttribute": {
+          "shape": "__string",
+          "locationName": "errorAttribute"
         },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
-        },
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
-        },
-        "Configuration" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "configuration"
-        },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
-        },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataInput",
-          "locationName" : "ldapServerMetadata"
-        },
-        "Logs" : {
-          "shape" : "Logs",
-          "locationName" : "logs"
-        },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
-        },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "BrokerId" ]
+      "exception": true,
+      "error": {
+        "httpStatusCode": 404
+      }
     },
-    "UpdateBrokerResponse" : {
-      "type" : "structure",
-      "members" : {
-        "AuthenticationStrategy" : {
-          "shape" : "AuthenticationStrategy",
-          "locationName" : "authenticationStrategy"
+    "PendingLogs": {
+      "type": "structure",
+      "members": {
+        "Audit": {
+          "shape": "__boolean",
+          "locationName": "audit"
         },
-        "AutoMinorVersionUpgrade" : {
-          "shape" : "__boolean",
-          "locationName" : "autoMinorVersionUpgrade"
-        },
-        "BrokerId" : {
-          "shape" : "__string",
-          "locationName" : "brokerId"
-        },
-        "Configuration" : {
-          "shape" : "ConfigurationId",
-          "locationName" : "configuration"
-        },
-        "EngineVersion" : {
-          "shape" : "__string",
-          "locationName" : "engineVersion"
-        },
-        "HostInstanceType" : {
-          "shape" : "__string",
-          "locationName" : "hostInstanceType"
-        },
-        "LdapServerMetadata" : {
-          "shape" : "LdapServerMetadataOutput",
-          "locationName" : "ldapServerMetadata"
-        },
-        "Logs" : {
-          "shape" : "Logs",
-          "locationName" : "logs"
-        },
-        "MaintenanceWindowStartTime" : {
-          "shape" : "WeeklyStartTime",
-          "locationName" : "maintenanceWindowStartTime"
-        },
-        "SecurityGroups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "securityGroups"
+        "General": {
+          "shape": "__boolean",
+          "locationName": "general"
         }
       }
     },
-    "UpdateConfigurationInput" : {
-      "type" : "structure",
-      "members" : {
-        "Data" : {
-          "shape" : "__string",
-          "locationName" : "data"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+    "PromoteInput": {
+      "type": "structure",
+      "members": {
+        "Mode": {
+          "shape": "PromoteMode",
+          "locationName": "mode"
         }
       },
-      "required" : [ "Data" ]
+      "required": [
+        "Mode"
+      ]
     },
-    "UpdateConfigurationOutput" : {
-      "type" : "structure",
-      "members" : {
-        "Arn" : {
-          "shape" : "__string",
-          "locationName" : "arn"
+    "PromoteMode": {
+      "type": "string",
+      "enum": [
+        "SWITCHOVER",
+        "FAILOVER"
+      ]
+    },
+    "PromoteOutput": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        }
+      }
+    },
+    "PromoteRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
         },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
-        },
-        "Id" : {
-          "shape" : "__string",
-          "locationName" : "id"
-        },
-        "LatestRevision" : {
-          "shape" : "ConfigurationRevision",
-          "locationName" : "latestRevision"
-        },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
-        },
-        "Warnings" : {
-          "shape" : "__listOfSanitizationWarning",
-          "locationName" : "warnings"
+        "Mode": {
+          "shape": "PromoteMode",
+          "locationName": "mode"
         }
       },
-      "required" : [ "Id", "Arn", "Name", "Created" ]
+      "required": [
+        "BrokerId",
+        "Mode"
+      ]
     },
-    "UpdateConfigurationRequest" : {
-      "type" : "structure",
-      "members" : {
-        "ConfigurationId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "configuration-id"
-        },
-        "Data" : {
-          "shape" : "__string",
-          "locationName" : "data"
-        },
-        "Description" : {
-          "shape" : "__string",
-          "locationName" : "description"
+    "PromoteResponse": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        }
+      }
+    },
+    "RebootBrokerRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
         }
       },
-      "required" : [ "ConfigurationId", "Data" ]
+      "required": [
+        "BrokerId"
+      ]
     },
-    "UpdateConfigurationResponse" : {
-      "type" : "structure",
-      "members" : {
-        "Arn" : {
-          "shape" : "__string",
-          "locationName" : "arn"
-        },
-        "Created" : {
-          "shape" : "__timestampIso8601",
-          "locationName" : "created"
-        },
-        "Id" : {
-          "shape" : "__string",
-          "locationName" : "id"
-        },
-        "LatestRevision" : {
-          "shape" : "ConfigurationRevision",
-          "locationName" : "latestRevision"
-        },
-        "Name" : {
-          "shape" : "__string",
-          "locationName" : "name"
-        },
-        "Warnings" : {
-          "shape" : "__listOfSanitizationWarning",
-          "locationName" : "warnings"
-        }
+    "RebootBrokerResponse": {
+      "type": "structure",
+      "members": {
       }
     },
-    "UpdateUserInput" : {
-      "type" : "structure",
-      "members" : {
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
+    "SanitizationWarning": {
+      "type": "structure",
+      "members": {
+        "AttributeName": {
+          "shape": "__string",
+          "locationName": "attributeName"
         },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
+        "ElementName": {
+          "shape": "__string",
+          "locationName": "elementName"
         },
-        "Password" : {
-          "shape" : "__string",
-          "locationName" : "password"
-        }
-      }
-    },
-    "UpdateUserRequest" : {
-      "type" : "structure",
-      "members" : {
-        "BrokerId" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "broker-id"
-        },
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
-        },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
-        },
-        "Password" : {
-          "shape" : "__string",
-          "locationName" : "password"
-        },
-        "Username" : {
-          "shape" : "__string",
-          "location" : "uri",
-          "locationName" : "username"
+        "Reason": {
+          "shape": "SanitizationWarningReason",
+          "locationName": "reason"
         }
       },
-      "required" : [ "Username", "BrokerId" ]
+      "required": [
+        "Reason"
+      ]
     },
-    "UpdateUserResponse" : {
-      "type" : "structure",
-      "members" : { }
+    "SanitizationWarningReason": {
+      "type": "string",
+      "enum": [
+        "DISALLOWED_ELEMENT_REMOVED",
+        "DISALLOWED_ATTRIBUTE_REMOVED",
+        "INVALID_ATTRIBUTE_VALUE_REMOVED"
+      ]
     },
-    "User" : {
-      "type" : "structure",
-      "members" : {
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
+    "Tags": {
+      "type": "structure",
+      "members": {
+        "Tags": {
+          "shape": "__mapOf__string",
+          "locationName": "tags"
+        }
+      }
+    },
+    "UnauthorizedException": {
+      "type": "structure",
+      "members": {
+        "ErrorAttribute": {
+          "shape": "__string",
+          "locationName": "errorAttribute"
         },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
-        },
-        "Password" : {
-          "shape" : "__string",
-          "locationName" : "password"
-        },
-        "Username" : {
-          "shape" : "__string",
-          "locationName" : "username"
+        "Message": {
+          "shape": "__string",
+          "locationName": "message"
         }
       },
-      "required" : [ "Username", "Password" ]
+      "exception": true,
+      "error": {
+        "httpStatusCode": 401
+      }
     },
-    "UserPendingChanges" : {
-      "type" : "structure",
-      "members" : {
-        "ConsoleAccess" : {
-          "shape" : "__boolean",
-          "locationName" : "consoleAccess"
+    "UpdateBrokerInput": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "Groups" : {
-          "shape" : "__listOf__string",
-          "locationName" : "groups"
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
         },
-        "PendingChange" : {
-          "shape" : "ChangeType",
-          "locationName" : "pendingChange"
+        "Configuration": {
+          "shape": "ConfigurationId",
+          "locationName": "configuration"
+        },
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
+        },
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
+        },
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
+        },
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataInput",
+          "locationName": "ldapServerMetadata"
+        },
+        "Logs": {
+          "shape": "Logs",
+          "locationName": "logs"
+        },
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
+        },
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
+        }
+      }
+    },
+    "UpdateBrokerOutput": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
+        },
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
+        },
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        },
+        "Configuration": {
+          "shape": "ConfigurationId",
+          "locationName": "configuration"
+        },
+        "DataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "dataReplicationMetadata"
+        },
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
+        },
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
+        },
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
+        },
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataOutput",
+          "locationName": "ldapServerMetadata"
+        },
+        "Logs": {
+          "shape": "Logs",
+          "locationName": "logs"
+        },
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
+        },
+        "PendingDataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "pendingDataReplicationMetadata"
+        },
+        "PendingDataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "pendingDataReplicationMode"
+        },
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
         }
       },
-      "required" : [ "PendingChange" ]
+      "required": [
+        "BrokerId"
+      ]
     },
-    "UserSummary" : {
-      "type" : "structure",
-      "members" : {
-        "PendingChange" : {
-          "shape" : "ChangeType",
-          "locationName" : "pendingChange"
+    "UpdateBrokerRequest": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "Username" : {
-          "shape" : "__string",
-          "locationName" : "username"
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
+        },
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
+        },
+        "Configuration": {
+          "shape": "ConfigurationId",
+          "locationName": "configuration"
+        },
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
+        },
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
+        },
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataInput",
+          "locationName": "ldapServerMetadata"
+        },
+        "Logs": {
+          "shape": "Logs",
+          "locationName": "logs"
+        },
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
+        },
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
+        },
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
         }
       },
-      "required" : [ "Username" ]
+      "required": [
+        "BrokerId"
+      ]
     },
-    "WeeklyStartTime" : {
-      "type" : "structure",
-      "members" : {
-        "DayOfWeek" : {
-          "shape" : "DayOfWeek",
-          "locationName" : "dayOfWeek"
+    "UpdateBrokerResponse": {
+      "type": "structure",
+      "members": {
+        "AuthenticationStrategy": {
+          "shape": "AuthenticationStrategy",
+          "locationName": "authenticationStrategy"
         },
-        "TimeOfDay" : {
-          "shape" : "__string",
-          "locationName" : "timeOfDay"
+        "AutoMinorVersionUpgrade": {
+          "shape": "__boolean",
+          "locationName": "autoMinorVersionUpgrade"
         },
-        "TimeZone" : {
-          "shape" : "__string",
-          "locationName" : "timeZone"
+        "BrokerId": {
+          "shape": "__string",
+          "locationName": "brokerId"
+        },
+        "Configuration": {
+          "shape": "ConfigurationId",
+          "locationName": "configuration"
+        },
+        "EngineVersion": {
+          "shape": "__string",
+          "locationName": "engineVersion"
+        },
+        "HostInstanceType": {
+          "shape": "__string",
+          "locationName": "hostInstanceType"
+        },
+        "LdapServerMetadata": {
+          "shape": "LdapServerMetadataOutput",
+          "locationName": "ldapServerMetadata"
+        },
+        "Logs": {
+          "shape": "Logs",
+          "locationName": "logs"
+        },
+        "MaintenanceWindowStartTime": {
+          "shape": "WeeklyStartTime",
+          "locationName": "maintenanceWindowStartTime"
+        },
+        "SecurityGroups": {
+          "shape": "__listOf__string",
+          "locationName": "securityGroups"
+        },
+        "DataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "dataReplicationMetadata"
+        },
+        "DataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "dataReplicationMode"
+        },
+        "PendingDataReplicationMetadata": {
+          "shape": "DataReplicationMetadataOutput",
+          "locationName": "pendingDataReplicationMetadata"
+        },
+        "PendingDataReplicationMode": {
+          "shape": "DataReplicationMode",
+          "locationName": "pendingDataReplicationMode"
+        }
+      }
+    },
+    "UpdateConfigurationInput": {
+      "type": "structure",
+      "members": {
+        "Data": {
+          "shape": "__string",
+          "locationName": "data"
+        },
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
         }
       },
-      "required" : [ "TimeOfDay", "DayOfWeek" ]
+      "required": [
+        "Data"
+      ]
     },
-    "__boolean" : {
-      "type" : "boolean"
-    },
-    "__double" : {
-      "type" : "double"
-    },
-    "__integer" : {
-      "type" : "integer"
-    },
-    "__integerMin5Max100" : {
-      "type" : "integer",
-      "min" : 5,
-      "max" : 100
-    },
-    "__listOfAvailabilityZone" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "AvailabilityZone"
-      }
-    },
-    "__listOfBrokerEngineType" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "BrokerEngineType"
-      }
-    },
-    "__listOfBrokerInstance" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "BrokerInstance"
-      }
-    },
-    "__listOfBrokerInstanceOption" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "BrokerInstanceOption"
-      }
-    },
-    "__listOfBrokerSummary" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "BrokerSummary"
-      }
-    },
-    "__listOfConfiguration" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "Configuration"
-      }
-    },
-    "__listOfConfigurationId" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "ConfigurationId"
-      }
-    },
-    "__listOfConfigurationRevision" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "ConfigurationRevision"
-      }
-    },
-    "__listOfDeploymentMode" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "DeploymentMode"
-      }
-    },
-    "__listOfEngineVersion" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "EngineVersion"
-      }
-    },
-    "__listOfSanitizationWarning" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "SanitizationWarning"
-      }
-    },
-    "__listOfUser" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "User"
-      }
-    },
-    "__listOfUserSummary" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "UserSummary"
-      }
-    },
-    "__listOf__string" : {
-      "type" : "list",
-      "member" : {
-        "shape" : "__string"
-      }
-    },
-    "__long" : {
-      "type" : "long"
-    },
-    "__mapOf__string" : {
-      "type" : "map",
-      "key" : {
-        "shape" : "__string"
+    "UpdateConfigurationOutput": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "LatestRevision": {
+          "shape": "ConfigurationRevision",
+          "locationName": "latestRevision"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Warnings": {
+          "shape": "__listOfSanitizationWarning",
+          "locationName": "warnings"
+        }
       },
-      "value" : {
-        "shape" : "__string"
+      "required": [
+        "Id",
+        "Arn",
+        "Name",
+        "Created"
+      ]
+    },
+    "UpdateConfigurationRequest": {
+      "type": "structure",
+      "members": {
+        "ConfigurationId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "configuration-id"
+        },
+        "Data": {
+          "shape": "__string",
+          "locationName": "data"
+        },
+        "Description": {
+          "shape": "__string",
+          "locationName": "description"
+        }
+      },
+      "required": [
+        "ConfigurationId",
+        "Data"
+      ]
+    },
+    "UpdateConfigurationResponse": {
+      "type": "structure",
+      "members": {
+        "Arn": {
+          "shape": "__string",
+          "locationName": "arn"
+        },
+        "Created": {
+          "shape": "__timestampIso8601",
+          "locationName": "created"
+        },
+        "Id": {
+          "shape": "__string",
+          "locationName": "id"
+        },
+        "LatestRevision": {
+          "shape": "ConfigurationRevision",
+          "locationName": "latestRevision"
+        },
+        "Name": {
+          "shape": "__string",
+          "locationName": "name"
+        },
+        "Warnings": {
+          "shape": "__listOfSanitizationWarning",
+          "locationName": "warnings"
+        }
       }
     },
-    "__string" : {
-      "type" : "string"
-    },
-    "__timestampIso8601" : {
-      "type" : "timestamp",
-      "timestampFormat" : "iso8601"
-    },
-    "__timestampUnix" : {
-      "type" : "timestamp",
-      "timestampFormat" : "unixTimestamp"
-    }
-  },
-  "authorizers" : {
-    "authorization_strategy" : {
-      "name" : "authorization_strategy",
-      "type" : "provided",
-      "placement" : {
-        "location" : "header",
-        "name" : "Authorization"
+    "UpdateUserInput": {
+      "type": "structure",
+      "members": {
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
+        },
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
+        },
+        "Password": {
+          "shape": "__string",
+          "locationName": "password"
+        },
+        "ReplicationUser": {
+          "shape": "__boolean",
+          "locationName": "replicationUser"
+        }
       }
+    },
+    "UpdateUserRequest": {
+      "type": "structure",
+      "members": {
+        "BrokerId": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "broker-id"
+        },
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
+        },
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
+        },
+        "Password": {
+          "shape": "__string",
+          "locationName": "password"
+        },
+        "Username": {
+          "shape": "__string",
+          "location": "uri",
+          "locationName": "username"
+        },
+        "ReplicationUser": {
+          "shape": "__boolean",
+          "locationName": "replicationUser"
+        }
+      },
+      "required": [
+        "Username",
+        "BrokerId"
+      ]
+    },
+    "UpdateUserResponse": {
+      "type": "structure",
+      "members": {
+      }
+    },
+    "User": {
+      "type": "structure",
+      "members": {
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
+        },
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
+        },
+        "Password": {
+          "shape": "__string",
+          "locationName": "password"
+        },
+        "Username": {
+          "shape": "__string",
+          "locationName": "username"
+        },
+        "ReplicationUser": {
+          "shape": "__boolean",
+          "locationName": "replicationUser"
+        }
+      },
+      "required": [
+        "Username",
+        "Password"
+      ]
+    },
+    "UserPendingChanges": {
+      "type": "structure",
+      "members": {
+        "ConsoleAccess": {
+          "shape": "__boolean",
+          "locationName": "consoleAccess"
+        },
+        "Groups": {
+          "shape": "__listOf__string",
+          "locationName": "groups"
+        },
+        "PendingChange": {
+          "shape": "ChangeType",
+          "locationName": "pendingChange"
+        }
+      },
+      "required": [
+        "PendingChange"
+      ]
+    },
+    "UserSummary": {
+      "type": "structure",
+      "members": {
+        "PendingChange": {
+          "shape": "ChangeType",
+          "locationName": "pendingChange"
+        },
+        "Username": {
+          "shape": "__string",
+          "locationName": "username"
+        }
+      },
+      "required": [
+        "Username"
+      ]
+    },
+    "WeeklyStartTime": {
+      "type": "structure",
+      "members": {
+        "DayOfWeek": {
+          "shape": "DayOfWeek",
+          "locationName": "dayOfWeek"
+        },
+        "TimeOfDay": {
+          "shape": "__string",
+          "locationName": "timeOfDay"
+        },
+        "TimeZone": {
+          "shape": "__string",
+          "locationName": "timeZone"
+        }
+      },
+      "required": [
+        "TimeOfDay",
+        "DayOfWeek"
+      ]
+    },
+    "__boolean": {
+      "type": "boolean"
+    },
+    "__double": {
+      "type": "double"
+    },
+    "__integer": {
+      "type": "integer"
+    },
+    "__integerMin5Max100": {
+      "type": "integer",
+      "min": 5,
+      "max": 100
+    },
+    "__listOfActionRequired": {
+      "type": "list",
+      "member": {
+        "shape": "ActionRequired"
+      }
+    },
+    "__listOfAvailabilityZone": {
+      "type": "list",
+      "member": {
+        "shape": "AvailabilityZone"
+      }
+    },
+    "__listOfBrokerEngineType": {
+      "type": "list",
+      "member": {
+        "shape": "BrokerEngineType"
+      }
+    },
+    "__listOfBrokerInstance": {
+      "type": "list",
+      "member": {
+        "shape": "BrokerInstance"
+      }
+    },
+    "__listOfBrokerInstanceOption": {
+      "type": "list",
+      "member": {
+        "shape": "BrokerInstanceOption"
+      }
+    },
+    "__listOfBrokerSummary": {
+      "type": "list",
+      "member": {
+        "shape": "BrokerSummary"
+      }
+    },
+    "__listOfConfiguration": {
+      "type": "list",
+      "member": {
+        "shape": "Configuration"
+      }
+    },
+    "__listOfConfigurationId": {
+      "type": "list",
+      "member": {
+        "shape": "ConfigurationId"
+      }
+    },
+    "__listOfConfigurationRevision": {
+      "type": "list",
+      "member": {
+        "shape": "ConfigurationRevision"
+      }
+    },
+    "__listOfDeploymentMode": {
+      "type": "list",
+      "member": {
+        "shape": "DeploymentMode"
+      }
+    },
+    "__listOfEngineVersion": {
+      "type": "list",
+      "member": {
+        "shape": "EngineVersion"
+      }
+    },
+    "__listOfSanitizationWarning": {
+      "type": "list",
+      "member": {
+        "shape": "SanitizationWarning"
+      }
+    },
+    "__listOfUser": {
+      "type": "list",
+      "member": {
+        "shape": "User"
+      }
+    },
+    "__listOfUserSummary": {
+      "type": "list",
+      "member": {
+        "shape": "UserSummary"
+      }
+    },
+    "__listOf__string": {
+      "type": "list",
+      "member": {
+        "shape": "__string"
+      }
+    },
+    "__long": {
+      "type": "long"
+    },
+    "__mapOf__string": {
+      "type": "map",
+      "key": {
+        "shape": "__string"
+      },
+      "value": {
+        "shape": "__string"
+      }
+    },
+    "__string": {
+      "type": "string"
+    },
+    "__timestampIso8601": {
+      "type": "timestamp",
+      "timestampFormat": "iso8601"
+    },
+    "__timestampUnix": {
+      "type": "timestamp",
+      "timestampFormat": "unixTimestamp"
     }
   }
 }

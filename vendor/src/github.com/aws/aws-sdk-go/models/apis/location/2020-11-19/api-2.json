@@ -3,8 +3,8 @@
   "metadata":{
     "apiVersion":"2020-11-19",
     "endpointPrefix":"geo",
-    "jsonVersion":"1.1",
     "protocol":"rest-json",
+    "protocols":["rest-json"],
     "serviceFullName":"Amazon Location Service",
     "serviceId":"Location",
     "signatureVersion":"v4",
@@ -30,7 +30,7 @@
         {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."}
+      "endpoint":{"hostPrefix":"cp.tracking."}
     },
     "BatchDeleteDevicePositionHistory":{
       "name":"BatchDeleteDevicePositionHistory",
@@ -158,6 +158,24 @@
       ],
       "endpoint":{"hostPrefix":"routes."}
     },
+    "CalculateRouteMatrix":{
+      "name":"CalculateRouteMatrix",
+      "http":{
+        "method":"POST",
+        "requestUri":"/routes/v0/calculators/{CalculatorName}/calculate/route-matrix",
+        "responseCode":200
+      },
+      "input":{"shape":"CalculateRouteMatrixRequest"},
+      "output":{"shape":"CalculateRouteMatrixResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"routes."}
+    },
     "CreateGeofenceCollection":{
       "name":"CreateGeofenceCollection",
       "http":{
@@ -172,9 +190,30 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"geofencing."},
+      "endpoint":{"hostPrefix":"cp.geofencing."},
+      "idempotent":true
+    },
+    "CreateKey":{
+      "name":"CreateKey",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata/v0/keys",
+        "responseCode":200
+      },
+      "input":{"shape":"CreateKeyRequest"},
+      "output":{"shape":"CreateKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ConflictException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"cp.metadata."},
       "idempotent":true
     },
     "CreateMap":{
@@ -191,9 +230,10 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"maps."},
+      "endpoint":{"hostPrefix":"cp.maps."},
       "idempotent":true
     },
     "CreatePlaceIndex":{
@@ -210,9 +250,10 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"places."},
+      "endpoint":{"hostPrefix":"cp.places."},
       "idempotent":true
     },
     "CreateRouteCalculator":{
@@ -229,9 +270,10 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"routes."},
+      "endpoint":{"hostPrefix":"cp.routes."},
       "idempotent":true
     },
     "CreateTracker":{
@@ -248,9 +290,10 @@
         {"shape":"ConflictException"},
         {"shape":"AccessDeniedException"},
         {"shape":"ValidationException"},
+        {"shape":"ServiceQuotaExceededException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."},
+      "endpoint":{"hostPrefix":"cp.tracking."},
       "idempotent":true
     },
     "DeleteGeofenceCollection":{
@@ -269,7 +312,26 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"geofencing."},
+      "endpoint":{"hostPrefix":"cp.geofencing."},
+      "idempotent":true
+    },
+    "DeleteKey":{
+      "name":"DeleteKey",
+      "http":{
+        "method":"DELETE",
+        "requestUri":"/metadata/v0/keys/{KeyName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DeleteKeyRequest"},
+      "output":{"shape":"DeleteKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"cp.metadata."},
       "idempotent":true
     },
     "DeleteMap":{
@@ -288,7 +350,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"maps."},
+      "endpoint":{"hostPrefix":"cp.maps."},
       "idempotent":true
     },
     "DeletePlaceIndex":{
@@ -307,7 +369,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"places."},
+      "endpoint":{"hostPrefix":"cp.places."},
       "idempotent":true
     },
     "DeleteRouteCalculator":{
@@ -326,7 +388,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"routes."},
+      "endpoint":{"hostPrefix":"cp.routes."},
       "idempotent":true
     },
     "DeleteTracker":{
@@ -345,7 +407,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."},
+      "endpoint":{"hostPrefix":"cp.tracking."},
       "idempotent":true
     },
     "DescribeGeofenceCollection":{
@@ -364,7 +426,25 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"geofencing."}
+      "endpoint":{"hostPrefix":"cp.geofencing."}
+    },
+    "DescribeKey":{
+      "name":"DescribeKey",
+      "http":{
+        "method":"GET",
+        "requestUri":"/metadata/v0/keys/{KeyName}",
+        "responseCode":200
+      },
+      "input":{"shape":"DescribeKeyRequest"},
+      "output":{"shape":"DescribeKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"cp.metadata."}
     },
     "DescribeMap":{
       "name":"DescribeMap",
@@ -382,7 +462,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"maps."}
+      "endpoint":{"hostPrefix":"cp.maps."}
     },
     "DescribePlaceIndex":{
       "name":"DescribePlaceIndex",
@@ -400,7 +480,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"places."}
+      "endpoint":{"hostPrefix":"cp.places."}
     },
     "DescribeRouteCalculator":{
       "name":"DescribeRouteCalculator",
@@ -418,7 +498,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"routes."}
+      "endpoint":{"hostPrefix":"cp.routes."}
     },
     "DescribeTracker":{
       "name":"DescribeTracker",
@@ -436,7 +516,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."}
+      "endpoint":{"hostPrefix":"cp.tracking."}
     },
     "DisassociateTrackerConsumer":{
       "name":"DisassociateTrackerConsumer",
@@ -454,7 +534,25 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."}
+      "endpoint":{"hostPrefix":"cp.tracking."}
+    },
+    "ForecastGeofenceEvents":{
+      "name":"ForecastGeofenceEvents",
+      "http":{
+        "method":"POST",
+        "requestUri":"/geofencing/v0/collections/{CollectionName}/forecast-geofence-events",
+        "responseCode":200
+      },
+      "input":{"shape":"ForecastGeofenceEventsRequest"},
+      "output":{"shape":"ForecastGeofenceEventsResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"geofencing."}
     },
     "GetDevicePosition":{
       "name":"GetDevicePosition",
@@ -582,6 +680,24 @@
       ],
       "endpoint":{"hostPrefix":"maps."}
     },
+    "GetPlace":{
+      "name":"GetPlace",
+      "http":{
+        "method":"GET",
+        "requestUri":"/places/v0/indexes/{IndexName}/places/{PlaceId}",
+        "responseCode":200
+      },
+      "input":{"shape":"GetPlaceRequest"},
+      "output":{"shape":"GetPlaceResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"places."}
+    },
     "ListDevicePositions":{
       "name":"ListDevicePositions",
       "http":{
@@ -614,7 +730,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"geofencing."}
+      "endpoint":{"hostPrefix":"cp.geofencing."}
     },
     "ListGeofences":{
       "name":"ListGeofences",
@@ -634,6 +750,23 @@
       ],
       "endpoint":{"hostPrefix":"geofencing."}
     },
+    "ListKeys":{
+      "name":"ListKeys",
+      "http":{
+        "method":"POST",
+        "requestUri":"/metadata/v0/list-keys",
+        "responseCode":200
+      },
+      "input":{"shape":"ListKeysRequest"},
+      "output":{"shape":"ListKeysResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"cp.metadata."}
+    },
     "ListMaps":{
       "name":"ListMaps",
       "http":{
@@ -649,7 +782,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"maps."}
+      "endpoint":{"hostPrefix":"cp.maps."}
     },
     "ListPlaceIndexes":{
       "name":"ListPlaceIndexes",
@@ -666,7 +799,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"places."}
+      "endpoint":{"hostPrefix":"cp.places."}
     },
     "ListRouteCalculators":{
       "name":"ListRouteCalculators",
@@ -683,7 +816,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"routes."}
+      "endpoint":{"hostPrefix":"cp.routes."}
     },
     "ListTagsForResource":{
       "name":"ListTagsForResource",
@@ -701,7 +834,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"metadata."}
+      "endpoint":{"hostPrefix":"cp.metadata."}
     },
     "ListTrackerConsumers":{
       "name":"ListTrackerConsumers",
@@ -719,7 +852,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."}
+      "endpoint":{"hostPrefix":"cp.tracking."}
     },
     "ListTrackers":{
       "name":"ListTrackers",
@@ -736,7 +869,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."}
+      "endpoint":{"hostPrefix":"cp.tracking."}
     },
     "PutGeofence":{
       "name":"PutGeofence",
@@ -766,6 +899,24 @@
       },
       "input":{"shape":"SearchPlaceIndexForPositionRequest"},
       "output":{"shape":"SearchPlaceIndexForPositionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"places."}
+    },
+    "SearchPlaceIndexForSuggestions":{
+      "name":"SearchPlaceIndexForSuggestions",
+      "http":{
+        "method":"POST",
+        "requestUri":"/places/v0/indexes/{IndexName}/search/suggestions",
+        "responseCode":200
+      },
+      "input":{"shape":"SearchPlaceIndexForSuggestionsRequest"},
+      "output":{"shape":"SearchPlaceIndexForSuggestionsResponse"},
       "errors":[
         {"shape":"InternalServerException"},
         {"shape":"ResourceNotFoundException"},
@@ -809,7 +960,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"metadata."}
+      "endpoint":{"hostPrefix":"cp.metadata."}
     },
     "UntagResource":{
       "name":"UntagResource",
@@ -827,7 +978,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"metadata."},
+      "endpoint":{"hostPrefix":"cp.metadata."},
       "idempotent":true
     },
     "UpdateGeofenceCollection":{
@@ -846,7 +997,26 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"geofencing."},
+      "endpoint":{"hostPrefix":"cp.geofencing."},
+      "idempotent":true
+    },
+    "UpdateKey":{
+      "name":"UpdateKey",
+      "http":{
+        "method":"PATCH",
+        "requestUri":"/metadata/v0/keys/{KeyName}",
+        "responseCode":200
+      },
+      "input":{"shape":"UpdateKeyRequest"},
+      "output":{"shape":"UpdateKeyResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"cp.metadata."},
       "idempotent":true
     },
     "UpdateMap":{
@@ -865,7 +1035,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"maps."},
+      "endpoint":{"hostPrefix":"cp.maps."},
       "idempotent":true
     },
     "UpdatePlaceIndex":{
@@ -884,7 +1054,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"places."},
+      "endpoint":{"hostPrefix":"cp.places."},
       "idempotent":true
     },
     "UpdateRouteCalculator":{
@@ -903,7 +1073,7 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"routes."},
+      "endpoint":{"hostPrefix":"cp.routes."},
       "idempotent":true
     },
     "UpdateTracker":{
@@ -922,8 +1092,26 @@
         {"shape":"ValidationException"},
         {"shape":"ThrottlingException"}
       ],
-      "endpoint":{"hostPrefix":"tracking."},
+      "endpoint":{"hostPrefix":"cp.tracking."},
       "idempotent":true
+    },
+    "VerifyDevicePosition":{
+      "name":"VerifyDevicePosition",
+      "http":{
+        "method":"POST",
+        "requestUri":"/tracking/v0/trackers/{TrackerName}/positions/verify",
+        "responseCode":200
+      },
+      "input":{"shape":"VerifyDevicePositionRequest"},
+      "output":{"shape":"VerifyDevicePositionResponse"},
+      "errors":[
+        {"shape":"InternalServerException"},
+        {"shape":"ResourceNotFoundException"},
+        {"shape":"AccessDeniedException"},
+        {"shape":"ValidationException"},
+        {"shape":"ThrottlingException"}
+      ],
+      "endpoint":{"hostPrefix":"tracking."}
     }
   },
   "shapes":{
@@ -942,11 +1130,59 @@
       },
       "exception":true
     },
+    "ApiKey":{
+      "type":"string",
+      "max":1000,
+      "min":0,
+      "sensitive":true
+    },
+    "ApiKeyAction":{
+      "type":"string",
+      "max":200,
+      "min":5,
+      "pattern":"(geo|geo-routes|geo-places|geo-maps):\\w*\\*?"
+    },
+    "ApiKeyFilter":{
+      "type":"structure",
+      "members":{
+        "KeyStatus":{"shape":"Status"}
+      }
+    },
+    "ApiKeyRestrictions":{
+      "type":"structure",
+      "required":[
+        "AllowActions",
+        "AllowResources"
+      ],
+      "members":{
+        "AllowActions":{"shape":"ApiKeyRestrictionsAllowActionsList"},
+        "AllowResources":{"shape":"ApiKeyRestrictionsAllowResourcesList"},
+        "AllowReferers":{"shape":"ApiKeyRestrictionsAllowReferersList"}
+      }
+    },
+    "ApiKeyRestrictionsAllowActionsList":{
+      "type":"list",
+      "member":{"shape":"ApiKeyAction"},
+      "max":7,
+      "min":1
+    },
+    "ApiKeyRestrictionsAllowReferersList":{
+      "type":"list",
+      "member":{"shape":"RefererPattern"},
+      "max":5,
+      "min":1
+    },
+    "ApiKeyRestrictionsAllowResourcesList":{
+      "type":"list",
+      "member":{"shape":"GeoArnV2"},
+      "max":5,
+      "min":1
+    },
     "Arn":{
       "type":"string",
       "max":1600,
       "min":0,
-      "pattern":"^arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:([^/].*)?$"
+      "pattern":"arn(:[a-z0-9]+([.-][a-z0-9]+)*){2}(:([a-z0-9]+([.-][a-z0-9]+)*)?){2}:([^/].*)?"
     },
     "ArnList":{
       "type":"list",
@@ -955,22 +1191,28 @@
     "AssociateTrackerConsumerRequest":{
       "type":"structure",
       "required":[
-        "ConsumerArn",
-        "TrackerName"
+        "TrackerName",
+        "ConsumerArn"
       ],
       "members":{
-        "ConsumerArn":{"shape":"Arn"},
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"TrackerName"
-        }
+        },
+        "ConsumerArn":{"shape":"Arn"}
       }
     },
     "AssociateTrackerConsumerResponse":{
       "type":"structure",
       "members":{
       }
+    },
+    "Base64EncodedGeobuf":{
+      "type":"blob",
+      "max":600000,
+      "min":0,
+      "sensitive":true
     },
     "BatchDeleteDevicePositionHistoryError":{
       "type":"structure",
@@ -990,16 +1232,16 @@
     "BatchDeleteDevicePositionHistoryRequest":{
       "type":"structure",
       "required":[
-        "DeviceIds",
-        "TrackerName"
+        "TrackerName",
+        "DeviceIds"
       ],
       "members":{
-        "DeviceIds":{"shape":"BatchDeleteDevicePositionHistoryRequestDeviceIdsList"},
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"TrackerName"
-        }
+        },
+        "DeviceIds":{"shape":"BatchDeleteDevicePositionHistoryRequestDeviceIdsList"}
       }
     },
     "BatchDeleteDevicePositionHistoryRequestDeviceIdsList":{
@@ -1018,12 +1260,12 @@
     "BatchDeleteGeofenceError":{
       "type":"structure",
       "required":[
-        "Error",
-        "GeofenceId"
+        "GeofenceId",
+        "Error"
       ],
       "members":{
-        "Error":{"shape":"BatchItemError"},
-        "GeofenceId":{"shape":"Id"}
+        "GeofenceId":{"shape":"Id"},
+        "Error":{"shape":"BatchItemError"}
       }
     },
     "BatchDeleteGeofenceErrorList":{
@@ -1062,13 +1304,13 @@
       "type":"structure",
       "required":[
         "DeviceId",
-        "Error",
-        "SampleTime"
+        "SampleTime",
+        "Error"
       ],
       "members":{
         "DeviceId":{"shape":"Id"},
-        "Error":{"shape":"BatchItemError"},
-        "SampleTime":{"shape":"Timestamp"}
+        "SampleTime":{"shape":"Timestamp"},
+        "Error":{"shape":"BatchItemError"}
       }
     },
     "BatchEvaluateGeofencesErrorList":{
@@ -1121,16 +1363,16 @@
     "BatchGetDevicePositionRequest":{
       "type":"structure",
       "required":[
-        "DeviceIds",
-        "TrackerName"
+        "TrackerName",
+        "DeviceIds"
       ],
       "members":{
-        "DeviceIds":{"shape":"BatchGetDevicePositionRequestDeviceIdsList"},
         "TrackerName":{
           "shape":"BatchGetDevicePositionRequestTrackerNameString",
           "location":"uri",
           "locationName":"TrackerName"
-        }
+        },
+        "DeviceIds":{"shape":"BatchGetDevicePositionRequestDeviceIdsList"}
       }
     },
     "BatchGetDevicePositionRequestDeviceIdsList":{
@@ -1142,17 +1384,17 @@
     "BatchGetDevicePositionRequestTrackerNameString":{
       "type":"string",
       "min":1,
-      "pattern":"^[-._\\w]+$"
+      "pattern":"[-._\\w]+"
     },
     "BatchGetDevicePositionResponse":{
       "type":"structure",
       "required":[
-        "DevicePositions",
-        "Errors"
+        "Errors",
+        "DevicePositions"
       ],
       "members":{
-        "DevicePositions":{"shape":"DevicePositionList"},
-        "Errors":{"shape":"BatchGetDevicePositionErrorList"}
+        "Errors":{"shape":"BatchGetDevicePositionErrorList"},
+        "DevicePositions":{"shape":"DevicePositionList"}
       }
     },
     "BatchItemError":{
@@ -1176,12 +1418,12 @@
     "BatchPutGeofenceError":{
       "type":"structure",
       "required":[
-        "Error",
-        "GeofenceId"
+        "GeofenceId",
+        "Error"
       ],
       "members":{
-        "Error":{"shape":"BatchItemError"},
-        "GeofenceId":{"shape":"Id"}
+        "GeofenceId":{"shape":"Id"},
+        "Error":{"shape":"BatchItemError"}
       }
     },
     "BatchPutGeofenceErrorList":{
@@ -1217,30 +1459,31 @@
       ],
       "members":{
         "GeofenceId":{"shape":"Id"},
-        "Geometry":{"shape":"GeofenceGeometry"}
+        "Geometry":{"shape":"GeofenceGeometry"},
+        "GeofenceProperties":{"shape":"PropertyMap"}
       }
     },
     "BatchPutGeofenceResponse":{
       "type":"structure",
       "required":[
-        "Errors",
-        "Successes"
+        "Successes",
+        "Errors"
       ],
       "members":{
-        "Errors":{"shape":"BatchPutGeofenceErrorList"},
-        "Successes":{"shape":"BatchPutGeofenceSuccessList"}
+        "Successes":{"shape":"BatchPutGeofenceSuccessList"},
+        "Errors":{"shape":"BatchPutGeofenceErrorList"}
       }
     },
     "BatchPutGeofenceSuccess":{
       "type":"structure",
       "required":[
-        "CreateTime",
         "GeofenceId",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
         "GeofenceId":{"shape":"Id"},
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -1252,13 +1495,13 @@
       "type":"structure",
       "required":[
         "DeviceId",
-        "Error",
-        "SampleTime"
+        "SampleTime",
+        "Error"
       ],
       "members":{
         "DeviceId":{"shape":"Id"},
-        "Error":{"shape":"BatchItemError"},
-        "SampleTime":{"shape":"Timestamp"}
+        "SampleTime":{"shape":"Timestamp"},
+        "Error":{"shape":"BatchItemError"}
       }
     },
     "BatchUpdateDevicePositionErrorList":{
@@ -1312,6 +1555,98 @@
         "AvoidTolls":{"shape":"Boolean"}
       }
     },
+    "CalculateRouteMatrixRequest":{
+      "type":"structure",
+      "required":[
+        "CalculatorName",
+        "DeparturePositions",
+        "DestinationPositions"
+      ],
+      "members":{
+        "CalculatorName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"CalculatorName"
+        },
+        "DeparturePositions":{"shape":"CalculateRouteMatrixRequestDeparturePositionsList"},
+        "DestinationPositions":{"shape":"CalculateRouteMatrixRequestDestinationPositionsList"},
+        "TravelMode":{"shape":"TravelMode"},
+        "DepartureTime":{"shape":"Timestamp"},
+        "DepartNow":{"shape":"Boolean"},
+        "DistanceUnit":{"shape":"DistanceUnit"},
+        "CarModeOptions":{"shape":"CalculateRouteCarModeOptions"},
+        "TruckModeOptions":{"shape":"CalculateRouteTruckModeOptions"},
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        }
+      }
+    },
+    "CalculateRouteMatrixRequestDeparturePositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixRequestDestinationPositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixResponse":{
+      "type":"structure",
+      "required":[
+        "RouteMatrix",
+        "Summary"
+      ],
+      "members":{
+        "RouteMatrix":{"shape":"RouteMatrix"},
+        "SnappedDeparturePositions":{"shape":"CalculateRouteMatrixResponseSnappedDeparturePositionsList"},
+        "SnappedDestinationPositions":{"shape":"CalculateRouteMatrixResponseSnappedDestinationPositionsList"},
+        "Summary":{"shape":"CalculateRouteMatrixSummary"}
+      }
+    },
+    "CalculateRouteMatrixResponseSnappedDeparturePositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixResponseSnappedDestinationPositionsList":{
+      "type":"list",
+      "member":{"shape":"Position"},
+      "max":350,
+      "min":1
+    },
+    "CalculateRouteMatrixSummary":{
+      "type":"structure",
+      "required":[
+        "DataSource",
+        "RouteCount",
+        "ErrorCount",
+        "DistanceUnit"
+      ],
+      "members":{
+        "DataSource":{"shape":"String"},
+        "RouteCount":{"shape":"CalculateRouteMatrixSummaryRouteCountInteger"},
+        "ErrorCount":{"shape":"CalculateRouteMatrixSummaryErrorCountInteger"},
+        "DistanceUnit":{"shape":"DistanceUnit"}
+      }
+    },
+    "CalculateRouteMatrixSummaryErrorCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":160000,
+      "min":1
+    },
+    "CalculateRouteMatrixSummaryRouteCountInteger":{
+      "type":"integer",
+      "box":true,
+      "max":160000,
+      "min":1
+    },
     "CalculateRouteRequest":{
       "type":"structure",
       "required":[
@@ -1325,16 +1660,23 @@
           "location":"uri",
           "locationName":"CalculatorName"
         },
-        "CarModeOptions":{"shape":"CalculateRouteCarModeOptions"},
-        "DepartNow":{"shape":"Boolean"},
         "DeparturePosition":{"shape":"Position"},
-        "DepartureTime":{"shape":"Timestamp"},
         "DestinationPosition":{"shape":"Position"},
+        "WaypointPositions":{"shape":"CalculateRouteRequestWaypointPositionsList"},
+        "TravelMode":{"shape":"TravelMode"},
+        "DepartureTime":{"shape":"Timestamp"},
+        "DepartNow":{"shape":"Boolean"},
         "DistanceUnit":{"shape":"DistanceUnit"},
         "IncludeLegGeometry":{"shape":"Boolean"},
-        "TravelMode":{"shape":"TravelMode"},
+        "CarModeOptions":{"shape":"CalculateRouteCarModeOptions"},
         "TruckModeOptions":{"shape":"CalculateRouteTruckModeOptions"},
-        "WaypointPositions":{"shape":"CalculateRouteRequestWaypointPositionsList"}
+        "ArrivalTime":{"shape":"Timestamp"},
+        "OptimizeFor":{"shape":"OptimizationMode"},
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        }
       }
     },
     "CalculateRouteRequestWaypointPositionsList":{
@@ -1357,18 +1699,18 @@
     "CalculateRouteSummary":{
       "type":"structure",
       "required":[
+        "RouteBBox",
         "DataSource",
         "Distance",
-        "DistanceUnit",
         "DurationSeconds",
-        "RouteBBox"
+        "DistanceUnit"
       ],
       "members":{
+        "RouteBBox":{"shape":"BoundingBox"},
         "DataSource":{"shape":"String"},
         "Distance":{"shape":"CalculateRouteSummaryDistanceDouble"},
-        "DistanceUnit":{"shape":"DistanceUnit"},
         "DurationSeconds":{"shape":"CalculateRouteSummaryDurationSecondsDouble"},
-        "RouteBBox":{"shape":"BoundingBox"}
+        "DistanceUnit":{"shape":"DistanceUnit"}
       }
     },
     "CalculateRouteSummaryDistanceDouble":{
@@ -1390,6 +1732,31 @@
         "Weight":{"shape":"TruckWeight"}
       }
     },
+    "CellSignals":{
+      "type":"structure",
+      "required":["LteCellDetails"],
+      "members":{
+        "LteCellDetails":{"shape":"CellSignalsLteCellDetailsList"}
+      }
+    },
+    "CellSignalsLteCellDetailsList":{
+      "type":"list",
+      "member":{"shape":"LteCellDetails"},
+      "max":16,
+      "min":1
+    },
+    "Circle":{
+      "type":"structure",
+      "required":[
+        "Center",
+        "Radius"
+      ],
+      "members":{
+        "Center":{"shape":"Position"},
+        "Radius":{"shape":"Double"}
+      },
+      "sensitive":true
+    },
     "ConflictException":{
       "type":"structure",
       "required":["Message"],
@@ -1405,156 +1772,228 @@
       },
       "exception":true
     },
-    "CountryCode":{
+    "CountryCode3":{
       "type":"string",
-      "pattern":"^[A-Z]{3}$"
+      "max":3,
+      "min":3,
+      "pattern":"[A-Z]{3}"
+    },
+    "CountryCode3OrEmpty":{
+      "type":"string",
+      "max":3,
+      "min":0,
+      "pattern":"[A-Z]{3}$|^"
     },
     "CountryCodeList":{
       "type":"list",
-      "member":{"shape":"CountryCode"},
+      "member":{"shape":"CountryCode3"},
       "max":100,
       "min":1
     },
     "CreateGeofenceCollectionRequest":{
       "type":"structure",
-      "required":[
-        "CollectionName",
-        "PricingPlan"
-      ],
+      "required":["CollectionName"],
       "members":{
         "CollectionName":{"shape":"ResourceName"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        },
         "Description":{"shape":"ResourceDescription"},
-        "KmsKeyId":{"shape":"KmsKeyId"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
-        "Tags":{"shape":"TagMap"}
+        "Tags":{"shape":"TagMap"},
+        "KmsKeyId":{"shape":"KmsKeyId"}
       }
     },
     "CreateGeofenceCollectionResponse":{
       "type":"structure",
       "required":[
-        "CollectionArn",
         "CollectionName",
+        "CollectionArn",
         "CreateTime"
       ],
       "members":{
-        "CollectionArn":{"shape":"Arn"},
         "CollectionName":{"shape":"ResourceName"},
+        "CollectionArn":{"shape":"Arn"},
+        "CreateTime":{"shape":"Timestamp"}
+      }
+    },
+    "CreateKeyRequest":{
+      "type":"structure",
+      "required":[
+        "KeyName",
+        "Restrictions"
+      ],
+      "members":{
+        "KeyName":{"shape":"ResourceName"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"},
+        "Description":{"shape":"ResourceDescription"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "NoExpiry":{"shape":"Boolean"},
+        "Tags":{"shape":"TagMap"}
+      }
+    },
+    "CreateKeyResponse":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "KeyArn",
+        "KeyName",
+        "CreateTime"
+      ],
+      "members":{
+        "Key":{"shape":"ApiKey"},
+        "KeyArn":{"shape":"Arn"},
+        "KeyName":{"shape":"ResourceName"},
         "CreateTime":{"shape":"Timestamp"}
       }
     },
     "CreateMapRequest":{
       "type":"structure",
       "required":[
-        "Configuration",
         "MapName",
-        "PricingPlan"
+        "Configuration"
       ],
       "members":{
-        "Configuration":{"shape":"MapConfiguration"},
-        "Description":{"shape":"ResourceDescription"},
         "MapName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "Configuration":{"shape":"MapConfiguration"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"}
       }
     },
     "CreateMapResponse":{
       "type":"structure",
       "required":[
-        "CreateTime",
+        "MapName",
         "MapArn",
-        "MapName"
+        "CreateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
-        "MapArn":{"shape":"Arn"},
-        "MapName":{"shape":"ResourceName"}
+        "MapName":{"shape":"ResourceName"},
+        "MapArn":{"shape":"GeoArn"},
+        "CreateTime":{"shape":"Timestamp"}
       }
     },
     "CreatePlaceIndexRequest":{
       "type":"structure",
       "required":[
-        "DataSource",
         "IndexName",
-        "PricingPlan"
+        "DataSource"
       ],
       "members":{
-        "DataSource":{"shape":"String"},
-        "DataSourceConfiguration":{"shape":"DataSourceConfiguration"},
-        "Description":{"shape":"ResourceDescription"},
         "IndexName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "DataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "Description":{"shape":"ResourceDescription"},
+        "DataSourceConfiguration":{"shape":"DataSourceConfiguration"},
         "Tags":{"shape":"TagMap"}
       }
     },
     "CreatePlaceIndexResponse":{
       "type":"structure",
       "required":[
-        "CreateTime",
+        "IndexName",
         "IndexArn",
-        "IndexName"
+        "CreateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
-        "IndexArn":{"shape":"Arn"},
-        "IndexName":{"shape":"ResourceName"}
+        "IndexName":{"shape":"ResourceName"},
+        "IndexArn":{"shape":"GeoArn"},
+        "CreateTime":{"shape":"Timestamp"}
       }
     },
     "CreateRouteCalculatorRequest":{
       "type":"structure",
       "required":[
         "CalculatorName",
-        "DataSource",
-        "PricingPlan"
+        "DataSource"
       ],
       "members":{
         "CalculatorName":{"shape":"ResourceName"},
         "DataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
         "Tags":{"shape":"TagMap"}
       }
     },
     "CreateRouteCalculatorResponse":{
       "type":"structure",
       "required":[
-        "CalculatorArn",
         "CalculatorName",
+        "CalculatorArn",
         "CreateTime"
       ],
       "members":{
-        "CalculatorArn":{"shape":"Arn"},
         "CalculatorName":{"shape":"ResourceName"},
+        "CalculatorArn":{"shape":"GeoArn"},
         "CreateTime":{"shape":"Timestamp"}
       }
     },
     "CreateTrackerRequest":{
       "type":"structure",
-      "required":[
-        "PricingPlan",
-        "TrackerName"
-      ],
+      "required":["TrackerName"],
       "members":{
-        "Description":{"shape":"ResourceDescription"},
+        "TrackerName":{"shape":"ResourceName"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        },
+        "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"},
-        "TrackerName":{"shape":"ResourceName"}
+        "PositionFiltering":{"shape":"PositionFiltering"},
+        "EventBridgeEnabled":{"shape":"Boolean"},
+        "KmsKeyEnableGeospatialQueries":{"shape":"Boolean"}
       }
     },
     "CreateTrackerResponse":{
       "type":"structure",
       "required":[
-        "CreateTime",
+        "TrackerName",
         "TrackerArn",
-        "TrackerName"
+        "CreateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
+        "TrackerName":{"shape":"ResourceName"},
         "TrackerArn":{"shape":"Arn"},
-        "TrackerName":{"shape":"ResourceName"}
+        "CreateTime":{"shape":"Timestamp"}
       }
+    },
+    "CustomLayer":{
+      "type":"string",
+      "max":100,
+      "min":1,
+      "pattern":"[-._\\w]+"
+    },
+    "CustomLayerList":{
+      "type":"list",
+      "member":{"shape":"CustomLayer"},
+      "max":10,
+      "min":0
     },
     "DataSourceConfiguration":{
       "type":"structure",
@@ -1574,6 +2013,27 @@
       }
     },
     "DeleteGeofenceCollectionResponse":{
+      "type":"structure",
+      "members":{
+      }
+    },
+    "DeleteKeyRequest":{
+      "type":"structure",
+      "required":["KeyName"],
+      "members":{
+        "KeyName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"KeyName"
+        },
+        "ForceDelete":{
+          "shape":"Boolean",
+          "location":"querystring",
+          "locationName":"forceDelete"
+        }
+      }
+    },
+    "DeleteKeyResponse":{
       "type":"structure",
       "members":{
       }
@@ -1656,23 +2116,70 @@
     "DescribeGeofenceCollectionResponse":{
       "type":"structure",
       "required":[
-        "CollectionArn",
         "CollectionName",
-        "CreateTime",
+        "CollectionArn",
         "Description",
-        "PricingPlan",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CollectionArn":{"shape":"Arn"},
         "CollectionName":{"shape":"ResourceName"},
-        "CreateTime":{"shape":"Timestamp"},
+        "CollectionArn":{"shape":"Arn"},
         "Description":{"shape":"ResourceDescription"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
         "KmsKeyId":{"shape":"KmsKeyId"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
         "Tags":{"shape":"TagMap"},
-        "UpdateTime":{"shape":"Timestamp"}
+        "CreateTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "GeofenceCount":{"shape":"DescribeGeofenceCollectionResponseGeofenceCountInteger"}
+      }
+    },
+    "DescribeGeofenceCollectionResponseGeofenceCountInteger":{
+      "type":"integer",
+      "box":true,
+      "min":0
+    },
+    "DescribeKeyRequest":{
+      "type":"structure",
+      "required":["KeyName"],
+      "members":{
+        "KeyName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"KeyName"
+        }
+      }
+    },
+    "DescribeKeyResponse":{
+      "type":"structure",
+      "required":[
+        "Key",
+        "KeyArn",
+        "KeyName",
+        "Restrictions",
+        "CreateTime",
+        "ExpireTime",
+        "UpdateTime"
+      ],
+      "members":{
+        "Key":{"shape":"ApiKey"},
+        "KeyArn":{"shape":"Arn"},
+        "KeyName":{"shape":"ResourceName"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"},
+        "CreateTime":{"shape":"Timestamp"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "Description":{"shape":"ResourceDescription"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "DescribeMapRequest":{
@@ -1689,24 +2196,27 @@
     "DescribeMapResponse":{
       "type":"structure",
       "required":[
-        "Configuration",
-        "CreateTime",
-        "DataSource",
-        "Description",
-        "MapArn",
         "MapName",
-        "PricingPlan",
+        "MapArn",
+        "DataSource",
+        "Configuration",
+        "Description",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "Configuration":{"shape":"MapConfiguration"},
-        "CreateTime":{"shape":"Timestamp"},
-        "DataSource":{"shape":"String"},
-        "Description":{"shape":"ResourceDescription"},
-        "MapArn":{"shape":"Arn"},
         "MapName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "MapArn":{"shape":"GeoArn"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "DataSource":{"shape":"String"},
+        "Configuration":{"shape":"MapConfiguration"},
+        "Description":{"shape":"ResourceDescription"},
         "Tags":{"shape":"TagMap"},
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -1724,25 +2234,28 @@
     "DescribePlaceIndexResponse":{
       "type":"structure",
       "required":[
-        "CreateTime",
-        "DataSource",
-        "DataSourceConfiguration",
-        "Description",
-        "IndexArn",
         "IndexName",
-        "PricingPlan",
-        "UpdateTime"
+        "IndexArn",
+        "Description",
+        "CreateTime",
+        "UpdateTime",
+        "DataSource",
+        "DataSourceConfiguration"
       ],
       "members":{
+        "IndexName":{"shape":"ResourceName"},
+        "IndexArn":{"shape":"GeoArn"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "Description":{"shape":"ResourceDescription"},
         "CreateTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
         "DataSource":{"shape":"String"},
         "DataSourceConfiguration":{"shape":"DataSourceConfiguration"},
-        "Description":{"shape":"ResourceDescription"},
-        "IndexArn":{"shape":"Arn"},
-        "IndexName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "Tags":{"shape":"TagMap"},
-        "UpdateTime":{"shape":"Timestamp"}
+        "Tags":{"shape":"TagMap"}
       }
     },
     "DescribeRouteCalculatorRequest":{
@@ -1759,23 +2272,26 @@
     "DescribeRouteCalculatorResponse":{
       "type":"structure",
       "required":[
-        "CalculatorArn",
         "CalculatorName",
-        "CreateTime",
-        "DataSource",
+        "CalculatorArn",
         "Description",
-        "PricingPlan",
-        "UpdateTime"
+        "CreateTime",
+        "UpdateTime",
+        "DataSource"
       ],
       "members":{
-        "CalculatorArn":{"shape":"Arn"},
         "CalculatorName":{"shape":"ResourceName"},
-        "CreateTime":{"shape":"Timestamp"},
-        "DataSource":{"shape":"String"},
+        "CalculatorArn":{"shape":"GeoArn"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "Tags":{"shape":"TagMap"},
-        "UpdateTime":{"shape":"Timestamp"}
+        "CreateTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "DataSource":{"shape":"String"},
+        "Tags":{"shape":"TagMap"}
       }
     },
     "DescribeTrackerRequest":{
@@ -1792,37 +2308,49 @@
     "DescribeTrackerResponse":{
       "type":"structure",
       "required":[
-        "CreateTime",
-        "Description",
-        "PricingPlan",
-        "TrackerArn",
         "TrackerName",
+        "TrackerArn",
+        "Description",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
-        "Description":{"shape":"ResourceDescription"},
-        "KmsKeyId":{"shape":"KmsKeyId"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
-        "Tags":{"shape":"TagMap"},
-        "TrackerArn":{"shape":"Arn"},
         "TrackerName":{"shape":"ResourceName"},
-        "UpdateTime":{"shape":"Timestamp"}
+        "TrackerArn":{"shape":"Arn"},
+        "Description":{"shape":"ResourceDescription"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
+        "Tags":{"shape":"TagMap"},
+        "CreateTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "KmsKeyId":{"shape":"KmsKeyId"},
+        "PositionFiltering":{"shape":"PositionFiltering"},
+        "EventBridgeEnabled":{"shape":"Boolean"},
+        "KmsKeyEnableGeospatialQueries":{"shape":"Boolean"}
       }
     },
     "DevicePosition":{
       "type":"structure",
       "required":[
-        "Position",
+        "SampleTime",
         "ReceivedTime",
-        "SampleTime"
+        "Position"
       ],
       "members":{
         "DeviceId":{"shape":"Id"},
-        "Position":{"shape":"Position"},
+        "SampleTime":{"shape":"Timestamp"},
         "ReceivedTime":{"shape":"Timestamp"},
-        "SampleTime":{"shape":"Timestamp"}
+        "Position":{"shape":"Position"},
+        "Accuracy":{"shape":"PositionalAccuracy"},
+        "PositionProperties":{"shape":"PropertyMap"}
       }
     },
     "DevicePositionList":{
@@ -1833,14 +2361,37 @@
       "type":"structure",
       "required":[
         "DeviceId",
-        "Position",
-        "SampleTime"
+        "SampleTime",
+        "Position"
       ],
       "members":{
         "DeviceId":{"shape":"Id"},
+        "SampleTime":{"shape":"Timestamp"},
         "Position":{"shape":"Position"},
-        "SampleTime":{"shape":"Timestamp"}
+        "Accuracy":{"shape":"PositionalAccuracy"},
+        "PositionProperties":{"shape":"PropertyMap"}
       }
+    },
+    "DeviceState":{
+      "type":"structure",
+      "required":[
+        "DeviceId",
+        "SampleTime",
+        "Position"
+      ],
+      "members":{
+        "DeviceId":{"shape":"Id"},
+        "SampleTime":{"shape":"Timestamp"},
+        "Position":{"shape":"Position"},
+        "Accuracy":{"shape":"PositionalAccuracy"},
+        "Ipv4Address":{"shape":"DeviceStateIpv4AddressString"},
+        "WiFiAccessPoints":{"shape":"WiFiAccessPointList"},
+        "CellSignals":{"shape":"CellSignals"}
+      }
+    },
+    "DeviceStateIpv4AddressString":{
+      "type":"string",
+      "pattern":"(?:(?:25[0-5]|(?:2[0-4]|1\\d|[0-9]|)\\d)\\.?\\b){4}"
     },
     "DimensionUnit":{
       "type":"string",
@@ -1852,19 +2403,19 @@
     "DisassociateTrackerConsumerRequest":{
       "type":"structure",
       "required":[
-        "ConsumerArn",
-        "TrackerName"
+        "TrackerName",
+        "ConsumerArn"
       ],
       "members":{
-        "ConsumerArn":{
-          "shape":"Arn",
-          "location":"uri",
-          "locationName":"ConsumerArn"
-        },
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"TrackerName"
+        },
+        "ConsumerArn":{
+          "shape":"Arn",
+          "location":"uri",
+          "locationName":"ConsumerArn"
         }
       }
     },
@@ -1884,33 +2435,159 @@
       "type":"double",
       "box":true
     },
+    "Earfcn":{
+      "type":"integer",
+      "max":262143,
+      "min":0
+    },
+    "EutranCellId":{
+      "type":"integer",
+      "max":268435455,
+      "min":0
+    },
+    "FilterPlaceCategoryList":{
+      "type":"list",
+      "member":{"shape":"PlaceCategory"},
+      "max":5,
+      "min":1
+    },
+    "ForecastGeofenceEventsDeviceState":{
+      "type":"structure",
+      "required":["Position"],
+      "members":{
+        "Position":{"shape":"Position"},
+        "Speed":{"shape":"ForecastGeofenceEventsDeviceStateSpeedDouble"}
+      }
+    },
+    "ForecastGeofenceEventsDeviceStateSpeedDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "ForecastGeofenceEventsRequest":{
+      "type":"structure",
+      "required":[
+        "CollectionName",
+        "DeviceState"
+      ],
+      "members":{
+        "CollectionName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"CollectionName"
+        },
+        "DeviceState":{"shape":"ForecastGeofenceEventsDeviceState"},
+        "TimeHorizonMinutes":{"shape":"ForecastGeofenceEventsRequestTimeHorizonMinutesDouble"},
+        "DistanceUnit":{"shape":"DistanceUnit"},
+        "SpeedUnit":{"shape":"SpeedUnit"},
+        "NextToken":{"shape":"LargeToken"},
+        "MaxResults":{"shape":"ForecastGeofenceEventsRequestMaxResultsInteger"}
+      }
+    },
+    "ForecastGeofenceEventsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":20,
+      "min":1
+    },
+    "ForecastGeofenceEventsRequestTimeHorizonMinutesDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "ForecastGeofenceEventsResponse":{
+      "type":"structure",
+      "required":[
+        "ForecastedEvents",
+        "DistanceUnit",
+        "SpeedUnit"
+      ],
+      "members":{
+        "ForecastedEvents":{"shape":"ForecastedEventsList"},
+        "NextToken":{"shape":"LargeToken"},
+        "DistanceUnit":{"shape":"DistanceUnit"},
+        "SpeedUnit":{"shape":"SpeedUnit"}
+      }
+    },
+    "ForecastedEvent":{
+      "type":"structure",
+      "required":[
+        "EventId",
+        "GeofenceId",
+        "IsDeviceInGeofence",
+        "NearestDistance",
+        "EventType"
+      ],
+      "members":{
+        "EventId":{"shape":"Uuid"},
+        "GeofenceId":{"shape":"Id"},
+        "IsDeviceInGeofence":{"shape":"Boolean"},
+        "NearestDistance":{"shape":"NearestDistance"},
+        "EventType":{"shape":"ForecastedGeofenceEventType"},
+        "ForecastedBreachTime":{"shape":"Timestamp"},
+        "GeofenceProperties":{"shape":"PropertyMap"}
+      }
+    },
+    "ForecastedEventsList":{
+      "type":"list",
+      "member":{"shape":"ForecastedEvent"}
+    },
+    "ForecastedGeofenceEventType":{
+      "type":"string",
+      "enum":[
+        "ENTER",
+        "EXIT",
+        "IDLE"
+      ]
+    },
+    "GeoArn":{
+      "type":"string",
+      "max":1600,
+      "min":0,
+      "pattern":"arn(:[a-z0-9]+([.-][a-z0-9]+)*):geo(:([a-z0-9]+([.-][a-z0-9]+)*))(:[0-9]+):((\\*)|([-a-z]+[/][*-._\\w]+))"
+    },
+    "GeoArnV2":{
+      "type":"string",
+      "max":1600,
+      "min":0,
+      "pattern":".*(^arn(:[a-z0-9]+([.-][a-z0-9]+)*):geo(:([a-z0-9]+([.-][a-z0-9]+)*))(:[0-9]+):((\\*)|([-a-z]+[/][*-._\\w]+))$)|(^arn(:[a-z0-9]+([.-][a-z0-9]+)*):(geo-routes|geo-places|geo-maps)(:((\\*)|([a-z0-9]+([.-][a-z0-9]+)*)))::((provider[\\/][*-._\\w]+))$).*"
+    },
     "GeofenceGeometry":{
       "type":"structure",
       "members":{
-        "Polygon":{"shape":"LinearRings"}
+        "Polygon":{"shape":"LinearRings"},
+        "Circle":{"shape":"Circle"},
+        "Geobuf":{"shape":"Base64EncodedGeobuf"}
       }
     },
     "GetDevicePositionHistoryRequest":{
       "type":"structure",
       "required":[
-        "DeviceId",
-        "TrackerName"
+        "TrackerName",
+        "DeviceId"
       ],
       "members":{
+        "TrackerName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"TrackerName"
+        },
         "DeviceId":{
           "shape":"Id",
           "location":"uri",
           "locationName":"DeviceId"
         },
-        "EndTimeExclusive":{"shape":"Timestamp"},
         "NextToken":{"shape":"Token"},
         "StartTimeInclusive":{"shape":"Timestamp"},
-        "TrackerName":{
-          "shape":"ResourceName",
-          "location":"uri",
-          "locationName":"TrackerName"
-        }
+        "EndTimeExclusive":{"shape":"Timestamp"},
+        "MaxResults":{"shape":"GetDevicePositionHistoryRequestMaxResultsInteger"}
       }
+    },
+    "GetDevicePositionHistoryRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
     },
     "GetDevicePositionHistoryResponse":{
       "type":"structure",
@@ -1923,34 +2600,36 @@
     "GetDevicePositionRequest":{
       "type":"structure",
       "required":[
-        "DeviceId",
-        "TrackerName"
+        "TrackerName",
+        "DeviceId"
       ],
       "members":{
-        "DeviceId":{
-          "shape":"Id",
-          "location":"uri",
-          "locationName":"DeviceId"
-        },
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"TrackerName"
+        },
+        "DeviceId":{
+          "shape":"Id",
+          "location":"uri",
+          "locationName":"DeviceId"
         }
       }
     },
     "GetDevicePositionResponse":{
       "type":"structure",
       "required":[
-        "Position",
+        "SampleTime",
         "ReceivedTime",
-        "SampleTime"
+        "Position"
       ],
       "members":{
         "DeviceId":{"shape":"Id"},
-        "Position":{"shape":"Position"},
+        "SampleTime":{"shape":"Timestamp"},
         "ReceivedTime":{"shape":"Timestamp"},
-        "SampleTime":{"shape":"Timestamp"}
+        "Position":{"shape":"Position"},
+        "Accuracy":{"shape":"PositionalAccuracy"},
+        "PositionProperties":{"shape":"PropertyMap"}
       }
     },
     "GetGeofenceRequest":{
@@ -1975,28 +2654,34 @@
     "GetGeofenceResponse":{
       "type":"structure",
       "required":[
-        "CreateTime",
         "GeofenceId",
         "Geometry",
         "Status",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
         "GeofenceId":{"shape":"Id"},
         "Geometry":{"shape":"GeofenceGeometry"},
         "Status":{"shape":"String"},
-        "UpdateTime":{"shape":"Timestamp"}
+        "CreateTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "GeofenceProperties":{"shape":"PropertyMap"}
       }
     },
     "GetMapGlyphsRequest":{
       "type":"structure",
       "required":[
+        "MapName",
         "FontStack",
-        "FontUnicodeRange",
-        "MapName"
+        "FontUnicodeRange"
       ],
       "members":{
+        "MapName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"MapName"
+        },
         "FontStack":{
           "shape":"String",
           "location":"uri",
@@ -2007,16 +2692,16 @@
           "location":"uri",
           "locationName":"FontUnicodeRange"
         },
-        "MapName":{
-          "shape":"ResourceName",
-          "location":"uri",
-          "locationName":"MapName"
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
         }
       }
     },
     "GetMapGlyphsRequestFontUnicodeRangeString":{
       "type":"string",
-      "pattern":"^[0-9]+-[0-9]+\\.pbf$"
+      "pattern":"[0-9]+-[0-9]+\\.pbf"
     },
     "GetMapGlyphsResponse":{
       "type":"structure",
@@ -2026,6 +2711,11 @@
           "shape":"String",
           "location":"header",
           "locationName":"Content-Type"
+        },
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
         }
       },
       "payload":"Blob"
@@ -2033,25 +2723,30 @@
     "GetMapSpritesRequest":{
       "type":"structure",
       "required":[
-        "FileName",
-        "MapName"
+        "MapName",
+        "FileName"
       ],
       "members":{
+        "MapName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"MapName"
+        },
         "FileName":{
           "shape":"GetMapSpritesRequestFileNameString",
           "location":"uri",
           "locationName":"FileName"
         },
-        "MapName":{
-          "shape":"ResourceName",
-          "location":"uri",
-          "locationName":"MapName"
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
         }
       }
     },
     "GetMapSpritesRequestFileNameString":{
       "type":"string",
-      "pattern":"^sprites(@2x)?\\.(png|json)$"
+      "pattern":"sprites(@2x)?\\.(png|json)"
     },
     "GetMapSpritesResponse":{
       "type":"structure",
@@ -2061,6 +2756,11 @@
           "shape":"String",
           "location":"header",
           "locationName":"Content-Type"
+        },
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
         }
       },
       "payload":"Blob"
@@ -2073,6 +2773,11 @@
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"MapName"
+        },
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
         }
       }
     },
@@ -2084,6 +2789,11 @@
           "shape":"String",
           "location":"header",
           "locationName":"Content-Type"
+        },
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
         }
       },
       "payload":"Blob"
@@ -2092,15 +2802,20 @@
       "type":"structure",
       "required":[
         "MapName",
+        "Z",
         "X",
-        "Y",
-        "Z"
+        "Y"
       ],
       "members":{
         "MapName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"MapName"
+        },
+        "Z":{
+          "shape":"GetMapTileRequestZString",
+          "location":"uri",
+          "locationName":"Z"
         },
         "X":{
           "shape":"GetMapTileRequestXString",
@@ -2112,24 +2827,24 @@
           "location":"uri",
           "locationName":"Y"
         },
-        "Z":{
-          "shape":"GetMapTileRequestZString",
-          "location":"uri",
-          "locationName":"Z"
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
         }
       }
     },
     "GetMapTileRequestXString":{
       "type":"string",
-      "pattern":"\\d+"
+      "pattern":".*\\d+.*"
     },
     "GetMapTileRequestYString":{
       "type":"string",
-      "pattern":"\\d+"
+      "pattern":".*\\d+.*"
     },
     "GetMapTileRequestZString":{
       "type":"string",
-      "pattern":"\\d+"
+      "pattern":".*\\d+.*"
     },
     "GetMapTileResponse":{
       "type":"structure",
@@ -2139,15 +2854,70 @@
           "shape":"String",
           "location":"header",
           "locationName":"Content-Type"
+        },
+        "CacheControl":{
+          "shape":"String",
+          "location":"header",
+          "locationName":"Cache-Control"
         }
       },
       "payload":"Blob"
+    },
+    "GetPlaceRequest":{
+      "type":"structure",
+      "required":[
+        "IndexName",
+        "PlaceId"
+      ],
+      "members":{
+        "IndexName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"IndexName"
+        },
+        "PlaceId":{
+          "shape":"PlaceId",
+          "location":"uri",
+          "locationName":"PlaceId"
+        },
+        "Language":{
+          "shape":"LanguageTag",
+          "location":"querystring",
+          "locationName":"language"
+        },
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        }
+      }
+    },
+    "GetPlaceResponse":{
+      "type":"structure",
+      "required":["Place"],
+      "members":{
+        "Place":{"shape":"Place"}
+      }
     },
     "Id":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[-._\\p{L}\\p{N}]+$"
+      "pattern":"[-._\\p{L}\\p{N}]+"
+    },
+    "InferredState":{
+      "type":"structure",
+      "required":["ProxyDetected"],
+      "members":{
+        "Position":{"shape":"Position"},
+        "Accuracy":{"shape":"PositionalAccuracy"},
+        "DeviationDistance":{"shape":"Double"},
+        "ProxyDetected":{"shape":"Boolean"}
+      }
+    },
+    "Integer":{
+      "type":"integer",
+      "box":true
     },
     "IntendedUse":{
       "type":"string",
@@ -2175,21 +2945,31 @@
       "max":2048,
       "min":1
     },
+    "LanguageTag":{
+      "type":"string",
+      "max":35,
+      "min":2
+    },
+    "LargeToken":{
+      "type":"string",
+      "max":60000,
+      "min":1
+    },
     "Leg":{
       "type":"structure",
       "required":[
+        "StartPosition",
+        "EndPosition",
         "Distance",
         "DurationSeconds",
-        "EndPosition",
-        "StartPosition",
         "Steps"
       ],
       "members":{
+        "StartPosition":{"shape":"Position"},
+        "EndPosition":{"shape":"Position"},
         "Distance":{"shape":"LegDistanceDouble"},
         "DurationSeconds":{"shape":"LegDurationSecondsDouble"},
-        "EndPosition":{"shape":"Position"},
         "Geometry":{"shape":"LegGeometry"},
-        "StartPosition":{"shape":"Position"},
         "Steps":{"shape":"StepList"}
       }
     },
@@ -2232,13 +3012,14 @@
       "type":"structure",
       "required":["TrackerName"],
       "members":{
-        "MaxResults":{"shape":"ListDevicePositionsRequestMaxResultsInteger"},
-        "NextToken":{"shape":"Token"},
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"TrackerName"
-        }
+        },
+        "MaxResults":{"shape":"ListDevicePositionsRequestMaxResultsInteger"},
+        "NextToken":{"shape":"Token"},
+        "FilterGeometry":{"shape":"TrackingFilterGeometry"}
       }
     },
     "ListDevicePositionsRequestMaxResultsInteger":{
@@ -2259,13 +3040,15 @@
       "type":"structure",
       "required":[
         "DeviceId",
-        "Position",
-        "SampleTime"
+        "SampleTime",
+        "Position"
       ],
       "members":{
         "DeviceId":{"shape":"Id"},
+        "SampleTime":{"shape":"Timestamp"},
         "Position":{"shape":"Position"},
-        "SampleTime":{"shape":"Timestamp"}
+        "Accuracy":{"shape":"PositionalAccuracy"},
+        "PositionProperties":{"shape":"PropertyMap"}
       }
     },
     "ListDevicePositionsResponseEntryList":{
@@ -2297,17 +3080,24 @@
       "type":"structure",
       "required":[
         "CollectionName",
-        "CreateTime",
         "Description",
-        "PricingPlan",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
         "CollectionName":{"shape":"ResourceName"},
-        "CreateTime":{"shape":"Timestamp"},
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2318,18 +3108,19 @@
     "ListGeofenceResponseEntry":{
       "type":"structure",
       "required":[
-        "CreateTime",
         "GeofenceId",
         "Geometry",
         "Status",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
         "GeofenceId":{"shape":"Id"},
         "Geometry":{"shape":"GeofenceGeometry"},
         "Status":{"shape":"String"},
-        "UpdateTime":{"shape":"Timestamp"}
+        "CreateTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"},
+        "GeofenceProperties":{"shape":"PropertyMap"}
       }
     },
     "ListGeofenceResponseEntryList":{
@@ -2345,16 +3136,67 @@
           "location":"uri",
           "locationName":"CollectionName"
         },
-        "NextToken":{"shape":"Token"}
+        "NextToken":{"shape":"LargeToken"},
+        "MaxResults":{"shape":"ListGeofencesRequestMaxResultsInteger"}
       }
+    },
+    "ListGeofencesRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
     },
     "ListGeofencesResponse":{
       "type":"structure",
       "required":["Entries"],
       "members":{
         "Entries":{"shape":"ListGeofenceResponseEntryList"},
+        "NextToken":{"shape":"LargeToken"}
+      }
+    },
+    "ListKeysRequest":{
+      "type":"structure",
+      "members":{
+        "MaxResults":{"shape":"ListKeysRequestMaxResultsInteger"},
+        "NextToken":{"shape":"Token"},
+        "Filter":{"shape":"ApiKeyFilter"}
+      }
+    },
+    "ListKeysRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":100,
+      "min":1
+    },
+    "ListKeysResponse":{
+      "type":"structure",
+      "required":["Entries"],
+      "members":{
+        "Entries":{"shape":"ListKeysResponseEntryList"},
         "NextToken":{"shape":"Token"}
       }
+    },
+    "ListKeysResponseEntry":{
+      "type":"structure",
+      "required":[
+        "KeyName",
+        "ExpireTime",
+        "Restrictions",
+        "CreateTime",
+        "UpdateTime"
+      ],
+      "members":{
+        "KeyName":{"shape":"ResourceName"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "Description":{"shape":"ResourceDescription"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"},
+        "CreateTime":{"shape":"Timestamp"},
+        "UpdateTime":{"shape":"Timestamp"}
+      }
+    },
+    "ListKeysResponseEntryList":{
+      "type":"list",
+      "member":{"shape":"ListKeysResponseEntry"}
     },
     "ListMapsRequest":{
       "type":"structure",
@@ -2380,19 +3222,22 @@
     "ListMapsResponseEntry":{
       "type":"structure",
       "required":[
-        "CreateTime",
-        "DataSource",
-        "Description",
         "MapName",
-        "PricingPlan",
+        "Description",
+        "DataSource",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
-        "DataSource":{"shape":"String"},
-        "Description":{"shape":"ResourceDescription"},
         "MapName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "Description":{"shape":"ResourceDescription"},
+        "DataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2424,19 +3269,22 @@
     "ListPlaceIndexesResponseEntry":{
       "type":"structure",
       "required":[
-        "CreateTime",
-        "DataSource",
-        "Description",
         "IndexName",
-        "PricingPlan",
+        "Description",
+        "DataSource",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
-        "DataSource":{"shape":"String"},
-        "Description":{"shape":"ResourceDescription"},
         "IndexName":{"shape":"ResourceName"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "Description":{"shape":"ResourceDescription"},
+        "DataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2469,18 +3317,21 @@
       "type":"structure",
       "required":[
         "CalculatorName",
-        "CreateTime",
-        "DataSource",
         "Description",
-        "PricingPlan",
+        "DataSource",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
         "CalculatorName":{"shape":"ResourceName"},
-        "CreateTime":{"shape":"Timestamp"},
-        "DataSource":{"shape":"String"},
         "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
+        "DataSource":{"shape":"String"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2509,13 +3360,13 @@
       "type":"structure",
       "required":["TrackerName"],
       "members":{
-        "MaxResults":{"shape":"ListTrackerConsumersRequestMaxResultsInteger"},
-        "NextToken":{"shape":"Token"},
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"TrackerName"
-        }
+        },
+        "MaxResults":{"shape":"ListTrackerConsumersRequestMaxResultsInteger"},
+        "NextToken":{"shape":"Token"}
       }
     },
     "ListTrackerConsumersRequestMaxResultsInteger":{
@@ -2556,18 +3407,25 @@
     "ListTrackersResponseEntry":{
       "type":"structure",
       "required":[
-        "CreateTime",
-        "Description",
-        "PricingPlan",
         "TrackerName",
+        "Description",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
-        "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
         "TrackerName":{"shape":"ResourceName"},
+        "Description":{"shape":"ResourceDescription"},
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Always returns RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. Unused."
+        },
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -2575,34 +3433,153 @@
       "type":"list",
       "member":{"shape":"ListTrackersResponseEntry"}
     },
+    "LteCellDetails":{
+      "type":"structure",
+      "required":[
+        "CellId",
+        "Mcc",
+        "Mnc"
+      ],
+      "members":{
+        "CellId":{"shape":"EutranCellId"},
+        "Mcc":{"shape":"LteCellDetailsMccInteger"},
+        "Mnc":{"shape":"LteCellDetailsMncInteger"},
+        "LocalId":{"shape":"LteLocalId"},
+        "NetworkMeasurements":{"shape":"LteCellDetailsNetworkMeasurementsList"},
+        "TimingAdvance":{"shape":"LteCellDetailsTimingAdvanceInteger"},
+        "NrCapable":{"shape":"Boolean"},
+        "Rsrp":{"shape":"Rsrp"},
+        "Rsrq":{"shape":"Rsrq"},
+        "Tac":{"shape":"LteCellDetailsTacInteger"}
+      }
+    },
+    "LteCellDetailsMccInteger":{
+      "type":"integer",
+      "box":true,
+      "max":999,
+      "min":200
+    },
+    "LteCellDetailsMncInteger":{
+      "type":"integer",
+      "box":true,
+      "max":999,
+      "min":0
+    },
+    "LteCellDetailsNetworkMeasurementsList":{
+      "type":"list",
+      "member":{"shape":"LteNetworkMeasurements"},
+      "max":32,
+      "min":1
+    },
+    "LteCellDetailsTacInteger":{
+      "type":"integer",
+      "box":true,
+      "max":65535,
+      "min":0
+    },
+    "LteCellDetailsTimingAdvanceInteger":{
+      "type":"integer",
+      "box":true,
+      "max":1282,
+      "min":0
+    },
+    "LteLocalId":{
+      "type":"structure",
+      "required":[
+        "Earfcn",
+        "Pci"
+      ],
+      "members":{
+        "Earfcn":{"shape":"Earfcn"},
+        "Pci":{"shape":"Pci"}
+      }
+    },
+    "LteNetworkMeasurements":{
+      "type":"structure",
+      "required":[
+        "Earfcn",
+        "CellId",
+        "Pci"
+      ],
+      "members":{
+        "Earfcn":{"shape":"Earfcn"},
+        "CellId":{"shape":"EutranCellId"},
+        "Pci":{"shape":"Pci"},
+        "Rsrp":{"shape":"Rsrp"},
+        "Rsrq":{"shape":"Rsrq"}
+      }
+    },
     "MapConfiguration":{
       "type":"structure",
       "required":["Style"],
       "members":{
-        "Style":{"shape":"MapStyle"}
+        "Style":{"shape":"MapStyle"},
+        "PoliticalView":{"shape":"CountryCode3"},
+        "CustomLayers":{"shape":"CustomLayerList"}
+      }
+    },
+    "MapConfigurationUpdate":{
+      "type":"structure",
+      "members":{
+        "PoliticalView":{"shape":"CountryCode3OrEmpty"},
+        "CustomLayers":{"shape":"CustomLayerList"}
       }
     },
     "MapStyle":{
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[-._\\w]+$"
+      "pattern":"[-._\\w]+"
+    },
+    "NearestDistance":{
+      "type":"double",
+      "min":0
+    },
+    "OptimizationMode":{
+      "type":"string",
+      "enum":[
+        "FastestRoute",
+        "ShortestRoute"
+      ]
+    },
+    "Pci":{
+      "type":"integer",
+      "max":503,
+      "min":0
     },
     "Place":{
       "type":"structure",
       "required":["Geometry"],
       "members":{
-        "AddressNumber":{"shape":"String"},
-        "Country":{"shape":"String"},
-        "Geometry":{"shape":"PlaceGeometry"},
         "Label":{"shape":"String"},
-        "Municipality":{"shape":"String"},
-        "Neighborhood":{"shape":"String"},
-        "PostalCode":{"shape":"String"},
-        "Region":{"shape":"String"},
+        "Geometry":{"shape":"PlaceGeometry"},
+        "AddressNumber":{"shape":"String"},
         "Street":{"shape":"String"},
-        "SubRegion":{"shape":"String"}
+        "Neighborhood":{"shape":"String"},
+        "Municipality":{"shape":"String"},
+        "SubRegion":{"shape":"String"},
+        "Region":{"shape":"String"},
+        "Country":{"shape":"String"},
+        "PostalCode":{"shape":"String"},
+        "Interpolated":{"shape":"Boolean"},
+        "TimeZone":{"shape":"TimeZone"},
+        "UnitType":{"shape":"String"},
+        "UnitNumber":{"shape":"String"},
+        "Categories":{"shape":"PlaceCategoryList"},
+        "SupplementalCategories":{"shape":"PlaceSupplementalCategoryList"},
+        "SubMunicipality":{"shape":"String"}
       }
+    },
+    "PlaceCategory":{
+      "type":"string",
+      "max":35,
+      "min":0
+    },
+    "PlaceCategoryList":{
+      "type":"list",
+      "member":{"shape":"PlaceCategory"},
+      "max":10,
+      "min":1
     },
     "PlaceGeometry":{
       "type":"structure",
@@ -2610,9 +3587,22 @@
         "Point":{"shape":"Position"}
       }
     },
+    "PlaceId":{"type":"string"},
     "PlaceIndexSearchResultLimit":{
       "type":"integer",
+      "box":true,
       "max":50,
+      "min":1
+    },
+    "PlaceSupplementalCategory":{
+      "type":"string",
+      "max":35,
+      "min":0
+    },
+    "PlaceSupplementalCategoryList":{
+      "type":"list",
+      "member":{"shape":"PlaceSupplementalCategory"},
+      "max":10,
       "min":1
     },
     "Position":{
@@ -2622,6 +3612,27 @@
       "min":2,
       "sensitive":true
     },
+    "PositionFiltering":{
+      "type":"string",
+      "enum":[
+        "TimeBased",
+        "DistanceBased",
+        "AccuracyBased"
+      ]
+    },
+    "PositionalAccuracy":{
+      "type":"structure",
+      "required":["Horizontal"],
+      "members":{
+        "Horizontal":{"shape":"PositionalAccuracyHorizontalDouble"}
+      }
+    },
+    "PositionalAccuracyHorizontalDouble":{
+      "type":"double",
+      "box":true,
+      "max":10000000,
+      "min":0
+    },
     "PricingPlan":{
       "type":"string",
       "enum":[
@@ -2629,6 +3640,24 @@
         "MobileAssetTracking",
         "MobileAssetManagement"
       ]
+    },
+    "PropertyMap":{
+      "type":"map",
+      "key":{"shape":"PropertyMapKeyString"},
+      "value":{"shape":"PropertyMapValueString"},
+      "max":3,
+      "min":0,
+      "sensitive":true
+    },
+    "PropertyMapKeyString":{
+      "type":"string",
+      "max":20,
+      "min":1
+    },
+    "PropertyMapValueString":{
+      "type":"string",
+      "max":40,
+      "min":1
     },
     "PutGeofenceRequest":{
       "type":"structure",
@@ -2648,21 +3677,28 @@
           "location":"uri",
           "locationName":"GeofenceId"
         },
-        "Geometry":{"shape":"GeofenceGeometry"}
+        "Geometry":{"shape":"GeofenceGeometry"},
+        "GeofenceProperties":{"shape":"PropertyMap"}
       }
     },
     "PutGeofenceResponse":{
       "type":"structure",
       "required":[
-        "CreateTime",
         "GeofenceId",
+        "CreateTime",
         "UpdateTime"
       ],
       "members":{
-        "CreateTime":{"shape":"Timestamp"},
         "GeofenceId":{"shape":"Id"},
+        "CreateTime":{"shape":"Timestamp"},
         "UpdateTime":{"shape":"Timestamp"}
       }
+    },
+    "RefererPattern":{
+      "type":"string",
+      "max":253,
+      "min":0,
+      "pattern":"([$\\-._+!*\\x{60}(),;/?:@=&\\w]|%([0-9a-fA-F?]{2}|[0-9a-fA-F?]?[*]))+"
     },
     "ResourceDescription":{
       "type":"string",
@@ -2673,7 +3709,7 @@
       "type":"string",
       "max":100,
       "min":1,
-      "pattern":"^[-._\\w]+$"
+      "pattern":"[-._\\w]+"
     },
     "ResourceNotFoundException":{
       "type":"structure",
@@ -2690,27 +3726,122 @@
       },
       "exception":true
     },
+    "RouteMatrix":{
+      "type":"list",
+      "member":{"shape":"RouteMatrixRow"}
+    },
+    "RouteMatrixEntry":{
+      "type":"structure",
+      "members":{
+        "Distance":{"shape":"RouteMatrixEntryDistanceDouble"},
+        "DurationSeconds":{"shape":"RouteMatrixEntryDurationSecondsDouble"},
+        "Error":{"shape":"RouteMatrixEntryError"}
+      }
+    },
+    "RouteMatrixEntryDistanceDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "RouteMatrixEntryDurationSecondsDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
+    },
+    "RouteMatrixEntryError":{
+      "type":"structure",
+      "required":["Code"],
+      "members":{
+        "Code":{"shape":"RouteMatrixErrorCode"},
+        "Message":{"shape":"String"}
+      }
+    },
+    "RouteMatrixErrorCode":{
+      "type":"string",
+      "enum":[
+        "RouteNotFound",
+        "RouteTooLong",
+        "PositionsNotFound",
+        "DestinationPositionNotFound",
+        "DeparturePositionNotFound",
+        "OtherValidationError"
+      ]
+    },
+    "RouteMatrixRow":{
+      "type":"list",
+      "member":{"shape":"RouteMatrixEntry"}
+    },
+    "Rsrp":{
+      "type":"integer",
+      "box":true,
+      "max":-44,
+      "min":-140
+    },
+    "Rsrq":{
+      "type":"float",
+      "box":true,
+      "max":-3,
+      "min":-19.5
+    },
     "SearchForPositionResult":{
       "type":"structure",
-      "required":["Place"],
+      "required":[
+        "Place",
+        "Distance"
+      ],
       "members":{
-        "Place":{"shape":"Place"}
+        "Place":{"shape":"Place"},
+        "Distance":{"shape":"SearchForPositionResultDistanceDouble"},
+        "PlaceId":{"shape":"PlaceId"}
       }
+    },
+    "SearchForPositionResultDistanceDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
     },
     "SearchForPositionResultList":{
       "type":"list",
       "member":{"shape":"SearchForPositionResult"}
     },
+    "SearchForSuggestionsResult":{
+      "type":"structure",
+      "required":["Text"],
+      "members":{
+        "Text":{"shape":"String"},
+        "PlaceId":{"shape":"PlaceId"},
+        "Categories":{"shape":"PlaceCategoryList"},
+        "SupplementalCategories":{"shape":"PlaceSupplementalCategoryList"}
+      }
+    },
+    "SearchForSuggestionsResultList":{
+      "type":"list",
+      "member":{"shape":"SearchForSuggestionsResult"}
+    },
     "SearchForTextResult":{
       "type":"structure",
       "required":["Place"],
       "members":{
-        "Place":{"shape":"Place"}
+        "Place":{"shape":"Place"},
+        "Distance":{"shape":"SearchForTextResultDistanceDouble"},
+        "Relevance":{"shape":"SearchForTextResultRelevanceDouble"},
+        "PlaceId":{"shape":"PlaceId"}
       }
+    },
+    "SearchForTextResultDistanceDouble":{
+      "type":"double",
+      "box":true,
+      "min":0
     },
     "SearchForTextResultList":{
       "type":"list",
       "member":{"shape":"SearchForTextResult"}
+    },
+    "SearchForTextResultRelevanceDouble":{
+      "type":"double",
+      "box":true,
+      "max":1,
+      "min":0
     },
     "SearchPlaceIndexForPositionRequest":{
       "type":"structure",
@@ -2724,31 +3855,104 @@
           "location":"uri",
           "locationName":"IndexName"
         },
+        "Position":{"shape":"Position"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
-        "Position":{"shape":"Position"}
+        "Language":{"shape":"LanguageTag"},
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        }
       }
     },
     "SearchPlaceIndexForPositionResponse":{
       "type":"structure",
       "required":[
-        "Results",
-        "Summary"
+        "Summary",
+        "Results"
       ],
       "members":{
-        "Results":{"shape":"SearchForPositionResultList"},
-        "Summary":{"shape":"SearchPlaceIndexForPositionSummary"}
+        "Summary":{"shape":"SearchPlaceIndexForPositionSummary"},
+        "Results":{"shape":"SearchForPositionResultList"}
       }
     },
     "SearchPlaceIndexForPositionSummary":{
       "type":"structure",
       "required":[
-        "DataSource",
-        "Position"
+        "Position",
+        "DataSource"
       ],
       "members":{
-        "DataSource":{"shape":"String"},
+        "Position":{"shape":"Position"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
-        "Position":{"shape":"Position"}
+        "DataSource":{"shape":"String"},
+        "Language":{"shape":"LanguageTag"}
+      }
+    },
+    "SearchPlaceIndexForSuggestionsRequest":{
+      "type":"structure",
+      "required":[
+        "IndexName",
+        "Text"
+      ],
+      "members":{
+        "IndexName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"IndexName"
+        },
+        "Text":{"shape":"SearchPlaceIndexForSuggestionsRequestTextString"},
+        "BiasPosition":{"shape":"Position"},
+        "FilterBBox":{"shape":"BoundingBox"},
+        "FilterCountries":{"shape":"CountryCodeList"},
+        "MaxResults":{"shape":"SearchPlaceIndexForSuggestionsRequestMaxResultsInteger"},
+        "Language":{"shape":"LanguageTag"},
+        "FilterCategories":{"shape":"FilterPlaceCategoryList"},
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        }
+      }
+    },
+    "SearchPlaceIndexForSuggestionsRequestMaxResultsInteger":{
+      "type":"integer",
+      "box":true,
+      "max":15,
+      "min":1
+    },
+    "SearchPlaceIndexForSuggestionsRequestTextString":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
+    },
+    "SearchPlaceIndexForSuggestionsResponse":{
+      "type":"structure",
+      "required":[
+        "Summary",
+        "Results"
+      ],
+      "members":{
+        "Summary":{"shape":"SearchPlaceIndexForSuggestionsSummary"},
+        "Results":{"shape":"SearchForSuggestionsResultList"}
+      }
+    },
+    "SearchPlaceIndexForSuggestionsSummary":{
+      "type":"structure",
+      "required":[
+        "Text",
+        "DataSource"
+      ],
+      "members":{
+        "Text":{"shape":"SensitiveString"},
+        "BiasPosition":{"shape":"Position"},
+        "FilterBBox":{"shape":"BoundingBox"},
+        "FilterCountries":{"shape":"CountryCodeList"},
+        "MaxResults":{"shape":"Integer"},
+        "DataSource":{"shape":"String"},
+        "Language":{"shape":"LanguageTag"},
+        "FilterCategories":{"shape":"FilterPlaceCategoryList"}
       }
     },
     "SearchPlaceIndexForTextRequest":{
@@ -2758,44 +3962,63 @@
         "Text"
       ],
       "members":{
-        "BiasPosition":{"shape":"Position"},
-        "FilterBBox":{"shape":"BoundingBox"},
-        "FilterCountries":{"shape":"CountryCodeList"},
         "IndexName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"IndexName"
         },
+        "Text":{"shape":"SearchPlaceIndexForTextRequestTextString"},
+        "BiasPosition":{"shape":"Position"},
+        "FilterBBox":{"shape":"BoundingBox"},
+        "FilterCountries":{"shape":"CountryCodeList"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
-        "Text":{"shape":"SyntheticSearchPlaceIndexForTextRequestString"}
+        "Language":{"shape":"LanguageTag"},
+        "FilterCategories":{"shape":"FilterPlaceCategoryList"},
+        "Key":{
+          "shape":"ApiKey",
+          "location":"querystring",
+          "locationName":"key"
+        }
       }
+    },
+    "SearchPlaceIndexForTextRequestTextString":{
+      "type":"string",
+      "max":200,
+      "min":1,
+      "sensitive":true
     },
     "SearchPlaceIndexForTextResponse":{
       "type":"structure",
       "required":[
-        "Results",
-        "Summary"
+        "Summary",
+        "Results"
       ],
       "members":{
-        "Results":{"shape":"SearchForTextResultList"},
-        "Summary":{"shape":"SearchPlaceIndexForTextSummary"}
+        "Summary":{"shape":"SearchPlaceIndexForTextSummary"},
+        "Results":{"shape":"SearchForTextResultList"}
       }
     },
     "SearchPlaceIndexForTextSummary":{
       "type":"structure",
       "required":[
-        "DataSource",
-        "Text"
+        "Text",
+        "DataSource"
       ],
       "members":{
+        "Text":{"shape":"SensitiveString"},
         "BiasPosition":{"shape":"Position"},
-        "DataSource":{"shape":"String"},
         "FilterBBox":{"shape":"BoundingBox"},
         "FilterCountries":{"shape":"CountryCodeList"},
         "MaxResults":{"shape":"PlaceIndexSearchResultLimit"},
         "ResultBBox":{"shape":"BoundingBox"},
-        "Text":{"shape":"SyntheticSearchPlaceIndexForTextSummaryString"}
+        "DataSource":{"shape":"String"},
+        "Language":{"shape":"LanguageTag"},
+        "FilterCategories":{"shape":"FilterPlaceCategoryList"}
       }
+    },
+    "SensitiveString":{
+      "type":"string",
+      "sensitive":true
     },
     "ServiceQuotaExceededException":{
       "type":"structure",
@@ -2812,20 +4035,34 @@
       },
       "exception":true
     },
+    "SpeedUnit":{
+      "type":"string",
+      "enum":[
+        "KilometersPerHour",
+        "MilesPerHour"
+      ]
+    },
+    "Status":{
+      "type":"string",
+      "enum":[
+        "Active",
+        "Expired"
+      ]
+    },
     "Step":{
       "type":"structure",
       "required":[
-        "Distance",
-        "DurationSeconds",
+        "StartPosition",
         "EndPosition",
-        "StartPosition"
+        "Distance",
+        "DurationSeconds"
       ],
       "members":{
+        "StartPosition":{"shape":"Position"},
+        "EndPosition":{"shape":"Position"},
         "Distance":{"shape":"StepDistanceDouble"},
         "DurationSeconds":{"shape":"StepDurationSecondsDouble"},
-        "EndPosition":{"shape":"Position"},
-        "GeometryOffset":{"shape":"StepGeometryOffsetInteger"},
-        "StartPosition":{"shape":"Position"}
+        "GeometryOffset":{"shape":"StepGeometryOffsetInteger"}
       }
     },
     "StepDistanceDouble":{
@@ -2848,21 +4085,11 @@
       "member":{"shape":"Step"}
     },
     "String":{"type":"string"},
-    "SyntheticSearchPlaceIndexForTextRequestString":{
-      "type":"string",
-      "max":200,
-      "min":1,
-      "sensitive":true
-    },
-    "SyntheticSearchPlaceIndexForTextSummaryString":{
-      "type":"string",
-      "sensitive":true
-    },
     "TagKey":{
       "type":"string",
       "max":128,
       "min":1,
-      "pattern":"^(?!aws:)[a-zA-Z+-=._:/]+$"
+      "pattern":"[a-zA-Z+-=._:/]+"
     },
     "TagKeys":{
       "type":"list",
@@ -2901,7 +4128,7 @@
       "type":"string",
       "max":256,
       "min":0,
-      "pattern":"^[A-Za-z0-9 _=@:.+-/]*$"
+      "pattern":"[A-Za-z0-9 _=@:.+-/]*"
     },
     "ThrottlingException":{
       "type":"structure",
@@ -2919,6 +4146,14 @@
       "exception":true,
       "retryable":{"throttling":false}
     },
+    "TimeZone":{
+      "type":"structure",
+      "required":["Name"],
+      "members":{
+        "Name":{"shape":"String"},
+        "Offset":{"shape":"Integer"}
+      }
+    },
     "Timestamp":{
       "type":"timestamp",
       "timestampFormat":"iso8601"
@@ -2928,21 +4163,29 @@
       "max":2000,
       "min":1
     },
+    "TrackingFilterGeometry":{
+      "type":"structure",
+      "members":{
+        "Polygon":{"shape":"LinearRings"}
+      }
+    },
     "TravelMode":{
       "type":"string",
       "enum":[
         "Car",
         "Truck",
-        "Walking"
+        "Walking",
+        "Bicycle",
+        "Motorcycle"
       ]
     },
     "TruckDimensions":{
       "type":"structure",
       "members":{
-        "Height":{"shape":"TruckDimensionsHeightDouble"},
         "Length":{"shape":"TruckDimensionsLengthDouble"},
-        "Unit":{"shape":"DimensionUnit"},
-        "Width":{"shape":"TruckDimensionsWidthDouble"}
+        "Height":{"shape":"TruckDimensionsHeightDouble"},
+        "Width":{"shape":"TruckDimensionsWidthDouble"},
+        "Unit":{"shape":"DimensionUnit"}
       }
     },
     "TruckDimensionsHeightDouble":{
@@ -3005,21 +4248,58 @@
           "location":"uri",
           "locationName":"CollectionName"
         },
-        "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        },
+        "Description":{"shape":"ResourceDescription"}
       }
     },
     "UpdateGeofenceCollectionResponse":{
       "type":"structure",
       "required":[
-        "CollectionArn",
         "CollectionName",
+        "CollectionArn",
         "UpdateTime"
       ],
       "members":{
-        "CollectionArn":{"shape":"Arn"},
         "CollectionName":{"shape":"ResourceName"},
+        "CollectionArn":{"shape":"Arn"},
+        "UpdateTime":{"shape":"Timestamp"}
+      }
+    },
+    "UpdateKeyRequest":{
+      "type":"structure",
+      "required":["KeyName"],
+      "members":{
+        "KeyName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"KeyName"
+        },
+        "Description":{"shape":"ResourceDescription"},
+        "ExpireTime":{"shape":"Timestamp"},
+        "NoExpiry":{"shape":"Boolean"},
+        "ForceUpdate":{"shape":"Boolean"},
+        "Restrictions":{"shape":"ApiKeyRestrictions"}
+      }
+    },
+    "UpdateKeyResponse":{
+      "type":"structure",
+      "required":[
+        "KeyArn",
+        "KeyName",
+        "UpdateTime"
+      ],
+      "members":{
+        "KeyArn":{"shape":"Arn"},
+        "KeyName":{"shape":"ResourceName"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -3027,25 +4307,30 @@
       "type":"structure",
       "required":["MapName"],
       "members":{
-        "Description":{"shape":"ResourceDescription"},
         "MapName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"MapName"
         },
-        "PricingPlan":{"shape":"PricingPlan"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "Description":{"shape":"ResourceDescription"},
+        "ConfigurationUpdate":{"shape":"MapConfigurationUpdate"}
       }
     },
     "UpdateMapResponse":{
       "type":"structure",
       "required":[
-        "MapArn",
         "MapName",
+        "MapArn",
         "UpdateTime"
       ],
       "members":{
-        "MapArn":{"shape":"Arn"},
         "MapName":{"shape":"ResourceName"},
+        "MapArn":{"shape":"GeoArn"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -3053,26 +4338,30 @@
       "type":"structure",
       "required":["IndexName"],
       "members":{
-        "DataSourceConfiguration":{"shape":"DataSourceConfiguration"},
-        "Description":{"shape":"ResourceDescription"},
         "IndexName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"IndexName"
         },
-        "PricingPlan":{"shape":"PricingPlan"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "Description":{"shape":"ResourceDescription"},
+        "DataSourceConfiguration":{"shape":"DataSourceConfiguration"}
       }
     },
     "UpdatePlaceIndexResponse":{
       "type":"structure",
       "required":[
-        "IndexArn",
         "IndexName",
+        "IndexArn",
         "UpdateTime"
       ],
       "members":{
-        "IndexArn":{"shape":"Arn"},
         "IndexName":{"shape":"ResourceName"},
+        "IndexArn":{"shape":"GeoArn"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -3085,20 +4374,24 @@
           "location":"uri",
           "locationName":"CalculatorName"
         },
-        "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"}
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "Description":{"shape":"ResourceDescription"}
       }
     },
     "UpdateRouteCalculatorResponse":{
       "type":"structure",
       "required":[
-        "CalculatorArn",
         "CalculatorName",
+        "CalculatorArn",
         "UpdateTime"
       ],
       "members":{
-        "CalculatorArn":{"shape":"Arn"},
         "CalculatorName":{"shape":"ResourceName"},
+        "CalculatorArn":{"shape":"GeoArn"},
         "UpdateTime":{"shape":"Timestamp"}
       }
     },
@@ -3106,41 +4399,52 @@
       "type":"structure",
       "required":["TrackerName"],
       "members":{
-        "Description":{"shape":"ResourceDescription"},
-        "PricingPlan":{"shape":"PricingPlan"},
-        "PricingPlanDataSource":{"shape":"String"},
         "TrackerName":{
           "shape":"ResourceName",
           "location":"uri",
           "locationName":"TrackerName"
-        }
+        },
+        "PricingPlan":{
+          "shape":"PricingPlan",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. If included, the only allowed value is RequestBasedUsage."
+        },
+        "PricingPlanDataSource":{
+          "shape":"String",
+          "deprecated":true,
+          "deprecatedMessage":"Deprecated. No longer allowed."
+        },
+        "Description":{"shape":"ResourceDescription"},
+        "PositionFiltering":{"shape":"PositionFiltering"},
+        "EventBridgeEnabled":{"shape":"Boolean"},
+        "KmsKeyEnableGeospatialQueries":{"shape":"Boolean"}
       }
     },
     "UpdateTrackerResponse":{
       "type":"structure",
       "required":[
-        "TrackerArn",
         "TrackerName",
+        "TrackerArn",
         "UpdateTime"
       ],
       "members":{
-        "TrackerArn":{"shape":"Arn"},
         "TrackerName":{"shape":"ResourceName"},
+        "TrackerArn":{"shape":"Arn"},
         "UpdateTime":{"shape":"Timestamp"}
       }
+    },
+    "Uuid":{
+      "type":"string",
+      "pattern":"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
     },
     "ValidationException":{
       "type":"structure",
       "required":[
-        "FieldList",
         "Message",
-        "Reason"
+        "Reason",
+        "FieldList"
       ],
       "members":{
-        "FieldList":{
-          "shape":"ValidationExceptionFieldList",
-          "locationName":"fieldList"
-        },
         "Message":{
           "shape":"String",
           "locationName":"message"
@@ -3148,6 +4452,10 @@
         "Reason":{
           "shape":"ValidationExceptionReason",
           "locationName":"reason"
+        },
+        "FieldList":{
+          "shape":"ValidationExceptionFieldList",
+          "locationName":"fieldList"
         }
       },
       "error":{
@@ -3159,17 +4467,17 @@
     "ValidationExceptionField":{
       "type":"structure",
       "required":[
-        "Message",
-        "Name"
+        "Name",
+        "Message"
       ],
       "members":{
-        "Message":{
-          "shape":"String",
-          "locationName":"message"
-        },
         "Name":{
           "shape":"String",
           "locationName":"name"
+        },
+        "Message":{
+          "shape":"String",
+          "locationName":"message"
         }
       }
     },
@@ -3193,6 +4501,66 @@
         "Kilograms",
         "Pounds"
       ]
+    },
+    "VerifyDevicePositionRequest":{
+      "type":"structure",
+      "required":[
+        "TrackerName",
+        "DeviceState"
+      ],
+      "members":{
+        "TrackerName":{
+          "shape":"ResourceName",
+          "location":"uri",
+          "locationName":"TrackerName"
+        },
+        "DeviceState":{"shape":"DeviceState"},
+        "DistanceUnit":{"shape":"DistanceUnit"}
+      }
+    },
+    "VerifyDevicePositionResponse":{
+      "type":"structure",
+      "required":[
+        "InferredState",
+        "DeviceId",
+        "SampleTime",
+        "ReceivedTime",
+        "DistanceUnit"
+      ],
+      "members":{
+        "InferredState":{"shape":"InferredState"},
+        "DeviceId":{"shape":"Id"},
+        "SampleTime":{"shape":"Timestamp"},
+        "ReceivedTime":{"shape":"Timestamp"},
+        "DistanceUnit":{"shape":"DistanceUnit"}
+      }
+    },
+    "WiFiAccessPoint":{
+      "type":"structure",
+      "required":[
+        "MacAddress",
+        "Rss"
+      ],
+      "members":{
+        "MacAddress":{"shape":"WiFiAccessPointMacAddressString"},
+        "Rss":{"shape":"WiFiAccessPointRssInteger"}
+      }
+    },
+    "WiFiAccessPointList":{
+      "type":"list",
+      "member":{"shape":"WiFiAccessPoint"}
+    },
+    "WiFiAccessPointMacAddressString":{
+      "type":"string",
+      "max":17,
+      "min":12,
+      "pattern":"([0-9A-Fa-f]{2}[:-]?){5}([0-9A-Fa-f]{2})"
+    },
+    "WiFiAccessPointRssInteger":{
+      "type":"integer",
+      "box":true,
+      "max":0,
+      "min":-128
     }
   }
 }

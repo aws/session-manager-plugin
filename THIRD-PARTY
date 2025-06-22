@@ -10,6 +10,8 @@ Copyright (c) 2013 The Gorilla WebSocket Authors. All rights reserved.
 ** fsnotigy/fsnotify - https://github.com/fsnotify/fsnotify
 Copyright (c) 2012 The Go Authors. All rights reserved.
 Copyright (c) 2012 fsnotify Authors. All rights reserved.
+** pmezard/go-difflib - https://github.com/pmezard/go-difflib
+Copyright (c) 2013, Patrick Mezard
 
 BSD License
 
@@ -48,7 +50,7 @@ Copyright (c) 2017-2018 objx contributors
 ** eiannone/keyboard - https://github.com/eiannone/keyboard
 Copyright (C) 2012 termbox-go authors
 Copyright (c) 2015 Emanuele Iannone
-**xtaci/smux - https://github.com/xtaci/smux
+** xtaci/smux - https://github.com/xtaci/smux
 Copyright (c) 2016-2017 Daniel Fu
 
 MIT License
@@ -73,9 +75,29 @@ SOFTWARE.
 
 ----------------
 
-jmespath/go-jmespath - https://github.com/jmespath/go-jmespath
+** davecgh/go-spew - https://github.com/davecgh/go-spew
+Copyright (c) 2012-2016 Dave Collins <dave@davec.name>
 
+ISC License
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+----------------
+
+** jmespath/go-jmespath - https://github.com/jmespath/go-jmespath
 Copyright 2015 James Saryerwinnie
+** go-yaml/yaml - https://github.com/go-yaml/yaml
+Copyright (c) 2011-2019 Canonical Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

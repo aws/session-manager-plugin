@@ -23,37 +23,37 @@ import (
 // can be stubbed out for unit testing your code with the SDK without needing
 // to inject custom request handlers into the SDK's request pipeline.
 //
-//    // myFunc uses an SDK service client to make a request to
-//    // Amazon DynamoDB.
-//    func myFunc(svc dynamodbiface.DynamoDBAPI) bool {
-//        // Make svc.BatchExecuteStatement request
-//    }
+//	// myFunc uses an SDK service client to make a request to
+//	// Amazon DynamoDB.
+//	func myFunc(svc dynamodbiface.DynamoDBAPI) bool {
+//	    // Make svc.BatchExecuteStatement request
+//	}
 //
-//    func main() {
-//        sess := session.New()
-//        svc := dynamodb.New(sess)
+//	func main() {
+//	    sess := session.New()
+//	    svc := dynamodb.New(sess)
 //
-//        myFunc(svc)
-//    }
+//	    myFunc(svc)
+//	}
 //
 // In your _test.go file:
 //
-//    // Define a mock struct to be used in your unit tests of myFunc.
-//    type mockDynamoDBClient struct {
-//        dynamodbiface.DynamoDBAPI
-//    }
-//    func (m *mockDynamoDBClient) BatchExecuteStatement(input *dynamodb.BatchExecuteStatementInput) (*dynamodb.BatchExecuteStatementOutput, error) {
-//        // mock response/functionality
-//    }
+//	// Define a mock struct to be used in your unit tests of myFunc.
+//	type mockDynamoDBClient struct {
+//	    dynamodbiface.DynamoDBAPI
+//	}
+//	func (m *mockDynamoDBClient) BatchExecuteStatement(input *dynamodb.BatchExecuteStatementInput) (*dynamodb.BatchExecuteStatementOutput, error) {
+//	    // mock response/functionality
+//	}
 //
-//    func TestMyFunc(t *testing.T) {
-//        // Setup Test
-//        mockSvc := &mockDynamoDBClient{}
+//	func TestMyFunc(t *testing.T) {
+//	    // Setup Test
+//	    mockSvc := &mockDynamoDBClient{}
 //
-//        myfunc(mockSvc)
+//	    myfunc(mockSvc)
 //
-//        // Verify myFunc's functionality
-//    }
+//	    // Verify myFunc's functionality
+//	}
 //
 // It is important to note that this interface will have breaking changes
 // when the service model is updated and adds new API operations, paginators,
@@ -95,6 +95,10 @@ type DynamoDBAPI interface {
 	DeleteItemWithContext(aws.Context, *dynamodb.DeleteItemInput, ...request.Option) (*dynamodb.DeleteItemOutput, error)
 	DeleteItemRequest(*dynamodb.DeleteItemInput) (*request.Request, *dynamodb.DeleteItemOutput)
 
+	DeleteResourcePolicy(*dynamodb.DeleteResourcePolicyInput) (*dynamodb.DeleteResourcePolicyOutput, error)
+	DeleteResourcePolicyWithContext(aws.Context, *dynamodb.DeleteResourcePolicyInput, ...request.Option) (*dynamodb.DeleteResourcePolicyOutput, error)
+	DeleteResourcePolicyRequest(*dynamodb.DeleteResourcePolicyInput) (*request.Request, *dynamodb.DeleteResourcePolicyOutput)
+
 	DeleteTable(*dynamodb.DeleteTableInput) (*dynamodb.DeleteTableOutput, error)
 	DeleteTableWithContext(aws.Context, *dynamodb.DeleteTableInput, ...request.Option) (*dynamodb.DeleteTableOutput, error)
 	DeleteTableRequest(*dynamodb.DeleteTableInput) (*request.Request, *dynamodb.DeleteTableOutput)
@@ -126,6 +130,10 @@ type DynamoDBAPI interface {
 	DescribeGlobalTableSettings(*dynamodb.DescribeGlobalTableSettingsInput) (*dynamodb.DescribeGlobalTableSettingsOutput, error)
 	DescribeGlobalTableSettingsWithContext(aws.Context, *dynamodb.DescribeGlobalTableSettingsInput, ...request.Option) (*dynamodb.DescribeGlobalTableSettingsOutput, error)
 	DescribeGlobalTableSettingsRequest(*dynamodb.DescribeGlobalTableSettingsInput) (*request.Request, *dynamodb.DescribeGlobalTableSettingsOutput)
+
+	DescribeImport(*dynamodb.DescribeImportInput) (*dynamodb.DescribeImportOutput, error)
+	DescribeImportWithContext(aws.Context, *dynamodb.DescribeImportInput, ...request.Option) (*dynamodb.DescribeImportOutput, error)
+	DescribeImportRequest(*dynamodb.DescribeImportInput) (*request.Request, *dynamodb.DescribeImportOutput)
 
 	DescribeKinesisStreamingDestination(*dynamodb.DescribeKinesisStreamingDestinationInput) (*dynamodb.DescribeKinesisStreamingDestinationOutput, error)
 	DescribeKinesisStreamingDestinationWithContext(aws.Context, *dynamodb.DescribeKinesisStreamingDestinationInput, ...request.Option) (*dynamodb.DescribeKinesisStreamingDestinationOutput, error)
@@ -171,6 +179,14 @@ type DynamoDBAPI interface {
 	GetItemWithContext(aws.Context, *dynamodb.GetItemInput, ...request.Option) (*dynamodb.GetItemOutput, error)
 	GetItemRequest(*dynamodb.GetItemInput) (*request.Request, *dynamodb.GetItemOutput)
 
+	GetResourcePolicy(*dynamodb.GetResourcePolicyInput) (*dynamodb.GetResourcePolicyOutput, error)
+	GetResourcePolicyWithContext(aws.Context, *dynamodb.GetResourcePolicyInput, ...request.Option) (*dynamodb.GetResourcePolicyOutput, error)
+	GetResourcePolicyRequest(*dynamodb.GetResourcePolicyInput) (*request.Request, *dynamodb.GetResourcePolicyOutput)
+
+	ImportTable(*dynamodb.ImportTableInput) (*dynamodb.ImportTableOutput, error)
+	ImportTableWithContext(aws.Context, *dynamodb.ImportTableInput, ...request.Option) (*dynamodb.ImportTableOutput, error)
+	ImportTableRequest(*dynamodb.ImportTableInput) (*request.Request, *dynamodb.ImportTableOutput)
+
 	ListBackups(*dynamodb.ListBackupsInput) (*dynamodb.ListBackupsOutput, error)
 	ListBackupsWithContext(aws.Context, *dynamodb.ListBackupsInput, ...request.Option) (*dynamodb.ListBackupsOutput, error)
 	ListBackupsRequest(*dynamodb.ListBackupsInput) (*request.Request, *dynamodb.ListBackupsOutput)
@@ -193,6 +209,13 @@ type DynamoDBAPI interface {
 	ListGlobalTablesWithContext(aws.Context, *dynamodb.ListGlobalTablesInput, ...request.Option) (*dynamodb.ListGlobalTablesOutput, error)
 	ListGlobalTablesRequest(*dynamodb.ListGlobalTablesInput) (*request.Request, *dynamodb.ListGlobalTablesOutput)
 
+	ListImports(*dynamodb.ListImportsInput) (*dynamodb.ListImportsOutput, error)
+	ListImportsWithContext(aws.Context, *dynamodb.ListImportsInput, ...request.Option) (*dynamodb.ListImportsOutput, error)
+	ListImportsRequest(*dynamodb.ListImportsInput) (*request.Request, *dynamodb.ListImportsOutput)
+
+	ListImportsPages(*dynamodb.ListImportsInput, func(*dynamodb.ListImportsOutput, bool) bool) error
+	ListImportsPagesWithContext(aws.Context, *dynamodb.ListImportsInput, func(*dynamodb.ListImportsOutput, bool) bool, ...request.Option) error
+
 	ListTables(*dynamodb.ListTablesInput) (*dynamodb.ListTablesOutput, error)
 	ListTablesWithContext(aws.Context, *dynamodb.ListTablesInput, ...request.Option) (*dynamodb.ListTablesOutput, error)
 	ListTablesRequest(*dynamodb.ListTablesInput) (*request.Request, *dynamodb.ListTablesOutput)
@@ -207,6 +230,10 @@ type DynamoDBAPI interface {
 	PutItem(*dynamodb.PutItemInput) (*dynamodb.PutItemOutput, error)
 	PutItemWithContext(aws.Context, *dynamodb.PutItemInput, ...request.Option) (*dynamodb.PutItemOutput, error)
 	PutItemRequest(*dynamodb.PutItemInput) (*request.Request, *dynamodb.PutItemOutput)
+
+	PutResourcePolicy(*dynamodb.PutResourcePolicyInput) (*dynamodb.PutResourcePolicyOutput, error)
+	PutResourcePolicyWithContext(aws.Context, *dynamodb.PutResourcePolicyInput, ...request.Option) (*dynamodb.PutResourcePolicyOutput, error)
+	PutResourcePolicyRequest(*dynamodb.PutResourcePolicyInput) (*request.Request, *dynamodb.PutResourcePolicyOutput)
 
 	Query(*dynamodb.QueryInput) (*dynamodb.QueryOutput, error)
 	QueryWithContext(aws.Context, *dynamodb.QueryInput, ...request.Option) (*dynamodb.QueryOutput, error)
@@ -265,6 +292,10 @@ type DynamoDBAPI interface {
 	UpdateItem(*dynamodb.UpdateItemInput) (*dynamodb.UpdateItemOutput, error)
 	UpdateItemWithContext(aws.Context, *dynamodb.UpdateItemInput, ...request.Option) (*dynamodb.UpdateItemOutput, error)
 	UpdateItemRequest(*dynamodb.UpdateItemInput) (*request.Request, *dynamodb.UpdateItemOutput)
+
+	UpdateKinesisStreamingDestination(*dynamodb.UpdateKinesisStreamingDestinationInput) (*dynamodb.UpdateKinesisStreamingDestinationOutput, error)
+	UpdateKinesisStreamingDestinationWithContext(aws.Context, *dynamodb.UpdateKinesisStreamingDestinationInput, ...request.Option) (*dynamodb.UpdateKinesisStreamingDestinationOutput, error)
+	UpdateKinesisStreamingDestinationRequest(*dynamodb.UpdateKinesisStreamingDestinationInput) (*request.Request, *dynamodb.UpdateKinesisStreamingDestinationOutput)
 
 	UpdateTable(*dynamodb.UpdateTableInput) (*dynamodb.UpdateTableOutput, error)
 	UpdateTableWithContext(aws.Context, *dynamodb.UpdateTableInput, ...request.Option) (*dynamodb.UpdateTableOutput, error)

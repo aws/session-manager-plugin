@@ -20,6 +20,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/aws/session-manager-plugin/src/config"
@@ -86,12 +87,12 @@ type Session struct {
 	DisplayMode           sessionutil.DisplayMode
 }
 
-//startSession create the datachannel for session
+// startSession create the datachannel for session
 var startSession = func(session *Session, log log.T) error {
 	return session.Execute(log)
 }
 
-//setSessionHandlersWithSessionType set session handlers based on session subtype
+// setSessionHandlersWithSessionType set session handlers based on session subtype
 var setSessionHandlersWithSessionType = func(session *Session, log log.T) error {
 	// SessionType is set inside DataChannel
 	sessionSubType := SessionRegistry[session.SessionType]
@@ -162,7 +163,14 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	for argsIndex := 1; argsIndex < len(args); argsIndex++ {
 		switch argsIndex {
 		case 1:
-			response = []byte(args[1])
+			if strings.HasPrefix(args[1], "AWS_SSM_START_SESSION_RESPONSE") == true {
+				response = []byte(os.Getenv(args[1]))
+				if err = os.Unsetenv(args[1]); err != nil {
+					log.Errorf("Failed to remove temporary session env parameter: %v", err)
+				}
+			} else {
+				response = []byte(args[1])
+			}
 		case 2:
 			region = args[2]
 		case 3:
@@ -209,7 +217,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	}
 }
 
-//Execute create data channel and start the session
+// Execute create data channel and start the session
 func (s *Session) Execute(log log.T) (err error) {
 	fmt.Fprintf(os.Stdout, "\nStarting session with SessionId: %s\n", s.SessionId)
 

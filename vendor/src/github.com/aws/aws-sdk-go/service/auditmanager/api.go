@@ -29,14 +29,13 @@ const opAssociateAssessmentReportEvidenceFolder = "AssociateAssessmentReportEvid
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the AssociateAssessmentReportEvidenceFolderRequest method.
+//	req, resp := client.AssociateAssessmentReportEvidenceFolderRequest(params)
 //
-//    // Example sending a request using the AssociateAssessmentReportEvidenceFolderRequest method.
-//    req, resp := client.AssociateAssessmentReportEvidenceFolderRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/AssociateAssessmentReportEvidenceFolder
 func (c *AuditManager) AssociateAssessmentReportEvidenceFolderRequest(input *AssociateAssessmentReportEvidenceFolderInput) (req *request.Request, output *AssociateAssessmentReportEvidenceFolderOutput) {
@@ -58,8 +57,8 @@ func (c *AuditManager) AssociateAssessmentReportEvidenceFolderRequest(input *Ass
 
 // AssociateAssessmentReportEvidenceFolder API operation for AWS Audit Manager.
 //
-// Associates an evidence folder to the specified assessment report in Audit
-// Manager.
+// Associates an evidence folder to an assessment report in an Audit Manager
+// assessment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -69,19 +68,20 @@ func (c *AuditManager) AssociateAssessmentReportEvidenceFolderRequest(input *Ass
 // API operation AssociateAssessmentReportEvidenceFolder for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/AssociateAssessmentReportEvidenceFolder
 func (c *AuditManager) AssociateAssessmentReportEvidenceFolder(input *AssociateAssessmentReportEvidenceFolderInput) (*AssociateAssessmentReportEvidenceFolderOutput, error) {
@@ -121,14 +121,13 @@ const opBatchAssociateAssessmentReportEvidence = "BatchAssociateAssessmentReport
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the BatchAssociateAssessmentReportEvidenceRequest method.
+//	req, resp := client.BatchAssociateAssessmentReportEvidenceRequest(params)
 //
-//    // Example sending a request using the BatchAssociateAssessmentReportEvidenceRequest method.
-//    req, resp := client.BatchAssociateAssessmentReportEvidenceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchAssociateAssessmentReportEvidence
 func (c *AuditManager) BatchAssociateAssessmentReportEvidenceRequest(input *BatchAssociateAssessmentReportEvidenceInput) (req *request.Request, output *BatchAssociateAssessmentReportEvidenceOutput) {
@@ -160,19 +159,20 @@ func (c *AuditManager) BatchAssociateAssessmentReportEvidenceRequest(input *Batc
 // API operation BatchAssociateAssessmentReportEvidence for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchAssociateAssessmentReportEvidence
 func (c *AuditManager) BatchAssociateAssessmentReportEvidence(input *BatchAssociateAssessmentReportEvidenceInput) (*BatchAssociateAssessmentReportEvidenceOutput, error) {
@@ -212,14 +212,13 @@ const opBatchCreateDelegationByAssessment = "BatchCreateDelegationByAssessment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the BatchCreateDelegationByAssessmentRequest method.
+//	req, resp := client.BatchCreateDelegationByAssessmentRequest(params)
 //
-//    // Example sending a request using the BatchCreateDelegationByAssessmentRequest method.
-//    req, resp := client.BatchCreateDelegationByAssessmentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchCreateDelegationByAssessment
 func (c *AuditManager) BatchCreateDelegationByAssessmentRequest(input *BatchCreateDelegationByAssessmentInput) (req *request.Request, output *BatchCreateDelegationByAssessmentOutput) {
@@ -240,7 +239,7 @@ func (c *AuditManager) BatchCreateDelegationByAssessmentRequest(input *BatchCrea
 
 // BatchCreateDelegationByAssessment API operation for AWS Audit Manager.
 //
-// Create a batch of delegations for a specified assessment in Audit Manager.
+// Creates a batch of delegations for an assessment in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -250,19 +249,20 @@ func (c *AuditManager) BatchCreateDelegationByAssessmentRequest(input *BatchCrea
 // API operation BatchCreateDelegationByAssessment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchCreateDelegationByAssessment
 func (c *AuditManager) BatchCreateDelegationByAssessment(input *BatchCreateDelegationByAssessmentInput) (*BatchCreateDelegationByAssessmentOutput, error) {
@@ -302,14 +302,13 @@ const opBatchDeleteDelegationByAssessment = "BatchDeleteDelegationByAssessment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the BatchDeleteDelegationByAssessmentRequest method.
+//	req, resp := client.BatchDeleteDelegationByAssessmentRequest(params)
 //
-//    // Example sending a request using the BatchDeleteDelegationByAssessmentRequest method.
-//    req, resp := client.BatchDeleteDelegationByAssessmentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchDeleteDelegationByAssessment
 func (c *AuditManager) BatchDeleteDelegationByAssessmentRequest(input *BatchDeleteDelegationByAssessmentInput) (req *request.Request, output *BatchDeleteDelegationByAssessmentOutput) {
@@ -330,7 +329,7 @@ func (c *AuditManager) BatchDeleteDelegationByAssessmentRequest(input *BatchDele
 
 // BatchDeleteDelegationByAssessment API operation for AWS Audit Manager.
 //
-// Deletes the delegations in the specified Audit Manager assessment.
+// Deletes a batch of delegations for an assessment in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -340,19 +339,20 @@ func (c *AuditManager) BatchDeleteDelegationByAssessmentRequest(input *BatchDele
 // API operation BatchDeleteDelegationByAssessment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchDeleteDelegationByAssessment
 func (c *AuditManager) BatchDeleteDelegationByAssessment(input *BatchDeleteDelegationByAssessmentInput) (*BatchDeleteDelegationByAssessmentOutput, error) {
@@ -392,14 +392,13 @@ const opBatchDisassociateAssessmentReportEvidence = "BatchDisassociateAssessment
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the BatchDisassociateAssessmentReportEvidenceRequest method.
+//	req, resp := client.BatchDisassociateAssessmentReportEvidenceRequest(params)
 //
-//    // Example sending a request using the BatchDisassociateAssessmentReportEvidenceRequest method.
-//    req, resp := client.BatchDisassociateAssessmentReportEvidenceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchDisassociateAssessmentReportEvidence
 func (c *AuditManager) BatchDisassociateAssessmentReportEvidenceRequest(input *BatchDisassociateAssessmentReportEvidenceInput) (req *request.Request, output *BatchDisassociateAssessmentReportEvidenceOutput) {
@@ -420,8 +419,7 @@ func (c *AuditManager) BatchDisassociateAssessmentReportEvidenceRequest(input *B
 
 // BatchDisassociateAssessmentReportEvidence API operation for AWS Audit Manager.
 //
-// Disassociates a list of evidence from the specified assessment report in
-// Audit Manager.
+// Disassociates a list of evidence from an assessment report in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -431,19 +429,20 @@ func (c *AuditManager) BatchDisassociateAssessmentReportEvidenceRequest(input *B
 // API operation BatchDisassociateAssessmentReportEvidence for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchDisassociateAssessmentReportEvidence
 func (c *AuditManager) BatchDisassociateAssessmentReportEvidence(input *BatchDisassociateAssessmentReportEvidenceInput) (*BatchDisassociateAssessmentReportEvidenceOutput, error) {
@@ -483,14 +482,13 @@ const opBatchImportEvidenceToAssessmentControl = "BatchImportEvidenceToAssessmen
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the BatchImportEvidenceToAssessmentControlRequest method.
+//	req, resp := client.BatchImportEvidenceToAssessmentControlRequest(params)
 //
-//    // Example sending a request using the BatchImportEvidenceToAssessmentControlRequest method.
-//    req, resp := client.BatchImportEvidenceToAssessmentControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchImportEvidenceToAssessmentControl
 func (c *AuditManager) BatchImportEvidenceToAssessmentControlRequest(input *BatchImportEvidenceToAssessmentControlInput) (req *request.Request, output *BatchImportEvidenceToAssessmentControlOutput) {
@@ -511,8 +509,27 @@ func (c *AuditManager) BatchImportEvidenceToAssessmentControlRequest(input *Batc
 
 // BatchImportEvidenceToAssessmentControl API operation for AWS Audit Manager.
 //
-// Uploads one or more pieces of evidence to the specified control in the assessment
-// in Audit Manager.
+// Adds one or more pieces of evidence to a control in an Audit Manager assessment.
+//
+// You can import manual evidence from any S3 bucket by specifying the S3 URI
+// of the object. You can also upload a file from your browser, or enter plain
+// text in response to a risk assessment question.
+//
+// The following restrictions apply to this action:
+//
+//   - manualEvidence can be only one of the following: evidenceFileName, s3ResourcePath,
+//     or textResponse
+//
+//   - Maximum size of an individual evidence file: 100 MB
+//
+//   - Number of daily manual evidence uploads per control: 100
+//
+//   - Supported file formats: See Supported file types for manual evidence
+//     (https://docs.aws.amazon.com/audit-manager/latest/userguide/upload-evidence.html#supported-manual-evidence-files)
+//     in the Audit Manager User Guide
+//
+// For more information about Audit Manager service restrictions, see Quotas
+// and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -522,19 +539,23 @@ func (c *AuditManager) BatchImportEvidenceToAssessmentControlRequest(input *Batc
 // API operation BatchImportEvidenceToAssessmentControl for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/BatchImportEvidenceToAssessmentControl
 func (c *AuditManager) BatchImportEvidenceToAssessmentControl(input *BatchImportEvidenceToAssessmentControlInput) (*BatchImportEvidenceToAssessmentControlOutput, error) {
@@ -574,14 +595,13 @@ const opCreateAssessment = "CreateAssessment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateAssessmentRequest method.
+//	req, resp := client.CreateAssessmentRequest(params)
 //
-//    // Example sending a request using the CreateAssessmentRequest method.
-//    req, resp := client.CreateAssessmentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateAssessment
 func (c *AuditManager) CreateAssessmentRequest(input *CreateAssessmentInput) (req *request.Request, output *CreateAssessmentOutput) {
@@ -612,19 +632,30 @@ func (c *AuditManager) CreateAssessmentRequest(input *CreateAssessmentInput) (re
 // API operation CreateAssessment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ServiceQuotaExceededException
+//     You've reached your account quota for this resource type. To perform the
+//     requested action, delete some existing resources or request a quota increase
+//     (https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) from
+//     the Service Quotas console. For a list of Audit Manager service quotas, see
+//     Quotas and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateAssessment
 func (c *AuditManager) CreateAssessment(input *CreateAssessmentInput) (*CreateAssessmentOutput, error) {
@@ -664,14 +695,13 @@ const opCreateAssessmentFramework = "CreateAssessmentFramework"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateAssessmentFrameworkRequest method.
+//	req, resp := client.CreateAssessmentFrameworkRequest(params)
 //
-//    // Example sending a request using the CreateAssessmentFrameworkRequest method.
-//    req, resp := client.CreateAssessmentFrameworkRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateAssessmentFramework
 func (c *AuditManager) CreateAssessmentFrameworkRequest(input *CreateAssessmentFrameworkInput) (req *request.Request, output *CreateAssessmentFrameworkOutput) {
@@ -702,19 +732,27 @@ func (c *AuditManager) CreateAssessmentFrameworkRequest(input *CreateAssessmentF
 // API operation CreateAssessmentFramework for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ServiceQuotaExceededException
+//     You've reached your account quota for this resource type. To perform the
+//     requested action, delete some existing resources or request a quota increase
+//     (https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) from
+//     the Service Quotas console. For a list of Audit Manager service quotas, see
+//     Quotas and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateAssessmentFramework
 func (c *AuditManager) CreateAssessmentFramework(input *CreateAssessmentFrameworkInput) (*CreateAssessmentFrameworkOutput, error) {
@@ -754,14 +792,13 @@ const opCreateAssessmentReport = "CreateAssessmentReport"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateAssessmentReportRequest method.
+//	req, resp := client.CreateAssessmentReportRequest(params)
 //
-//    // Example sending a request using the CreateAssessmentReportRequest method.
-//    req, resp := client.CreateAssessmentReportRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateAssessmentReport
 func (c *AuditManager) CreateAssessmentReportRequest(input *CreateAssessmentReportInput) (req *request.Request, output *CreateAssessmentReportOutput) {
@@ -792,19 +829,20 @@ func (c *AuditManager) CreateAssessmentReportRequest(input *CreateAssessmentRepo
 // API operation CreateAssessmentReport for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateAssessmentReport
 func (c *AuditManager) CreateAssessmentReport(input *CreateAssessmentReportInput) (*CreateAssessmentReportOutput, error) {
@@ -844,14 +882,13 @@ const opCreateControl = "CreateControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateControlRequest method.
+//	req, resp := client.CreateControlRequest(params)
 //
-//    // Example sending a request using the CreateControlRequest method.
-//    req, resp := client.CreateControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateControl
 func (c *AuditManager) CreateControlRequest(input *CreateControlInput) (req *request.Request, output *CreateControlOutput) {
@@ -882,19 +919,27 @@ func (c *AuditManager) CreateControlRequest(input *CreateControlInput) (req *req
 // API operation CreateControl for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ServiceQuotaExceededException
+//     You've reached your account quota for this resource type. To perform the
+//     requested action, delete some existing resources or request a quota increase
+//     (https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) from
+//     the Service Quotas console. For a list of Audit Manager service quotas, see
+//     Quotas and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/CreateControl
 func (c *AuditManager) CreateControl(input *CreateControlInput) (*CreateControlOutput, error) {
@@ -934,14 +979,13 @@ const opDeleteAssessment = "DeleteAssessment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteAssessmentRequest method.
+//	req, resp := client.DeleteAssessmentRequest(params)
 //
-//    // Example sending a request using the DeleteAssessmentRequest method.
-//    req, resp := client.DeleteAssessmentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessment
 func (c *AuditManager) DeleteAssessmentRequest(input *DeleteAssessmentInput) (req *request.Request, output *DeleteAssessmentOutput) {
@@ -973,19 +1017,20 @@ func (c *AuditManager) DeleteAssessmentRequest(input *DeleteAssessmentInput) (re
 // API operation DeleteAssessment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessment
 func (c *AuditManager) DeleteAssessment(input *DeleteAssessmentInput) (*DeleteAssessmentOutput, error) {
@@ -1025,14 +1070,13 @@ const opDeleteAssessmentFramework = "DeleteAssessmentFramework"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteAssessmentFrameworkRequest method.
+//	req, resp := client.DeleteAssessmentFrameworkRequest(params)
 //
-//    // Example sending a request using the DeleteAssessmentFrameworkRequest method.
-//    req, resp := client.DeleteAssessmentFrameworkRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessmentFramework
 func (c *AuditManager) DeleteAssessmentFrameworkRequest(input *DeleteAssessmentFrameworkInput) (req *request.Request, output *DeleteAssessmentFrameworkOutput) {
@@ -1064,19 +1108,20 @@ func (c *AuditManager) DeleteAssessmentFrameworkRequest(input *DeleteAssessmentF
 // API operation DeleteAssessmentFramework for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessmentFramework
 func (c *AuditManager) DeleteAssessmentFramework(input *DeleteAssessmentFrameworkInput) (*DeleteAssessmentFrameworkOutput, error) {
@@ -1100,6 +1145,97 @@ func (c *AuditManager) DeleteAssessmentFrameworkWithContext(ctx aws.Context, inp
 	return out, req.Send()
 }
 
+const opDeleteAssessmentFrameworkShare = "DeleteAssessmentFrameworkShare"
+
+// DeleteAssessmentFrameworkShareRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteAssessmentFrameworkShare operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteAssessmentFrameworkShare for more information on using the DeleteAssessmentFrameworkShare
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteAssessmentFrameworkShareRequest method.
+//	req, resp := client.DeleteAssessmentFrameworkShareRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessmentFrameworkShare
+func (c *AuditManager) DeleteAssessmentFrameworkShareRequest(input *DeleteAssessmentFrameworkShareInput) (req *request.Request, output *DeleteAssessmentFrameworkShareOutput) {
+	op := &request.Operation{
+		Name:       opDeleteAssessmentFrameworkShare,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/assessmentFrameworkShareRequests/{requestId}",
+	}
+
+	if input == nil {
+		input = &DeleteAssessmentFrameworkShareInput{}
+	}
+
+	output = &DeleteAssessmentFrameworkShareOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteAssessmentFrameworkShare API operation for AWS Audit Manager.
+//
+// Deletes a share request for a custom framework in Audit Manager.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation DeleteAssessmentFrameworkShare for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessmentFrameworkShare
+func (c *AuditManager) DeleteAssessmentFrameworkShare(input *DeleteAssessmentFrameworkShareInput) (*DeleteAssessmentFrameworkShareOutput, error) {
+	req, out := c.DeleteAssessmentFrameworkShareRequest(input)
+	return out, req.Send()
+}
+
+// DeleteAssessmentFrameworkShareWithContext is the same as DeleteAssessmentFrameworkShare with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteAssessmentFrameworkShare for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) DeleteAssessmentFrameworkShareWithContext(ctx aws.Context, input *DeleteAssessmentFrameworkShareInput, opts ...request.Option) (*DeleteAssessmentFrameworkShareOutput, error) {
+	req, out := c.DeleteAssessmentFrameworkShareRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteAssessmentReport = "DeleteAssessmentReport"
 
 // DeleteAssessmentReportRequest generates a "aws/request.Request" representing the
@@ -1116,14 +1252,13 @@ const opDeleteAssessmentReport = "DeleteAssessmentReport"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteAssessmentReportRequest method.
+//	req, resp := client.DeleteAssessmentReportRequest(params)
 //
-//    // Example sending a request using the DeleteAssessmentReportRequest method.
-//    req, resp := client.DeleteAssessmentReportRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessmentReport
 func (c *AuditManager) DeleteAssessmentReportRequest(input *DeleteAssessmentReportInput) (req *request.Request, output *DeleteAssessmentReportOutput) {
@@ -1145,7 +1280,29 @@ func (c *AuditManager) DeleteAssessmentReportRequest(input *DeleteAssessmentRepo
 
 // DeleteAssessmentReport API operation for AWS Audit Manager.
 //
-// Deletes an assessment report from an assessment in Audit Manager.
+// Deletes an assessment report in Audit Manager.
+//
+// When you run the DeleteAssessmentReport operation, Audit Manager attempts
+// to delete the following data:
+//
+// # The specified assessment report that’s stored in your S3 bucket
+//
+// # The associated metadata that’s stored in Audit Manager
+//
+// If Audit Manager can’t access the assessment report in your S3 bucket,
+// the report isn’t deleted. In this event, the DeleteAssessmentReport operation
+// doesn’t fail. Instead, it proceeds to delete the associated metadata only.
+// You must then delete the assessment report from the S3 bucket yourself.
+//
+// This scenario happens when Audit Manager receives a 403 (Forbidden) or 404
+// (Not Found) error from Amazon S3. To avoid this, make sure that your S3 bucket
+// is available, and that you configured the correct permissions for Audit Manager
+// to delete resources in your S3 bucket. For an example permissions policy
+// that you can use, see Assessment report destination permissions (https://docs.aws.amazon.com/audit-manager/latest/userguide/security_iam_id-based-policy-examples.html#full-administrator-access-assessment-report-destination)
+// in the Audit Manager User Guide. For information about the issues that could
+// cause a 403 (Forbidden) or 404 (Not Found) error from Amazon S3, see List
+// of Error Codes (https://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html#ErrorCodeList)
+// in the Amazon Simple Storage Service API Reference.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1155,19 +1312,20 @@ func (c *AuditManager) DeleteAssessmentReportRequest(input *DeleteAssessmentRepo
 // API operation DeleteAssessmentReport for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteAssessmentReport
 func (c *AuditManager) DeleteAssessmentReport(input *DeleteAssessmentReportInput) (*DeleteAssessmentReportOutput, error) {
@@ -1207,14 +1365,13 @@ const opDeleteControl = "DeleteControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteControlRequest method.
+//	req, resp := client.DeleteControlRequest(params)
 //
-//    // Example sending a request using the DeleteControlRequest method.
-//    req, resp := client.DeleteControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteControl
 func (c *AuditManager) DeleteControlRequest(input *DeleteControlInput) (req *request.Request, output *DeleteControlOutput) {
@@ -1238,6 +1395,12 @@ func (c *AuditManager) DeleteControlRequest(input *DeleteControlInput) (req *req
 //
 // Deletes a custom control in Audit Manager.
 //
+// When you invoke this operation, the custom control is deleted from any frameworks
+// or assessments that it’s currently part of. As a result, Audit Manager
+// will stop collecting evidence for that custom control in all of your assessments.
+// This includes assessments that you previously created before you deleted
+// the custom control.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -1246,19 +1409,20 @@ func (c *AuditManager) DeleteControlRequest(input *DeleteControlInput) (req *req
 // API operation DeleteControl for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeleteControl
 func (c *AuditManager) DeleteControl(input *DeleteControlInput) (*DeleteControlOutput, error) {
@@ -1298,14 +1462,13 @@ const opDeregisterAccount = "DeregisterAccount"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeregisterAccountRequest method.
+//	req, resp := client.DeregisterAccountRequest(params)
 //
-//    // Example sending a request using the DeregisterAccountRequest method.
-//    req, resp := client.DeregisterAccountRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeregisterAccount
 func (c *AuditManager) DeregisterAccountRequest(input *DeregisterAccountInput) (req *request.Request, output *DeregisterAccountOutput) {
@@ -1328,6 +1491,14 @@ func (c *AuditManager) DeregisterAccountRequest(input *DeregisterAccountInput) (
 //
 // Deregisters an account in Audit Manager.
 //
+// Before you deregister, you can use the UpdateSettings (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_UpdateSettings.html)
+// API operation to set your preferred data retention policy. By default, Audit
+// Manager retains your data. If you want to delete your data, you can use the
+// DeregistrationPolicy attribute to request the deletion of your data.
+//
+// For more information about data retention, see Data Protection (https://docs.aws.amazon.com/audit-manager/latest/userguide/data-protection.html)
+// in the Audit Manager User Guide.
+//
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
 // the error.
@@ -1336,19 +1507,20 @@ func (c *AuditManager) DeregisterAccountRequest(input *DeregisterAccountInput) (
 // API operation DeregisterAccount for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeregisterAccount
 func (c *AuditManager) DeregisterAccount(input *DeregisterAccountInput) (*DeregisterAccountOutput, error) {
@@ -1388,14 +1560,13 @@ const opDeregisterOrganizationAdminAccount = "DeregisterOrganizationAdminAccount
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeregisterOrganizationAdminAccountRequest method.
+//	req, resp := client.DeregisterOrganizationAdminAccountRequest(params)
 //
-//    // Example sending a request using the DeregisterOrganizationAdminAccountRequest method.
-//    req, resp := client.DeregisterOrganizationAdminAccountRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeregisterOrganizationAdminAccount
 func (c *AuditManager) DeregisterOrganizationAdminAccountRequest(input *DeregisterOrganizationAdminAccountInput) (req *request.Request, output *DeregisterOrganizationAdminAccountOutput) {
@@ -1417,14 +1588,65 @@ func (c *AuditManager) DeregisterOrganizationAdminAccountRequest(input *Deregist
 
 // DeregisterOrganizationAdminAccount API operation for AWS Audit Manager.
 //
-// Removes the specified member account as a delegated administrator for Audit
-// Manager.
+// Removes the specified Amazon Web Services account as a delegated administrator
+// for Audit Manager.
 //
 // When you remove a delegated administrator from your Audit Manager settings,
-// or when you deregister a delegated administrator from Organizations, you
-// continue to have access to the evidence that you previously collected under
-// that account. However, Audit Manager will stop collecting and attaching evidence
-// to that delegated administrator account moving forward.
+// you continue to have access to the evidence that you previously collected
+// under that account. This is also the case when you deregister a delegated
+// administrator from Organizations. However, Audit Manager stops collecting
+// and attaching evidence to that delegated administrator account moving forward.
+//
+// Keep in mind the following cleanup task if you use evidence finder:
+//
+// Before you use your management account to remove a delegated administrator,
+// make sure that the current delegated administrator account signs in to Audit
+// Manager and disables evidence finder first. Disabling evidence finder automatically
+// deletes the event data store that was created in their account when they
+// enabled evidence finder. If this task isn’t completed, the event data store
+// remains in their account. In this case, we recommend that the original delegated
+// administrator goes to CloudTrail Lake and manually deletes the event data
+// store (https://docs.aws.amazon.com/awscloudtrail/latest/userguide/query-eds-disable-termination.html).
+//
+// This cleanup task is necessary to ensure that you don't end up with multiple
+// event data stores. Audit Manager ignores an unused event data store after
+// you remove or change a delegated administrator account. However, the unused
+// event data store continues to incur storage costs from CloudTrail Lake if
+// you don't delete it.
+//
+// When you deregister a delegated administrator account for Audit Manager,
+// the data for that account isn’t deleted. If you want to delete resource
+// data for a delegated administrator account, you must perform that task separately
+// before you deregister the account. Either, you can do this in the Audit Manager
+// console. Or, you can use one of the delete API operations that are provided
+// by Audit Manager.
+//
+// To delete your Audit Manager resource data, see the following instructions:
+//
+//   - DeleteAssessment (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeleteAssessment.html)
+//     (see also: Deleting an assessment (https://docs.aws.amazon.com/audit-manager/latest/userguide/delete-assessment.html)
+//     in the Audit Manager User Guide)
+//
+//   - DeleteAssessmentFramework (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeleteAssessmentFramework.html)
+//     (see also: Deleting a custom framework (https://docs.aws.amazon.com/audit-manager/latest/userguide/delete-custom-framework.html)
+//     in the Audit Manager User Guide)
+//
+//   - DeleteAssessmentFrameworkShare (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeleteAssessmentFrameworkShare.html)
+//     (see also: Deleting a share request (https://docs.aws.amazon.com/audit-manager/latest/userguide/deleting-shared-framework-requests.html)
+//     in the Audit Manager User Guide)
+//
+//   - DeleteAssessmentReport (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeleteAssessmentReport.html)
+//     (see also: Deleting an assessment report (https://docs.aws.amazon.com/audit-manager/latest/userguide/generate-assessment-report.html#delete-assessment-report-steps)
+//     in the Audit Manager User Guide)
+//
+//   - DeleteControl (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeleteControl.html)
+//     (see also: Deleting a custom control (https://docs.aws.amazon.com/audit-manager/latest/userguide/delete-controls.html)
+//     in the Audit Manager User Guide)
+//
+// At this time, Audit Manager doesn't provide an option to delete evidence
+// for a specific delegated administrator. Instead, when your management account
+// deregisters Audit Manager, we perform a cleanup for the current delegated
+// administrator account at the time of deregistration.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1434,19 +1656,20 @@ func (c *AuditManager) DeregisterOrganizationAdminAccountRequest(input *Deregist
 // API operation DeregisterOrganizationAdminAccount for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DeregisterOrganizationAdminAccount
 func (c *AuditManager) DeregisterOrganizationAdminAccount(input *DeregisterOrganizationAdminAccountInput) (*DeregisterOrganizationAdminAccountOutput, error) {
@@ -1486,14 +1709,13 @@ const opDisassociateAssessmentReportEvidenceFolder = "DisassociateAssessmentRepo
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DisassociateAssessmentReportEvidenceFolderRequest method.
+//	req, resp := client.DisassociateAssessmentReportEvidenceFolderRequest(params)
 //
-//    // Example sending a request using the DisassociateAssessmentReportEvidenceFolderRequest method.
-//    req, resp := client.DisassociateAssessmentReportEvidenceFolderRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DisassociateAssessmentReportEvidenceFolder
 func (c *AuditManager) DisassociateAssessmentReportEvidenceFolderRequest(input *DisassociateAssessmentReportEvidenceFolderInput) (req *request.Request, output *DisassociateAssessmentReportEvidenceFolderOutput) {
@@ -1526,19 +1748,20 @@ func (c *AuditManager) DisassociateAssessmentReportEvidenceFolderRequest(input *
 // API operation DisassociateAssessmentReportEvidenceFolder for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/DisassociateAssessmentReportEvidenceFolder
 func (c *AuditManager) DisassociateAssessmentReportEvidenceFolder(input *DisassociateAssessmentReportEvidenceFolderInput) (*DisassociateAssessmentReportEvidenceFolderOutput, error) {
@@ -1578,14 +1801,13 @@ const opGetAccountStatus = "GetAccountStatus"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetAccountStatusRequest method.
+//	req, resp := client.GetAccountStatusRequest(params)
 //
-//    // Example sending a request using the GetAccountStatusRequest method.
-//    req, resp := client.GetAccountStatusRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAccountStatus
 func (c *AuditManager) GetAccountStatusRequest(input *GetAccountStatusInput) (req *request.Request, output *GetAccountStatusOutput) {
@@ -1606,7 +1828,7 @@ func (c *AuditManager) GetAccountStatusRequest(input *GetAccountStatusInput) (re
 
 // GetAccountStatus API operation for AWS Audit Manager.
 //
-// Returns the registration status of an account in Audit Manager.
+// Gets the registration status of an account in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1616,9 +1838,9 @@ func (c *AuditManager) GetAccountStatusRequest(input *GetAccountStatusInput) (re
 // API operation GetAccountStatus for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAccountStatus
 func (c *AuditManager) GetAccountStatus(input *GetAccountStatusInput) (*GetAccountStatusOutput, error) {
@@ -1658,14 +1880,13 @@ const opGetAssessment = "GetAssessment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetAssessmentRequest method.
+//	req, resp := client.GetAssessmentRequest(params)
 //
-//    // Example sending a request using the GetAssessmentRequest method.
-//    req, resp := client.GetAssessmentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAssessment
 func (c *AuditManager) GetAssessmentRequest(input *GetAssessmentInput) (req *request.Request, output *GetAssessmentOutput) {
@@ -1686,7 +1907,7 @@ func (c *AuditManager) GetAssessmentRequest(input *GetAssessmentInput) (req *req
 
 // GetAssessment API operation for AWS Audit Manager.
 //
-// Returns an assessment from Audit Manager.
+// Gets information about a specified assessment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1696,19 +1917,20 @@ func (c *AuditManager) GetAssessmentRequest(input *GetAssessmentInput) (req *req
 // API operation GetAssessment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAssessment
 func (c *AuditManager) GetAssessment(input *GetAssessmentInput) (*GetAssessmentOutput, error) {
@@ -1748,14 +1970,13 @@ const opGetAssessmentFramework = "GetAssessmentFramework"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetAssessmentFrameworkRequest method.
+//	req, resp := client.GetAssessmentFrameworkRequest(params)
 //
-//    // Example sending a request using the GetAssessmentFrameworkRequest method.
-//    req, resp := client.GetAssessmentFrameworkRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAssessmentFramework
 func (c *AuditManager) GetAssessmentFrameworkRequest(input *GetAssessmentFrameworkInput) (req *request.Request, output *GetAssessmentFrameworkOutput) {
@@ -1776,7 +1997,7 @@ func (c *AuditManager) GetAssessmentFrameworkRequest(input *GetAssessmentFramewo
 
 // GetAssessmentFramework API operation for AWS Audit Manager.
 //
-// Returns a framework from Audit Manager.
+// Gets information about a specified framework.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1786,19 +2007,20 @@ func (c *AuditManager) GetAssessmentFrameworkRequest(input *GetAssessmentFramewo
 // API operation GetAssessmentFramework for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAssessmentFramework
 func (c *AuditManager) GetAssessmentFramework(input *GetAssessmentFrameworkInput) (*GetAssessmentFrameworkOutput, error) {
@@ -1838,14 +2060,13 @@ const opGetAssessmentReportUrl = "GetAssessmentReportUrl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetAssessmentReportUrlRequest method.
+//	req, resp := client.GetAssessmentReportUrlRequest(params)
 //
-//    // Example sending a request using the GetAssessmentReportUrlRequest method.
-//    req, resp := client.GetAssessmentReportUrlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAssessmentReportUrl
 func (c *AuditManager) GetAssessmentReportUrlRequest(input *GetAssessmentReportUrlInput) (req *request.Request, output *GetAssessmentReportUrlOutput) {
@@ -1866,7 +2087,7 @@ func (c *AuditManager) GetAssessmentReportUrlRequest(input *GetAssessmentReportU
 
 // GetAssessmentReportUrl API operation for AWS Audit Manager.
 //
-// Returns the URL of a specified assessment report in Audit Manager.
+// Gets the URL of an assessment report in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1876,19 +2097,20 @@ func (c *AuditManager) GetAssessmentReportUrlRequest(input *GetAssessmentReportU
 // API operation GetAssessmentReportUrl for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetAssessmentReportUrl
 func (c *AuditManager) GetAssessmentReportUrl(input *GetAssessmentReportUrlInput) (*GetAssessmentReportUrlOutput, error) {
@@ -1928,14 +2150,13 @@ const opGetChangeLogs = "GetChangeLogs"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetChangeLogsRequest method.
+//	req, resp := client.GetChangeLogsRequest(params)
 //
-//    // Example sending a request using the GetChangeLogsRequest method.
-//    req, resp := client.GetChangeLogsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetChangeLogs
 func (c *AuditManager) GetChangeLogsRequest(input *GetChangeLogsInput) (req *request.Request, output *GetChangeLogsOutput) {
@@ -1962,7 +2183,7 @@ func (c *AuditManager) GetChangeLogsRequest(input *GetChangeLogsInput) (req *req
 
 // GetChangeLogs API operation for AWS Audit Manager.
 //
-// Returns a list of changelogs from Audit Manager.
+// Gets a list of changelogs from Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1972,19 +2193,20 @@ func (c *AuditManager) GetChangeLogsRequest(input *GetChangeLogsInput) (req *req
 // API operation GetChangeLogs for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetChangeLogs
 func (c *AuditManager) GetChangeLogs(input *GetChangeLogsInput) (*GetChangeLogsOutput, error) {
@@ -2016,15 +2238,14 @@ func (c *AuditManager) GetChangeLogsWithContext(ctx aws.Context, input *GetChang
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetChangeLogs operation.
-//    pageNum := 0
-//    err := client.GetChangeLogsPages(params,
-//        func(page *auditmanager.GetChangeLogsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetChangeLogs operation.
+//	pageNum := 0
+//	err := client.GetChangeLogsPages(params,
+//	    func(page *auditmanager.GetChangeLogsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) GetChangeLogsPages(input *GetChangeLogsInput, fn func(*GetChangeLogsOutput, bool) bool) error {
 	return c.GetChangeLogsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2076,14 +2297,13 @@ const opGetControl = "GetControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetControlRequest method.
+//	req, resp := client.GetControlRequest(params)
 //
-//    // Example sending a request using the GetControlRequest method.
-//    req, resp := client.GetControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetControl
 func (c *AuditManager) GetControlRequest(input *GetControlInput) (req *request.Request, output *GetControlOutput) {
@@ -2104,7 +2324,7 @@ func (c *AuditManager) GetControlRequest(input *GetControlInput) (req *request.R
 
 // GetControl API operation for AWS Audit Manager.
 //
-// Returns a control from Audit Manager.
+// Gets information about a specified control.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2114,19 +2334,20 @@ func (c *AuditManager) GetControlRequest(input *GetControlInput) (req *request.R
 // API operation GetControl for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetControl
 func (c *AuditManager) GetControl(input *GetControlInput) (*GetControlOutput, error) {
@@ -2166,14 +2387,13 @@ const opGetDelegations = "GetDelegations"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetDelegationsRequest method.
+//	req, resp := client.GetDelegationsRequest(params)
 //
-//    // Example sending a request using the GetDelegationsRequest method.
-//    req, resp := client.GetDelegationsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetDelegations
 func (c *AuditManager) GetDelegationsRequest(input *GetDelegationsInput) (req *request.Request, output *GetDelegationsOutput) {
@@ -2200,7 +2420,7 @@ func (c *AuditManager) GetDelegationsRequest(input *GetDelegationsInput) (req *r
 
 // GetDelegations API operation for AWS Audit Manager.
 //
-// Returns a list of delegations from an audit owner to a delegate.
+// Gets a list of delegations from an audit owner to a delegate.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2210,16 +2430,17 @@ func (c *AuditManager) GetDelegationsRequest(input *GetDelegationsInput) (req *r
 // API operation GetDelegations for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetDelegations
 func (c *AuditManager) GetDelegations(input *GetDelegationsInput) (*GetDelegationsOutput, error) {
@@ -2251,15 +2472,14 @@ func (c *AuditManager) GetDelegationsWithContext(ctx aws.Context, input *GetDele
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetDelegations operation.
-//    pageNum := 0
-//    err := client.GetDelegationsPages(params,
-//        func(page *auditmanager.GetDelegationsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetDelegations operation.
+//	pageNum := 0
+//	err := client.GetDelegationsPages(params,
+//	    func(page *auditmanager.GetDelegationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) GetDelegationsPages(input *GetDelegationsInput, fn func(*GetDelegationsOutput, bool) bool) error {
 	return c.GetDelegationsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2311,14 +2531,13 @@ const opGetEvidence = "GetEvidence"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetEvidenceRequest method.
+//	req, resp := client.GetEvidenceRequest(params)
 //
-//    // Example sending a request using the GetEvidenceRequest method.
-//    req, resp := client.GetEvidenceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidence
 func (c *AuditManager) GetEvidenceRequest(input *GetEvidenceInput) (req *request.Request, output *GetEvidenceOutput) {
@@ -2339,7 +2558,7 @@ func (c *AuditManager) GetEvidenceRequest(input *GetEvidenceInput) (req *request
 
 // GetEvidence API operation for AWS Audit Manager.
 //
-// Returns evidence from Audit Manager.
+// Gets information about a specified evidence item.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2349,19 +2568,20 @@ func (c *AuditManager) GetEvidenceRequest(input *GetEvidenceInput) (req *request
 // API operation GetEvidence for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidence
 func (c *AuditManager) GetEvidence(input *GetEvidenceInput) (*GetEvidenceOutput, error) {
@@ -2401,14 +2621,13 @@ const opGetEvidenceByEvidenceFolder = "GetEvidenceByEvidenceFolder"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetEvidenceByEvidenceFolderRequest method.
+//	req, resp := client.GetEvidenceByEvidenceFolderRequest(params)
 //
-//    // Example sending a request using the GetEvidenceByEvidenceFolderRequest method.
-//    req, resp := client.GetEvidenceByEvidenceFolderRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceByEvidenceFolder
 func (c *AuditManager) GetEvidenceByEvidenceFolderRequest(input *GetEvidenceByEvidenceFolderInput) (req *request.Request, output *GetEvidenceByEvidenceFolderOutput) {
@@ -2435,7 +2654,7 @@ func (c *AuditManager) GetEvidenceByEvidenceFolderRequest(input *GetEvidenceByEv
 
 // GetEvidenceByEvidenceFolder API operation for AWS Audit Manager.
 //
-// Returns all evidence from a specified evidence folder in Audit Manager.
+// Gets all evidence from a specified evidence folder in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2445,19 +2664,20 @@ func (c *AuditManager) GetEvidenceByEvidenceFolderRequest(input *GetEvidenceByEv
 // API operation GetEvidenceByEvidenceFolder for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceByEvidenceFolder
 func (c *AuditManager) GetEvidenceByEvidenceFolder(input *GetEvidenceByEvidenceFolderInput) (*GetEvidenceByEvidenceFolderOutput, error) {
@@ -2489,15 +2709,14 @@ func (c *AuditManager) GetEvidenceByEvidenceFolderWithContext(ctx aws.Context, i
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetEvidenceByEvidenceFolder operation.
-//    pageNum := 0
-//    err := client.GetEvidenceByEvidenceFolderPages(params,
-//        func(page *auditmanager.GetEvidenceByEvidenceFolderOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetEvidenceByEvidenceFolder operation.
+//	pageNum := 0
+//	err := client.GetEvidenceByEvidenceFolderPages(params,
+//	    func(page *auditmanager.GetEvidenceByEvidenceFolderOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) GetEvidenceByEvidenceFolderPages(input *GetEvidenceByEvidenceFolderInput, fn func(*GetEvidenceByEvidenceFolderOutput, bool) bool) error {
 	return c.GetEvidenceByEvidenceFolderPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2533,6 +2752,112 @@ func (c *AuditManager) GetEvidenceByEvidenceFolderPagesWithContext(ctx aws.Conte
 	return p.Err()
 }
 
+const opGetEvidenceFileUploadUrl = "GetEvidenceFileUploadUrl"
+
+// GetEvidenceFileUploadUrlRequest generates a "aws/request.Request" representing the
+// client's request for the GetEvidenceFileUploadUrl operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetEvidenceFileUploadUrl for more information on using the GetEvidenceFileUploadUrl
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetEvidenceFileUploadUrlRequest method.
+//	req, resp := client.GetEvidenceFileUploadUrlRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFileUploadUrl
+func (c *AuditManager) GetEvidenceFileUploadUrlRequest(input *GetEvidenceFileUploadUrlInput) (req *request.Request, output *GetEvidenceFileUploadUrlOutput) {
+	op := &request.Operation{
+		Name:       opGetEvidenceFileUploadUrl,
+		HTTPMethod: "GET",
+		HTTPPath:   "/evidenceFileUploadUrl",
+	}
+
+	if input == nil {
+		input = &GetEvidenceFileUploadUrlInput{}
+	}
+
+	output = &GetEvidenceFileUploadUrlOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetEvidenceFileUploadUrl API operation for AWS Audit Manager.
+//
+// Creates a presigned Amazon S3 URL that can be used to upload a file as manual
+// evidence. For instructions on how to use this operation, see Upload a file
+// from your browser (https://docs.aws.amazon.com/audit-manager/latest/userguide/upload-evidence.html#how-to-upload-manual-evidence-files)
+// in the Audit Manager User Guide.
+//
+// The following restrictions apply to this operation:
+//
+//   - Maximum size of an individual evidence file: 100 MB
+//
+//   - Number of daily manual evidence uploads per control: 100
+//
+//   - Supported file formats: See Supported file types for manual evidence
+//     (https://docs.aws.amazon.com/audit-manager/latest/userguide/upload-evidence.html#supported-manual-evidence-files)
+//     in the Audit Manager User Guide
+//
+// For more information about Audit Manager service restrictions, see Quotas
+// and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation GetEvidenceFileUploadUrl for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFileUploadUrl
+func (c *AuditManager) GetEvidenceFileUploadUrl(input *GetEvidenceFileUploadUrlInput) (*GetEvidenceFileUploadUrlOutput, error) {
+	req, out := c.GetEvidenceFileUploadUrlRequest(input)
+	return out, req.Send()
+}
+
+// GetEvidenceFileUploadUrlWithContext is the same as GetEvidenceFileUploadUrl with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetEvidenceFileUploadUrl for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) GetEvidenceFileUploadUrlWithContext(ctx aws.Context, input *GetEvidenceFileUploadUrlInput, opts ...request.Option) (*GetEvidenceFileUploadUrlOutput, error) {
+	req, out := c.GetEvidenceFileUploadUrlRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetEvidenceFolder = "GetEvidenceFolder"
 
 // GetEvidenceFolderRequest generates a "aws/request.Request" representing the
@@ -2549,14 +2874,13 @@ const opGetEvidenceFolder = "GetEvidenceFolder"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetEvidenceFolderRequest method.
+//	req, resp := client.GetEvidenceFolderRequest(params)
 //
-//    // Example sending a request using the GetEvidenceFolderRequest method.
-//    req, resp := client.GetEvidenceFolderRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFolder
 func (c *AuditManager) GetEvidenceFolderRequest(input *GetEvidenceFolderInput) (req *request.Request, output *GetEvidenceFolderOutput) {
@@ -2577,7 +2901,7 @@ func (c *AuditManager) GetEvidenceFolderRequest(input *GetEvidenceFolderInput) (
 
 // GetEvidenceFolder API operation for AWS Audit Manager.
 //
-// Returns an evidence folder from the specified assessment in Audit Manager.
+// Gets an evidence folder from a specified assessment in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2587,19 +2911,20 @@ func (c *AuditManager) GetEvidenceFolderRequest(input *GetEvidenceFolderInput) (
 // API operation GetEvidenceFolder for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFolder
 func (c *AuditManager) GetEvidenceFolder(input *GetEvidenceFolderInput) (*GetEvidenceFolderOutput, error) {
@@ -2639,14 +2964,13 @@ const opGetEvidenceFoldersByAssessment = "GetEvidenceFoldersByAssessment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetEvidenceFoldersByAssessmentRequest method.
+//	req, resp := client.GetEvidenceFoldersByAssessmentRequest(params)
 //
-//    // Example sending a request using the GetEvidenceFoldersByAssessmentRequest method.
-//    req, resp := client.GetEvidenceFoldersByAssessmentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFoldersByAssessment
 func (c *AuditManager) GetEvidenceFoldersByAssessmentRequest(input *GetEvidenceFoldersByAssessmentInput) (req *request.Request, output *GetEvidenceFoldersByAssessmentOutput) {
@@ -2673,7 +2997,7 @@ func (c *AuditManager) GetEvidenceFoldersByAssessmentRequest(input *GetEvidenceF
 
 // GetEvidenceFoldersByAssessment API operation for AWS Audit Manager.
 //
-// Returns the evidence folders from a specified assessment in Audit Manager.
+// Gets the evidence folders from a specified assessment in Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2683,19 +3007,20 @@ func (c *AuditManager) GetEvidenceFoldersByAssessmentRequest(input *GetEvidenceF
 // API operation GetEvidenceFoldersByAssessment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFoldersByAssessment
 func (c *AuditManager) GetEvidenceFoldersByAssessment(input *GetEvidenceFoldersByAssessmentInput) (*GetEvidenceFoldersByAssessmentOutput, error) {
@@ -2727,15 +3052,14 @@ func (c *AuditManager) GetEvidenceFoldersByAssessmentWithContext(ctx aws.Context
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetEvidenceFoldersByAssessment operation.
-//    pageNum := 0
-//    err := client.GetEvidenceFoldersByAssessmentPages(params,
-//        func(page *auditmanager.GetEvidenceFoldersByAssessmentOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetEvidenceFoldersByAssessment operation.
+//	pageNum := 0
+//	err := client.GetEvidenceFoldersByAssessmentPages(params,
+//	    func(page *auditmanager.GetEvidenceFoldersByAssessmentOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) GetEvidenceFoldersByAssessmentPages(input *GetEvidenceFoldersByAssessmentInput, fn func(*GetEvidenceFoldersByAssessmentOutput, bool) bool) error {
 	return c.GetEvidenceFoldersByAssessmentPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2787,14 +3111,13 @@ const opGetEvidenceFoldersByAssessmentControl = "GetEvidenceFoldersByAssessmentC
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetEvidenceFoldersByAssessmentControlRequest method.
+//	req, resp := client.GetEvidenceFoldersByAssessmentControlRequest(params)
 //
-//    // Example sending a request using the GetEvidenceFoldersByAssessmentControlRequest method.
-//    req, resp := client.GetEvidenceFoldersByAssessmentControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFoldersByAssessmentControl
 func (c *AuditManager) GetEvidenceFoldersByAssessmentControlRequest(input *GetEvidenceFoldersByAssessmentControlInput) (req *request.Request, output *GetEvidenceFoldersByAssessmentControlOutput) {
@@ -2821,8 +3144,8 @@ func (c *AuditManager) GetEvidenceFoldersByAssessmentControlRequest(input *GetEv
 
 // GetEvidenceFoldersByAssessmentControl API operation for AWS Audit Manager.
 //
-// Returns a list of evidence folders associated with a specified control of
-// an assessment in Audit Manager.
+// Gets a list of evidence folders that are associated with a specified control
+// in an Audit Manager assessment.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2832,19 +3155,20 @@ func (c *AuditManager) GetEvidenceFoldersByAssessmentControlRequest(input *GetEv
 // API operation GetEvidenceFoldersByAssessmentControl for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetEvidenceFoldersByAssessmentControl
 func (c *AuditManager) GetEvidenceFoldersByAssessmentControl(input *GetEvidenceFoldersByAssessmentControlInput) (*GetEvidenceFoldersByAssessmentControlOutput, error) {
@@ -2876,15 +3200,14 @@ func (c *AuditManager) GetEvidenceFoldersByAssessmentControlWithContext(ctx aws.
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a GetEvidenceFoldersByAssessmentControl operation.
-//    pageNum := 0
-//    err := client.GetEvidenceFoldersByAssessmentControlPages(params,
-//        func(page *auditmanager.GetEvidenceFoldersByAssessmentControlOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a GetEvidenceFoldersByAssessmentControl operation.
+//	pageNum := 0
+//	err := client.GetEvidenceFoldersByAssessmentControlPages(params,
+//	    func(page *auditmanager.GetEvidenceFoldersByAssessmentControlOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) GetEvidenceFoldersByAssessmentControlPages(input *GetEvidenceFoldersByAssessmentControlInput, fn func(*GetEvidenceFoldersByAssessmentControlOutput, bool) bool) error {
 	return c.GetEvidenceFoldersByAssessmentControlPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -2920,6 +3243,180 @@ func (c *AuditManager) GetEvidenceFoldersByAssessmentControlPagesWithContext(ctx
 	return p.Err()
 }
 
+const opGetInsights = "GetInsights"
+
+// GetInsightsRequest generates a "aws/request.Request" representing the
+// client's request for the GetInsights operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetInsights for more information on using the GetInsights
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetInsightsRequest method.
+//	req, resp := client.GetInsightsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetInsights
+func (c *AuditManager) GetInsightsRequest(input *GetInsightsInput) (req *request.Request, output *GetInsightsOutput) {
+	op := &request.Operation{
+		Name:       opGetInsights,
+		HTTPMethod: "GET",
+		HTTPPath:   "/insights",
+	}
+
+	if input == nil {
+		input = &GetInsightsInput{}
+	}
+
+	output = &GetInsightsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetInsights API operation for AWS Audit Manager.
+//
+// Gets the latest analytics data for all your current active assessments.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation GetInsights for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetInsights
+func (c *AuditManager) GetInsights(input *GetInsightsInput) (*GetInsightsOutput, error) {
+	req, out := c.GetInsightsRequest(input)
+	return out, req.Send()
+}
+
+// GetInsightsWithContext is the same as GetInsights with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetInsights for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) GetInsightsWithContext(ctx aws.Context, input *GetInsightsInput, opts ...request.Option) (*GetInsightsOutput, error) {
+	req, out := c.GetInsightsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetInsightsByAssessment = "GetInsightsByAssessment"
+
+// GetInsightsByAssessmentRequest generates a "aws/request.Request" representing the
+// client's request for the GetInsightsByAssessment operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetInsightsByAssessment for more information on using the GetInsightsByAssessment
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetInsightsByAssessmentRequest method.
+//	req, resp := client.GetInsightsByAssessmentRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetInsightsByAssessment
+func (c *AuditManager) GetInsightsByAssessmentRequest(input *GetInsightsByAssessmentInput) (req *request.Request, output *GetInsightsByAssessmentOutput) {
+	op := &request.Operation{
+		Name:       opGetInsightsByAssessment,
+		HTTPMethod: "GET",
+		HTTPPath:   "/insights/assessments/{assessmentId}",
+	}
+
+	if input == nil {
+		input = &GetInsightsByAssessmentInput{}
+	}
+
+	output = &GetInsightsByAssessmentOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetInsightsByAssessment API operation for AWS Audit Manager.
+//
+// Gets the latest analytics data for a specific active assessment.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation GetInsightsByAssessment for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetInsightsByAssessment
+func (c *AuditManager) GetInsightsByAssessment(input *GetInsightsByAssessmentInput) (*GetInsightsByAssessmentOutput, error) {
+	req, out := c.GetInsightsByAssessmentRequest(input)
+	return out, req.Send()
+}
+
+// GetInsightsByAssessmentWithContext is the same as GetInsightsByAssessment with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetInsightsByAssessment for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) GetInsightsByAssessmentWithContext(ctx aws.Context, input *GetInsightsByAssessmentInput, opts ...request.Option) (*GetInsightsByAssessmentOutput, error) {
+	req, out := c.GetInsightsByAssessmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetOrganizationAdminAccount = "GetOrganizationAdminAccount"
 
 // GetOrganizationAdminAccountRequest generates a "aws/request.Request" representing the
@@ -2936,14 +3433,13 @@ const opGetOrganizationAdminAccount = "GetOrganizationAdminAccount"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetOrganizationAdminAccountRequest method.
+//	req, resp := client.GetOrganizationAdminAccountRequest(params)
 //
-//    // Example sending a request using the GetOrganizationAdminAccountRequest method.
-//    req, resp := client.GetOrganizationAdminAccountRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetOrganizationAdminAccount
 func (c *AuditManager) GetOrganizationAdminAccountRequest(input *GetOrganizationAdminAccountInput) (req *request.Request, output *GetOrganizationAdminAccountOutput) {
@@ -2964,8 +3460,8 @@ func (c *AuditManager) GetOrganizationAdminAccountRequest(input *GetOrganization
 
 // GetOrganizationAdminAccount API operation for AWS Audit Manager.
 //
-// Returns the name of the delegated Amazon Web Services administrator account
-// for the organization.
+// Gets the name of the delegated Amazon Web Services administrator account
+// for a specified organization.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -2975,19 +3471,20 @@ func (c *AuditManager) GetOrganizationAdminAccountRequest(input *GetOrganization
 // API operation GetOrganizationAdminAccount for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetOrganizationAdminAccount
 func (c *AuditManager) GetOrganizationAdminAccount(input *GetOrganizationAdminAccountInput) (*GetOrganizationAdminAccountOutput, error) {
@@ -3027,14 +3524,13 @@ const opGetServicesInScope = "GetServicesInScope"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetServicesInScopeRequest method.
+//	req, resp := client.GetServicesInScopeRequest(params)
 //
-//    // Example sending a request using the GetServicesInScopeRequest method.
-//    req, resp := client.GetServicesInScopeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetServicesInScope
 func (c *AuditManager) GetServicesInScopeRequest(input *GetServicesInScopeInput) (req *request.Request, output *GetServicesInScopeOutput) {
@@ -3055,8 +3551,18 @@ func (c *AuditManager) GetServicesInScopeRequest(input *GetServicesInScopeInput)
 
 // GetServicesInScope API operation for AWS Audit Manager.
 //
-// Returns a list of the in-scope Amazon Web Services services for the specified
-// assessment.
+// Gets a list of the Amazon Web Services from which Audit Manager can collect
+// evidence.
+//
+// Audit Manager defines which Amazon Web Services are in scope for an assessment.
+// Audit Manager infers this scope by examining the assessment’s controls
+// and their data sources, and then mapping this information to one or more
+// of the corresponding Amazon Web Services that are in this list.
+//
+// For information about why it's no longer possible to specify services in
+// scope manually, see I can't edit the services in scope for my assessment
+// (https://docs.aws.amazon.com/audit-manager/latest/userguide/evidence-collection-issues.html#unable-to-edit-services)
+// in the Troubleshooting section of the Audit Manager user guide.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3066,16 +3572,17 @@ func (c *AuditManager) GetServicesInScopeRequest(input *GetServicesInScopeInput)
 // API operation GetServicesInScope for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetServicesInScope
 func (c *AuditManager) GetServicesInScope(input *GetServicesInScopeInput) (*GetServicesInScopeOutput, error) {
@@ -3115,14 +3622,13 @@ const opGetSettings = "GetSettings"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetSettingsRequest method.
+//	req, resp := client.GetSettingsRequest(params)
 //
-//    // Example sending a request using the GetSettingsRequest method.
-//    req, resp := client.GetSettingsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetSettings
 func (c *AuditManager) GetSettingsRequest(input *GetSettingsInput) (req *request.Request, output *GetSettingsOutput) {
@@ -3143,7 +3649,7 @@ func (c *AuditManager) GetSettingsRequest(input *GetSettingsInput) (req *request
 
 // GetSettings API operation for AWS Audit Manager.
 //
-// Returns the settings for the specified account.
+// Gets the settings for a specified Amazon Web Services account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3153,13 +3659,14 @@ func (c *AuditManager) GetSettingsRequest(input *GetSettingsInput) (req *request
 // API operation GetSettings for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/GetSettings
 func (c *AuditManager) GetSettings(input *GetSettingsInput) (*GetSettingsOutput, error) {
@@ -3183,6 +3690,304 @@ func (c *AuditManager) GetSettingsWithContext(ctx aws.Context, input *GetSetting
 	return out, req.Send()
 }
 
+const opListAssessmentControlInsightsByControlDomain = "ListAssessmentControlInsightsByControlDomain"
+
+// ListAssessmentControlInsightsByControlDomainRequest generates a "aws/request.Request" representing the
+// client's request for the ListAssessmentControlInsightsByControlDomain operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListAssessmentControlInsightsByControlDomain for more information on using the ListAssessmentControlInsightsByControlDomain
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListAssessmentControlInsightsByControlDomainRequest method.
+//	req, resp := client.ListAssessmentControlInsightsByControlDomainRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentControlInsightsByControlDomain
+func (c *AuditManager) ListAssessmentControlInsightsByControlDomainRequest(input *ListAssessmentControlInsightsByControlDomainInput) (req *request.Request, output *ListAssessmentControlInsightsByControlDomainOutput) {
+	op := &request.Operation{
+		Name:       opListAssessmentControlInsightsByControlDomain,
+		HTTPMethod: "GET",
+		HTTPPath:   "/insights/controls-by-assessment",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListAssessmentControlInsightsByControlDomainInput{}
+	}
+
+	output = &ListAssessmentControlInsightsByControlDomainOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListAssessmentControlInsightsByControlDomain API operation for AWS Audit Manager.
+//
+// Lists the latest analytics data for controls within a specific control domain
+// and a specific active assessment.
+//
+// Control insights are listed only if the control belongs to the control domain
+// and assessment that was specified. Moreover, the control must have collected
+// evidence on the lastUpdated date of controlInsightsByAssessment. If neither
+// of these conditions are met, no data is listed for that control.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation ListAssessmentControlInsightsByControlDomain for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentControlInsightsByControlDomain
+func (c *AuditManager) ListAssessmentControlInsightsByControlDomain(input *ListAssessmentControlInsightsByControlDomainInput) (*ListAssessmentControlInsightsByControlDomainOutput, error) {
+	req, out := c.ListAssessmentControlInsightsByControlDomainRequest(input)
+	return out, req.Send()
+}
+
+// ListAssessmentControlInsightsByControlDomainWithContext is the same as ListAssessmentControlInsightsByControlDomain with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListAssessmentControlInsightsByControlDomain for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListAssessmentControlInsightsByControlDomainWithContext(ctx aws.Context, input *ListAssessmentControlInsightsByControlDomainInput, opts ...request.Option) (*ListAssessmentControlInsightsByControlDomainOutput, error) {
+	req, out := c.ListAssessmentControlInsightsByControlDomainRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListAssessmentControlInsightsByControlDomainPages iterates over the pages of a ListAssessmentControlInsightsByControlDomain operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListAssessmentControlInsightsByControlDomain method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListAssessmentControlInsightsByControlDomain operation.
+//	pageNum := 0
+//	err := client.ListAssessmentControlInsightsByControlDomainPages(params,
+//	    func(page *auditmanager.ListAssessmentControlInsightsByControlDomainOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *AuditManager) ListAssessmentControlInsightsByControlDomainPages(input *ListAssessmentControlInsightsByControlDomainInput, fn func(*ListAssessmentControlInsightsByControlDomainOutput, bool) bool) error {
+	return c.ListAssessmentControlInsightsByControlDomainPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListAssessmentControlInsightsByControlDomainPagesWithContext same as ListAssessmentControlInsightsByControlDomainPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListAssessmentControlInsightsByControlDomainPagesWithContext(ctx aws.Context, input *ListAssessmentControlInsightsByControlDomainInput, fn func(*ListAssessmentControlInsightsByControlDomainOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListAssessmentControlInsightsByControlDomainInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListAssessmentControlInsightsByControlDomainRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListAssessmentControlInsightsByControlDomainOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListAssessmentFrameworkShareRequests = "ListAssessmentFrameworkShareRequests"
+
+// ListAssessmentFrameworkShareRequestsRequest generates a "aws/request.Request" representing the
+// client's request for the ListAssessmentFrameworkShareRequests operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListAssessmentFrameworkShareRequests for more information on using the ListAssessmentFrameworkShareRequests
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListAssessmentFrameworkShareRequestsRequest method.
+//	req, resp := client.ListAssessmentFrameworkShareRequestsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentFrameworkShareRequests
+func (c *AuditManager) ListAssessmentFrameworkShareRequestsRequest(input *ListAssessmentFrameworkShareRequestsInput) (req *request.Request, output *ListAssessmentFrameworkShareRequestsOutput) {
+	op := &request.Operation{
+		Name:       opListAssessmentFrameworkShareRequests,
+		HTTPMethod: "GET",
+		HTTPPath:   "/assessmentFrameworkShareRequests",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListAssessmentFrameworkShareRequestsInput{}
+	}
+
+	output = &ListAssessmentFrameworkShareRequestsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListAssessmentFrameworkShareRequests API operation for AWS Audit Manager.
+//
+// Returns a list of sent or received share requests for custom frameworks in
+// Audit Manager.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation ListAssessmentFrameworkShareRequests for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentFrameworkShareRequests
+func (c *AuditManager) ListAssessmentFrameworkShareRequests(input *ListAssessmentFrameworkShareRequestsInput) (*ListAssessmentFrameworkShareRequestsOutput, error) {
+	req, out := c.ListAssessmentFrameworkShareRequestsRequest(input)
+	return out, req.Send()
+}
+
+// ListAssessmentFrameworkShareRequestsWithContext is the same as ListAssessmentFrameworkShareRequests with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListAssessmentFrameworkShareRequests for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListAssessmentFrameworkShareRequestsWithContext(ctx aws.Context, input *ListAssessmentFrameworkShareRequestsInput, opts ...request.Option) (*ListAssessmentFrameworkShareRequestsOutput, error) {
+	req, out := c.ListAssessmentFrameworkShareRequestsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListAssessmentFrameworkShareRequestsPages iterates over the pages of a ListAssessmentFrameworkShareRequests operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListAssessmentFrameworkShareRequests method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListAssessmentFrameworkShareRequests operation.
+//	pageNum := 0
+//	err := client.ListAssessmentFrameworkShareRequestsPages(params,
+//	    func(page *auditmanager.ListAssessmentFrameworkShareRequestsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *AuditManager) ListAssessmentFrameworkShareRequestsPages(input *ListAssessmentFrameworkShareRequestsInput, fn func(*ListAssessmentFrameworkShareRequestsOutput, bool) bool) error {
+	return c.ListAssessmentFrameworkShareRequestsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListAssessmentFrameworkShareRequestsPagesWithContext same as ListAssessmentFrameworkShareRequestsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListAssessmentFrameworkShareRequestsPagesWithContext(ctx aws.Context, input *ListAssessmentFrameworkShareRequestsInput, fn func(*ListAssessmentFrameworkShareRequestsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListAssessmentFrameworkShareRequestsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListAssessmentFrameworkShareRequestsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListAssessmentFrameworkShareRequestsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListAssessmentFrameworks = "ListAssessmentFrameworks"
 
 // ListAssessmentFrameworksRequest generates a "aws/request.Request" representing the
@@ -3199,14 +4004,13 @@ const opListAssessmentFrameworks = "ListAssessmentFrameworks"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListAssessmentFrameworksRequest method.
+//	req, resp := client.ListAssessmentFrameworksRequest(params)
 //
-//    // Example sending a request using the ListAssessmentFrameworksRequest method.
-//    req, resp := client.ListAssessmentFrameworksRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentFrameworks
 func (c *AuditManager) ListAssessmentFrameworksRequest(input *ListAssessmentFrameworksInput) (req *request.Request, output *ListAssessmentFrameworksOutput) {
@@ -3233,8 +4037,8 @@ func (c *AuditManager) ListAssessmentFrameworksRequest(input *ListAssessmentFram
 
 // ListAssessmentFrameworks API operation for AWS Audit Manager.
 //
-// Returns a list of the frameworks available in the Audit Manager framework
-// library.
+// Returns a list of the frameworks that are available in the Audit Manager
+// framework library.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3244,16 +4048,17 @@ func (c *AuditManager) ListAssessmentFrameworksRequest(input *ListAssessmentFram
 // API operation ListAssessmentFrameworks for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentFrameworks
 func (c *AuditManager) ListAssessmentFrameworks(input *ListAssessmentFrameworksInput) (*ListAssessmentFrameworksOutput, error) {
@@ -3285,15 +4090,14 @@ func (c *AuditManager) ListAssessmentFrameworksWithContext(ctx aws.Context, inpu
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListAssessmentFrameworks operation.
-//    pageNum := 0
-//    err := client.ListAssessmentFrameworksPages(params,
-//        func(page *auditmanager.ListAssessmentFrameworksOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListAssessmentFrameworks operation.
+//	pageNum := 0
+//	err := client.ListAssessmentFrameworksPages(params,
+//	    func(page *auditmanager.ListAssessmentFrameworksOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) ListAssessmentFrameworksPages(input *ListAssessmentFrameworksInput, fn func(*ListAssessmentFrameworksOutput, bool) bool) error {
 	return c.ListAssessmentFrameworksPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -3345,14 +4149,13 @@ const opListAssessmentReports = "ListAssessmentReports"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListAssessmentReportsRequest method.
+//	req, resp := client.ListAssessmentReportsRequest(params)
 //
-//    // Example sending a request using the ListAssessmentReportsRequest method.
-//    req, resp := client.ListAssessmentReportsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentReports
 func (c *AuditManager) ListAssessmentReportsRequest(input *ListAssessmentReportsInput) (req *request.Request, output *ListAssessmentReportsOutput) {
@@ -3389,16 +4192,17 @@ func (c *AuditManager) ListAssessmentReportsRequest(input *ListAssessmentReports
 // API operation ListAssessmentReports for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessmentReports
 func (c *AuditManager) ListAssessmentReports(input *ListAssessmentReportsInput) (*ListAssessmentReportsOutput, error) {
@@ -3430,15 +4234,14 @@ func (c *AuditManager) ListAssessmentReportsWithContext(ctx aws.Context, input *
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListAssessmentReports operation.
-//    pageNum := 0
-//    err := client.ListAssessmentReportsPages(params,
-//        func(page *auditmanager.ListAssessmentReportsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListAssessmentReports operation.
+//	pageNum := 0
+//	err := client.ListAssessmentReportsPages(params,
+//	    func(page *auditmanager.ListAssessmentReportsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) ListAssessmentReportsPages(input *ListAssessmentReportsInput, fn func(*ListAssessmentReportsOutput, bool) bool) error {
 	return c.ListAssessmentReportsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -3490,14 +4293,13 @@ const opListAssessments = "ListAssessments"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListAssessmentsRequest method.
+//	req, resp := client.ListAssessmentsRequest(params)
 //
-//    // Example sending a request using the ListAssessmentsRequest method.
-//    req, resp := client.ListAssessmentsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessments
 func (c *AuditManager) ListAssessmentsRequest(input *ListAssessmentsInput) (req *request.Request, output *ListAssessmentsOutput) {
@@ -3534,16 +4336,17 @@ func (c *AuditManager) ListAssessmentsRequest(input *ListAssessmentsInput) (req 
 // API operation ListAssessments for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListAssessments
 func (c *AuditManager) ListAssessments(input *ListAssessmentsInput) (*ListAssessmentsOutput, error) {
@@ -3575,15 +4378,14 @@ func (c *AuditManager) ListAssessmentsWithContext(ctx aws.Context, input *ListAs
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListAssessments operation.
-//    pageNum := 0
-//    err := client.ListAssessmentsPages(params,
-//        func(page *auditmanager.ListAssessmentsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListAssessments operation.
+//	pageNum := 0
+//	err := client.ListAssessmentsPages(params,
+//	    func(page *auditmanager.ListAssessmentsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) ListAssessmentsPages(input *ListAssessmentsInput, fn func(*ListAssessmentsOutput, bool) bool) error {
 	return c.ListAssessmentsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -3619,6 +4421,472 @@ func (c *AuditManager) ListAssessmentsPagesWithContext(ctx aws.Context, input *L
 	return p.Err()
 }
 
+const opListControlDomainInsights = "ListControlDomainInsights"
+
+// ListControlDomainInsightsRequest generates a "aws/request.Request" representing the
+// client's request for the ListControlDomainInsights operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListControlDomainInsights for more information on using the ListControlDomainInsights
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListControlDomainInsightsRequest method.
+//	req, resp := client.ListControlDomainInsightsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControlDomainInsights
+func (c *AuditManager) ListControlDomainInsightsRequest(input *ListControlDomainInsightsInput) (req *request.Request, output *ListControlDomainInsightsOutput) {
+	op := &request.Operation{
+		Name:       opListControlDomainInsights,
+		HTTPMethod: "GET",
+		HTTPPath:   "/insights/control-domains",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListControlDomainInsightsInput{}
+	}
+
+	output = &ListControlDomainInsightsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListControlDomainInsights API operation for AWS Audit Manager.
+//
+// Lists the latest analytics data for control domains across all of your active
+// assessments.
+//
+// Audit Manager supports the control domains that are provided by Amazon Web
+// Services Control Catalog. For information about how to find a list of available
+// control domains, see ListDomains (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListDomains.html)
+// in the Amazon Web Services Control Catalog API Reference.
+//
+// A control domain is listed only if at least one of the controls within that
+// domain collected evidence on the lastUpdated date of controlDomainInsights.
+// If this condition isn’t met, no data is listed for that control domain.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation ListControlDomainInsights for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControlDomainInsights
+func (c *AuditManager) ListControlDomainInsights(input *ListControlDomainInsightsInput) (*ListControlDomainInsightsOutput, error) {
+	req, out := c.ListControlDomainInsightsRequest(input)
+	return out, req.Send()
+}
+
+// ListControlDomainInsightsWithContext is the same as ListControlDomainInsights with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListControlDomainInsights for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListControlDomainInsightsWithContext(ctx aws.Context, input *ListControlDomainInsightsInput, opts ...request.Option) (*ListControlDomainInsightsOutput, error) {
+	req, out := c.ListControlDomainInsightsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListControlDomainInsightsPages iterates over the pages of a ListControlDomainInsights operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListControlDomainInsights method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListControlDomainInsights operation.
+//	pageNum := 0
+//	err := client.ListControlDomainInsightsPages(params,
+//	    func(page *auditmanager.ListControlDomainInsightsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *AuditManager) ListControlDomainInsightsPages(input *ListControlDomainInsightsInput, fn func(*ListControlDomainInsightsOutput, bool) bool) error {
+	return c.ListControlDomainInsightsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListControlDomainInsightsPagesWithContext same as ListControlDomainInsightsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListControlDomainInsightsPagesWithContext(ctx aws.Context, input *ListControlDomainInsightsInput, fn func(*ListControlDomainInsightsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListControlDomainInsightsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListControlDomainInsightsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListControlDomainInsightsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListControlDomainInsightsByAssessment = "ListControlDomainInsightsByAssessment"
+
+// ListControlDomainInsightsByAssessmentRequest generates a "aws/request.Request" representing the
+// client's request for the ListControlDomainInsightsByAssessment operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListControlDomainInsightsByAssessment for more information on using the ListControlDomainInsightsByAssessment
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListControlDomainInsightsByAssessmentRequest method.
+//	req, resp := client.ListControlDomainInsightsByAssessmentRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControlDomainInsightsByAssessment
+func (c *AuditManager) ListControlDomainInsightsByAssessmentRequest(input *ListControlDomainInsightsByAssessmentInput) (req *request.Request, output *ListControlDomainInsightsByAssessmentOutput) {
+	op := &request.Operation{
+		Name:       opListControlDomainInsightsByAssessment,
+		HTTPMethod: "GET",
+		HTTPPath:   "/insights/control-domains-by-assessment",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListControlDomainInsightsByAssessmentInput{}
+	}
+
+	output = &ListControlDomainInsightsByAssessmentOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListControlDomainInsightsByAssessment API operation for AWS Audit Manager.
+//
+// Lists analytics data for control domains within a specified active assessment.
+//
+// Audit Manager supports the control domains that are provided by Amazon Web
+// Services Control Catalog. For information about how to find a list of available
+// control domains, see ListDomains (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListDomains.html)
+// in the Amazon Web Services Control Catalog API Reference.
+//
+// A control domain is listed only if at least one of the controls within that
+// domain collected evidence on the lastUpdated date of controlDomainInsights.
+// If this condition isn’t met, no data is listed for that domain.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation ListControlDomainInsightsByAssessment for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControlDomainInsightsByAssessment
+func (c *AuditManager) ListControlDomainInsightsByAssessment(input *ListControlDomainInsightsByAssessmentInput) (*ListControlDomainInsightsByAssessmentOutput, error) {
+	req, out := c.ListControlDomainInsightsByAssessmentRequest(input)
+	return out, req.Send()
+}
+
+// ListControlDomainInsightsByAssessmentWithContext is the same as ListControlDomainInsightsByAssessment with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListControlDomainInsightsByAssessment for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListControlDomainInsightsByAssessmentWithContext(ctx aws.Context, input *ListControlDomainInsightsByAssessmentInput, opts ...request.Option) (*ListControlDomainInsightsByAssessmentOutput, error) {
+	req, out := c.ListControlDomainInsightsByAssessmentRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListControlDomainInsightsByAssessmentPages iterates over the pages of a ListControlDomainInsightsByAssessment operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListControlDomainInsightsByAssessment method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListControlDomainInsightsByAssessment operation.
+//	pageNum := 0
+//	err := client.ListControlDomainInsightsByAssessmentPages(params,
+//	    func(page *auditmanager.ListControlDomainInsightsByAssessmentOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *AuditManager) ListControlDomainInsightsByAssessmentPages(input *ListControlDomainInsightsByAssessmentInput, fn func(*ListControlDomainInsightsByAssessmentOutput, bool) bool) error {
+	return c.ListControlDomainInsightsByAssessmentPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListControlDomainInsightsByAssessmentPagesWithContext same as ListControlDomainInsightsByAssessmentPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListControlDomainInsightsByAssessmentPagesWithContext(ctx aws.Context, input *ListControlDomainInsightsByAssessmentInput, fn func(*ListControlDomainInsightsByAssessmentOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListControlDomainInsightsByAssessmentInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListControlDomainInsightsByAssessmentRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListControlDomainInsightsByAssessmentOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
+const opListControlInsightsByControlDomain = "ListControlInsightsByControlDomain"
+
+// ListControlInsightsByControlDomainRequest generates a "aws/request.Request" representing the
+// client's request for the ListControlInsightsByControlDomain operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListControlInsightsByControlDomain for more information on using the ListControlInsightsByControlDomain
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListControlInsightsByControlDomainRequest method.
+//	req, resp := client.ListControlInsightsByControlDomainRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControlInsightsByControlDomain
+func (c *AuditManager) ListControlInsightsByControlDomainRequest(input *ListControlInsightsByControlDomainInput) (req *request.Request, output *ListControlInsightsByControlDomainOutput) {
+	op := &request.Operation{
+		Name:       opListControlInsightsByControlDomain,
+		HTTPMethod: "GET",
+		HTTPPath:   "/insights/controls",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListControlInsightsByControlDomainInput{}
+	}
+
+	output = &ListControlInsightsByControlDomainOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListControlInsightsByControlDomain API operation for AWS Audit Manager.
+//
+// Lists the latest analytics data for controls within a specific control domain
+// across all active assessments.
+//
+// Control insights are listed only if the control belongs to the control domain
+// that was specified and the control collected evidence on the lastUpdated
+// date of controlInsightsMetadata. If neither of these conditions are met,
+// no data is listed for that control.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation ListControlInsightsByControlDomain for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControlInsightsByControlDomain
+func (c *AuditManager) ListControlInsightsByControlDomain(input *ListControlInsightsByControlDomainInput) (*ListControlInsightsByControlDomainOutput, error) {
+	req, out := c.ListControlInsightsByControlDomainRequest(input)
+	return out, req.Send()
+}
+
+// ListControlInsightsByControlDomainWithContext is the same as ListControlInsightsByControlDomain with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListControlInsightsByControlDomain for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListControlInsightsByControlDomainWithContext(ctx aws.Context, input *ListControlInsightsByControlDomainInput, opts ...request.Option) (*ListControlInsightsByControlDomainOutput, error) {
+	req, out := c.ListControlInsightsByControlDomainRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListControlInsightsByControlDomainPages iterates over the pages of a ListControlInsightsByControlDomain operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListControlInsightsByControlDomain method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListControlInsightsByControlDomain operation.
+//	pageNum := 0
+//	err := client.ListControlInsightsByControlDomainPages(params,
+//	    func(page *auditmanager.ListControlInsightsByControlDomainOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *AuditManager) ListControlInsightsByControlDomainPages(input *ListControlInsightsByControlDomainInput, fn func(*ListControlInsightsByControlDomainOutput, bool) bool) error {
+	return c.ListControlInsightsByControlDomainPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListControlInsightsByControlDomainPagesWithContext same as ListControlInsightsByControlDomainPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) ListControlInsightsByControlDomainPagesWithContext(ctx aws.Context, input *ListControlInsightsByControlDomainInput, fn func(*ListControlInsightsByControlDomainOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListControlInsightsByControlDomainInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListControlInsightsByControlDomainRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListControlInsightsByControlDomainOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListControls = "ListControls"
 
 // ListControlsRequest generates a "aws/request.Request" representing the
@@ -3635,14 +4903,13 @@ const opListControls = "ListControls"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListControlsRequest method.
+//	req, resp := client.ListControlsRequest(params)
 //
-//    // Example sending a request using the ListControlsRequest method.
-//    req, resp := client.ListControlsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControls
 func (c *AuditManager) ListControlsRequest(input *ListControlsInput) (req *request.Request, output *ListControlsOutput) {
@@ -3679,16 +4946,17 @@ func (c *AuditManager) ListControlsRequest(input *ListControlsInput) (req *reque
 // API operation ListControls for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListControls
 func (c *AuditManager) ListControls(input *ListControlsInput) (*ListControlsOutput, error) {
@@ -3720,15 +4988,14 @@ func (c *AuditManager) ListControlsWithContext(ctx aws.Context, input *ListContr
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListControls operation.
-//    pageNum := 0
-//    err := client.ListControlsPages(params,
-//        func(page *auditmanager.ListControlsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListControls operation.
+//	pageNum := 0
+//	err := client.ListControlsPages(params,
+//	    func(page *auditmanager.ListControlsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) ListControlsPages(input *ListControlsInput, fn func(*ListControlsOutput, bool) bool) error {
 	return c.ListControlsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -3780,14 +5047,13 @@ const opListKeywordsForDataSource = "ListKeywordsForDataSource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListKeywordsForDataSourceRequest method.
+//	req, resp := client.ListKeywordsForDataSourceRequest(params)
 //
-//    // Example sending a request using the ListKeywordsForDataSourceRequest method.
-//    req, resp := client.ListKeywordsForDataSourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListKeywordsForDataSource
 func (c *AuditManager) ListKeywordsForDataSourceRequest(input *ListKeywordsForDataSourceInput) (req *request.Request, output *ListKeywordsForDataSourceOutput) {
@@ -3814,7 +5080,7 @@ func (c *AuditManager) ListKeywordsForDataSourceRequest(input *ListKeywordsForDa
 
 // ListKeywordsForDataSource API operation for AWS Audit Manager.
 //
-// Returns a list of keywords that pre-mapped to the specified control data
+// Returns a list of keywords that are pre-mapped to the specified control data
 // source.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -3825,16 +5091,17 @@ func (c *AuditManager) ListKeywordsForDataSourceRequest(input *ListKeywordsForDa
 // API operation ListKeywordsForDataSource for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListKeywordsForDataSource
 func (c *AuditManager) ListKeywordsForDataSource(input *ListKeywordsForDataSourceInput) (*ListKeywordsForDataSourceOutput, error) {
@@ -3866,15 +5133,14 @@ func (c *AuditManager) ListKeywordsForDataSourceWithContext(ctx aws.Context, inp
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListKeywordsForDataSource operation.
-//    pageNum := 0
-//    err := client.ListKeywordsForDataSourcePages(params,
-//        func(page *auditmanager.ListKeywordsForDataSourceOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListKeywordsForDataSource operation.
+//	pageNum := 0
+//	err := client.ListKeywordsForDataSourcePages(params,
+//	    func(page *auditmanager.ListKeywordsForDataSourceOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) ListKeywordsForDataSourcePages(input *ListKeywordsForDataSourceInput, fn func(*ListKeywordsForDataSourceOutput, bool) bool) error {
 	return c.ListKeywordsForDataSourcePagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -3926,14 +5192,13 @@ const opListNotifications = "ListNotifications"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListNotificationsRequest method.
+//	req, resp := client.ListNotificationsRequest(params)
 //
-//    // Example sending a request using the ListNotificationsRequest method.
-//    req, resp := client.ListNotificationsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListNotifications
 func (c *AuditManager) ListNotificationsRequest(input *ListNotificationsInput) (req *request.Request, output *ListNotificationsOutput) {
@@ -3970,16 +5235,17 @@ func (c *AuditManager) ListNotificationsRequest(input *ListNotificationsInput) (
 // API operation ListNotifications for usage and error information.
 //
 // Returned Error Types:
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListNotifications
 func (c *AuditManager) ListNotifications(input *ListNotificationsInput) (*ListNotificationsOutput, error) {
@@ -4011,15 +5277,14 @@ func (c *AuditManager) ListNotificationsWithContext(ctx aws.Context, input *List
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListNotifications operation.
-//    pageNum := 0
-//    err := client.ListNotificationsPages(params,
-//        func(page *auditmanager.ListNotificationsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListNotifications operation.
+//	pageNum := 0
+//	err := client.ListNotificationsPages(params,
+//	    func(page *auditmanager.ListNotificationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *AuditManager) ListNotificationsPages(input *ListNotificationsInput, fn func(*ListNotificationsOutput, bool) bool) error {
 	return c.ListNotificationsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -4071,14 +5336,13 @@ const opListTagsForResource = "ListTagsForResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListTagsForResourceRequest method.
+//	req, resp := client.ListTagsForResourceRequest(params)
 //
-//    // Example sending a request using the ListTagsForResourceRequest method.
-//    req, resp := client.ListTagsForResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListTagsForResource
 func (c *AuditManager) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *request.Request, output *ListTagsForResourceOutput) {
@@ -4109,15 +5373,16 @@ func (c *AuditManager) ListTagsForResourceRequest(input *ListTagsForResourceInpu
 // API operation ListTagsForResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ListTagsForResource
 func (c *AuditManager) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
@@ -4157,14 +5422,13 @@ const opRegisterAccount = "RegisterAccount"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RegisterAccountRequest method.
+//	req, resp := client.RegisterAccountRequest(params)
 //
-//    // Example sending a request using the RegisterAccountRequest method.
-//    req, resp := client.RegisterAccountRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/RegisterAccount
 func (c *AuditManager) RegisterAccountRequest(input *RegisterAccountInput) (req *request.Request, output *RegisterAccountOutput) {
@@ -4185,7 +5449,7 @@ func (c *AuditManager) RegisterAccountRequest(input *RegisterAccountInput) (req 
 
 // RegisterAccount API operation for AWS Audit Manager.
 //
-// Enables Audit Manager for the specified account.
+// Enables Audit Manager for the specified Amazon Web Services account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4195,19 +5459,23 @@ func (c *AuditManager) RegisterAccountRequest(input *RegisterAccountInput) (req 
 // API operation RegisterAccount for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/RegisterAccount
 func (c *AuditManager) RegisterAccount(input *RegisterAccountInput) (*RegisterAccountOutput, error) {
@@ -4247,14 +5515,13 @@ const opRegisterOrganizationAdminAccount = "RegisterOrganizationAdminAccount"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the RegisterOrganizationAdminAccountRequest method.
+//	req, resp := client.RegisterOrganizationAdminAccountRequest(params)
 //
-//    // Example sending a request using the RegisterOrganizationAdminAccountRequest method.
-//    req, resp := client.RegisterOrganizationAdminAccountRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/RegisterOrganizationAdminAccount
 func (c *AuditManager) RegisterOrganizationAdminAccountRequest(input *RegisterOrganizationAdminAccountInput) (req *request.Request, output *RegisterOrganizationAdminAccountOutput) {
@@ -4275,8 +5542,8 @@ func (c *AuditManager) RegisterOrganizationAdminAccountRequest(input *RegisterOr
 
 // RegisterOrganizationAdminAccount API operation for AWS Audit Manager.
 //
-// Enables an account within the organization as the delegated administrator
-// for Audit Manager.
+// Enables an Amazon Web Services account within the organization as the delegated
+// administrator for Audit Manager.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -4286,19 +5553,20 @@ func (c *AuditManager) RegisterOrganizationAdminAccountRequest(input *RegisterOr
 // API operation RegisterOrganizationAdminAccount for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/RegisterOrganizationAdminAccount
 func (c *AuditManager) RegisterOrganizationAdminAccount(input *RegisterOrganizationAdminAccountInput) (*RegisterOrganizationAdminAccountOutput, error) {
@@ -4322,6 +5590,134 @@ func (c *AuditManager) RegisterOrganizationAdminAccountWithContext(ctx aws.Conte
 	return out, req.Send()
 }
 
+const opStartAssessmentFrameworkShare = "StartAssessmentFrameworkShare"
+
+// StartAssessmentFrameworkShareRequest generates a "aws/request.Request" representing the
+// client's request for the StartAssessmentFrameworkShare operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartAssessmentFrameworkShare for more information on using the StartAssessmentFrameworkShare
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartAssessmentFrameworkShareRequest method.
+//	req, resp := client.StartAssessmentFrameworkShareRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/StartAssessmentFrameworkShare
+func (c *AuditManager) StartAssessmentFrameworkShareRequest(input *StartAssessmentFrameworkShareInput) (req *request.Request, output *StartAssessmentFrameworkShareOutput) {
+	op := &request.Operation{
+		Name:       opStartAssessmentFrameworkShare,
+		HTTPMethod: "POST",
+		HTTPPath:   "/assessmentFrameworks/{frameworkId}/shareRequests",
+	}
+
+	if input == nil {
+		input = &StartAssessmentFrameworkShareInput{}
+	}
+
+	output = &StartAssessmentFrameworkShareOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartAssessmentFrameworkShare API operation for AWS Audit Manager.
+//
+// Creates a share request for a custom framework in Audit Manager.
+//
+// The share request specifies a recipient and notifies them that a custom framework
+// is available. Recipients have 120 days to accept or decline the request.
+// If no action is taken, the share request expires.
+//
+// When you create a share request, Audit Manager stores a snapshot of your
+// custom framework in the US East (N. Virginia) Amazon Web Services Region.
+// Audit Manager also stores a backup of the same snapshot in the US West (Oregon)
+// Amazon Web Services Region.
+//
+// Audit Manager deletes the snapshot and the backup snapshot when one of the
+// following events occurs:
+//
+//   - The sender revokes the share request.
+//
+//   - The recipient declines the share request.
+//
+//   - The recipient encounters an error and doesn't successfully accept the
+//     share request.
+//
+//   - The share request expires before the recipient responds to the request.
+//
+// When a sender resends a share request (https://docs.aws.amazon.com/audit-manager/latest/userguide/framework-sharing.html#framework-sharing-resend),
+// the snapshot is replaced with an updated version that corresponds with the
+// latest version of the custom framework.
+//
+// When a recipient accepts a share request, the snapshot is replicated into
+// their Amazon Web Services account under the Amazon Web Services Region that
+// was specified in the share request.
+//
+// When you invoke the StartAssessmentFrameworkShare API, you are about to share
+// a custom framework with another Amazon Web Services account. You may not
+// share a custom framework that is derived from a standard framework if the
+// standard framework is designated as not eligible for sharing by Amazon Web
+// Services, unless you have obtained permission to do so from the owner of
+// the standard framework. To learn more about which standard frameworks are
+// eligible for sharing, see Framework sharing eligibility (https://docs.aws.amazon.com/audit-manager/latest/userguide/share-custom-framework-concepts-and-terminology.html#eligibility)
+// in the Audit Manager User Guide.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation StartAssessmentFrameworkShare for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/StartAssessmentFrameworkShare
+func (c *AuditManager) StartAssessmentFrameworkShare(input *StartAssessmentFrameworkShareInput) (*StartAssessmentFrameworkShareOutput, error) {
+	req, out := c.StartAssessmentFrameworkShareRequest(input)
+	return out, req.Send()
+}
+
+// StartAssessmentFrameworkShareWithContext is the same as StartAssessmentFrameworkShare with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartAssessmentFrameworkShare for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) StartAssessmentFrameworkShareWithContext(ctx aws.Context, input *StartAssessmentFrameworkShareInput, opts ...request.Option) (*StartAssessmentFrameworkShareOutput, error) {
+	req, out := c.StartAssessmentFrameworkShareRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opTagResource = "TagResource"
 
 // TagResourceRequest generates a "aws/request.Request" representing the
@@ -4338,14 +5734,13 @@ const opTagResource = "TagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the TagResourceRequest method.
+//	req, resp := client.TagResourceRequest(params)
 //
-//    // Example sending a request using the TagResourceRequest method.
-//    req, resp := client.TagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/TagResource
 func (c *AuditManager) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
@@ -4377,15 +5772,16 @@ func (c *AuditManager) TagResourceRequest(input *TagResourceInput) (req *request
 // API operation TagResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/TagResource
 func (c *AuditManager) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -4425,14 +5821,13 @@ const opUntagResource = "UntagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UntagResourceRequest method.
+//	req, resp := client.UntagResourceRequest(params)
 //
-//    // Example sending a request using the UntagResourceRequest method.
-//    req, resp := client.UntagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UntagResource
 func (c *AuditManager) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
@@ -4464,15 +5859,16 @@ func (c *AuditManager) UntagResourceRequest(input *UntagResourceInput) (req *req
 // API operation UntagResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UntagResource
 func (c *AuditManager) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -4512,14 +5908,13 @@ const opUpdateAssessment = "UpdateAssessment"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateAssessmentRequest method.
+//	req, resp := client.UpdateAssessmentRequest(params)
 //
-//    // Example sending a request using the UpdateAssessmentRequest method.
-//    req, resp := client.UpdateAssessmentRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessment
 func (c *AuditManager) UpdateAssessmentRequest(input *UpdateAssessmentInput) (req *request.Request, output *UpdateAssessmentOutput) {
@@ -4550,19 +5945,23 @@ func (c *AuditManager) UpdateAssessmentRequest(input *UpdateAssessmentInput) (re
 // API operation UpdateAssessment for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ThrottlingException
+//     The request was denied due to request throttling.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessment
 func (c *AuditManager) UpdateAssessment(input *UpdateAssessmentInput) (*UpdateAssessmentOutput, error) {
@@ -4602,14 +6001,13 @@ const opUpdateAssessmentControl = "UpdateAssessmentControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateAssessmentControlRequest method.
+//	req, resp := client.UpdateAssessmentControlRequest(params)
 //
-//    // Example sending a request using the UpdateAssessmentControlRequest method.
-//    req, resp := client.UpdateAssessmentControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentControl
 func (c *AuditManager) UpdateAssessmentControlRequest(input *UpdateAssessmentControlInput) (req *request.Request, output *UpdateAssessmentControlOutput) {
@@ -4640,19 +6038,20 @@ func (c *AuditManager) UpdateAssessmentControlRequest(input *UpdateAssessmentCon
 // API operation UpdateAssessmentControl for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentControl
 func (c *AuditManager) UpdateAssessmentControl(input *UpdateAssessmentControlInput) (*UpdateAssessmentControlOutput, error) {
@@ -4692,14 +6091,13 @@ const opUpdateAssessmentControlSetStatus = "UpdateAssessmentControlSetStatus"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateAssessmentControlSetStatusRequest method.
+//	req, resp := client.UpdateAssessmentControlSetStatusRequest(params)
 //
-//    // Example sending a request using the UpdateAssessmentControlSetStatusRequest method.
-//    req, resp := client.UpdateAssessmentControlSetStatusRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentControlSetStatus
 func (c *AuditManager) UpdateAssessmentControlSetStatusRequest(input *UpdateAssessmentControlSetStatusInput) (req *request.Request, output *UpdateAssessmentControlSetStatusOutput) {
@@ -4730,19 +6128,20 @@ func (c *AuditManager) UpdateAssessmentControlSetStatusRequest(input *UpdateAsse
 // API operation UpdateAssessmentControlSetStatus for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentControlSetStatus
 func (c *AuditManager) UpdateAssessmentControlSetStatus(input *UpdateAssessmentControlSetStatusInput) (*UpdateAssessmentControlSetStatusOutput, error) {
@@ -4782,14 +6181,13 @@ const opUpdateAssessmentFramework = "UpdateAssessmentFramework"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateAssessmentFrameworkRequest method.
+//	req, resp := client.UpdateAssessmentFrameworkRequest(params)
 //
-//    // Example sending a request using the UpdateAssessmentFrameworkRequest method.
-//    req, resp := client.UpdateAssessmentFrameworkRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentFramework
 func (c *AuditManager) UpdateAssessmentFrameworkRequest(input *UpdateAssessmentFrameworkInput) (req *request.Request, output *UpdateAssessmentFrameworkOutput) {
@@ -4820,19 +6218,20 @@ func (c *AuditManager) UpdateAssessmentFrameworkRequest(input *UpdateAssessmentF
 // API operation UpdateAssessmentFramework for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentFramework
 func (c *AuditManager) UpdateAssessmentFramework(input *UpdateAssessmentFrameworkInput) (*UpdateAssessmentFrameworkOutput, error) {
@@ -4856,6 +6255,103 @@ func (c *AuditManager) UpdateAssessmentFrameworkWithContext(ctx aws.Context, inp
 	return out, req.Send()
 }
 
+const opUpdateAssessmentFrameworkShare = "UpdateAssessmentFrameworkShare"
+
+// UpdateAssessmentFrameworkShareRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateAssessmentFrameworkShare operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateAssessmentFrameworkShare for more information on using the UpdateAssessmentFrameworkShare
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateAssessmentFrameworkShareRequest method.
+//	req, resp := client.UpdateAssessmentFrameworkShareRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentFrameworkShare
+func (c *AuditManager) UpdateAssessmentFrameworkShareRequest(input *UpdateAssessmentFrameworkShareInput) (req *request.Request, output *UpdateAssessmentFrameworkShareOutput) {
+	op := &request.Operation{
+		Name:       opUpdateAssessmentFrameworkShare,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/assessmentFrameworkShareRequests/{requestId}",
+	}
+
+	if input == nil {
+		input = &UpdateAssessmentFrameworkShareInput{}
+	}
+
+	output = &UpdateAssessmentFrameworkShareOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateAssessmentFrameworkShare API operation for AWS Audit Manager.
+//
+// Updates a share request for a custom framework in Audit Manager.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS Audit Manager's
+// API operation UpdateAssessmentFrameworkShare for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
+//
+//   - ValidationException
+//     The request has invalid or missing parameters.
+//
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ServiceQuotaExceededException
+//     You've reached your account quota for this resource type. To perform the
+//     requested action, delete some existing resources or request a quota increase
+//     (https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) from
+//     the Service Quotas console. For a list of Audit Manager service quotas, see
+//     Quotas and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentFrameworkShare
+func (c *AuditManager) UpdateAssessmentFrameworkShare(input *UpdateAssessmentFrameworkShareInput) (*UpdateAssessmentFrameworkShareOutput, error) {
+	req, out := c.UpdateAssessmentFrameworkShareRequest(input)
+	return out, req.Send()
+}
+
+// UpdateAssessmentFrameworkShareWithContext is the same as UpdateAssessmentFrameworkShare with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateAssessmentFrameworkShare for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AuditManager) UpdateAssessmentFrameworkShareWithContext(ctx aws.Context, input *UpdateAssessmentFrameworkShareInput, opts ...request.Option) (*UpdateAssessmentFrameworkShareOutput, error) {
+	req, out := c.UpdateAssessmentFrameworkShareRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateAssessmentStatus = "UpdateAssessmentStatus"
 
 // UpdateAssessmentStatusRequest generates a "aws/request.Request" representing the
@@ -4872,14 +6368,13 @@ const opUpdateAssessmentStatus = "UpdateAssessmentStatus"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateAssessmentStatusRequest method.
+//	req, resp := client.UpdateAssessmentStatusRequest(params)
 //
-//    // Example sending a request using the UpdateAssessmentStatusRequest method.
-//    req, resp := client.UpdateAssessmentStatusRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentStatus
 func (c *AuditManager) UpdateAssessmentStatusRequest(input *UpdateAssessmentStatusInput) (req *request.Request, output *UpdateAssessmentStatusOutput) {
@@ -4910,19 +6405,27 @@ func (c *AuditManager) UpdateAssessmentStatusRequest(input *UpdateAssessmentStat
 // API operation UpdateAssessmentStatus for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ServiceQuotaExceededException
+//     You've reached your account quota for this resource type. To perform the
+//     requested action, delete some existing resources or request a quota increase
+//     (https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) from
+//     the Service Quotas console. For a list of Audit Manager service quotas, see
+//     Quotas and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateAssessmentStatus
 func (c *AuditManager) UpdateAssessmentStatus(input *UpdateAssessmentStatusInput) (*UpdateAssessmentStatusOutput, error) {
@@ -4962,14 +6465,13 @@ const opUpdateControl = "UpdateControl"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateControlRequest method.
+//	req, resp := client.UpdateControlRequest(params)
 //
-//    // Example sending a request using the UpdateControlRequest method.
-//    req, resp := client.UpdateControlRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateControl
 func (c *AuditManager) UpdateControlRequest(input *UpdateControlInput) (req *request.Request, output *UpdateControlOutput) {
@@ -5000,19 +6502,20 @@ func (c *AuditManager) UpdateControlRequest(input *UpdateControlInput) (req *req
 // API operation UpdateControl for usage and error information.
 //
 // Returned Error Types:
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
 //
-//   * ValidationException
-//   The request has invalid or missing parameters.
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateControl
 func (c *AuditManager) UpdateControl(input *UpdateControlInput) (*UpdateControlOutput, error) {
@@ -5052,14 +6555,13 @@ const opUpdateSettings = "UpdateSettings"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateSettingsRequest method.
+//	req, resp := client.UpdateSettingsRequest(params)
 //
-//    // Example sending a request using the UpdateSettingsRequest method.
-//    req, resp := client.UpdateSettingsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateSettings
 func (c *AuditManager) UpdateSettingsRequest(input *UpdateSettingsInput) (req *request.Request, output *UpdateSettingsOutput) {
@@ -5080,7 +6582,7 @@ func (c *AuditManager) UpdateSettingsRequest(input *UpdateSettingsInput) (req *r
 
 // UpdateSettings API operation for AWS Audit Manager.
 //
-// Updates Audit Manager settings for the current user account.
+// Updates Audit Manager settings for the current account.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -5090,16 +6592,17 @@ func (c *AuditManager) UpdateSettingsRequest(input *UpdateSettingsInput) (req *r
 // API operation UpdateSettings for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
+//
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/UpdateSettings
 func (c *AuditManager) UpdateSettings(input *UpdateSettingsInput) (*UpdateSettingsOutput, error) {
@@ -5139,14 +6642,13 @@ const opValidateAssessmentReportIntegrity = "ValidateAssessmentReportIntegrity"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ValidateAssessmentReportIntegrityRequest method.
+//	req, resp := client.ValidateAssessmentReportIntegrityRequest(params)
 //
-//    // Example sending a request using the ValidateAssessmentReportIntegrityRequest method.
-//    req, resp := client.ValidateAssessmentReportIntegrityRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ValidateAssessmentReportIntegrity
 func (c *AuditManager) ValidateAssessmentReportIntegrityRequest(input *ValidateAssessmentReportIntegrityInput) (req *request.Request, output *ValidateAssessmentReportIntegrityOutput) {
@@ -5177,19 +6679,20 @@ func (c *AuditManager) ValidateAssessmentReportIntegrityRequest(input *ValidateA
 // API operation ValidateAssessmentReportIntegrity for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   The request has invalid or missing parameters.
 //
-//   * AccessDeniedException
-//   Your account is not registered with Audit Manager. Check the delegated administrator
-//   setup on the Audit Manager settings page, and try again.
+//   - ValidationException
+//     The request has invalid or missing parameters.
 //
-//   * InternalServerException
-//   An internal service error occurred during the processing of your request.
-//   Try again later.
+//   - AccessDeniedException
+//     Your account isn't registered with Audit Manager. Check the delegated administrator
+//     setup on the Audit Manager settings page, and try again.
 //
-//   * ResourceNotFoundException
-//   The resource specified in the request cannot be found.
+//   - InternalServerException
+//     An internal service error occurred during the processing of your request.
+//     Try again later.
+//
+//   - ResourceNotFoundException
+//     The resource that's specified in the request can't be found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/auditmanager-2017-07-25/ValidateAssessmentReportIntegrity
 func (c *AuditManager) ValidateAssessmentReportIntegrity(input *ValidateAssessmentReportIntegrityInput) (*ValidateAssessmentReportIntegrityOutput, error) {
@@ -5213,27 +6716,39 @@ func (c *AuditManager) ValidateAssessmentReportIntegrityWithContext(ctx aws.Cont
 	return out, req.Send()
 }
 
-// The wrapper of account details, such as account ID, email address, and so
-// on.
+// The wrapper of Amazon Web Services account details, such as account ID or
+// email address.
 type AWSAccount struct {
 	_ struct{} `type:"structure"`
 
-	// The email address associated with the specified account.
-	EmailAddress *string `locationName:"emailAddress" min:"1" type:"string"`
+	// The email address that's associated with the Amazon Web Services account.
+	//
+	// EmailAddress is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AWSAccount's
+	// String and GoString methods.
+	EmailAddress *string `locationName:"emailAddress" min:"1" type:"string" sensitive:"true"`
 
-	// The identifier for the specified account.
+	// The identifier for the Amazon Web Services account.
 	Id *string `locationName:"id" min:"12" type:"string"`
 
-	// The name of the specified account.
+	// The name of the Amazon Web Services account.
 	Name *string `locationName:"name" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AWSAccount) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AWSAccount) GoString() string {
 	return s.String()
 }
@@ -5275,7 +6790,14 @@ func (s *AWSAccount) SetName(v string) *AWSAccount {
 	return s
 }
 
-// An Amazon Web Service such as Amazon S3, CloudTrail, and so on.
+// An Amazon Web Service such as Amazon S3 or CloudTrail.
+//
+// For an example of how to find an Amazon Web Service name and how to define
+// it in your assessment scope, see the following:
+//
+//   - Finding an Amazon Web Service name to use in your assessment scope (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_GetServicesInScope.html#API_GetServicesInScope_Example_2)
+//
+//   - Defining an Amazon Web Service name in your assessment scope (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_GetServicesInScope.html#API_GetServicesInScope_Example_3)
 type AWSService struct {
 	_ struct{} `type:"structure"`
 
@@ -5283,12 +6805,20 @@ type AWSService struct {
 	ServiceName *string `locationName:"serviceName" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AWSService) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AWSService) GoString() string {
 	return s.String()
 }
@@ -5312,7 +6842,7 @@ func (s *AWSService) SetServiceName(v string) *AWSService {
 	return s
 }
 
-// Your account is not registered with Audit Manager. Check the delegated administrator
+// Your account isn't registered with Audit Manager. Check the delegated administrator
 // setup on the Audit Manager settings page, and try again.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
@@ -5321,12 +6851,20 @@ type AccessDeniedException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) GoString() string {
 	return s.String()
 }
@@ -5377,25 +6915,37 @@ type Assessment struct {
 	// The Amazon Resource Name (ARN) of the assessment.
 	Arn *string `locationName:"arn" min:"20" type:"string"`
 
-	// The account associated with the assessment.
+	// The Amazon Web Services account that's associated with the assessment.
 	AwsAccount *AWSAccount `locationName:"awsAccount" type:"structure"`
 
-	// The framework from which the assessment was created.
-	Framework *AssessmentFramework `locationName:"framework" type:"structure"`
+	// The framework that the assessment was created from.
+	//
+	// Framework is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Assessment's
+	// String and GoString methods.
+	Framework *AssessmentFramework `locationName:"framework" type:"structure" sensitive:"true"`
 
-	// The metadata for the specified assessment.
+	// The metadata for the assessment.
 	Metadata *AssessmentMetadata `locationName:"metadata" type:"structure"`
 
-	// The tags associated with the assessment.
+	// The tags that are associated with the assessment.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Assessment) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Assessment) GoString() string {
 	return s.String()
 }
@@ -5430,45 +6980,57 @@ func (s *Assessment) SetTags(v map[string]*string) *Assessment {
 	return s
 }
 
-// The control entity that represents a standard or custom control used in an
-// Audit Manager assessment.
+// The control entity that represents a standard control or a custom control
+// in an Audit Manager assessment.
 type AssessmentControl struct {
 	_ struct{} `type:"structure"`
 
 	// The amount of evidence in the assessment report.
 	AssessmentReportEvidenceCount *int64 `locationName:"assessmentReportEvidenceCount" type:"integer"`
 
-	// The list of comments attached to the specified control.
+	// The list of comments that's attached to the control.
 	Comments []*ControlComment `locationName:"comments" type:"list"`
 
-	// The description of the specified control.
-	Description *string `locationName:"description" type:"string"`
+	// The description of the control.
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentControl's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
-	// The amount of evidence generated for the control.
+	// The amount of evidence that's collected for the control.
 	EvidenceCount *int64 `locationName:"evidenceCount" type:"integer"`
 
-	// The list of data sources for the specified evidence.
+	// The list of data sources for the evidence.
 	EvidenceSources []*string `locationName:"evidenceSources" type:"list"`
 
-	// The identifier for the specified control.
+	// The identifier for the control.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// The name of the specified control.
+	// The name of the control.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
-	// The response of the specified control.
+	// The response of the control.
 	Response *string `locationName:"response" type:"string" enum:"ControlResponse"`
 
-	// The status of the specified control.
+	// The status of the control.
 	Status *string `locationName:"status" type:"string" enum:"ControlStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentControl) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentControl) GoString() string {
 	return s.String()
 }
@@ -5531,10 +7093,10 @@ func (s *AssessmentControl) SetStatus(v string) *AssessmentControl {
 type AssessmentControlSet struct {
 	_ struct{} `type:"structure"`
 
-	// The list of controls contained with the control set.
+	// The list of controls that's contained with the control set.
 	Controls []*AssessmentControl `locationName:"controls" type:"list"`
 
-	// The delegations associated with the control set.
+	// The delegations that are associated with the control set.
 	Delegations []*Delegation `locationName:"delegations" type:"list"`
 
 	// The description for the control set.
@@ -5544,26 +7106,39 @@ type AssessmentControlSet struct {
 	// set name in a plain string format.
 	Id *string `locationName:"id" min:"1" type:"string"`
 
-	// The total number of evidence objects uploaded manually to the control set.
+	// The total number of evidence objects that are uploaded manually to the control
+	// set.
 	ManualEvidenceCount *int64 `locationName:"manualEvidenceCount" type:"integer"`
 
-	// The roles associated with the control set.
-	Roles []*Role `locationName:"roles" type:"list"`
+	// The roles that are associated with the control set.
+	//
+	// Roles is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentControlSet's
+	// String and GoString methods.
+	Roles []*Role `locationName:"roles" type:"list" sensitive:"true"`
 
-	// Specifies the current status of the control set.
+	// The current status of the control set.
 	Status *string `locationName:"status" type:"string" enum:"ControlSetStatus"`
 
-	// The total number of evidence objects retrieved automatically for the control
-	// set.
+	// The total number of evidence objects that are retrieved automatically for
+	// the control set.
 	SystemEvidenceCount *int64 `locationName:"systemEvidenceCount" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentControlSet) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentControlSet) GoString() string {
 	return s.String()
 }
@@ -5616,20 +7191,20 @@ func (s *AssessmentControlSet) SetSystemEvidenceCount(v int64) *AssessmentContro
 	return s
 }
 
-// The folder in which Audit Manager stores evidence for an assessment.
+// The folder where Audit Manager stores evidence for an assessment.
 type AssessmentEvidenceFolder struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	AssessmentId *string `locationName:"assessmentId" min:"36" type:"string"`
 
-	// The total count of evidence included in the assessment report.
+	// The total count of evidence that's included in the assessment report.
 	AssessmentReportSelectionCount *int64 `locationName:"assessmentReportSelectionCount" type:"integer"`
 
 	// The name of the user who created the evidence folder.
 	Author *string `locationName:"author" type:"string"`
 
-	// The unique identifier for the specified control.
+	// The unique identifier for the control.
 	ControlId *string `locationName:"controlId" min:"36" type:"string"`
 
 	// The name of the control.
@@ -5638,14 +7213,14 @@ type AssessmentEvidenceFolder struct {
 	// The identifier for the control set.
 	ControlSetId *string `locationName:"controlSetId" min:"1" type:"string"`
 
-	// The Amazon Web Service from which the evidence was collected.
+	// The Amazon Web Service that the evidence was collected from.
 	DataSource *string `locationName:"dataSource" type:"string"`
 
 	// The date when the first evidence was added to the evidence folder.
 	Date *time.Time `locationName:"date" type:"timestamp"`
 
-	// The total number of Amazon Web Services resources assessed to generate the
-	// evidence.
+	// The total number of Amazon Web Services resources that were assessed to generate
+	// the evidence.
 	EvidenceAwsServiceSourceCount *int64 `locationName:"evidenceAwsServiceSourceCount" type:"integer"`
 
 	// The number of evidence that falls under the compliance check category. This
@@ -5658,7 +7233,7 @@ type AssessmentEvidenceFolder struct {
 
 	// The number of evidence that falls under the configuration data category.
 	// This evidence is collected from configuration snapshots of other Amazon Web
-	// Services services such as Amazon EC2, Amazon S3, or IAM.
+	// Services such as Amazon EC2, Amazon S3, or IAM.
 	EvidenceByTypeConfigurationDataCount *int64 `locationName:"evidenceByTypeConfigurationDataCount" type:"integer"`
 
 	// The number of evidence that falls under the manual category. This evidence
@@ -5669,25 +7244,33 @@ type AssessmentEvidenceFolder struct {
 	// evidence is collected from CloudTrail logs.
 	EvidenceByTypeUserActivityCount *int64 `locationName:"evidenceByTypeUserActivityCount" type:"integer"`
 
-	// The amount of evidence included in the evidence folder.
+	// The amount of evidence that's included in the evidence folder.
 	EvidenceResourcesIncludedCount *int64 `locationName:"evidenceResourcesIncludedCount" type:"integer"`
 
-	// The identifier for the folder in which evidence is stored.
+	// The identifier for the folder that the evidence is stored in.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// The name of the specified evidence folder.
+	// The name of the evidence folder.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
 	// The total amount of evidence in the evidence folder.
 	TotalEvidence *int64 `locationName:"totalEvidence" type:"integer"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentEvidenceFolder) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentEvidenceFolder) GoString() string {
 	return s.String()
 }
@@ -5803,27 +7386,35 @@ func (s *AssessmentEvidenceFolder) SetTotalEvidence(v int64) *AssessmentEvidence
 // The file used to structure and automate Audit Manager assessments for a given
 // compliance standard.
 type AssessmentFramework struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" sensitive:"true"`
 
-	// The Amazon Resource Name (ARN) of the specified framework.
+	// The Amazon Resource Name (ARN) of the framework.
 	Arn *string `locationName:"arn" min:"20" type:"string"`
 
-	// The control sets associated with the framework.
+	// The control sets that are associated with the framework.
 	ControlSets []*AssessmentControlSet `locationName:"controlSets" type:"list"`
 
 	// The unique identifier for the framework.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// The metadata of a framework, such as the name, ID, description, and so on.
+	// The metadata of a framework, such as the name, ID, or description.
 	Metadata *FrameworkMetadata `locationName:"metadata" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentFramework) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentFramework) GoString() string {
 	return s.String()
 }
@@ -5852,7 +7443,7 @@ func (s *AssessmentFramework) SetMetadata(v *FrameworkMetadata) *AssessmentFrame
 	return s
 }
 
-// The metadata associated with a standard or custom framework.
+// The metadata that's associated with a standard framework or a custom framework.
 type AssessmentFrameworkMetadata struct {
 	_ struct{} `type:"structure"`
 
@@ -5861,42 +7452,54 @@ type AssessmentFrameworkMetadata struct {
 
 	// The compliance type that the new custom framework supports, such as CIS or
 	// HIPAA.
-	ComplianceType *string `locationName:"complianceType" type:"string"`
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentFrameworkMetadata's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
 
-	// The number of control sets associated with the specified framework.
+	// The number of control sets that are associated with the framework.
 	ControlSetsCount *int64 `locationName:"controlSetsCount" type:"integer"`
 
-	// The number of controls associated with the specified framework.
+	// The number of controls that are associated with the framework.
 	ControlsCount *int64 `locationName:"controlsCount" type:"integer"`
 
-	// Specifies when the framework was created.
+	// The time when the framework was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The description of the specified framework.
+	// The description of the framework.
 	Description *string `locationName:"description" min:"1" type:"string"`
 
-	// The unique identified for the specified framework.
+	// The unique identifier for the framework.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// Specifies when the framework was most recently updated.
+	// The time when the framework was most recently updated.
 	LastUpdatedAt *time.Time `locationName:"lastUpdatedAt" type:"timestamp"`
 
-	// The logo associated with the framework.
+	// The logo that's associated with the framework.
 	Logo *string `locationName:"logo" min:"1" type:"string"`
 
-	// The name of the specified framework.
+	// The name of the framework.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
-	// The framework type, such as standard or custom.
+	// The framework type, such as a standard framework or a custom framework.
 	Type *string `locationName:"type" type:"string" enum:"FrameworkType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentFrameworkMetadata) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentFrameworkMetadata) GoString() string {
 	return s.String()
 }
@@ -5967,24 +7570,200 @@ func (s *AssessmentFrameworkMetadata) SetType(v string) *AssessmentFrameworkMeta
 	return s
 }
 
-// The metadata associated with the specified assessment.
+// Represents a share request for a custom framework in Audit Manager.
+type AssessmentFrameworkShareRequest struct {
+	_ struct{} `type:"structure"`
+
+	// An optional comment from the sender about the share request.
+	Comment *string `locationName:"comment" type:"string"`
+
+	// The compliance type that the shared custom framework supports, such as CIS
+	// or HIPAA.
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentFrameworkShareRequest's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
+
+	// The time when the share request was created.
+	CreationTime *time.Time `locationName:"creationTime" type:"timestamp"`
+
+	// The number of custom controls that are part of the shared custom framework.
+	CustomControlsCount *int64 `locationName:"customControlsCount" type:"integer"`
+
+	// The Amazon Web Services account of the recipient.
+	DestinationAccount *string `locationName:"destinationAccount" min:"12" type:"string"`
+
+	// The Amazon Web Services Region of the recipient.
+	DestinationRegion *string `locationName:"destinationRegion" type:"string"`
+
+	// The time when the share request expires.
+	ExpirationTime *time.Time `locationName:"expirationTime" type:"timestamp"`
+
+	// The description of the shared custom framework.
+	FrameworkDescription *string `locationName:"frameworkDescription" min:"1" type:"string"`
+
+	// The unique identifier for the shared custom framework.
+	FrameworkId *string `locationName:"frameworkId" min:"36" type:"string"`
+
+	// The name of the custom framework that the share request is for.
+	FrameworkName *string `locationName:"frameworkName" min:"1" type:"string"`
+
+	// The unique identifier for the share request.
+	Id *string `locationName:"id" min:"36" type:"string"`
+
+	// Specifies when the share request was last updated.
+	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
+
+	// The Amazon Web Services account of the sender.
+	SourceAccount *string `locationName:"sourceAccount" min:"12" type:"string"`
+
+	// The number of standard controls that are part of the shared custom framework.
+	StandardControlsCount *int64 `locationName:"standardControlsCount" type:"integer"`
+
+	// The status of the share request.
+	Status *string `locationName:"status" type:"string" enum:"ShareRequestStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssessmentFrameworkShareRequest) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssessmentFrameworkShareRequest) GoString() string {
+	return s.String()
+}
+
+// SetComment sets the Comment field's value.
+func (s *AssessmentFrameworkShareRequest) SetComment(v string) *AssessmentFrameworkShareRequest {
+	s.Comment = &v
+	return s
+}
+
+// SetComplianceType sets the ComplianceType field's value.
+func (s *AssessmentFrameworkShareRequest) SetComplianceType(v string) *AssessmentFrameworkShareRequest {
+	s.ComplianceType = &v
+	return s
+}
+
+// SetCreationTime sets the CreationTime field's value.
+func (s *AssessmentFrameworkShareRequest) SetCreationTime(v time.Time) *AssessmentFrameworkShareRequest {
+	s.CreationTime = &v
+	return s
+}
+
+// SetCustomControlsCount sets the CustomControlsCount field's value.
+func (s *AssessmentFrameworkShareRequest) SetCustomControlsCount(v int64) *AssessmentFrameworkShareRequest {
+	s.CustomControlsCount = &v
+	return s
+}
+
+// SetDestinationAccount sets the DestinationAccount field's value.
+func (s *AssessmentFrameworkShareRequest) SetDestinationAccount(v string) *AssessmentFrameworkShareRequest {
+	s.DestinationAccount = &v
+	return s
+}
+
+// SetDestinationRegion sets the DestinationRegion field's value.
+func (s *AssessmentFrameworkShareRequest) SetDestinationRegion(v string) *AssessmentFrameworkShareRequest {
+	s.DestinationRegion = &v
+	return s
+}
+
+// SetExpirationTime sets the ExpirationTime field's value.
+func (s *AssessmentFrameworkShareRequest) SetExpirationTime(v time.Time) *AssessmentFrameworkShareRequest {
+	s.ExpirationTime = &v
+	return s
+}
+
+// SetFrameworkDescription sets the FrameworkDescription field's value.
+func (s *AssessmentFrameworkShareRequest) SetFrameworkDescription(v string) *AssessmentFrameworkShareRequest {
+	s.FrameworkDescription = &v
+	return s
+}
+
+// SetFrameworkId sets the FrameworkId field's value.
+func (s *AssessmentFrameworkShareRequest) SetFrameworkId(v string) *AssessmentFrameworkShareRequest {
+	s.FrameworkId = &v
+	return s
+}
+
+// SetFrameworkName sets the FrameworkName field's value.
+func (s *AssessmentFrameworkShareRequest) SetFrameworkName(v string) *AssessmentFrameworkShareRequest {
+	s.FrameworkName = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *AssessmentFrameworkShareRequest) SetId(v string) *AssessmentFrameworkShareRequest {
+	s.Id = &v
+	return s
+}
+
+// SetLastUpdated sets the LastUpdated field's value.
+func (s *AssessmentFrameworkShareRequest) SetLastUpdated(v time.Time) *AssessmentFrameworkShareRequest {
+	s.LastUpdated = &v
+	return s
+}
+
+// SetSourceAccount sets the SourceAccount field's value.
+func (s *AssessmentFrameworkShareRequest) SetSourceAccount(v string) *AssessmentFrameworkShareRequest {
+	s.SourceAccount = &v
+	return s
+}
+
+// SetStandardControlsCount sets the StandardControlsCount field's value.
+func (s *AssessmentFrameworkShareRequest) SetStandardControlsCount(v int64) *AssessmentFrameworkShareRequest {
+	s.StandardControlsCount = &v
+	return s
+}
+
+// SetStatus sets the Status field's value.
+func (s *AssessmentFrameworkShareRequest) SetStatus(v string) *AssessmentFrameworkShareRequest {
+	s.Status = &v
+	return s
+}
+
+// The metadata that's associated with the specified assessment.
 type AssessmentMetadata struct {
 	_ struct{} `type:"structure"`
 
-	// The destination in which evidence reports are stored for the specified assessment.
-	AssessmentReportsDestination *AssessmentReportsDestination `locationName:"assessmentReportsDestination" type:"structure"`
+	// The destination that evidence reports are stored in for the assessment.
+	//
+	// AssessmentReportsDestination is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadata's
+	// String and GoString methods.
+	AssessmentReportsDestination *AssessmentReportsDestination `locationName:"assessmentReportsDestination" type:"structure" sensitive:"true"`
 
-	// The name of a compliance standard related to the assessment, such as PCI-DSS.
-	ComplianceType *string `locationName:"complianceType" type:"string"`
+	// The name of the compliance standard that's related to the assessment, such
+	// as PCI-DSS.
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadata's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
 
 	// Specifies when the assessment was created.
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp"`
 
-	// The delegations associated with the assessment.
+	// The delegations that are associated with the assessment.
 	Delegations []*Delegation `locationName:"delegations" type:"list"`
 
 	// The description of the assessment.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadata's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The unique identifier for the assessment.
 	Id *string `locationName:"id" min:"36" type:"string"`
@@ -5993,24 +7772,45 @@ type AssessmentMetadata struct {
 	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
 
 	// The name of the assessment.
-	Name *string `locationName:"name" min:"1" type:"string"`
+	//
+	// Name is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadata's
+	// String and GoString methods.
+	Name *string `locationName:"name" min:"1" type:"string" sensitive:"true"`
 
-	// The roles associated with the assessment.
-	Roles []*Role `locationName:"roles" type:"list"`
+	// The roles that are associated with the assessment.
+	//
+	// Roles is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadata's
+	// String and GoString methods.
+	Roles []*Role `locationName:"roles" type:"list" sensitive:"true"`
 
-	// The wrapper of accounts and services in scope for the assessment.
-	Scope *Scope `locationName:"scope" type:"structure"`
+	// The wrapper of Amazon Web Services accounts and services that are in scope
+	// for the assessment.
+	//
+	// Scope is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadata's
+	// String and GoString methods.
+	Scope *Scope `locationName:"scope" type:"structure" sensitive:"true"`
 
 	// The overall status of the assessment.
 	Status *string `locationName:"status" type:"string" enum:"AssessmentStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentMetadata) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentMetadata) GoString() string {
 	return s.String()
 }
@@ -6081,17 +7881,22 @@ func (s *AssessmentMetadata) SetStatus(v string) *AssessmentMetadata {
 	return s
 }
 
-// A metadata object associated with an assessment in Audit Manager.
+// A metadata object that's associated with an assessment in Audit Manager.
 type AssessmentMetadataItem struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the compliance standard related to the assessment, such as PCI-DSS.
-	ComplianceType *string `locationName:"complianceType" type:"string"`
+	// The name of the compliance standard that's related to the assessment, such
+	// as PCI-DSS.
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadataItem's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
 
 	// Specifies when the assessment was created.
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp"`
 
-	// The delegations associated with the assessment.
+	// The delegations that are associated with the assessment.
 	Delegations []*Delegation `locationName:"delegations" type:"list"`
 
 	// The unique identifier for the assessment.
@@ -6101,21 +7906,37 @@ type AssessmentMetadataItem struct {
 	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
 
 	// The name of the assessment.
-	Name *string `locationName:"name" min:"1" type:"string"`
+	//
+	// Name is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadataItem's
+	// String and GoString methods.
+	Name *string `locationName:"name" min:"1" type:"string" sensitive:"true"`
 
-	// The roles associated with the assessment.
-	Roles []*Role `locationName:"roles" type:"list"`
+	// The roles that are associated with the assessment.
+	//
+	// Roles is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentMetadataItem's
+	// String and GoString methods.
+	Roles []*Role `locationName:"roles" type:"list" sensitive:"true"`
 
 	// The current status of the assessment.
 	Status *string `locationName:"status" type:"string" enum:"AssessmentStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentMetadataItem) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentMetadataItem) GoString() string {
 	return s.String()
 }
@@ -6168,10 +7989,10 @@ func (s *AssessmentMetadataItem) SetStatus(v string) *AssessmentMetadataItem {
 	return s
 }
 
-// A finalized document generated from an Audit Manager assessment. These reports
-// summarize the relevant evidence collected for your audit, and link to the
-// relevant evidence folders which are named and organized according to the
-// controls specified in your assessment.
+// A finalized document that's generated from an Audit Manager assessment. These
+// reports summarize the relevant evidence that was collected for your audit,
+// and link to the relevant evidence folders. These evidence folders are named
+// and organized according to the controls that are specified in your assessment.
 type AssessmentReport struct {
 	_ struct{} `type:"structure"`
 
@@ -6179,36 +8000,56 @@ type AssessmentReport struct {
 	AssessmentId *string `locationName:"assessmentId" min:"36" type:"string"`
 
 	// The name of the associated assessment.
-	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string"`
+	//
+	// AssessmentName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentReport's
+	// String and GoString methods.
+	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string" sensitive:"true"`
 
 	// The name of the user who created the assessment report.
-	Author *string `locationName:"author" min:"1" type:"string"`
+	//
+	// Author is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentReport's
+	// String and GoString methods.
+	Author *string `locationName:"author" min:"1" type:"string" sensitive:"true"`
 
-	// The identifier for the specified account.
+	// The identifier for the specified Amazon Web Services account.
 	AwsAccountId *string `locationName:"awsAccountId" min:"12" type:"string"`
 
 	// Specifies when the assessment report was created.
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp"`
 
 	// The description of the specified assessment report.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentReport's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
-	// The unique identifier for the specified assessment report.
+	// The unique identifier for the assessment report.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// The name given to the assessment report.
+	// The name that's given to the assessment report.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
 	// The current status of the specified assessment report.
 	Status *string `locationName:"status" type:"string" enum:"AssessmentReportStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReport) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReport) GoString() string {
 	return s.String()
 }
@@ -6267,27 +8108,35 @@ func (s *AssessmentReport) SetStatus(v string) *AssessmentReport {
 	return s
 }
 
-// An error entity for the AssessmentReportEvidence API. This is used to provide
+// An error entity for assessment report evidence errors. This is used to provide
 // more meaningful errors than a simple string message.
 type AssessmentReportEvidenceError struct {
 	_ struct{} `type:"structure"`
 
-	// The error code returned by the AssessmentReportEvidence API.
+	// The error code that was returned.
 	ErrorCode *string `locationName:"errorCode" min:"3" type:"string"`
 
-	// The error message returned by the AssessmentReportEvidence API.
+	// The error message that was returned.
 	ErrorMessage *string `locationName:"errorMessage" type:"string"`
 
 	// The identifier for the evidence.
 	EvidenceId *string `locationName:"evidenceId" min:"36" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReportEvidenceError) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReportEvidenceError) GoString() string {
 	return s.String()
 }
@@ -6310,7 +8159,7 @@ func (s *AssessmentReportEvidenceError) SetEvidenceId(v string) *AssessmentRepor
 	return s
 }
 
-// The metadata objects associated with the specified assessment report.
+// The metadata objects that are associated with the specified assessment report.
 type AssessmentReportMetadata struct {
 	_ struct{} `type:"structure"`
 
@@ -6318,16 +8167,28 @@ type AssessmentReportMetadata struct {
 	AssessmentId *string `locationName:"assessmentId" min:"36" type:"string"`
 
 	// The name of the associated assessment.
-	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string"`
+	//
+	// AssessmentName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentReportMetadata's
+	// String and GoString methods.
+	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string" sensitive:"true"`
 
 	// The name of the user who created the assessment report.
-	Author *string `locationName:"author" min:"1" type:"string"`
+	//
+	// Author is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentReportMetadata's
+	// String and GoString methods.
+	Author *string `locationName:"author" min:"1" type:"string" sensitive:"true"`
 
 	// Specifies when the assessment report was created.
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp"`
 
-	// The description of the specified assessment report.
-	Description *string `locationName:"description" type:"string"`
+	// The description of the assessment report.
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by AssessmentReportMetadata's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The unique identifier for the assessment report.
 	Id *string `locationName:"id" min:"36" type:"string"`
@@ -6339,12 +8200,20 @@ type AssessmentReportMetadata struct {
 	Status *string `locationName:"status" type:"string" enum:"AssessmentReportStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReportMetadata) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReportMetadata) GoString() string {
 	return s.String()
 }
@@ -6397,24 +8266,31 @@ func (s *AssessmentReportMetadata) SetStatus(v string) *AssessmentReportMetadata
 	return s
 }
 
-// The location in which Audit Manager saves assessment reports for the given
-// assessment.
+// The location where Audit Manager saves assessment reports for the given assessment.
 type AssessmentReportsDestination struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" sensitive:"true"`
 
-	// The destination of the assessment report.
+	// The destination bucket where Audit Manager stores assessment reports.
 	Destination *string `locationName:"destination" min:"1" type:"string"`
 
 	// The destination type, such as Amazon S3.
 	DestinationType *string `locationName:"destinationType" type:"string" enum:"AssessmentReportDestinationType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReportsDestination) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssessmentReportsDestination) GoString() string {
 	return s.String()
 }
@@ -6447,23 +8323,31 @@ func (s *AssessmentReportsDestination) SetDestinationType(v string) *AssessmentR
 type AssociateAssessmentReportEvidenceFolderInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the folder in which evidence is stored.
+	// The identifier for the folder that the evidence is stored in.
 	//
 	// EvidenceFolderId is a required field
 	EvidenceFolderId *string `locationName:"evidenceFolderId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateAssessmentReportEvidenceFolderInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateAssessmentReportEvidenceFolderInput) GoString() string {
 	return s.String()
 }
@@ -6506,12 +8390,20 @@ type AssociateAssessmentReportEvidenceFolderOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateAssessmentReportEvidenceFolderOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AssociateAssessmentReportEvidenceFolderOutput) GoString() string {
 	return s.String()
 }
@@ -6519,12 +8411,12 @@ func (s AssociateAssessmentReportEvidenceFolderOutput) GoString() string {
 type BatchAssociateAssessmentReportEvidenceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The unique identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the folder in which the evidence is stored.
+	// The identifier for the folder that the evidence is stored in.
 	//
 	// EvidenceFolderId is a required field
 	EvidenceFolderId *string `locationName:"evidenceFolderId" min:"36" type:"string" required:"true"`
@@ -6535,12 +8427,20 @@ type BatchAssociateAssessmentReportEvidenceInput struct {
 	EvidenceIds []*string `locationName:"evidenceIds" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateAssessmentReportEvidenceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateAssessmentReportEvidenceInput) GoString() string {
 	return s.String()
 }
@@ -6591,19 +8491,27 @@ func (s *BatchAssociateAssessmentReportEvidenceInput) SetEvidenceIds(v []*string
 type BatchAssociateAssessmentReportEvidenceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of errors returned by the BatchAssociateAssessmentReportEvidence API.
+	// A list of errors that the BatchAssociateAssessmentReportEvidence API returned.
 	Errors []*AssessmentReportEvidenceError `locationName:"errors" type:"list"`
 
-	// The identifier for the evidence.
+	// The list of evidence identifiers.
 	EvidenceIds []*string `locationName:"evidenceIds" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateAssessmentReportEvidenceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchAssociateAssessmentReportEvidenceOutput) GoString() string {
 	return s.String()
 }
@@ -6628,19 +8536,27 @@ type BatchCreateDelegationByAssessmentError struct {
 	// The API request to batch create delegations in Audit Manager.
 	CreateDelegationRequest *CreateDelegationRequest `locationName:"createDelegationRequest" type:"structure"`
 
-	// The error code returned by the BatchCreateDelegationByAssessment API.
+	// The error code that the BatchCreateDelegationByAssessment API returned.
 	ErrorCode *string `locationName:"errorCode" min:"3" type:"string"`
 
-	// The error message returned by the BatchCreateDelegationByAssessment API.
+	// The error message that the BatchCreateDelegationByAssessment API returned.
 	ErrorMessage *string `locationName:"errorMessage" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchCreateDelegationByAssessmentError) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchCreateDelegationByAssessmentError) GoString() string {
 	return s.String()
 }
@@ -6666,23 +8582,35 @@ func (s *BatchCreateDelegationByAssessmentError) SetErrorMessage(v string) *Batc
 type BatchCreateDelegationByAssessmentInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
 	// The API request to batch create delegations in Audit Manager.
 	//
+	// CreateDelegationRequests is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by BatchCreateDelegationByAssessmentInput's
+	// String and GoString methods.
+	//
 	// CreateDelegationRequests is a required field
-	CreateDelegationRequests []*CreateDelegationRequest `locationName:"createDelegationRequests" min:"1" type:"list" required:"true"`
+	CreateDelegationRequests []*CreateDelegationRequest `locationName:"createDelegationRequests" min:"1" type:"list" required:"true" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchCreateDelegationByAssessmentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchCreateDelegationByAssessmentInput) GoString() string {
 	return s.String()
 }
@@ -6734,19 +8662,31 @@ func (s *BatchCreateDelegationByAssessmentInput) SetCreateDelegationRequests(v [
 type BatchCreateDelegationByAssessmentOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The delegations associated with the assessment.
+	// The delegations that are associated with the assessment.
 	Delegations []*Delegation `locationName:"delegations" type:"list"`
 
-	// A list of errors returned by the BatchCreateDelegationByAssessment API.
-	Errors []*BatchCreateDelegationByAssessmentError `locationName:"errors" type:"list"`
+	// A list of errors that the BatchCreateDelegationByAssessment API returned.
+	//
+	// Errors is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by BatchCreateDelegationByAssessmentOutput's
+	// String and GoString methods.
+	Errors []*BatchCreateDelegationByAssessmentError `locationName:"errors" type:"list" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchCreateDelegationByAssessmentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchCreateDelegationByAssessmentOutput) GoString() string {
 	return s.String()
 }
@@ -6768,22 +8708,30 @@ func (s *BatchCreateDelegationByAssessmentOutput) SetErrors(v []*BatchCreateDele
 type BatchDeleteDelegationByAssessmentError struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified delegation.
+	// The identifier for the delegation.
 	DelegationId *string `locationName:"delegationId" min:"36" type:"string"`
 
-	// The error code returned by the BatchDeleteDelegationByAssessment API.
+	// The error code that the BatchDeleteDelegationByAssessment API returned.
 	ErrorCode *string `locationName:"errorCode" min:"3" type:"string"`
 
-	// The error message returned by the BatchDeleteDelegationByAssessment API.
+	// The error message that the BatchDeleteDelegationByAssessment API returned.
 	ErrorMessage *string `locationName:"errorMessage" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDeleteDelegationByAssessmentError) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDeleteDelegationByAssessmentError) GoString() string {
 	return s.String()
 }
@@ -6809,23 +8757,31 @@ func (s *BatchDeleteDelegationByAssessmentError) SetErrorMessage(v string) *Batc
 type BatchDeleteDelegationByAssessmentInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifiers for the specified delegations.
+	// The identifiers for the delegations.
 	//
 	// DelegationIds is a required field
 	DelegationIds []*string `locationName:"delegationIds" min:"1" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDeleteDelegationByAssessmentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDeleteDelegationByAssessmentInput) GoString() string {
 	return s.String()
 }
@@ -6867,16 +8823,28 @@ func (s *BatchDeleteDelegationByAssessmentInput) SetDelegationIds(v []*string) *
 type BatchDeleteDelegationByAssessmentOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of errors returned by the BatchDeleteDelegationByAssessment API.
-	Errors []*BatchDeleteDelegationByAssessmentError `locationName:"errors" type:"list"`
+	// A list of errors that the BatchDeleteDelegationByAssessment API returned.
+	//
+	// Errors is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by BatchDeleteDelegationByAssessmentOutput's
+	// String and GoString methods.
+	Errors []*BatchDeleteDelegationByAssessmentError `locationName:"errors" type:"list" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDeleteDelegationByAssessmentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDeleteDelegationByAssessmentOutput) GoString() string {
 	return s.String()
 }
@@ -6890,12 +8858,12 @@ func (s *BatchDeleteDelegationByAssessmentOutput) SetErrors(v []*BatchDeleteDele
 type BatchDisassociateAssessmentReportEvidenceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the folder in which evidence is stored.
+	// The identifier for the folder that the evidence is stored in.
 	//
 	// EvidenceFolderId is a required field
 	EvidenceFolderId *string `locationName:"evidenceFolderId" min:"36" type:"string" required:"true"`
@@ -6906,12 +8874,20 @@ type BatchDisassociateAssessmentReportEvidenceInput struct {
 	EvidenceIds []*string `locationName:"evidenceIds" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateAssessmentReportEvidenceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateAssessmentReportEvidenceInput) GoString() string {
 	return s.String()
 }
@@ -6962,20 +8938,27 @@ func (s *BatchDisassociateAssessmentReportEvidenceInput) SetEvidenceIds(v []*str
 type BatchDisassociateAssessmentReportEvidenceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of errors returned by the BatchDisassociateAssessmentReportEvidence
-	// API.
+	// A list of errors that the BatchDisassociateAssessmentReportEvidence API returned.
 	Errors []*AssessmentReportEvidenceError `locationName:"errors" type:"list"`
 
 	// The identifier for the evidence.
 	EvidenceIds []*string `locationName:"evidenceIds" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateAssessmentReportEvidenceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchDisassociateAssessmentReportEvidenceOutput) GoString() string {
 	return s.String()
 }
@@ -6997,23 +8980,30 @@ func (s *BatchDisassociateAssessmentReportEvidenceOutput) SetEvidenceIds(v []*st
 type BatchImportEvidenceToAssessmentControlError struct {
 	_ struct{} `type:"structure"`
 
-	// The error code returned by the BatchImportEvidenceToAssessmentControl API.
+	// The error code that the BatchImportEvidenceToAssessmentControl API returned.
 	ErrorCode *string `locationName:"errorCode" min:"3" type:"string"`
 
-	// The error message returned by the BatchImportEvidenceToAssessmentControl
-	// API.
+	// The error message that the BatchImportEvidenceToAssessmentControl API returned.
 	ErrorMessage *string `locationName:"errorMessage" type:"string"`
 
-	// Manual evidence that cannot be collected automatically by Audit Manager.
+	// Manual evidence that can't be collected automatically by Audit Manager.
 	ManualEvidence *ManualEvidence `locationName:"manualEvidence" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchImportEvidenceToAssessmentControlError) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchImportEvidenceToAssessmentControlError) GoString() string {
 	return s.String()
 }
@@ -7039,17 +9029,17 @@ func (s *BatchImportEvidenceToAssessmentControlError) SetManualEvidence(v *Manua
 type BatchImportEvidenceToAssessmentControlInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control.
+	// The identifier for the control.
 	//
 	// ControlId is a required field
 	ControlId *string `location:"uri" locationName:"controlId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control set.
+	// The identifier for the control set.
 	//
 	// ControlSetId is a required field
 	ControlSetId *string `location:"uri" locationName:"controlSetId" min:"1" type:"string" required:"true"`
@@ -7060,12 +9050,20 @@ type BatchImportEvidenceToAssessmentControlInput struct {
 	ManualEvidence []*ManualEvidence `locationName:"manualEvidence" min:"1" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchImportEvidenceToAssessmentControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchImportEvidenceToAssessmentControlInput) GoString() string {
 	return s.String()
 }
@@ -7141,16 +9139,24 @@ func (s *BatchImportEvidenceToAssessmentControlInput) SetManualEvidence(v []*Man
 type BatchImportEvidenceToAssessmentControlOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of errors returned by the BatchImportEvidenceToAssessmentControl API.
+	// A list of errors that the BatchImportEvidenceToAssessmentControl API returned.
 	Errors []*BatchImportEvidenceToAssessmentControlError `locationName:"errors" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchImportEvidenceToAssessmentControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BatchImportEvidenceToAssessmentControlOutput) GoString() string {
 	return s.String()
 }
@@ -7161,33 +9167,42 @@ func (s *BatchImportEvidenceToAssessmentControlOutput) SetErrors(v []*BatchImpor
 	return s
 }
 
-// The record of a change within Audit Manager, such as a modified assessment,
-// a delegated control set, and so on.
+// The record of a change within Audit Manager. For example, this could be the
+// status change of an assessment or the delegation of a control set.
 type ChangeLog struct {
 	_ struct{} `type:"structure"`
 
-	// The action performed.
+	// The action that was performed.
 	Action *string `locationName:"action" type:"string" enum:"ActionEnum"`
 
-	// The time of creation for the changelog object.
+	// The time when the action was performed and the changelog record was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The IAM user or role that performed the action.
+	// The user or role that performed the action.
 	CreatedBy *string `locationName:"createdBy" min:"20" type:"string"`
 
-	// The name of the changelog object.
+	// The name of the object that changed. This could be the name of an assessment,
+	// control, or control set.
 	ObjectName *string `locationName:"objectName" min:"1" type:"string"`
 
-	// The changelog object type, such as an assessment, control, or control set.
+	// The object that was changed, such as an assessment, control, or control set.
 	ObjectType *string `locationName:"objectType" type:"string" enum:"ObjectTypeEnum"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ChangeLog) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ChangeLog) GoString() string {
 	return s.String()
 }
@@ -7226,59 +9241,97 @@ func (s *ChangeLog) SetObjectType(v string) *ChangeLog {
 type Control struct {
 	_ struct{} `type:"structure"`
 
-	// The recommended actions to carry out if the control is not fulfilled.
-	ActionPlanInstructions *string `locationName:"actionPlanInstructions" type:"string"`
+	// The recommended actions to carry out if the control isn't fulfilled.
+	//
+	// ActionPlanInstructions is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Control's
+	// String and GoString methods.
+	ActionPlanInstructions *string `locationName:"actionPlanInstructions" type:"string" sensitive:"true"`
 
 	// The title of the action plan for remediating the control.
-	ActionPlanTitle *string `locationName:"actionPlanTitle" type:"string"`
+	//
+	// ActionPlanTitle is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Control's
+	// String and GoString methods.
+	ActionPlanTitle *string `locationName:"actionPlanTitle" type:"string" sensitive:"true"`
 
-	// The Amazon Resource Name (ARN) of the specified control.
+	// The Amazon Resource Name (ARN) of the control.
 	Arn *string `locationName:"arn" min:"20" type:"string"`
 
-	// The data mapping sources for the specified control.
+	// The data mapping sources for the control.
 	ControlMappingSources []*ControlMappingSource `locationName:"controlMappingSources" min:"1" type:"list"`
 
-	// The data source that determines from where Audit Manager collects evidence
-	// for the control.
+	// The data source types that determine where Audit Manager collects evidence
+	// from for the control.
 	ControlSources *string `locationName:"controlSources" min:"1" type:"string"`
 
-	// Specifies when the control was created.
+	// The time when the control was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The IAM user or role that created the control.
-	CreatedBy *string `locationName:"createdBy" min:"1" type:"string"`
+	// The user or role that created the control.
+	//
+	// CreatedBy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Control's
+	// String and GoString methods.
+	CreatedBy *string `locationName:"createdBy" min:"1" type:"string" sensitive:"true"`
 
-	// The description of the specified control.
-	Description *string `locationName:"description" type:"string"`
+	// The description of the control.
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Control's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The unique identifier for the control.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// Specifies when the control was most recently updated.
+	// The time when the control was most recently updated.
 	LastUpdatedAt *time.Time `locationName:"lastUpdatedAt" type:"timestamp"`
 
-	// The IAM user or role that most recently updated the control.
-	LastUpdatedBy *string `locationName:"lastUpdatedBy" min:"1" type:"string"`
+	// The user or role that most recently updated the control.
+	//
+	// LastUpdatedBy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Control's
+	// String and GoString methods.
+	LastUpdatedBy *string `locationName:"lastUpdatedBy" min:"1" type:"string" sensitive:"true"`
 
-	// The name of the specified control.
+	// The name of the control.
 	Name *string `locationName:"name" min:"1" type:"string"`
+
+	// The state of the control. The END_OF_SUPPORT state is applicable to standard
+	// controls only. This state indicates that the standard control can still be
+	// used to collect evidence, but Audit Manager is no longer updating or maintaining
+	// that control.
+	State *string `locationName:"state" type:"string" enum:"ControlState"`
 
 	// The tags associated with the control.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 
-	// The steps to follow to determine if the control has been satisfied.
-	TestingInformation *string `locationName:"testingInformation" type:"string"`
+	// The steps that you should follow to determine if the control has been satisfied.
+	//
+	// TestingInformation is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Control's
+	// String and GoString methods.
+	TestingInformation *string `locationName:"testingInformation" type:"string" sensitive:"true"`
 
-	// The type of control, such as custom or standard.
+	// Specifies whether the control is a standard control or a custom control.
 	Type *string `locationName:"type" type:"string" enum:"ControlType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Control) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Control) GoString() string {
 	return s.String()
 }
@@ -7355,6 +9408,12 @@ func (s *Control) SetName(v string) *Control {
 	return s
 }
 
+// SetState sets the State field's value.
+func (s *Control) SetState(v string) *Control {
+	s.State = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *Control) SetTags(v map[string]*string) *Control {
 	s.Tags = v
@@ -7373,27 +9432,43 @@ func (s *Control) SetType(v string) *Control {
 	return s
 }
 
-// A comment posted by a user on a control. This includes the author's name,
-// the comment text, and a timestamp.
+// A comment that's posted by a user on a control. This includes the author's
+// name, the comment text, and a timestamp.
 type ControlComment struct {
 	_ struct{} `type:"structure"`
 
 	// The name of the user who authored the comment.
-	AuthorName *string `locationName:"authorName" min:"1" type:"string"`
+	//
+	// AuthorName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ControlComment's
+	// String and GoString methods.
+	AuthorName *string `locationName:"authorName" min:"1" type:"string" sensitive:"true"`
 
 	// The body text of a control comment.
-	CommentBody *string `locationName:"commentBody" type:"string"`
+	//
+	// CommentBody is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ControlComment's
+	// String and GoString methods.
+	CommentBody *string `locationName:"commentBody" type:"string" sensitive:"true"`
 
 	// The time when the comment was posted.
 	PostedDate *time.Time `locationName:"postedDate" type:"timestamp"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlComment) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlComment) GoString() string {
 	return s.String()
 }
@@ -7416,44 +9491,304 @@ func (s *ControlComment) SetPostedDate(v time.Time) *ControlComment {
 	return s
 }
 
-// The data source that determines from where Audit Manager collects evidence
+// A summary of the latest analytics data for a specific control domain.
+//
+// Control domain insights are grouped by control domain, and ranked by the
+// highest total count of non-compliant evidence.
+type ControlDomainInsights struct {
+	_ struct{} `type:"structure"`
+
+	// The number of controls in the control domain that collected non-compliant
+	// evidence on the lastUpdated date.
+	ControlsCountByNoncompliantEvidence *int64 `locationName:"controlsCountByNoncompliantEvidence" type:"integer"`
+
+	// A breakdown of the compliance check status for the evidence that’s associated
+	// with the control domain.
+	EvidenceInsights *EvidenceInsights `locationName:"evidenceInsights" type:"structure"`
+
+	// The unique identifier for the control domain. Audit Manager supports the
+	// control domains that are provided by Amazon Web Services Control Catalog.
+	// For information about how to find a list of available control domains, see
+	// ListDomains (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListDomains.html)
+	// in the Amazon Web Services Control Catalog API Reference.
+	Id *string `locationName:"id" min:"13" type:"string"`
+
+	// The time when the control domain insights were last updated.
+	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
+
+	// The name of the control domain.
+	Name *string `locationName:"name" type:"string"`
+
+	// The total number of controls in the control domain.
+	TotalControlsCount *int64 `locationName:"totalControlsCount" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlDomainInsights) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlDomainInsights) GoString() string {
+	return s.String()
+}
+
+// SetControlsCountByNoncompliantEvidence sets the ControlsCountByNoncompliantEvidence field's value.
+func (s *ControlDomainInsights) SetControlsCountByNoncompliantEvidence(v int64) *ControlDomainInsights {
+	s.ControlsCountByNoncompliantEvidence = &v
+	return s
+}
+
+// SetEvidenceInsights sets the EvidenceInsights field's value.
+func (s *ControlDomainInsights) SetEvidenceInsights(v *EvidenceInsights) *ControlDomainInsights {
+	s.EvidenceInsights = v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *ControlDomainInsights) SetId(v string) *ControlDomainInsights {
+	s.Id = &v
+	return s
+}
+
+// SetLastUpdated sets the LastUpdated field's value.
+func (s *ControlDomainInsights) SetLastUpdated(v time.Time) *ControlDomainInsights {
+	s.LastUpdated = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ControlDomainInsights) SetName(v string) *ControlDomainInsights {
+	s.Name = &v
+	return s
+}
+
+// SetTotalControlsCount sets the TotalControlsCount field's value.
+func (s *ControlDomainInsights) SetTotalControlsCount(v int64) *ControlDomainInsights {
+	s.TotalControlsCount = &v
+	return s
+}
+
+// A summary of the latest analytics data for a specific control in a specific
+// active assessment.
+//
+// Control insights are grouped by control domain, and ranked by the highest
+// total count of non-compliant evidence.
+type ControlInsightsMetadataByAssessmentItem struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the control set that the assessment control belongs to.
+	ControlSetName *string `locationName:"controlSetName" min:"1" type:"string"`
+
+	// A breakdown of the compliance check status for the evidence that’s associated
+	// with the assessment control.
+	EvidenceInsights *EvidenceInsights `locationName:"evidenceInsights" type:"structure"`
+
+	// The unique identifier for the assessment control.
+	Id *string `locationName:"id" min:"13" type:"string"`
+
+	// The time when the assessment control insights were last updated.
+	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
+
+	// The name of the assessment control.
+	Name *string `locationName:"name" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlInsightsMetadataByAssessmentItem) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlInsightsMetadataByAssessmentItem) GoString() string {
+	return s.String()
+}
+
+// SetControlSetName sets the ControlSetName field's value.
+func (s *ControlInsightsMetadataByAssessmentItem) SetControlSetName(v string) *ControlInsightsMetadataByAssessmentItem {
+	s.ControlSetName = &v
+	return s
+}
+
+// SetEvidenceInsights sets the EvidenceInsights field's value.
+func (s *ControlInsightsMetadataByAssessmentItem) SetEvidenceInsights(v *EvidenceInsights) *ControlInsightsMetadataByAssessmentItem {
+	s.EvidenceInsights = v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *ControlInsightsMetadataByAssessmentItem) SetId(v string) *ControlInsightsMetadataByAssessmentItem {
+	s.Id = &v
+	return s
+}
+
+// SetLastUpdated sets the LastUpdated field's value.
+func (s *ControlInsightsMetadataByAssessmentItem) SetLastUpdated(v time.Time) *ControlInsightsMetadataByAssessmentItem {
+	s.LastUpdated = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ControlInsightsMetadataByAssessmentItem) SetName(v string) *ControlInsightsMetadataByAssessmentItem {
+	s.Name = &v
+	return s
+}
+
+// A summary of the latest analytics data for a specific control.
+//
+// This data reflects the total counts for the specified control across all
+// active assessments. Control insights are grouped by control domain, and ranked
+// by the highest total count of non-compliant evidence.
+type ControlInsightsMetadataItem struct {
+	_ struct{} `type:"structure"`
+
+	// A breakdown of the compliance check status for the evidence that’s associated
+	// with the control.
+	EvidenceInsights *EvidenceInsights `locationName:"evidenceInsights" type:"structure"`
+
+	// The unique identifier for the control.
+	Id *string `locationName:"id" min:"13" type:"string"`
+
+	// The time when the control insights were last updated.
+	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
+
+	// The name of the control.
+	Name *string `locationName:"name" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlInsightsMetadataItem) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ControlInsightsMetadataItem) GoString() string {
+	return s.String()
+}
+
+// SetEvidenceInsights sets the EvidenceInsights field's value.
+func (s *ControlInsightsMetadataItem) SetEvidenceInsights(v *EvidenceInsights) *ControlInsightsMetadataItem {
+	s.EvidenceInsights = v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *ControlInsightsMetadataItem) SetId(v string) *ControlInsightsMetadataItem {
+	s.Id = &v
+	return s
+}
+
+// SetLastUpdated sets the LastUpdated field's value.
+func (s *ControlInsightsMetadataItem) SetLastUpdated(v time.Time) *ControlInsightsMetadataItem {
+	s.LastUpdated = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *ControlInsightsMetadataItem) SetName(v string) *ControlInsightsMetadataItem {
+	s.Name = &v
+	return s
+}
+
+// The data source that determines where Audit Manager collects evidence from
 // for the control.
 type ControlMappingSource struct {
 	_ struct{} `type:"structure"`
 
-	// The description of the specified source.
+	// The description of the source.
 	SourceDescription *string `locationName:"sourceDescription" type:"string"`
 
-	// The frequency of evidence collection for the specified control mapping source.
+	// Specifies how often evidence is collected from the control mapping source.
 	SourceFrequency *string `locationName:"sourceFrequency" type:"string" enum:"SourceFrequency"`
 
-	// The unique identifier for the specified source.
+	// The unique identifier for the source.
 	SourceId *string `locationName:"sourceId" min:"36" type:"string"`
 
-	// The keyword to search for in CloudTrail logs, Config rules, Security Hub
-	// checks, and Amazon Web Services API names.
+	// A keyword that relates to the control data source.
+	//
+	// For manual evidence, this keyword indicates if the manual evidence is a file
+	// or text.
+	//
+	// For automated evidence, this keyword identifies a specific CloudTrail event,
+	// Config rule, Security Hub control, or Amazon Web Services API name.
+	//
+	// To learn more about the supported keywords that you can use when mapping
+	// a control data source, see the following pages in the Audit Manager User
+	// Guide:
+	//
+	//    * Config rules supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-config.html)
+	//
+	//    * Security Hub controls supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-ash.html)
+	//
+	//    * API calls supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-api.html)
+	//
+	//    * CloudTrail event names supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-cloudtrail.html)
 	SourceKeyword *SourceKeyword `locationName:"sourceKeyword" type:"structure"`
 
-	// The name of the specified source.
+	// The name of the source.
 	SourceName *string `locationName:"sourceName" min:"1" type:"string"`
 
-	// The setup option for the data source, which reflects if the evidence collection
-	// is automated or manual.
+	// The setup option for the data source. This option reflects if the evidence
+	// collection method is automated or manual. If you don’t provide a value
+	// for sourceSetUpOption, Audit Manager automatically infers and populates the
+	// correct value based on the sourceType that you specify.
 	SourceSetUpOption *string `locationName:"sourceSetUpOption" type:"string" enum:"SourceSetUpOption"`
 
-	// Specifies one of the five types of data sources for evidence collection.
+	// Specifies which type of data source is used to collect evidence.
+	//
+	//    * The source can be an individual data source type, such as AWS_Cloudtrail,
+	//    AWS_Config, AWS_Security_Hub, AWS_API_Call, or MANUAL.
+	//
+	//    * The source can also be a managed grouping of data sources, such as a
+	//    Core_Control or a Common_Control.
 	SourceType *string `locationName:"sourceType" type:"string" enum:"SourceType"`
 
-	// The instructions for troubleshooting the specified control.
-	TroubleshootingText *string `locationName:"troubleshootingText" type:"string"`
+	// The instructions for troubleshooting the control.
+	//
+	// TroubleshootingText is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ControlMappingSource's
+	// String and GoString methods.
+	TroubleshootingText *string `locationName:"troubleshootingText" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlMappingSource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlMappingSource) GoString() string {
 	return s.String()
 }
@@ -7527,36 +9862,44 @@ func (s *ControlMappingSource) SetTroubleshootingText(v string) *ControlMappingS
 	return s
 }
 
-// The metadata associated with the specified standard or custom control.
+// The metadata that's associated with the standard control or custom control.
 type ControlMetadata struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the specified control.
+	// The Amazon Resource Name (ARN) of the control.
 	Arn *string `locationName:"arn" min:"20" type:"string"`
 
-	// The data source that determines from where Audit Manager collects evidence
+	// The data source that determines where Audit Manager collects evidence from
 	// for the control.
 	ControlSources *string `locationName:"controlSources" min:"1" type:"string"`
 
-	// Specifies when the control was created.
+	// The time when the control was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The unique identifier for the specified control.
+	// The unique identifier for the control.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// Specifies when the control was most recently updated.
+	// The time when the control was most recently updated.
 	LastUpdatedAt *time.Time `locationName:"lastUpdatedAt" type:"timestamp"`
 
-	// The name of the specified control.
+	// The name of the control.
 	Name *string `locationName:"name" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlMetadata) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlMetadata) GoString() string {
 	return s.String()
 }
@@ -7612,12 +9955,20 @@ type ControlSet struct {
 	Name *string `locationName:"name" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlSet) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ControlSet) GoString() string {
 	return s.String()
 }
@@ -7640,21 +9991,31 @@ func (s *ControlSet) SetName(v string) *ControlSet {
 	return s
 }
 
-// Control entity attributes that uniquely identify an existing control to be
-// added to a framework in Audit Manager.
+// The control entity attributes that uniquely identify an existing control
+// to be added to a framework in Audit Manager.
 type CreateAssessmentFrameworkControl struct {
 	_ struct{} `type:"structure"`
 
 	// The unique identifier of the control.
-	Id *string `locationName:"id" min:"36" type:"string"`
+	//
+	// Id is a required field
+	Id *string `locationName:"id" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkControl) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkControl) GoString() string {
 	return s.String()
 }
@@ -7662,6 +10023,9 @@ func (s CreateAssessmentFrameworkControl) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateAssessmentFrameworkControl) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateAssessmentFrameworkControl"}
+	if s.Id == nil {
+		invalidParams.Add(request.NewErrParamRequired("Id"))
+	}
 	if s.Id != nil && len(*s.Id) < 36 {
 		invalidParams.Add(request.NewErrParamMinLen("Id", 36))
 	}
@@ -7679,26 +10043,34 @@ func (s *CreateAssessmentFrameworkControl) SetId(v string) *CreateAssessmentFram
 }
 
 // A controlSet entity that represents a collection of controls in Audit Manager.
-// This does not contain the control set ID.
+// This doesn't contain the control set ID.
 type CreateAssessmentFrameworkControlSet struct {
 	_ struct{} `type:"structure"`
 
-	// The list of controls within the control set. This does not contain the control
+	// The list of controls within the control set. This doesn't contain the control
 	// set ID.
 	Controls []*CreateAssessmentFrameworkControl `locationName:"controls" min:"1" type:"list"`
 
-	// The name of the specified control set.
+	// The name of the control set.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkControlSet) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkControlSet) GoString() string {
 	return s.String()
 }
@@ -7749,9 +10121,13 @@ type CreateAssessmentFrameworkInput struct {
 
 	// The compliance type that the new custom framework supports, such as CIS or
 	// HIPAA.
-	ComplianceType *string `locationName:"complianceType" type:"string"`
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateAssessmentFrameworkInput's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
 
-	// The control sets to be associated with the framework.
+	// The control sets that are associated with the framework.
 	//
 	// ControlSets is a required field
 	ControlSets []*CreateAssessmentFrameworkControlSet `locationName:"controlSets" min:"1" type:"list" required:"true"`
@@ -7764,16 +10140,24 @@ type CreateAssessmentFrameworkInput struct {
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
-	// The tags associated with the framework.
+	// The tags that are associated with the framework.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkInput) GoString() string {
 	return s.String()
 }
@@ -7846,16 +10230,24 @@ func (s *CreateAssessmentFrameworkInput) SetTags(v map[string]*string) *CreateAs
 type CreateAssessmentFrameworkOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the new framework returned by the CreateAssessmentFramework API.
+	// The name of the new framework that the CreateAssessmentFramework API returned.
 	Framework *Framework `locationName:"framework" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentFrameworkOutput) GoString() string {
 	return s.String()
 }
@@ -7869,45 +10261,84 @@ func (s *CreateAssessmentFrameworkOutput) SetFramework(v *Framework) *CreateAsse
 type CreateAssessmentInput struct {
 	_ struct{} `type:"structure"`
 
-	// The assessment report storage destination for the specified assessment that
-	// is being created.
+	// The assessment report storage destination for the assessment that's being
+	// created.
+	//
+	// AssessmentReportsDestination is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateAssessmentInput's
+	// String and GoString methods.
 	//
 	// AssessmentReportsDestination is a required field
-	AssessmentReportsDestination *AssessmentReportsDestination `locationName:"assessmentReportsDestination" type:"structure" required:"true"`
+	AssessmentReportsDestination *AssessmentReportsDestination `locationName:"assessmentReportsDestination" type:"structure" required:"true" sensitive:"true"`
 
 	// The optional description of the assessment to be created.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateAssessmentInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
-	// The identifier for the specified framework.
+	// The identifier for the framework that the assessment will be created from.
 	//
 	// FrameworkId is a required field
 	FrameworkId *string `locationName:"frameworkId" min:"36" type:"string" required:"true"`
 
 	// The name of the assessment to be created.
 	//
+	// Name is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateAssessmentInput's
+	// String and GoString methods.
+	//
 	// Name is a required field
-	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
+	Name *string `locationName:"name" min:"1" type:"string" required:"true" sensitive:"true"`
 
-	// The list of roles for the specified assessment.
+	// The list of roles for the assessment.
+	//
+	// Roles is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateAssessmentInput's
+	// String and GoString methods.
 	//
 	// Roles is a required field
-	Roles []*Role `locationName:"roles" type:"list" required:"true"`
+	Roles []*Role `locationName:"roles" type:"list" required:"true" sensitive:"true"`
 
-	// The wrapper that contains the accounts and services in scope for the assessment.
+	// The wrapper that contains the Amazon Web Services accounts that are in scope
+	// for the assessment.
+	//
+	// You no longer need to specify which Amazon Web Services are in scope when
+	// you create or update an assessment. Audit Manager infers the services in
+	// scope by examining your assessment controls and their data sources, and then
+	// mapping this information to the relevant Amazon Web Services.
+	//
+	// If an underlying data source changes for your assessment, we automatically
+	// update the services scope as needed to reflect the correct Amazon Web Services.
+	// This ensures that your assessment collects accurate and comprehensive evidence
+	// about all of the relevant services in your AWS environment.
+	//
+	// Scope is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateAssessmentInput's
+	// String and GoString methods.
 	//
 	// Scope is a required field
-	Scope *Scope `locationName:"scope" type:"structure" required:"true"`
+	Scope *Scope `locationName:"scope" type:"structure" required:"true" sensitive:"true"`
 
-	// The tags associated with the assessment.
+	// The tags that are associated with the assessment.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentInput) GoString() string {
 	return s.String()
 }
@@ -8013,12 +10444,20 @@ type CreateAssessmentOutput struct {
 	Assessment *Assessment `locationName:"assessment" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentOutput) GoString() string {
 	return s.String()
 }
@@ -8032,26 +10471,55 @@ func (s *CreateAssessmentOutput) SetAssessment(v *Assessment) *CreateAssessmentO
 type CreateAssessmentReportInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
 	// The description of the assessment report.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateAssessmentReportInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The name of the new assessment report.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
+
+	// A SQL statement that represents an evidence finder query.
+	//
+	// Provide this parameter when you want to generate an assessment report from
+	// the results of an evidence finder search query. When you use this parameter,
+	// Audit Manager generates a one-time report using only the evidence from the
+	// query output. This report does not include any assessment evidence that was
+	// manually added to a report using the console (https://docs.aws.amazon.com/audit-manager/latest/userguide/generate-assessment-report.html#generate-assessment-report-include-evidence),
+	// or associated with a report using the API (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_BatchAssociateAssessmentReportEvidence.html).
+	//
+	// To use this parameter, the enablementStatus (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_EvidenceFinderEnablement.html#auditmanager-Type-EvidenceFinderEnablement-enablementStatus)
+	// of evidence finder must be ENABLED.
+	//
+	// For examples and help resolving queryStatement validation exceptions, see
+	// Troubleshooting evidence finder issues (https://docs.aws.amazon.com/audit-manager/latest/userguide/evidence-finder-issues.html#querystatement-exceptions)
+	// in the Audit Manager User Guide.
+	QueryStatement *string `locationName:"queryStatement" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentReportInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentReportInput) GoString() string {
 	return s.String()
 }
@@ -8070,6 +10538,9 @@ func (s *CreateAssessmentReportInput) Validate() error {
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.QueryStatement != nil && len(*s.QueryStatement) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("QueryStatement", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -8096,19 +10567,33 @@ func (s *CreateAssessmentReportInput) SetName(v string) *CreateAssessmentReportI
 	return s
 }
 
+// SetQueryStatement sets the QueryStatement field's value.
+func (s *CreateAssessmentReportInput) SetQueryStatement(v string) *CreateAssessmentReportInput {
+	s.QueryStatement = &v
+	return s
+}
+
 type CreateAssessmentReportOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The new assessment report returned by the CreateAssessmentReport API.
+	// The new assessment report that the CreateAssessmentReport API returned.
 	AssessmentReport *AssessmentReport `locationName:"assessmentReport" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentReportOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateAssessmentReportOutput) GoString() string {
 	return s.String()
 }
@@ -8122,38 +10607,62 @@ func (s *CreateAssessmentReportOutput) SetAssessmentReport(v *AssessmentReport) 
 type CreateControlInput struct {
 	_ struct{} `type:"structure"`
 
-	// The recommended actions to carry out if the control is not fulfilled.
-	ActionPlanInstructions *string `locationName:"actionPlanInstructions" type:"string"`
+	// The recommended actions to carry out if the control isn't fulfilled.
+	//
+	// ActionPlanInstructions is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateControlInput's
+	// String and GoString methods.
+	ActionPlanInstructions *string `locationName:"actionPlanInstructions" type:"string" sensitive:"true"`
 
 	// The title of the action plan for remediating the control.
-	ActionPlanTitle *string `locationName:"actionPlanTitle" type:"string"`
+	//
+	// ActionPlanTitle is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateControlInput's
+	// String and GoString methods.
+	ActionPlanTitle *string `locationName:"actionPlanTitle" type:"string" sensitive:"true"`
 
-	// The data mapping sources for the specified control.
+	// The data mapping sources for the control.
 	//
 	// ControlMappingSources is a required field
 	ControlMappingSources []*CreateControlMappingSource `locationName:"controlMappingSources" min:"1" type:"list" required:"true"`
 
 	// The description of the control.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateControlInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
 	// The name of the control.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
-	// The tags associated with the control.
+	// The tags that are associated with the control.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 
-	// The steps to follow to determine if the control has been satisfied.
-	TestingInformation *string `locationName:"testingInformation" type:"string"`
+	// The steps to follow to determine if the control is satisfied.
+	//
+	// TestingInformation is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateControlInput's
+	// String and GoString methods.
+	TestingInformation *string `locationName:"testingInformation" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlInput) GoString() string {
 	return s.String()
 }
@@ -8232,42 +10741,79 @@ func (s *CreateControlInput) SetTestingInformation(v string) *CreateControlInput
 	return s
 }
 
-// Control mapping fields that represent the source for evidence collection,
-// along with related parameters and metadata. This does not contain mappingID.
+// The mapping attributes that determine the evidence source for a given control,
+// along with related parameters and metadata. This doesn't contain mappingID.
 type CreateControlMappingSource struct {
 	_ struct{} `type:"structure"`
 
-	// The description of the data source that determines from where Audit Manager
-	// collects evidence for the control.
+	// The description of the data source that determines where Audit Manager collects
+	// evidence from for the control.
 	SourceDescription *string `locationName:"sourceDescription" type:"string"`
 
-	// The frequency of evidence collection for the specified control mapping source.
+	// Specifies how often evidence is collected from the control mapping source.
 	SourceFrequency *string `locationName:"sourceFrequency" type:"string" enum:"SourceFrequency"`
 
-	// The keyword to search for in CloudTrail logs, Config rules, Security Hub
-	// checks, and Amazon Web Services API names.
+	// A keyword that relates to the control data source.
+	//
+	// For manual evidence, this keyword indicates if the manual evidence is a file
+	// or text.
+	//
+	// For automated evidence, this keyword identifies a specific CloudTrail event,
+	// Config rule, Security Hub control, or Amazon Web Services API name.
+	//
+	// To learn more about the supported keywords that you can use when mapping
+	// a control data source, see the following pages in the Audit Manager User
+	// Guide:
+	//
+	//    * Config rules supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-config.html)
+	//
+	//    * Security Hub controls supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-ash.html)
+	//
+	//    * API calls supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-api.html)
+	//
+	//    * CloudTrail event names supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-cloudtrail.html)
 	SourceKeyword *SourceKeyword `locationName:"sourceKeyword" type:"structure"`
 
 	// The name of the control mapping data source.
 	SourceName *string `locationName:"sourceName" min:"1" type:"string"`
 
-	// The setup option for the data source, which reflects if the evidence collection
-	// is automated or manual.
+	// The setup option for the data source. This option reflects if the evidence
+	// collection method is automated or manual. If you don’t provide a value
+	// for sourceSetUpOption, Audit Manager automatically infers and populates the
+	// correct value based on the sourceType that you specify.
 	SourceSetUpOption *string `locationName:"sourceSetUpOption" type:"string" enum:"SourceSetUpOption"`
 
-	// Specifies one of the five types of data sources for evidence collection.
+	// Specifies which type of data source is used to collect evidence.
+	//
+	//    * The source can be an individual data source type, such as AWS_Cloudtrail,
+	//    AWS_Config, AWS_Security_Hub, AWS_API_Call, or MANUAL.
+	//
+	//    * The source can also be a managed grouping of data sources, such as a
+	//    Core_Control or a Common_Control.
 	SourceType *string `locationName:"sourceType" type:"string" enum:"SourceType"`
 
-	// The instructions for troubleshooting the specified control.
-	TroubleshootingText *string `locationName:"troubleshootingText" type:"string"`
+	// The instructions for troubleshooting the control.
+	//
+	// TroubleshootingText is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateControlMappingSource's
+	// String and GoString methods.
+	TroubleshootingText *string `locationName:"troubleshootingText" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlMappingSource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlMappingSource) GoString() string {
 	return s.String()
 }
@@ -8335,16 +10881,24 @@ func (s *CreateControlMappingSource) SetTroubleshootingText(v string) *CreateCon
 type CreateControlOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The new control returned by the CreateControl API.
+	// The new control that the CreateControl API returned.
 	Control *Control `locationName:"control" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateControlOutput) GoString() string {
 	return s.String()
 }
@@ -8355,13 +10909,17 @@ func (s *CreateControlOutput) SetControl(v *Control) *CreateControlOutput {
 	return s
 }
 
-// A collection of attributes used to create a delegation for an assessment
+// A collection of attributes that's used to create a delegation for an assessment
 // in Audit Manager.
 type CreateDelegationRequest struct {
 	_ struct{} `type:"structure"`
 
-	// A comment related to the delegation request.
-	Comment *string `locationName:"comment" type:"string"`
+	// A comment that's related to the delegation request.
+	//
+	// Comment is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by CreateDelegationRequest's
+	// String and GoString methods.
+	Comment *string `locationName:"comment" type:"string" sensitive:"true"`
 
 	// The unique identifier for the control set.
 	ControlSetId *string `locationName:"controlSetId" min:"1" type:"string"`
@@ -8379,12 +10937,20 @@ type CreateDelegationRequest struct {
 	RoleType *string `locationName:"roleType" type:"string" enum:"RoleType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDelegationRequest) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDelegationRequest) GoString() string {
 	return s.String()
 }
@@ -8429,24 +10995,91 @@ func (s *CreateDelegationRequest) SetRoleType(v string) *CreateDelegationRequest
 	return s
 }
 
-// The assignment of a control set to a delegate for review.
-type Delegation struct {
+// The default s3 bucket where Audit Manager saves the files that you export
+// from evidence finder.
+type DefaultExportDestination struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the associated assessment.
+	// The destination bucket where Audit Manager stores exported files.
+	Destination *string `locationName:"destination" min:"1" type:"string"`
+
+	// The destination type, such as Amazon S3.
+	DestinationType *string `locationName:"destinationType" type:"string" enum:"ExportDestinationType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DefaultExportDestination) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DefaultExportDestination) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DefaultExportDestination) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DefaultExportDestination"}
+	if s.Destination != nil && len(*s.Destination) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Destination", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDestination sets the Destination field's value.
+func (s *DefaultExportDestination) SetDestination(v string) *DefaultExportDestination {
+	s.Destination = &v
+	return s
+}
+
+// SetDestinationType sets the DestinationType field's value.
+func (s *DefaultExportDestination) SetDestinationType(v string) *DefaultExportDestination {
+	s.DestinationType = &v
+	return s
+}
+
+// The assignment of a control set to a delegate for review.
+type Delegation struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The identifier for the assessment that's associated with the delegation.
 	AssessmentId *string `locationName:"assessmentId" min:"36" type:"string"`
 
-	// The name of the associated assessment.
-	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string"`
+	// The name of the assessment that's associated with the delegation.
+	//
+	// AssessmentName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Delegation's
+	// String and GoString methods.
+	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string" sensitive:"true"`
 
-	// The comment related to the delegation.
-	Comment *string `locationName:"comment" type:"string"`
+	// The comment that's related to the delegation.
+	//
+	// Comment is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Delegation's
+	// String and GoString methods.
+	Comment *string `locationName:"comment" type:"string" sensitive:"true"`
 
-	// The identifier for the associated control set.
+	// The identifier for the control set that's associated with the delegation.
 	ControlSetId *string `locationName:"controlSetId" min:"1" type:"string"`
 
-	// The IAM user or role that created the delegation.
-	CreatedBy *string `locationName:"createdBy" min:"1" type:"string"`
+	// The user or role that created the delegation.
+	//
+	// CreatedBy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Delegation's
+	// String and GoString methods.
+	CreatedBy *string `locationName:"createdBy" min:"1" type:"string" sensitive:"true"`
 
 	// Specifies when the delegation was created.
 	CreationTime *time.Time `locationName:"creationTime" type:"timestamp"`
@@ -8473,12 +11106,20 @@ type Delegation struct {
 	Status *string `locationName:"status" type:"string" enum:"DelegationStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Delegation) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Delegation) GoString() string {
 	return s.String()
 }
@@ -8549,17 +11190,21 @@ func (s *Delegation) SetStatus(v string) *Delegation {
 	return s
 }
 
-// The metadata associated with the specified delegation.
+// The metadata that's associated with the delegation.
 type DelegationMetadata struct {
 	_ struct{} `type:"structure"`
 
-	// The unique identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	AssessmentId *string `locationName:"assessmentId" min:"36" type:"string"`
 
 	// The name of the associated assessment.
-	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string"`
+	//
+	// AssessmentName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by DelegationMetadata's
+	// String and GoString methods.
+	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string" sensitive:"true"`
 
-	// Specifies the name of the control set delegated for review.
+	// Specifies the name of the control set that was delegated for review.
 	ControlSetName *string `locationName:"controlSetName" min:"1" type:"string"`
 
 	// Specifies when the delegation was created.
@@ -8571,16 +11216,24 @@ type DelegationMetadata struct {
 	// The Amazon Resource Name (ARN) of the IAM role.
 	RoleArn *string `locationName:"roleArn" min:"20" type:"string"`
 
-	// The current status of the delgation.
+	// The current status of the delegation.
 	Status *string `locationName:"status" type:"string" enum:"DelegationStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DelegationMetadata) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DelegationMetadata) GoString() string {
 	return s.String()
 }
@@ -8628,20 +11281,28 @@ func (s *DelegationMetadata) SetStatus(v string) *DelegationMetadata {
 }
 
 type DeleteAssessmentFrameworkInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified framework.
+	// The identifier for the custom framework.
 	//
 	// FrameworkId is a required field
 	FrameworkId *string `location:"uri" locationName:"frameworkId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentFrameworkInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentFrameworkInput) GoString() string {
 	return s.String()
 }
@@ -8672,31 +11333,132 @@ type DeleteAssessmentFrameworkOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentFrameworkOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentFrameworkOutput) GoString() string {
 	return s.String()
 }
 
-type DeleteAssessmentInput struct {
-	_ struct{} `type:"structure"`
+type DeleteAssessmentFrameworkShareInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the share request to be deleted.
+	//
+	// RequestId is a required field
+	RequestId *string `location:"uri" locationName:"requestId" min:"36" type:"string" required:"true"`
+
+	// Specifies whether the share request is a sent request or a received request.
+	//
+	// RequestType is a required field
+	RequestType *string `location:"querystring" locationName:"requestType" type:"string" required:"true" enum:"ShareRequestType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAssessmentFrameworkShareInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAssessmentFrameworkShareInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteAssessmentFrameworkShareInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteAssessmentFrameworkShareInput"}
+	if s.RequestId == nil {
+		invalidParams.Add(request.NewErrParamRequired("RequestId"))
+	}
+	if s.RequestId != nil && len(*s.RequestId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("RequestId", 36))
+	}
+	if s.RequestType == nil {
+		invalidParams.Add(request.NewErrParamRequired("RequestType"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *DeleteAssessmentFrameworkShareInput) SetRequestId(v string) *DeleteAssessmentFrameworkShareInput {
+	s.RequestId = &v
+	return s
+}
+
+// SetRequestType sets the RequestType field's value.
+func (s *DeleteAssessmentFrameworkShareInput) SetRequestType(v string) *DeleteAssessmentFrameworkShareInput {
+	s.RequestType = &v
+	return s
+}
+
+type DeleteAssessmentFrameworkShareOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAssessmentFrameworkShareOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteAssessmentFrameworkShareOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteAssessmentInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentInput) GoString() string {
 	return s.String()
 }
@@ -8727,20 +11489,28 @@ type DeleteAssessmentOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteAssessmentReportInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
@@ -8751,12 +11521,20 @@ type DeleteAssessmentReportInput struct {
 	AssessmentReportId *string `location:"uri" locationName:"assessmentReportId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentReportInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentReportInput) GoString() string {
 	return s.String()
 }
@@ -8799,31 +11577,47 @@ type DeleteAssessmentReportOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentReportOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteAssessmentReportOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteControlInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified control.
+	// The unique identifier for the control.
 	//
 	// ControlId is a required field
 	ControlId *string `location:"uri" locationName:"controlId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlInput) GoString() string {
 	return s.String()
 }
@@ -8854,26 +11648,42 @@ type DeleteControlOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteControlOutput) GoString() string {
 	return s.String()
 }
 
 type DeregisterAccountInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterAccountInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterAccountInput) GoString() string {
 	return s.String()
 }
@@ -8885,12 +11695,20 @@ type DeregisterAccountOutput struct {
 	Status *string `locationName:"status" type:"string" enum:"AccountStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterAccountOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterAccountOutput) GoString() string {
 	return s.String()
 }
@@ -8904,16 +11722,24 @@ func (s *DeregisterAccountOutput) SetStatus(v string) *DeregisterAccountOutput {
 type DeregisterOrganizationAdminAccountInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified administrator account.
+	// The identifier for the administrator account.
 	AdminAccountId *string `locationName:"adminAccountId" min:"12" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterOrganizationAdminAccountInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterOrganizationAdminAccountInput) GoString() string {
 	return s.String()
 }
@@ -8941,36 +11767,110 @@ type DeregisterOrganizationAdminAccountOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterOrganizationAdminAccountOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeregisterOrganizationAdminAccountOutput) GoString() string {
 	return s.String()
+}
+
+// The deregistration policy for the data that's stored in Audit Manager. You
+// can use this attribute to determine how your data is handled when you deregister
+// Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeregisterAccount.html).
+//
+// By default, Audit Manager retains evidence data for two years from the time
+// of its creation. Other Audit Manager resources (including assessments, custom
+// controls, and custom frameworks) remain in Audit Manager indefinitely, and
+// are available if you re-register Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_RegisterAccount.html)
+// in the future. For more information about data retention, see Data Protection
+// (https://docs.aws.amazon.com/audit-manager/latest/userguide/data-protection.html)
+// in the Audit Manager User Guide.
+//
+// If you choose to delete all data, this action permanently deletes all evidence
+// data in your account within seven days. It also deletes all of the Audit
+// Manager resources that you created, including assessments, custom controls,
+// and custom frameworks. Your data will not be available if you re-register
+// Audit Manager in the future.
+type DeregistrationPolicy struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies which Audit Manager data will be deleted when you deregister Audit
+	// Manager.
+	//
+	//    * If you set the value to ALL, all of your data is deleted within seven
+	//    days of deregistration.
+	//
+	//    * If you set the value to DEFAULT, none of your data is deleted at the
+	//    time of deregistration. However, keep in mind that the Audit Manager data
+	//    retention policy still applies. As a result, any evidence data will be
+	//    deleted two years after its creation date. Your other Audit Manager resources
+	//    will continue to exist indefinitely.
+	DeleteResources *string `locationName:"deleteResources" type:"string" enum:"DeleteResources"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeregistrationPolicy) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeregistrationPolicy) GoString() string {
+	return s.String()
+}
+
+// SetDeleteResources sets the DeleteResources field's value.
+func (s *DeregistrationPolicy) SetDeleteResources(v string) *DeregistrationPolicy {
+	s.DeleteResources = &v
+	return s
 }
 
 type DisassociateAssessmentReportEvidenceFolderInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the folder in which evidence is stored.
+	// The unique identifier for the folder that the evidence is stored in.
 	//
 	// EvidenceFolderId is a required field
 	EvidenceFolderId *string `locationName:"evidenceFolderId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateAssessmentReportEvidenceFolderInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateAssessmentReportEvidenceFolderInput) GoString() string {
 	return s.String()
 }
@@ -9013,78 +11913,107 @@ type DisassociateAssessmentReportEvidenceFolderOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateAssessmentReportEvidenceFolderOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DisassociateAssessmentReportEvidenceFolderOutput) GoString() string {
 	return s.String()
 }
 
 // A record that contains the information needed to demonstrate compliance with
 // the requirements specified by a control. Examples of evidence include change
-// activity triggered by a user, or a system configuration snapshot.
+// activity invoked by a user, or a system configuration snapshot.
 type Evidence struct {
 	_ struct{} `type:"structure"`
 
 	// Specifies whether the evidence is included in the assessment report.
 	AssessmentReportSelection *string `locationName:"assessmentReportSelection" type:"string"`
 
-	// The names and values used by the evidence event, including an attribute name
-	// (such as allowUsersToChangePassword) and value (such as true or false).
+	// The names and values that are used by the evidence event. This includes an
+	// attribute name (such as allowUsersToChangePassword) and value (such as true
+	// or false).
 	Attributes map[string]*string `locationName:"attributes" type:"map"`
 
-	// The identifier for the specified account.
+	// The identifier for the Amazon Web Services account.
 	AwsAccountId *string `locationName:"awsAccountId" min:"12" type:"string"`
 
-	// The account from which the evidence is collected, and its organization path.
+	// The Amazon Web Services account that the evidence is collected from, and
+	// its organization path.
 	AwsOrganization *string `locationName:"awsOrganization" type:"string"`
 
-	// The evaluation status for evidence that falls under the compliance check
-	// category. For evidence collected from Security Hub, a Pass or Fail result
-	// is shown. For evidence collected from Config, a Compliant or Noncompliant
-	// result is shown.
+	// The evaluation status for automated evidence that falls under the compliance
+	// check category.
+	//
+	//    * Audit Manager classes evidence as non-compliant if Security Hub reports
+	//    a Fail result, or if Config reports a Non-compliant result.
+	//
+	//    * Audit Manager classes evidence as compliant if Security Hub reports
+	//    a Pass result, or if Config reports a Compliant result.
+	//
+	//    * If a compliance check isn't available or applicable, then no compliance
+	//    evaluation can be made for that evidence. This is the case if the evidence
+	//    uses Config or Security Hub as the underlying data source type, but those
+	//    services aren't enabled. This is also the case if the evidence uses an
+	//    underlying data source type that doesn't support compliance checks (such
+	//    as manual evidence, Amazon Web Services API calls, or CloudTrail).
 	ComplianceCheck *string `locationName:"complianceCheck" type:"string"`
 
-	// The data source from which the specified evidence was collected.
+	// The data source where the evidence was collected from.
 	DataSource *string `locationName:"dataSource" type:"string"`
 
-	// The name of the specified evidence event.
+	// The name of the evidence event.
 	EventName *string `locationName:"eventName" type:"string"`
 
-	// The Amazon Web Service from which the evidence is collected.
+	// The Amazon Web Service that the evidence is collected from.
 	EventSource *string `locationName:"eventSource" min:"1" type:"string"`
 
-	// The identifier for the specified account.
+	// The identifier for the Amazon Web Services account.
 	EvidenceAwsAccountId *string `locationName:"evidenceAwsAccountId" min:"12" type:"string"`
 
 	// The type of automated evidence.
 	EvidenceByType *string `locationName:"evidenceByType" type:"string"`
 
-	// The identifier for the folder in which the evidence is stored.
+	// The identifier for the folder that the evidence is stored in.
 	EvidenceFolderId *string `locationName:"evidenceFolderId" min:"36" type:"string"`
 
-	// The unique identifier for the IAM user or role associated with the evidence.
+	// The unique identifier for the user or role that's associated with the evidence.
 	IamId *string `locationName:"iamId" min:"20" type:"string"`
 
 	// The identifier for the evidence.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// The list of resources assessed to generate the evidence.
+	// The list of resources that are assessed to generate the evidence.
 	ResourcesIncluded []*Resource `locationName:"resourcesIncluded" type:"list"`
 
 	// The timestamp that represents when the evidence was collected.
 	Time *time.Time `locationName:"time" type:"timestamp"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Evidence) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Evidence) GoString() string {
 	return s.String()
 }
@@ -9179,61 +12108,239 @@ func (s *Evidence) SetTime(v time.Time) *Evidence {
 	return s
 }
 
-// The file used to structure and automate Audit Manager assessments for a given
-// compliance standard.
+// The settings object that specifies whether evidence finder is enabled. This
+// object also describes the related event data store, and the backfill status
+// for populating the event data store with evidence data.
+type EvidenceFinderEnablement struct {
+	_ struct{} `type:"structure"`
+
+	// The current status of the evidence data backfill process.
+	//
+	// The backfill starts after you enable evidence finder. During this task, Audit
+	// Manager populates an event data store with your past two years’ worth of
+	// evidence data so that your evidence can be queried.
+	//
+	//    * NOT_STARTED means that the backfill hasn’t started yet.
+	//
+	//    * IN_PROGRESS means that the backfill is in progress. This can take up
+	//    to 7 days to complete, depending on the amount of evidence data.
+	//
+	//    * COMPLETED means that the backfill is complete. All of your past evidence
+	//    is now queryable.
+	BackfillStatus *string `locationName:"backfillStatus" type:"string" enum:"EvidenceFinderBackfillStatus"`
+
+	// The current status of the evidence finder feature and the related event data
+	// store.
+	//
+	//    * ENABLE_IN_PROGRESS means that you requested to enable evidence finder.
+	//    An event data store is currently being created to support evidence finder
+	//    queries.
+	//
+	//    * ENABLED means that an event data store was successfully created and
+	//    evidence finder is enabled. We recommend that you wait 7 days until the
+	//    event data store is backfilled with your past two years’ worth of evidence
+	//    data. You can use evidence finder in the meantime, but not all data might
+	//    be available until the backfill is complete.
+	//
+	//    * DISABLE_IN_PROGRESS means that you requested to disable evidence finder,
+	//    and your request is pending the deletion of the event data store.
+	//
+	//    * DISABLED means that you have permanently disabled evidence finder and
+	//    the event data store has been deleted. You can't re-enable evidence finder
+	//    after this point.
+	EnablementStatus *string `locationName:"enablementStatus" type:"string" enum:"EvidenceFinderEnablementStatus"`
+
+	// Represents any errors that occurred when enabling or disabling evidence finder.
+	Error *string `locationName:"error" type:"string"`
+
+	// The Amazon Resource Name (ARN) of the CloudTrail Lake event data store that’s
+	// used by evidence finder. The event data store is the lake of evidence data
+	// that evidence finder runs queries against.
+	EventDataStoreArn *string `locationName:"eventDataStoreArn" min:"20" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvidenceFinderEnablement) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvidenceFinderEnablement) GoString() string {
+	return s.String()
+}
+
+// SetBackfillStatus sets the BackfillStatus field's value.
+func (s *EvidenceFinderEnablement) SetBackfillStatus(v string) *EvidenceFinderEnablement {
+	s.BackfillStatus = &v
+	return s
+}
+
+// SetEnablementStatus sets the EnablementStatus field's value.
+func (s *EvidenceFinderEnablement) SetEnablementStatus(v string) *EvidenceFinderEnablement {
+	s.EnablementStatus = &v
+	return s
+}
+
+// SetError sets the Error field's value.
+func (s *EvidenceFinderEnablement) SetError(v string) *EvidenceFinderEnablement {
+	s.Error = &v
+	return s
+}
+
+// SetEventDataStoreArn sets the EventDataStoreArn field's value.
+func (s *EvidenceFinderEnablement) SetEventDataStoreArn(v string) *EvidenceFinderEnablement {
+	s.EventDataStoreArn = &v
+	return s
+}
+
+// A breakdown of the latest compliance check status for the evidence in your
+// Audit Manager assessments.
+type EvidenceInsights struct {
+	_ struct{} `type:"structure"`
+
+	// The number of compliance check evidence that Audit Manager classified as
+	// compliant. This includes evidence that was collected from Security Hub with
+	// a Pass ruling, or collected from Config with a Compliant ruling.
+	CompliantEvidenceCount *int64 `locationName:"compliantEvidenceCount" type:"integer"`
+
+	// The number of evidence that a compliance check ruling isn't available for.
+	// Evidence is inconclusive when the associated control uses Security Hub or
+	// Config as a data source but you didn't enable those services. This is also
+	// the case when a control uses a data source that doesn’t support compliance
+	// checks (for example, manual evidence, API calls, or CloudTrail).
+	//
+	// If evidence has a compliance check status of not applicable in the console,
+	// it's classified as inconclusive in EvidenceInsights data.
+	InconclusiveEvidenceCount *int64 `locationName:"inconclusiveEvidenceCount" type:"integer"`
+
+	// The number of compliance check evidence that Audit Manager classified as
+	// non-compliant. This includes evidence that was collected from Security Hub
+	// with a Fail ruling, or collected from Config with a Non-compliant ruling.
+	NoncompliantEvidenceCount *int64 `locationName:"noncompliantEvidenceCount" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvidenceInsights) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvidenceInsights) GoString() string {
+	return s.String()
+}
+
+// SetCompliantEvidenceCount sets the CompliantEvidenceCount field's value.
+func (s *EvidenceInsights) SetCompliantEvidenceCount(v int64) *EvidenceInsights {
+	s.CompliantEvidenceCount = &v
+	return s
+}
+
+// SetInconclusiveEvidenceCount sets the InconclusiveEvidenceCount field's value.
+func (s *EvidenceInsights) SetInconclusiveEvidenceCount(v int64) *EvidenceInsights {
+	s.InconclusiveEvidenceCount = &v
+	return s
+}
+
+// SetNoncompliantEvidenceCount sets the NoncompliantEvidenceCount field's value.
+func (s *EvidenceInsights) SetNoncompliantEvidenceCount(v int64) *EvidenceInsights {
+	s.NoncompliantEvidenceCount = &v
+	return s
+}
+
+// The file that's used to structure and automate Audit Manager assessments
+// for a given compliance standard.
 type Framework struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the specified framework.
+	// The Amazon Resource Name (ARN) of the framework.
 	Arn *string `locationName:"arn" min:"20" type:"string"`
 
-	// The compliance type that the new custom framework supports, such as CIS or
-	// HIPAA.
-	ComplianceType *string `locationName:"complianceType" type:"string"`
+	// The compliance type that the framework supports, such as CIS or HIPAA.
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Framework's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
 
-	// The control sets associated with the framework.
-	ControlSets []*ControlSet `locationName:"controlSets" min:"1" type:"list"`
+	// The control sets that are associated with the framework.
+	//
+	// ControlSets is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Framework's
+	// String and GoString methods.
+	ControlSets []*ControlSet `locationName:"controlSets" min:"1" type:"list" sensitive:"true"`
 
-	// The sources from which Audit Manager collects evidence for the control.
+	// The control data sources where Audit Manager collects evidence from.
 	ControlSources *string `locationName:"controlSources" min:"1" type:"string"`
 
-	// Specifies when the framework was created.
+	// The time when the framework was created.
 	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp"`
 
-	// The IAM user or role that created the framework.
-	CreatedBy *string `locationName:"createdBy" min:"1" type:"string"`
+	// The user or role that created the framework.
+	//
+	// CreatedBy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Framework's
+	// String and GoString methods.
+	CreatedBy *string `locationName:"createdBy" min:"1" type:"string" sensitive:"true"`
 
-	// The description of the specified framework.
+	// The description of the framework.
 	Description *string `locationName:"description" min:"1" type:"string"`
 
-	// The unique identifier for the specified framework.
+	// The unique identifier for the framework.
 	Id *string `locationName:"id" min:"36" type:"string"`
 
-	// Specifies when the framework was most recently updated.
+	// The time when the framework was most recently updated.
 	LastUpdatedAt *time.Time `locationName:"lastUpdatedAt" type:"timestamp"`
 
-	// The IAM user or role that most recently updated the framework.
-	LastUpdatedBy *string `locationName:"lastUpdatedBy" min:"1" type:"string"`
+	// The user or role that most recently updated the framework.
+	//
+	// LastUpdatedBy is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Framework's
+	// String and GoString methods.
+	LastUpdatedBy *string `locationName:"lastUpdatedBy" min:"1" type:"string" sensitive:"true"`
 
-	// The logo associated with the framework.
+	// The logo that's associated with the framework.
 	Logo *string `locationName:"logo" min:"1" type:"string"`
 
-	// The name of the specified framework.
+	// The name of the framework.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
-	// The tags associated with the framework.
+	// The tags that are associated with the framework.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 
-	// The framework type, such as custom or standard.
+	// Specifies whether the framework is a standard framework or a custom framework.
 	Type *string `locationName:"type" type:"string" enum:"FrameworkType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Framework) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Framework) GoString() string {
 	return s.String()
 }
@@ -9322,30 +12429,46 @@ func (s *Framework) SetType(v string) *Framework {
 	return s
 }
 
-// The metadata of a framework, such as the name, ID, description, and so on.
+// The metadata of a framework, such as the name, ID, or description.
 type FrameworkMetadata struct {
 	_ struct{} `type:"structure"`
 
-	// The compliance standard associated with the framework, such as PCI-DSS or
-	// HIPAA.
-	ComplianceType *string `locationName:"complianceType" type:"string"`
+	// The compliance standard that's associated with the framework. For example,
+	// this could be PCI DSS or HIPAA.
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by FrameworkMetadata's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
 
 	// The description of the framework.
 	Description *string `locationName:"description" min:"1" type:"string"`
 
-	// The logo associated with the framework.
+	// The logo that's associated with the framework.
 	Logo *string `locationName:"logo" min:"1" type:"string"`
 
 	// The name of the framework.
-	Name *string `locationName:"name" min:"1" type:"string"`
+	//
+	// Name is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by FrameworkMetadata's
+	// String and GoString methods.
+	Name *string `locationName:"name" min:"1" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FrameworkMetadata) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FrameworkMetadata) GoString() string {
 	return s.String()
 }
@@ -9375,15 +12498,23 @@ func (s *FrameworkMetadata) SetName(v string) *FrameworkMetadata {
 }
 
 type GetAccountStatusInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAccountStatusInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAccountStatusInput) GoString() string {
 	return s.String()
 }
@@ -9391,16 +12522,24 @@ func (s GetAccountStatusInput) GoString() string {
 type GetAccountStatusOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The status of the specified account.
+	// The status of the Amazon Web Services account.
 	Status *string `locationName:"status" type:"string" enum:"AccountStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAccountStatusOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAccountStatusOutput) GoString() string {
 	return s.String()
 }
@@ -9412,20 +12551,28 @@ func (s *GetAccountStatusOutput) SetStatus(v string) *GetAccountStatusOutput {
 }
 
 type GetAssessmentFrameworkInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified framework.
+	// The identifier for the framework.
 	//
 	// FrameworkId is a required field
 	FrameworkId *string `location:"uri" locationName:"frameworkId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentFrameworkInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentFrameworkInput) GoString() string {
 	return s.String()
 }
@@ -9455,16 +12602,24 @@ func (s *GetAssessmentFrameworkInput) SetFrameworkId(v string) *GetAssessmentFra
 type GetAssessmentFrameworkOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The framework returned by the GetAssessmentFramework API.
+	// The framework that the GetAssessmentFramework API returned.
 	Framework *Framework `locationName:"framework" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentFrameworkOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentFrameworkOutput) GoString() string {
 	return s.String()
 }
@@ -9476,20 +12631,28 @@ func (s *GetAssessmentFrameworkOutput) SetFramework(v *Framework) *GetAssessment
 }
 
 type GetAssessmentInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentInput) GoString() string {
 	return s.String()
 }
@@ -9524,16 +12687,24 @@ type GetAssessmentOutput struct {
 	Assessment *Assessment `locationName:"assessment" type:"structure"`
 
 	// The wrapper that contains the Audit Manager role information of the current
-	// user, such as the role type and IAM Amazon Resource Name (ARN).
+	// user. This includes the role type and IAM Amazon Resource Name (ARN).
 	UserRole *Role `locationName:"userRole" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentOutput) GoString() string {
 	return s.String()
 }
@@ -9551,25 +12722,33 @@ func (s *GetAssessmentOutput) SetUserRole(v *Role) *GetAssessmentOutput {
 }
 
 type GetAssessmentReportUrlInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the assessment report.
+	// The unique identifier for the assessment report.
 	//
 	// AssessmentReportId is a required field
 	AssessmentReportId *string `location:"uri" locationName:"assessmentReportId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentReportUrlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentReportUrlInput) GoString() string {
 	return s.String()
 }
@@ -9611,17 +12790,25 @@ func (s *GetAssessmentReportUrlInput) SetAssessmentReportId(v string) *GetAssess
 type GetAssessmentReportUrlOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A uniform resource locator, used as a unique identifier to locate a resource
-	// on the internet.
+	// Short for uniform resource locator. A URL is used as a unique identifier
+	// to locate a resource on the internet.
 	PreSignedUrl *URL `locationName:"preSignedUrl" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentReportUrlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetAssessmentReportUrlOutput) GoString() string {
 	return s.String()
 }
@@ -9633,32 +12820,41 @@ func (s *GetAssessmentReportUrlOutput) SetPreSignedUrl(v *URL) *GetAssessmentRep
 }
 
 type GetChangeLogsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control.
+	// The unique identifier for the control.
 	ControlId *string `location:"querystring" locationName:"controlId" min:"36" type:"string"`
 
-	// The identifier for the specified control set.
+	// The unique identifier for the control set.
 	ControlSetId *string `location:"querystring" locationName:"controlSetId" min:"1" type:"string"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetChangeLogsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetChangeLogsInput) GoString() string {
 	return s.String()
 }
@@ -9727,16 +12923,24 @@ type GetChangeLogsOutput struct {
 	// The list of user activity for the control.
 	ChangeLogs []*ChangeLog `locationName:"changeLogs" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetChangeLogsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetChangeLogsOutput) GoString() string {
 	return s.String()
 }
@@ -9754,20 +12958,28 @@ func (s *GetChangeLogsOutput) SetNextToken(v string) *GetChangeLogsOutput {
 }
 
 type GetControlInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified control.
+	// The identifier for the control.
 	//
 	// ControlId is a required field
 	ControlId *string `location:"uri" locationName:"controlId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetControlInput) GoString() string {
 	return s.String()
 }
@@ -9797,16 +13009,24 @@ func (s *GetControlInput) SetControlId(v string) *GetControlInput {
 type GetControlOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the control returned by the GetControl API.
+	// The details of the control that the GetControl API returned.
 	Control *Control `locationName:"control" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetControlOutput) GoString() string {
 	return s.String()
 }
@@ -9818,21 +13038,30 @@ func (s *GetControlOutput) SetControl(v *Control) *GetControlOutput {
 }
 
 type GetDelegationsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDelegationsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDelegationsInput) GoString() string {
 	return s.String()
 }
@@ -9868,19 +13097,27 @@ func (s *GetDelegationsInput) SetNextToken(v string) *GetDelegationsInput {
 type GetDelegationsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of delegations returned by the GetDelegations API.
+	// The list of delegations that the GetDelegations API returned.
 	Delegations []*DelegationMetadata `locationName:"delegations" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDelegationsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDelegationsOutput) GoString() string {
 	return s.String()
 }
@@ -9898,9 +13135,9 @@ func (s *GetDelegationsOutput) SetNextToken(v string) *GetDelegationsOutput {
 }
 
 type GetEvidenceByEvidenceFolderInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
@@ -9910,24 +13147,33 @@ type GetEvidenceByEvidenceFolderInput struct {
 	// ControlSetId is a required field
 	ControlSetId *string `location:"uri" locationName:"controlSetId" min:"1" type:"string" required:"true"`
 
-	// The unique identifier for the folder in which the evidence is stored.
+	// The unique identifier for the folder that the evidence is stored in.
 	//
 	// EvidenceFolderId is a required field
 	EvidenceFolderId *string `location:"uri" locationName:"evidenceFolderId" min:"36" type:"string" required:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceByEvidenceFolderInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceByEvidenceFolderInput) GoString() string {
 	return s.String()
 }
@@ -9999,19 +13245,27 @@ func (s *GetEvidenceByEvidenceFolderInput) SetNextToken(v string) *GetEvidenceBy
 type GetEvidenceByEvidenceFolderOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of evidence returned by the GetEvidenceByEvidenceFolder API.
+	// The list of evidence that the GetEvidenceByEvidenceFolder API returned.
 	Evidence []*Evidence `locationName:"evidence" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceByEvidenceFolderOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceByEvidenceFolderOutput) GoString() string {
 	return s.String()
 }
@@ -10028,31 +13282,135 @@ func (s *GetEvidenceByEvidenceFolderOutput) SetNextToken(v string) *GetEvidenceB
 	return s
 }
 
-type GetEvidenceFolderInput struct {
-	_ struct{} `type:"structure"`
+type GetEvidenceFileUploadUrlInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The file that you want to upload. For a list of supported file formats, see
+	// Supported file types for manual evidence (https://docs.aws.amazon.com/audit-manager/latest/userguide/upload-evidence.html#supported-manual-evidence-files)
+	// in the Audit Manager User Guide.
+	//
+	// FileName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by GetEvidenceFileUploadUrlInput's
+	// String and GoString methods.
+	//
+	// FileName is a required field
+	FileName *string `location:"querystring" locationName:"fileName" min:"1" type:"string" required:"true" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEvidenceFileUploadUrlInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEvidenceFileUploadUrlInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetEvidenceFileUploadUrlInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetEvidenceFileUploadUrlInput"}
+	if s.FileName == nil {
+		invalidParams.Add(request.NewErrParamRequired("FileName"))
+	}
+	if s.FileName != nil && len(*s.FileName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("FileName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetFileName sets the FileName field's value.
+func (s *GetEvidenceFileUploadUrlInput) SetFileName(v string) *GetEvidenceFileUploadUrlInput {
+	s.FileName = &v
+	return s
+}
+
+type GetEvidenceFileUploadUrlOutput struct {
+	_ struct{} `type:"structure" sensitive:"true"`
+
+	// The name of the uploaded manual evidence file that the presigned URL was
+	// generated for.
+	EvidenceFileName *string `locationName:"evidenceFileName" min:"1" type:"string"`
+
+	// The presigned URL that was generated.
+	UploadUrl *string `locationName:"uploadUrl" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEvidenceFileUploadUrlOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetEvidenceFileUploadUrlOutput) GoString() string {
+	return s.String()
+}
+
+// SetEvidenceFileName sets the EvidenceFileName field's value.
+func (s *GetEvidenceFileUploadUrlOutput) SetEvidenceFileName(v string) *GetEvidenceFileUploadUrlOutput {
+	s.EvidenceFileName = &v
+	return s
+}
+
+// SetUploadUrl sets the UploadUrl field's value.
+func (s *GetEvidenceFileUploadUrlOutput) SetUploadUrl(v string) *GetEvidenceFileUploadUrlOutput {
+	s.UploadUrl = &v
+	return s
+}
+
+type GetEvidenceFolderInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control set.
+	// The unique identifier for the control set.
 	//
 	// ControlSetId is a required field
 	ControlSetId *string `location:"uri" locationName:"controlSetId" min:"1" type:"string" required:"true"`
 
-	// The identifier for the folder in which the evidence is stored.
+	// The unique identifier for the folder that the evidence is stored in.
 	//
 	// EvidenceFolderId is a required field
 	EvidenceFolderId *string `location:"uri" locationName:"evidenceFolderId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFolderInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFolderInput) GoString() string {
 	return s.String()
 }
@@ -10106,16 +13464,24 @@ func (s *GetEvidenceFolderInput) SetEvidenceFolderId(v string) *GetEvidenceFolde
 type GetEvidenceFolderOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The folder in which evidence is stored.
+	// The folder that the evidence is stored in.
 	EvidenceFolder *AssessmentEvidenceFolder `locationName:"evidenceFolder" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFolderOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFolderOutput) GoString() string {
 	return s.String()
 }
@@ -10127,36 +13493,45 @@ func (s *GetEvidenceFolderOutput) SetEvidenceFolder(v *AssessmentEvidenceFolder)
 }
 
 type GetEvidenceFoldersByAssessmentControlInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control.
+	// The identifier for the control.
 	//
 	// ControlId is a required field
 	ControlId *string `location:"uri" locationName:"controlId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control set.
+	// The identifier for the control set.
 	//
 	// ControlSetId is a required field
 	ControlSetId *string `location:"uri" locationName:"controlSetId" min:"1" type:"string" required:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentControlInput) GoString() string {
 	return s.String()
 }
@@ -10228,20 +13603,28 @@ func (s *GetEvidenceFoldersByAssessmentControlInput) SetNextToken(v string) *Get
 type GetEvidenceFoldersByAssessmentControlOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of evidence folders returned by the GetEvidenceFoldersByAssessmentControl
-	// API.
+	// The list of evidence folders that the GetEvidenceFoldersByAssessmentControl
+	// API returned.
 	EvidenceFolders []*AssessmentEvidenceFolder `locationName:"evidenceFolders" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentControlOutput) GoString() string {
 	return s.String()
 }
@@ -10259,26 +13642,35 @@ func (s *GetEvidenceFoldersByAssessmentControlOutput) SetNextToken(v string) *Ge
 }
 
 type GetEvidenceFoldersByAssessmentInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentInput) GoString() string {
 	return s.String()
 }
@@ -10326,20 +13718,28 @@ func (s *GetEvidenceFoldersByAssessmentInput) SetNextToken(v string) *GetEvidenc
 type GetEvidenceFoldersByAssessmentOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of evidence folders returned by the GetEvidenceFoldersByAssessment
-	// API.
+	// The list of evidence folders that the GetEvidenceFoldersByAssessment API
+	// returned.
 	EvidenceFolders []*AssessmentEvidenceFolder `locationName:"evidenceFolders" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceFoldersByAssessmentOutput) GoString() string {
 	return s.String()
 }
@@ -10357,35 +13757,43 @@ func (s *GetEvidenceFoldersByAssessmentOutput) SetNextToken(v string) *GetEviden
 }
 
 type GetEvidenceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control set.
+	// The unique identifier for the control set.
 	//
 	// ControlSetId is a required field
 	ControlSetId *string `location:"uri" locationName:"controlSetId" min:"1" type:"string" required:"true"`
 
-	// The identifier for the folder in which the evidence is stored.
+	// The unique identifier for the folder that the evidence is stored in.
 	//
 	// EvidenceFolderId is a required field
 	EvidenceFolderId *string `location:"uri" locationName:"evidenceFolderId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the evidence.
+	// The unique identifier for the evidence.
 	//
 	// EvidenceId is a required field
 	EvidenceId *string `location:"uri" locationName:"evidenceId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceInput) GoString() string {
 	return s.String()
 }
@@ -10451,16 +13859,24 @@ func (s *GetEvidenceInput) SetEvidenceId(v string) *GetEvidenceInput {
 type GetEvidenceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The evidence returned by the GetEvidenceResponse API.
+	// The evidence that the GetEvidence API returned.
 	Evidence *Evidence `locationName:"evidence" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetEvidenceOutput) GoString() string {
 	return s.String()
 }
@@ -10471,16 +13887,157 @@ func (s *GetEvidenceOutput) SetEvidence(v *Evidence) *GetEvidenceOutput {
 	return s
 }
 
-type GetOrganizationAdminAccountInput struct {
-	_ struct{} `type:"structure"`
+type GetInsightsByAssessmentInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The unique identifier for the assessment.
+	//
+	// AssessmentId is a required field
+	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsByAssessmentInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsByAssessmentInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetInsightsByAssessmentInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetInsightsByAssessmentInput"}
+	if s.AssessmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssessmentId"))
+	}
+	if s.AssessmentId != nil && len(*s.AssessmentId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("AssessmentId", 36))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssessmentId sets the AssessmentId field's value.
+func (s *GetInsightsByAssessmentInput) SetAssessmentId(v string) *GetInsightsByAssessmentInput {
+	s.AssessmentId = &v
+	return s
+}
+
+type GetInsightsByAssessmentOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The assessment analytics data that the GetInsightsByAssessment API returned.
+	Insights *InsightsByAssessment `locationName:"insights" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsByAssessmentOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsByAssessmentOutput) GoString() string {
+	return s.String()
+}
+
+// SetInsights sets the Insights field's value.
+func (s *GetInsightsByAssessmentOutput) SetInsights(v *InsightsByAssessment) *GetInsightsByAssessmentOutput {
+	s.Insights = v
+	return s
+}
+
+type GetInsightsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsInput) GoString() string {
+	return s.String()
+}
+
+type GetInsightsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The analytics data that the GetInsights API returned.
+	Insights *Insights `locationName:"insights" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetInsightsOutput) GoString() string {
+	return s.String()
+}
+
+// SetInsights sets the Insights field's value.
+func (s *GetInsightsOutput) SetInsights(v *Insights) *GetInsightsOutput {
+	s.Insights = v
+	return s
+}
+
+type GetOrganizationAdminAccountInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetOrganizationAdminAccountInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetOrganizationAdminAccountInput) GoString() string {
 	return s.String()
 }
@@ -10488,19 +14045,27 @@ func (s GetOrganizationAdminAccountInput) GoString() string {
 type GetOrganizationAdminAccountOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified administrator account.
+	// The identifier for the administrator account.
 	AdminAccountId *string `locationName:"adminAccountId" min:"12" type:"string"`
 
-	// The identifier for the specified organization.
+	// The identifier for the organization.
 	OrganizationId *string `locationName:"organizationId" min:"12" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetOrganizationAdminAccountOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetOrganizationAdminAccountOutput) GoString() string {
 	return s.String()
 }
@@ -10518,15 +14083,23 @@ func (s *GetOrganizationAdminAccountOutput) SetOrganizationId(v string) *GetOrga
 }
 
 type GetServicesInScopeInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetServicesInScopeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetServicesInScopeInput) GoString() string {
 	return s.String()
 }
@@ -10534,16 +14107,24 @@ func (s GetServicesInScopeInput) GoString() string {
 type GetServicesInScopeOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The metadata associated with the Amazon Web Service.
+	// The metadata that's associated with the Amazon Web Service.
 	ServiceMetadata []*ServiceMetadata `locationName:"serviceMetadata" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetServicesInScopeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetServicesInScopeOutput) GoString() string {
 	return s.String()
 }
@@ -10555,20 +14136,28 @@ func (s *GetServicesInScopeOutput) SetServiceMetadata(v []*ServiceMetadata) *Get
 }
 
 type GetSettingsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The list of SettingAttribute enum values.
+	// The list of setting attribute enum values.
 	//
 	// Attribute is a required field
 	Attribute *string `location:"uri" locationName:"attribute" type:"string" required:"true" enum:"SettingAttribute"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSettingsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSettingsInput) GoString() string {
 	return s.String()
 }
@@ -10602,12 +14191,20 @@ type GetSettingsOutput struct {
 	Settings *Settings `locationName:"settings" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSettingsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSettingsOutput) GoString() string {
 	return s.String()
 }
@@ -10615,6 +14212,237 @@ func (s GetSettingsOutput) GoString() string {
 // SetSettings sets the Settings field's value.
 func (s *GetSettingsOutput) SetSettings(v *Settings) *GetSettingsOutput {
 	s.Settings = v
+	return s
+}
+
+// A summary of the latest analytics data for all your active assessments.
+//
+// This summary is a snapshot of the data that your active assessments collected
+// on the lastUpdated date. It’s important to understand that the following
+// totals are daily counts based on this date — they aren’t a total sum
+// to date.
+//
+// The Insights data is eventually consistent. This means that, when you read
+// data from Insights, the response might not instantly reflect the results
+// of a recently completed write or update operation. If you repeat your read
+// request after a few hours, the response should return the latest data.
+//
+// If you delete an assessment or change its status to inactive, InsightsByAssessment
+// includes data for that assessment as follows.
+//
+//   - Inactive assessments - If Audit Manager collected evidence for your
+//     assessment before you changed it inactive, that evidence is included in
+//     the InsightsByAssessment counts for that day.
+//
+//   - Deleted assessments - If Audit Manager collected evidence for your assessment
+//     before you deleted it, that evidence isn't included in the InsightsByAssessment
+//     counts for that day.
+type Insights struct {
+	_ struct{} `type:"structure"`
+
+	// The number of active assessments in Audit Manager.
+	ActiveAssessmentsCount *int64 `locationName:"activeAssessmentsCount" type:"integer"`
+
+	// The number of assessment controls that collected non-compliant evidence on
+	// the lastUpdated date.
+	AssessmentControlsCountByNoncompliantEvidence *int64 `locationName:"assessmentControlsCountByNoncompliantEvidence" type:"integer"`
+
+	// The number of compliance check evidence that Audit Manager classified as
+	// compliant on the lastUpdated date. This includes evidence that was collected
+	// from Security Hub with a Pass ruling, or collected from Config with a Compliant
+	// ruling.
+	CompliantEvidenceCount *int64 `locationName:"compliantEvidenceCount" type:"integer"`
+
+	// The number of evidence without a compliance check ruling. Evidence is inconclusive
+	// when the associated control uses Security Hub or Config as a data source
+	// but you didn't enable those services. This is also the case when a control
+	// uses a data source that doesn’t support compliance checks (for example:
+	// manual evidence, API calls, or CloudTrail).
+	//
+	// If evidence has a compliance check status of not applicable, it's classed
+	// as inconclusive in Insights data.
+	InconclusiveEvidenceCount *int64 `locationName:"inconclusiveEvidenceCount" type:"integer"`
+
+	// The time when the cross-assessment insights were last updated.
+	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
+
+	// The number of compliance check evidence that Audit Manager classified as
+	// non-compliant on the lastUpdated date. This includes evidence that was collected
+	// from Security Hub with a Fail ruling, or collected from Config with a Non-compliant
+	// ruling.
+	NoncompliantEvidenceCount *int64 `locationName:"noncompliantEvidenceCount" type:"integer"`
+
+	// The total number of controls across all active assessments.
+	TotalAssessmentControlsCount *int64 `locationName:"totalAssessmentControlsCount" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Insights) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Insights) GoString() string {
+	return s.String()
+}
+
+// SetActiveAssessmentsCount sets the ActiveAssessmentsCount field's value.
+func (s *Insights) SetActiveAssessmentsCount(v int64) *Insights {
+	s.ActiveAssessmentsCount = &v
+	return s
+}
+
+// SetAssessmentControlsCountByNoncompliantEvidence sets the AssessmentControlsCountByNoncompliantEvidence field's value.
+func (s *Insights) SetAssessmentControlsCountByNoncompliantEvidence(v int64) *Insights {
+	s.AssessmentControlsCountByNoncompliantEvidence = &v
+	return s
+}
+
+// SetCompliantEvidenceCount sets the CompliantEvidenceCount field's value.
+func (s *Insights) SetCompliantEvidenceCount(v int64) *Insights {
+	s.CompliantEvidenceCount = &v
+	return s
+}
+
+// SetInconclusiveEvidenceCount sets the InconclusiveEvidenceCount field's value.
+func (s *Insights) SetInconclusiveEvidenceCount(v int64) *Insights {
+	s.InconclusiveEvidenceCount = &v
+	return s
+}
+
+// SetLastUpdated sets the LastUpdated field's value.
+func (s *Insights) SetLastUpdated(v time.Time) *Insights {
+	s.LastUpdated = &v
+	return s
+}
+
+// SetNoncompliantEvidenceCount sets the NoncompliantEvidenceCount field's value.
+func (s *Insights) SetNoncompliantEvidenceCount(v int64) *Insights {
+	s.NoncompliantEvidenceCount = &v
+	return s
+}
+
+// SetTotalAssessmentControlsCount sets the TotalAssessmentControlsCount field's value.
+func (s *Insights) SetTotalAssessmentControlsCount(v int64) *Insights {
+	s.TotalAssessmentControlsCount = &v
+	return s
+}
+
+// A summary of the latest analytics data for a specific active assessment.
+//
+// This summary is a snapshot of the data that was collected on the lastUpdated
+// date. It’s important to understand that the totals in InsightsByAssessment
+// are daily counts based on this date — they aren’t a total sum to date.
+//
+// The InsightsByAssessment data is eventually consistent. This means that when
+// you read data from InsightsByAssessment, the response might not instantly
+// reflect the results of a recently completed write or update operation. If
+// you repeat your read request after a few hours, the response returns the
+// latest data.
+//
+// If you delete an assessment or change its status to inactive, InsightsByAssessment
+// includes data for that assessment as follows.
+//
+//   - Inactive assessments - If Audit Manager collected evidence for your
+//     assessment before you changed it inactive, that evidence is included in
+//     the InsightsByAssessment counts for that day.
+//
+//   - Deleted assessments - If Audit Manager collected evidence for your assessment
+//     before you deleted it, that evidence isn't included in the InsightsByAssessment
+//     counts for that day.
+type InsightsByAssessment struct {
+	_ struct{} `type:"structure"`
+
+	// The number of assessment controls that collected non-compliant evidence on
+	// the lastUpdated date.
+	AssessmentControlsCountByNoncompliantEvidence *int64 `locationName:"assessmentControlsCountByNoncompliantEvidence" type:"integer"`
+
+	// The number of compliance check evidence that Audit Manager classified as
+	// compliant. This includes evidence that was collected from Security Hub with
+	// a Pass ruling, or collected from Config with a Compliant ruling.
+	CompliantEvidenceCount *int64 `locationName:"compliantEvidenceCount" type:"integer"`
+
+	// The amount of evidence without a compliance check ruling. Evidence is inconclusive
+	// if the associated control uses Security Hub or Config as a data source and
+	// you didn't enable those services. This is also the case if a control uses
+	// a data source that doesn’t support compliance checks (for example, manual
+	// evidence, API calls, or CloudTrail).
+	//
+	// If evidence has a compliance check status of not applicable, it's classified
+	// as inconclusive in InsightsByAssessment data.
+	InconclusiveEvidenceCount *int64 `locationName:"inconclusiveEvidenceCount" type:"integer"`
+
+	// The time when the assessment insights were last updated.
+	LastUpdated *time.Time `locationName:"lastUpdated" type:"timestamp"`
+
+	// The number of compliance check evidence that Audit Manager classified as
+	// non-compliant. This includes evidence that was collected from Security Hub
+	// with a Fail ruling, or collected from Config with a Non-compliant ruling.
+	NoncompliantEvidenceCount *int64 `locationName:"noncompliantEvidenceCount" type:"integer"`
+
+	// The total number of controls in the assessment.
+	TotalAssessmentControlsCount *int64 `locationName:"totalAssessmentControlsCount" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InsightsByAssessment) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InsightsByAssessment) GoString() string {
+	return s.String()
+}
+
+// SetAssessmentControlsCountByNoncompliantEvidence sets the AssessmentControlsCountByNoncompliantEvidence field's value.
+func (s *InsightsByAssessment) SetAssessmentControlsCountByNoncompliantEvidence(v int64) *InsightsByAssessment {
+	s.AssessmentControlsCountByNoncompliantEvidence = &v
+	return s
+}
+
+// SetCompliantEvidenceCount sets the CompliantEvidenceCount field's value.
+func (s *InsightsByAssessment) SetCompliantEvidenceCount(v int64) *InsightsByAssessment {
+	s.CompliantEvidenceCount = &v
+	return s
+}
+
+// SetInconclusiveEvidenceCount sets the InconclusiveEvidenceCount field's value.
+func (s *InsightsByAssessment) SetInconclusiveEvidenceCount(v int64) *InsightsByAssessment {
+	s.InconclusiveEvidenceCount = &v
+	return s
+}
+
+// SetLastUpdated sets the LastUpdated field's value.
+func (s *InsightsByAssessment) SetLastUpdated(v time.Time) *InsightsByAssessment {
+	s.LastUpdated = &v
+	return s
+}
+
+// SetNoncompliantEvidenceCount sets the NoncompliantEvidenceCount field's value.
+func (s *InsightsByAssessment) SetNoncompliantEvidenceCount(v int64) *InsightsByAssessment {
+	s.NoncompliantEvidenceCount = &v
+	return s
+}
+
+// SetTotalAssessmentControlsCount sets the TotalAssessmentControlsCount field's value.
+func (s *InsightsByAssessment) SetTotalAssessmentControlsCount(v int64) *InsightsByAssessment {
+	s.TotalAssessmentControlsCount = &v
 	return s
 }
 
@@ -10627,12 +14455,20 @@ type InternalServerException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) GoString() string {
 	return s.String()
 }
@@ -10675,27 +14511,285 @@ func (s *InternalServerException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-type ListAssessmentFrameworksInput struct {
+type ListAssessmentControlInsightsByControlDomainInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The unique identifier for the active assessment.
+	//
+	// AssessmentId is a required field
+	AssessmentId *string `location:"querystring" locationName:"assessmentId" min:"36" type:"string" required:"true"`
+
+	// The unique identifier for the control domain.
+	//
+	// Audit Manager supports the control domains that are provided by Amazon Web
+	// Services Control Catalog. For information about how to find a list of available
+	// control domains, see ListDomains (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListDomains.html)
+	// in the Amazon Web Services Control Catalog API Reference.
+	//
+	// ControlDomainId is a required field
+	ControlDomainId *string `location:"querystring" locationName:"controlDomainId" min:"13" type:"string" required:"true"`
+
+	// Represents the maximum number of results on a page or for an API request
+	// call.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentControlInsightsByControlDomainInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentControlInsightsByControlDomainInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListAssessmentControlInsightsByControlDomainInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListAssessmentControlInsightsByControlDomainInput"}
+	if s.AssessmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssessmentId"))
+	}
+	if s.AssessmentId != nil && len(*s.AssessmentId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("AssessmentId", 36))
+	}
+	if s.ControlDomainId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ControlDomainId"))
+	}
+	if s.ControlDomainId != nil && len(*s.ControlDomainId) < 13 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlDomainId", 13))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssessmentId sets the AssessmentId field's value.
+func (s *ListAssessmentControlInsightsByControlDomainInput) SetAssessmentId(v string) *ListAssessmentControlInsightsByControlDomainInput {
+	s.AssessmentId = &v
+	return s
+}
+
+// SetControlDomainId sets the ControlDomainId field's value.
+func (s *ListAssessmentControlInsightsByControlDomainInput) SetControlDomainId(v string) *ListAssessmentControlInsightsByControlDomainInput {
+	s.ControlDomainId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListAssessmentControlInsightsByControlDomainInput) SetMaxResults(v int64) *ListAssessmentControlInsightsByControlDomainInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAssessmentControlInsightsByControlDomainInput) SetNextToken(v string) *ListAssessmentControlInsightsByControlDomainInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListAssessmentControlInsightsByControlDomainOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The type of framework, such as standard or custom.
+	// The assessment control analytics data that the ListAssessmentControlInsightsByControlDomain
+	// API returned.
+	ControlInsightsByAssessment []*ControlInsightsMetadataByAssessmentItem `locationName:"controlInsightsByAssessment" type:"list"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentControlInsightsByControlDomainOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentControlInsightsByControlDomainOutput) GoString() string {
+	return s.String()
+}
+
+// SetControlInsightsByAssessment sets the ControlInsightsByAssessment field's value.
+func (s *ListAssessmentControlInsightsByControlDomainOutput) SetControlInsightsByAssessment(v []*ControlInsightsMetadataByAssessmentItem) *ListAssessmentControlInsightsByControlDomainOutput {
+	s.ControlInsightsByAssessment = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAssessmentControlInsightsByControlDomainOutput) SetNextToken(v string) *ListAssessmentControlInsightsByControlDomainOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListAssessmentFrameworkShareRequestsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// Represents the maximum number of results on a page or for an API request
+	// call.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+
+	// Specifies whether the share request is a sent request or a received request.
+	//
+	// RequestType is a required field
+	RequestType *string `location:"querystring" locationName:"requestType" type:"string" required:"true" enum:"ShareRequestType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentFrameworkShareRequestsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentFrameworkShareRequestsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListAssessmentFrameworkShareRequestsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListAssessmentFrameworkShareRequestsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+	if s.RequestType == nil {
+		invalidParams.Add(request.NewErrParamRequired("RequestType"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListAssessmentFrameworkShareRequestsInput) SetMaxResults(v int64) *ListAssessmentFrameworkShareRequestsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAssessmentFrameworkShareRequestsInput) SetNextToken(v string) *ListAssessmentFrameworkShareRequestsInput {
+	s.NextToken = &v
+	return s
+}
+
+// SetRequestType sets the RequestType field's value.
+func (s *ListAssessmentFrameworkShareRequestsInput) SetRequestType(v string) *ListAssessmentFrameworkShareRequestsInput {
+	s.RequestType = &v
+	return s
+}
+
+type ListAssessmentFrameworkShareRequestsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The list of share requests that the ListAssessmentFrameworkShareRequests
+	// API returned.
+	AssessmentFrameworkShareRequests []*AssessmentFrameworkShareRequest `locationName:"assessmentFrameworkShareRequests" type:"list"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentFrameworkShareRequestsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListAssessmentFrameworkShareRequestsOutput) GoString() string {
+	return s.String()
+}
+
+// SetAssessmentFrameworkShareRequests sets the AssessmentFrameworkShareRequests field's value.
+func (s *ListAssessmentFrameworkShareRequestsOutput) SetAssessmentFrameworkShareRequests(v []*AssessmentFrameworkShareRequest) *ListAssessmentFrameworkShareRequestsOutput {
+	s.AssessmentFrameworkShareRequests = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListAssessmentFrameworkShareRequestsOutput) SetNextToken(v string) *ListAssessmentFrameworkShareRequestsOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListAssessmentFrameworksInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The type of framework, such as a standard framework or a custom framework.
 	//
 	// FrameworkType is a required field
 	FrameworkType *string `location:"querystring" locationName:"frameworkType" type:"string" required:"true" enum:"FrameworkType"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentFrameworksInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentFrameworksInput) GoString() string {
 	return s.String()
 }
@@ -10740,19 +14834,28 @@ func (s *ListAssessmentFrameworksInput) SetNextToken(v string) *ListAssessmentFr
 type ListAssessmentFrameworksOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of metadata objects for the specified framework.
+	// A list of metadata that the ListAssessmentFrameworks API returns for each
+	// framework.
 	FrameworkMetadataList []*AssessmentFrameworkMetadata `locationName:"frameworkMetadataList" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentFrameworksOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentFrameworksOutput) GoString() string {
 	return s.String()
 }
@@ -10770,21 +14873,30 @@ func (s *ListAssessmentFrameworksOutput) SetNextToken(v string) *ListAssessmentF
 }
 
 type ListAssessmentReportsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentReportsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentReportsInput) GoString() string {
 	return s.String()
 }
@@ -10820,19 +14932,27 @@ func (s *ListAssessmentReportsInput) SetNextToken(v string) *ListAssessmentRepor
 type ListAssessmentReportsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of assessment reports returned by the ListAssessmentReports API.
+	// The list of assessment reports that the ListAssessmentReports API returned.
 	AssessmentReports []*AssessmentReportMetadata `locationName:"assessmentReports" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentReportsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentReportsOutput) GoString() string {
 	return s.String()
 }
@@ -10850,21 +14970,33 @@ func (s *ListAssessmentReportsOutput) SetNextToken(v string) *ListAssessmentRepo
 }
 
 type ListAssessmentsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+
+	// The current status of the assessment.
+	Status *string `location:"querystring" locationName:"status" type:"string" enum:"AssessmentStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentsInput) GoString() string {
 	return s.String()
 }
@@ -10897,22 +15029,36 @@ func (s *ListAssessmentsInput) SetNextToken(v string) *ListAssessmentsInput {
 	return s
 }
 
+// SetStatus sets the Status field's value.
+func (s *ListAssessmentsInput) SetStatus(v string) *ListAssessmentsInput {
+	s.Status = &v
+	return s
+}
+
 type ListAssessmentsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The metadata associated with the assessment.
+	// The metadata that the ListAssessments API returns for each assessment.
 	AssessmentMetadata []*AssessmentMetadataItem `locationName:"assessmentMetadata" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListAssessmentsOutput) GoString() string {
 	return s.String()
 }
@@ -10929,27 +15075,389 @@ func (s *ListAssessmentsOutput) SetNextToken(v string) *ListAssessmentsOutput {
 	return s
 }
 
-type ListControlsInput struct {
+type ListControlDomainInsightsByAssessmentInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The unique identifier for the active assessment.
+	//
+	// AssessmentId is a required field
+	AssessmentId *string `location:"querystring" locationName:"assessmentId" min:"36" type:"string" required:"true"`
+
+	// Represents the maximum number of results on a page or for an API request
+	// call.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsByAssessmentInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsByAssessmentInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListControlDomainInsightsByAssessmentInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListControlDomainInsightsByAssessmentInput"}
+	if s.AssessmentId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssessmentId"))
+	}
+	if s.AssessmentId != nil && len(*s.AssessmentId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("AssessmentId", 36))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssessmentId sets the AssessmentId field's value.
+func (s *ListControlDomainInsightsByAssessmentInput) SetAssessmentId(v string) *ListControlDomainInsightsByAssessmentInput {
+	s.AssessmentId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListControlDomainInsightsByAssessmentInput) SetMaxResults(v int64) *ListControlDomainInsightsByAssessmentInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlDomainInsightsByAssessmentInput) SetNextToken(v string) *ListControlDomainInsightsByAssessmentInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlDomainInsightsByAssessmentOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The type of control, such as standard or custom.
+	// The control domain analytics data that the ListControlDomainInsightsByAssessment
+	// API returned.
+	ControlDomainInsights []*ControlDomainInsights `locationName:"controlDomainInsights" type:"list"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsByAssessmentOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsByAssessmentOutput) GoString() string {
+	return s.String()
+}
+
+// SetControlDomainInsights sets the ControlDomainInsights field's value.
+func (s *ListControlDomainInsightsByAssessmentOutput) SetControlDomainInsights(v []*ControlDomainInsights) *ListControlDomainInsightsByAssessmentOutput {
+	s.ControlDomainInsights = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlDomainInsightsByAssessmentOutput) SetNextToken(v string) *ListControlDomainInsightsByAssessmentOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlDomainInsightsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// Represents the maximum number of results on a page or for an API request
+	// call.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListControlDomainInsightsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListControlDomainInsightsInput"}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListControlDomainInsightsInput) SetMaxResults(v int64) *ListControlDomainInsightsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlDomainInsightsInput) SetNextToken(v string) *ListControlDomainInsightsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlDomainInsightsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The control domain analytics data that the ListControlDomainInsights API
+	// returned.
+	ControlDomainInsights []*ControlDomainInsights `locationName:"controlDomainInsights" type:"list"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlDomainInsightsOutput) GoString() string {
+	return s.String()
+}
+
+// SetControlDomainInsights sets the ControlDomainInsights field's value.
+func (s *ListControlDomainInsightsOutput) SetControlDomainInsights(v []*ControlDomainInsights) *ListControlDomainInsightsOutput {
+	s.ControlDomainInsights = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlDomainInsightsOutput) SetNextToken(v string) *ListControlDomainInsightsOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlInsightsByControlDomainInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The unique identifier for the control domain.
+	//
+	// Audit Manager supports the control domains that are provided by Amazon Web
+	// Services Control Catalog. For information about how to find a list of available
+	// control domains, see ListDomains (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListDomains.html)
+	// in the Amazon Web Services Control Catalog API Reference.
+	//
+	// ControlDomainId is a required field
+	ControlDomainId *string `location:"querystring" locationName:"controlDomainId" min:"13" type:"string" required:"true"`
+
+	// Represents the maximum number of results on a page or for an API request
+	// call.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlInsightsByControlDomainInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlInsightsByControlDomainInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListControlInsightsByControlDomainInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListControlInsightsByControlDomainInput"}
+	if s.ControlDomainId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ControlDomainId"))
+	}
+	if s.ControlDomainId != nil && len(*s.ControlDomainId) < 13 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlDomainId", 13))
+	}
+	if s.MaxResults != nil && *s.MaxResults < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxResults", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetControlDomainId sets the ControlDomainId field's value.
+func (s *ListControlInsightsByControlDomainInput) SetControlDomainId(v string) *ListControlInsightsByControlDomainInput {
+	s.ControlDomainId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListControlInsightsByControlDomainInput) SetMaxResults(v int64) *ListControlInsightsByControlDomainInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlInsightsByControlDomainInput) SetNextToken(v string) *ListControlInsightsByControlDomainInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlInsightsByControlDomainOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The control analytics data that the ListControlInsightsByControlDomain API
+	// returned.
+	ControlInsightsMetadata []*ControlInsightsMetadataItem `locationName:"controlInsightsMetadata" type:"list"`
+
+	// The pagination token that's used to fetch the next set of results.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlInsightsByControlDomainOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListControlInsightsByControlDomainOutput) GoString() string {
+	return s.String()
+}
+
+// SetControlInsightsMetadata sets the ControlInsightsMetadata field's value.
+func (s *ListControlInsightsByControlDomainOutput) SetControlInsightsMetadata(v []*ControlInsightsMetadataItem) *ListControlInsightsByControlDomainOutput {
+	s.ControlInsightsMetadata = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListControlInsightsByControlDomainOutput) SetNextToken(v string) *ListControlInsightsByControlDomainOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListControlsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A filter that narrows the list of controls to a specific resource from the
+	// Amazon Web Services Control Catalog.
+	//
+	// To use this parameter, specify the ARN of the Control Catalog resource. You
+	// can specify either a control domain, a control objective, or a common control.
+	// For information about how to find the ARNs for these resources, see ListDomains
+	// (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListDomains.html),
+	// ListObjectives (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListObjectives.html),
+	// and ListCommonControls (https://docs.aws.amazon.com/controlcatalog/latest/APIReference/API_ListCommonControls.html).
+	//
+	// You can only filter by one Control Catalog resource at a time. Specifying
+	// multiple resource ARNs isn’t currently supported. If you want to filter
+	// by more than one ARN, we recommend that you run the ListControls operation
+	// separately for each ARN.
+	//
+	// Alternatively, specify UNCATEGORIZED to list controls that aren't mapped
+	// to a Control Catalog resource. For example, this operation might return a
+	// list of custom controls that don't belong to any control domain or control
+	// objective.
+	ControlCatalogId *string `location:"querystring" locationName:"controlCatalogId" min:"13" type:"string"`
+
+	// A filter that narrows the list of controls to a specific type.
 	//
 	// ControlType is a required field
 	ControlType *string `location:"querystring" locationName:"controlType" type:"string" required:"true" enum:"ControlType"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// The maximum number of results on a page or for an API request call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlsInput) GoString() string {
 	return s.String()
 }
@@ -10957,6 +15465,9 @@ func (s ListControlsInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *ListControlsInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "ListControlsInput"}
+	if s.ControlCatalogId != nil && len(*s.ControlCatalogId) < 13 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlCatalogId", 13))
+	}
 	if s.ControlType == nil {
 		invalidParams.Add(request.NewErrParamRequired("ControlType"))
 	}
@@ -10971,6 +15482,12 @@ func (s *ListControlsInput) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetControlCatalogId sets the ControlCatalogId field's value.
+func (s *ListControlsInput) SetControlCatalogId(v string) *ListControlsInput {
+	s.ControlCatalogId = &v
+	return s
 }
 
 // SetControlType sets the ControlType field's value.
@@ -10994,19 +15511,27 @@ func (s *ListControlsInput) SetNextToken(v string) *ListControlsInput {
 type ListControlsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of control metadata objects returned by the ListControls API.
+	// A list of metadata that the ListControls API returns for each control.
 	ControlMetadataList []*ControlMetadata `locationName:"controlMetadataList" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListControlsOutput) GoString() string {
 	return s.String()
 }
@@ -11024,26 +15549,35 @@ func (s *ListControlsOutput) SetNextToken(v string) *ListControlsOutput {
 }
 
 type ListKeywordsForDataSourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
-	// The control mapping data source to which the keywords apply.
+	// The control mapping data source that the keywords apply to.
 	//
 	// Source is a required field
-	Source *string `location:"querystring" locationName:"source" type:"string" required:"true" enum:"SourceType"`
+	Source *string `location:"querystring" locationName:"source" type:"string" required:"true" enum:"DataSourceType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListKeywordsForDataSourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListKeywordsForDataSourceInput) GoString() string {
 	return s.String()
 }
@@ -11088,19 +15622,27 @@ func (s *ListKeywordsForDataSourceInput) SetSource(v string) *ListKeywordsForDat
 type ListKeywordsForDataSourceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of keywords for the specified event mapping source.
+	// The list of keywords for the control mapping source.
 	Keywords []*string `locationName:"keywords" type:"list"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListKeywordsForDataSourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListKeywordsForDataSourceOutput) GoString() string {
 	return s.String()
 }
@@ -11118,21 +15660,30 @@ func (s *ListKeywordsForDataSourceOutput) SetNextToken(v string) *ListKeywordsFo
 }
 
 type ListNotificationsInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// Represents the maximum number of results per page, or per API request call.
+	// Represents the maximum number of results on a page or for an API request
+	// call.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListNotificationsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListNotificationsInput) GoString() string {
 	return s.String()
 }
@@ -11168,19 +15719,27 @@ func (s *ListNotificationsInput) SetNextToken(v string) *ListNotificationsInput 
 type ListNotificationsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The pagination token used to fetch the next set of results.
+	// The pagination token that's used to fetch the next set of results.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
 	// The returned list of notifications.
 	Notifications []*Notification `locationName:"notifications" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListNotificationsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListNotificationsOutput) GoString() string {
 	return s.String()
 }
@@ -11198,20 +15757,28 @@ func (s *ListNotificationsOutput) SetNotifications(v []*Notification) *ListNotif
 }
 
 type ListTagsForResourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The Amazon Resource Name (ARN) of the specified resource.
+	// The Amazon Resource Name (ARN) of the resource.
 	//
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resourceArn" min:"20" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) GoString() string {
 	return s.String()
 }
@@ -11241,16 +15808,24 @@ func (s *ListTagsForResourceInput) SetResourceArn(v string) *ListTagsForResource
 type ListTagsForResourceOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The list of tags returned by the ListTagsForResource API.
+	// The list of tags that the ListTagsForResource API returned.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) GoString() string {
 	return s.String()
 }
@@ -11261,20 +15836,45 @@ func (s *ListTagsForResourceOutput) SetTags(v map[string]*string) *ListTagsForRe
 	return s
 }
 
-// Evidence that is uploaded to Audit Manager manually.
+// Evidence that's manually added to a control in Audit Manager. manualEvidence
+// can be one of the following: evidenceFileName, s3ResourcePath, or textResponse.
 type ManualEvidence struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon S3 URL that points to a manual evidence object.
+	// The name of the file that's uploaded as manual evidence. This name is populated
+	// using the evidenceFileName value from the GetEvidenceFileUploadUrl (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_GetEvidenceFileUploadUrl.html)
+	// API response.
+	//
+	// EvidenceFileName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ManualEvidence's
+	// String and GoString methods.
+	EvidenceFileName *string `locationName:"evidenceFileName" min:"1" type:"string" sensitive:"true"`
+
+	// The S3 URL of the object that's imported as manual evidence.
 	S3ResourcePath *string `locationName:"s3ResourcePath" min:"1" type:"string"`
+
+	// The plain text response that's entered and saved as manual evidence.
+	//
+	// TextResponse is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by ManualEvidence's
+	// String and GoString methods.
+	TextResponse *string `locationName:"textResponse" min:"1" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ManualEvidence) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ManualEvidence) GoString() string {
 	return s.String()
 }
@@ -11282,8 +15882,14 @@ func (s ManualEvidence) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *ManualEvidence) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "ManualEvidence"}
+	if s.EvidenceFileName != nil && len(*s.EvidenceFileName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EvidenceFileName", 1))
+	}
 	if s.S3ResourcePath != nil && len(*s.S3ResourcePath) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("S3ResourcePath", 1))
+	}
+	if s.TextResponse != nil && len(*s.TextResponse) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("TextResponse", 1))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -11292,25 +15898,41 @@ func (s *ManualEvidence) Validate() error {
 	return nil
 }
 
+// SetEvidenceFileName sets the EvidenceFileName field's value.
+func (s *ManualEvidence) SetEvidenceFileName(v string) *ManualEvidence {
+	s.EvidenceFileName = &v
+	return s
+}
+
 // SetS3ResourcePath sets the S3ResourcePath field's value.
 func (s *ManualEvidence) SetS3ResourcePath(v string) *ManualEvidence {
 	s.S3ResourcePath = &v
 	return s
 }
 
-// The notification used to inform a user of an update in Audit Manager. For
-// example, this includes the notification that is sent when a control set is
-// delegated for review.
+// SetTextResponse sets the TextResponse field's value.
+func (s *ManualEvidence) SetTextResponse(v string) *ManualEvidence {
+	s.TextResponse = &v
+	return s
+}
+
+// The notification that informs a user of an update in Audit Manager. For example,
+// this includes the notification that's sent when a control set is delegated
+// for review.
 type Notification struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The identifier for the assessment.
 	AssessmentId *string `locationName:"assessmentId" min:"36" type:"string"`
 
 	// The name of the related assessment.
-	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string"`
+	//
+	// AssessmentName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Notification's
+	// String and GoString methods.
+	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string" sensitive:"true"`
 
-	// The identifier for the specified control set.
+	// The identifier for the control set.
 	ControlSetId *string `locationName:"controlSetId" min:"1" type:"string"`
 
 	// Specifies the name of the control set that the notification is about.
@@ -11329,12 +15951,20 @@ type Notification struct {
 	Source *string `locationName:"source" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Notification) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Notification) GoString() string {
 	return s.String()
 }
@@ -11397,12 +16027,20 @@ type RegisterAccountInput struct {
 	KmsKey *string `locationName:"kmsKey" min:"7" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterAccountInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterAccountInput) GoString() string {
 	return s.String()
 }
@@ -11442,12 +16080,20 @@ type RegisterAccountOutput struct {
 	Status *string `locationName:"status" type:"string" enum:"AccountStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterAccountOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterAccountOutput) GoString() string {
 	return s.String()
 }
@@ -11461,18 +16107,26 @@ func (s *RegisterAccountOutput) SetStatus(v string) *RegisterAccountOutput {
 type RegisterOrganizationAdminAccountInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified delegated administrator account.
+	// The identifier for the delegated administrator account.
 	//
 	// AdminAccountId is a required field
 	AdminAccountId *string `locationName:"adminAccountId" min:"12" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterOrganizationAdminAccountInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterOrganizationAdminAccountInput) GoString() string {
 	return s.String()
 }
@@ -11502,19 +16156,27 @@ func (s *RegisterOrganizationAdminAccountInput) SetAdminAccountId(v string) *Reg
 type RegisterOrganizationAdminAccountOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified delegated administrator account.
+	// The identifier for the delegated administrator account.
 	AdminAccountId *string `locationName:"adminAccountId" min:"12" type:"string"`
 
-	// The identifier for the specified organization.
+	// The identifier for the organization.
 	OrganizationId *string `locationName:"organizationId" min:"12" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterOrganizationAdminAccountOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RegisterOrganizationAdminAccountOutput) GoString() string {
 	return s.String()
 }
@@ -11531,23 +16193,48 @@ func (s *RegisterOrganizationAdminAccountOutput) SetOrganizationId(v string) *Re
 	return s
 }
 
-// A system asset that is evaluated in an Audit Manager assessment.
+// A system asset that's evaluated in an Audit Manager assessment.
 type Resource struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) for the specified resource.
+	// The Amazon Resource Name (ARN) for the resource.
 	Arn *string `locationName:"arn" min:"20" type:"string"`
 
-	// The value of the specified resource.
+	// The evaluation status for a resource that was assessed when collecting compliance
+	// check evidence.
+	//
+	//    * Audit Manager classes the resource as non-compliant if Security Hub
+	//    reports a Fail result, or if Config reports a Non-compliant result.
+	//
+	//    * Audit Manager classes the resource as compliant if Security Hub reports
+	//    a Pass result, or if Config reports a Compliant result.
+	//
+	//    * If a compliance check isn't available or applicable, then no compliance
+	//    evaluation can be made for that resource. This is the case if a resource
+	//    assessment uses Config or Security Hub as the underlying data source type,
+	//    but those services aren't enabled. This is also the case if the resource
+	//    assessment uses an underlying data source type that doesn't support compliance
+	//    checks (such as manual evidence, Amazon Web Services API calls, or CloudTrail).
+	ComplianceCheck *string `locationName:"complianceCheck" type:"string"`
+
+	// The value of the resource.
 	Value *string `locationName:"value" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Resource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Resource) GoString() string {
 	return s.String()
 }
@@ -11558,36 +16245,50 @@ func (s *Resource) SetArn(v string) *Resource {
 	return s
 }
 
+// SetComplianceCheck sets the ComplianceCheck field's value.
+func (s *Resource) SetComplianceCheck(v string) *Resource {
+	s.ComplianceCheck = &v
+	return s
+}
+
 // SetValue sets the Value field's value.
 func (s *Resource) SetValue(v string) *Resource {
 	s.Value = &v
 	return s
 }
 
-// The resource specified in the request cannot be found.
+// The resource that's specified in the request can't be found.
 type ResourceNotFoundException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
 	Message_ *string `locationName:"message" type:"string"`
 
-	// The unique identifier for the specified resource.
+	// The unique identifier for the resource.
 	//
 	// ResourceId is a required field
 	ResourceId *string `locationName:"resourceId" type:"string" required:"true"`
 
-	// The type of resource affected by the error.
+	// The type of resource that's affected by the error.
 	//
 	// ResourceType is a required field
 	ResourceType *string `locationName:"resourceType" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) GoString() string {
 	return s.String()
 }
@@ -11631,12 +16332,14 @@ func (s *ResourceNotFoundException) RequestID() string {
 }
 
 // The wrapper that contains the Audit Manager role information of the current
-// user, such as the role type and IAM Amazon Resource Name (ARN).
+// user. This includes the role type and IAM Amazon Resource Name (ARN).
 type Role struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Resource Name (ARN) of the IAM role.
-	RoleArn *string `locationName:"roleArn" min:"20" type:"string"`
+	//
+	// RoleArn is a required field
+	RoleArn *string `locationName:"roleArn" min:"20" type:"string" required:"true"`
 
 	// The type of customer persona.
 	//
@@ -11645,15 +16348,25 @@ type Role struct {
 	// In UpdateSettings, roleType can only be PROCESS_OWNER.
 	//
 	// In BatchCreateDelegationByAssessment, roleType can only be RESOURCE_OWNER.
-	RoleType *string `locationName:"roleType" type:"string" enum:"RoleType"`
+	//
+	// RoleType is a required field
+	RoleType *string `locationName:"roleType" type:"string" required:"true" enum:"RoleType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Role) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Role) GoString() string {
 	return s.String()
 }
@@ -11661,8 +16374,14 @@ func (s Role) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *Role) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "Role"}
+	if s.RoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("RoleArn"))
+	}
 	if s.RoleArn != nil && len(*s.RoleArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("RoleArn", 20))
+	}
+	if s.RoleType == nil {
+		invalidParams.Add(request.NewErrParamRequired("RoleType"))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -11683,23 +16402,52 @@ func (s *Role) SetRoleType(v string) *Role {
 	return s
 }
 
-// The wrapper that contains the accounts and services in scope for the assessment.
+// The wrapper that contains the Amazon Web Services accounts that are in scope
+// for the assessment.
+//
+// You no longer need to specify which Amazon Web Services are in scope when
+// you create or update an assessment. Audit Manager infers the services in
+// scope by examining your assessment controls and their data sources, and then
+// mapping this information to the relevant Amazon Web Services.
+//
+// If an underlying data source changes for your assessment, we automatically
+// update the services scope as needed to reflect the correct Amazon Web Services.
+// This ensures that your assessment collects accurate and comprehensive evidence
+// about all of the relevant services in your AWS environment.
 type Scope struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" sensitive:"true"`
 
-	// The accounts included in the scope of the assessment.
-	AwsAccounts []*AWSAccount `locationName:"awsAccounts" type:"list"`
+	// The Amazon Web Services accounts that are included in the scope of the assessment.
+	//
+	// AwsAccounts is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Scope's
+	// String and GoString methods.
+	AwsAccounts []*AWSAccount `locationName:"awsAccounts" min:"1" type:"list" sensitive:"true"`
 
-	// The Amazon Web Services services included in the scope of the assessment.
-	AwsServices []*AWSService `locationName:"awsServices" type:"list"`
+	// The Amazon Web Services services that are included in the scope of the assessment.
+	//
+	// This API parameter is no longer supported. If you use this parameter to specify
+	// one or more Amazon Web Services, Audit Manager ignores this input. Instead,
+	// the value for awsServices will show as empty.
+	//
+	// Deprecated: You can't specify services in scope when creating/updating an assessment. If you use the parameter to specify one or more AWS services, Audit Manager ignores the input. Instead the value of the parameter will show as empty indicating that the services are defined and managed by Audit Manager.
+	AwsServices []*AWSService `locationName:"awsServices" deprecated:"true" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Scope) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Scope) GoString() string {
 	return s.String()
 }
@@ -11707,6 +16455,9 @@ func (s Scope) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *Scope) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "Scope"}
+	if s.AwsAccounts != nil && len(s.AwsAccounts) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AwsAccounts", 1))
+	}
 	if s.AwsAccounts != nil {
 		for i, v := range s.AwsAccounts {
 			if v == nil {
@@ -11746,15 +16497,15 @@ func (s *Scope) SetAwsServices(v []*AWSService) *Scope {
 	return s
 }
 
-// The metadata associated with the specified Amazon Web Service.
+// The metadata that's associated with the Amazon Web Service.
 type ServiceMetadata struct {
 	_ struct{} `type:"structure"`
 
-	// The category in which the Amazon Web Service belongs, such as compute, storage,
-	// database, and so on.
+	// The category that the Amazon Web Service belongs to, such as compute, storage,
+	// or database.
 	Category *string `locationName:"category" min:"1" type:"string"`
 
-	// The description of the specified Amazon Web Service.
+	// The description of the Amazon Web Service.
 	Description *string `locationName:"description" min:"1" type:"string"`
 
 	// The display name of the Amazon Web Service.
@@ -11764,12 +16515,20 @@ type ServiceMetadata struct {
 	Name *string `locationName:"name" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceMetadata) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ServiceMetadata) GoString() string {
 	return s.String()
 }
@@ -11798,15 +16557,101 @@ func (s *ServiceMetadata) SetName(v string) *ServiceMetadata {
 	return s
 }
 
+// You've reached your account quota for this resource type. To perform the
+// requested action, delete some existing resources or request a quota increase
+// (https://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html) from
+// the Service Quotas console. For a list of Audit Manager service quotas, see
+// Quotas and restrictions for Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/service-quotas.html).
+type ServiceQuotaExceededException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceQuotaExceededException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ServiceQuotaExceededException) GoString() string {
+	return s.String()
+}
+
+func newErrorServiceQuotaExceededException(v protocol.ResponseMetadata) error {
+	return &ServiceQuotaExceededException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ServiceQuotaExceededException) Code() string {
+	return "ServiceQuotaExceededException"
+}
+
+// Message returns the exception's message.
+func (s *ServiceQuotaExceededException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ServiceQuotaExceededException) OrigErr() error {
+	return nil
+}
+
+func (s *ServiceQuotaExceededException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ServiceQuotaExceededException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ServiceQuotaExceededException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // The settings object that holds all supported Audit Manager settings.
 type Settings struct {
 	_ struct{} `type:"structure"`
 
-	// The default storage destination for assessment reports.
-	DefaultAssessmentReportsDestination *AssessmentReportsDestination `locationName:"defaultAssessmentReportsDestination" type:"structure"`
+	// The default S3 destination bucket for storing assessment reports.
+	//
+	// DefaultAssessmentReportsDestination is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Settings's
+	// String and GoString methods.
+	DefaultAssessmentReportsDestination *AssessmentReportsDestination `locationName:"defaultAssessmentReportsDestination" type:"structure" sensitive:"true"`
+
+	// The default S3 destination bucket for storing evidence finder exports.
+	DefaultExportDestination *DefaultExportDestination `locationName:"defaultExportDestination" type:"structure"`
 
 	// The designated default audit owners.
-	DefaultProcessOwners []*Role `locationName:"defaultProcessOwners" type:"list"`
+	//
+	// DefaultProcessOwners is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Settings's
+	// String and GoString methods.
+	DefaultProcessOwners []*Role `locationName:"defaultProcessOwners" type:"list" sensitive:"true"`
+
+	// The deregistration policy for your Audit Manager data. You can use this attribute
+	// to determine how your data is handled when you deregister Audit Manager.
+	DeregistrationPolicy *DeregistrationPolicy `locationName:"deregistrationPolicy" type:"structure"`
+
+	// The current evidence finder status and event data store details.
+	EvidenceFinderEnablement *EvidenceFinderEnablement `locationName:"evidenceFinderEnablement" type:"structure"`
 
 	// Specifies whether Organizations is enabled.
 	IsAwsOrgEnabled *bool `locationName:"isAwsOrgEnabled" type:"boolean"`
@@ -11815,15 +16660,27 @@ type Settings struct {
 	KmsKey *string `locationName:"kmsKey" min:"7" type:"string"`
 
 	// The designated Amazon Simple Notification Service (Amazon SNS) topic.
-	SnsTopic *string `locationName:"snsTopic" min:"1" type:"string"`
+	//
+	// SnsTopic is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Settings's
+	// String and GoString methods.
+	SnsTopic *string `locationName:"snsTopic" min:"1" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Settings) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Settings) GoString() string {
 	return s.String()
 }
@@ -11834,9 +16691,27 @@ func (s *Settings) SetDefaultAssessmentReportsDestination(v *AssessmentReportsDe
 	return s
 }
 
+// SetDefaultExportDestination sets the DefaultExportDestination field's value.
+func (s *Settings) SetDefaultExportDestination(v *DefaultExportDestination) *Settings {
+	s.DefaultExportDestination = v
+	return s
+}
+
 // SetDefaultProcessOwners sets the DefaultProcessOwners field's value.
 func (s *Settings) SetDefaultProcessOwners(v []*Role) *Settings {
 	s.DefaultProcessOwners = v
+	return s
+}
+
+// SetDeregistrationPolicy sets the DeregistrationPolicy field's value.
+func (s *Settings) SetDeregistrationPolicy(v *DeregistrationPolicy) *Settings {
+	s.DeregistrationPolicy = v
+	return s
+}
+
+// SetEvidenceFinderEnablement sets the EvidenceFinderEnablement field's value.
+func (s *Settings) SetEvidenceFinderEnablement(v *EvidenceFinderEnablement) *Settings {
+	s.EvidenceFinderEnablement = v
 	return s
 }
 
@@ -11858,26 +16733,121 @@ func (s *Settings) SetSnsTopic(v string) *Settings {
 	return s
 }
 
-// The keyword to search for in CloudTrail logs, Config rules, Security Hub
-// checks, and Amazon Web Services API names.
+// A keyword that relates to the control data source.
+//
+// For manual evidence, this keyword indicates if the manual evidence is a file
+// or text.
+//
+// For automated evidence, this keyword identifies a specific CloudTrail event,
+// Config rule, Security Hub control, or Amazon Web Services API name.
+//
+// To learn more about the supported keywords that you can use when mapping
+// a control data source, see the following pages in the Audit Manager User
+// Guide:
+//
+//   - Config rules supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-config.html)
+//
+//   - Security Hub controls supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-ash.html)
+//
+//   - API calls supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-api.html)
+//
+//   - CloudTrail event names supported by Audit Manager (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-cloudtrail.html)
 type SourceKeyword struct {
 	_ struct{} `type:"structure"`
 
-	// The method of input for the specified keyword.
+	// The input method for the keyword.
+	//
+	//    * SELECT_FROM_LIST is used when mapping a data source for automated evidence.
+	//    When keywordInputType is SELECT_FROM_LIST, a keyword must be selected
+	//    to collect automated evidence. For example, this keyword can be a CloudTrail
+	//    event name, a rule name for Config, a Security Hub control, or the name
+	//    of an Amazon Web Services API call.
+	//
+	//    * UPLOAD_FILE and INPUT_TEXT are only used when mapping a data source
+	//    for manual evidence. When keywordInputType is UPLOAD_FILE, a file must
+	//    be uploaded as manual evidence. When keywordInputType is INPUT_TEXT, text
+	//    must be entered as manual evidence.
 	KeywordInputType *string `locationName:"keywordInputType" type:"string" enum:"KeywordInputType"`
 
-	// The value of the keyword used to search CloudTrail logs, Config rules, Security
-	// Hub checks, and Amazon Web Services API names when mapping a control data
-	// source.
+	// The value of the keyword that's used when mapping a control data source.
+	// For example, this can be a CloudTrail event name, a rule name for Config,
+	// a Security Hub control, or the name of an Amazon Web Services API call.
+	//
+	// If you’re mapping a data source to a rule in Config, the keywordValue that
+	// you specify depends on the type of rule:
+	//
+	//    * For managed rules (https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_use-managed-rules.html),
+	//    you can use the rule identifier as the keywordValue. You can find the
+	//    rule identifier from the list of Config managed rules (https://docs.aws.amazon.com/config/latest/developerguide/managed-rules-by-aws-config.html).
+	//    For some rules, the rule identifier is different from the rule name. For
+	//    example, the rule name restricted-ssh has the following rule identifier:
+	//    INCOMING_SSH_DISABLED. Make sure to use the rule identifier, not the rule
+	//    name. Keyword example for managed rules: Managed rule name: s3-bucket-acl-prohibited
+	//    (https://docs.aws.amazon.com/config/latest/developerguide/s3-bucket-acl-prohibited.html)
+	//    keywordValue: S3_BUCKET_ACL_PROHIBITED
+	//
+	//    * For custom rules (https://docs.aws.amazon.com/config/latest/developerguide/evaluate-config_develop-rules.html),
+	//    you form the keywordValue by adding the Custom_ prefix to the rule name.
+	//    This prefix distinguishes the custom rule from a managed rule. Keyword
+	//    example for custom rules: Custom rule name: my-custom-config-rule keywordValue:
+	//    Custom_my-custom-config-rule
+	//
+	//    * For service-linked rules (https://docs.aws.amazon.com/config/latest/developerguide/service-linked-awsconfig-rules.html),
+	//    you form the keywordValue by adding the Custom_ prefix to the rule name.
+	//    In addition, you remove the suffix ID that appears at the end of the rule
+	//    name. Keyword examples for service-linked rules: Service-linked rule name:
+	//    CustomRuleForAccount-conformance-pack-szsm1uv0w keywordValue: Custom_CustomRuleForAccount-conformance-pack
+	//    Service-linked rule name: OrgConfigRule-s3-bucket-versioning-enabled-dbgzf8ba
+	//    keywordValue: Custom_OrgConfigRule-s3-bucket-versioning-enabled
+	//
+	// The keywordValue is case sensitive. If you enter a value incorrectly, Audit
+	// Manager might not recognize the data source mapping. As a result, you might
+	// not successfully collect evidence from that data source as intended.
+	//
+	// Keep in mind the following requirements, depending on the data source type
+	// that you're using.
+	//
+	// For Config:
+	//
+	//    * For managed rules, make sure that the keywordValue is the rule identifier
+	//    in ALL_CAPS_WITH_UNDERSCORES. For example, CLOUDWATCH_LOG_GROUP_ENCRYPTED.
+	//    For accuracy, we recommend that you reference the list of supported Config
+	//    managed rules (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-config.html).
+	//
+	//    * For custom rules, make sure that the keywordValue has the Custom_ prefix
+	//    followed by the custom rule name. The format of the custom rule name itself
+	//    may vary. For accuracy, we recommend that you visit the Config console
+	//    (https://console.aws.amazon.com/config/) to verify your custom rule name.
+	//
+	// For Security Hub: The format varies for Security Hub control names. For accuracy,
+	// we recommend that you reference the list of supported Security Hub controls
+	// (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-ash.html).
+	//
+	// For Amazon Web Services API calls: Make sure that the keywordValue is written
+	// as serviceprefix_ActionName. For example, iam_ListGroups. For accuracy, we
+	// recommend that you reference the list of supported API calls (https://docs.aws.amazon.com/audit-manager/latest/userguide/control-data-sources-api.html).
+	//
+	// For CloudTrail: Make sure that the keywordValue is written as serviceprefix_ActionName.
+	// For example, cloudtrail_StartLogging. For accuracy, we recommend that you
+	// review the Amazon Web Service prefix and action names in the Service Authorization
+	// Reference (https://docs.aws.amazon.com/service-authorization/latest/reference/reference_policies_actions-resources-contextkeys.html).
 	KeywordValue *string `locationName:"keywordValue" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SourceKeyword) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SourceKeyword) GoString() string {
 	return s.String()
 }
@@ -11907,26 +16877,154 @@ func (s *SourceKeyword) SetKeywordValue(v string) *SourceKeyword {
 	return s
 }
 
+type StartAssessmentFrameworkShareInput struct {
+	_ struct{} `type:"structure"`
+
+	// An optional comment from the sender about the share request.
+	Comment *string `locationName:"comment" type:"string"`
+
+	// The Amazon Web Services account of the recipient.
+	//
+	// DestinationAccount is a required field
+	DestinationAccount *string `locationName:"destinationAccount" min:"12" type:"string" required:"true"`
+
+	// The Amazon Web Services Region of the recipient.
+	//
+	// DestinationRegion is a required field
+	DestinationRegion *string `locationName:"destinationRegion" type:"string" required:"true"`
+
+	// The unique identifier for the custom framework to be shared.
+	//
+	// FrameworkId is a required field
+	FrameworkId *string `location:"uri" locationName:"frameworkId" min:"36" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartAssessmentFrameworkShareInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartAssessmentFrameworkShareInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartAssessmentFrameworkShareInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartAssessmentFrameworkShareInput"}
+	if s.DestinationAccount == nil {
+		invalidParams.Add(request.NewErrParamRequired("DestinationAccount"))
+	}
+	if s.DestinationAccount != nil && len(*s.DestinationAccount) < 12 {
+		invalidParams.Add(request.NewErrParamMinLen("DestinationAccount", 12))
+	}
+	if s.DestinationRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("DestinationRegion"))
+	}
+	if s.FrameworkId == nil {
+		invalidParams.Add(request.NewErrParamRequired("FrameworkId"))
+	}
+	if s.FrameworkId != nil && len(*s.FrameworkId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("FrameworkId", 36))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetComment sets the Comment field's value.
+func (s *StartAssessmentFrameworkShareInput) SetComment(v string) *StartAssessmentFrameworkShareInput {
+	s.Comment = &v
+	return s
+}
+
+// SetDestinationAccount sets the DestinationAccount field's value.
+func (s *StartAssessmentFrameworkShareInput) SetDestinationAccount(v string) *StartAssessmentFrameworkShareInput {
+	s.DestinationAccount = &v
+	return s
+}
+
+// SetDestinationRegion sets the DestinationRegion field's value.
+func (s *StartAssessmentFrameworkShareInput) SetDestinationRegion(v string) *StartAssessmentFrameworkShareInput {
+	s.DestinationRegion = &v
+	return s
+}
+
+// SetFrameworkId sets the FrameworkId field's value.
+func (s *StartAssessmentFrameworkShareInput) SetFrameworkId(v string) *StartAssessmentFrameworkShareInput {
+	s.FrameworkId = &v
+	return s
+}
+
+type StartAssessmentFrameworkShareOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The share request that's created by the StartAssessmentFrameworkShare API.
+	AssessmentFrameworkShareRequest *AssessmentFrameworkShareRequest `locationName:"assessmentFrameworkShareRequest" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartAssessmentFrameworkShareOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartAssessmentFrameworkShareOutput) GoString() string {
+	return s.String()
+}
+
+// SetAssessmentFrameworkShareRequest sets the AssessmentFrameworkShareRequest field's value.
+func (s *StartAssessmentFrameworkShareOutput) SetAssessmentFrameworkShareRequest(v *AssessmentFrameworkShareRequest) *StartAssessmentFrameworkShareOutput {
+	s.AssessmentFrameworkShareRequest = v
+	return s
+}
+
 type TagResourceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) of the specified resource.
+	// The Amazon Resource Name (ARN) of the resource.
 	//
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resourceArn" min:"20" type:"string" required:"true"`
 
-	// The tags to be associated with the resource.
+	// The tags that are associated with the resource.
 	//
 	// Tags is a required field
 	Tags map[string]*string `locationName:"tags" type:"map" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) GoString() string {
 	return s.String()
 }
@@ -11966,34 +17064,114 @@ type TagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
 
-// A uniform resource locator, used as a unique identifier to locate a resource
-// on the internet.
+// The request was denied due to request throttling.
+type ThrottlingException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ThrottlingException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ThrottlingException) GoString() string {
+	return s.String()
+}
+
+func newErrorThrottlingException(v protocol.ResponseMetadata) error {
+	return &ThrottlingException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *ThrottlingException) Code() string {
+	return "ThrottlingException"
+}
+
+// Message returns the exception's message.
+func (s *ThrottlingException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *ThrottlingException) OrigErr() error {
+	return nil
+}
+
+func (s *ThrottlingException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *ThrottlingException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *ThrottlingException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// Short for uniform resource locator. A URL is used as a unique identifier
+// to locate a resource on the internet.
 type URL struct {
 	_ struct{} `type:"structure"`
 
-	// The name or word used as a hyperlink to the URL.
+	// The name or word that's used as a hyperlink to the URL.
 	HyperlinkName *string `locationName:"hyperlinkName" min:"1" type:"string"`
 
 	// The unique identifier for the internet resource.
 	Link *string `locationName:"link" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s URL) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s URL) GoString() string {
 	return s.String()
 }
@@ -12011,7 +17189,7 @@ func (s *URL) SetLink(v string) *URL {
 }
 
 type UntagResourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The Amazon Resource Name (ARN) of the specified resource.
 	//
@@ -12024,12 +17202,20 @@ type UntagResourceInput struct {
 	TagKeys []*string `location:"querystring" locationName:"tagKeys" min:"1" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) GoString() string {
 	return s.String()
 }
@@ -12072,12 +17258,20 @@ type UntagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -12085,34 +17279,46 @@ func (s UntagResourceOutput) GoString() string {
 type UpdateAssessmentControlInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The comment body text for the specified control.
-	CommentBody *string `locationName:"commentBody" type:"string"`
+	// The comment body text for the control.
+	//
+	// CommentBody is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentControlInput's
+	// String and GoString methods.
+	CommentBody *string `locationName:"commentBody" type:"string" sensitive:"true"`
 
-	// The identifier for the specified control.
+	// The unique identifier for the control.
 	//
 	// ControlId is a required field
 	ControlId *string `location:"uri" locationName:"controlId" min:"36" type:"string" required:"true"`
 
-	// The identifier for the specified control set.
+	// The unique identifier for the control set.
 	//
 	// ControlSetId is a required field
 	ControlSetId *string `location:"uri" locationName:"controlSetId" min:"1" type:"string" required:"true"`
 
-	// The status of the specified control.
+	// The status of the control.
 	ControlStatus *string `locationName:"controlStatus" type:"string" enum:"ControlStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlInput) GoString() string {
 	return s.String()
 }
@@ -12178,17 +17384,25 @@ func (s *UpdateAssessmentControlInput) SetControlStatus(v string) *UpdateAssessm
 type UpdateAssessmentControlOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the updated control set returned by the UpdateAssessmentControl
-	// API.
+	// The name of the updated control set that the UpdateAssessmentControl API
+	// returned.
 	Control *AssessmentControl `locationName:"control" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlOutput) GoString() string {
 	return s.String()
 }
@@ -12202,33 +17416,45 @@ func (s *UpdateAssessmentControlOutput) SetControl(v *AssessmentControl) *Update
 type UpdateAssessmentControlSetStatusInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The comment related to the status update.
+	// The comment that's related to the status update.
+	//
+	// Comment is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentControlSetStatusInput's
+	// String and GoString methods.
 	//
 	// Comment is a required field
-	Comment *string `locationName:"comment" type:"string" required:"true"`
+	Comment *string `locationName:"comment" type:"string" required:"true" sensitive:"true"`
 
-	// The identifier for the specified control set.
+	// The unique identifier for the control set.
 	//
 	// ControlSetId is a required field
 	ControlSetId *string `location:"uri" locationName:"controlSetId" type:"string" required:"true"`
 
-	// The status of the control set that is being updated.
+	// The status of the control set that's being updated.
 	//
 	// Status is a required field
 	Status *string `locationName:"status" type:"string" required:"true" enum:"ControlSetStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlSetStatusInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlSetStatusInput) GoString() string {
 	return s.String()
 }
@@ -12288,17 +17514,25 @@ func (s *UpdateAssessmentControlSetStatusInput) SetStatus(v string) *UpdateAsses
 type UpdateAssessmentControlSetStatusOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the updated control set returned by the UpdateAssessmentControlSetStatus
-	// API.
+	// The name of the updated control set that the UpdateAssessmentControlSetStatus
+	// API returned.
 	ControlSet *AssessmentControlSet `locationName:"controlSet" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlSetStatusOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentControlSetStatusOutput) GoString() string {
 	return s.String()
 }
@@ -12310,12 +17544,14 @@ func (s *UpdateAssessmentControlSetStatusOutput) SetControlSet(v *AssessmentCont
 }
 
 // A controlSet entity that represents a collection of controls in Audit Manager.
-// This does not contain the control set ID.
+// This doesn't contain the control set ID.
 type UpdateAssessmentFrameworkControlSet struct {
 	_ struct{} `type:"structure"`
 
-	// The list of controls contained within the control set.
-	Controls []*CreateAssessmentFrameworkControl `locationName:"controls" min:"1" type:"list"`
+	// The list of controls that are contained within the control set.
+	//
+	// Controls is a required field
+	Controls []*CreateAssessmentFrameworkControl `locationName:"controls" min:"1" type:"list" required:"true"`
 
 	// The unique identifier for the control set.
 	Id *string `locationName:"id" min:"1" type:"string"`
@@ -12326,12 +17562,20 @@ type UpdateAssessmentFrameworkControlSet struct {
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentFrameworkControlSet) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentFrameworkControlSet) GoString() string {
 	return s.String()
 }
@@ -12339,6 +17583,9 @@ func (s UpdateAssessmentFrameworkControlSet) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *UpdateAssessmentFrameworkControlSet) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UpdateAssessmentFrameworkControlSet"}
+	if s.Controls == nil {
+		invalidParams.Add(request.NewErrParamRequired("Controls"))
+	}
 	if s.Controls != nil && len(s.Controls) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Controls", 1))
 	}
@@ -12391,17 +17638,21 @@ type UpdateAssessmentFrameworkInput struct {
 
 	// The compliance type that the new custom framework supports, such as CIS or
 	// HIPAA.
-	ComplianceType *string `locationName:"complianceType" type:"string"`
+	//
+	// ComplianceType is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentFrameworkInput's
+	// String and GoString methods.
+	ComplianceType *string `locationName:"complianceType" type:"string" sensitive:"true"`
 
-	// The control sets associated with the framework.
+	// The control sets that are associated with the framework.
 	//
 	// ControlSets is a required field
-	ControlSets []*UpdateAssessmentFrameworkControlSet `locationName:"controlSets" type:"list" required:"true"`
+	ControlSets []*UpdateAssessmentFrameworkControlSet `locationName:"controlSets" min:"1" type:"list" required:"true"`
 
-	// The description of the framework that is to be updated.
+	// The description of the updated framework.
 	Description *string `locationName:"description" min:"1" type:"string"`
 
-	// The identifier for the specified framework.
+	// The unique identifier for the framework.
 	//
 	// FrameworkId is a required field
 	FrameworkId *string `location:"uri" locationName:"frameworkId" min:"36" type:"string" required:"true"`
@@ -12412,12 +17663,20 @@ type UpdateAssessmentFrameworkInput struct {
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentFrameworkInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentFrameworkInput) GoString() string {
 	return s.String()
 }
@@ -12427,6 +17686,9 @@ func (s *UpdateAssessmentFrameworkInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "UpdateAssessmentFrameworkInput"}
 	if s.ControlSets == nil {
 		invalidParams.Add(request.NewErrParamRequired("ControlSets"))
+	}
+	if s.ControlSets != nil && len(s.ControlSets) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ControlSets", 1))
 	}
 	if s.Description != nil && len(*s.Description) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Description", 1))
@@ -12493,16 +17755,24 @@ func (s *UpdateAssessmentFrameworkInput) SetName(v string) *UpdateAssessmentFram
 type UpdateAssessmentFrameworkOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the specified framework.
+	// The name of the framework.
 	Framework *Framework `locationName:"framework" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentFrameworkOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentFrameworkOutput) GoString() string {
 	return s.String()
 }
@@ -12513,39 +17783,176 @@ func (s *UpdateAssessmentFrameworkOutput) SetFramework(v *Framework) *UpdateAsse
 	return s
 }
 
+type UpdateAssessmentFrameworkShareInput struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the update action for the share request.
+	//
+	// Action is a required field
+	Action *string `locationName:"action" type:"string" required:"true" enum:"ShareRequestAction"`
+
+	// The unique identifier for the share request.
+	//
+	// RequestId is a required field
+	RequestId *string `location:"uri" locationName:"requestId" min:"36" type:"string" required:"true"`
+
+	// Specifies whether the share request is a sent request or a received request.
+	//
+	// RequestType is a required field
+	RequestType *string `locationName:"requestType" type:"string" required:"true" enum:"ShareRequestType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAssessmentFrameworkShareInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAssessmentFrameworkShareInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateAssessmentFrameworkShareInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateAssessmentFrameworkShareInput"}
+	if s.Action == nil {
+		invalidParams.Add(request.NewErrParamRequired("Action"))
+	}
+	if s.RequestId == nil {
+		invalidParams.Add(request.NewErrParamRequired("RequestId"))
+	}
+	if s.RequestId != nil && len(*s.RequestId) < 36 {
+		invalidParams.Add(request.NewErrParamMinLen("RequestId", 36))
+	}
+	if s.RequestType == nil {
+		invalidParams.Add(request.NewErrParamRequired("RequestType"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAction sets the Action field's value.
+func (s *UpdateAssessmentFrameworkShareInput) SetAction(v string) *UpdateAssessmentFrameworkShareInput {
+	s.Action = &v
+	return s
+}
+
+// SetRequestId sets the RequestId field's value.
+func (s *UpdateAssessmentFrameworkShareInput) SetRequestId(v string) *UpdateAssessmentFrameworkShareInput {
+	s.RequestId = &v
+	return s
+}
+
+// SetRequestType sets the RequestType field's value.
+func (s *UpdateAssessmentFrameworkShareInput) SetRequestType(v string) *UpdateAssessmentFrameworkShareInput {
+	s.RequestType = &v
+	return s
+}
+
+type UpdateAssessmentFrameworkShareOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The updated share request that's returned by the UpdateAssessmentFrameworkShare
+	// operation.
+	AssessmentFrameworkShareRequest *AssessmentFrameworkShareRequest `locationName:"assessmentFrameworkShareRequest" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAssessmentFrameworkShareOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateAssessmentFrameworkShareOutput) GoString() string {
+	return s.String()
+}
+
+// SetAssessmentFrameworkShareRequest sets the AssessmentFrameworkShareRequest field's value.
+func (s *UpdateAssessmentFrameworkShareOutput) SetAssessmentFrameworkShareRequest(v *AssessmentFrameworkShareRequest) *UpdateAssessmentFrameworkShareOutput {
+	s.AssessmentFrameworkShareRequest = v
+	return s
+}
+
 type UpdateAssessmentInput struct {
 	_ struct{} `type:"structure"`
 
-	// The description of the specified assessment.
-	AssessmentDescription *string `locationName:"assessmentDescription" type:"string"`
+	// The description of the assessment.
+	//
+	// AssessmentDescription is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentInput's
+	// String and GoString methods.
+	AssessmentDescription *string `locationName:"assessmentDescription" type:"string" sensitive:"true"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The name of the specified assessment to be updated.
-	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string"`
+	// The name of the assessment to be updated.
+	//
+	// AssessmentName is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentInput's
+	// String and GoString methods.
+	AssessmentName *string `locationName:"assessmentName" min:"1" type:"string" sensitive:"true"`
 
-	// The assessment report storage destination for the specified assessment that
-	// is being updated.
-	AssessmentReportsDestination *AssessmentReportsDestination `locationName:"assessmentReportsDestination" type:"structure"`
+	// The assessment report storage destination for the assessment that's being
+	// updated.
+	//
+	// AssessmentReportsDestination is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentInput's
+	// String and GoString methods.
+	AssessmentReportsDestination *AssessmentReportsDestination `locationName:"assessmentReportsDestination" type:"structure" sensitive:"true"`
 
-	// The list of roles for the specified assessment.
-	Roles []*Role `locationName:"roles" type:"list"`
+	// The list of roles for the assessment.
+	//
+	// Roles is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentInput's
+	// String and GoString methods.
+	Roles []*Role `locationName:"roles" type:"list" sensitive:"true"`
 
-	// The scope of the specified assessment.
+	// The scope of the assessment.
+	//
+	// Scope is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateAssessmentInput's
+	// String and GoString methods.
 	//
 	// Scope is a required field
-	Scope *Scope `locationName:"scope" type:"structure" required:"true"`
+	Scope *Scope `locationName:"scope" type:"structure" required:"true" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentInput) GoString() string {
 	return s.String()
 }
@@ -12631,17 +18038,25 @@ func (s *UpdateAssessmentInput) SetScope(v *Scope) *UpdateAssessmentInput {
 type UpdateAssessmentOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The response object (name of the updated assessment) for the UpdateAssessmentRequest
-	// API.
+	// The response object for the UpdateAssessment API. This is the name of the
+	// updated assessment.
 	Assessment *Assessment `locationName:"assessment" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentOutput) GoString() string {
 	return s.String()
 }
@@ -12655,23 +18070,31 @@ func (s *UpdateAssessmentOutput) SetAssessment(v *Assessment) *UpdateAssessmentO
 type UpdateAssessmentStatusInput struct {
 	_ struct{} `type:"structure"`
 
-	// The identifier for the specified assessment.
+	// The unique identifier for the assessment.
 	//
 	// AssessmentId is a required field
 	AssessmentId *string `location:"uri" locationName:"assessmentId" min:"36" type:"string" required:"true"`
 
-	// The current status of the specified assessment.
+	// The current status of the assessment.
 	//
 	// Status is a required field
 	Status *string `locationName:"status" type:"string" required:"true" enum:"AssessmentStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentStatusInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentStatusInput) GoString() string {
 	return s.String()
 }
@@ -12710,17 +18133,24 @@ func (s *UpdateAssessmentStatusInput) SetStatus(v string) *UpdateAssessmentStatu
 type UpdateAssessmentStatusOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the updated assessment returned by the UpdateAssessmentStatus
-	// API.
+	// The name of the updated assessment that the UpdateAssessmentStatus API returned.
 	Assessment *Assessment `locationName:"assessment" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentStatusOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateAssessmentStatusOutput) GoString() string {
 	return s.String()
 }
@@ -12734,40 +18164,64 @@ func (s *UpdateAssessmentStatusOutput) SetAssessment(v *Assessment) *UpdateAsses
 type UpdateControlInput struct {
 	_ struct{} `type:"structure"`
 
-	// The recommended actions to carry out if the control is not fulfilled.
-	ActionPlanInstructions *string `locationName:"actionPlanInstructions" type:"string"`
+	// The recommended actions to carry out if the control isn't fulfilled.
+	//
+	// ActionPlanInstructions is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateControlInput's
+	// String and GoString methods.
+	ActionPlanInstructions *string `locationName:"actionPlanInstructions" type:"string" sensitive:"true"`
 
 	// The title of the action plan for remediating the control.
-	ActionPlanTitle *string `locationName:"actionPlanTitle" type:"string"`
+	//
+	// ActionPlanTitle is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateControlInput's
+	// String and GoString methods.
+	ActionPlanTitle *string `locationName:"actionPlanTitle" type:"string" sensitive:"true"`
 
-	// The identifier for the specified control.
+	// The identifier for the control.
 	//
 	// ControlId is a required field
 	ControlId *string `location:"uri" locationName:"controlId" min:"36" type:"string" required:"true"`
 
-	// The data mapping sources for the specified control.
+	// The data mapping sources for the control.
 	//
 	// ControlMappingSources is a required field
 	ControlMappingSources []*ControlMappingSource `locationName:"controlMappingSources" min:"1" type:"list" required:"true"`
 
 	// The optional description of the control.
-	Description *string `locationName:"description" type:"string"`
+	//
+	// Description is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateControlInput's
+	// String and GoString methods.
+	Description *string `locationName:"description" type:"string" sensitive:"true"`
 
-	// The name of the control to be updated.
+	// The name of the updated control.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
-	// The steps that to follow to determine if the control has been satisfied.
-	TestingInformation *string `locationName:"testingInformation" type:"string"`
+	// The steps that you should follow to determine if the control is met.
+	//
+	// TestingInformation is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateControlInput's
+	// String and GoString methods.
+	TestingInformation *string `locationName:"testingInformation" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlInput) GoString() string {
 	return s.String()
 }
@@ -12855,16 +18309,24 @@ func (s *UpdateControlInput) SetTestingInformation(v string) *UpdateControlInput
 type UpdateControlOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of the updated control set returned by the UpdateControl API.
+	// The name of the updated control set that the UpdateControl API returned.
 	Control *Control `locationName:"control" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateControlOutput) GoString() string {
 	return s.String()
 }
@@ -12878,26 +18340,60 @@ func (s *UpdateControlOutput) SetControl(v *Control) *UpdateControlOutput {
 type UpdateSettingsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The default storage destination for assessment reports.
-	DefaultAssessmentReportsDestination *AssessmentReportsDestination `locationName:"defaultAssessmentReportsDestination" type:"structure"`
+	// The default S3 destination bucket for storing assessment reports.
+	//
+	// DefaultAssessmentReportsDestination is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateSettingsInput's
+	// String and GoString methods.
+	DefaultAssessmentReportsDestination *AssessmentReportsDestination `locationName:"defaultAssessmentReportsDestination" type:"structure" sensitive:"true"`
+
+	// The default S3 destination bucket for storing evidence finder exports.
+	DefaultExportDestination *DefaultExportDestination `locationName:"defaultExportDestination" type:"structure"`
 
 	// A list of the default audit owners.
-	DefaultProcessOwners []*Role `locationName:"defaultProcessOwners" type:"list"`
+	//
+	// DefaultProcessOwners is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by UpdateSettingsInput's
+	// String and GoString methods.
+	DefaultProcessOwners []*Role `locationName:"defaultProcessOwners" type:"list" sensitive:"true"`
+
+	// The deregistration policy for your Audit Manager data. You can use this attribute
+	// to determine how your data is handled when you deregister Audit Manager.
+	DeregistrationPolicy *DeregistrationPolicy `locationName:"deregistrationPolicy" type:"structure"`
+
+	// Specifies whether the evidence finder feature is enabled. Change this attribute
+	// to enable or disable evidence finder.
+	//
+	// When you use this attribute to disable evidence finder, Audit Manager deletes
+	// the event data store that’s used to query your evidence data. As a result,
+	// you can’t re-enable evidence finder and use the feature again. Your only
+	// alternative is to deregister (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_DeregisterAccount.html)
+	// and then re-register (https://docs.aws.amazon.com/audit-manager/latest/APIReference/API_RegisterAccount.html)
+	// Audit Manager.
+	EvidenceFinderEnabled *bool `locationName:"evidenceFinderEnabled" type:"boolean"`
 
 	// The KMS key details.
 	KmsKey *string `locationName:"kmsKey" min:"7" type:"string"`
 
-	// The Amazon Simple Notification Service (Amazon SNS) topic to which Audit
-	// Manager sends notifications.
-	SnsTopic *string `locationName:"snsTopic" min:"20" type:"string"`
+	// The Amazon Simple Notification Service (Amazon SNS) topic that Audit Manager
+	// sends notifications to.
+	SnsTopic *string `locationName:"snsTopic" min:"4" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSettingsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSettingsInput) GoString() string {
 	return s.String()
 }
@@ -12908,12 +18404,17 @@ func (s *UpdateSettingsInput) Validate() error {
 	if s.KmsKey != nil && len(*s.KmsKey) < 7 {
 		invalidParams.Add(request.NewErrParamMinLen("KmsKey", 7))
 	}
-	if s.SnsTopic != nil && len(*s.SnsTopic) < 20 {
-		invalidParams.Add(request.NewErrParamMinLen("SnsTopic", 20))
+	if s.SnsTopic != nil && len(*s.SnsTopic) < 4 {
+		invalidParams.Add(request.NewErrParamMinLen("SnsTopic", 4))
 	}
 	if s.DefaultAssessmentReportsDestination != nil {
 		if err := s.DefaultAssessmentReportsDestination.Validate(); err != nil {
 			invalidParams.AddNested("DefaultAssessmentReportsDestination", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.DefaultExportDestination != nil {
+		if err := s.DefaultExportDestination.Validate(); err != nil {
+			invalidParams.AddNested("DefaultExportDestination", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.DefaultProcessOwners != nil {
@@ -12939,9 +18440,27 @@ func (s *UpdateSettingsInput) SetDefaultAssessmentReportsDestination(v *Assessme
 	return s
 }
 
+// SetDefaultExportDestination sets the DefaultExportDestination field's value.
+func (s *UpdateSettingsInput) SetDefaultExportDestination(v *DefaultExportDestination) *UpdateSettingsInput {
+	s.DefaultExportDestination = v
+	return s
+}
+
 // SetDefaultProcessOwners sets the DefaultProcessOwners field's value.
 func (s *UpdateSettingsInput) SetDefaultProcessOwners(v []*Role) *UpdateSettingsInput {
 	s.DefaultProcessOwners = v
+	return s
+}
+
+// SetDeregistrationPolicy sets the DeregistrationPolicy field's value.
+func (s *UpdateSettingsInput) SetDeregistrationPolicy(v *DeregistrationPolicy) *UpdateSettingsInput {
+	s.DeregistrationPolicy = v
+	return s
+}
+
+// SetEvidenceFinderEnabled sets the EvidenceFinderEnabled field's value.
+func (s *UpdateSettingsInput) SetEvidenceFinderEnabled(v bool) *UpdateSettingsInput {
+	s.EvidenceFinderEnabled = &v
 	return s
 }
 
@@ -12964,12 +18483,20 @@ type UpdateSettingsOutput struct {
 	Settings *Settings `locationName:"settings" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSettingsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateSettingsOutput) GoString() string {
 	return s.String()
 }
@@ -12983,19 +18510,27 @@ func (s *UpdateSettingsOutput) SetSettings(v *Settings) *UpdateSettingsOutput {
 type ValidateAssessmentReportIntegrityInput struct {
 	_ struct{} `type:"structure"`
 
-	// The relative path of the specified Amazon S3 bucket in which the assessment
-	// report is stored.
+	// The relative path of the Amazon S3 bucket that the assessment report is stored
+	// in.
 	//
 	// S3RelativePath is a required field
 	S3RelativePath *string `locationName:"s3RelativePath" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidateAssessmentReportIntegrityInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidateAssessmentReportIntegrityInput) GoString() string {
 	return s.String()
 }
@@ -13025,7 +18560,7 @@ func (s *ValidateAssessmentReportIntegrityInput) SetS3RelativePath(v string) *Va
 type ValidateAssessmentReportIntegrityOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The signature algorithm used to code sign the assessment report file.
+	// The signature algorithm that's used to code sign the assessment report file.
 	SignatureAlgorithm *string `locationName:"signatureAlgorithm" type:"string"`
 
 	// The date and time signature that specifies when the assessment report was
@@ -13042,12 +18577,20 @@ type ValidateAssessmentReportIntegrityOutput struct {
 	ValidationErrors []*string `locationName:"validationErrors" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidateAssessmentReportIntegrityOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidateAssessmentReportIntegrityOutput) GoString() string {
 	return s.String()
 }
@@ -13096,12 +18639,20 @@ type ValidationException struct {
 	Reason *string `locationName:"reason" type:"string" enum:"ValidationExceptionReason"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) GoString() string {
 	return s.String()
 }
@@ -13144,8 +18695,7 @@ func (s *ValidationException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Indicates that the request has invalid or missing parameters for the specified
-// field.
+// Indicates that the request has invalid or missing parameters for the field.
 type ValidationExceptionField struct {
 	_ struct{} `type:"structure"`
 
@@ -13160,12 +18710,20 @@ type ValidationExceptionField struct {
 	Name *string `locationName:"name" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationExceptionField) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationExceptionField) GoString() string {
 	return s.String()
 }
@@ -13335,6 +18893,22 @@ func ControlSetStatus_Values() []string {
 }
 
 const (
+	// ControlStateActive is a ControlState enum value
+	ControlStateActive = "ACTIVE"
+
+	// ControlStateEndOfSupport is a ControlState enum value
+	ControlStateEndOfSupport = "END_OF_SUPPORT"
+)
+
+// ControlState_Values returns all elements of the ControlState enum
+func ControlState_Values() []string {
+	return []string{
+		ControlStateActive,
+		ControlStateEndOfSupport,
+	}
+}
+
+const (
 	// ControlStatusUnderReview is a ControlStatus enum value
 	ControlStatusUnderReview = "UNDER_REVIEW"
 
@@ -13360,6 +18934,9 @@ const (
 
 	// ControlTypeCustom is a ControlType enum value
 	ControlTypeCustom = "Custom"
+
+	// ControlTypeCore is a ControlType enum value
+	ControlTypeCore = "Core"
 )
 
 // ControlType_Values returns all elements of the ControlType enum
@@ -13367,6 +18944,35 @@ func ControlType_Values() []string {
 	return []string{
 		ControlTypeStandard,
 		ControlTypeCustom,
+		ControlTypeCore,
+	}
+}
+
+const (
+	// DataSourceTypeAwsCloudtrail is a DataSourceType enum value
+	DataSourceTypeAwsCloudtrail = "AWS_Cloudtrail"
+
+	// DataSourceTypeAwsConfig is a DataSourceType enum value
+	DataSourceTypeAwsConfig = "AWS_Config"
+
+	// DataSourceTypeAwsSecurityHub is a DataSourceType enum value
+	DataSourceTypeAwsSecurityHub = "AWS_Security_Hub"
+
+	// DataSourceTypeAwsApiCall is a DataSourceType enum value
+	DataSourceTypeAwsApiCall = "AWS_API_Call"
+
+	// DataSourceTypeManual is a DataSourceType enum value
+	DataSourceTypeManual = "MANUAL"
+)
+
+// DataSourceType_Values returns all elements of the DataSourceType enum
+func DataSourceType_Values() []string {
+	return []string{
+		DataSourceTypeAwsCloudtrail,
+		DataSourceTypeAwsConfig,
+		DataSourceTypeAwsSecurityHub,
+		DataSourceTypeAwsApiCall,
+		DataSourceTypeManual,
 	}
 }
 
@@ -13391,6 +18997,78 @@ func DelegationStatus_Values() []string {
 }
 
 const (
+	// DeleteResourcesAll is a DeleteResources enum value
+	DeleteResourcesAll = "ALL"
+
+	// DeleteResourcesDefault is a DeleteResources enum value
+	DeleteResourcesDefault = "DEFAULT"
+)
+
+// DeleteResources_Values returns all elements of the DeleteResources enum
+func DeleteResources_Values() []string {
+	return []string{
+		DeleteResourcesAll,
+		DeleteResourcesDefault,
+	}
+}
+
+const (
+	// EvidenceFinderBackfillStatusNotStarted is a EvidenceFinderBackfillStatus enum value
+	EvidenceFinderBackfillStatusNotStarted = "NOT_STARTED"
+
+	// EvidenceFinderBackfillStatusInProgress is a EvidenceFinderBackfillStatus enum value
+	EvidenceFinderBackfillStatusInProgress = "IN_PROGRESS"
+
+	// EvidenceFinderBackfillStatusCompleted is a EvidenceFinderBackfillStatus enum value
+	EvidenceFinderBackfillStatusCompleted = "COMPLETED"
+)
+
+// EvidenceFinderBackfillStatus_Values returns all elements of the EvidenceFinderBackfillStatus enum
+func EvidenceFinderBackfillStatus_Values() []string {
+	return []string{
+		EvidenceFinderBackfillStatusNotStarted,
+		EvidenceFinderBackfillStatusInProgress,
+		EvidenceFinderBackfillStatusCompleted,
+	}
+}
+
+const (
+	// EvidenceFinderEnablementStatusEnabled is a EvidenceFinderEnablementStatus enum value
+	EvidenceFinderEnablementStatusEnabled = "ENABLED"
+
+	// EvidenceFinderEnablementStatusDisabled is a EvidenceFinderEnablementStatus enum value
+	EvidenceFinderEnablementStatusDisabled = "DISABLED"
+
+	// EvidenceFinderEnablementStatusEnableInProgress is a EvidenceFinderEnablementStatus enum value
+	EvidenceFinderEnablementStatusEnableInProgress = "ENABLE_IN_PROGRESS"
+
+	// EvidenceFinderEnablementStatusDisableInProgress is a EvidenceFinderEnablementStatus enum value
+	EvidenceFinderEnablementStatusDisableInProgress = "DISABLE_IN_PROGRESS"
+)
+
+// EvidenceFinderEnablementStatus_Values returns all elements of the EvidenceFinderEnablementStatus enum
+func EvidenceFinderEnablementStatus_Values() []string {
+	return []string{
+		EvidenceFinderEnablementStatusEnabled,
+		EvidenceFinderEnablementStatusDisabled,
+		EvidenceFinderEnablementStatusEnableInProgress,
+		EvidenceFinderEnablementStatusDisableInProgress,
+	}
+}
+
+const (
+	// ExportDestinationTypeS3 is a ExportDestinationType enum value
+	ExportDestinationTypeS3 = "S3"
+)
+
+// ExportDestinationType_Values returns all elements of the ExportDestinationType enum
+func ExportDestinationType_Values() []string {
+	return []string{
+		ExportDestinationTypeS3,
+	}
+}
+
+const (
 	// FrameworkTypeStandard is a FrameworkType enum value
 	FrameworkTypeStandard = "Standard"
 
@@ -13409,12 +19087,20 @@ func FrameworkType_Values() []string {
 const (
 	// KeywordInputTypeSelectFromList is a KeywordInputType enum value
 	KeywordInputTypeSelectFromList = "SELECT_FROM_LIST"
+
+	// KeywordInputTypeUploadFile is a KeywordInputType enum value
+	KeywordInputTypeUploadFile = "UPLOAD_FILE"
+
+	// KeywordInputTypeInputText is a KeywordInputType enum value
+	KeywordInputTypeInputText = "INPUT_TEXT"
 )
 
 // KeywordInputType_Values returns all elements of the KeywordInputType enum
 func KeywordInputType_Values() []string {
 	return []string{
 		KeywordInputTypeSelectFromList,
+		KeywordInputTypeUploadFile,
+		KeywordInputTypeInputText,
 	}
 }
 
@@ -13477,6 +19163,15 @@ const (
 
 	// SettingAttributeDefaultProcessOwners is a SettingAttribute enum value
 	SettingAttributeDefaultProcessOwners = "DEFAULT_PROCESS_OWNERS"
+
+	// SettingAttributeEvidenceFinderEnablement is a SettingAttribute enum value
+	SettingAttributeEvidenceFinderEnablement = "EVIDENCE_FINDER_ENABLEMENT"
+
+	// SettingAttributeDeregistrationPolicy is a SettingAttribute enum value
+	SettingAttributeDeregistrationPolicy = "DEREGISTRATION_POLICY"
+
+	// SettingAttributeDefaultExportDestination is a SettingAttribute enum value
+	SettingAttributeDefaultExportDestination = "DEFAULT_EXPORT_DESTINATION"
 )
 
 // SettingAttribute_Values returns all elements of the SettingAttribute enum
@@ -13487,6 +19182,85 @@ func SettingAttribute_Values() []string {
 		SettingAttributeSnsTopic,
 		SettingAttributeDefaultAssessmentReportsDestination,
 		SettingAttributeDefaultProcessOwners,
+		SettingAttributeEvidenceFinderEnablement,
+		SettingAttributeDeregistrationPolicy,
+		SettingAttributeDefaultExportDestination,
+	}
+}
+
+const (
+	// ShareRequestActionAccept is a ShareRequestAction enum value
+	ShareRequestActionAccept = "ACCEPT"
+
+	// ShareRequestActionDecline is a ShareRequestAction enum value
+	ShareRequestActionDecline = "DECLINE"
+
+	// ShareRequestActionRevoke is a ShareRequestAction enum value
+	ShareRequestActionRevoke = "REVOKE"
+)
+
+// ShareRequestAction_Values returns all elements of the ShareRequestAction enum
+func ShareRequestAction_Values() []string {
+	return []string{
+		ShareRequestActionAccept,
+		ShareRequestActionDecline,
+		ShareRequestActionRevoke,
+	}
+}
+
+const (
+	// ShareRequestStatusActive is a ShareRequestStatus enum value
+	ShareRequestStatusActive = "ACTIVE"
+
+	// ShareRequestStatusReplicating is a ShareRequestStatus enum value
+	ShareRequestStatusReplicating = "REPLICATING"
+
+	// ShareRequestStatusShared is a ShareRequestStatus enum value
+	ShareRequestStatusShared = "SHARED"
+
+	// ShareRequestStatusExpiring is a ShareRequestStatus enum value
+	ShareRequestStatusExpiring = "EXPIRING"
+
+	// ShareRequestStatusFailed is a ShareRequestStatus enum value
+	ShareRequestStatusFailed = "FAILED"
+
+	// ShareRequestStatusExpired is a ShareRequestStatus enum value
+	ShareRequestStatusExpired = "EXPIRED"
+
+	// ShareRequestStatusDeclined is a ShareRequestStatus enum value
+	ShareRequestStatusDeclined = "DECLINED"
+
+	// ShareRequestStatusRevoked is a ShareRequestStatus enum value
+	ShareRequestStatusRevoked = "REVOKED"
+)
+
+// ShareRequestStatus_Values returns all elements of the ShareRequestStatus enum
+func ShareRequestStatus_Values() []string {
+	return []string{
+		ShareRequestStatusActive,
+		ShareRequestStatusReplicating,
+		ShareRequestStatusShared,
+		ShareRequestStatusExpiring,
+		ShareRequestStatusFailed,
+		ShareRequestStatusExpired,
+		ShareRequestStatusDeclined,
+		ShareRequestStatusRevoked,
+	}
+}
+
+const (
+	// ShareRequestTypeSent is a ShareRequestType enum value
+	ShareRequestTypeSent = "SENT"
+
+	// ShareRequestTypeReceived is a ShareRequestType enum value
+	ShareRequestTypeReceived = "RECEIVED"
+)
+
+// ShareRequestType_Values returns all elements of the ShareRequestType enum
+func ShareRequestType_Values() []string {
+	return []string{
+		ShareRequestTypeSent,
+		ShareRequestTypeReceived,
 	}
 }
 
@@ -13541,6 +19315,12 @@ const (
 
 	// SourceTypeManual is a SourceType enum value
 	SourceTypeManual = "MANUAL"
+
+	// SourceTypeCommonControl is a SourceType enum value
+	SourceTypeCommonControl = "Common_Control"
+
+	// SourceTypeCoreControl is a SourceType enum value
+	SourceTypeCoreControl = "Core_Control"
 )
 
 // SourceType_Values returns all elements of the SourceType enum
@@ -13551,6 +19331,8 @@ func SourceType_Values() []string {
 		SourceTypeAwsSecurityHub,
 		SourceTypeAwsApiCall,
 		SourceTypeManual,
+		SourceTypeCommonControl,
+		SourceTypeCoreControl,
 	}
 }
 

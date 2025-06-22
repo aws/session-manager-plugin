@@ -1,29 +1,56 @@
 {
   "version": "2.0",
-  "service": "<p>Amazon EMR on EKS provides a deployment option for Amazon EMR that allows you to run open-source big data frameworks on Amazon Elastic Kubernetes Service (Amazon EKS). With this deployment option, you can focus on running analytics workloads while Amazon EMR on EKS builds, configures, and manages containers for open-source applications. For more information about Amazon EMR on EKS concepts and tasks, see <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/emr-eks.html\">What is Amazon EMR on EKS</a>.</p> <p> <i>Amazon EMR containers</i> is the API name for Amazon EMR on EKS. The <code>emr-containers</code> prefix is used in the following scenarios: </p> <ul> <li> <p>It is the prefix in the CLI commands for Amazon EMR on EKS. For example, <code>aws emr-containers start-job-run</code>.</p> </li> <li> <p>It is the prefix before IAM policy actions for Amazon EMR on EKS. For example, <code>\"Action\": [ \"emr-containers:StartJobRun\"]</code>. For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/security_iam_service-with-iam.html#security_iam_service-with-iam-id-based-policies-actions\">Policy actions for Amazon EMR on EKS</a>.</p> </li> <li> <p>It is the prefix used in Amazon EMR on EKS service endpoints. For example, <code>emr-containers.us-east-2.amazonaws.com</code>. For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/service-quotas.html#service-endpoints\">Amazon EMR on EKS Service Endpoints</a>.</p> </li> </ul>",
+  "service": "<p>Amazon EMR on EKS provides a deployment option for Amazon EMR that allows you to run open-source big data frameworks on Amazon Elastic Kubernetes Service (Amazon EKS). With this deployment option, you can focus on running analytics workloads while Amazon EMR on EKS builds, configures, and manages containers for open-source applications. For more information about Amazon EMR on EKS concepts and tasks, see <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/emr-eks.html\">What is Amazon EMR on EKS</a>.</p> <p> <i>Amazon EMR containers</i> is the API name for Amazon EMR on EKS. The <code>emr-containers</code> prefix is used in the following scenarios: </p> <ul> <li> <p>It is the prefix in the CLI commands for Amazon EMR on EKS. For example, <code>aws emr-containers start-job-run</code>.</p> </li> <li> <p>It is the prefix before IAM policy actions for Amazon EMR on EKS. For example, <code>\"Action\": [ \"emr-containers:StartJobRun\"]</code>. For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/security_iam_service-with-iam.html#security_iam_service-with-iam-id-based-policies-actions\">Policy actions for Amazon EMR on EKS</a>.</p> </li> <li> <p>It is the prefix used in Amazon EMR on EKS service endpoints. For example, <code>emr-containers.us-east-2.amazonaws.com</code>. For more information, see <a href=\"https://docs.aws.amazon.com/emr/latest/EMR-on-EKS-DevelopmentGuide/service-quotas.html#service-endpoints\">Amazon EMR on EKSService Endpoints</a>.</p> </li> </ul>",
   "operations": {
     "CancelJobRun": "<p>Cancels a job run. A job run is a unit of work, such as a Spark jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR on EKS.</p>",
-    "CreateManagedEndpoint": "<p>Creates a managed endpoint. A managed endpoint is a gateway that connects EMR Studio to Amazon EMR on EKS so that EMR Studio can communicate with your virtual cluster.</p>",
+    "CreateJobTemplate": "<p>Creates a job template. Job template stores values of StartJobRun API request in a template and can be used to start a job run. Job template allows two use cases: avoid repeating recurring StartJobRun API request values, enforcing certain values in StartJobRun API request.</p>",
+    "CreateManagedEndpoint": "<p>Creates a managed endpoint. A managed endpoint is a gateway that connects Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate with your virtual cluster.</p>",
+    "CreateSecurityConfiguration": "<p>Creates a security configuration. Security configurations in Amazon EMR on EKS are templates for different security setups. You can use security configurations to configure the Lake Formation integration setup. You can also create a security configuration to re-use a security setup each time you create a virtual cluster.</p>",
     "CreateVirtualCluster": "<p>Creates a virtual cluster. Virtual cluster is a managed entity on Amazon EMR on EKS. You can create, describe, list and delete virtual clusters. They do not consume any additional resource in your system. A single virtual cluster maps to a single Kubernetes namespace. Given this relationship, you can model virtual clusters the same way you model Kubernetes namespaces to meet your requirements.</p>",
-    "DeleteManagedEndpoint": "<p>Deletes a managed endpoint. A managed endpoint is a gateway that connects EMR Studio to Amazon EMR on EKS so that EMR Studio can communicate with your virtual cluster.</p>",
+    "DeleteJobTemplate": "<p>Deletes a job template. Job template stores values of StartJobRun API request in a template and can be used to start a job run. Job template allows two use cases: avoid repeating recurring StartJobRun API request values, enforcing certain values in StartJobRun API request.</p>",
+    "DeleteManagedEndpoint": "<p>Deletes a managed endpoint. A managed endpoint is a gateway that connects Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate with your virtual cluster.</p>",
     "DeleteVirtualCluster": "<p>Deletes a virtual cluster. Virtual cluster is a managed entity on Amazon EMR on EKS. You can create, describe, list and delete virtual clusters. They do not consume any additional resource in your system. A single virtual cluster maps to a single Kubernetes namespace. Given this relationship, you can model virtual clusters the same way you model Kubernetes namespaces to meet your requirements.</p>",
     "DescribeJobRun": "<p>Displays detailed information about a job run. A job run is a unit of work, such as a Spark jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR on EKS.</p>",
-    "DescribeManagedEndpoint": "<p>Displays detailed information about a managed endpoint. A managed endpoint is a gateway that connects EMR Studio to Amazon EMR on EKS so that EMR Studio can communicate with your virtual cluster.</p>",
+    "DescribeJobTemplate": "<p>Displays detailed information about a specified job template. Job template stores values of StartJobRun API request in a template and can be used to start a job run. Job template allows two use cases: avoid repeating recurring StartJobRun API request values, enforcing certain values in StartJobRun API request.</p>",
+    "DescribeManagedEndpoint": "<p>Displays detailed information about a managed endpoint. A managed endpoint is a gateway that connects Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate with your virtual cluster.</p>",
+    "DescribeSecurityConfiguration": "<p>Displays detailed information about a specified security configuration. Security configurations in Amazon EMR on EKS are templates for different security setups. You can use security configurations to configure the Lake Formation integration setup. You can also create a security configuration to re-use a security setup each time you create a virtual cluster.</p>",
     "DescribeVirtualCluster": "<p>Displays detailed information about a specified virtual cluster. Virtual cluster is a managed entity on Amazon EMR on EKS. You can create, describe, list and delete virtual clusters. They do not consume any additional resource in your system. A single virtual cluster maps to a single Kubernetes namespace. Given this relationship, you can model virtual clusters the same way you model Kubernetes namespaces to meet your requirements.</p>",
+    "GetManagedEndpointSessionCredentials": "<p>Generate a session token to connect to a managed endpoint. </p>",
     "ListJobRuns": "<p>Lists job runs based on a set of parameters. A job run is a unit of work, such as a Spark jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR on EKS.</p>",
-    "ListManagedEndpoints": "<p>Lists managed endpoints based on a set of parameters. A managed endpoint is a gateway that connects EMR Studio to Amazon EMR on EKS so that EMR Studio can communicate with your virtual cluster.</p>",
+    "ListJobTemplates": "<p>Lists job templates based on a set of parameters. Job template stores values of StartJobRun API request in a template and can be used to start a job run. Job template allows two use cases: avoid repeating recurring StartJobRun API request values, enforcing certain values in StartJobRun API request.</p>",
+    "ListManagedEndpoints": "<p>Lists managed endpoints based on a set of parameters. A managed endpoint is a gateway that connects Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate with your virtual cluster.</p>",
+    "ListSecurityConfigurations": "<p>Lists security configurations based on a set of parameters. Security configurations in Amazon EMR on EKS are templates for different security setups. You can use security configurations to configure the Lake Formation integration setup. You can also create a security configuration to re-use a security setup each time you create a virtual cluster.</p>",
     "ListTagsForResource": "<p>Lists the tags assigned to the resources.</p>",
     "ListVirtualClusters": "<p>Lists information about the specified virtual cluster. Virtual cluster is a managed entity on Amazon EMR on EKS. You can create, describe, list and delete virtual clusters. They do not consume any additional resource in your system. A single virtual cluster maps to a single Kubernetes namespace. Given this relationship, you can model virtual clusters the same way you model Kubernetes namespaces to meet your requirements.</p>",
     "StartJobRun": "<p>Starts a job run. A job run is a unit of work, such as a Spark jar, PySpark script, or SparkSQL query, that you submit to Amazon EMR on EKS.</p>",
-    "TagResource": "<p>Assigns tags to resources. A tag is a label that you assign to an AWS resource. Each tag consists of a key and an optional value, both of which you define. Tags enable you to categorize your AWS resources by attributes such as purpose, owner, or environment. When you have many resources of the same type, you can quickly identify a specific resource based on the tags you've assigned to it. For example, you can define a set of tags for your Amazon EMR on EKS clusters to help you track each cluster's owner and stack level. We recommend that you devise a consistent set of tag keys for each resource type. You can then search and filter the resources based on the tags that you add.</p>",
+    "TagResource": "<p>Assigns tags to resources. A tag is a label that you assign to an Amazon Web Services resource. Each tag consists of a key and an optional value, both of which you define. Tags enable you to categorize your Amazon Web Services resources by attributes such as purpose, owner, or environment. When you have many resources of the same type, you can quickly identify a specific resource based on the tags you've assigned to it. For example, you can define a set of tags for your Amazon EMR on EKS clusters to help you track each cluster's owner and stack level. We recommend that you devise a consistent set of tag keys for each resource type. You can then search and filter the resources based on the tags that you add.</p>",
     "UntagResource": "<p>Removes tags from resources.</p>"
   },
   "shapes": {
     "ACMCertArn": {
       "base": null,
       "refs": {
-        "CreateManagedEndpointRequest$certificateArn": "<p>The certificate ARN of the managed endpoint.</p>",
-        "Endpoint$certificateArn": "<p>The certificate ARN of the endpoint.</p>"
+        "Certificate$certificateArn": "<p>The ARN of the certificate generated for managed endpoint.</p>",
+        "CreateManagedEndpointRequest$certificateArn": "<p>The certificate ARN provided by users for the managed endpoint. This field is under deprecation and will be removed in future releases.</p>",
+        "Endpoint$certificateArn": "<p>The certificate ARN of the endpoint. This field is under deprecation and will be removed in future.</p>"
+      }
+    },
+    "AuthorizationConfiguration": {
+      "base": "<p>Authorization-related configuration inputs for the security configuration.</p>",
+      "refs": {
+        "SecurityConfigurationData$authorizationConfiguration": "<p>Authorization-related configuration input for the security configuration.</p>"
+      }
+    },
+    "Base64Encoded": {
+      "base": null,
+      "refs": {
+        "Certificate$certificateData": "<p>The base64 encoded PEM certificate data generated for managed endpoint.</p>"
+      }
+    },
+    "Boolean": {
+      "base": null,
+      "refs": {
+        "ListVirtualClustersRequest$eksAccessEntryIntegrated": "<p>Optional Boolean that specifies whether the operation should return the virtual clusters that have the access entry integration enabled or disabled. If not specified, the operation returns all applicable virtual clusters.</p>"
       }
     },
     "CancelJobRunRequest": {
@@ -36,11 +63,26 @@
       "refs": {
       }
     },
+    "Certificate": {
+      "base": "<p>The entity representing certificate data generated for managed endpoint.</p>",
+      "refs": {
+        "Endpoint$certificateAuthority": "<p>The certificate generated by emr control plane on customer behalf to secure the managed endpoint.</p>"
+      }
+    },
+    "CertificateProviderType": {
+      "base": null,
+      "refs": {
+        "TLSCertificateConfiguration$certificateProviderType": "<p>The TLS certificate type. Acceptable values: <code>PEM</code> or <code>Custom</code>.</p>"
+      }
+    },
     "ClientToken": {
       "base": null,
       "refs": {
+        "CreateJobTemplateRequest$clientToken": "<p>The client token of the job template.</p>",
         "CreateManagedEndpointRequest$clientToken": "<p>The client idempotency token for this create call.</p>",
+        "CreateSecurityConfigurationRequest$clientToken": "<p>The client idempotency token to use when creating the security configuration.</p>",
         "CreateVirtualClusterRequest$clientToken": "<p>The client token of the virtual cluster.</p>",
+        "GetManagedEndpointSessionCredentialsRequest$clientToken": "<p>The client idempotency token of the job run request.</p>",
         "JobRun$clientToken": "<p>The client token used to start a job run.</p>",
         "StartJobRunRequest$clientToken": "<p>The client idempotency token of the job run request. </p>"
       }
@@ -54,7 +96,8 @@
     "ClusterId": {
       "base": null,
       "refs": {
-        "ContainerProvider$id": "<p>The ID of the container cluster.</p>"
+        "ContainerProvider$id": "<p>The ID of the container cluster.</p>",
+        "SecureNamespaceInfo$clusterId": "<p>The ID of the Amazon EKS cluster where Amazon EMR on EKS jobs run.</p>"
       }
     },
     "Configuration": {
@@ -67,7 +110,8 @@
       "base": null,
       "refs": {
         "Configuration$configurations": "<p>A list of additional configurations to apply within a configuration object.</p>",
-        "ConfigurationOverrides$applicationConfiguration": "<p>The configurations for the application running by the job run. </p>"
+        "ConfigurationOverrides$applicationConfiguration": "<p>The configurations for the application running by the job run. </p>",
+        "ParametricConfigurationOverrides$applicationConfiguration": "<p> The configurations for the application running by the job run.</p>"
       }
     },
     "ConfigurationOverrides": {
@@ -85,6 +129,12 @@
         "ContainerProvider$info": "<p>The information about the container cluster.</p>"
       }
     },
+    "ContainerLogRotationConfiguration": {
+      "base": "<p>The settings for container log rotation.</p>",
+      "refs": {
+        "MonitoringConfiguration$containerLogRotationConfiguration": "<p>Enable or disable container log rotation.</p>"
+      }
+    },
     "ContainerProvider": {
       "base": "<p>The information about the container provider.</p>",
       "refs": {
@@ -95,8 +145,18 @@
     "ContainerProviderType": {
       "base": null,
       "refs": {
-        "ContainerProvider$type": "<p>The type of the container provider. EKS is the only supported type as of now.</p>",
-        "ListVirtualClustersRequest$containerProviderType": "<p>The container provider type of the virtual cluster. EKS is the only supported type as of now.</p>"
+        "ContainerProvider$type": "<p>The type of the container provider. Amazon EKS is the only supported type as of now.</p>",
+        "ListVirtualClustersRequest$containerProviderType": "<p>The container provider type of the virtual cluster. Amazon EKS is the only supported type as of now.</p>"
+      }
+    },
+    "CreateJobTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateJobTemplateResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "CreateManagedEndpointRequest": {
@@ -105,6 +165,16 @@
       }
     },
     "CreateManagedEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSecurityConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "CreateSecurityConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -119,19 +189,49 @@
       "refs": {
       }
     },
+    "CredentialType": {
+      "base": null,
+      "refs": {
+        "GetManagedEndpointSessionCredentialsRequest$credentialType": "<p>Type of the token requested. Currently supported and default value of this field is “TOKEN.”</p>"
+      }
+    },
+    "Credentials": {
+      "base": "<p>The structure containing the session token being returned.</p>",
+      "refs": {
+        "GetManagedEndpointSessionCredentialsResponse$credentials": "<p>The structure containing the session credentials.</p>"
+      }
+    },
     "Date": {
       "base": null,
       "refs": {
+        "CreateJobTemplateResponse$createdAt": "<p>This output displays the date and time when the job template was created.</p>",
         "Endpoint$createdAt": "<p>The date and time when the endpoint was created.</p>",
+        "GetManagedEndpointSessionCredentialsResponse$expiresAt": "<p>The date and time when the session token will expire.</p>",
         "JobRun$createdAt": "<p>The date and time when the job run was created.</p>",
         "JobRun$finishedAt": "<p>The date and time when the job run has finished.</p>",
+        "JobTemplate$createdAt": "<p> The date and time when the job template was created.</p>",
         "ListJobRunsRequest$createdBefore": "<p>The date and time before which the job runs were submitted.</p>",
         "ListJobRunsRequest$createdAfter": "<p>The date and time after which the job runs were submitted.</p>",
+        "ListJobTemplatesRequest$createdAfter": "<p>The date and time after which the job templates were created.</p>",
+        "ListJobTemplatesRequest$createdBefore": "<p> The date and time before which the job templates were created.</p>",
         "ListManagedEndpointsRequest$createdBefore": "<p>The date and time before which the endpoints are created.</p>",
         "ListManagedEndpointsRequest$createdAfter": "<p> The date and time after which the endpoints are created.</p>",
+        "ListSecurityConfigurationsRequest$createdAfter": "<p>The date and time after which the security configuration was created.</p>",
+        "ListSecurityConfigurationsRequest$createdBefore": "<p>The date and time before which the security configuration was created.</p>",
         "ListVirtualClustersRequest$createdAfter": "<p>The date and time after which the virtual clusters are created.</p>",
         "ListVirtualClustersRequest$createdBefore": "<p>The date and time before which the virtual clusters are created.</p>",
+        "SecurityConfiguration$createdAt": "<p>The date and time that the job run was created.</p>",
         "VirtualCluster$createdAt": "<p>The date and time when the virtual cluster is created.</p>"
+      }
+    },
+    "DeleteJobTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DeleteJobTemplateResponse": {
+      "base": null,
+      "refs": {
       }
     },
     "DeleteManagedEndpointRequest": {
@@ -164,12 +264,32 @@
       "refs": {
       }
     },
+    "DescribeJobTemplateRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeJobTemplateResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "DescribeManagedEndpointRequest": {
       "base": null,
       "refs": {
       }
     },
     "DescribeManagedEndpointResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeSecurityConfigurationRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "DescribeSecurityConfigurationResponse": {
       "base": null,
       "refs": {
       }
@@ -184,10 +304,21 @@
       "refs": {
       }
     },
-    "EksInfo": {
-      "base": "<p>The information about the EKS cluster.</p>",
+    "EKSRequestThrottledException": {
+      "base": "<p>The request exceeded the Amazon EKS API operation limits.</p>",
       "refs": {
-        "ContainerInfo$eksInfo": "<p>The information about the EKS cluster.</p>"
+      }
+    },
+    "EksInfo": {
+      "base": "<p>The information about the Amazon EKS cluster.</p>",
+      "refs": {
+        "ContainerInfo$eksInfo": "<p>The information about the Amazon EKS cluster.</p>"
+      }
+    },
+    "EncryptionConfiguration": {
+      "base": "<p>Configurations related to encryption for the security configuration.</p>",
+      "refs": {
+        "AuthorizationConfiguration$encryptionConfiguration": "<p>Encryption-related configuration input for the security configuration.</p>"
       }
     },
     "Endpoint": {
@@ -252,6 +383,7 @@
     "EntryPointPath": {
       "base": null,
       "refs": {
+        "SparkSqlJobDriver$entryPoint": "<p>The SQL file to be executed.</p>",
         "SparkSubmitJobDriver$entryPoint": "<p>The entry point of job application.</p>"
       }
     },
@@ -262,13 +394,31 @@
         "JobRun$failureReason": "<p>The reasons why the job run has failed.</p>"
       }
     },
+    "GetManagedEndpointSessionCredentialsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "GetManagedEndpointSessionCredentialsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "IAMRoleArn": {
       "base": null,
       "refs": {
         "CreateManagedEndpointRequest$executionRoleArn": "<p>The ARN of the execution role.</p>",
         "Endpoint$executionRoleArn": "<p>The execution role ARN of the endpoint.</p>",
+        "GetManagedEndpointSessionCredentialsRequest$executionRoleArn": "<p>The IAM Execution Role ARN that will be used by the job run. </p>",
         "JobRun$executionRoleArn": "<p>The execution role ARN of the job run.</p>",
+        "LakeFormationConfiguration$queryEngineRoleArn": "<p>The query engine IAM role ARN that is tied to the secure Spark job. The <code>QueryEngine</code> role assumes the <code>JobExecutionRole</code> to execute all the Lake Formation calls.</p>",
         "StartJobRunRequest$executionRoleArn": "<p>The execution role ARN for the job run.</p>"
+      }
+    },
+    "InTransitEncryptionConfiguration": {
+      "base": "<p>Configurations related to in-transit encryption for the security configuration.</p>",
+      "refs": {
+        "EncryptionConfiguration$inTransitEncryptionConfiguration": "<p>In-transit encryption-related input for the security configuration.</p>"
       }
     },
     "InternalServerException": {
@@ -279,9 +429,14 @@
     "JavaInteger": {
       "base": null,
       "refs": {
+        "GetManagedEndpointSessionCredentialsRequest$durationInSeconds": "<p>Duration in seconds for which the session token is valid. The default duration is 15 minutes and the maximum is 12 hours.</p>",
         "ListJobRunsRequest$maxResults": "<p>The maximum number of job runs that can be listed.</p>",
+        "ListJobTemplatesRequest$maxResults": "<p> The maximum number of job templates that can be listed.</p>",
         "ListManagedEndpointsRequest$maxResults": "<p>The maximum number of managed endpoints that can be listed.</p>",
-        "ListVirtualClustersRequest$maxResults": "<p>The maximum number of virtual clusters that can be listed.</p>"
+        "ListSecurityConfigurationsRequest$maxResults": "<p>The maximum number of security configurations the operation can list.</p>",
+        "ListVirtualClustersRequest$maxResults": "<p>The maximum number of virtual clusters that can be listed.</p>",
+        "RetryPolicyConfiguration$maxAttempts": "<p>The maximum number of attempts on the job's driver.</p>",
+        "RetryPolicyExecution$currentAttemptCount": "<p>The current number of attempts made on the driver of the job.</p>"
       }
     },
     "JobArn": {
@@ -292,9 +447,10 @@
       }
     },
     "JobDriver": {
-      "base": "<p>Specify the driver that the job runs on.</p>",
+      "base": "<p>Specify the driver that the job runs on. Exactly one of the two available job drivers is required, either sparkSqlJobDriver or sparkSubmitJobDriver.</p>",
       "refs": {
         "JobRun$jobDriver": "<p>Parameters of job driver for the job run.</p>",
+        "JobTemplateData$jobDriver": null,
         "StartJobRunRequest$jobDriver": "<p>The job driver for the job run.</p>"
       }
     },
@@ -324,10 +480,51 @@
         "ListJobRunsResponse$jobRuns": "<p>This output lists information about the specified job runs.</p>"
       }
     },
+    "JobTemplate": {
+      "base": "<p>This entity describes a job template. Job template stores values of StartJobRun API request in a template and can be used to start a job run. Job template allows two use cases: avoid repeating recurring StartJobRun API request values, enforcing certain values in StartJobRun API request.</p>",
+      "refs": {
+        "DescribeJobTemplateResponse$jobTemplate": "<p>This output displays information about the specified job template.</p>",
+        "JobTemplates$member": null
+      }
+    },
+    "JobTemplateArn": {
+      "base": null,
+      "refs": {
+        "CreateJobTemplateResponse$arn": "<p>This output display the ARN of the created job template.</p>",
+        "JobTemplate$arn": "<p>The ARN of the job template.</p>"
+      }
+    },
+    "JobTemplateData": {
+      "base": "<p>The values of StartJobRun API requests used in job runs started using the job template.</p>",
+      "refs": {
+        "CreateJobTemplateRequest$jobTemplateData": "<p>The job template data which holds values of StartJobRun API request.</p>",
+        "JobTemplate$jobTemplateData": "<p>The job template data which holds values of StartJobRun API request.</p>"
+      }
+    },
+    "JobTemplates": {
+      "base": null,
+      "refs": {
+        "ListJobTemplatesResponse$templates": "<p>This output lists information about the specified job templates.</p>"
+      }
+    },
+    "KmsKeyArn": {
+      "base": null,
+      "refs": {
+        "CreateJobTemplateRequest$kmsKeyArn": "<p>The KMS key ARN used to encrypt the job template.</p>",
+        "JobTemplate$kmsKeyArn": "<p> The KMS key ARN used to encrypt the job template.</p>"
+      }
+    },
     "KubernetesNamespace": {
       "base": null,
       "refs": {
-        "EksInfo$namespace": "<p>The namespaces of the EKS cluster.</p>"
+        "EksInfo$namespace": "<p>The namespaces of the Amazon EKS cluster.</p>",
+        "SecureNamespaceInfo$namespace": "<p>The namespace of the Amazon EKS cluster where the system jobs run.</p>"
+      }
+    },
+    "LakeFormationConfiguration": {
+      "base": "<p>Lake Formation related configuration inputs for the security configuration.</p>",
+      "refs": {
+        "AuthorizationConfiguration$lakeFormationConfiguration": "<p>Lake Formation related configuration inputs for the security configuration.</p>"
       }
     },
     "ListJobRunsRequest": {
@@ -340,12 +537,32 @@
       "refs": {
       }
     },
+    "ListJobTemplatesRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListJobTemplatesResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
     "ListManagedEndpointsRequest": {
       "base": null,
       "refs": {
       }
     },
     "ListManagedEndpointsResponse": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSecurityConfigurationsRequest": {
+      "base": null,
+      "refs": {
+      }
+    },
+    "ListSecurityConfigurationsResponse": {
       "base": null,
       "refs": {
       }
@@ -370,10 +587,22 @@
       "refs": {
       }
     },
+    "LogContext": {
+      "base": null,
+      "refs": {
+        "GetManagedEndpointSessionCredentialsRequest$logContext": "<p>String identifier used to separate sections of the execution logs uploaded to S3.</p>"
+      }
+    },
     "LogGroupName": {
       "base": null,
       "refs": {
         "CloudWatchMonitoringConfiguration$logGroupName": "<p>The name of the log group for log publishing.</p>"
+      }
+    },
+    "MaxFilesToKeep": {
+      "base": null,
+      "refs": {
+        "ContainerLogRotationConfiguration$maxFilesToKeep": "<p>The number of files to keep in container after rotation.</p>"
       }
     },
     "MonitoringConfiguration": {
@@ -387,10 +616,50 @@
       "refs": {
         "ListJobRunsRequest$nextToken": "<p>The token for the next set of job runs to return.</p>",
         "ListJobRunsResponse$nextToken": "<p>This output displays the token for the next set of job runs.</p>",
+        "ListJobTemplatesRequest$nextToken": "<p> The token for the next set of job templates to return.</p>",
+        "ListJobTemplatesResponse$nextToken": "<p> This output displays the token for the next set of job templates.</p>",
         "ListManagedEndpointsRequest$nextToken": "<p> The token for the next set of managed endpoints to return. </p>",
         "ListManagedEndpointsResponse$nextToken": "<p> The token for the next set of endpoints to return. </p>",
+        "ListSecurityConfigurationsRequest$nextToken": "<p>The token for the next set of security configurations to return.</p>",
+        "ListSecurityConfigurationsResponse$nextToken": "<p>The token for the next set of security configurations to return.</p>",
         "ListVirtualClustersRequest$nextToken": "<p>The token for the next set of virtual clusters to return. </p>",
         "ListVirtualClustersResponse$nextToken": "<p>This output displays the token for the next set of virtual clusters.</p>"
+      }
+    },
+    "ParametricCloudWatchMonitoringConfiguration": {
+      "base": "<p> A configuration for CloudWatch monitoring. You can configure your jobs to send log information to CloudWatch Logs. This data type allows job template parameters to be specified within.</p>",
+      "refs": {
+        "ParametricMonitoringConfiguration$cloudWatchMonitoringConfiguration": "<p> Monitoring configurations for CloudWatch.</p>"
+      }
+    },
+    "ParametricConfigurationOverrides": {
+      "base": "<p> A configuration specification to be used to override existing configurations. This data type allows job template parameters to be specified within.</p>",
+      "refs": {
+        "JobTemplateData$configurationOverrides": "<p> The configuration settings that are used to override defaults configuration.</p>"
+      }
+    },
+    "ParametricIAMRoleArn": {
+      "base": null,
+      "refs": {
+        "JobTemplateData$executionRoleArn": "<p>The execution role ARN of the job run.</p>"
+      }
+    },
+    "ParametricMonitoringConfiguration": {
+      "base": "<p> Configuration setting for monitoring. This data type allows job template parameters to be specified within.</p>",
+      "refs": {
+        "ParametricConfigurationOverrides$monitoringConfiguration": "<p> The configurations for monitoring. </p>"
+      }
+    },
+    "ParametricReleaseLabel": {
+      "base": null,
+      "refs": {
+        "JobTemplateData$releaseLabel": "<p> The release version of Amazon EMR.</p>"
+      }
+    },
+    "ParametricS3MonitoringConfiguration": {
+      "base": "<p> Amazon S3 configuration for monitoring log publishing. You can configure your jobs to send log information to Amazon S3. This data type allows job template parameters to be specified within.</p>",
+      "refs": {
+        "ParametricMonitoringConfiguration$s3MonitoringConfiguration": "<p> Amazon S3 configuration for monitoring log publishing.</p>"
       }
     },
     "PersistentAppUI": {
@@ -411,7 +680,14 @@
     "RequestIdentityUserArn": {
       "base": null,
       "refs": {
-        "JobRun$createdBy": "<p>The user who created the job run.</p>"
+        "JobRun$createdBy": "<p>The user who created the job run.</p>",
+        "JobTemplate$createdBy": "<p> The user who created the job template.</p>",
+        "SecurityConfiguration$createdBy": "<p>The user who created the job run.</p>"
+      }
+    },
+    "RequestThrottledException": {
+      "base": "<p>The request throttled.</p>",
+      "refs": {
       }
     },
     "ResourceIdString": {
@@ -421,10 +697,15 @@
         "CancelJobRunRequest$virtualClusterId": "<p>The ID of the virtual cluster for which the job run will be canceled.</p>",
         "CancelJobRunResponse$id": "<p>The output contains the ID of the cancelled job run.</p>",
         "CancelJobRunResponse$virtualClusterId": "<p>The output contains the virtual cluster ID for which the job run is cancelled.</p>",
+        "CreateJobTemplateResponse$id": "<p>This output display the created job template ID.</p>",
         "CreateManagedEndpointRequest$virtualClusterId": "<p>The ID of the virtual cluster for which a managed endpoint is created.</p>",
         "CreateManagedEndpointResponse$id": "<p>The output contains the ID of the managed endpoint.</p>",
         "CreateManagedEndpointResponse$virtualClusterId": "<p>The output contains the ID of the virtual cluster.</p>",
+        "CreateSecurityConfigurationResponse$id": "<p>The ID of the security configuration.</p>",
+        "CreateVirtualClusterRequest$securityConfigurationId": "<p>The ID of the security configuration.</p>",
         "CreateVirtualClusterResponse$id": "<p>This output contains the virtual cluster ID.</p>",
+        "DeleteJobTemplateRequest$id": "<p>The ID of the job template that will be deleted.</p>",
+        "DeleteJobTemplateResponse$id": "<p>This output contains the ID of the job template that was deleted.</p>",
         "DeleteManagedEndpointRequest$id": "<p>The ID of the managed endpoint.</p>",
         "DeleteManagedEndpointRequest$virtualClusterId": "<p>The ID of the endpoint's virtual cluster.</p>",
         "DeleteManagedEndpointResponse$id": "<p>The output displays the ID of the managed endpoint.</p>",
@@ -433,31 +714,44 @@
         "DeleteVirtualClusterResponse$id": "<p>This output contains the ID of the virtual cluster that will be deleted. </p>",
         "DescribeJobRunRequest$id": "<p>The ID of the job run request. </p>",
         "DescribeJobRunRequest$virtualClusterId": "<p>The ID of the virtual cluster for which the job run is submitted.</p>",
+        "DescribeJobTemplateRequest$id": "<p>The ID of the job template that will be described.</p>",
         "DescribeManagedEndpointRequest$id": "<p>This output displays ID of the managed endpoint.</p>",
         "DescribeManagedEndpointRequest$virtualClusterId": "<p>The ID of the endpoint's virtual cluster.</p>",
+        "DescribeSecurityConfigurationRequest$id": "<p>The ID of the security configuration.</p>",
         "DescribeVirtualClusterRequest$id": "<p>The ID of the virtual cluster that will be described.</p>",
         "Endpoint$id": "<p>The ID of the endpoint.</p>",
         "Endpoint$virtualClusterId": "<p>The ID of the endpoint's virtual cluster.</p>",
+        "GetManagedEndpointSessionCredentialsResponse$id": "<p>The identifier of the session token returned.</p>",
         "JobRun$id": "<p>The ID of the job run.</p>",
         "JobRun$virtualClusterId": "<p>The ID of the job run's virtual cluster.</p>",
+        "JobTemplate$id": "<p>The ID of the job template.</p>",
         "ListJobRunsRequest$virtualClusterId": "<p>The ID of the virtual cluster for which to list the job run. </p>",
         "ListManagedEndpointsRequest$virtualClusterId": "<p>The ID of the virtual cluster.</p>",
+        "SecurityConfiguration$id": "<p>The ID of the security configuration.</p>",
         "StartJobRunRequest$virtualClusterId": "<p>The virtual cluster ID for which the job run request is submitted.</p>",
+        "StartJobRunRequest$jobTemplateId": "<p>The job template ID to be used to start the job run.</p>",
         "StartJobRunResponse$id": "<p>This output displays the started job run ID.</p>",
         "StartJobRunResponse$virtualClusterId": "<p>This output displays the virtual cluster ID for which the job run was submitted.</p>",
-        "VirtualCluster$id": "<p>The ID of the virtual cluster.</p>"
+        "VirtualCluster$id": "<p>The ID of the virtual cluster.</p>",
+        "VirtualCluster$securityConfigurationId": "<p>The ID of the security configuration.</p>"
       }
     },
     "ResourceNameString": {
       "base": null,
       "refs": {
+        "CreateJobTemplateRequest$name": "<p>The specified name of the job template.</p>",
+        "CreateJobTemplateResponse$name": "<p>This output displays the name of the created job template.</p>",
         "CreateManagedEndpointRequest$name": "<p>The name of the managed endpoint.</p>",
         "CreateManagedEndpointResponse$name": "<p>The output contains the name of the managed endpoint.</p>",
+        "CreateSecurityConfigurationRequest$name": "<p>The name of the security configuration.</p>",
+        "CreateSecurityConfigurationResponse$name": "<p>The name of the security configuration.</p>",
         "CreateVirtualClusterRequest$name": "<p>The specified name of the virtual cluster.</p>",
         "CreateVirtualClusterResponse$name": "<p>This output contains the name of the virtual cluster.</p>",
         "Endpoint$name": "<p>The name of the endpoint.</p>",
         "JobRun$name": "<p>The name of the job run.</p>",
+        "JobTemplate$name": "<p>The name of the job template.</p>",
         "ListJobRunsRequest$name": "<p>The name of the job run.</p>",
+        "SecurityConfiguration$name": "<p>The name of the security configuration.</p>",
         "StartJobRunRequest$name": "<p>The name of the job run.</p>",
         "StartJobRunResponse$name": "<p>This output displays the name of the started job run.</p>",
         "VirtualCluster$name": "<p>The name of the virtual cluster.</p>"
@@ -466,6 +760,25 @@
     "ResourceNotFoundException": {
       "base": "<p>The specified resource was not found.</p>",
       "refs": {
+      }
+    },
+    "RetryPolicyConfiguration": {
+      "base": "<p>The configuration of the retry policy that the job runs on.</p>",
+      "refs": {
+        "JobRun$retryPolicyConfiguration": "<p>The configuration of the retry policy that the job runs on.</p>",
+        "StartJobRunRequest$retryPolicyConfiguration": "<p>The retry policy configuration for the job run.</p>"
+      }
+    },
+    "RetryPolicyExecution": {
+      "base": "<p>The current status of the retry policy executed on the job.</p>",
+      "refs": {
+        "JobRun$retryPolicyExecution": "<p>The current status of the retry policy executed on the job.</p>"
+      }
+    },
+    "RotationSize": {
+      "base": null,
+      "refs": {
+        "ContainerLogRotationConfiguration$rotationSize": "<p>The file size at which to rotate logs. Minimum of 2KB, Maximum of 2GB.</p>"
       }
     },
     "RsiArn": {
@@ -482,10 +795,68 @@
         "MonitoringConfiguration$s3MonitoringConfiguration": "<p>Amazon S3 configuration for monitoring log publishing.</p>"
       }
     },
+    "SecretsManagerArn": {
+      "base": null,
+      "refs": {
+        "TLSCertificateConfiguration$publicCertificateSecretArn": "<p>Secrets Manager ARN that contains the public TLS certificate contents, used for communication between the user job and the system job.</p>",
+        "TLSCertificateConfiguration$privateCertificateSecretArn": "<p>Secrets Manager ARN that contains the private TLS certificate contents, used for communication between the user job and the system job.</p>"
+      }
+    },
+    "SecureNamespaceInfo": {
+      "base": "<p>Namespace inputs for the system job.</p>",
+      "refs": {
+        "LakeFormationConfiguration$secureNamespaceInfo": "<p>The namespace input of the system job.</p>"
+      }
+    },
+    "SecurityConfiguration": {
+      "base": "<p>Inputs related to the security configuration. Security configurations in Amazon EMR on EKS are templates for different security setups. You can use security configurations to configure the Lake Formation integration setup. You can also create a security configuration to re-use a security setup each time you create a virtual cluster.</p>",
+      "refs": {
+        "DescribeSecurityConfigurationResponse$securityConfiguration": "<p>Details of the security configuration.</p>",
+        "SecurityConfigurations$member": null
+      }
+    },
+    "SecurityConfigurationArn": {
+      "base": null,
+      "refs": {
+        "CreateSecurityConfigurationResponse$arn": "<p>The ARN (Amazon Resource Name) of the security configuration.</p>",
+        "SecurityConfiguration$arn": "<p>The ARN (Amazon Resource Name) of the security configuration.</p>"
+      }
+    },
+    "SecurityConfigurationData": {
+      "base": "<p>Configurations related to the security configuration for the request.</p>",
+      "refs": {
+        "CreateSecurityConfigurationRequest$securityConfigurationData": "<p>Security configuration input for the request.</p>",
+        "SecurityConfiguration$securityConfigurationData": "<p>Security configuration inputs for the request.</p>"
+      }
+    },
+    "SecurityConfigurations": {
+      "base": null,
+      "refs": {
+        "ListSecurityConfigurationsResponse$securityConfigurations": "<p>The list of returned security configurations.</p>"
+      }
+    },
     "SensitivePropertiesMap": {
       "base": null,
       "refs": {
         "Configuration$properties": "<p>A set of properties specified within a configuration classification.</p>"
+      }
+    },
+    "SessionTagValue": {
+      "base": null,
+      "refs": {
+        "LakeFormationConfiguration$authorizedSessionTagValue": "<p>The session tag to authorize Amazon EMR on EKS for API calls to Lake Formation.</p>"
+      }
+    },
+    "SparkSqlJobDriver": {
+      "base": "<p>The job driver for job type.</p>",
+      "refs": {
+        "JobDriver$sparkSqlJobDriver": "<p>The job driver for job type.</p>"
+      }
+    },
+    "SparkSqlParameters": {
+      "base": null,
+      "refs": {
+        "SparkSqlJobDriver$sparkSqlParameters": "<p>The Spark parameters to be included in the Spark SQL command.</p>"
       }
     },
     "SparkSubmitJobDriver": {
@@ -514,11 +885,15 @@
       "base": null,
       "refs": {
         "Configuration$classification": "<p>The classification within a configuration.</p>",
+        "EKSRequestThrottledException$message": null,
         "InternalServerException$message": null,
         "ListVirtualClustersRequest$containerProviderId": "<p>The container provider ID of the virtual cluster.</p>",
+        "RequestThrottledException$message": null,
         "ResourceNotFoundException$message": null,
         "SensitivePropertiesMap$key": null,
         "SensitivePropertiesMap$value": null,
+        "TemplateParameterConfiguration$defaultValue": "<p>The default value for the job template parameter.</p>",
+        "TemplateParameterInputMap$value": null,
         "ValidationException$message": null
       }
     },
@@ -529,6 +904,14 @@
         "TagMap$key": null
       }
     },
+    "String2048": {
+      "base": null,
+      "refs": {
+        "GetManagedEndpointSessionCredentialsRequest$endpointIdentifier": "<p>The ARN of the managed endpoint for which the request is submitted. </p>",
+        "GetManagedEndpointSessionCredentialsRequest$virtualClusterIdentifier": "<p>The ARN of the Virtual Cluster which the Managed Endpoint belongs to. </p>",
+        "JobTemplate$decryptionError": "<p>The error message in case the decryption of job template fails.</p>"
+      }
+    },
     "String256": {
       "base": null,
       "refs": {
@@ -536,6 +919,7 @@
         "Endpoint$securityGroup": "<p>The security group configuration of the endpoint. </p>",
         "Endpoint$stateDetails": "<p> Additional details of the endpoint state. </p>",
         "JobRun$stateDetails": "<p>Additional details of the job run state.</p>",
+        "ParametricCloudWatchMonitoringConfiguration$logStreamNamePrefix": "<p> The specified name prefix for log streams.</p>",
         "SubnetIds$member": null
       }
     },
@@ -551,6 +935,12 @@
         "Endpoint$subnetIds": "<p>The subnet IDs of the endpoint. </p>"
       }
     },
+    "TLSCertificateConfiguration": {
+      "base": "<p>Configurations related to the TLS certificate for the security configuration.</p>",
+      "refs": {
+        "InTransitEncryptionConfiguration$tlsCertificateConfiguration": "<p>TLS certificate-related configuration input for the security configuration.</p>"
+      }
+    },
     "TagKeyList": {
       "base": null,
       "refs": {
@@ -560,11 +950,16 @@
     "TagMap": {
       "base": null,
       "refs": {
+        "CreateJobTemplateRequest$tags": "<p>The tags that are associated with the job template.</p>",
         "CreateManagedEndpointRequest$tags": "<p>The tags of the managed endpoint. </p>",
+        "CreateSecurityConfigurationRequest$tags": "<p>The tags to add to the security configuration.</p>",
         "CreateVirtualClusterRequest$tags": "<p>The tags assigned to the virtual cluster.</p>",
         "Endpoint$tags": "<p>The tags of the endpoint. </p>",
         "JobRun$tags": "<p>The assigned tags of the job run.</p>",
+        "JobTemplate$tags": "<p>The tags assigned to the job template.</p>",
+        "JobTemplateData$jobTags": "<p>The tags assigned to jobs started using the job template.</p>",
         "ListTagsForResourceResponse$tags": "<p>The tags assigned to resources.</p>",
+        "SecurityConfiguration$tags": "<p>The tags to assign to the security configuration.</p>",
         "StartJobRunRequest$tags": "<p>The tags assigned to job runs.</p>",
         "TagResourceRequest$tags": "<p>The tags assigned to resources.</p>",
         "VirtualCluster$tags": "<p>The assigned tags of the virtual cluster.</p>"
@@ -578,6 +973,50 @@
     "TagResourceResponse": {
       "base": null,
       "refs": {
+      }
+    },
+    "TemplateParameter": {
+      "base": null,
+      "refs": {
+        "ParametricCloudWatchMonitoringConfiguration$logGroupName": "<p> The name of the log group for log publishing.</p>",
+        "ParametricMonitoringConfiguration$persistentAppUI": "<p> Monitoring configurations for the persistent application UI.</p>"
+      }
+    },
+    "TemplateParameterConfiguration": {
+      "base": "<p>The configuration of a job template parameter.</p>",
+      "refs": {
+        "TemplateParameterConfigurationMap$value": null
+      }
+    },
+    "TemplateParameterConfigurationMap": {
+      "base": null,
+      "refs": {
+        "JobTemplateData$parameterConfiguration": "<p>The configuration of parameters existing in the job template.</p>"
+      }
+    },
+    "TemplateParameterDataType": {
+      "base": null,
+      "refs": {
+        "TemplateParameterConfiguration$type": "<p>The type of the job template parameter. Allowed values are: ‘STRING’, ‘NUMBER’.</p>"
+      }
+    },
+    "TemplateParameterInputMap": {
+      "base": null,
+      "refs": {
+        "StartJobRunRequest$jobTemplateParameters": "<p>The values of job template parameters to start a job run.</p>"
+      }
+    },
+    "TemplateParameterName": {
+      "base": null,
+      "refs": {
+        "TemplateParameterConfigurationMap$key": null,
+        "TemplateParameterInputMap$key": null
+      }
+    },
+    "Token": {
+      "base": null,
+      "refs": {
+        "Credentials$token": "<p>The actual session token being returned.</p>"
       }
     },
     "UntagResourceRequest": {
@@ -594,6 +1033,7 @@
       "base": null,
       "refs": {
         "Endpoint$serverUrl": "<p>The server URL of the endpoint.</p>",
+        "ParametricS3MonitoringConfiguration$logUri": "<p>Amazon S3 destination URI for log publishing.</p>",
         "S3MonitoringConfiguration$logUri": "<p>Amazon S3 destination URI for log publishing.</p>"
       }
     },
@@ -603,7 +1043,7 @@
       }
     },
     "VirtualCluster": {
-      "base": "<p>This entity describes a virtual cluster. A virtual cluster is a Kubernetes namespace that Amazon EMR is registered with. Amazon EMR uses virtual clusters to run jobs and host endpoints. Multiple virtual clusters can be backed by the same physical cluster. However, each virtual cluster maps to one namespace on an EKS cluster. Virtual clusters do not create any active resources that contribute to your bill or that require lifecycle management outside the service.</p>",
+      "base": "<p>This entity describes a virtual cluster. A virtual cluster is a Kubernetes namespace that Amazon EMR is registered with. Amazon EMR uses virtual clusters to run jobs and host endpoints. Multiple virtual clusters can be backed by the same physical cluster. However, each virtual cluster maps to one namespace on an Amazon EKS cluster. Virtual clusters do not create any active resources that contribute to your bill or that require lifecycle management outside the service.</p>",
       "refs": {
         "DescribeVirtualClusterResponse$virtualCluster": "<p>This output displays information about the specified virtual cluster.</p>",
         "VirtualClusters$member": null

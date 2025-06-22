@@ -8,6 +8,12 @@ import (
 
 const (
 
+	// ErrCodeAccessDeniedException for service response error code
+	// "AccessDeniedException".
+	//
+	// General authentication failure. The request wasn't signed correctly.
+	ErrCodeAccessDeniedException = "AccessDeniedException"
+
 	// ErrCodeExpiredNextTokenException for service response error code
 	// "ExpiredNextTokenException".
 	//
@@ -38,12 +44,27 @@ const (
 	//
 	// The requested resource can't be found.
 	ErrCodeNotFoundException = "NotFoundException"
+
+	// ErrCodeResourceNotFoundException for service response error code
+	// "ResourceNotFoundException".
+	//
+	// The requested resource can't be found.
+	ErrCodeResourceNotFoundException = "ResourceNotFoundException"
+
+	// ErrCodeThrottlingException for service response error code
+	// "ThrottlingException".
+	//
+	// You've made too many requests exceeding service quotas.
+	ErrCodeThrottlingException = "ThrottlingException"
 )
 
 var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
+	"AccessDeniedException":     newErrorAccessDeniedException,
 	"ExpiredNextTokenException": newErrorExpiredNextTokenException,
 	"InternalErrorException":    newErrorInternalErrorException,
 	"InvalidNextTokenException": newErrorInvalidNextTokenException,
 	"InvalidParameterException": newErrorInvalidParameterException,
 	"NotFoundException":         newErrorNotFoundException,
+	"ResourceNotFoundException": newErrorResourceNotFoundException,
+	"ThrottlingException":       newErrorThrottlingException,
 }

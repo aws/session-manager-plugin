@@ -29,14 +29,13 @@ const opCancelJobRun = "CancelJobRun"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CancelJobRunRequest method.
+//	req, resp := client.CancelJobRunRequest(params)
 //
-//    // Example sending a request using the CancelJobRunRequest method.
-//    req, resp := client.CancelJobRunRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CancelJobRun
 func (c *EMRContainers) CancelJobRunRequest(input *CancelJobRunInput) (req *request.Request, output *CancelJobRunOutput) {
@@ -68,11 +67,12 @@ func (c *EMRContainers) CancelJobRunRequest(input *CancelJobRunInput) (req *requ
 // API operation CancelJobRun for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CancelJobRun
 func (c *EMRContainers) CancelJobRun(input *CancelJobRunInput) (*CancelJobRunOutput, error) {
@@ -96,6 +96,94 @@ func (c *EMRContainers) CancelJobRunWithContext(ctx aws.Context, input *CancelJo
 	return out, req.Send()
 }
 
+const opCreateJobTemplate = "CreateJobTemplate"
+
+// CreateJobTemplateRequest generates a "aws/request.Request" representing the
+// client's request for the CreateJobTemplate operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateJobTemplate for more information on using the CreateJobTemplate
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateJobTemplateRequest method.
+//	req, resp := client.CreateJobTemplateRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateJobTemplate
+func (c *EMRContainers) CreateJobTemplateRequest(input *CreateJobTemplateInput) (req *request.Request, output *CreateJobTemplateOutput) {
+	op := &request.Operation{
+		Name:       opCreateJobTemplate,
+		HTTPMethod: "POST",
+		HTTPPath:   "/jobtemplates",
+	}
+
+	if input == nil {
+		input = &CreateJobTemplateInput{}
+	}
+
+	output = &CreateJobTemplateOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateJobTemplate API operation for Amazon EMR Containers.
+//
+// Creates a job template. Job template stores values of StartJobRun API request
+// in a template and can be used to start a job run. Job template allows two
+// use cases: avoid repeating recurring StartJobRun API request values, enforcing
+// certain values in StartJobRun API request.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation CreateJobTemplate for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateJobTemplate
+func (c *EMRContainers) CreateJobTemplate(input *CreateJobTemplateInput) (*CreateJobTemplateOutput, error) {
+	req, out := c.CreateJobTemplateRequest(input)
+	return out, req.Send()
+}
+
+// CreateJobTemplateWithContext is the same as CreateJobTemplate with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateJobTemplate for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) CreateJobTemplateWithContext(ctx aws.Context, input *CreateJobTemplateInput, opts ...request.Option) (*CreateJobTemplateOutput, error) {
+	req, out := c.CreateJobTemplateRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateManagedEndpoint = "CreateManagedEndpoint"
 
 // CreateManagedEndpointRequest generates a "aws/request.Request" representing the
@@ -112,14 +200,13 @@ const opCreateManagedEndpoint = "CreateManagedEndpoint"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateManagedEndpointRequest method.
+//	req, resp := client.CreateManagedEndpointRequest(params)
 //
-//    // Example sending a request using the CreateManagedEndpointRequest method.
-//    req, resp := client.CreateManagedEndpointRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateManagedEndpoint
 func (c *EMRContainers) CreateManagedEndpointRequest(input *CreateManagedEndpointInput) (req *request.Request, output *CreateManagedEndpointOutput) {
@@ -141,8 +228,8 @@ func (c *EMRContainers) CreateManagedEndpointRequest(input *CreateManagedEndpoin
 // CreateManagedEndpoint API operation for Amazon EMR Containers.
 //
 // Creates a managed endpoint. A managed endpoint is a gateway that connects
-// EMR Studio to Amazon EMR on EKS so that EMR Studio can communicate with your
-// virtual cluster.
+// Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate
+// with your virtual cluster.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -152,14 +239,15 @@ func (c *EMRContainers) CreateManagedEndpointRequest(input *CreateManagedEndpoin
 // API operation CreateManagedEndpoint for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateManagedEndpoint
 func (c *EMRContainers) CreateManagedEndpoint(input *CreateManagedEndpointInput) (*CreateManagedEndpointOutput, error) {
@@ -183,6 +271,92 @@ func (c *EMRContainers) CreateManagedEndpointWithContext(ctx aws.Context, input 
 	return out, req.Send()
 }
 
+const opCreateSecurityConfiguration = "CreateSecurityConfiguration"
+
+// CreateSecurityConfigurationRequest generates a "aws/request.Request" representing the
+// client's request for the CreateSecurityConfiguration operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateSecurityConfiguration for more information on using the CreateSecurityConfiguration
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateSecurityConfigurationRequest method.
+//	req, resp := client.CreateSecurityConfigurationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateSecurityConfiguration
+func (c *EMRContainers) CreateSecurityConfigurationRequest(input *CreateSecurityConfigurationInput) (req *request.Request, output *CreateSecurityConfigurationOutput) {
+	op := &request.Operation{
+		Name:       opCreateSecurityConfiguration,
+		HTTPMethod: "POST",
+		HTTPPath:   "/securityconfigurations",
+	}
+
+	if input == nil {
+		input = &CreateSecurityConfigurationInput{}
+	}
+
+	output = &CreateSecurityConfigurationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateSecurityConfiguration API operation for Amazon EMR Containers.
+//
+// Creates a security configuration. Security configurations in Amazon EMR on
+// EKS are templates for different security setups. You can use security configurations
+// to configure the Lake Formation integration setup. You can also create a
+// security configuration to re-use a security setup each time you create a
+// virtual cluster.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation CreateSecurityConfiguration for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateSecurityConfiguration
+func (c *EMRContainers) CreateSecurityConfiguration(input *CreateSecurityConfigurationInput) (*CreateSecurityConfigurationOutput, error) {
+	req, out := c.CreateSecurityConfigurationRequest(input)
+	return out, req.Send()
+}
+
+// CreateSecurityConfigurationWithContext is the same as CreateSecurityConfiguration with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateSecurityConfiguration for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) CreateSecurityConfigurationWithContext(ctx aws.Context, input *CreateSecurityConfigurationInput, opts ...request.Option) (*CreateSecurityConfigurationOutput, error) {
+	req, out := c.CreateSecurityConfigurationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateVirtualCluster = "CreateVirtualCluster"
 
 // CreateVirtualClusterRequest generates a "aws/request.Request" representing the
@@ -199,14 +373,13 @@ const opCreateVirtualCluster = "CreateVirtualCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateVirtualClusterRequest method.
+//	req, resp := client.CreateVirtualClusterRequest(params)
 //
-//    // Example sending a request using the CreateVirtualClusterRequest method.
-//    req, resp := client.CreateVirtualClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateVirtualCluster
 func (c *EMRContainers) CreateVirtualClusterRequest(input *CreateVirtualClusterInput) (req *request.Request, output *CreateVirtualClusterOutput) {
@@ -242,14 +415,18 @@ func (c *EMRContainers) CreateVirtualClusterRequest(input *CreateVirtualClusterI
 // API operation CreateVirtualCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+//   - EKSRequestThrottledException
+//     The request exceeded the Amazon EKS API operation limits.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/CreateVirtualCluster
 func (c *EMRContainers) CreateVirtualCluster(input *CreateVirtualClusterInput) (*CreateVirtualClusterOutput, error) {
@@ -273,6 +450,91 @@ func (c *EMRContainers) CreateVirtualClusterWithContext(ctx aws.Context, input *
 	return out, req.Send()
 }
 
+const opDeleteJobTemplate = "DeleteJobTemplate"
+
+// DeleteJobTemplateRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteJobTemplate operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteJobTemplate for more information on using the DeleteJobTemplate
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteJobTemplateRequest method.
+//	req, resp := client.DeleteJobTemplateRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DeleteJobTemplate
+func (c *EMRContainers) DeleteJobTemplateRequest(input *DeleteJobTemplateInput) (req *request.Request, output *DeleteJobTemplateOutput) {
+	op := &request.Operation{
+		Name:       opDeleteJobTemplate,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/jobtemplates/{templateId}",
+	}
+
+	if input == nil {
+		input = &DeleteJobTemplateInput{}
+	}
+
+	output = &DeleteJobTemplateOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DeleteJobTemplate API operation for Amazon EMR Containers.
+//
+// Deletes a job template. Job template stores values of StartJobRun API request
+// in a template and can be used to start a job run. Job template allows two
+// use cases: avoid repeating recurring StartJobRun API request values, enforcing
+// certain values in StartJobRun API request.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation DeleteJobTemplate for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DeleteJobTemplate
+func (c *EMRContainers) DeleteJobTemplate(input *DeleteJobTemplateInput) (*DeleteJobTemplateOutput, error) {
+	req, out := c.DeleteJobTemplateRequest(input)
+	return out, req.Send()
+}
+
+// DeleteJobTemplateWithContext is the same as DeleteJobTemplate with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteJobTemplate for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) DeleteJobTemplateWithContext(ctx aws.Context, input *DeleteJobTemplateInput, opts ...request.Option) (*DeleteJobTemplateOutput, error) {
+	req, out := c.DeleteJobTemplateRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteManagedEndpoint = "DeleteManagedEndpoint"
 
 // DeleteManagedEndpointRequest generates a "aws/request.Request" representing the
@@ -289,14 +551,13 @@ const opDeleteManagedEndpoint = "DeleteManagedEndpoint"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteManagedEndpointRequest method.
+//	req, resp := client.DeleteManagedEndpointRequest(params)
 //
-//    // Example sending a request using the DeleteManagedEndpointRequest method.
-//    req, resp := client.DeleteManagedEndpointRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DeleteManagedEndpoint
 func (c *EMRContainers) DeleteManagedEndpointRequest(input *DeleteManagedEndpointInput) (req *request.Request, output *DeleteManagedEndpointOutput) {
@@ -318,8 +579,8 @@ func (c *EMRContainers) DeleteManagedEndpointRequest(input *DeleteManagedEndpoin
 // DeleteManagedEndpoint API operation for Amazon EMR Containers.
 //
 // Deletes a managed endpoint. A managed endpoint is a gateway that connects
-// EMR Studio to Amazon EMR on EKS so that EMR Studio can communicate with your
-// virtual cluster.
+// Amazon EMR Studio to Amazon EMR on EKS so that Amazon EMR Studio can communicate
+// with your virtual cluster.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -329,11 +590,12 @@ func (c *EMRContainers) DeleteManagedEndpointRequest(input *DeleteManagedEndpoin
 // API operation DeleteManagedEndpoint for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DeleteManagedEndpoint
 func (c *EMRContainers) DeleteManagedEndpoint(input *DeleteManagedEndpointInput) (*DeleteManagedEndpointOutput, error) {
@@ -373,14 +635,13 @@ const opDeleteVirtualCluster = "DeleteVirtualCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteVirtualClusterRequest method.
+//	req, resp := client.DeleteVirtualClusterRequest(params)
 //
-//    // Example sending a request using the DeleteVirtualClusterRequest method.
-//    req, resp := client.DeleteVirtualClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DeleteVirtualCluster
 func (c *EMRContainers) DeleteVirtualClusterRequest(input *DeleteVirtualClusterInput) (req *request.Request, output *DeleteVirtualClusterOutput) {
@@ -416,11 +677,12 @@ func (c *EMRContainers) DeleteVirtualClusterRequest(input *DeleteVirtualClusterI
 // API operation DeleteVirtualCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DeleteVirtualCluster
 func (c *EMRContainers) DeleteVirtualCluster(input *DeleteVirtualClusterInput) (*DeleteVirtualClusterOutput, error) {
@@ -460,14 +722,13 @@ const opDescribeJobRun = "DescribeJobRun"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeJobRunRequest method.
+//	req, resp := client.DescribeJobRunRequest(params)
 //
-//    // Example sending a request using the DescribeJobRunRequest method.
-//    req, resp := client.DescribeJobRunRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeJobRun
 func (c *EMRContainers) DescribeJobRunRequest(input *DescribeJobRunInput) (req *request.Request, output *DescribeJobRunOutput) {
@@ -500,14 +761,15 @@ func (c *EMRContainers) DescribeJobRunRequest(input *DescribeJobRunInput) (req *
 // API operation DescribeJobRun for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeJobRun
 func (c *EMRContainers) DescribeJobRun(input *DescribeJobRunInput) (*DescribeJobRunOutput, error) {
@@ -531,6 +793,95 @@ func (c *EMRContainers) DescribeJobRunWithContext(ctx aws.Context, input *Descri
 	return out, req.Send()
 }
 
+const opDescribeJobTemplate = "DescribeJobTemplate"
+
+// DescribeJobTemplateRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeJobTemplate operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeJobTemplate for more information on using the DescribeJobTemplate
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeJobTemplateRequest method.
+//	req, resp := client.DescribeJobTemplateRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeJobTemplate
+func (c *EMRContainers) DescribeJobTemplateRequest(input *DescribeJobTemplateInput) (req *request.Request, output *DescribeJobTemplateOutput) {
+	op := &request.Operation{
+		Name:       opDescribeJobTemplate,
+		HTTPMethod: "GET",
+		HTTPPath:   "/jobtemplates/{templateId}",
+	}
+
+	if input == nil {
+		input = &DescribeJobTemplateInput{}
+	}
+
+	output = &DescribeJobTemplateOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeJobTemplate API operation for Amazon EMR Containers.
+//
+// Displays detailed information about a specified job template. Job template
+// stores values of StartJobRun API request in a template and can be used to
+// start a job run. Job template allows two use cases: avoid repeating recurring
+// StartJobRun API request values, enforcing certain values in StartJobRun API
+// request.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation DescribeJobTemplate for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeJobTemplate
+func (c *EMRContainers) DescribeJobTemplate(input *DescribeJobTemplateInput) (*DescribeJobTemplateOutput, error) {
+	req, out := c.DescribeJobTemplateRequest(input)
+	return out, req.Send()
+}
+
+// DescribeJobTemplateWithContext is the same as DescribeJobTemplate with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeJobTemplate for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) DescribeJobTemplateWithContext(ctx aws.Context, input *DescribeJobTemplateInput, opts ...request.Option) (*DescribeJobTemplateOutput, error) {
+	req, out := c.DescribeJobTemplateRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDescribeManagedEndpoint = "DescribeManagedEndpoint"
 
 // DescribeManagedEndpointRequest generates a "aws/request.Request" representing the
@@ -547,14 +898,13 @@ const opDescribeManagedEndpoint = "DescribeManagedEndpoint"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeManagedEndpointRequest method.
+//	req, resp := client.DescribeManagedEndpointRequest(params)
 //
-//    // Example sending a request using the DescribeManagedEndpointRequest method.
-//    req, resp := client.DescribeManagedEndpointRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeManagedEndpoint
 func (c *EMRContainers) DescribeManagedEndpointRequest(input *DescribeManagedEndpointInput) (req *request.Request, output *DescribeManagedEndpointOutput) {
@@ -576,8 +926,8 @@ func (c *EMRContainers) DescribeManagedEndpointRequest(input *DescribeManagedEnd
 // DescribeManagedEndpoint API operation for Amazon EMR Containers.
 //
 // Displays detailed information about a managed endpoint. A managed endpoint
-// is a gateway that connects EMR Studio to Amazon EMR on EKS so that EMR Studio
-// can communicate with your virtual cluster.
+// is a gateway that connects Amazon EMR Studio to Amazon EMR on EKS so that
+// Amazon EMR Studio can communicate with your virtual cluster.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -587,14 +937,15 @@ func (c *EMRContainers) DescribeManagedEndpointRequest(input *DescribeManagedEnd
 // API operation DescribeManagedEndpoint for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeManagedEndpoint
 func (c *EMRContainers) DescribeManagedEndpoint(input *DescribeManagedEndpointInput) (*DescribeManagedEndpointOutput, error) {
@@ -618,6 +969,95 @@ func (c *EMRContainers) DescribeManagedEndpointWithContext(ctx aws.Context, inpu
 	return out, req.Send()
 }
 
+const opDescribeSecurityConfiguration = "DescribeSecurityConfiguration"
+
+// DescribeSecurityConfigurationRequest generates a "aws/request.Request" representing the
+// client's request for the DescribeSecurityConfiguration operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DescribeSecurityConfiguration for more information on using the DescribeSecurityConfiguration
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DescribeSecurityConfigurationRequest method.
+//	req, resp := client.DescribeSecurityConfigurationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeSecurityConfiguration
+func (c *EMRContainers) DescribeSecurityConfigurationRequest(input *DescribeSecurityConfigurationInput) (req *request.Request, output *DescribeSecurityConfigurationOutput) {
+	op := &request.Operation{
+		Name:       opDescribeSecurityConfiguration,
+		HTTPMethod: "GET",
+		HTTPPath:   "/securityconfigurations/{securityConfigurationId}",
+	}
+
+	if input == nil {
+		input = &DescribeSecurityConfigurationInput{}
+	}
+
+	output = &DescribeSecurityConfigurationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DescribeSecurityConfiguration API operation for Amazon EMR Containers.
+//
+// Displays detailed information about a specified security configuration. Security
+// configurations in Amazon EMR on EKS are templates for different security
+// setups. You can use security configurations to configure the Lake Formation
+// integration setup. You can also create a security configuration to re-use
+// a security setup each time you create a virtual cluster.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation DescribeSecurityConfiguration for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeSecurityConfiguration
+func (c *EMRContainers) DescribeSecurityConfiguration(input *DescribeSecurityConfigurationInput) (*DescribeSecurityConfigurationOutput, error) {
+	req, out := c.DescribeSecurityConfigurationRequest(input)
+	return out, req.Send()
+}
+
+// DescribeSecurityConfigurationWithContext is the same as DescribeSecurityConfiguration with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DescribeSecurityConfiguration for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) DescribeSecurityConfigurationWithContext(ctx aws.Context, input *DescribeSecurityConfigurationInput, opts ...request.Option) (*DescribeSecurityConfigurationOutput, error) {
+	req, out := c.DescribeSecurityConfigurationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDescribeVirtualCluster = "DescribeVirtualCluster"
 
 // DescribeVirtualClusterRequest generates a "aws/request.Request" representing the
@@ -634,14 +1074,13 @@ const opDescribeVirtualCluster = "DescribeVirtualCluster"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DescribeVirtualClusterRequest method.
+//	req, resp := client.DescribeVirtualClusterRequest(params)
 //
-//    // Example sending a request using the DescribeVirtualClusterRequest method.
-//    req, resp := client.DescribeVirtualClusterRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeVirtualCluster
 func (c *EMRContainers) DescribeVirtualClusterRequest(input *DescribeVirtualClusterInput) (req *request.Request, output *DescribeVirtualClusterOutput) {
@@ -677,14 +1116,15 @@ func (c *EMRContainers) DescribeVirtualClusterRequest(input *DescribeVirtualClus
 // API operation DescribeVirtualCluster for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/DescribeVirtualCluster
 func (c *EMRContainers) DescribeVirtualCluster(input *DescribeVirtualClusterInput) (*DescribeVirtualClusterOutput, error) {
@@ -708,6 +1148,94 @@ func (c *EMRContainers) DescribeVirtualClusterWithContext(ctx aws.Context, input
 	return out, req.Send()
 }
 
+const opGetManagedEndpointSessionCredentials = "GetManagedEndpointSessionCredentials"
+
+// GetManagedEndpointSessionCredentialsRequest generates a "aws/request.Request" representing the
+// client's request for the GetManagedEndpointSessionCredentials operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetManagedEndpointSessionCredentials for more information on using the GetManagedEndpointSessionCredentials
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetManagedEndpointSessionCredentialsRequest method.
+//	req, resp := client.GetManagedEndpointSessionCredentialsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/GetManagedEndpointSessionCredentials
+func (c *EMRContainers) GetManagedEndpointSessionCredentialsRequest(input *GetManagedEndpointSessionCredentialsInput) (req *request.Request, output *GetManagedEndpointSessionCredentialsOutput) {
+	op := &request.Operation{
+		Name:       opGetManagedEndpointSessionCredentials,
+		HTTPMethod: "POST",
+		HTTPPath:   "/virtualclusters/{virtualClusterId}/endpoints/{endpointId}/credentials",
+	}
+
+	if input == nil {
+		input = &GetManagedEndpointSessionCredentialsInput{}
+	}
+
+	output = &GetManagedEndpointSessionCredentialsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetManagedEndpointSessionCredentials API operation for Amazon EMR Containers.
+//
+// Generate a session token to connect to a managed endpoint.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation GetManagedEndpointSessionCredentials for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - RequestThrottledException
+//     The request throttled.
+//
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/GetManagedEndpointSessionCredentials
+func (c *EMRContainers) GetManagedEndpointSessionCredentials(input *GetManagedEndpointSessionCredentialsInput) (*GetManagedEndpointSessionCredentialsOutput, error) {
+	req, out := c.GetManagedEndpointSessionCredentialsRequest(input)
+	return out, req.Send()
+}
+
+// GetManagedEndpointSessionCredentialsWithContext is the same as GetManagedEndpointSessionCredentials with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetManagedEndpointSessionCredentials for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) GetManagedEndpointSessionCredentialsWithContext(ctx aws.Context, input *GetManagedEndpointSessionCredentialsInput, opts ...request.Option) (*GetManagedEndpointSessionCredentialsOutput, error) {
+	req, out := c.GetManagedEndpointSessionCredentialsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opListJobRuns = "ListJobRuns"
 
 // ListJobRunsRequest generates a "aws/request.Request" representing the
@@ -724,14 +1252,13 @@ const opListJobRuns = "ListJobRuns"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListJobRunsRequest method.
+//	req, resp := client.ListJobRunsRequest(params)
 //
-//    // Example sending a request using the ListJobRunsRequest method.
-//    req, resp := client.ListJobRunsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListJobRuns
 func (c *EMRContainers) ListJobRunsRequest(input *ListJobRunsInput) (req *request.Request, output *ListJobRunsOutput) {
@@ -770,11 +1297,12 @@ func (c *EMRContainers) ListJobRunsRequest(input *ListJobRunsInput) (req *reques
 // API operation ListJobRuns for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListJobRuns
 func (c *EMRContainers) ListJobRuns(input *ListJobRunsInput) (*ListJobRunsOutput, error) {
@@ -806,15 +1334,14 @@ func (c *EMRContainers) ListJobRunsWithContext(ctx aws.Context, input *ListJobRu
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListJobRuns operation.
-//    pageNum := 0
-//    err := client.ListJobRunsPages(params,
-//        func(page *emrcontainers.ListJobRunsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListJobRuns operation.
+//	pageNum := 0
+//	err := client.ListJobRunsPages(params,
+//	    func(page *emrcontainers.ListJobRunsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *EMRContainers) ListJobRunsPages(input *ListJobRunsInput, fn func(*ListJobRunsOutput, bool) bool) error {
 	return c.ListJobRunsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -850,6 +1377,148 @@ func (c *EMRContainers) ListJobRunsPagesWithContext(ctx aws.Context, input *List
 	return p.Err()
 }
 
+const opListJobTemplates = "ListJobTemplates"
+
+// ListJobTemplatesRequest generates a "aws/request.Request" representing the
+// client's request for the ListJobTemplates operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListJobTemplates for more information on using the ListJobTemplates
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListJobTemplatesRequest method.
+//	req, resp := client.ListJobTemplatesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListJobTemplates
+func (c *EMRContainers) ListJobTemplatesRequest(input *ListJobTemplatesInput) (req *request.Request, output *ListJobTemplatesOutput) {
+	op := &request.Operation{
+		Name:       opListJobTemplates,
+		HTTPMethod: "GET",
+		HTTPPath:   "/jobtemplates",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListJobTemplatesInput{}
+	}
+
+	output = &ListJobTemplatesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListJobTemplates API operation for Amazon EMR Containers.
+//
+// Lists job templates based on a set of parameters. Job template stores values
+// of StartJobRun API request in a template and can be used to start a job run.
+// Job template allows two use cases: avoid repeating recurring StartJobRun
+// API request values, enforcing certain values in StartJobRun API request.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation ListJobTemplates for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListJobTemplates
+func (c *EMRContainers) ListJobTemplates(input *ListJobTemplatesInput) (*ListJobTemplatesOutput, error) {
+	req, out := c.ListJobTemplatesRequest(input)
+	return out, req.Send()
+}
+
+// ListJobTemplatesWithContext is the same as ListJobTemplates with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListJobTemplates for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) ListJobTemplatesWithContext(ctx aws.Context, input *ListJobTemplatesInput, opts ...request.Option) (*ListJobTemplatesOutput, error) {
+	req, out := c.ListJobTemplatesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListJobTemplatesPages iterates over the pages of a ListJobTemplates operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListJobTemplates method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListJobTemplates operation.
+//	pageNum := 0
+//	err := client.ListJobTemplatesPages(params,
+//	    func(page *emrcontainers.ListJobTemplatesOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *EMRContainers) ListJobTemplatesPages(input *ListJobTemplatesInput, fn func(*ListJobTemplatesOutput, bool) bool) error {
+	return c.ListJobTemplatesPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListJobTemplatesPagesWithContext same as ListJobTemplatesPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) ListJobTemplatesPagesWithContext(ctx aws.Context, input *ListJobTemplatesInput, fn func(*ListJobTemplatesOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListJobTemplatesInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListJobTemplatesRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListJobTemplatesOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListManagedEndpoints = "ListManagedEndpoints"
 
 // ListManagedEndpointsRequest generates a "aws/request.Request" representing the
@@ -866,14 +1535,13 @@ const opListManagedEndpoints = "ListManagedEndpoints"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListManagedEndpointsRequest method.
+//	req, resp := client.ListManagedEndpointsRequest(params)
 //
-//    // Example sending a request using the ListManagedEndpointsRequest method.
-//    req, resp := client.ListManagedEndpointsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListManagedEndpoints
 func (c *EMRContainers) ListManagedEndpointsRequest(input *ListManagedEndpointsInput) (req *request.Request, output *ListManagedEndpointsOutput) {
@@ -901,8 +1569,8 @@ func (c *EMRContainers) ListManagedEndpointsRequest(input *ListManagedEndpointsI
 // ListManagedEndpoints API operation for Amazon EMR Containers.
 //
 // Lists managed endpoints based on a set of parameters. A managed endpoint
-// is a gateway that connects EMR Studio to Amazon EMR on EKS so that EMR Studio
-// can communicate with your virtual cluster.
+// is a gateway that connects Amazon EMR Studio to Amazon EMR on EKS so that
+// Amazon EMR Studio can communicate with your virtual cluster.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -912,11 +1580,12 @@ func (c *EMRContainers) ListManagedEndpointsRequest(input *ListManagedEndpointsI
 // API operation ListManagedEndpoints for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListManagedEndpoints
 func (c *EMRContainers) ListManagedEndpoints(input *ListManagedEndpointsInput) (*ListManagedEndpointsOutput, error) {
@@ -948,15 +1617,14 @@ func (c *EMRContainers) ListManagedEndpointsWithContext(ctx aws.Context, input *
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListManagedEndpoints operation.
-//    pageNum := 0
-//    err := client.ListManagedEndpointsPages(params,
-//        func(page *emrcontainers.ListManagedEndpointsOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListManagedEndpoints operation.
+//	pageNum := 0
+//	err := client.ListManagedEndpointsPages(params,
+//	    func(page *emrcontainers.ListManagedEndpointsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *EMRContainers) ListManagedEndpointsPages(input *ListManagedEndpointsInput, fn func(*ListManagedEndpointsOutput, bool) bool) error {
 	return c.ListManagedEndpointsPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -992,6 +1660,149 @@ func (c *EMRContainers) ListManagedEndpointsPagesWithContext(ctx aws.Context, in
 	return p.Err()
 }
 
+const opListSecurityConfigurations = "ListSecurityConfigurations"
+
+// ListSecurityConfigurationsRequest generates a "aws/request.Request" representing the
+// client's request for the ListSecurityConfigurations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListSecurityConfigurations for more information on using the ListSecurityConfigurations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListSecurityConfigurationsRequest method.
+//	req, resp := client.ListSecurityConfigurationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListSecurityConfigurations
+func (c *EMRContainers) ListSecurityConfigurationsRequest(input *ListSecurityConfigurationsInput) (req *request.Request, output *ListSecurityConfigurationsOutput) {
+	op := &request.Operation{
+		Name:       opListSecurityConfigurations,
+		HTTPMethod: "GET",
+		HTTPPath:   "/securityconfigurations",
+		Paginator: &request.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
+	}
+
+	if input == nil {
+		input = &ListSecurityConfigurationsInput{}
+	}
+
+	output = &ListSecurityConfigurationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListSecurityConfigurations API operation for Amazon EMR Containers.
+//
+// Lists security configurations based on a set of parameters. Security configurations
+// in Amazon EMR on EKS are templates for different security setups. You can
+// use security configurations to configure the Lake Formation integration setup.
+// You can also create a security configuration to re-use a security setup each
+// time you create a virtual cluster.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for Amazon EMR Containers's
+// API operation ListSecurityConfigurations for usage and error information.
+//
+// Returned Error Types:
+//
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListSecurityConfigurations
+func (c *EMRContainers) ListSecurityConfigurations(input *ListSecurityConfigurationsInput) (*ListSecurityConfigurationsOutput, error) {
+	req, out := c.ListSecurityConfigurationsRequest(input)
+	return out, req.Send()
+}
+
+// ListSecurityConfigurationsWithContext is the same as ListSecurityConfigurations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListSecurityConfigurations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) ListSecurityConfigurationsWithContext(ctx aws.Context, input *ListSecurityConfigurationsInput, opts ...request.Option) (*ListSecurityConfigurationsOutput, error) {
+	req, out := c.ListSecurityConfigurationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+// ListSecurityConfigurationsPages iterates over the pages of a ListSecurityConfigurations operation,
+// calling the "fn" function with the response data for each page. To stop
+// iterating, return false from the fn function.
+//
+// See ListSecurityConfigurations method for more information on how to use this operation.
+//
+// Note: This operation can generate multiple requests to a service.
+//
+//	// Example iterating over at most 3 pages of a ListSecurityConfigurations operation.
+//	pageNum := 0
+//	err := client.ListSecurityConfigurationsPages(params,
+//	    func(page *emrcontainers.ListSecurityConfigurationsOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
+func (c *EMRContainers) ListSecurityConfigurationsPages(input *ListSecurityConfigurationsInput, fn func(*ListSecurityConfigurationsOutput, bool) bool) error {
+	return c.ListSecurityConfigurationsPagesWithContext(aws.BackgroundContext(), input, fn)
+}
+
+// ListSecurityConfigurationsPagesWithContext same as ListSecurityConfigurationsPages except
+// it takes a Context and allows setting request options on the pages.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *EMRContainers) ListSecurityConfigurationsPagesWithContext(ctx aws.Context, input *ListSecurityConfigurationsInput, fn func(*ListSecurityConfigurationsOutput, bool) bool, opts ...request.Option) error {
+	p := request.Pagination{
+		NewRequest: func() (*request.Request, error) {
+			var inCpy *ListSecurityConfigurationsInput
+			if input != nil {
+				tmp := *input
+				inCpy = &tmp
+			}
+			req, _ := c.ListSecurityConfigurationsRequest(inCpy)
+			req.SetContext(ctx)
+			req.ApplyOptions(opts...)
+			return req, nil
+		},
+	}
+
+	for p.Next() {
+		if !fn(p.Page().(*ListSecurityConfigurationsOutput), !p.HasNextPage()) {
+			break
+		}
+	}
+
+	return p.Err()
+}
+
 const opListTagsForResource = "ListTagsForResource"
 
 // ListTagsForResourceRequest generates a "aws/request.Request" representing the
@@ -1008,14 +1819,13 @@ const opListTagsForResource = "ListTagsForResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListTagsForResourceRequest method.
+//	req, resp := client.ListTagsForResourceRequest(params)
 //
-//    // Example sending a request using the ListTagsForResourceRequest method.
-//    req, resp := client.ListTagsForResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListTagsForResource
 func (c *EMRContainers) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *request.Request, output *ListTagsForResourceOutput) {
@@ -1046,14 +1856,15 @@ func (c *EMRContainers) ListTagsForResourceRequest(input *ListTagsForResourceInp
 // API operation ListTagsForResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   This is an internal server exception.
 //
-//   * ValidationException
-//   There are invalid parameters in the client request.
+//   - InternalServerException
+//     This is an internal server exception.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - ResourceNotFoundException
+//     The specified resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListTagsForResource
 func (c *EMRContainers) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
@@ -1093,14 +1904,13 @@ const opListVirtualClusters = "ListVirtualClusters"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListVirtualClustersRequest method.
+//	req, resp := client.ListVirtualClustersRequest(params)
 //
-//    // Example sending a request using the ListVirtualClustersRequest method.
-//    req, resp := client.ListVirtualClustersRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListVirtualClusters
 func (c *EMRContainers) ListVirtualClustersRequest(input *ListVirtualClustersInput) (req *request.Request, output *ListVirtualClustersOutput) {
@@ -1142,11 +1952,12 @@ func (c *EMRContainers) ListVirtualClustersRequest(input *ListVirtualClustersInp
 // API operation ListVirtualClusters for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/ListVirtualClusters
 func (c *EMRContainers) ListVirtualClusters(input *ListVirtualClustersInput) (*ListVirtualClustersOutput, error) {
@@ -1178,15 +1989,14 @@ func (c *EMRContainers) ListVirtualClustersWithContext(ctx aws.Context, input *L
 //
 // Note: This operation can generate multiple requests to a service.
 //
-//    // Example iterating over at most 3 pages of a ListVirtualClusters operation.
-//    pageNum := 0
-//    err := client.ListVirtualClustersPages(params,
-//        func(page *emrcontainers.ListVirtualClustersOutput, lastPage bool) bool {
-//            pageNum++
-//            fmt.Println(page)
-//            return pageNum <= 3
-//        })
-//
+//	// Example iterating over at most 3 pages of a ListVirtualClusters operation.
+//	pageNum := 0
+//	err := client.ListVirtualClustersPages(params,
+//	    func(page *emrcontainers.ListVirtualClustersOutput, lastPage bool) bool {
+//	        pageNum++
+//	        fmt.Println(page)
+//	        return pageNum <= 3
+//	    })
 func (c *EMRContainers) ListVirtualClustersPages(input *ListVirtualClustersInput, fn func(*ListVirtualClustersOutput, bool) bool) error {
 	return c.ListVirtualClustersPagesWithContext(aws.BackgroundContext(), input, fn)
 }
@@ -1238,14 +2048,13 @@ const opStartJobRun = "StartJobRun"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the StartJobRunRequest method.
+//	req, resp := client.StartJobRunRequest(params)
 //
-//    // Example sending a request using the StartJobRunRequest method.
-//    req, resp := client.StartJobRunRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/StartJobRun
 func (c *EMRContainers) StartJobRunRequest(input *StartJobRunInput) (req *request.Request, output *StartJobRunOutput) {
@@ -1277,14 +2086,15 @@ func (c *EMRContainers) StartJobRunRequest(input *StartJobRunInput) (req *reques
 // API operation StartJobRun for usage and error information.
 //
 // Returned Error Types:
-//   * ValidationException
-//   There are invalid parameters in the client request.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
 //
-//   * InternalServerException
-//   This is an internal server exception.
+//   - ResourceNotFoundException
+//     The specified resource was not found.
+//
+//   - InternalServerException
+//     This is an internal server exception.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/StartJobRun
 func (c *EMRContainers) StartJobRun(input *StartJobRunInput) (*StartJobRunOutput, error) {
@@ -1324,14 +2134,13 @@ const opTagResource = "TagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the TagResourceRequest method.
+//	req, resp := client.TagResourceRequest(params)
 //
-//    // Example sending a request using the TagResourceRequest method.
-//    req, resp := client.TagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/TagResource
 func (c *EMRContainers) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
@@ -1353,15 +2162,16 @@ func (c *EMRContainers) TagResourceRequest(input *TagResourceInput) (req *reques
 
 // TagResource API operation for Amazon EMR Containers.
 //
-// Assigns tags to resources. A tag is a label that you assign to an AWS resource.
-// Each tag consists of a key and an optional value, both of which you define.
-// Tags enable you to categorize your AWS resources by attributes such as purpose,
-// owner, or environment. When you have many resources of the same type, you
-// can quickly identify a specific resource based on the tags you've assigned
-// to it. For example, you can define a set of tags for your Amazon EMR on EKS
-// clusters to help you track each cluster's owner and stack level. We recommend
-// that you devise a consistent set of tag keys for each resource type. You
-// can then search and filter the resources based on the tags that you add.
+// Assigns tags to resources. A tag is a label that you assign to an Amazon
+// Web Services resource. Each tag consists of a key and an optional value,
+// both of which you define. Tags enable you to categorize your Amazon Web Services
+// resources by attributes such as purpose, owner, or environment. When you
+// have many resources of the same type, you can quickly identify a specific
+// resource based on the tags you've assigned to it. For example, you can define
+// a set of tags for your Amazon EMR on EKS clusters to help you track each
+// cluster's owner and stack level. We recommend that you devise a consistent
+// set of tag keys for each resource type. You can then search and filter the
+// resources based on the tags that you add.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -1371,14 +2181,15 @@ func (c *EMRContainers) TagResourceRequest(input *TagResourceInput) (req *reques
 // API operation TagResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   This is an internal server exception.
 //
-//   * ValidationException
-//   There are invalid parameters in the client request.
+//   - InternalServerException
+//     This is an internal server exception.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - ResourceNotFoundException
+//     The specified resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/TagResource
 func (c *EMRContainers) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -1418,14 +2229,13 @@ const opUntagResource = "UntagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UntagResourceRequest method.
+//	req, resp := client.UntagResourceRequest(params)
 //
-//    // Example sending a request using the UntagResourceRequest method.
-//    req, resp := client.UntagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/UntagResource
 func (c *EMRContainers) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
@@ -1457,14 +2267,15 @@ func (c *EMRContainers) UntagResourceRequest(input *UntagResourceInput) (req *re
 // API operation UntagResource for usage and error information.
 //
 // Returned Error Types:
-//   * InternalServerException
-//   This is an internal server exception.
 //
-//   * ValidationException
-//   There are invalid parameters in the client request.
+//   - InternalServerException
+//     This is an internal server exception.
 //
-//   * ResourceNotFoundException
-//   The specified resource was not found.
+//   - ValidationException
+//     There are invalid parameters in the client request.
+//
+//   - ResourceNotFoundException
+//     The specified resource was not found.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/emr-containers-2020-10-01/UntagResource
 func (c *EMRContainers) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -1488,8 +2299,69 @@ func (c *EMRContainers) UntagResourceWithContext(ctx aws.Context, input *UntagRe
 	return out, req.Send()
 }
 
-type CancelJobRunInput struct {
+// Authorization-related configuration inputs for the security configuration.
+type AuthorizationConfiguration struct {
 	_ struct{} `type:"structure"`
+
+	// Encryption-related configuration input for the security configuration.
+	EncryptionConfiguration *EncryptionConfiguration `locationName:"encryptionConfiguration" type:"structure"`
+
+	// Lake Formation related configuration inputs for the security configuration.
+	LakeFormationConfiguration *LakeFormationConfiguration `locationName:"lakeFormationConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthorizationConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AuthorizationConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AuthorizationConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AuthorizationConfiguration"}
+	if s.EncryptionConfiguration != nil {
+		if err := s.EncryptionConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("EncryptionConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.LakeFormationConfiguration != nil {
+		if err := s.LakeFormationConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("LakeFormationConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEncryptionConfiguration sets the EncryptionConfiguration field's value.
+func (s *AuthorizationConfiguration) SetEncryptionConfiguration(v *EncryptionConfiguration) *AuthorizationConfiguration {
+	s.EncryptionConfiguration = v
+	return s
+}
+
+// SetLakeFormationConfiguration sets the LakeFormationConfiguration field's value.
+func (s *AuthorizationConfiguration) SetLakeFormationConfiguration(v *LakeFormationConfiguration) *AuthorizationConfiguration {
+	s.LakeFormationConfiguration = v
+	return s
+}
+
+type CancelJobRunInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ID of the job run to cancel.
 	//
@@ -1502,12 +2374,20 @@ type CancelJobRunInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelJobRunInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelJobRunInput) GoString() string {
 	return s.String()
 }
@@ -1556,12 +2436,20 @@ type CancelJobRunOutput struct {
 	VirtualClusterId *string `locationName:"virtualClusterId" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelJobRunOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CancelJobRunOutput) GoString() string {
 	return s.String()
 }
@@ -1575,6 +2463,47 @@ func (s *CancelJobRunOutput) SetId(v string) *CancelJobRunOutput {
 // SetVirtualClusterId sets the VirtualClusterId field's value.
 func (s *CancelJobRunOutput) SetVirtualClusterId(v string) *CancelJobRunOutput {
 	s.VirtualClusterId = &v
+	return s
+}
+
+// The entity representing certificate data generated for managed endpoint.
+type Certificate struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the certificate generated for managed endpoint.
+	CertificateArn *string `locationName:"certificateArn" min:"44" type:"string"`
+
+	// The base64 encoded PEM certificate data generated for managed endpoint.
+	CertificateData *string `locationName:"certificateData" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Certificate) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Certificate) GoString() string {
+	return s.String()
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *Certificate) SetCertificateArn(v string) *Certificate {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetCertificateData sets the CertificateData field's value.
+func (s *Certificate) SetCertificateData(v string) *Certificate {
+	s.CertificateData = &v
 	return s
 }
 
@@ -1592,12 +2521,20 @@ type CloudWatchMonitoringConfiguration struct {
 	LogStreamNamePrefix *string `locationName:"logStreamNamePrefix" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudWatchMonitoringConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CloudWatchMonitoringConfiguration) GoString() string {
 	return s.String()
 }
@@ -1651,15 +2588,27 @@ type Configuration struct {
 	Configurations []*Configuration `locationName:"configurations" type:"list"`
 
 	// A set of properties specified within a configuration classification.
+	//
+	// Properties is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Configuration's
+	// String and GoString methods.
 	Properties map[string]*string `locationName:"properties" type:"map" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Configuration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Configuration) GoString() string {
 	return s.String()
 }
@@ -1719,12 +2668,20 @@ type ConfigurationOverrides struct {
 	MonitoringConfiguration *MonitoringConfiguration `locationName:"monitoringConfiguration" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConfigurationOverrides) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConfigurationOverrides) GoString() string {
 	return s.String()
 }
@@ -1770,16 +2727,24 @@ func (s *ConfigurationOverrides) SetMonitoringConfiguration(v *MonitoringConfigu
 type ContainerInfo struct {
 	_ struct{} `type:"structure"`
 
-	// The information about the EKS cluster.
+	// The information about the Amazon EKS cluster.
 	EksInfo *EksInfo `locationName:"eksInfo" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ContainerInfo) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ContainerInfo) GoString() string {
 	return s.String()
 }
@@ -1805,6 +2770,73 @@ func (s *ContainerInfo) SetEksInfo(v *EksInfo) *ContainerInfo {
 	return s
 }
 
+// The settings for container log rotation.
+type ContainerLogRotationConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The number of files to keep in container after rotation.
+	//
+	// MaxFilesToKeep is a required field
+	MaxFilesToKeep *int64 `locationName:"maxFilesToKeep" min:"1" type:"integer" required:"true"`
+
+	// The file size at which to rotate logs. Minimum of 2KB, Maximum of 2GB.
+	//
+	// RotationSize is a required field
+	RotationSize *string `locationName:"rotationSize" min:"3" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContainerLogRotationConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ContainerLogRotationConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ContainerLogRotationConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ContainerLogRotationConfiguration"}
+	if s.MaxFilesToKeep == nil {
+		invalidParams.Add(request.NewErrParamRequired("MaxFilesToKeep"))
+	}
+	if s.MaxFilesToKeep != nil && *s.MaxFilesToKeep < 1 {
+		invalidParams.Add(request.NewErrParamMinValue("MaxFilesToKeep", 1))
+	}
+	if s.RotationSize == nil {
+		invalidParams.Add(request.NewErrParamRequired("RotationSize"))
+	}
+	if s.RotationSize != nil && len(*s.RotationSize) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("RotationSize", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxFilesToKeep sets the MaxFilesToKeep field's value.
+func (s *ContainerLogRotationConfiguration) SetMaxFilesToKeep(v int64) *ContainerLogRotationConfiguration {
+	s.MaxFilesToKeep = &v
+	return s
+}
+
+// SetRotationSize sets the RotationSize field's value.
+func (s *ContainerLogRotationConfiguration) SetRotationSize(v string) *ContainerLogRotationConfiguration {
+	s.RotationSize = &v
+	return s
+}
+
 // The information about the container provider.
 type ContainerProvider struct {
 	_ struct{} `type:"structure"`
@@ -1817,19 +2849,27 @@ type ContainerProvider struct {
 	// The information about the container cluster.
 	Info *ContainerInfo `locationName:"info" type:"structure"`
 
-	// The type of the container provider. EKS is the only supported type as of
-	// now.
+	// The type of the container provider. Amazon EKS is the only supported type
+	// as of now.
 	//
 	// Type is a required field
 	Type *string `locationName:"type" type:"string" required:"true" enum:"ContainerProviderType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ContainerProvider) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ContainerProvider) GoString() string {
 	return s.String()
 }
@@ -1876,13 +2916,173 @@ func (s *ContainerProvider) SetType(v string) *ContainerProvider {
 	return s
 }
 
+type CreateJobTemplateInput struct {
+	_ struct{} `type:"structure"`
+
+	// The client token of the job template.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The job template data which holds values of StartJobRun API request.
+	//
+	// JobTemplateData is a required field
+	JobTemplateData *JobTemplateData `locationName:"jobTemplateData" type:"structure" required:"true"`
+
+	// The KMS key ARN used to encrypt the job template.
+	KmsKeyArn *string `locationName:"kmsKeyArn" min:"3" type:"string"`
+
+	// The specified name of the job template.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
+
+	// The tags that are associated with the job template.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateJobTemplateInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateJobTemplateInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateJobTemplateInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateJobTemplateInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.JobTemplateData == nil {
+		invalidParams.Add(request.NewErrParamRequired("JobTemplateData"))
+	}
+	if s.KmsKeyArn != nil && len(*s.KmsKeyArn) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("KmsKeyArn", 3))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.JobTemplateData != nil {
+		if err := s.JobTemplateData.Validate(); err != nil {
+			invalidParams.AddNested("JobTemplateData", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *CreateJobTemplateInput) SetClientToken(v string) *CreateJobTemplateInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetJobTemplateData sets the JobTemplateData field's value.
+func (s *CreateJobTemplateInput) SetJobTemplateData(v *JobTemplateData) *CreateJobTemplateInput {
+	s.JobTemplateData = v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *CreateJobTemplateInput) SetKmsKeyArn(v string) *CreateJobTemplateInput {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CreateJobTemplateInput) SetName(v string) *CreateJobTemplateInput {
+	s.Name = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateJobTemplateInput) SetTags(v map[string]*string) *CreateJobTemplateInput {
+	s.Tags = v
+	return s
+}
+
+type CreateJobTemplateOutput struct {
+	_ struct{} `type:"structure"`
+
+	// This output display the ARN of the created job template.
+	Arn *string `locationName:"arn" min:"60" type:"string"`
+
+	// This output displays the date and time when the job template was created.
+	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp" timestampFormat:"iso8601"`
+
+	// This output display the created job template ID.
+	Id *string `locationName:"id" min:"1" type:"string"`
+
+	// This output displays the name of the created job template.
+	Name *string `locationName:"name" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateJobTemplateOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateJobTemplateOutput) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *CreateJobTemplateOutput) SetArn(v string) *CreateJobTemplateOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *CreateJobTemplateOutput) SetCreatedAt(v time.Time) *CreateJobTemplateOutput {
+	s.CreatedAt = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *CreateJobTemplateOutput) SetId(v string) *CreateJobTemplateOutput {
+	s.Id = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CreateJobTemplateOutput) SetName(v string) *CreateJobTemplateOutput {
+	s.Name = &v
+	return s
+}
+
 type CreateManagedEndpointInput struct {
 	_ struct{} `type:"structure"`
 
-	// The certificate ARN of the managed endpoint.
+	// The certificate ARN provided by users for the managed endpoint. This field
+	// is under deprecation and will be removed in future releases.
 	//
-	// CertificateArn is a required field
-	CertificateArn *string `locationName:"certificateArn" min:"44" type:"string" required:"true"`
+	// Deprecated: Customer provided certificate-arn is deprecated and would be removed in future.
+	CertificateArn *string `locationName:"certificateArn" min:"44" deprecated:"true" type:"string"`
 
 	// The client idempotency token for this create call.
 	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
@@ -1919,12 +3119,20 @@ type CreateManagedEndpointInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateManagedEndpointInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateManagedEndpointInput) GoString() string {
 	return s.String()
 }
@@ -1932,9 +3140,6 @@ func (s CreateManagedEndpointInput) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *CreateManagedEndpointInput) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "CreateManagedEndpointInput"}
-	if s.CertificateArn == nil {
-		invalidParams.Add(request.NewErrParamRequired("CertificateArn"))
-	}
 	if s.CertificateArn != nil && len(*s.CertificateArn) < 44 {
 		invalidParams.Add(request.NewErrParamMinLen("CertificateArn", 44))
 	}
@@ -2053,12 +3258,20 @@ type CreateManagedEndpointOutput struct {
 	VirtualClusterId *string `locationName:"virtualClusterId" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateManagedEndpointOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateManagedEndpointOutput) GoString() string {
 	return s.String()
 }
@@ -2087,6 +3300,144 @@ func (s *CreateManagedEndpointOutput) SetVirtualClusterId(v string) *CreateManag
 	return s
 }
 
+type CreateSecurityConfigurationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The client idempotency token to use when creating the security configuration.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// The name of the security configuration.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
+
+	// Security configuration input for the request.
+	//
+	// SecurityConfigurationData is a required field
+	SecurityConfigurationData *SecurityConfigurationData `locationName:"securityConfigurationData" type:"structure" required:"true"`
+
+	// The tags to add to the security configuration.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateSecurityConfigurationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateSecurityConfigurationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateSecurityConfigurationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateSecurityConfigurationInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.Name != nil && len(*s.Name) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.SecurityConfigurationData == nil {
+		invalidParams.Add(request.NewErrParamRequired("SecurityConfigurationData"))
+	}
+	if s.SecurityConfigurationData != nil {
+		if err := s.SecurityConfigurationData.Validate(); err != nil {
+			invalidParams.AddNested("SecurityConfigurationData", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *CreateSecurityConfigurationInput) SetClientToken(v string) *CreateSecurityConfigurationInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CreateSecurityConfigurationInput) SetName(v string) *CreateSecurityConfigurationInput {
+	s.Name = &v
+	return s
+}
+
+// SetSecurityConfigurationData sets the SecurityConfigurationData field's value.
+func (s *CreateSecurityConfigurationInput) SetSecurityConfigurationData(v *SecurityConfigurationData) *CreateSecurityConfigurationInput {
+	s.SecurityConfigurationData = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *CreateSecurityConfigurationInput) SetTags(v map[string]*string) *CreateSecurityConfigurationInput {
+	s.Tags = v
+	return s
+}
+
+type CreateSecurityConfigurationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN (Amazon Resource Name) of the security configuration.
+	Arn *string `locationName:"arn" min:"60" type:"string"`
+
+	// The ID of the security configuration.
+	Id *string `locationName:"id" min:"1" type:"string"`
+
+	// The name of the security configuration.
+	Name *string `locationName:"name" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateSecurityConfigurationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateSecurityConfigurationOutput) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *CreateSecurityConfigurationOutput) SetArn(v string) *CreateSecurityConfigurationOutput {
+	s.Arn = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *CreateSecurityConfigurationOutput) SetId(v string) *CreateSecurityConfigurationOutput {
+	s.Id = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *CreateSecurityConfigurationOutput) SetName(v string) *CreateSecurityConfigurationOutput {
+	s.Name = &v
+	return s
+}
+
 type CreateVirtualClusterInput struct {
 	_ struct{} `type:"structure"`
 
@@ -2103,16 +3454,27 @@ type CreateVirtualClusterInput struct {
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
+	// The ID of the security configuration.
+	SecurityConfigurationId *string `locationName:"securityConfigurationId" min:"1" type:"string"`
+
 	// The tags assigned to the virtual cluster.
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateVirtualClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateVirtualClusterInput) GoString() string {
 	return s.String()
 }
@@ -2131,6 +3493,9 @@ func (s *CreateVirtualClusterInput) Validate() error {
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
+	}
+	if s.SecurityConfigurationId != nil && len(*s.SecurityConfigurationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SecurityConfigurationId", 1))
 	}
 	if s.ContainerProvider != nil {
 		if err := s.ContainerProvider.Validate(); err != nil {
@@ -2162,6 +3527,12 @@ func (s *CreateVirtualClusterInput) SetName(v string) *CreateVirtualClusterInput
 	return s
 }
 
+// SetSecurityConfigurationId sets the SecurityConfigurationId field's value.
+func (s *CreateVirtualClusterInput) SetSecurityConfigurationId(v string) *CreateVirtualClusterInput {
+	s.SecurityConfigurationId = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *CreateVirtualClusterInput) SetTags(v map[string]*string) *CreateVirtualClusterInput {
 	s.Tags = v
@@ -2181,12 +3552,20 @@ type CreateVirtualClusterOutput struct {
 	Name *string `locationName:"name" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateVirtualClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateVirtualClusterOutput) GoString() string {
 	return s.String()
 }
@@ -2209,8 +3588,124 @@ func (s *CreateVirtualClusterOutput) SetName(v string) *CreateVirtualClusterOutp
 	return s
 }
 
-type DeleteManagedEndpointInput struct {
+// The structure containing the session token being returned.
+type Credentials struct {
 	_ struct{} `type:"structure"`
+
+	// The actual session token being returned.
+	//
+	// Token is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by Credentials's
+	// String and GoString methods.
+	Token *string `locationName:"token" min:"1" type:"string" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Credentials) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s Credentials) GoString() string {
+	return s.String()
+}
+
+// SetToken sets the Token field's value.
+func (s *Credentials) SetToken(v string) *Credentials {
+	s.Token = &v
+	return s
+}
+
+type DeleteJobTemplateInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the job template that will be deleted.
+	//
+	// Id is a required field
+	Id *string `location:"uri" locationName:"templateId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteJobTemplateInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteJobTemplateInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteJobTemplateInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteJobTemplateInput"}
+	if s.Id == nil {
+		invalidParams.Add(request.NewErrParamRequired("Id"))
+	}
+	if s.Id != nil && len(*s.Id) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Id", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetId sets the Id field's value.
+func (s *DeleteJobTemplateInput) SetId(v string) *DeleteJobTemplateInput {
+	s.Id = &v
+	return s
+}
+
+type DeleteJobTemplateOutput struct {
+	_ struct{} `type:"structure"`
+
+	// This output contains the ID of the job template that was deleted.
+	Id *string `locationName:"id" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteJobTemplateOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteJobTemplateOutput) GoString() string {
+	return s.String()
+}
+
+// SetId sets the Id field's value.
+func (s *DeleteJobTemplateOutput) SetId(v string) *DeleteJobTemplateOutput {
+	s.Id = &v
+	return s
+}
+
+type DeleteManagedEndpointInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ID of the managed endpoint.
 	//
@@ -2223,12 +3718,20 @@ type DeleteManagedEndpointInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteManagedEndpointInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteManagedEndpointInput) GoString() string {
 	return s.String()
 }
@@ -2277,12 +3780,20 @@ type DeleteManagedEndpointOutput struct {
 	VirtualClusterId *string `locationName:"virtualClusterId" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteManagedEndpointOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteManagedEndpointOutput) GoString() string {
 	return s.String()
 }
@@ -2300,7 +3811,7 @@ func (s *DeleteManagedEndpointOutput) SetVirtualClusterId(v string) *DeleteManag
 }
 
 type DeleteVirtualClusterInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ID of the virtual cluster that will be deleted.
 	//
@@ -2308,12 +3819,20 @@ type DeleteVirtualClusterInput struct {
 	Id *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteVirtualClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteVirtualClusterInput) GoString() string {
 	return s.String()
 }
@@ -2347,12 +3866,20 @@ type DeleteVirtualClusterOutput struct {
 	Id *string `locationName:"id" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteVirtualClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteVirtualClusterOutput) GoString() string {
 	return s.String()
 }
@@ -2364,7 +3891,7 @@ func (s *DeleteVirtualClusterOutput) SetId(v string) *DeleteVirtualClusterOutput
 }
 
 type DescribeJobRunInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ID of the job run request.
 	//
@@ -2377,12 +3904,20 @@ type DescribeJobRunInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeJobRunInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeJobRunInput) GoString() string {
 	return s.String()
 }
@@ -2428,12 +3963,20 @@ type DescribeJobRunOutput struct {
 	JobRun *JobRun `locationName:"jobRun" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeJobRunOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeJobRunOutput) GoString() string {
 	return s.String()
 }
@@ -2444,8 +3987,88 @@ func (s *DescribeJobRunOutput) SetJobRun(v *JobRun) *DescribeJobRunOutput {
 	return s
 }
 
-type DescribeManagedEndpointInput struct {
+type DescribeJobTemplateInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the job template that will be described.
+	//
+	// Id is a required field
+	Id *string `location:"uri" locationName:"templateId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeJobTemplateInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeJobTemplateInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeJobTemplateInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeJobTemplateInput"}
+	if s.Id == nil {
+		invalidParams.Add(request.NewErrParamRequired("Id"))
+	}
+	if s.Id != nil && len(*s.Id) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Id", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetId sets the Id field's value.
+func (s *DescribeJobTemplateInput) SetId(v string) *DescribeJobTemplateInput {
+	s.Id = &v
+	return s
+}
+
+type DescribeJobTemplateOutput struct {
 	_ struct{} `type:"structure"`
+
+	// This output displays information about the specified job template.
+	JobTemplate *JobTemplate `locationName:"jobTemplate" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeJobTemplateOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeJobTemplateOutput) GoString() string {
+	return s.String()
+}
+
+// SetJobTemplate sets the JobTemplate field's value.
+func (s *DescribeJobTemplateOutput) SetJobTemplate(v *JobTemplate) *DescribeJobTemplateOutput {
+	s.JobTemplate = v
+	return s
+}
+
+type DescribeManagedEndpointInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// This output displays ID of the managed endpoint.
 	//
@@ -2458,12 +4081,20 @@ type DescribeManagedEndpointInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeManagedEndpointInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeManagedEndpointInput) GoString() string {
 	return s.String()
 }
@@ -2509,12 +4140,20 @@ type DescribeManagedEndpointOutput struct {
 	Endpoint *Endpoint `locationName:"endpoint" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeManagedEndpointOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeManagedEndpointOutput) GoString() string {
 	return s.String()
 }
@@ -2525,8 +4164,88 @@ func (s *DescribeManagedEndpointOutput) SetEndpoint(v *Endpoint) *DescribeManage
 	return s
 }
 
-type DescribeVirtualClusterInput struct {
+type DescribeSecurityConfigurationInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the security configuration.
+	//
+	// Id is a required field
+	Id *string `location:"uri" locationName:"securityConfigurationId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeSecurityConfigurationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeSecurityConfigurationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DescribeSecurityConfigurationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DescribeSecurityConfigurationInput"}
+	if s.Id == nil {
+		invalidParams.Add(request.NewErrParamRequired("Id"))
+	}
+	if s.Id != nil && len(*s.Id) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Id", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetId sets the Id field's value.
+func (s *DescribeSecurityConfigurationInput) SetId(v string) *DescribeSecurityConfigurationInput {
+	s.Id = &v
+	return s
+}
+
+type DescribeSecurityConfigurationOutput struct {
 	_ struct{} `type:"structure"`
+
+	// Details of the security configuration.
+	SecurityConfiguration *SecurityConfiguration `locationName:"securityConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeSecurityConfigurationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DescribeSecurityConfigurationOutput) GoString() string {
+	return s.String()
+}
+
+// SetSecurityConfiguration sets the SecurityConfiguration field's value.
+func (s *DescribeSecurityConfigurationOutput) SetSecurityConfiguration(v *SecurityConfiguration) *DescribeSecurityConfigurationOutput {
+	s.SecurityConfiguration = v
+	return s
+}
+
+type DescribeVirtualClusterInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ID of the virtual cluster that will be described.
 	//
@@ -2534,12 +4253,20 @@ type DescribeVirtualClusterInput struct {
 	Id *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVirtualClusterInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVirtualClusterInput) GoString() string {
 	return s.String()
 }
@@ -2573,12 +4300,20 @@ type DescribeVirtualClusterOutput struct {
 	VirtualCluster *VirtualCluster `locationName:"virtualCluster" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVirtualClusterOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DescribeVirtualClusterOutput) GoString() string {
 	return s.String()
 }
@@ -2589,20 +4324,92 @@ func (s *DescribeVirtualClusterOutput) SetVirtualCluster(v *VirtualCluster) *Des
 	return s
 }
 
-// The information about the EKS cluster.
+// The request exceeded the Amazon EKS API operation limits.
+type EKSRequestThrottledException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EKSRequestThrottledException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EKSRequestThrottledException) GoString() string {
+	return s.String()
+}
+
+func newErrorEKSRequestThrottledException(v protocol.ResponseMetadata) error {
+	return &EKSRequestThrottledException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *EKSRequestThrottledException) Code() string {
+	return "EKSRequestThrottledException"
+}
+
+// Message returns the exception's message.
+func (s *EKSRequestThrottledException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *EKSRequestThrottledException) OrigErr() error {
+	return nil
+}
+
+func (s *EKSRequestThrottledException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *EKSRequestThrottledException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *EKSRequestThrottledException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
+// The information about the Amazon EKS cluster.
 type EksInfo struct {
 	_ struct{} `type:"structure"`
 
-	// The namespaces of the EKS cluster.
+	// The namespaces of the Amazon EKS cluster.
 	Namespace *string `locationName:"namespace" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EksInfo) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s EksInfo) GoString() string {
 	return s.String()
 }
@@ -2626,6 +4433,53 @@ func (s *EksInfo) SetNamespace(v string) *EksInfo {
 	return s
 }
 
+// Configurations related to encryption for the security configuration.
+type EncryptionConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// In-transit encryption-related input for the security configuration.
+	InTransitEncryptionConfiguration *InTransitEncryptionConfiguration `locationName:"inTransitEncryptionConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EncryptionConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EncryptionConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EncryptionConfiguration"}
+	if s.InTransitEncryptionConfiguration != nil {
+		if err := s.InTransitEncryptionConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("InTransitEncryptionConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetInTransitEncryptionConfiguration sets the InTransitEncryptionConfiguration field's value.
+func (s *EncryptionConfiguration) SetInTransitEncryptionConfiguration(v *InTransitEncryptionConfiguration) *EncryptionConfiguration {
+	s.InTransitEncryptionConfiguration = v
+	return s
+}
+
 // This entity represents the endpoint that is managed by Amazon EMR on EKS.
 type Endpoint struct {
 	_ struct{} `type:"structure"`
@@ -2633,8 +4487,15 @@ type Endpoint struct {
 	// The ARN of the endpoint.
 	Arn *string `locationName:"arn" min:"60" type:"string"`
 
-	// The certificate ARN of the endpoint.
-	CertificateArn *string `locationName:"certificateArn" min:"44" type:"string"`
+	// The certificate ARN of the endpoint. This field is under deprecation and
+	// will be removed in future.
+	//
+	// Deprecated: Customer provided certificate-arn is deprecated and would be removed in future.
+	CertificateArn *string `locationName:"certificateArn" min:"44" deprecated:"true" type:"string"`
+
+	// The certificate generated by emr control plane on customer behalf to secure
+	// the managed endpoint.
+	CertificateAuthority *Certificate `locationName:"certificateAuthority" type:"structure"`
 
 	// The configuration settings that are used to override existing configurations
 	// for endpoints.
@@ -2683,12 +4544,20 @@ type Endpoint struct {
 	VirtualClusterId *string `locationName:"virtualClusterId" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Endpoint) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Endpoint) GoString() string {
 	return s.String()
 }
@@ -2702,6 +4571,12 @@ func (s *Endpoint) SetArn(v string) *Endpoint {
 // SetCertificateArn sets the CertificateArn field's value.
 func (s *Endpoint) SetCertificateArn(v string) *Endpoint {
 	s.CertificateArn = &v
+	return s
+}
+
+// SetCertificateAuthority sets the CertificateAuthority field's value.
+func (s *Endpoint) SetCertificateAuthority(v *Certificate) *Endpoint {
+	s.CertificateAuthority = v
 	return s
 }
 
@@ -2795,6 +4670,238 @@ func (s *Endpoint) SetVirtualClusterId(v string) *Endpoint {
 	return s
 }
 
+type GetManagedEndpointSessionCredentialsInput struct {
+	_ struct{} `type:"structure"`
+
+	// The client idempotency token of the job run request.
+	ClientToken *string `locationName:"clientToken" min:"1" type:"string" idempotencyToken:"true"`
+
+	// Type of the token requested. Currently supported and default value of this
+	// field is “TOKEN.”
+	//
+	// CredentialType is a required field
+	CredentialType *string `locationName:"credentialType" min:"1" type:"string" required:"true"`
+
+	// Duration in seconds for which the session token is valid. The default duration
+	// is 15 minutes and the maximum is 12 hours.
+	DurationInSeconds *int64 `locationName:"durationInSeconds" type:"integer"`
+
+	// The ARN of the managed endpoint for which the request is submitted.
+	//
+	// EndpointIdentifier is a required field
+	EndpointIdentifier *string `location:"uri" locationName:"endpointId" min:"1" type:"string" required:"true"`
+
+	// The IAM Execution Role ARN that will be used by the job run.
+	//
+	// ExecutionRoleArn is a required field
+	ExecutionRoleArn *string `locationName:"executionRoleArn" min:"20" type:"string" required:"true"`
+
+	// String identifier used to separate sections of the execution logs uploaded
+	// to S3.
+	LogContext *string `locationName:"logContext" min:"3" type:"string"`
+
+	// The ARN of the Virtual Cluster which the Managed Endpoint belongs to.
+	//
+	// VirtualClusterIdentifier is a required field
+	VirtualClusterIdentifier *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetManagedEndpointSessionCredentialsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetManagedEndpointSessionCredentialsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetManagedEndpointSessionCredentialsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetManagedEndpointSessionCredentialsInput"}
+	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
+	}
+	if s.CredentialType == nil {
+		invalidParams.Add(request.NewErrParamRequired("CredentialType"))
+	}
+	if s.CredentialType != nil && len(*s.CredentialType) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("CredentialType", 1))
+	}
+	if s.EndpointIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("EndpointIdentifier"))
+	}
+	if s.EndpointIdentifier != nil && len(*s.EndpointIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EndpointIdentifier", 1))
+	}
+	if s.ExecutionRoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ExecutionRoleArn"))
+	}
+	if s.ExecutionRoleArn != nil && len(*s.ExecutionRoleArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("ExecutionRoleArn", 20))
+	}
+	if s.LogContext != nil && len(*s.LogContext) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("LogContext", 3))
+	}
+	if s.VirtualClusterIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("VirtualClusterIdentifier"))
+	}
+	if s.VirtualClusterIdentifier != nil && len(*s.VirtualClusterIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("VirtualClusterIdentifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClientToken sets the ClientToken field's value.
+func (s *GetManagedEndpointSessionCredentialsInput) SetClientToken(v string) *GetManagedEndpointSessionCredentialsInput {
+	s.ClientToken = &v
+	return s
+}
+
+// SetCredentialType sets the CredentialType field's value.
+func (s *GetManagedEndpointSessionCredentialsInput) SetCredentialType(v string) *GetManagedEndpointSessionCredentialsInput {
+	s.CredentialType = &v
+	return s
+}
+
+// SetDurationInSeconds sets the DurationInSeconds field's value.
+func (s *GetManagedEndpointSessionCredentialsInput) SetDurationInSeconds(v int64) *GetManagedEndpointSessionCredentialsInput {
+	s.DurationInSeconds = &v
+	return s
+}
+
+// SetEndpointIdentifier sets the EndpointIdentifier field's value.
+func (s *GetManagedEndpointSessionCredentialsInput) SetEndpointIdentifier(v string) *GetManagedEndpointSessionCredentialsInput {
+	s.EndpointIdentifier = &v
+	return s
+}
+
+// SetExecutionRoleArn sets the ExecutionRoleArn field's value.
+func (s *GetManagedEndpointSessionCredentialsInput) SetExecutionRoleArn(v string) *GetManagedEndpointSessionCredentialsInput {
+	s.ExecutionRoleArn = &v
+	return s
+}
+
+// SetLogContext sets the LogContext field's value.
+func (s *GetManagedEndpointSessionCredentialsInput) SetLogContext(v string) *GetManagedEndpointSessionCredentialsInput {
+	s.LogContext = &v
+	return s
+}
+
+// SetVirtualClusterIdentifier sets the VirtualClusterIdentifier field's value.
+func (s *GetManagedEndpointSessionCredentialsInput) SetVirtualClusterIdentifier(v string) *GetManagedEndpointSessionCredentialsInput {
+	s.VirtualClusterIdentifier = &v
+	return s
+}
+
+type GetManagedEndpointSessionCredentialsOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The structure containing the session credentials.
+	Credentials *Credentials `locationName:"credentials" type:"structure"`
+
+	// The date and time when the session token will expire.
+	ExpiresAt *time.Time `locationName:"expiresAt" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The identifier of the session token returned.
+	Id *string `locationName:"id" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetManagedEndpointSessionCredentialsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetManagedEndpointSessionCredentialsOutput) GoString() string {
+	return s.String()
+}
+
+// SetCredentials sets the Credentials field's value.
+func (s *GetManagedEndpointSessionCredentialsOutput) SetCredentials(v *Credentials) *GetManagedEndpointSessionCredentialsOutput {
+	s.Credentials = v
+	return s
+}
+
+// SetExpiresAt sets the ExpiresAt field's value.
+func (s *GetManagedEndpointSessionCredentialsOutput) SetExpiresAt(v time.Time) *GetManagedEndpointSessionCredentialsOutput {
+	s.ExpiresAt = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *GetManagedEndpointSessionCredentialsOutput) SetId(v string) *GetManagedEndpointSessionCredentialsOutput {
+	s.Id = &v
+	return s
+}
+
+// Configurations related to in-transit encryption for the security configuration.
+type InTransitEncryptionConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// TLS certificate-related configuration input for the security configuration.
+	TlsCertificateConfiguration *TLSCertificateConfiguration `locationName:"tlsCertificateConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InTransitEncryptionConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s InTransitEncryptionConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *InTransitEncryptionConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "InTransitEncryptionConfiguration"}
+	if s.TlsCertificateConfiguration != nil {
+		if err := s.TlsCertificateConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("TlsCertificateConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetTlsCertificateConfiguration sets the TlsCertificateConfiguration field's value.
+func (s *InTransitEncryptionConfiguration) SetTlsCertificateConfiguration(v *TLSCertificateConfiguration) *InTransitEncryptionConfiguration {
+	s.TlsCertificateConfiguration = v
+	return s
+}
+
 // This is an internal server exception.
 type InternalServerException struct {
 	_            struct{}                  `type:"structure"`
@@ -2803,12 +4910,20 @@ type InternalServerException struct {
 	Message_ *string `locationName:"message" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalServerException) GoString() string {
 	return s.String()
 }
@@ -2851,20 +4966,32 @@ func (s *InternalServerException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Specify the driver that the job runs on.
+// Specify the driver that the job runs on. Exactly one of the two available
+// job drivers is required, either sparkSqlJobDriver or sparkSubmitJobDriver.
 type JobDriver struct {
 	_ struct{} `type:"structure"`
+
+	// The job driver for job type.
+	SparkSqlJobDriver *SparkSqlJobDriver `locationName:"sparkSqlJobDriver" type:"structure"`
 
 	// The job driver parameters specified for spark submit.
 	SparkSubmitJobDriver *SparkSubmitJobDriver `locationName:"sparkSubmitJobDriver" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s JobDriver) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s JobDriver) GoString() string {
 	return s.String()
 }
@@ -2872,6 +4999,11 @@ func (s JobDriver) GoString() string {
 // Validate inspects the fields of the type to determine if they are valid.
 func (s *JobDriver) Validate() error {
 	invalidParams := request.ErrInvalidParams{Context: "JobDriver"}
+	if s.SparkSqlJobDriver != nil {
+		if err := s.SparkSqlJobDriver.Validate(); err != nil {
+			invalidParams.AddNested("SparkSqlJobDriver", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.SparkSubmitJobDriver != nil {
 		if err := s.SparkSubmitJobDriver.Validate(); err != nil {
 			invalidParams.AddNested("SparkSubmitJobDriver", err.(request.ErrInvalidParams))
@@ -2882,6 +5014,12 @@ func (s *JobDriver) Validate() error {
 		return invalidParams
 	}
 	return nil
+}
+
+// SetSparkSqlJobDriver sets the SparkSqlJobDriver field's value.
+func (s *JobDriver) SetSparkSqlJobDriver(v *SparkSqlJobDriver) *JobDriver {
+	s.SparkSqlJobDriver = v
+	return s
 }
 
 // SetSparkSubmitJobDriver sets the SparkSubmitJobDriver field's value.
@@ -2932,6 +5070,12 @@ type JobRun struct {
 	// The release version of Amazon EMR.
 	ReleaseLabel *string `locationName:"releaseLabel" min:"1" type:"string"`
 
+	// The configuration of the retry policy that the job runs on.
+	RetryPolicyConfiguration *RetryPolicyConfiguration `locationName:"retryPolicyConfiguration" type:"structure"`
+
+	// The current status of the retry policy executed on the job.
+	RetryPolicyExecution *RetryPolicyExecution `locationName:"retryPolicyExecution" type:"structure"`
+
 	// The state of the job run.
 	State *string `locationName:"state" type:"string" enum:"JobRunState"`
 
@@ -2945,12 +5089,20 @@ type JobRun struct {
 	VirtualClusterId *string `locationName:"virtualClusterId" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s JobRun) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s JobRun) GoString() string {
 	return s.String()
 }
@@ -3027,6 +5179,18 @@ func (s *JobRun) SetReleaseLabel(v string) *JobRun {
 	return s
 }
 
+// SetRetryPolicyConfiguration sets the RetryPolicyConfiguration field's value.
+func (s *JobRun) SetRetryPolicyConfiguration(v *RetryPolicyConfiguration) *JobRun {
+	s.RetryPolicyConfiguration = v
+	return s
+}
+
+// SetRetryPolicyExecution sets the RetryPolicyExecution field's value.
+func (s *JobRun) SetRetryPolicyExecution(v *RetryPolicyExecution) *JobRun {
+	s.RetryPolicyExecution = v
+	return s
+}
+
 // SetState sets the State field's value.
 func (s *JobRun) SetState(v string) *JobRun {
 	s.State = &v
@@ -3051,8 +5215,319 @@ func (s *JobRun) SetVirtualClusterId(v string) *JobRun {
 	return s
 }
 
-type ListJobRunsInput struct {
+// This entity describes a job template. Job template stores values of StartJobRun
+// API request in a template and can be used to start a job run. Job template
+// allows two use cases: avoid repeating recurring StartJobRun API request values,
+// enforcing certain values in StartJobRun API request.
+type JobTemplate struct {
 	_ struct{} `type:"structure"`
+
+	// The ARN of the job template.
+	Arn *string `locationName:"arn" min:"60" type:"string"`
+
+	// The date and time when the job template was created.
+	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The user who created the job template.
+	CreatedBy *string `locationName:"createdBy" min:"20" type:"string"`
+
+	// The error message in case the decryption of job template fails.
+	DecryptionError *string `locationName:"decryptionError" min:"1" type:"string"`
+
+	// The ID of the job template.
+	Id *string `locationName:"id" min:"1" type:"string"`
+
+	// The job template data which holds values of StartJobRun API request.
+	//
+	// JobTemplateData is a required field
+	JobTemplateData *JobTemplateData `locationName:"jobTemplateData" type:"structure" required:"true"`
+
+	// The KMS key ARN used to encrypt the job template.
+	KmsKeyArn *string `locationName:"kmsKeyArn" min:"3" type:"string"`
+
+	// The name of the job template.
+	Name *string `locationName:"name" min:"1" type:"string"`
+
+	// The tags assigned to the job template.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JobTemplate) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JobTemplate) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *JobTemplate) SetArn(v string) *JobTemplate {
+	s.Arn = &v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *JobTemplate) SetCreatedAt(v time.Time) *JobTemplate {
+	s.CreatedAt = &v
+	return s
+}
+
+// SetCreatedBy sets the CreatedBy field's value.
+func (s *JobTemplate) SetCreatedBy(v string) *JobTemplate {
+	s.CreatedBy = &v
+	return s
+}
+
+// SetDecryptionError sets the DecryptionError field's value.
+func (s *JobTemplate) SetDecryptionError(v string) *JobTemplate {
+	s.DecryptionError = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *JobTemplate) SetId(v string) *JobTemplate {
+	s.Id = &v
+	return s
+}
+
+// SetJobTemplateData sets the JobTemplateData field's value.
+func (s *JobTemplate) SetJobTemplateData(v *JobTemplateData) *JobTemplate {
+	s.JobTemplateData = v
+	return s
+}
+
+// SetKmsKeyArn sets the KmsKeyArn field's value.
+func (s *JobTemplate) SetKmsKeyArn(v string) *JobTemplate {
+	s.KmsKeyArn = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *JobTemplate) SetName(v string) *JobTemplate {
+	s.Name = &v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *JobTemplate) SetTags(v map[string]*string) *JobTemplate {
+	s.Tags = v
+	return s
+}
+
+// The values of StartJobRun API requests used in job runs started using the
+// job template.
+type JobTemplateData struct {
+	_ struct{} `type:"structure"`
+
+	// The configuration settings that are used to override defaults configuration.
+	ConfigurationOverrides *ParametricConfigurationOverrides `locationName:"configurationOverrides" type:"structure"`
+
+	// The execution role ARN of the job run.
+	//
+	// ExecutionRoleArn is a required field
+	ExecutionRoleArn *string `locationName:"executionRoleArn" min:"4" type:"string" required:"true"`
+
+	// Specify the driver that the job runs on. Exactly one of the two available
+	// job drivers is required, either sparkSqlJobDriver or sparkSubmitJobDriver.
+	//
+	// JobDriver is a required field
+	JobDriver *JobDriver `locationName:"jobDriver" type:"structure" required:"true"`
+
+	// The tags assigned to jobs started using the job template.
+	JobTags map[string]*string `locationName:"jobTags" type:"map"`
+
+	// The configuration of parameters existing in the job template.
+	ParameterConfiguration map[string]*TemplateParameterConfiguration `locationName:"parameterConfiguration" type:"map"`
+
+	// The release version of Amazon EMR.
+	//
+	// ReleaseLabel is a required field
+	ReleaseLabel *string `locationName:"releaseLabel" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JobTemplateData) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s JobTemplateData) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *JobTemplateData) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "JobTemplateData"}
+	if s.ExecutionRoleArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ExecutionRoleArn"))
+	}
+	if s.ExecutionRoleArn != nil && len(*s.ExecutionRoleArn) < 4 {
+		invalidParams.Add(request.NewErrParamMinLen("ExecutionRoleArn", 4))
+	}
+	if s.JobDriver == nil {
+		invalidParams.Add(request.NewErrParamRequired("JobDriver"))
+	}
+	if s.ReleaseLabel == nil {
+		invalidParams.Add(request.NewErrParamRequired("ReleaseLabel"))
+	}
+	if s.ReleaseLabel != nil && len(*s.ReleaseLabel) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ReleaseLabel", 1))
+	}
+	if s.ConfigurationOverrides != nil {
+		if err := s.ConfigurationOverrides.Validate(); err != nil {
+			invalidParams.AddNested("ConfigurationOverrides", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.JobDriver != nil {
+		if err := s.JobDriver.Validate(); err != nil {
+			invalidParams.AddNested("JobDriver", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.ParameterConfiguration != nil {
+		for i, v := range s.ParameterConfiguration {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ParameterConfiguration", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetConfigurationOverrides sets the ConfigurationOverrides field's value.
+func (s *JobTemplateData) SetConfigurationOverrides(v *ParametricConfigurationOverrides) *JobTemplateData {
+	s.ConfigurationOverrides = v
+	return s
+}
+
+// SetExecutionRoleArn sets the ExecutionRoleArn field's value.
+func (s *JobTemplateData) SetExecutionRoleArn(v string) *JobTemplateData {
+	s.ExecutionRoleArn = &v
+	return s
+}
+
+// SetJobDriver sets the JobDriver field's value.
+func (s *JobTemplateData) SetJobDriver(v *JobDriver) *JobTemplateData {
+	s.JobDriver = v
+	return s
+}
+
+// SetJobTags sets the JobTags field's value.
+func (s *JobTemplateData) SetJobTags(v map[string]*string) *JobTemplateData {
+	s.JobTags = v
+	return s
+}
+
+// SetParameterConfiguration sets the ParameterConfiguration field's value.
+func (s *JobTemplateData) SetParameterConfiguration(v map[string]*TemplateParameterConfiguration) *JobTemplateData {
+	s.ParameterConfiguration = v
+	return s
+}
+
+// SetReleaseLabel sets the ReleaseLabel field's value.
+func (s *JobTemplateData) SetReleaseLabel(v string) *JobTemplateData {
+	s.ReleaseLabel = &v
+	return s
+}
+
+// Lake Formation related configuration inputs for the security configuration.
+type LakeFormationConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The session tag to authorize Amazon EMR on EKS for API calls to Lake Formation.
+	AuthorizedSessionTagValue *string `locationName:"authorizedSessionTagValue" min:"1" type:"string"`
+
+	// The query engine IAM role ARN that is tied to the secure Spark job. The QueryEngine
+	// role assumes the JobExecutionRole to execute all the Lake Formation calls.
+	QueryEngineRoleArn *string `locationName:"queryEngineRoleArn" min:"20" type:"string"`
+
+	// The namespace input of the system job.
+	SecureNamespaceInfo *SecureNamespaceInfo `locationName:"secureNamespaceInfo" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LakeFormationConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s LakeFormationConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *LakeFormationConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "LakeFormationConfiguration"}
+	if s.AuthorizedSessionTagValue != nil && len(*s.AuthorizedSessionTagValue) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AuthorizedSessionTagValue", 1))
+	}
+	if s.QueryEngineRoleArn != nil && len(*s.QueryEngineRoleArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("QueryEngineRoleArn", 20))
+	}
+	if s.SecureNamespaceInfo != nil {
+		if err := s.SecureNamespaceInfo.Validate(); err != nil {
+			invalidParams.AddNested("SecureNamespaceInfo", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthorizedSessionTagValue sets the AuthorizedSessionTagValue field's value.
+func (s *LakeFormationConfiguration) SetAuthorizedSessionTagValue(v string) *LakeFormationConfiguration {
+	s.AuthorizedSessionTagValue = &v
+	return s
+}
+
+// SetQueryEngineRoleArn sets the QueryEngineRoleArn field's value.
+func (s *LakeFormationConfiguration) SetQueryEngineRoleArn(v string) *LakeFormationConfiguration {
+	s.QueryEngineRoleArn = &v
+	return s
+}
+
+// SetSecureNamespaceInfo sets the SecureNamespaceInfo field's value.
+func (s *LakeFormationConfiguration) SetSecureNamespaceInfo(v *SecureNamespaceInfo) *LakeFormationConfiguration {
+	s.SecureNamespaceInfo = v
+	return s
+}
+
+type ListJobRunsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The date and time after which the job runs were submitted.
 	CreatedAfter *time.Time `location:"querystring" locationName:"createdAfter" type:"timestamp" timestampFormat:"iso8601"`
@@ -3070,7 +5545,7 @@ type ListJobRunsInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
 	// The states of the job run.
-	States []*string `location:"querystring" locationName:"states" type:"list"`
+	States []*string `location:"querystring" locationName:"states" type:"list" enum:"JobRunState"`
 
 	// The ID of the virtual cluster for which to list the job run.
 	//
@@ -3078,12 +5553,20 @@ type ListJobRunsInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListJobRunsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListJobRunsInput) GoString() string {
 	return s.String()
 }
@@ -3162,12 +5645,20 @@ type ListJobRunsOutput struct {
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListJobRunsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListJobRunsOutput) GoString() string {
 	return s.String()
 }
@@ -3184,8 +5675,119 @@ func (s *ListJobRunsOutput) SetNextToken(v string) *ListJobRunsOutput {
 	return s
 }
 
-type ListManagedEndpointsInput struct {
+type ListJobTemplatesInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The date and time after which the job templates were created.
+	CreatedAfter *time.Time `location:"querystring" locationName:"createdAfter" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The date and time before which the job templates were created.
+	CreatedBefore *time.Time `location:"querystring" locationName:"createdBefore" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The maximum number of job templates that can be listed.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// The token for the next set of job templates to return.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListJobTemplatesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListJobTemplatesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListJobTemplatesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListJobTemplatesInput"}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCreatedAfter sets the CreatedAfter field's value.
+func (s *ListJobTemplatesInput) SetCreatedAfter(v time.Time) *ListJobTemplatesInput {
+	s.CreatedAfter = &v
+	return s
+}
+
+// SetCreatedBefore sets the CreatedBefore field's value.
+func (s *ListJobTemplatesInput) SetCreatedBefore(v time.Time) *ListJobTemplatesInput {
+	s.CreatedBefore = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListJobTemplatesInput) SetMaxResults(v int64) *ListJobTemplatesInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListJobTemplatesInput) SetNextToken(v string) *ListJobTemplatesInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListJobTemplatesOutput struct {
 	_ struct{} `type:"structure"`
+
+	// This output displays the token for the next set of job templates.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+
+	// This output lists information about the specified job templates.
+	Templates []*JobTemplate `locationName:"templates" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListJobTemplatesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListJobTemplatesOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListJobTemplatesOutput) SetNextToken(v string) *ListJobTemplatesOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetTemplates sets the Templates field's value.
+func (s *ListJobTemplatesOutput) SetTemplates(v []*JobTemplate) *ListJobTemplatesOutput {
+	s.Templates = v
+	return s
+}
+
+type ListManagedEndpointsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The date and time after which the endpoints are created.
 	CreatedAfter *time.Time `location:"querystring" locationName:"createdAfter" type:"timestamp" timestampFormat:"iso8601"`
@@ -3200,7 +5802,7 @@ type ListManagedEndpointsInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
 	// The states of the managed endpoints.
-	States []*string `location:"querystring" locationName:"states" type:"list"`
+	States []*string `location:"querystring" locationName:"states" type:"list" enum:"EndpointState"`
 
 	// The types of the managed endpoints.
 	Types []*string `location:"querystring" locationName:"types" type:"list"`
@@ -3211,12 +5813,20 @@ type ListManagedEndpointsInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListManagedEndpointsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListManagedEndpointsInput) GoString() string {
 	return s.String()
 }
@@ -3292,12 +5902,20 @@ type ListManagedEndpointsOutput struct {
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListManagedEndpointsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListManagedEndpointsOutput) GoString() string {
 	return s.String()
 }
@@ -3314,8 +5932,119 @@ func (s *ListManagedEndpointsOutput) SetNextToken(v string) *ListManagedEndpoint
 	return s
 }
 
-type ListTagsForResourceInput struct {
+type ListSecurityConfigurationsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The date and time after which the security configuration was created.
+	CreatedAfter *time.Time `location:"querystring" locationName:"createdAfter" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The date and time before which the security configuration was created.
+	CreatedBefore *time.Time `location:"querystring" locationName:"createdBefore" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The maximum number of security configurations the operation can list.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// The token for the next set of security configurations to return.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSecurityConfigurationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSecurityConfigurationsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListSecurityConfigurationsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListSecurityConfigurationsInput"}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCreatedAfter sets the CreatedAfter field's value.
+func (s *ListSecurityConfigurationsInput) SetCreatedAfter(v time.Time) *ListSecurityConfigurationsInput {
+	s.CreatedAfter = &v
+	return s
+}
+
+// SetCreatedBefore sets the CreatedBefore field's value.
+func (s *ListSecurityConfigurationsInput) SetCreatedBefore(v time.Time) *ListSecurityConfigurationsInput {
+	s.CreatedBefore = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListSecurityConfigurationsInput) SetMaxResults(v int64) *ListSecurityConfigurationsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListSecurityConfigurationsInput) SetNextToken(v string) *ListSecurityConfigurationsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListSecurityConfigurationsOutput struct {
 	_ struct{} `type:"structure"`
+
+	// The token for the next set of security configurations to return.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+
+	// The list of returned security configurations.
+	SecurityConfigurations []*SecurityConfiguration `locationName:"securityConfigurations" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSecurityConfigurationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSecurityConfigurationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListSecurityConfigurationsOutput) SetNextToken(v string) *ListSecurityConfigurationsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetSecurityConfigurations sets the SecurityConfigurations field's value.
+func (s *ListSecurityConfigurationsOutput) SetSecurityConfigurations(v []*SecurityConfiguration) *ListSecurityConfigurationsOutput {
+	s.SecurityConfigurations = v
+	return s
+}
+
+type ListTagsForResourceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN of tagged resources.
 	//
@@ -3323,12 +6052,20 @@ type ListTagsForResourceInput struct {
 	ResourceArn *string `location:"uri" locationName:"resourceArn" min:"60" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) GoString() string {
 	return s.String()
 }
@@ -3362,12 +6099,20 @@ type ListTagsForResourceOutput struct {
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) GoString() string {
 	return s.String()
 }
@@ -3379,13 +6124,13 @@ func (s *ListTagsForResourceOutput) SetTags(v map[string]*string) *ListTagsForRe
 }
 
 type ListVirtualClustersInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The container provider ID of the virtual cluster.
 	ContainerProviderId *string `location:"querystring" locationName:"containerProviderId" min:"1" type:"string"`
 
-	// The container provider type of the virtual cluster. EKS is the only supported
-	// type as of now.
+	// The container provider type of the virtual cluster. Amazon EKS is the only
+	// supported type as of now.
 	ContainerProviderType *string `location:"querystring" locationName:"containerProviderType" type:"string" enum:"ContainerProviderType"`
 
 	// The date and time after which the virtual clusters are created.
@@ -3394,6 +6139,11 @@ type ListVirtualClustersInput struct {
 	// The date and time before which the virtual clusters are created.
 	CreatedBefore *time.Time `location:"querystring" locationName:"createdBefore" type:"timestamp" timestampFormat:"iso8601"`
 
+	// Optional Boolean that specifies whether the operation should return the virtual
+	// clusters that have the access entry integration enabled or disabled. If not
+	// specified, the operation returns all applicable virtual clusters.
+	EksAccessEntryIntegrated *bool `location:"querystring" locationName:"eksAccessEntryIntegrated" type:"boolean"`
+
 	// The maximum number of virtual clusters that can be listed.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
@@ -3401,15 +6151,23 @@ type ListVirtualClustersInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
 	// The states of the requested virtual clusters.
-	States []*string `location:"querystring" locationName:"states" type:"list"`
+	States []*string `location:"querystring" locationName:"states" type:"list" enum:"VirtualClusterState"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListVirtualClustersInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListVirtualClustersInput) GoString() string {
 	return s.String()
 }
@@ -3454,6 +6212,12 @@ func (s *ListVirtualClustersInput) SetCreatedBefore(v time.Time) *ListVirtualClu
 	return s
 }
 
+// SetEksAccessEntryIntegrated sets the EksAccessEntryIntegrated field's value.
+func (s *ListVirtualClustersInput) SetEksAccessEntryIntegrated(v bool) *ListVirtualClustersInput {
+	s.EksAccessEntryIntegrated = &v
+	return s
+}
+
 // SetMaxResults sets the MaxResults field's value.
 func (s *ListVirtualClustersInput) SetMaxResults(v int64) *ListVirtualClustersInput {
 	s.MaxResults = &v
@@ -3482,12 +6246,20 @@ type ListVirtualClustersOutput struct {
 	VirtualClusters []*VirtualCluster `locationName:"virtualClusters" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListVirtualClustersOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListVirtualClustersOutput) GoString() string {
 	return s.String()
 }
@@ -3511,6 +6283,9 @@ type MonitoringConfiguration struct {
 	// Monitoring configurations for CloudWatch.
 	CloudWatchMonitoringConfiguration *CloudWatchMonitoringConfiguration `locationName:"cloudWatchMonitoringConfiguration" type:"structure"`
 
+	// Enable or disable container log rotation.
+	ContainerLogRotationConfiguration *ContainerLogRotationConfiguration `locationName:"containerLogRotationConfiguration" type:"structure"`
+
 	// Monitoring configurations for the persistent application UI.
 	PersistentAppUI *string `locationName:"persistentAppUI" type:"string" enum:"PersistentAppUI"`
 
@@ -3518,12 +6293,20 @@ type MonitoringConfiguration struct {
 	S3MonitoringConfiguration *S3MonitoringConfiguration `locationName:"s3MonitoringConfiguration" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s MonitoringConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s MonitoringConfiguration) GoString() string {
 	return s.String()
 }
@@ -3534,6 +6317,11 @@ func (s *MonitoringConfiguration) Validate() error {
 	if s.CloudWatchMonitoringConfiguration != nil {
 		if err := s.CloudWatchMonitoringConfiguration.Validate(); err != nil {
 			invalidParams.AddNested("CloudWatchMonitoringConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.ContainerLogRotationConfiguration != nil {
+		if err := s.ContainerLogRotationConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("ContainerLogRotationConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.S3MonitoringConfiguration != nil {
@@ -3554,6 +6342,12 @@ func (s *MonitoringConfiguration) SetCloudWatchMonitoringConfiguration(v *CloudW
 	return s
 }
 
+// SetContainerLogRotationConfiguration sets the ContainerLogRotationConfiguration field's value.
+func (s *MonitoringConfiguration) SetContainerLogRotationConfiguration(v *ContainerLogRotationConfiguration) *MonitoringConfiguration {
+	s.ContainerLogRotationConfiguration = v
+	return s
+}
+
 // SetPersistentAppUI sets the PersistentAppUI field's value.
 func (s *MonitoringConfiguration) SetPersistentAppUI(v string) *MonitoringConfiguration {
 	s.PersistentAppUI = &v
@@ -3566,6 +6360,317 @@ func (s *MonitoringConfiguration) SetS3MonitoringConfiguration(v *S3MonitoringCo
 	return s
 }
 
+// A configuration for CloudWatch monitoring. You can configure your jobs to
+// send log information to CloudWatch Logs. This data type allows job template
+// parameters to be specified within.
+type ParametricCloudWatchMonitoringConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the log group for log publishing.
+	LogGroupName *string `locationName:"logGroupName" min:"1" type:"string"`
+
+	// The specified name prefix for log streams.
+	LogStreamNamePrefix *string `locationName:"logStreamNamePrefix" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricCloudWatchMonitoringConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricCloudWatchMonitoringConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ParametricCloudWatchMonitoringConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ParametricCloudWatchMonitoringConfiguration"}
+	if s.LogGroupName != nil && len(*s.LogGroupName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LogGroupName", 1))
+	}
+	if s.LogStreamNamePrefix != nil && len(*s.LogStreamNamePrefix) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LogStreamNamePrefix", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLogGroupName sets the LogGroupName field's value.
+func (s *ParametricCloudWatchMonitoringConfiguration) SetLogGroupName(v string) *ParametricCloudWatchMonitoringConfiguration {
+	s.LogGroupName = &v
+	return s
+}
+
+// SetLogStreamNamePrefix sets the LogStreamNamePrefix field's value.
+func (s *ParametricCloudWatchMonitoringConfiguration) SetLogStreamNamePrefix(v string) *ParametricCloudWatchMonitoringConfiguration {
+	s.LogStreamNamePrefix = &v
+	return s
+}
+
+// A configuration specification to be used to override existing configurations.
+// This data type allows job template parameters to be specified within.
+type ParametricConfigurationOverrides struct {
+	_ struct{} `type:"structure"`
+
+	// The configurations for the application running by the job run.
+	ApplicationConfiguration []*Configuration `locationName:"applicationConfiguration" type:"list"`
+
+	// The configurations for monitoring.
+	MonitoringConfiguration *ParametricMonitoringConfiguration `locationName:"monitoringConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricConfigurationOverrides) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricConfigurationOverrides) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ParametricConfigurationOverrides) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ParametricConfigurationOverrides"}
+	if s.ApplicationConfiguration != nil {
+		for i, v := range s.ApplicationConfiguration {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "ApplicationConfiguration", i), err.(request.ErrInvalidParams))
+			}
+		}
+	}
+	if s.MonitoringConfiguration != nil {
+		if err := s.MonitoringConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("MonitoringConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApplicationConfiguration sets the ApplicationConfiguration field's value.
+func (s *ParametricConfigurationOverrides) SetApplicationConfiguration(v []*Configuration) *ParametricConfigurationOverrides {
+	s.ApplicationConfiguration = v
+	return s
+}
+
+// SetMonitoringConfiguration sets the MonitoringConfiguration field's value.
+func (s *ParametricConfigurationOverrides) SetMonitoringConfiguration(v *ParametricMonitoringConfiguration) *ParametricConfigurationOverrides {
+	s.MonitoringConfiguration = v
+	return s
+}
+
+// Configuration setting for monitoring. This data type allows job template
+// parameters to be specified within.
+type ParametricMonitoringConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Monitoring configurations for CloudWatch.
+	CloudWatchMonitoringConfiguration *ParametricCloudWatchMonitoringConfiguration `locationName:"cloudWatchMonitoringConfiguration" type:"structure"`
+
+	// Monitoring configurations for the persistent application UI.
+	PersistentAppUI *string `locationName:"persistentAppUI" min:"1" type:"string"`
+
+	// Amazon S3 configuration for monitoring log publishing.
+	S3MonitoringConfiguration *ParametricS3MonitoringConfiguration `locationName:"s3MonitoringConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricMonitoringConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricMonitoringConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ParametricMonitoringConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ParametricMonitoringConfiguration"}
+	if s.PersistentAppUI != nil && len(*s.PersistentAppUI) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("PersistentAppUI", 1))
+	}
+	if s.CloudWatchMonitoringConfiguration != nil {
+		if err := s.CloudWatchMonitoringConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("CloudWatchMonitoringConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.S3MonitoringConfiguration != nil {
+		if err := s.S3MonitoringConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("S3MonitoringConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCloudWatchMonitoringConfiguration sets the CloudWatchMonitoringConfiguration field's value.
+func (s *ParametricMonitoringConfiguration) SetCloudWatchMonitoringConfiguration(v *ParametricCloudWatchMonitoringConfiguration) *ParametricMonitoringConfiguration {
+	s.CloudWatchMonitoringConfiguration = v
+	return s
+}
+
+// SetPersistentAppUI sets the PersistentAppUI field's value.
+func (s *ParametricMonitoringConfiguration) SetPersistentAppUI(v string) *ParametricMonitoringConfiguration {
+	s.PersistentAppUI = &v
+	return s
+}
+
+// SetS3MonitoringConfiguration sets the S3MonitoringConfiguration field's value.
+func (s *ParametricMonitoringConfiguration) SetS3MonitoringConfiguration(v *ParametricS3MonitoringConfiguration) *ParametricMonitoringConfiguration {
+	s.S3MonitoringConfiguration = v
+	return s
+}
+
+// Amazon S3 configuration for monitoring log publishing. You can configure
+// your jobs to send log information to Amazon S3. This data type allows job
+// template parameters to be specified within.
+type ParametricS3MonitoringConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// Amazon S3 destination URI for log publishing.
+	LogUri *string `locationName:"logUri" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricS3MonitoringConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ParametricS3MonitoringConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ParametricS3MonitoringConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ParametricS3MonitoringConfiguration"}
+	if s.LogUri != nil && len(*s.LogUri) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("LogUri", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetLogUri sets the LogUri field's value.
+func (s *ParametricS3MonitoringConfiguration) SetLogUri(v string) *ParametricS3MonitoringConfiguration {
+	s.LogUri = &v
+	return s
+}
+
+// The request throttled.
+type RequestThrottledException struct {
+	_            struct{}                  `type:"structure"`
+	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
+
+	Message_ *string `locationName:"message" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RequestThrottledException) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RequestThrottledException) GoString() string {
+	return s.String()
+}
+
+func newErrorRequestThrottledException(v protocol.ResponseMetadata) error {
+	return &RequestThrottledException{
+		RespMetadata: v,
+	}
+}
+
+// Code returns the exception type name.
+func (s *RequestThrottledException) Code() string {
+	return "RequestThrottledException"
+}
+
+// Message returns the exception's message.
+func (s *RequestThrottledException) Message() string {
+	if s.Message_ != nil {
+		return *s.Message_
+	}
+	return ""
+}
+
+// OrigErr always returns nil, satisfies awserr.Error interface.
+func (s *RequestThrottledException) OrigErr() error {
+	return nil
+}
+
+func (s *RequestThrottledException) Error() string {
+	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+}
+
+// Status code returns the HTTP status code for the request's response error.
+func (s *RequestThrottledException) StatusCode() int {
+	return s.RespMetadata.StatusCode
+}
+
+// RequestID returns the service's response RequestID for request.
+func (s *RequestThrottledException) RequestID() string {
+	return s.RespMetadata.RequestID
+}
+
 // The specified resource was not found.
 type ResourceNotFoundException struct {
 	_            struct{}                  `type:"structure"`
@@ -3574,12 +6679,20 @@ type ResourceNotFoundException struct {
 	Message_ *string `locationName:"message" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ResourceNotFoundException) GoString() string {
 	return s.String()
 }
@@ -3622,6 +6735,87 @@ func (s *ResourceNotFoundException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
+// The configuration of the retry policy that the job runs on.
+type RetryPolicyConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The maximum number of attempts on the job's driver.
+	//
+	// MaxAttempts is a required field
+	MaxAttempts *int64 `locationName:"maxAttempts" type:"integer" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RetryPolicyConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RetryPolicyConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RetryPolicyConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RetryPolicyConfiguration"}
+	if s.MaxAttempts == nil {
+		invalidParams.Add(request.NewErrParamRequired("MaxAttempts"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxAttempts sets the MaxAttempts field's value.
+func (s *RetryPolicyConfiguration) SetMaxAttempts(v int64) *RetryPolicyConfiguration {
+	s.MaxAttempts = &v
+	return s
+}
+
+// The current status of the retry policy executed on the job.
+type RetryPolicyExecution struct {
+	_ struct{} `type:"structure"`
+
+	// The current number of attempts made on the driver of the job.
+	//
+	// CurrentAttemptCount is a required field
+	CurrentAttemptCount *int64 `locationName:"currentAttemptCount" type:"integer" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RetryPolicyExecution) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RetryPolicyExecution) GoString() string {
+	return s.String()
+}
+
+// SetCurrentAttemptCount sets the CurrentAttemptCount field's value.
+func (s *RetryPolicyExecution) SetCurrentAttemptCount(v int64) *RetryPolicyExecution {
+	s.CurrentAttemptCount = &v
+	return s
+}
+
 // Amazon S3 configuration for monitoring log publishing. You can configure
 // your jobs to send log information to Amazon S3.
 type S3MonitoringConfiguration struct {
@@ -3633,12 +6827,20 @@ type S3MonitoringConfiguration struct {
 	LogUri *string `locationName:"logUri" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s S3MonitoringConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s S3MonitoringConfiguration) GoString() string {
 	return s.String()
 }
@@ -3665,11 +6867,274 @@ func (s *S3MonitoringConfiguration) SetLogUri(v string) *S3MonitoringConfigurati
 	return s
 }
 
+// Namespace inputs for the system job.
+type SecureNamespaceInfo struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the Amazon EKS cluster where Amazon EMR on EKS jobs run.
+	ClusterId *string `locationName:"clusterId" min:"1" type:"string"`
+
+	// The namespace of the Amazon EKS cluster where the system jobs run.
+	Namespace *string `locationName:"namespace" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecureNamespaceInfo) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecureNamespaceInfo) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SecureNamespaceInfo) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SecureNamespaceInfo"}
+	if s.ClusterId != nil && len(*s.ClusterId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ClusterId", 1))
+	}
+	if s.Namespace != nil && len(*s.Namespace) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Namespace", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetClusterId sets the ClusterId field's value.
+func (s *SecureNamespaceInfo) SetClusterId(v string) *SecureNamespaceInfo {
+	s.ClusterId = &v
+	return s
+}
+
+// SetNamespace sets the Namespace field's value.
+func (s *SecureNamespaceInfo) SetNamespace(v string) *SecureNamespaceInfo {
+	s.Namespace = &v
+	return s
+}
+
+// Inputs related to the security configuration. Security configurations in
+// Amazon EMR on EKS are templates for different security setups. You can use
+// security configurations to configure the Lake Formation integration setup.
+// You can also create a security configuration to re-use a security setup each
+// time you create a virtual cluster.
+type SecurityConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN (Amazon Resource Name) of the security configuration.
+	Arn *string `locationName:"arn" min:"60" type:"string"`
+
+	// The date and time that the job run was created.
+	CreatedAt *time.Time `locationName:"createdAt" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The user who created the job run.
+	CreatedBy *string `locationName:"createdBy" min:"20" type:"string"`
+
+	// The ID of the security configuration.
+	Id *string `locationName:"id" min:"1" type:"string"`
+
+	// The name of the security configuration.
+	Name *string `locationName:"name" min:"1" type:"string"`
+
+	// Security configuration inputs for the request.
+	SecurityConfigurationData *SecurityConfigurationData `locationName:"securityConfigurationData" type:"structure"`
+
+	// The tags to assign to the security configuration.
+	Tags map[string]*string `locationName:"tags" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecurityConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecurityConfiguration) GoString() string {
+	return s.String()
+}
+
+// SetArn sets the Arn field's value.
+func (s *SecurityConfiguration) SetArn(v string) *SecurityConfiguration {
+	s.Arn = &v
+	return s
+}
+
+// SetCreatedAt sets the CreatedAt field's value.
+func (s *SecurityConfiguration) SetCreatedAt(v time.Time) *SecurityConfiguration {
+	s.CreatedAt = &v
+	return s
+}
+
+// SetCreatedBy sets the CreatedBy field's value.
+func (s *SecurityConfiguration) SetCreatedBy(v string) *SecurityConfiguration {
+	s.CreatedBy = &v
+	return s
+}
+
+// SetId sets the Id field's value.
+func (s *SecurityConfiguration) SetId(v string) *SecurityConfiguration {
+	s.Id = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *SecurityConfiguration) SetName(v string) *SecurityConfiguration {
+	s.Name = &v
+	return s
+}
+
+// SetSecurityConfigurationData sets the SecurityConfigurationData field's value.
+func (s *SecurityConfiguration) SetSecurityConfigurationData(v *SecurityConfigurationData) *SecurityConfiguration {
+	s.SecurityConfigurationData = v
+	return s
+}
+
+// SetTags sets the Tags field's value.
+func (s *SecurityConfiguration) SetTags(v map[string]*string) *SecurityConfiguration {
+	s.Tags = v
+	return s
+}
+
+// Configurations related to the security configuration for the request.
+type SecurityConfigurationData struct {
+	_ struct{} `type:"structure"`
+
+	// Authorization-related configuration input for the security configuration.
+	AuthorizationConfiguration *AuthorizationConfiguration `locationName:"authorizationConfiguration" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecurityConfigurationData) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SecurityConfigurationData) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SecurityConfigurationData) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SecurityConfigurationData"}
+	if s.AuthorizationConfiguration != nil {
+		if err := s.AuthorizationConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("AuthorizationConfiguration", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAuthorizationConfiguration sets the AuthorizationConfiguration field's value.
+func (s *SecurityConfigurationData) SetAuthorizationConfiguration(v *AuthorizationConfiguration) *SecurityConfigurationData {
+	s.AuthorizationConfiguration = v
+	return s
+}
+
+// The job driver for job type.
+type SparkSqlJobDriver struct {
+	_ struct{} `type:"structure"`
+
+	// The SQL file to be executed.
+	//
+	// EntryPoint is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SparkSqlJobDriver's
+	// String and GoString methods.
+	EntryPoint *string `locationName:"entryPoint" min:"1" type:"string" sensitive:"true"`
+
+	// The Spark parameters to be included in the Spark SQL command.
+	//
+	// SparkSqlParameters is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SparkSqlJobDriver's
+	// String and GoString methods.
+	SparkSqlParameters *string `locationName:"sparkSqlParameters" min:"1" type:"string" sensitive:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SparkSqlJobDriver) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SparkSqlJobDriver) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *SparkSqlJobDriver) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "SparkSqlJobDriver"}
+	if s.EntryPoint != nil && len(*s.EntryPoint) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("EntryPoint", 1))
+	}
+	if s.SparkSqlParameters != nil && len(*s.SparkSqlParameters) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SparkSqlParameters", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEntryPoint sets the EntryPoint field's value.
+func (s *SparkSqlJobDriver) SetEntryPoint(v string) *SparkSqlJobDriver {
+	s.EntryPoint = &v
+	return s
+}
+
+// SetSparkSqlParameters sets the SparkSqlParameters field's value.
+func (s *SparkSqlJobDriver) SetSparkSqlParameters(v string) *SparkSqlJobDriver {
+	s.SparkSqlParameters = &v
+	return s
+}
+
 // The information about job driver for Spark submit.
 type SparkSubmitJobDriver struct {
 	_ struct{} `type:"structure"`
 
 	// The entry point of job application.
+	//
+	// EntryPoint is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SparkSubmitJobDriver's
+	// String and GoString methods.
 	//
 	// EntryPoint is a required field
 	EntryPoint *string `locationName:"entryPoint" min:"1" type:"string" required:"true" sensitive:"true"`
@@ -3678,15 +7143,27 @@ type SparkSubmitJobDriver struct {
 	EntryPointArguments []*string `locationName:"entryPointArguments" type:"list"`
 
 	// The Spark submit parameters that are used for job runs.
+	//
+	// SparkSubmitParameters is a sensitive parameter and its value will be
+	// replaced with "sensitive" in string returned by SparkSubmitJobDriver's
+	// String and GoString methods.
 	SparkSubmitParameters *string `locationName:"sparkSubmitParameters" min:"1" type:"string" sensitive:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SparkSubmitJobDriver) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SparkSubmitJobDriver) GoString() string {
 	return s.String()
 }
@@ -3738,22 +7215,25 @@ type StartJobRunInput struct {
 	ConfigurationOverrides *ConfigurationOverrides `locationName:"configurationOverrides" type:"structure"`
 
 	// The execution role ARN for the job run.
-	//
-	// ExecutionRoleArn is a required field
-	ExecutionRoleArn *string `locationName:"executionRoleArn" min:"20" type:"string" required:"true"`
+	ExecutionRoleArn *string `locationName:"executionRoleArn" min:"20" type:"string"`
 
 	// The job driver for the job run.
-	//
-	// JobDriver is a required field
-	JobDriver *JobDriver `locationName:"jobDriver" type:"structure" required:"true"`
+	JobDriver *JobDriver `locationName:"jobDriver" type:"structure"`
+
+	// The job template ID to be used to start the job run.
+	JobTemplateId *string `locationName:"jobTemplateId" min:"1" type:"string"`
+
+	// The values of job template parameters to start a job run.
+	JobTemplateParameters map[string]*string `locationName:"jobTemplateParameters" type:"map"`
 
 	// The name of the job run.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
 	// The Amazon EMR release version to use for the job run.
-	//
-	// ReleaseLabel is a required field
-	ReleaseLabel *string `locationName:"releaseLabel" min:"1" type:"string" required:"true"`
+	ReleaseLabel *string `locationName:"releaseLabel" min:"1" type:"string"`
+
+	// The retry policy configuration for the job run.
+	RetryPolicyConfiguration *RetryPolicyConfiguration `locationName:"retryPolicyConfiguration" type:"structure"`
 
 	// The tags assigned to job runs.
 	Tags map[string]*string `locationName:"tags" type:"map"`
@@ -3764,12 +7244,20 @@ type StartJobRunInput struct {
 	VirtualClusterId *string `location:"uri" locationName:"virtualClusterId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartJobRunInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartJobRunInput) GoString() string {
 	return s.String()
 }
@@ -3780,20 +7268,14 @@ func (s *StartJobRunInput) Validate() error {
 	if s.ClientToken != nil && len(*s.ClientToken) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ClientToken", 1))
 	}
-	if s.ExecutionRoleArn == nil {
-		invalidParams.Add(request.NewErrParamRequired("ExecutionRoleArn"))
-	}
 	if s.ExecutionRoleArn != nil && len(*s.ExecutionRoleArn) < 20 {
 		invalidParams.Add(request.NewErrParamMinLen("ExecutionRoleArn", 20))
 	}
-	if s.JobDriver == nil {
-		invalidParams.Add(request.NewErrParamRequired("JobDriver"))
+	if s.JobTemplateId != nil && len(*s.JobTemplateId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("JobTemplateId", 1))
 	}
 	if s.Name != nil && len(*s.Name) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("Name", 1))
-	}
-	if s.ReleaseLabel == nil {
-		invalidParams.Add(request.NewErrParamRequired("ReleaseLabel"))
 	}
 	if s.ReleaseLabel != nil && len(*s.ReleaseLabel) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ReleaseLabel", 1))
@@ -3812,6 +7294,11 @@ func (s *StartJobRunInput) Validate() error {
 	if s.JobDriver != nil {
 		if err := s.JobDriver.Validate(); err != nil {
 			invalidParams.AddNested("JobDriver", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.RetryPolicyConfiguration != nil {
+		if err := s.RetryPolicyConfiguration.Validate(); err != nil {
+			invalidParams.AddNested("RetryPolicyConfiguration", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -3845,6 +7332,18 @@ func (s *StartJobRunInput) SetJobDriver(v *JobDriver) *StartJobRunInput {
 	return s
 }
 
+// SetJobTemplateId sets the JobTemplateId field's value.
+func (s *StartJobRunInput) SetJobTemplateId(v string) *StartJobRunInput {
+	s.JobTemplateId = &v
+	return s
+}
+
+// SetJobTemplateParameters sets the JobTemplateParameters field's value.
+func (s *StartJobRunInput) SetJobTemplateParameters(v map[string]*string) *StartJobRunInput {
+	s.JobTemplateParameters = v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *StartJobRunInput) SetName(v string) *StartJobRunInput {
 	s.Name = &v
@@ -3854,6 +7353,12 @@ func (s *StartJobRunInput) SetName(v string) *StartJobRunInput {
 // SetReleaseLabel sets the ReleaseLabel field's value.
 func (s *StartJobRunInput) SetReleaseLabel(v string) *StartJobRunInput {
 	s.ReleaseLabel = &v
+	return s
+}
+
+// SetRetryPolicyConfiguration sets the RetryPolicyConfiguration field's value.
+func (s *StartJobRunInput) SetRetryPolicyConfiguration(v *RetryPolicyConfiguration) *StartJobRunInput {
+	s.RetryPolicyConfiguration = v
 	return s
 }
 
@@ -3885,12 +7390,20 @@ type StartJobRunOutput struct {
 	VirtualClusterId *string `locationName:"virtualClusterId" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartJobRunOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartJobRunOutput) GoString() string {
 	return s.String()
 }
@@ -3919,6 +7432,74 @@ func (s *StartJobRunOutput) SetVirtualClusterId(v string) *StartJobRunOutput {
 	return s
 }
 
+// Configurations related to the TLS certificate for the security configuration.
+type TLSCertificateConfiguration struct {
+	_ struct{} `type:"structure"`
+
+	// The TLS certificate type. Acceptable values: PEM or Custom.
+	CertificateProviderType *string `locationName:"certificateProviderType" type:"string" enum:"CertificateProviderType"`
+
+	// Secrets Manager ARN that contains the private TLS certificate contents, used
+	// for communication between the user job and the system job.
+	PrivateCertificateSecretArn *string `locationName:"privateCertificateSecretArn" min:"3" type:"string"`
+
+	// Secrets Manager ARN that contains the public TLS certificate contents, used
+	// for communication between the user job and the system job.
+	PublicCertificateSecretArn *string `locationName:"publicCertificateSecretArn" min:"3" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TLSCertificateConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TLSCertificateConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TLSCertificateConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TLSCertificateConfiguration"}
+	if s.PrivateCertificateSecretArn != nil && len(*s.PrivateCertificateSecretArn) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("PrivateCertificateSecretArn", 3))
+	}
+	if s.PublicCertificateSecretArn != nil && len(*s.PublicCertificateSecretArn) < 3 {
+		invalidParams.Add(request.NewErrParamMinLen("PublicCertificateSecretArn", 3))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCertificateProviderType sets the CertificateProviderType field's value.
+func (s *TLSCertificateConfiguration) SetCertificateProviderType(v string) *TLSCertificateConfiguration {
+	s.CertificateProviderType = &v
+	return s
+}
+
+// SetPrivateCertificateSecretArn sets the PrivateCertificateSecretArn field's value.
+func (s *TLSCertificateConfiguration) SetPrivateCertificateSecretArn(v string) *TLSCertificateConfiguration {
+	s.PrivateCertificateSecretArn = &v
+	return s
+}
+
+// SetPublicCertificateSecretArn sets the PublicCertificateSecretArn field's value.
+func (s *TLSCertificateConfiguration) SetPublicCertificateSecretArn(v string) *TLSCertificateConfiguration {
+	s.PublicCertificateSecretArn = &v
+	return s
+}
+
 type TagResourceInput struct {
 	_ struct{} `type:"structure"`
 
@@ -3933,12 +7514,20 @@ type TagResourceInput struct {
 	Tags map[string]*string `locationName:"tags" type:"map" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) GoString() string {
 	return s.String()
 }
@@ -3978,18 +7567,81 @@ type TagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
 
-type UntagResourceInput struct {
+// The configuration of a job template parameter.
+type TemplateParameterConfiguration struct {
 	_ struct{} `type:"structure"`
+
+	// The default value for the job template parameter.
+	DefaultValue *string `locationName:"defaultValue" min:"1" type:"string"`
+
+	// The type of the job template parameter. Allowed values are: ‘STRING’,
+	// ‘NUMBER’.
+	Type *string `locationName:"type" type:"string" enum:"TemplateParameterDataType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TemplateParameterConfiguration) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s TemplateParameterConfiguration) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *TemplateParameterConfiguration) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "TemplateParameterConfiguration"}
+	if s.DefaultValue != nil && len(*s.DefaultValue) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DefaultValue", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDefaultValue sets the DefaultValue field's value.
+func (s *TemplateParameterConfiguration) SetDefaultValue(v string) *TemplateParameterConfiguration {
+	s.DefaultValue = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *TemplateParameterConfiguration) SetType(v string) *TemplateParameterConfiguration {
+	s.Type = &v
+	return s
+}
+
+type UntagResourceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The ARN of resources.
 	//
@@ -4002,12 +7654,20 @@ type UntagResourceInput struct {
 	TagKeys []*string `location:"querystring" locationName:"tagKeys" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) GoString() string {
 	return s.String()
 }
@@ -4047,12 +7707,20 @@ type UntagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -4065,12 +7733,20 @@ type ValidationException struct {
 	Message_ *string `locationName:"message" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ValidationException) GoString() string {
 	return s.String()
 }
@@ -4117,9 +7793,9 @@ func (s *ValidationException) RequestID() string {
 // namespace that Amazon EMR is registered with. Amazon EMR uses virtual clusters
 // to run jobs and host endpoints. Multiple virtual clusters can be backed by
 // the same physical cluster. However, each virtual cluster maps to one namespace
-// on an EKS cluster. Virtual clusters do not create any active resources that
-// contribute to your bill or that require lifecycle management outside the
-// service.
+// on an Amazon EKS cluster. Virtual clusters do not create any active resources
+// that contribute to your bill or that require lifecycle management outside
+// the service.
 type VirtualCluster struct {
 	_ struct{} `type:"structure"`
 
@@ -4138,6 +7814,9 @@ type VirtualCluster struct {
 	// The name of the virtual cluster.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
+	// The ID of the security configuration.
+	SecurityConfigurationId *string `locationName:"securityConfigurationId" min:"1" type:"string"`
+
 	// The state of the virtual cluster.
 	State *string `locationName:"state" type:"string" enum:"VirtualClusterState"`
 
@@ -4145,12 +7824,20 @@ type VirtualCluster struct {
 	Tags map[string]*string `locationName:"tags" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s VirtualCluster) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s VirtualCluster) GoString() string {
 	return s.String()
 }
@@ -4185,6 +7872,12 @@ func (s *VirtualCluster) SetName(v string) *VirtualCluster {
 	return s
 }
 
+// SetSecurityConfigurationId sets the SecurityConfigurationId field's value.
+func (s *VirtualCluster) SetSecurityConfigurationId(v string) *VirtualCluster {
+	s.SecurityConfigurationId = &v
+	return s
+}
+
 // SetState sets the State field's value.
 func (s *VirtualCluster) SetState(v string) *VirtualCluster {
 	s.State = &v
@@ -4195,6 +7888,18 @@ func (s *VirtualCluster) SetState(v string) *VirtualCluster {
 func (s *VirtualCluster) SetTags(v map[string]*string) *VirtualCluster {
 	s.Tags = v
 	return s
+}
+
+const (
+	// CertificateProviderTypePem is a CertificateProviderType enum value
+	CertificateProviderTypePem = "PEM"
+)
+
+// CertificateProviderType_Values returns all elements of the CertificateProviderType enum
+func CertificateProviderType_Values() []string {
+	return []string{
+		CertificateProviderTypePem,
+	}
 }
 
 const (
@@ -4310,6 +8015,22 @@ func PersistentAppUI_Values() []string {
 	return []string{
 		PersistentAppUIEnabled,
 		PersistentAppUIDisabled,
+	}
+}
+
+const (
+	// TemplateParameterDataTypeNumber is a TemplateParameterDataType enum value
+	TemplateParameterDataTypeNumber = "NUMBER"
+
+	// TemplateParameterDataTypeString is a TemplateParameterDataType enum value
+	TemplateParameterDataTypeString = "STRING"
+)
+
+// TemplateParameterDataType_Values returns all elements of the TemplateParameterDataType enum
+func TemplateParameterDataType_Values() []string {
+	return []string{
+		TemplateParameterDataTypeNumber,
+		TemplateParameterDataTypeString,
 	}
 }
 

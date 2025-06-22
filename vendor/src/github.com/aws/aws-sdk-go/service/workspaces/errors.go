@@ -14,6 +14,36 @@ const (
 	// The user is not authorized to access a resource.
 	ErrCodeAccessDeniedException = "AccessDeniedException"
 
+	// ErrCodeApplicationNotSupportedException for service response error code
+	// "ApplicationNotSupportedException".
+	//
+	// The specified application is not supported.
+	ErrCodeApplicationNotSupportedException = "ApplicationNotSupportedException"
+
+	// ErrCodeComputeNotCompatibleException for service response error code
+	// "ComputeNotCompatibleException".
+	//
+	// The compute type of the WorkSpace is not compatible with the application.
+	ErrCodeComputeNotCompatibleException = "ComputeNotCompatibleException"
+
+	// ErrCodeConflictException for service response error code
+	// "ConflictException".
+	//
+	// The TargetAccountId is already linked or invited.
+	ErrCodeConflictException = "ConflictException"
+
+	// ErrCodeIncompatibleApplicationsException for service response error code
+	// "IncompatibleApplicationsException".
+	//
+	// The specified application is not compatible with the resource.
+	ErrCodeIncompatibleApplicationsException = "IncompatibleApplicationsException"
+
+	// ErrCodeInternalServerException for service response error code
+	// "InternalServerException".
+	//
+	// Unexpected server error occured.
+	ErrCodeInternalServerException = "InternalServerException"
+
 	// ErrCodeInvalidParameterValuesException for service response error code
 	// "InvalidParameterValuesException".
 	//
@@ -25,6 +55,12 @@ const (
 	//
 	// The state of the resource is not valid for this operation.
 	ErrCodeInvalidResourceStateException = "InvalidResourceStateException"
+
+	// ErrCodeOperatingSystemNotCompatibleException for service response error code
+	// "OperatingSystemNotCompatibleException".
+	//
+	// The operating system of the WorkSpace is not compatible with the application.
+	ErrCodeOperatingSystemNotCompatibleException = "OperatingSystemNotCompatibleException"
 
 	// ErrCodeOperationInProgressException for service response error code
 	// "OperationInProgressException".
@@ -56,6 +92,12 @@ const (
 	//
 	// The resource could not be created.
 	ErrCodeResourceCreationFailedException = "ResourceCreationFailedException"
+
+	// ErrCodeResourceInUseException for service response error code
+	// "ResourceInUseException".
+	//
+	// The specified resource is currently in use.
+	ErrCodeResourceInUseException = "ResourceInUseException"
 
 	// ErrCodeResourceLimitExceededException for service response error code
 	// "ResourceLimitExceededException".
@@ -92,6 +134,13 @@ const (
 	// WorkSpaces (https://docs.aws.amazon.com/workspaces/latest/adminguide/required-service-components.html).
 	ErrCodeUnsupportedWorkspaceConfigurationException = "UnsupportedWorkspaceConfigurationException"
 
+	// ErrCodeValidationException for service response error code
+	// "ValidationException".
+	//
+	// You either haven't provided a TargetAccountId or are using the same value
+	// for TargetAccountId and SourceAccountId.
+	ErrCodeValidationException = "ValidationException"
+
 	// ErrCodeWorkspacesDefaultRoleNotFoundException for service response error code
 	// "WorkspacesDefaultRoleNotFoundException".
 	//
@@ -104,17 +153,25 @@ const (
 
 var exceptionFromCode = map[string]func(protocol.ResponseMetadata) error{
 	"AccessDeniedException":                      newErrorAccessDeniedException,
+	"ApplicationNotSupportedException":           newErrorApplicationNotSupportedException,
+	"ComputeNotCompatibleException":              newErrorComputeNotCompatibleException,
+	"ConflictException":                          newErrorConflictException,
+	"IncompatibleApplicationsException":          newErrorIncompatibleApplicationsException,
+	"InternalServerException":                    newErrorInternalServerException,
 	"InvalidParameterValuesException":            newErrorInvalidParameterValuesException,
 	"InvalidResourceStateException":              newErrorInvalidResourceStateException,
+	"OperatingSystemNotCompatibleException":      newErrorOperatingSystemNotCompatibleException,
 	"OperationInProgressException":               newErrorOperationInProgressException,
 	"OperationNotSupportedException":             newErrorOperationNotSupportedException,
 	"ResourceAlreadyExistsException":             newErrorResourceAlreadyExistsException,
 	"ResourceAssociatedException":                newErrorResourceAssociatedException,
 	"ResourceCreationFailedException":            newErrorResourceCreationFailedException,
+	"ResourceInUseException":                     newErrorResourceInUseException,
 	"ResourceLimitExceededException":             newErrorResourceLimitExceededException,
 	"ResourceNotFoundException":                  newErrorResourceNotFoundException,
 	"ResourceUnavailableException":               newErrorResourceUnavailableException,
 	"UnsupportedNetworkConfigurationException":   newErrorUnsupportedNetworkConfigurationException,
 	"UnsupportedWorkspaceConfigurationException": newErrorUnsupportedWorkspaceConfigurationException,
+	"ValidationException":                        newErrorValidationException,
 	"WorkspacesDefaultRoleNotFoundException":     newErrorWorkspacesDefaultRoleNotFoundException,
 }

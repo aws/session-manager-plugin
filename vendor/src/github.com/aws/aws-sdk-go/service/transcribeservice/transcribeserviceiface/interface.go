@@ -23,37 +23,37 @@ import (
 // can be stubbed out for unit testing your code with the SDK without needing
 // to inject custom request handlers into the SDK's request pipeline.
 //
-//    // myFunc uses an SDK service client to make a request to
-//    // Amazon Transcribe Service.
-//    func myFunc(svc transcribeserviceiface.TranscribeServiceAPI) bool {
-//        // Make svc.CreateCallAnalyticsCategory request
-//    }
+//	// myFunc uses an SDK service client to make a request to
+//	// Amazon Transcribe Service.
+//	func myFunc(svc transcribeserviceiface.TranscribeServiceAPI) bool {
+//	    // Make svc.CreateCallAnalyticsCategory request
+//	}
 //
-//    func main() {
-//        sess := session.New()
-//        svc := transcribeservice.New(sess)
+//	func main() {
+//	    sess := session.New()
+//	    svc := transcribeservice.New(sess)
 //
-//        myFunc(svc)
-//    }
+//	    myFunc(svc)
+//	}
 //
 // In your _test.go file:
 //
-//    // Define a mock struct to be used in your unit tests of myFunc.
-//    type mockTranscribeServiceClient struct {
-//        transcribeserviceiface.TranscribeServiceAPI
-//    }
-//    func (m *mockTranscribeServiceClient) CreateCallAnalyticsCategory(input *transcribeservice.CreateCallAnalyticsCategoryInput) (*transcribeservice.CreateCallAnalyticsCategoryOutput, error) {
-//        // mock response/functionality
-//    }
+//	// Define a mock struct to be used in your unit tests of myFunc.
+//	type mockTranscribeServiceClient struct {
+//	    transcribeserviceiface.TranscribeServiceAPI
+//	}
+//	func (m *mockTranscribeServiceClient) CreateCallAnalyticsCategory(input *transcribeservice.CreateCallAnalyticsCategoryInput) (*transcribeservice.CreateCallAnalyticsCategoryOutput, error) {
+//	    // mock response/functionality
+//	}
 //
-//    func TestMyFunc(t *testing.T) {
-//        // Setup Test
-//        mockSvc := &mockTranscribeServiceClient{}
+//	func TestMyFunc(t *testing.T) {
+//	    // Setup Test
+//	    mockSvc := &mockTranscribeServiceClient{}
 //
-//        myfunc(mockSvc)
+//	    myfunc(mockSvc)
 //
-//        // Verify myFunc's functionality
-//    }
+//	    // Verify myFunc's functionality
+//	}
 //
 // It is important to note that this interface will have breaking changes
 // when the service model is updated and adds new API operations, paginators,
@@ -92,6 +92,10 @@ type TranscribeServiceAPI interface {
 	DeleteLanguageModelWithContext(aws.Context, *transcribeservice.DeleteLanguageModelInput, ...request.Option) (*transcribeservice.DeleteLanguageModelOutput, error)
 	DeleteLanguageModelRequest(*transcribeservice.DeleteLanguageModelInput) (*request.Request, *transcribeservice.DeleteLanguageModelOutput)
 
+	DeleteMedicalScribeJob(*transcribeservice.DeleteMedicalScribeJobInput) (*transcribeservice.DeleteMedicalScribeJobOutput, error)
+	DeleteMedicalScribeJobWithContext(aws.Context, *transcribeservice.DeleteMedicalScribeJobInput, ...request.Option) (*transcribeservice.DeleteMedicalScribeJobOutput, error)
+	DeleteMedicalScribeJobRequest(*transcribeservice.DeleteMedicalScribeJobInput) (*request.Request, *transcribeservice.DeleteMedicalScribeJobOutput)
+
 	DeleteMedicalTranscriptionJob(*transcribeservice.DeleteMedicalTranscriptionJobInput) (*transcribeservice.DeleteMedicalTranscriptionJobOutput, error)
 	DeleteMedicalTranscriptionJobWithContext(aws.Context, *transcribeservice.DeleteMedicalTranscriptionJobInput, ...request.Option) (*transcribeservice.DeleteMedicalTranscriptionJobOutput, error)
 	DeleteMedicalTranscriptionJobRequest(*transcribeservice.DeleteMedicalTranscriptionJobInput) (*request.Request, *transcribeservice.DeleteMedicalTranscriptionJobOutput)
@@ -123,6 +127,10 @@ type TranscribeServiceAPI interface {
 	GetCallAnalyticsJob(*transcribeservice.GetCallAnalyticsJobInput) (*transcribeservice.GetCallAnalyticsJobOutput, error)
 	GetCallAnalyticsJobWithContext(aws.Context, *transcribeservice.GetCallAnalyticsJobInput, ...request.Option) (*transcribeservice.GetCallAnalyticsJobOutput, error)
 	GetCallAnalyticsJobRequest(*transcribeservice.GetCallAnalyticsJobInput) (*request.Request, *transcribeservice.GetCallAnalyticsJobOutput)
+
+	GetMedicalScribeJob(*transcribeservice.GetMedicalScribeJobInput) (*transcribeservice.GetMedicalScribeJobOutput, error)
+	GetMedicalScribeJobWithContext(aws.Context, *transcribeservice.GetMedicalScribeJobInput, ...request.Option) (*transcribeservice.GetMedicalScribeJobOutput, error)
+	GetMedicalScribeJobRequest(*transcribeservice.GetMedicalScribeJobInput) (*request.Request, *transcribeservice.GetMedicalScribeJobOutput)
 
 	GetMedicalTranscriptionJob(*transcribeservice.GetMedicalTranscriptionJobInput) (*transcribeservice.GetMedicalTranscriptionJobOutput, error)
 	GetMedicalTranscriptionJobWithContext(aws.Context, *transcribeservice.GetMedicalTranscriptionJobInput, ...request.Option) (*transcribeservice.GetMedicalTranscriptionJobOutput, error)
@@ -165,6 +173,13 @@ type TranscribeServiceAPI interface {
 	ListLanguageModelsPages(*transcribeservice.ListLanguageModelsInput, func(*transcribeservice.ListLanguageModelsOutput, bool) bool) error
 	ListLanguageModelsPagesWithContext(aws.Context, *transcribeservice.ListLanguageModelsInput, func(*transcribeservice.ListLanguageModelsOutput, bool) bool, ...request.Option) error
 
+	ListMedicalScribeJobs(*transcribeservice.ListMedicalScribeJobsInput) (*transcribeservice.ListMedicalScribeJobsOutput, error)
+	ListMedicalScribeJobsWithContext(aws.Context, *transcribeservice.ListMedicalScribeJobsInput, ...request.Option) (*transcribeservice.ListMedicalScribeJobsOutput, error)
+	ListMedicalScribeJobsRequest(*transcribeservice.ListMedicalScribeJobsInput) (*request.Request, *transcribeservice.ListMedicalScribeJobsOutput)
+
+	ListMedicalScribeJobsPages(*transcribeservice.ListMedicalScribeJobsInput, func(*transcribeservice.ListMedicalScribeJobsOutput, bool) bool) error
+	ListMedicalScribeJobsPagesWithContext(aws.Context, *transcribeservice.ListMedicalScribeJobsInput, func(*transcribeservice.ListMedicalScribeJobsOutput, bool) bool, ...request.Option) error
+
 	ListMedicalTranscriptionJobs(*transcribeservice.ListMedicalTranscriptionJobsInput) (*transcribeservice.ListMedicalTranscriptionJobsOutput, error)
 	ListMedicalTranscriptionJobsWithContext(aws.Context, *transcribeservice.ListMedicalTranscriptionJobsInput, ...request.Option) (*transcribeservice.ListMedicalTranscriptionJobsOutput, error)
 	ListMedicalTranscriptionJobsRequest(*transcribeservice.ListMedicalTranscriptionJobsInput) (*request.Request, *transcribeservice.ListMedicalTranscriptionJobsOutput)
@@ -178,6 +193,10 @@ type TranscribeServiceAPI interface {
 
 	ListMedicalVocabulariesPages(*transcribeservice.ListMedicalVocabulariesInput, func(*transcribeservice.ListMedicalVocabulariesOutput, bool) bool) error
 	ListMedicalVocabulariesPagesWithContext(aws.Context, *transcribeservice.ListMedicalVocabulariesInput, func(*transcribeservice.ListMedicalVocabulariesOutput, bool) bool, ...request.Option) error
+
+	ListTagsForResource(*transcribeservice.ListTagsForResourceInput) (*transcribeservice.ListTagsForResourceOutput, error)
+	ListTagsForResourceWithContext(aws.Context, *transcribeservice.ListTagsForResourceInput, ...request.Option) (*transcribeservice.ListTagsForResourceOutput, error)
+	ListTagsForResourceRequest(*transcribeservice.ListTagsForResourceInput) (*request.Request, *transcribeservice.ListTagsForResourceOutput)
 
 	ListTranscriptionJobs(*transcribeservice.ListTranscriptionJobsInput) (*transcribeservice.ListTranscriptionJobsOutput, error)
 	ListTranscriptionJobsWithContext(aws.Context, *transcribeservice.ListTranscriptionJobsInput, ...request.Option) (*transcribeservice.ListTranscriptionJobsOutput, error)
@@ -204,6 +223,10 @@ type TranscribeServiceAPI interface {
 	StartCallAnalyticsJobWithContext(aws.Context, *transcribeservice.StartCallAnalyticsJobInput, ...request.Option) (*transcribeservice.StartCallAnalyticsJobOutput, error)
 	StartCallAnalyticsJobRequest(*transcribeservice.StartCallAnalyticsJobInput) (*request.Request, *transcribeservice.StartCallAnalyticsJobOutput)
 
+	StartMedicalScribeJob(*transcribeservice.StartMedicalScribeJobInput) (*transcribeservice.StartMedicalScribeJobOutput, error)
+	StartMedicalScribeJobWithContext(aws.Context, *transcribeservice.StartMedicalScribeJobInput, ...request.Option) (*transcribeservice.StartMedicalScribeJobOutput, error)
+	StartMedicalScribeJobRequest(*transcribeservice.StartMedicalScribeJobInput) (*request.Request, *transcribeservice.StartMedicalScribeJobOutput)
+
 	StartMedicalTranscriptionJob(*transcribeservice.StartMedicalTranscriptionJobInput) (*transcribeservice.StartMedicalTranscriptionJobOutput, error)
 	StartMedicalTranscriptionJobWithContext(aws.Context, *transcribeservice.StartMedicalTranscriptionJobInput, ...request.Option) (*transcribeservice.StartMedicalTranscriptionJobOutput, error)
 	StartMedicalTranscriptionJobRequest(*transcribeservice.StartMedicalTranscriptionJobInput) (*request.Request, *transcribeservice.StartMedicalTranscriptionJobOutput)
@@ -211,6 +234,14 @@ type TranscribeServiceAPI interface {
 	StartTranscriptionJob(*transcribeservice.StartTranscriptionJobInput) (*transcribeservice.StartTranscriptionJobOutput, error)
 	StartTranscriptionJobWithContext(aws.Context, *transcribeservice.StartTranscriptionJobInput, ...request.Option) (*transcribeservice.StartTranscriptionJobOutput, error)
 	StartTranscriptionJobRequest(*transcribeservice.StartTranscriptionJobInput) (*request.Request, *transcribeservice.StartTranscriptionJobOutput)
+
+	TagResource(*transcribeservice.TagResourceInput) (*transcribeservice.TagResourceOutput, error)
+	TagResourceWithContext(aws.Context, *transcribeservice.TagResourceInput, ...request.Option) (*transcribeservice.TagResourceOutput, error)
+	TagResourceRequest(*transcribeservice.TagResourceInput) (*request.Request, *transcribeservice.TagResourceOutput)
+
+	UntagResource(*transcribeservice.UntagResourceInput) (*transcribeservice.UntagResourceOutput, error)
+	UntagResourceWithContext(aws.Context, *transcribeservice.UntagResourceInput, ...request.Option) (*transcribeservice.UntagResourceOutput, error)
+	UntagResourceRequest(*transcribeservice.UntagResourceInput) (*request.Request, *transcribeservice.UntagResourceOutput)
 
 	UpdateCallAnalyticsCategory(*transcribeservice.UpdateCallAnalyticsCategoryInput) (*transcribeservice.UpdateCallAnalyticsCategoryOutput, error)
 	UpdateCallAnalyticsCategoryWithContext(aws.Context, *transcribeservice.UpdateCallAnalyticsCategoryInput, ...request.Option) (*transcribeservice.UpdateCallAnalyticsCategoryOutput, error)

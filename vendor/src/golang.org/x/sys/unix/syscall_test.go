@@ -2,12 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-// +build darwin dragonfly freebsd linux netbsd openbsd solaris
+//go:build aix || darwin || dragonfly || freebsd || linux || netbsd || openbsd || solaris
 
 package unix_test
 
 import (
-	"fmt"
 	"testing"
 
 	"golang.org/x/sys/unix"
@@ -33,22 +32,6 @@ func TestEnv(t *testing.T) {
 	testSetGetenv(t, "TESTENV", "")
 }
 
-func TestItoa(t *testing.T) {
-	// Make most negative integer: 0x8000...
-	i := 1
-	for i<<1 != 0 {
-		i <<= 1
-	}
-	if i >= 0 {
-		t.Fatal("bad math")
-	}
-	s := unix.Itoa(i)
-	f := fmt.Sprint(i)
-	if s != f {
-		t.Fatalf("itoa(%d) = %s, want %s", i, s, f)
-	}
-}
-
 func TestUname(t *testing.T) {
 	var utsname unix.Utsname
 	err := unix.Uname(&utsname)
@@ -57,4 +40,15 @@ func TestUname(t *testing.T) {
 	}
 
 	t.Logf("OS: %s/%s %s", utsname.Sysname[:], utsname.Machine[:], utsname.Release[:])
+}
+
+// Test that this compiles. (Issue #31735)
+func TestStatFieldNames(t *testing.T) {
+	var st unix.Stat_t
+	var _ *unix.Timespec
+	_ = &st.Atim
+	_ = &st.Mtim
+	_ = &st.Ctim
+	_ = int64(st.Mtim.Sec)
+	_ = int64(st.Mtim.Nsec)
 }

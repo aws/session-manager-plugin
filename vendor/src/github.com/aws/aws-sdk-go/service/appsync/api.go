@@ -4,6 +4,7 @@ package appsync
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awsutil"
@@ -11,6 +12,292 @@ import (
 	"github.com/aws/aws-sdk-go/private/protocol"
 	"github.com/aws/aws-sdk-go/private/protocol/restjson"
 )
+
+const opAssociateApi = "AssociateApi"
+
+// AssociateApiRequest generates a "aws/request.Request" representing the
+// client's request for the AssociateApi operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssociateApi for more information on using the AssociateApi
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the AssociateApiRequest method.
+//	req, resp := client.AssociateApiRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/AssociateApi
+func (c *AppSync) AssociateApiRequest(input *AssociateApiInput) (req *request.Request, output *AssociateApiOutput) {
+	op := &request.Operation{
+		Name:       opAssociateApi,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/domainnames/{domainName}/apiassociation",
+	}
+
+	if input == nil {
+		input = &AssociateApiInput{}
+	}
+
+	output = &AssociateApiOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// AssociateApi API operation for AWS AppSync.
+//
+// Maps an endpoint to your custom domain.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation AssociateApi for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/AssociateApi
+func (c *AppSync) AssociateApi(input *AssociateApiInput) (*AssociateApiOutput, error) {
+	req, out := c.AssociateApiRequest(input)
+	return out, req.Send()
+}
+
+// AssociateApiWithContext is the same as AssociateApi with the addition of
+// the ability to pass a context and additional request options.
+//
+// See AssociateApi for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) AssociateApiWithContext(ctx aws.Context, input *AssociateApiInput, opts ...request.Option) (*AssociateApiOutput, error) {
+	req, out := c.AssociateApiRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opAssociateMergedGraphqlApi = "AssociateMergedGraphqlApi"
+
+// AssociateMergedGraphqlApiRequest generates a "aws/request.Request" representing the
+// client's request for the AssociateMergedGraphqlApi operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssociateMergedGraphqlApi for more information on using the AssociateMergedGraphqlApi
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the AssociateMergedGraphqlApiRequest method.
+//	req, resp := client.AssociateMergedGraphqlApiRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/AssociateMergedGraphqlApi
+func (c *AppSync) AssociateMergedGraphqlApiRequest(input *AssociateMergedGraphqlApiInput) (req *request.Request, output *AssociateMergedGraphqlApiOutput) {
+	op := &request.Operation{
+		Name:       opAssociateMergedGraphqlApi,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/sourceApis/{sourceApiIdentifier}/mergedApiAssociations",
+	}
+
+	if input == nil {
+		input = &AssociateMergedGraphqlApiInput{}
+	}
+
+	output = &AssociateMergedGraphqlApiOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// AssociateMergedGraphqlApi API operation for AWS AppSync.
+//
+// Creates an association between a Merged API and source API using the source
+// API's identifier.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation AssociateMergedGraphqlApi for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/AssociateMergedGraphqlApi
+func (c *AppSync) AssociateMergedGraphqlApi(input *AssociateMergedGraphqlApiInput) (*AssociateMergedGraphqlApiOutput, error) {
+	req, out := c.AssociateMergedGraphqlApiRequest(input)
+	return out, req.Send()
+}
+
+// AssociateMergedGraphqlApiWithContext is the same as AssociateMergedGraphqlApi with the addition of
+// the ability to pass a context and additional request options.
+//
+// See AssociateMergedGraphqlApi for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) AssociateMergedGraphqlApiWithContext(ctx aws.Context, input *AssociateMergedGraphqlApiInput, opts ...request.Option) (*AssociateMergedGraphqlApiOutput, error) {
+	req, out := c.AssociateMergedGraphqlApiRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opAssociateSourceGraphqlApi = "AssociateSourceGraphqlApi"
+
+// AssociateSourceGraphqlApiRequest generates a "aws/request.Request" representing the
+// client's request for the AssociateSourceGraphqlApi operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See AssociateSourceGraphqlApi for more information on using the AssociateSourceGraphqlApi
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the AssociateSourceGraphqlApiRequest method.
+//	req, resp := client.AssociateSourceGraphqlApiRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/AssociateSourceGraphqlApi
+func (c *AppSync) AssociateSourceGraphqlApiRequest(input *AssociateSourceGraphqlApiInput) (req *request.Request, output *AssociateSourceGraphqlApiOutput) {
+	op := &request.Operation{
+		Name:       opAssociateSourceGraphqlApi,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations",
+	}
+
+	if input == nil {
+		input = &AssociateSourceGraphqlApiInput{}
+	}
+
+	output = &AssociateSourceGraphqlApiOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// AssociateSourceGraphqlApi API operation for AWS AppSync.
+//
+// Creates an association between a Merged API and source API using the Merged
+// API's identifier.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation AssociateSourceGraphqlApi for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/AssociateSourceGraphqlApi
+func (c *AppSync) AssociateSourceGraphqlApi(input *AssociateSourceGraphqlApiInput) (*AssociateSourceGraphqlApiOutput, error) {
+	req, out := c.AssociateSourceGraphqlApiRequest(input)
+	return out, req.Send()
+}
+
+// AssociateSourceGraphqlApiWithContext is the same as AssociateSourceGraphqlApi with the addition of
+// the ability to pass a context and additional request options.
+//
+// See AssociateSourceGraphqlApi for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) AssociateSourceGraphqlApiWithContext(ctx aws.Context, input *AssociateSourceGraphqlApiInput, opts ...request.Option) (*AssociateSourceGraphqlApiOutput, error) {
+	req, out := c.AssociateSourceGraphqlApiRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
 
 const opCreateApiCache = "CreateApiCache"
 
@@ -28,14 +315,13 @@ const opCreateApiCache = "CreateApiCache"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateApiCacheRequest method.
+//	req, resp := client.CreateApiCacheRequest(params)
 //
-//    // Example sending a request using the CreateApiCacheRequest method.
-//    req, resp := client.CreateApiCacheRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateApiCache
 func (c *AppSync) CreateApiCacheRequest(input *CreateApiCacheInput) (req *request.Request, output *CreateApiCacheOutput) {
@@ -66,23 +352,24 @@ func (c *AppSync) CreateApiCacheRequest(input *CreateApiCacheInput) (req *reques
 // API operation CreateApiCache for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateApiCache
 func (c *AppSync) CreateApiCache(input *CreateApiCacheInput) (*CreateApiCacheOutput, error) {
@@ -122,14 +409,13 @@ const opCreateApiKey = "CreateApiKey"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateApiKeyRequest method.
+//	req, resp := client.CreateApiKeyRequest(params)
 //
-//    // Example sending a request using the CreateApiKeyRequest method.
-//    req, resp := client.CreateApiKeyRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateApiKey
 func (c *AppSync) CreateApiKeyRequest(input *CreateApiKeyInput) (req *request.Request, output *CreateApiKeyOutput) {
@@ -150,8 +436,7 @@ func (c *AppSync) CreateApiKeyRequest(input *CreateApiKeyInput) (req *request.Re
 
 // CreateApiKey API operation for AWS AppSync.
 //
-// Creates a unique key that you can distribute to clients who are executing
-// your API.
+// Creates a unique key that you can distribute to clients who invoke your API.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -161,32 +446,33 @@ func (c *AppSync) CreateApiKeyRequest(input *CreateApiKeyInput) (req *request.Re
 // API operation CreateApiKey for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * LimitExceededException
-//   The request exceeded a limit. Try your request again.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
 //
-//   * LimitExceededException
-//   The request exceeded a limit. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
 //
-//   * ApiKeyLimitExceededException
-//   The API key exceeded a limit. Try your request again.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
-//   * ApiKeyValidityOutOfBoundsException
-//   The API key expiration must be set to a value between 1 and 365 days from
-//   creation (for CreateApiKey) or from update (for UpdateApiKey).
+//   - ApiKeyLimitExceededException
+//     The API key exceeded a limit. Try your request again.
+//
+//   - ApiKeyValidityOutOfBoundsException
+//     The API key expiration must be set to a value between 1 and 365 days from
+//     creation (for CreateApiKey) or from update (for UpdateApiKey).
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateApiKey
 func (c *AppSync) CreateApiKey(input *CreateApiKeyInput) (*CreateApiKeyOutput, error) {
@@ -226,14 +512,13 @@ const opCreateDataSource = "CreateDataSource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateDataSourceRequest method.
+//	req, resp := client.CreateDataSourceRequest(params)
 //
-//    // Example sending a request using the CreateDataSourceRequest method.
-//    req, resp := client.CreateDataSourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateDataSource
 func (c *AppSync) CreateDataSourceRequest(input *CreateDataSourceInput) (req *request.Request, output *CreateDataSourceOutput) {
@@ -264,23 +549,24 @@ func (c *AppSync) CreateDataSourceRequest(input *CreateDataSourceInput) (req *re
 // API operation CreateDataSource for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateDataSource
 func (c *AppSync) CreateDataSource(input *CreateDataSourceInput) (*CreateDataSourceOutput, error) {
@@ -304,6 +590,92 @@ func (c *AppSync) CreateDataSourceWithContext(ctx aws.Context, input *CreateData
 	return out, req.Send()
 }
 
+const opCreateDomainName = "CreateDomainName"
+
+// CreateDomainNameRequest generates a "aws/request.Request" representing the
+// client's request for the CreateDomainName operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See CreateDomainName for more information on using the CreateDomainName
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the CreateDomainNameRequest method.
+//	req, resp := client.CreateDomainNameRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateDomainName
+func (c *AppSync) CreateDomainNameRequest(input *CreateDomainNameInput) (req *request.Request, output *CreateDomainNameOutput) {
+	op := &request.Operation{
+		Name:       opCreateDomainName,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/domainnames",
+	}
+
+	if input == nil {
+		input = &CreateDomainNameInput{}
+	}
+
+	output = &CreateDomainNameOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// CreateDomainName API operation for AWS AppSync.
+//
+// Creates a custom DomainName object.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation CreateDomainName for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateDomainName
+func (c *AppSync) CreateDomainName(input *CreateDomainNameInput) (*CreateDomainNameOutput, error) {
+	req, out := c.CreateDomainNameRequest(input)
+	return out, req.Send()
+}
+
+// CreateDomainNameWithContext is the same as CreateDomainName with the addition of
+// the ability to pass a context and additional request options.
+//
+// See CreateDomainName for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) CreateDomainNameWithContext(ctx aws.Context, input *CreateDomainNameInput, opts ...request.Option) (*CreateDomainNameOutput, error) {
+	req, out := c.CreateDomainNameRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opCreateFunction = "CreateFunction"
 
 // CreateFunctionRequest generates a "aws/request.Request" representing the
@@ -320,14 +692,13 @@ const opCreateFunction = "CreateFunction"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateFunctionRequest method.
+//	req, resp := client.CreateFunctionRequest(params)
 //
-//    // Example sending a request using the CreateFunctionRequest method.
-//    req, resp := client.CreateFunctionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateFunction
 func (c *AppSync) CreateFunctionRequest(input *CreateFunctionInput) (req *request.Request, output *CreateFunctionOutput) {
@@ -350,7 +721,7 @@ func (c *AppSync) CreateFunctionRequest(input *CreateFunctionInput) (req *reques
 //
 // Creates a Function object.
 //
-// A function is a reusable entity. Multiple functions can be used to compose
+// A function is a reusable entity. You can use multiple functions to compose
 // the resolver logic.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
@@ -361,19 +732,24 @@ func (c *AppSync) CreateFunctionRequest(input *CreateFunctionInput) (req *reques
 // API operation CreateFunction for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateFunction
 func (c *AppSync) CreateFunction(input *CreateFunctionInput) (*CreateFunctionOutput, error) {
@@ -413,14 +789,13 @@ const opCreateGraphqlApi = "CreateGraphqlApi"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateGraphqlApiRequest method.
+//	req, resp := client.CreateGraphqlApiRequest(params)
 //
-//    // Example sending a request using the CreateGraphqlApiRequest method.
-//    req, resp := client.CreateGraphqlApiRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateGraphqlApi
 func (c *AppSync) CreateGraphqlApiRequest(input *CreateGraphqlApiInput) (req *request.Request, output *CreateGraphqlApiOutput) {
@@ -451,25 +826,26 @@ func (c *AppSync) CreateGraphqlApiRequest(input *CreateGraphqlApiInput) (req *re
 // API operation CreateGraphqlApi for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * LimitExceededException
-//   The request exceeded a limit. Try your request again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * ApiLimitExceededException
-//   The GraphQL API exceeded a limit. Try your request again.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - ApiLimitExceededException
+//     The GraphQL API exceeded a limit. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateGraphqlApi
 func (c *AppSync) CreateGraphqlApi(input *CreateGraphqlApiInput) (*CreateGraphqlApiOutput, error) {
@@ -509,14 +885,13 @@ const opCreateResolver = "CreateResolver"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateResolverRequest method.
+//	req, resp := client.CreateResolverRequest(params)
 //
-//    // Example sending a request using the CreateResolverRequest method.
-//    req, resp := client.CreateResolverRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateResolver
 func (c *AppSync) CreateResolverRequest(input *CreateResolverInput) (req *request.Request, output *CreateResolverOutput) {
@@ -540,7 +915,7 @@ func (c *AppSync) CreateResolverRequest(input *CreateResolverInput) (req *reques
 // Creates a Resolver object.
 //
 // A resolver converts incoming requests into a format that a data source can
-// understand and converts the data source's responses into GraphQL.
+// understand, and converts the data source's responses into GraphQL.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -550,19 +925,24 @@ func (c *AppSync) CreateResolverRequest(input *CreateResolverInput) (req *reques
 // API operation CreateResolver for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateResolver
 func (c *AppSync) CreateResolver(input *CreateResolverInput) (*CreateResolverOutput, error) {
@@ -602,14 +982,13 @@ const opCreateType = "CreateType"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the CreateTypeRequest method.
+//	req, resp := client.CreateTypeRequest(params)
 //
-//    // Example sending a request using the CreateTypeRequest method.
-//    req, resp := client.CreateTypeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateType
 func (c *AppSync) CreateTypeRequest(input *CreateTypeInput) (req *request.Request, output *CreateTypeOutput) {
@@ -640,23 +1019,24 @@ func (c *AppSync) CreateTypeRequest(input *CreateTypeInput) (req *request.Reques
 // API operation CreateType for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/CreateType
 func (c *AppSync) CreateType(input *CreateTypeInput) (*CreateTypeOutput, error) {
@@ -696,14 +1076,13 @@ const opDeleteApiCache = "DeleteApiCache"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteApiCacheRequest method.
+//	req, resp := client.DeleteApiCacheRequest(params)
 //
-//    // Example sending a request using the DeleteApiCacheRequest method.
-//    req, resp := client.DeleteApiCacheRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteApiCache
 func (c *AppSync) DeleteApiCacheRequest(input *DeleteApiCacheInput) (req *request.Request, output *DeleteApiCacheOutput) {
@@ -735,23 +1114,24 @@ func (c *AppSync) DeleteApiCacheRequest(input *DeleteApiCacheInput) (req *reques
 // API operation DeleteApiCache for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteApiCache
 func (c *AppSync) DeleteApiCache(input *DeleteApiCacheInput) (*DeleteApiCacheOutput, error) {
@@ -791,14 +1171,13 @@ const opDeleteApiKey = "DeleteApiKey"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteApiKeyRequest method.
+//	req, resp := client.DeleteApiKeyRequest(params)
 //
-//    // Example sending a request using the DeleteApiKeyRequest method.
-//    req, resp := client.DeleteApiKeyRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteApiKey
 func (c *AppSync) DeleteApiKeyRequest(input *DeleteApiKeyInput) (req *request.Request, output *DeleteApiKeyOutput) {
@@ -830,19 +1209,20 @@ func (c *AppSync) DeleteApiKeyRequest(input *DeleteApiKeyInput) (req *request.Re
 // API operation DeleteApiKey for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteApiKey
 func (c *AppSync) DeleteApiKey(input *DeleteApiKeyInput) (*DeleteApiKeyOutput, error) {
@@ -882,14 +1262,13 @@ const opDeleteDataSource = "DeleteDataSource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteDataSourceRequest method.
+//	req, resp := client.DeleteDataSourceRequest(params)
 //
-//    // Example sending a request using the DeleteDataSourceRequest method.
-//    req, resp := client.DeleteDataSourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteDataSource
 func (c *AppSync) DeleteDataSourceRequest(input *DeleteDataSourceInput) (req *request.Request, output *DeleteDataSourceOutput) {
@@ -921,23 +1300,24 @@ func (c *AppSync) DeleteDataSourceRequest(input *DeleteDataSourceInput) (req *re
 // API operation DeleteDataSource for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteDataSource
 func (c *AppSync) DeleteDataSource(input *DeleteDataSourceInput) (*DeleteDataSourceOutput, error) {
@@ -961,6 +1341,101 @@ func (c *AppSync) DeleteDataSourceWithContext(ctx aws.Context, input *DeleteData
 	return out, req.Send()
 }
 
+const opDeleteDomainName = "DeleteDomainName"
+
+// DeleteDomainNameRequest generates a "aws/request.Request" representing the
+// client's request for the DeleteDomainName operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DeleteDomainName for more information on using the DeleteDomainName
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DeleteDomainNameRequest method.
+//	req, resp := client.DeleteDomainNameRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteDomainName
+func (c *AppSync) DeleteDomainNameRequest(input *DeleteDomainNameInput) (req *request.Request, output *DeleteDomainNameOutput) {
+	op := &request.Operation{
+		Name:       opDeleteDomainName,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/v1/domainnames/{domainName}",
+	}
+
+	if input == nil {
+		input = &DeleteDomainNameInput{}
+	}
+
+	output = &DeleteDomainNameOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DeleteDomainName API operation for AWS AppSync.
+//
+// Deletes a custom DomainName object.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation DeleteDomainName for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteDomainName
+func (c *AppSync) DeleteDomainName(input *DeleteDomainNameInput) (*DeleteDomainNameOutput, error) {
+	req, out := c.DeleteDomainNameRequest(input)
+	return out, req.Send()
+}
+
+// DeleteDomainNameWithContext is the same as DeleteDomainName with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DeleteDomainName for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) DeleteDomainNameWithContext(ctx aws.Context, input *DeleteDomainNameInput, opts ...request.Option) (*DeleteDomainNameOutput, error) {
+	req, out := c.DeleteDomainNameRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opDeleteFunction = "DeleteFunction"
 
 // DeleteFunctionRequest generates a "aws/request.Request" representing the
@@ -977,14 +1452,13 @@ const opDeleteFunction = "DeleteFunction"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteFunctionRequest method.
+//	req, resp := client.DeleteFunctionRequest(params)
 //
-//    // Example sending a request using the DeleteFunctionRequest method.
-//    req, resp := client.DeleteFunctionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteFunction
 func (c *AppSync) DeleteFunctionRequest(input *DeleteFunctionInput) (req *request.Request, output *DeleteFunctionOutput) {
@@ -1016,19 +1490,24 @@ func (c *AppSync) DeleteFunctionRequest(input *DeleteFunctionInput) (req *reques
 // API operation DeleteFunction for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteFunction
 func (c *AppSync) DeleteFunction(input *DeleteFunctionInput) (*DeleteFunctionOutput, error) {
@@ -1068,14 +1547,13 @@ const opDeleteGraphqlApi = "DeleteGraphqlApi"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteGraphqlApiRequest method.
+//	req, resp := client.DeleteGraphqlApiRequest(params)
 //
-//    // Example sending a request using the DeleteGraphqlApiRequest method.
-//    req, resp := client.DeleteGraphqlApiRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteGraphqlApi
 func (c *AppSync) DeleteGraphqlApiRequest(input *DeleteGraphqlApiInput) (req *request.Request, output *DeleteGraphqlApiOutput) {
@@ -1107,26 +1585,27 @@ func (c *AppSync) DeleteGraphqlApiRequest(input *DeleteGraphqlApiInput) (req *re
 // API operation DeleteGraphqlApi for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * AccessDeniedException
-//   You do not have access to perform this operation on this resource.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteGraphqlApi
 func (c *AppSync) DeleteGraphqlApi(input *DeleteGraphqlApiInput) (*DeleteGraphqlApiOutput, error) {
@@ -1166,14 +1645,13 @@ const opDeleteResolver = "DeleteResolver"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteResolverRequest method.
+//	req, resp := client.DeleteResolverRequest(params)
 //
-//    // Example sending a request using the DeleteResolverRequest method.
-//    req, resp := client.DeleteResolverRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteResolver
 func (c *AppSync) DeleteResolverRequest(input *DeleteResolverInput) (req *request.Request, output *DeleteResolverOutput) {
@@ -1205,19 +1683,24 @@ func (c *AppSync) DeleteResolverRequest(input *DeleteResolverInput) (req *reques
 // API operation DeleteResolver for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteResolver
 func (c *AppSync) DeleteResolver(input *DeleteResolverInput) (*DeleteResolverOutput, error) {
@@ -1257,14 +1740,13 @@ const opDeleteType = "DeleteType"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the DeleteTypeRequest method.
+//	req, resp := client.DeleteTypeRequest(params)
 //
-//    // Example sending a request using the DeleteTypeRequest method.
-//    req, resp := client.DeleteTypeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteType
 func (c *AppSync) DeleteTypeRequest(input *DeleteTypeInput) (req *request.Request, output *DeleteTypeOutput) {
@@ -1296,23 +1778,24 @@ func (c *AppSync) DeleteTypeRequest(input *DeleteTypeInput) (req *request.Reques
 // API operation DeleteType for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DeleteType
 func (c *AppSync) DeleteType(input *DeleteTypeInput) (*DeleteTypeOutput, error) {
@@ -1336,6 +1819,477 @@ func (c *AppSync) DeleteTypeWithContext(ctx aws.Context, input *DeleteTypeInput,
 	return out, req.Send()
 }
 
+const opDisassociateApi = "DisassociateApi"
+
+// DisassociateApiRequest generates a "aws/request.Request" representing the
+// client's request for the DisassociateApi operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisassociateApi for more information on using the DisassociateApi
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DisassociateApiRequest method.
+//	req, resp := client.DisassociateApiRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DisassociateApi
+func (c *AppSync) DisassociateApiRequest(input *DisassociateApiInput) (req *request.Request, output *DisassociateApiOutput) {
+	op := &request.Operation{
+		Name:       opDisassociateApi,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/v1/domainnames/{domainName}/apiassociation",
+	}
+
+	if input == nil {
+		input = &DisassociateApiInput{}
+	}
+
+	output = &DisassociateApiOutput{}
+	req = c.newRequest(op, input, output)
+	req.Handlers.Unmarshal.Swap(restjson.UnmarshalHandler.Name, protocol.UnmarshalDiscardBodyHandler)
+	return
+}
+
+// DisassociateApi API operation for AWS AppSync.
+//
+// Removes an ApiAssociation object from a custom domain.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation DisassociateApi for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DisassociateApi
+func (c *AppSync) DisassociateApi(input *DisassociateApiInput) (*DisassociateApiOutput, error) {
+	req, out := c.DisassociateApiRequest(input)
+	return out, req.Send()
+}
+
+// DisassociateApiWithContext is the same as DisassociateApi with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DisassociateApi for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) DisassociateApiWithContext(ctx aws.Context, input *DisassociateApiInput, opts ...request.Option) (*DisassociateApiOutput, error) {
+	req, out := c.DisassociateApiRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDisassociateMergedGraphqlApi = "DisassociateMergedGraphqlApi"
+
+// DisassociateMergedGraphqlApiRequest generates a "aws/request.Request" representing the
+// client's request for the DisassociateMergedGraphqlApi operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisassociateMergedGraphqlApi for more information on using the DisassociateMergedGraphqlApi
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DisassociateMergedGraphqlApiRequest method.
+//	req, resp := client.DisassociateMergedGraphqlApiRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DisassociateMergedGraphqlApi
+func (c *AppSync) DisassociateMergedGraphqlApiRequest(input *DisassociateMergedGraphqlApiInput) (req *request.Request, output *DisassociateMergedGraphqlApiOutput) {
+	op := &request.Operation{
+		Name:       opDisassociateMergedGraphqlApi,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/v1/sourceApis/{sourceApiIdentifier}/mergedApiAssociations/{associationId}",
+	}
+
+	if input == nil {
+		input = &DisassociateMergedGraphqlApiInput{}
+	}
+
+	output = &DisassociateMergedGraphqlApiOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DisassociateMergedGraphqlApi API operation for AWS AppSync.
+//
+// Deletes an association between a Merged API and source API using the source
+// API's identifier and the association ID.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation DisassociateMergedGraphqlApi for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DisassociateMergedGraphqlApi
+func (c *AppSync) DisassociateMergedGraphqlApi(input *DisassociateMergedGraphqlApiInput) (*DisassociateMergedGraphqlApiOutput, error) {
+	req, out := c.DisassociateMergedGraphqlApiRequest(input)
+	return out, req.Send()
+}
+
+// DisassociateMergedGraphqlApiWithContext is the same as DisassociateMergedGraphqlApi with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DisassociateMergedGraphqlApi for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) DisassociateMergedGraphqlApiWithContext(ctx aws.Context, input *DisassociateMergedGraphqlApiInput, opts ...request.Option) (*DisassociateMergedGraphqlApiOutput, error) {
+	req, out := c.DisassociateMergedGraphqlApiRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opDisassociateSourceGraphqlApi = "DisassociateSourceGraphqlApi"
+
+// DisassociateSourceGraphqlApiRequest generates a "aws/request.Request" representing the
+// client's request for the DisassociateSourceGraphqlApi operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See DisassociateSourceGraphqlApi for more information on using the DisassociateSourceGraphqlApi
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the DisassociateSourceGraphqlApiRequest method.
+//	req, resp := client.DisassociateSourceGraphqlApiRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DisassociateSourceGraphqlApi
+func (c *AppSync) DisassociateSourceGraphqlApiRequest(input *DisassociateSourceGraphqlApiInput) (req *request.Request, output *DisassociateSourceGraphqlApiOutput) {
+	op := &request.Operation{
+		Name:       opDisassociateSourceGraphqlApi,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}",
+	}
+
+	if input == nil {
+		input = &DisassociateSourceGraphqlApiInput{}
+	}
+
+	output = &DisassociateSourceGraphqlApiOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// DisassociateSourceGraphqlApi API operation for AWS AppSync.
+//
+// Deletes an association between a Merged API and source API using the Merged
+// API's identifier and the association ID.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation DisassociateSourceGraphqlApi for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/DisassociateSourceGraphqlApi
+func (c *AppSync) DisassociateSourceGraphqlApi(input *DisassociateSourceGraphqlApiInput) (*DisassociateSourceGraphqlApiOutput, error) {
+	req, out := c.DisassociateSourceGraphqlApiRequest(input)
+	return out, req.Send()
+}
+
+// DisassociateSourceGraphqlApiWithContext is the same as DisassociateSourceGraphqlApi with the addition of
+// the ability to pass a context and additional request options.
+//
+// See DisassociateSourceGraphqlApi for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) DisassociateSourceGraphqlApiWithContext(ctx aws.Context, input *DisassociateSourceGraphqlApiInput, opts ...request.Option) (*DisassociateSourceGraphqlApiOutput, error) {
+	req, out := c.DisassociateSourceGraphqlApiRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opEvaluateCode = "EvaluateCode"
+
+// EvaluateCodeRequest generates a "aws/request.Request" representing the
+// client's request for the EvaluateCode operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See EvaluateCode for more information on using the EvaluateCode
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the EvaluateCodeRequest method.
+//	req, resp := client.EvaluateCodeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/EvaluateCode
+func (c *AppSync) EvaluateCodeRequest(input *EvaluateCodeInput) (req *request.Request, output *EvaluateCodeOutput) {
+	op := &request.Operation{
+		Name:       opEvaluateCode,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/dataplane-evaluatecode",
+	}
+
+	if input == nil {
+		input = &EvaluateCodeInput{}
+	}
+
+	output = &EvaluateCodeOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// EvaluateCode API operation for AWS AppSync.
+//
+// Evaluates the given code and returns the response. The code definition requirements
+// depend on the specified runtime. For APPSYNC_JS runtimes, the code defines
+// the request and response functions. The request function takes the incoming
+// request after a GraphQL operation is parsed and converts it into a request
+// configuration for the selected data source operation. The response function
+// interprets responses from the data source and maps it to the shape of the
+// GraphQL field output type.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation EvaluateCode for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/EvaluateCode
+func (c *AppSync) EvaluateCode(input *EvaluateCodeInput) (*EvaluateCodeOutput, error) {
+	req, out := c.EvaluateCodeRequest(input)
+	return out, req.Send()
+}
+
+// EvaluateCodeWithContext is the same as EvaluateCode with the addition of
+// the ability to pass a context and additional request options.
+//
+// See EvaluateCode for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) EvaluateCodeWithContext(ctx aws.Context, input *EvaluateCodeInput, opts ...request.Option) (*EvaluateCodeOutput, error) {
+	req, out := c.EvaluateCodeRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opEvaluateMappingTemplate = "EvaluateMappingTemplate"
+
+// EvaluateMappingTemplateRequest generates a "aws/request.Request" representing the
+// client's request for the EvaluateMappingTemplate operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See EvaluateMappingTemplate for more information on using the EvaluateMappingTemplate
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the EvaluateMappingTemplateRequest method.
+//	req, resp := client.EvaluateMappingTemplateRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/EvaluateMappingTemplate
+func (c *AppSync) EvaluateMappingTemplateRequest(input *EvaluateMappingTemplateInput) (req *request.Request, output *EvaluateMappingTemplateOutput) {
+	op := &request.Operation{
+		Name:       opEvaluateMappingTemplate,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/dataplane-evaluatetemplate",
+	}
+
+	if input == nil {
+		input = &EvaluateMappingTemplateInput{}
+	}
+
+	output = &EvaluateMappingTemplateOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// EvaluateMappingTemplate API operation for AWS AppSync.
+//
+// Evaluates a given template and returns the response. The mapping template
+// can be a request or response template.
+//
+// Request templates take the incoming request after a GraphQL operation is
+// parsed and convert it into a request configuration for the selected data
+// source operation. Response templates interpret responses from the data source
+// and map it to the shape of the GraphQL field output type.
+//
+// Mapping templates are written in the Apache Velocity Template Language (VTL).
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation EvaluateMappingTemplate for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/EvaluateMappingTemplate
+func (c *AppSync) EvaluateMappingTemplate(input *EvaluateMappingTemplateInput) (*EvaluateMappingTemplateOutput, error) {
+	req, out := c.EvaluateMappingTemplateRequest(input)
+	return out, req.Send()
+}
+
+// EvaluateMappingTemplateWithContext is the same as EvaluateMappingTemplate with the addition of
+// the ability to pass a context and additional request options.
+//
+// See EvaluateMappingTemplate for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) EvaluateMappingTemplateWithContext(ctx aws.Context, input *EvaluateMappingTemplateInput, opts ...request.Option) (*EvaluateMappingTemplateOutput, error) {
+	req, out := c.EvaluateMappingTemplateRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opFlushApiCache = "FlushApiCache"
 
 // FlushApiCacheRequest generates a "aws/request.Request" representing the
@@ -1352,14 +2306,13 @@ const opFlushApiCache = "FlushApiCache"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the FlushApiCacheRequest method.
+//	req, resp := client.FlushApiCacheRequest(params)
 //
-//    // Example sending a request using the FlushApiCacheRequest method.
-//    req, resp := client.FlushApiCacheRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/FlushApiCache
 func (c *AppSync) FlushApiCacheRequest(input *FlushApiCacheInput) (req *request.Request, output *FlushApiCacheOutput) {
@@ -1391,23 +2344,24 @@ func (c *AppSync) FlushApiCacheRequest(input *FlushApiCacheInput) (req *request.
 // API operation FlushApiCache for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/FlushApiCache
 func (c *AppSync) FlushApiCache(input *FlushApiCacheInput) (*FlushApiCacheOutput, error) {
@@ -1431,6 +2385,96 @@ func (c *AppSync) FlushApiCacheWithContext(ctx aws.Context, input *FlushApiCache
 	return out, req.Send()
 }
 
+const opGetApiAssociation = "GetApiAssociation"
+
+// GetApiAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the GetApiAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetApiAssociation for more information on using the GetApiAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetApiAssociationRequest method.
+//	req, resp := client.GetApiAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetApiAssociation
+func (c *AppSync) GetApiAssociationRequest(input *GetApiAssociationInput) (req *request.Request, output *GetApiAssociationOutput) {
+	op := &request.Operation{
+		Name:       opGetApiAssociation,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/domainnames/{domainName}/apiassociation",
+	}
+
+	if input == nil {
+		input = &GetApiAssociationInput{}
+	}
+
+	output = &GetApiAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetApiAssociation API operation for AWS AppSync.
+//
+// Retrieves an ApiAssociation object.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation GetApiAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetApiAssociation
+func (c *AppSync) GetApiAssociation(input *GetApiAssociationInput) (*GetApiAssociationOutput, error) {
+	req, out := c.GetApiAssociationRequest(input)
+	return out, req.Send()
+}
+
+// GetApiAssociationWithContext is the same as GetApiAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetApiAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) GetApiAssociationWithContext(ctx aws.Context, input *GetApiAssociationInput, opts ...request.Option) (*GetApiAssociationOutput, error) {
+	req, out := c.GetApiAssociationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetApiCache = "GetApiCache"
 
 // GetApiCacheRequest generates a "aws/request.Request" representing the
@@ -1447,14 +2491,13 @@ const opGetApiCache = "GetApiCache"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetApiCacheRequest method.
+//	req, resp := client.GetApiCacheRequest(params)
 //
-//    // Example sending a request using the GetApiCacheRequest method.
-//    req, resp := client.GetApiCacheRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetApiCache
 func (c *AppSync) GetApiCacheRequest(input *GetApiCacheInput) (req *request.Request, output *GetApiCacheOutput) {
@@ -1485,23 +2528,24 @@ func (c *AppSync) GetApiCacheRequest(input *GetApiCacheInput) (req *request.Requ
 // API operation GetApiCache for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetApiCache
 func (c *AppSync) GetApiCache(input *GetApiCacheInput) (*GetApiCacheOutput, error) {
@@ -1541,14 +2585,13 @@ const opGetDataSource = "GetDataSource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetDataSourceRequest method.
+//	req, resp := client.GetDataSourceRequest(params)
 //
-//    // Example sending a request using the GetDataSourceRequest method.
-//    req, resp := client.GetDataSourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetDataSource
 func (c *AppSync) GetDataSourceRequest(input *GetDataSourceInput) (req *request.Request, output *GetDataSourceOutput) {
@@ -1579,23 +2622,24 @@ func (c *AppSync) GetDataSourceRequest(input *GetDataSourceInput) (req *request.
 // API operation GetDataSource for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetDataSource
 func (c *AppSync) GetDataSource(input *GetDataSourceInput) (*GetDataSourceOutput, error) {
@@ -1619,6 +2663,185 @@ func (c *AppSync) GetDataSourceWithContext(ctx aws.Context, input *GetDataSource
 	return out, req.Send()
 }
 
+const opGetDataSourceIntrospection = "GetDataSourceIntrospection"
+
+// GetDataSourceIntrospectionRequest generates a "aws/request.Request" representing the
+// client's request for the GetDataSourceIntrospection operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetDataSourceIntrospection for more information on using the GetDataSourceIntrospection
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetDataSourceIntrospectionRequest method.
+//	req, resp := client.GetDataSourceIntrospectionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetDataSourceIntrospection
+func (c *AppSync) GetDataSourceIntrospectionRequest(input *GetDataSourceIntrospectionInput) (req *request.Request, output *GetDataSourceIntrospectionOutput) {
+	op := &request.Operation{
+		Name:       opGetDataSourceIntrospection,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/datasources/introspections/{introspectionId}",
+	}
+
+	if input == nil {
+		input = &GetDataSourceIntrospectionInput{}
+	}
+
+	output = &GetDataSourceIntrospectionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetDataSourceIntrospection API operation for AWS AppSync.
+//
+// Retrieves the record of an existing introspection. If the retrieval is successful,
+// the result of the instrospection will also be returned. If the retrieval
+// fails the operation, an error message will be returned instead.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation GetDataSourceIntrospection for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetDataSourceIntrospection
+func (c *AppSync) GetDataSourceIntrospection(input *GetDataSourceIntrospectionInput) (*GetDataSourceIntrospectionOutput, error) {
+	req, out := c.GetDataSourceIntrospectionRequest(input)
+	return out, req.Send()
+}
+
+// GetDataSourceIntrospectionWithContext is the same as GetDataSourceIntrospection with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetDataSourceIntrospection for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) GetDataSourceIntrospectionWithContext(ctx aws.Context, input *GetDataSourceIntrospectionInput, opts ...request.Option) (*GetDataSourceIntrospectionOutput, error) {
+	req, out := c.GetDataSourceIntrospectionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opGetDomainName = "GetDomainName"
+
+// GetDomainNameRequest generates a "aws/request.Request" representing the
+// client's request for the GetDomainName operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetDomainName for more information on using the GetDomainName
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetDomainNameRequest method.
+//	req, resp := client.GetDomainNameRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetDomainName
+func (c *AppSync) GetDomainNameRequest(input *GetDomainNameInput) (req *request.Request, output *GetDomainNameOutput) {
+	op := &request.Operation{
+		Name:       opGetDomainName,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/domainnames/{domainName}",
+	}
+
+	if input == nil {
+		input = &GetDomainNameInput{}
+	}
+
+	output = &GetDomainNameOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetDomainName API operation for AWS AppSync.
+//
+// Retrieves a custom DomainName object.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation GetDomainName for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetDomainName
+func (c *AppSync) GetDomainName(input *GetDomainNameInput) (*GetDomainNameOutput, error) {
+	req, out := c.GetDomainNameRequest(input)
+	return out, req.Send()
+}
+
+// GetDomainNameWithContext is the same as GetDomainName with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetDomainName for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) GetDomainNameWithContext(ctx aws.Context, input *GetDomainNameInput, opts ...request.Option) (*GetDomainNameOutput, error) {
+	req, out := c.GetDomainNameRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetFunction = "GetFunction"
 
 // GetFunctionRequest generates a "aws/request.Request" representing the
@@ -1635,14 +2858,13 @@ const opGetFunction = "GetFunction"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetFunctionRequest method.
+//	req, resp := client.GetFunctionRequest(params)
 //
-//    // Example sending a request using the GetFunctionRequest method.
-//    req, resp := client.GetFunctionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetFunction
 func (c *AppSync) GetFunctionRequest(input *GetFunctionInput) (req *request.Request, output *GetFunctionOutput) {
@@ -1673,16 +2895,17 @@ func (c *AppSync) GetFunctionRequest(input *GetFunctionInput) (req *request.Requ
 // API operation GetFunction for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetFunction
 func (c *AppSync) GetFunction(input *GetFunctionInput) (*GetFunctionOutput, error) {
@@ -1722,14 +2945,13 @@ const opGetGraphqlApi = "GetGraphqlApi"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetGraphqlApiRequest method.
+//	req, resp := client.GetGraphqlApiRequest(params)
 //
-//    // Example sending a request using the GetGraphqlApiRequest method.
-//    req, resp := client.GetGraphqlApiRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetGraphqlApi
 func (c *AppSync) GetGraphqlApiRequest(input *GetGraphqlApiInput) (req *request.Request, output *GetGraphqlApiOutput) {
@@ -1760,22 +2982,23 @@ func (c *AppSync) GetGraphqlApiRequest(input *GetGraphqlApiInput) (req *request.
 // API operation GetGraphqlApi for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * AccessDeniedException
-//   You do not have access to perform this operation on this resource.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetGraphqlApi
 func (c *AppSync) GetGraphqlApi(input *GetGraphqlApiInput) (*GetGraphqlApiOutput, error) {
@@ -1799,6 +3022,100 @@ func (c *AppSync) GetGraphqlApiWithContext(ctx aws.Context, input *GetGraphqlApi
 	return out, req.Send()
 }
 
+const opGetGraphqlApiEnvironmentVariables = "GetGraphqlApiEnvironmentVariables"
+
+// GetGraphqlApiEnvironmentVariablesRequest generates a "aws/request.Request" representing the
+// client's request for the GetGraphqlApiEnvironmentVariables operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetGraphqlApiEnvironmentVariables for more information on using the GetGraphqlApiEnvironmentVariables
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetGraphqlApiEnvironmentVariablesRequest method.
+//	req, resp := client.GetGraphqlApiEnvironmentVariablesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetGraphqlApiEnvironmentVariables
+func (c *AppSync) GetGraphqlApiEnvironmentVariablesRequest(input *GetGraphqlApiEnvironmentVariablesInput) (req *request.Request, output *GetGraphqlApiEnvironmentVariablesOutput) {
+	op := &request.Operation{
+		Name:       opGetGraphqlApiEnvironmentVariables,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/apis/{apiId}/environmentVariables",
+	}
+
+	if input == nil {
+		input = &GetGraphqlApiEnvironmentVariablesInput{}
+	}
+
+	output = &GetGraphqlApiEnvironmentVariablesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetGraphqlApiEnvironmentVariables API operation for AWS AppSync.
+//
+// Retrieves the list of environmental variable key-value pairs associated with
+// an API by its ID value.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation GetGraphqlApiEnvironmentVariables for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetGraphqlApiEnvironmentVariables
+func (c *AppSync) GetGraphqlApiEnvironmentVariables(input *GetGraphqlApiEnvironmentVariablesInput) (*GetGraphqlApiEnvironmentVariablesOutput, error) {
+	req, out := c.GetGraphqlApiEnvironmentVariablesRequest(input)
+	return out, req.Send()
+}
+
+// GetGraphqlApiEnvironmentVariablesWithContext is the same as GetGraphqlApiEnvironmentVariables with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetGraphqlApiEnvironmentVariables for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) GetGraphqlApiEnvironmentVariablesWithContext(ctx aws.Context, input *GetGraphqlApiEnvironmentVariablesInput, opts ...request.Option) (*GetGraphqlApiEnvironmentVariablesOutput, error) {
+	req, out := c.GetGraphqlApiEnvironmentVariablesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetIntrospectionSchema = "GetIntrospectionSchema"
 
 // GetIntrospectionSchemaRequest generates a "aws/request.Request" representing the
@@ -1815,14 +3132,13 @@ const opGetIntrospectionSchema = "GetIntrospectionSchema"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetIntrospectionSchemaRequest method.
+//	req, resp := client.GetIntrospectionSchemaRequest(params)
 //
-//    // Example sending a request using the GetIntrospectionSchemaRequest method.
-//    req, resp := client.GetIntrospectionSchemaRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetIntrospectionSchema
 func (c *AppSync) GetIntrospectionSchemaRequest(input *GetIntrospectionSchemaInput) (req *request.Request, output *GetIntrospectionSchemaOutput) {
@@ -1853,18 +3169,19 @@ func (c *AppSync) GetIntrospectionSchemaRequest(input *GetIntrospectionSchemaInp
 // API operation GetIntrospectionSchema for usage and error information.
 //
 // Returned Error Types:
-//   * GraphQLSchemaException
-//   The GraphQL schema is not valid.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - GraphQLSchemaException
+//     The GraphQL schema is not valid.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetIntrospectionSchema
 func (c *AppSync) GetIntrospectionSchema(input *GetIntrospectionSchemaInput) (*GetIntrospectionSchemaOutput, error) {
@@ -1904,14 +3221,13 @@ const opGetResolver = "GetResolver"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetResolverRequest method.
+//	req, resp := client.GetResolverRequest(params)
 //
-//    // Example sending a request using the GetResolverRequest method.
-//    req, resp := client.GetResolverRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetResolver
 func (c *AppSync) GetResolverRequest(input *GetResolverInput) (req *request.Request, output *GetResolverOutput) {
@@ -1942,16 +3258,17 @@ func (c *AppSync) GetResolverRequest(input *GetResolverInput) (req *request.Requ
 // API operation GetResolver for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetResolver
 func (c *AppSync) GetResolver(input *GetResolverInput) (*GetResolverOutput, error) {
@@ -1991,14 +3308,13 @@ const opGetSchemaCreationStatus = "GetSchemaCreationStatus"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetSchemaCreationStatusRequest method.
+//	req, resp := client.GetSchemaCreationStatusRequest(params)
 //
-//    // Example sending a request using the GetSchemaCreationStatusRequest method.
-//    req, resp := client.GetSchemaCreationStatusRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetSchemaCreationStatus
 func (c *AppSync) GetSchemaCreationStatusRequest(input *GetSchemaCreationStatusInput) (req *request.Request, output *GetSchemaCreationStatusOutput) {
@@ -2029,19 +3345,20 @@ func (c *AppSync) GetSchemaCreationStatusRequest(input *GetSchemaCreationStatusI
 // API operation GetSchemaCreationStatus for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetSchemaCreationStatus
 func (c *AppSync) GetSchemaCreationStatus(input *GetSchemaCreationStatusInput) (*GetSchemaCreationStatusOutput, error) {
@@ -2065,6 +3382,96 @@ func (c *AppSync) GetSchemaCreationStatusWithContext(ctx aws.Context, input *Get
 	return out, req.Send()
 }
 
+const opGetSourceApiAssociation = "GetSourceApiAssociation"
+
+// GetSourceApiAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the GetSourceApiAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See GetSourceApiAssociation for more information on using the GetSourceApiAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the GetSourceApiAssociationRequest method.
+//	req, resp := client.GetSourceApiAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetSourceApiAssociation
+func (c *AppSync) GetSourceApiAssociationRequest(input *GetSourceApiAssociationInput) (req *request.Request, output *GetSourceApiAssociationOutput) {
+	op := &request.Operation{
+		Name:       opGetSourceApiAssociation,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}",
+	}
+
+	if input == nil {
+		input = &GetSourceApiAssociationInput{}
+	}
+
+	output = &GetSourceApiAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// GetSourceApiAssociation API operation for AWS AppSync.
+//
+// Retrieves a SourceApiAssociation object.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation GetSourceApiAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetSourceApiAssociation
+func (c *AppSync) GetSourceApiAssociation(input *GetSourceApiAssociationInput) (*GetSourceApiAssociationOutput, error) {
+	req, out := c.GetSourceApiAssociationRequest(input)
+	return out, req.Send()
+}
+
+// GetSourceApiAssociationWithContext is the same as GetSourceApiAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See GetSourceApiAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) GetSourceApiAssociationWithContext(ctx aws.Context, input *GetSourceApiAssociationInput, opts ...request.Option) (*GetSourceApiAssociationOutput, error) {
+	req, out := c.GetSourceApiAssociationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opGetType = "GetType"
 
 // GetTypeRequest generates a "aws/request.Request" representing the
@@ -2081,14 +3488,13 @@ const opGetType = "GetType"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the GetTypeRequest method.
+//	req, resp := client.GetTypeRequest(params)
 //
-//    // Example sending a request using the GetTypeRequest method.
-//    req, resp := client.GetTypeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetType
 func (c *AppSync) GetTypeRequest(input *GetTypeInput) (req *request.Request, output *GetTypeOutput) {
@@ -2119,23 +3525,24 @@ func (c *AppSync) GetTypeRequest(input *GetTypeInput) (req *request.Request, out
 // API operation GetType for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/GetType
 func (c *AppSync) GetType(input *GetTypeInput) (*GetTypeOutput, error) {
@@ -2175,14 +3582,13 @@ const opListApiKeys = "ListApiKeys"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListApiKeysRequest method.
+//	req, resp := client.ListApiKeysRequest(params)
 //
-//    // Example sending a request using the ListApiKeysRequest method.
-//    req, resp := client.ListApiKeysRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListApiKeys
 func (c *AppSync) ListApiKeysRequest(input *ListApiKeysInput) (req *request.Request, output *ListApiKeysOutput) {
@@ -2218,19 +3624,20 @@ func (c *AppSync) ListApiKeysRequest(input *ListApiKeysInput) (req *request.Requ
 // API operation ListApiKeys for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListApiKeys
 func (c *AppSync) ListApiKeys(input *ListApiKeysInput) (*ListApiKeysOutput, error) {
@@ -2270,14 +3677,13 @@ const opListDataSources = "ListDataSources"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListDataSourcesRequest method.
+//	req, resp := client.ListDataSourcesRequest(params)
 //
-//    // Example sending a request using the ListDataSourcesRequest method.
-//    req, resp := client.ListDataSourcesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListDataSources
 func (c *AppSync) ListDataSourcesRequest(input *ListDataSourcesInput) (req *request.Request, output *ListDataSourcesOutput) {
@@ -2308,19 +3714,20 @@ func (c *AppSync) ListDataSourcesRequest(input *ListDataSourcesInput) (req *requ
 // API operation ListDataSources for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListDataSources
 func (c *AppSync) ListDataSources(input *ListDataSourcesInput) (*ListDataSourcesOutput, error) {
@@ -2344,6 +3751,92 @@ func (c *AppSync) ListDataSourcesWithContext(ctx aws.Context, input *ListDataSou
 	return out, req.Send()
 }
 
+const opListDomainNames = "ListDomainNames"
+
+// ListDomainNamesRequest generates a "aws/request.Request" representing the
+// client's request for the ListDomainNames operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListDomainNames for more information on using the ListDomainNames
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListDomainNamesRequest method.
+//	req, resp := client.ListDomainNamesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListDomainNames
+func (c *AppSync) ListDomainNamesRequest(input *ListDomainNamesInput) (req *request.Request, output *ListDomainNamesOutput) {
+	op := &request.Operation{
+		Name:       opListDomainNames,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/domainnames",
+	}
+
+	if input == nil {
+		input = &ListDomainNamesInput{}
+	}
+
+	output = &ListDomainNamesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListDomainNames API operation for AWS AppSync.
+//
+// Lists multiple custom domain names.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation ListDomainNames for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListDomainNames
+func (c *AppSync) ListDomainNames(input *ListDomainNamesInput) (*ListDomainNamesOutput, error) {
+	req, out := c.ListDomainNamesRequest(input)
+	return out, req.Send()
+}
+
+// ListDomainNamesWithContext is the same as ListDomainNames with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListDomainNames for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) ListDomainNamesWithContext(ctx aws.Context, input *ListDomainNamesInput, opts ...request.Option) (*ListDomainNamesOutput, error) {
+	req, out := c.ListDomainNamesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opListFunctions = "ListFunctions"
 
 // ListFunctionsRequest generates a "aws/request.Request" representing the
@@ -2360,14 +3853,13 @@ const opListFunctions = "ListFunctions"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListFunctionsRequest method.
+//	req, resp := client.ListFunctionsRequest(params)
 //
-//    // Example sending a request using the ListFunctionsRequest method.
-//    req, resp := client.ListFunctionsRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListFunctions
 func (c *AppSync) ListFunctionsRequest(input *ListFunctionsInput) (req *request.Request, output *ListFunctionsOutput) {
@@ -2398,19 +3890,20 @@ func (c *AppSync) ListFunctionsRequest(input *ListFunctionsInput) (req *request.
 // API operation ListFunctions for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListFunctions
 func (c *AppSync) ListFunctions(input *ListFunctionsInput) (*ListFunctionsOutput, error) {
@@ -2450,14 +3943,13 @@ const opListGraphqlApis = "ListGraphqlApis"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListGraphqlApisRequest method.
+//	req, resp := client.ListGraphqlApisRequest(params)
 //
-//    // Example sending a request using the ListGraphqlApisRequest method.
-//    req, resp := client.ListGraphqlApisRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListGraphqlApis
 func (c *AppSync) ListGraphqlApisRequest(input *ListGraphqlApisInput) (req *request.Request, output *ListGraphqlApisOutput) {
@@ -2488,15 +3980,16 @@ func (c *AppSync) ListGraphqlApisRequest(input *ListGraphqlApisInput) (req *requ
 // API operation ListGraphqlApis for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListGraphqlApis
 func (c *AppSync) ListGraphqlApis(input *ListGraphqlApisInput) (*ListGraphqlApisOutput, error) {
@@ -2536,14 +4029,13 @@ const opListResolvers = "ListResolvers"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListResolversRequest method.
+//	req, resp := client.ListResolversRequest(params)
 //
-//    // Example sending a request using the ListResolversRequest method.
-//    req, resp := client.ListResolversRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListResolvers
 func (c *AppSync) ListResolversRequest(input *ListResolversInput) (req *request.Request, output *ListResolversOutput) {
@@ -2574,19 +4066,20 @@ func (c *AppSync) ListResolversRequest(input *ListResolversInput) (req *request.
 // API operation ListResolvers for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListResolvers
 func (c *AppSync) ListResolvers(input *ListResolversInput) (*ListResolversOutput, error) {
@@ -2626,14 +4119,13 @@ const opListResolversByFunction = "ListResolversByFunction"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListResolversByFunctionRequest method.
+//	req, resp := client.ListResolversByFunctionRequest(params)
 //
-//    // Example sending a request using the ListResolversByFunctionRequest method.
-//    req, resp := client.ListResolversByFunctionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListResolversByFunction
 func (c *AppSync) ListResolversByFunctionRequest(input *ListResolversByFunctionInput) (req *request.Request, output *ListResolversByFunctionOutput) {
@@ -2664,19 +4156,20 @@ func (c *AppSync) ListResolversByFunctionRequest(input *ListResolversByFunctionI
 // API operation ListResolversByFunction for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListResolversByFunction
 func (c *AppSync) ListResolversByFunction(input *ListResolversByFunctionInput) (*ListResolversByFunctionOutput, error) {
@@ -2700,6 +4193,96 @@ func (c *AppSync) ListResolversByFunctionWithContext(ctx aws.Context, input *Lis
 	return out, req.Send()
 }
 
+const opListSourceApiAssociations = "ListSourceApiAssociations"
+
+// ListSourceApiAssociationsRequest generates a "aws/request.Request" representing the
+// client's request for the ListSourceApiAssociations operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListSourceApiAssociations for more information on using the ListSourceApiAssociations
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListSourceApiAssociationsRequest method.
+//	req, resp := client.ListSourceApiAssociationsRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListSourceApiAssociations
+func (c *AppSync) ListSourceApiAssociationsRequest(input *ListSourceApiAssociationsInput) (req *request.Request, output *ListSourceApiAssociationsOutput) {
+	op := &request.Operation{
+		Name:       opListSourceApiAssociations,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/apis/{apiId}/sourceApiAssociations",
+	}
+
+	if input == nil {
+		input = &ListSourceApiAssociationsInput{}
+	}
+
+	output = &ListSourceApiAssociationsOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListSourceApiAssociations API operation for AWS AppSync.
+//
+// Lists the SourceApiAssociationSummary data.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation ListSourceApiAssociations for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListSourceApiAssociations
+func (c *AppSync) ListSourceApiAssociations(input *ListSourceApiAssociationsInput) (*ListSourceApiAssociationsOutput, error) {
+	req, out := c.ListSourceApiAssociationsRequest(input)
+	return out, req.Send()
+}
+
+// ListSourceApiAssociationsWithContext is the same as ListSourceApiAssociations with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListSourceApiAssociations for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) ListSourceApiAssociationsWithContext(ctx aws.Context, input *ListSourceApiAssociationsInput, opts ...request.Option) (*ListSourceApiAssociationsOutput, error) {
+	req, out := c.ListSourceApiAssociationsRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opListTagsForResource = "ListTagsForResource"
 
 // ListTagsForResourceRequest generates a "aws/request.Request" representing the
@@ -2716,14 +4299,13 @@ const opListTagsForResource = "ListTagsForResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListTagsForResourceRequest method.
+//	req, resp := client.ListTagsForResourceRequest(params)
 //
-//    // Example sending a request using the ListTagsForResourceRequest method.
-//    req, resp := client.ListTagsForResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListTagsForResource
 func (c *AppSync) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *request.Request, output *ListTagsForResourceOutput) {
@@ -2754,25 +4336,26 @@ func (c *AppSync) ListTagsForResourceRequest(input *ListTagsForResourceInput) (r
 // API operation ListTagsForResource for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * LimitExceededException
-//   The request exceeded a limit. Try your request again.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * AccessDeniedException
-//   You do not have access to perform this operation on this resource.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListTagsForResource
 func (c *AppSync) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
@@ -2812,14 +4395,13 @@ const opListTypes = "ListTypes"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the ListTypesRequest method.
+//	req, resp := client.ListTypesRequest(params)
 //
-//    // Example sending a request using the ListTypesRequest method.
-//    req, resp := client.ListTypesRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListTypes
 func (c *AppSync) ListTypesRequest(input *ListTypesInput) (req *request.Request, output *ListTypesOutput) {
@@ -2850,23 +4432,24 @@ func (c *AppSync) ListTypesRequest(input *ListTypesInput) (req *request.Request,
 // API operation ListTypes for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListTypes
 func (c *AppSync) ListTypes(input *ListTypesInput) (*ListTypesOutput, error) {
@@ -2890,6 +4473,323 @@ func (c *AppSync) ListTypesWithContext(ctx aws.Context, input *ListTypesInput, o
 	return out, req.Send()
 }
 
+const opListTypesByAssociation = "ListTypesByAssociation"
+
+// ListTypesByAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the ListTypesByAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See ListTypesByAssociation for more information on using the ListTypesByAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the ListTypesByAssociationRequest method.
+//	req, resp := client.ListTypesByAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListTypesByAssociation
+func (c *AppSync) ListTypesByAssociationRequest(input *ListTypesByAssociationInput) (req *request.Request, output *ListTypesByAssociationOutput) {
+	op := &request.Operation{
+		Name:       opListTypesByAssociation,
+		HTTPMethod: "GET",
+		HTTPPath:   "/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}/types",
+	}
+
+	if input == nil {
+		input = &ListTypesByAssociationInput{}
+	}
+
+	output = &ListTypesByAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// ListTypesByAssociation API operation for AWS AppSync.
+//
+// Lists Type objects by the source API association ID.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation ListTypesByAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/ListTypesByAssociation
+func (c *AppSync) ListTypesByAssociation(input *ListTypesByAssociationInput) (*ListTypesByAssociationOutput, error) {
+	req, out := c.ListTypesByAssociationRequest(input)
+	return out, req.Send()
+}
+
+// ListTypesByAssociationWithContext is the same as ListTypesByAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See ListTypesByAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) ListTypesByAssociationWithContext(ctx aws.Context, input *ListTypesByAssociationInput, opts ...request.Option) (*ListTypesByAssociationOutput, error) {
+	req, out := c.ListTypesByAssociationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opPutGraphqlApiEnvironmentVariables = "PutGraphqlApiEnvironmentVariables"
+
+// PutGraphqlApiEnvironmentVariablesRequest generates a "aws/request.Request" representing the
+// client's request for the PutGraphqlApiEnvironmentVariables operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See PutGraphqlApiEnvironmentVariables for more information on using the PutGraphqlApiEnvironmentVariables
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the PutGraphqlApiEnvironmentVariablesRequest method.
+//	req, resp := client.PutGraphqlApiEnvironmentVariablesRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/PutGraphqlApiEnvironmentVariables
+func (c *AppSync) PutGraphqlApiEnvironmentVariablesRequest(input *PutGraphqlApiEnvironmentVariablesInput) (req *request.Request, output *PutGraphqlApiEnvironmentVariablesOutput) {
+	op := &request.Operation{
+		Name:       opPutGraphqlApiEnvironmentVariables,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/v1/apis/{apiId}/environmentVariables",
+	}
+
+	if input == nil {
+		input = &PutGraphqlApiEnvironmentVariablesInput{}
+	}
+
+	output = &PutGraphqlApiEnvironmentVariablesOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// PutGraphqlApiEnvironmentVariables API operation for AWS AppSync.
+//
+// Creates a list of environmental variables in an API by its ID value.
+//
+// When creating an environmental variable, it must follow the constraints below:
+//
+//   - Both JavaScript and VTL templates support environmental variables.
+//
+//   - Environmental variables are not evaluated before function invocation.
+//
+//   - Environmental variables only support string values.
+//
+//   - Any defined value in an environmental variable is considered a string
+//     literal and not expanded.
+//
+//   - Variable evaluations should ideally be performed in the function code.
+//
+// When creating an environmental variable key-value pair, it must follow the
+// additional constraints below:
+//
+//   - Keys must begin with a letter.
+//
+//   - Keys must be at least two characters long.
+//
+//   - Keys can only contain letters, numbers, and the underscore character
+//     (_).
+//
+//   - Values can be up to 512 characters long.
+//
+//   - You can configure up to 50 key-value pairs in a GraphQL API.
+//
+// You can create a list of environmental variables by adding it to the environmentVariables
+// payload as a list in the format {"key1":"value1","key2":"value2", …}. Note
+// that each call of the PutGraphqlApiEnvironmentVariables action will result
+// in the overwriting of the existing environmental variable list of that API.
+// This means the existing environmental variables will be lost. To avoid this,
+// you must include all existing and new environmental variables in the list
+// each time you call this action.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation PutGraphqlApiEnvironmentVariables for usage and error information.
+//
+// Returned Error Types:
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/PutGraphqlApiEnvironmentVariables
+func (c *AppSync) PutGraphqlApiEnvironmentVariables(input *PutGraphqlApiEnvironmentVariablesInput) (*PutGraphqlApiEnvironmentVariablesOutput, error) {
+	req, out := c.PutGraphqlApiEnvironmentVariablesRequest(input)
+	return out, req.Send()
+}
+
+// PutGraphqlApiEnvironmentVariablesWithContext is the same as PutGraphqlApiEnvironmentVariables with the addition of
+// the ability to pass a context and additional request options.
+//
+// See PutGraphqlApiEnvironmentVariables for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) PutGraphqlApiEnvironmentVariablesWithContext(ctx aws.Context, input *PutGraphqlApiEnvironmentVariablesInput, opts ...request.Option) (*PutGraphqlApiEnvironmentVariablesOutput, error) {
+	req, out := c.PutGraphqlApiEnvironmentVariablesRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
+const opStartDataSourceIntrospection = "StartDataSourceIntrospection"
+
+// StartDataSourceIntrospectionRequest generates a "aws/request.Request" representing the
+// client's request for the StartDataSourceIntrospection operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartDataSourceIntrospection for more information on using the StartDataSourceIntrospection
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartDataSourceIntrospectionRequest method.
+//	req, resp := client.StartDataSourceIntrospectionRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/StartDataSourceIntrospection
+func (c *AppSync) StartDataSourceIntrospectionRequest(input *StartDataSourceIntrospectionInput) (req *request.Request, output *StartDataSourceIntrospectionOutput) {
+	op := &request.Operation{
+		Name:       opStartDataSourceIntrospection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/datasources/introspections",
+	}
+
+	if input == nil {
+		input = &StartDataSourceIntrospectionInput{}
+	}
+
+	output = &StartDataSourceIntrospectionOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartDataSourceIntrospection API operation for AWS AppSync.
+//
+// Creates a new introspection. Returns the introspectionId of the new introspection
+// after its creation.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation StartDataSourceIntrospection for usage and error information.
+//
+// Returned Error Types:
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/StartDataSourceIntrospection
+func (c *AppSync) StartDataSourceIntrospection(input *StartDataSourceIntrospectionInput) (*StartDataSourceIntrospectionOutput, error) {
+	req, out := c.StartDataSourceIntrospectionRequest(input)
+	return out, req.Send()
+}
+
+// StartDataSourceIntrospectionWithContext is the same as StartDataSourceIntrospection with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartDataSourceIntrospection for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) StartDataSourceIntrospectionWithContext(ctx aws.Context, input *StartDataSourceIntrospectionInput, opts ...request.Option) (*StartDataSourceIntrospectionOutput, error) {
+	req, out := c.StartDataSourceIntrospectionRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opStartSchemaCreation = "StartSchemaCreation"
 
 // StartSchemaCreationRequest generates a "aws/request.Request" representing the
@@ -2906,14 +4806,13 @@ const opStartSchemaCreation = "StartSchemaCreation"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the StartSchemaCreationRequest method.
+//	req, resp := client.StartSchemaCreationRequest(params)
 //
-//    // Example sending a request using the StartSchemaCreationRequest method.
-//    req, resp := client.StartSchemaCreationRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/StartSchemaCreation
 func (c *AppSync) StartSchemaCreationRequest(input *StartSchemaCreationInput) (req *request.Request, output *StartSchemaCreationOutput) {
@@ -2946,23 +4845,24 @@ func (c *AppSync) StartSchemaCreationRequest(input *StartSchemaCreationInput) (r
 // API operation StartSchemaCreation for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/StartSchemaCreation
 func (c *AppSync) StartSchemaCreation(input *StartSchemaCreationInput) (*StartSchemaCreationOutput, error) {
@@ -2986,6 +4886,101 @@ func (c *AppSync) StartSchemaCreationWithContext(ctx aws.Context, input *StartSc
 	return out, req.Send()
 }
 
+const opStartSchemaMerge = "StartSchemaMerge"
+
+// StartSchemaMergeRequest generates a "aws/request.Request" representing the
+// client's request for the StartSchemaMerge operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See StartSchemaMerge for more information on using the StartSchemaMerge
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the StartSchemaMergeRequest method.
+//	req, resp := client.StartSchemaMergeRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/StartSchemaMerge
+func (c *AppSync) StartSchemaMergeRequest(input *StartSchemaMergeInput) (req *request.Request, output *StartSchemaMergeOutput) {
+	op := &request.Operation{
+		Name:       opStartSchemaMerge,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}/merge",
+	}
+
+	if input == nil {
+		input = &StartSchemaMergeInput{}
+	}
+
+	output = &StartSchemaMergeOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// StartSchemaMerge API operation for AWS AppSync.
+//
+// Initiates a merge operation. Returns a status that shows the result of the
+// merge operation.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation StartSchemaMerge for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/StartSchemaMerge
+func (c *AppSync) StartSchemaMerge(input *StartSchemaMergeInput) (*StartSchemaMergeOutput, error) {
+	req, out := c.StartSchemaMergeRequest(input)
+	return out, req.Send()
+}
+
+// StartSchemaMergeWithContext is the same as StartSchemaMerge with the addition of
+// the ability to pass a context and additional request options.
+//
+// See StartSchemaMerge for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) StartSchemaMergeWithContext(ctx aws.Context, input *StartSchemaMergeInput, opts ...request.Option) (*StartSchemaMergeOutput, error) {
+	req, out := c.StartSchemaMergeRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opTagResource = "TagResource"
 
 // TagResourceRequest generates a "aws/request.Request" representing the
@@ -3002,14 +4997,13 @@ const opTagResource = "TagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the TagResourceRequest method.
+//	req, resp := client.TagResourceRequest(params)
 //
-//    // Example sending a request using the TagResourceRequest method.
-//    req, resp := client.TagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/TagResource
 func (c *AppSync) TagResourceRequest(input *TagResourceInput) (req *request.Request, output *TagResourceOutput) {
@@ -3041,25 +5035,26 @@ func (c *AppSync) TagResourceRequest(input *TagResourceInput) (req *request.Requ
 // API operation TagResource for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * LimitExceededException
-//   The request exceeded a limit. Try your request again.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * AccessDeniedException
-//   You do not have access to perform this operation on this resource.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/TagResource
 func (c *AppSync) TagResource(input *TagResourceInput) (*TagResourceOutput, error) {
@@ -3099,14 +5094,13 @@ const opUntagResource = "UntagResource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UntagResourceRequest method.
+//	req, resp := client.UntagResourceRequest(params)
 //
-//    // Example sending a request using the UntagResourceRequest method.
-//    req, resp := client.UntagResourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UntagResource
 func (c *AppSync) UntagResourceRequest(input *UntagResourceInput) (req *request.Request, output *UntagResourceOutput) {
@@ -3138,25 +5132,26 @@ func (c *AppSync) UntagResourceRequest(input *UntagResourceInput) (req *request.
 // API operation UntagResource for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * LimitExceededException
-//   The request exceeded a limit. Try your request again.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * AccessDeniedException
-//   You do not have access to perform this operation on this resource.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UntagResource
 func (c *AppSync) UntagResource(input *UntagResourceInput) (*UntagResourceOutput, error) {
@@ -3196,14 +5191,13 @@ const opUpdateApiCache = "UpdateApiCache"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateApiCacheRequest method.
+//	req, resp := client.UpdateApiCacheRequest(params)
 //
-//    // Example sending a request using the UpdateApiCacheRequest method.
-//    req, resp := client.UpdateApiCacheRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateApiCache
 func (c *AppSync) UpdateApiCacheRequest(input *UpdateApiCacheInput) (req *request.Request, output *UpdateApiCacheOutput) {
@@ -3234,23 +5228,24 @@ func (c *AppSync) UpdateApiCacheRequest(input *UpdateApiCacheInput) (req *reques
 // API operation UpdateApiCache for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateApiCache
 func (c *AppSync) UpdateApiCache(input *UpdateApiCacheInput) (*UpdateApiCacheOutput, error) {
@@ -3290,14 +5285,13 @@ const opUpdateApiKey = "UpdateApiKey"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateApiKeyRequest method.
+//	req, resp := client.UpdateApiKeyRequest(params)
 //
-//    // Example sending a request using the UpdateApiKeyRequest method.
-//    req, resp := client.UpdateApiKeyRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateApiKey
 func (c *AppSync) UpdateApiKeyRequest(input *UpdateApiKeyInput) (req *request.Request, output *UpdateApiKeyOutput) {
@@ -3318,7 +5312,7 @@ func (c *AppSync) UpdateApiKeyRequest(input *UpdateApiKeyInput) (req *request.Re
 
 // UpdateApiKey API operation for AWS AppSync.
 //
-// Updates an API key. The key can be updated while it is not deleted.
+// Updates an API key. You can update the key as long as it's not deleted.
 //
 // Returns awserr.Error for service API and SDK errors. Use runtime type assertions
 // with awserr.Error's Code and Message methods to get detailed information about
@@ -3328,26 +5322,27 @@ func (c *AppSync) UpdateApiKeyRequest(input *UpdateApiKeyInput) (req *request.Re
 // API operation UpdateApiKey for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * LimitExceededException
-//   The request exceeded a limit. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - LimitExceededException
+//     The request exceeded a limit. Try your request again.
 //
-//   * ApiKeyValidityOutOfBoundsException
-//   The API key expiration must be set to a value between 1 and 365 days from
-//   creation (for CreateApiKey) or from update (for UpdateApiKey).
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - ApiKeyValidityOutOfBoundsException
+//     The API key expiration must be set to a value between 1 and 365 days from
+//     creation (for CreateApiKey) or from update (for UpdateApiKey).
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateApiKey
 func (c *AppSync) UpdateApiKey(input *UpdateApiKeyInput) (*UpdateApiKeyOutput, error) {
@@ -3387,14 +5382,13 @@ const opUpdateDataSource = "UpdateDataSource"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateDataSourceRequest method.
+//	req, resp := client.UpdateDataSourceRequest(params)
 //
-//    // Example sending a request using the UpdateDataSourceRequest method.
-//    req, resp := client.UpdateDataSourceRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateDataSource
 func (c *AppSync) UpdateDataSourceRequest(input *UpdateDataSourceInput) (req *request.Request, output *UpdateDataSourceOutput) {
@@ -3425,23 +5419,24 @@ func (c *AppSync) UpdateDataSourceRequest(input *UpdateDataSourceInput) (req *re
 // API operation UpdateDataSource for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateDataSource
 func (c *AppSync) UpdateDataSource(input *UpdateDataSourceInput) (*UpdateDataSourceOutput, error) {
@@ -3465,6 +5460,100 @@ func (c *AppSync) UpdateDataSourceWithContext(ctx aws.Context, input *UpdateData
 	return out, req.Send()
 }
 
+const opUpdateDomainName = "UpdateDomainName"
+
+// UpdateDomainNameRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateDomainName operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateDomainName for more information on using the UpdateDomainName
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateDomainNameRequest method.
+//	req, resp := client.UpdateDomainNameRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateDomainName
+func (c *AppSync) UpdateDomainNameRequest(input *UpdateDomainNameInput) (req *request.Request, output *UpdateDomainNameOutput) {
+	op := &request.Operation{
+		Name:       opUpdateDomainName,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/domainnames/{domainName}",
+	}
+
+	if input == nil {
+		input = &UpdateDomainNameInput{}
+	}
+
+	output = &UpdateDomainNameOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateDomainName API operation for AWS AppSync.
+//
+// Updates a custom DomainName object.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation UpdateDomainName for usage and error information.
+//
+// Returned Error Types:
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateDomainName
+func (c *AppSync) UpdateDomainName(input *UpdateDomainNameInput) (*UpdateDomainNameOutput, error) {
+	req, out := c.UpdateDomainNameRequest(input)
+	return out, req.Send()
+}
+
+// UpdateDomainNameWithContext is the same as UpdateDomainName with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateDomainName for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) UpdateDomainNameWithContext(ctx aws.Context, input *UpdateDomainNameInput, opts ...request.Option) (*UpdateDomainNameOutput, error) {
+	req, out := c.UpdateDomainNameRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateFunction = "UpdateFunction"
 
 // UpdateFunctionRequest generates a "aws/request.Request" representing the
@@ -3481,14 +5570,13 @@ const opUpdateFunction = "UpdateFunction"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateFunctionRequest method.
+//	req, resp := client.UpdateFunctionRequest(params)
 //
-//    // Example sending a request using the UpdateFunctionRequest method.
-//    req, resp := client.UpdateFunctionRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateFunction
 func (c *AppSync) UpdateFunctionRequest(input *UpdateFunctionInput) (req *request.Request, output *UpdateFunctionOutput) {
@@ -3519,19 +5607,24 @@ func (c *AppSync) UpdateFunctionRequest(input *UpdateFunctionInput) (req *reques
 // API operation UpdateFunction for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateFunction
 func (c *AppSync) UpdateFunction(input *UpdateFunctionInput) (*UpdateFunctionOutput, error) {
@@ -3571,14 +5664,13 @@ const opUpdateGraphqlApi = "UpdateGraphqlApi"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateGraphqlApiRequest method.
+//	req, resp := client.UpdateGraphqlApiRequest(params)
 //
-//    // Example sending a request using the UpdateGraphqlApiRequest method.
-//    req, resp := client.UpdateGraphqlApiRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateGraphqlApi
 func (c *AppSync) UpdateGraphqlApiRequest(input *UpdateGraphqlApiInput) (req *request.Request, output *UpdateGraphqlApiOutput) {
@@ -3609,26 +5701,27 @@ func (c *AppSync) UpdateGraphqlApiRequest(input *UpdateGraphqlApiInput) (req *re
 // API operation UpdateGraphqlApi for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
 //
-//   * AccessDeniedException
-//   You do not have access to perform this operation on this resource.
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - AccessDeniedException
+//     You don't have access to perform this operation on this resource.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateGraphqlApi
 func (c *AppSync) UpdateGraphqlApi(input *UpdateGraphqlApiInput) (*UpdateGraphqlApiOutput, error) {
@@ -3668,14 +5761,13 @@ const opUpdateResolver = "UpdateResolver"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateResolverRequest method.
+//	req, resp := client.UpdateResolverRequest(params)
 //
-//    // Example sending a request using the UpdateResolverRequest method.
-//    req, resp := client.UpdateResolverRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateResolver
 func (c *AppSync) UpdateResolverRequest(input *UpdateResolverInput) (req *request.Request, output *UpdateResolverOutput) {
@@ -3706,19 +5798,24 @@ func (c *AppSync) UpdateResolverRequest(input *UpdateResolverInput) (req *reques
 // API operation UpdateResolver for usage and error information.
 //
 // Returned Error Types:
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateResolver
 func (c *AppSync) UpdateResolver(input *UpdateResolverInput) (*UpdateResolverOutput, error) {
@@ -3742,6 +5839,100 @@ func (c *AppSync) UpdateResolverWithContext(ctx aws.Context, input *UpdateResolv
 	return out, req.Send()
 }
 
+const opUpdateSourceApiAssociation = "UpdateSourceApiAssociation"
+
+// UpdateSourceApiAssociationRequest generates a "aws/request.Request" representing the
+// client's request for the UpdateSourceApiAssociation operation. The "output" return
+// value will be populated with the request's response once the request completes
+// successfully.
+//
+// Use "Send" method on the returned Request to send the API call to the service.
+// the "output" return value is not valid until after Send returns without error.
+//
+// See UpdateSourceApiAssociation for more information on using the UpdateSourceApiAssociation
+// API call, and error handling.
+//
+// This method is useful when you want to inject custom logic or configuration
+// into the SDK's request lifecycle. Such as custom headers, or retry logic.
+//
+//	// Example sending a request using the UpdateSourceApiAssociationRequest method.
+//	req, resp := client.UpdateSourceApiAssociationRequest(params)
+//
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateSourceApiAssociation
+func (c *AppSync) UpdateSourceApiAssociationRequest(input *UpdateSourceApiAssociationInput) (req *request.Request, output *UpdateSourceApiAssociationOutput) {
+	op := &request.Operation{
+		Name:       opUpdateSourceApiAssociation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/v1/mergedApis/{mergedApiIdentifier}/sourceApiAssociations/{associationId}",
+	}
+
+	if input == nil {
+		input = &UpdateSourceApiAssociationInput{}
+	}
+
+	output = &UpdateSourceApiAssociationOutput{}
+	req = c.newRequest(op, input, output)
+	return
+}
+
+// UpdateSourceApiAssociation API operation for AWS AppSync.
+//
+// Updates some of the configuration choices of a particular source API association.
+//
+// Returns awserr.Error for service API and SDK errors. Use runtime type assertions
+// with awserr.Error's Code and Message methods to get detailed information about
+// the error.
+//
+// See the AWS API reference guide for AWS AppSync's
+// API operation UpdateSourceApiAssociation for usage and error information.
+//
+// Returned Error Types:
+//
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
+//
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
+//
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
+//
+// See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateSourceApiAssociation
+func (c *AppSync) UpdateSourceApiAssociation(input *UpdateSourceApiAssociationInput) (*UpdateSourceApiAssociationOutput, error) {
+	req, out := c.UpdateSourceApiAssociationRequest(input)
+	return out, req.Send()
+}
+
+// UpdateSourceApiAssociationWithContext is the same as UpdateSourceApiAssociation with the addition of
+// the ability to pass a context and additional request options.
+//
+// See UpdateSourceApiAssociation for details on how to use this API operation.
+//
+// The context must be non-nil and will be used for request cancellation. If
+// the context is nil a panic will occur. In the future the SDK may create
+// sub-contexts for http.Requests. See https://golang.org/pkg/context/
+// for more information on using Contexts.
+func (c *AppSync) UpdateSourceApiAssociationWithContext(ctx aws.Context, input *UpdateSourceApiAssociationInput, opts ...request.Option) (*UpdateSourceApiAssociationOutput, error) {
+	req, out := c.UpdateSourceApiAssociationRequest(input)
+	req.SetContext(ctx)
+	req.ApplyOptions(opts...)
+	return out, req.Send()
+}
+
 const opUpdateType = "UpdateType"
 
 // UpdateTypeRequest generates a "aws/request.Request" representing the
@@ -3758,14 +5949,13 @@ const opUpdateType = "UpdateType"
 // This method is useful when you want to inject custom logic or configuration
 // into the SDK's request lifecycle. Such as custom headers, or retry logic.
 //
+//	// Example sending a request using the UpdateTypeRequest method.
+//	req, resp := client.UpdateTypeRequest(params)
 //
-//    // Example sending a request using the UpdateTypeRequest method.
-//    req, resp := client.UpdateTypeRequest(params)
-//
-//    err := req.Send()
-//    if err == nil { // resp is now filled
-//        fmt.Println(resp)
-//    }
+//	err := req.Send()
+//	if err == nil { // resp is now filled
+//	    fmt.Println(resp)
+//	}
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateType
 func (c *AppSync) UpdateTypeRequest(input *UpdateTypeInput) (req *request.Request, output *UpdateTypeOutput) {
@@ -3796,23 +5986,24 @@ func (c *AppSync) UpdateTypeRequest(input *UpdateTypeInput) (req *request.Reques
 // API operation UpdateType for usage and error information.
 //
 // Returned Error Types:
-//   * BadRequestException
-//   The request is not well formed. For example, a value is invalid or a required
-//   field is missing. Check the field values, and then try again.
 //
-//   * ConcurrentModificationException
-//   Another modification is in progress at this time and it must complete before
-//   you can make your change.
+//   - BadRequestException
+//     The request is not well formed. For example, a value is invalid or a required
+//     field is missing. Check the field values, and then try again.
 //
-//   * NotFoundException
-//   The resource specified in the request was not found. Check the resource,
-//   and then try again.
+//   - ConcurrentModificationException
+//     Another modification is in progress at this time and it must complete before
+//     you can make your change.
 //
-//   * UnauthorizedException
-//   You are not authorized to perform this operation.
+//   - NotFoundException
+//     The resource specified in the request was not found. Check the resource,
+//     and then try again.
 //
-//   * InternalFailureException
-//   An internal AppSync error occurred. Try your request again.
+//   - UnauthorizedException
+//     You aren't authorized to perform this operation.
+//
+//   - InternalFailureException
+//     An internal AppSync error occurred. Try your request again.
 //
 // See also, https://docs.aws.amazon.com/goto/WebAPI/appsync-2017-07-25/UpdateType
 func (c *AppSync) UpdateType(input *UpdateTypeInput) (*UpdateTypeOutput, error) {
@@ -3836,7 +6027,7 @@ func (c *AppSync) UpdateTypeWithContext(ctx aws.Context, input *UpdateTypeInput,
 	return out, req.Send()
 }
 
-// You do not have access to perform this operation on this resource.
+// You don't have access to perform this operation on this resource.
 type AccessDeniedException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -3844,12 +6035,20 @@ type AccessDeniedException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AccessDeniedException) GoString() string {
 	return s.String()
 }
@@ -3896,26 +6095,34 @@ func (s *AccessDeniedException) RequestID() string {
 type AdditionalAuthenticationProvider struct {
 	_ struct{} `type:"structure"`
 
-	// The authentication type: API key, Identity and Access Management, OIDC, or
-	// Amazon Cognito user pools.
+	// The authentication type: API key, Identity and Access Management (IAM), OpenID
+	// Connect (OIDC), Amazon Cognito user pools, or Lambda.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
 
-	// Configuration for AWS Lambda function authorization.
+	// Configuration for Lambda function authorization.
 	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
 
-	// The OpenID Connect configuration.
+	// The OIDC configuration.
 	OpenIDConnectConfig *OpenIDConnectConfig `locationName:"openIDConnectConfig" type:"structure"`
 
 	// The Amazon Cognito user pool configuration.
 	UserPoolConfig *CognitoUserPoolConfig `locationName:"userPoolConfig" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AdditionalAuthenticationProvider) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AdditionalAuthenticationProvider) GoString() string {
 	return s.String()
 }
@@ -3969,6 +6176,74 @@ func (s *AdditionalAuthenticationProvider) SetUserPoolConfig(v *CognitoUserPoolC
 	return s
 }
 
+// Describes an ApiAssociation object.
+type ApiAssociation struct {
+	_ struct{} `type:"structure"`
+
+	// The API ID.
+	ApiId *string `locationName:"apiId" type:"string"`
+
+	// Identifies the status of an association.
+	//
+	//    * PROCESSING: The API association is being created. You cannot modify
+	//    association requests during processing.
+	//
+	//    * SUCCESS: The API association was successful. You can modify associations
+	//    after success.
+	//
+	//    * FAILED: The API association has failed. You can modify associations
+	//    after failure.
+	AssociationStatus *string `locationName:"associationStatus" type:"string" enum:"AssociationStatus"`
+
+	// Details about the last deployment status.
+	DeploymentDetail *string `locationName:"deploymentDetail" type:"string"`
+
+	// The domain name.
+	DomainName *string `locationName:"domainName" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiAssociation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ApiAssociation) GoString() string {
+	return s.String()
+}
+
+// SetApiId sets the ApiId field's value.
+func (s *ApiAssociation) SetApiId(v string) *ApiAssociation {
+	s.ApiId = &v
+	return s
+}
+
+// SetAssociationStatus sets the AssociationStatus field's value.
+func (s *ApiAssociation) SetAssociationStatus(v string) *ApiAssociation {
+	s.AssociationStatus = &v
+	return s
+}
+
+// SetDeploymentDetail sets the DeploymentDetail field's value.
+func (s *ApiAssociation) SetDeploymentDetail(v string) *ApiAssociation {
+	s.DeploymentDetail = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *ApiAssociation) SetDomainName(v string) *ApiAssociation {
+	s.DomainName = &v
+	return s
+}
+
 // The ApiCache object.
 type ApiCache struct {
 	_ struct{} `type:"structure"`
@@ -3980,8 +6255,22 @@ type ApiCache struct {
 	//    * PER_RESOLVER_CACHING: Individual resolvers that you specify are cached.
 	ApiCachingBehavior *string `locationName:"apiCachingBehavior" type:"string" enum:"ApiCachingBehavior"`
 
-	// At rest encryption flag for cache. This setting cannot be updated after creation.
+	// At-rest encryption flag for cache. You cannot update this setting after creation.
 	AtRestEncryptionEnabled *bool `locationName:"atRestEncryptionEnabled" type:"boolean"`
+
+	// Controls how cache health metrics will be emitted to CloudWatch. Cache health
+	// metrics include:
+	//
+	//    * NetworkBandwidthOutAllowanceExceeded: The network packets dropped because
+	//    the throughput exceeded the aggregated bandwidth limit. This is useful
+	//    for diagnosing bottlenecks in a cache configuration.
+	//
+	//    * EngineCPUUtilization: The CPU utilization (percentage) allocated to
+	//    the Redis process. This is useful for diagnosing bottlenecks in a cache
+	//    configuration.
+	//
+	// Metrics will be recorded by API ID. You can set the value to ENABLED or DISABLED.
+	HealthMetricsConfig *string `locationName:"healthMetricsConfig" type:"string" enum:"CacheHealthMetricsConfig"`
 
 	// The cache instance status.
 	//
@@ -3996,13 +6285,13 @@ type ApiCache struct {
 	//    * FAILED: The instance has failed creation.
 	Status *string `locationName:"status" type:"string" enum:"ApiCacheStatus"`
 
-	// Transit encryption flag when connecting to cache. This setting cannot be
-	// updated after creation.
+	// Transit encryption flag when connecting to cache. You cannot update this
+	// setting after creation.
 	TransitEncryptionEnabled *bool `locationName:"transitEncryptionEnabled" type:"boolean"`
 
 	// TTL in seconds for cache entries.
 	//
-	// Valid values are between 1 and 3600 seconds.
+	// Valid values are 1–3,600 seconds.
 	Ttl *int64 `locationName:"ttl" type:"long"`
 
 	// The cache instance type. Valid values are
@@ -4045,12 +6334,20 @@ type ApiCache struct {
 	Type *string `locationName:"type" type:"string" enum:"ApiCacheType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiCache) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiCache) GoString() string {
 	return s.String()
 }
@@ -4064,6 +6361,12 @@ func (s *ApiCache) SetApiCachingBehavior(v string) *ApiCache {
 // SetAtRestEncryptionEnabled sets the AtRestEncryptionEnabled field's value.
 func (s *ApiCache) SetAtRestEncryptionEnabled(v bool) *ApiCache {
 	s.AtRestEncryptionEnabled = &v
+	return s
+}
+
+// SetHealthMetricsConfig sets the HealthMetricsConfig field's value.
+func (s *ApiCache) SetHealthMetricsConfig(v string) *ApiCache {
+	s.HealthMetricsConfig = &v
 	return s
 }
 
@@ -4096,45 +6399,45 @@ func (s *ApiCache) SetType(v string) *ApiCache {
 // Customers invoke AppSync GraphQL API operations with API keys as an identity
 // mechanism. There are two key versions:
 //
-// da1: This version was introduced at launch in November 2017. These keys always
-// expire after 7 days. Key expiration is managed by Amazon DynamoDB TTL. The
-// keys ceased to be valid after February 21, 2018 and should not be used after
-// that date.
+// da1: We introduced this version at launch in November 2017. These keys always
+// expire after 7 days. Amazon DynamoDB TTL manages key expiration. These keys
+// ceased to be valid after February 21, 2018, and they should no longer be
+// used.
 //
-//    * ListApiKeys returns the expiration time in milliseconds.
+//   - ListApiKeys returns the expiration time in milliseconds.
 //
-//    * CreateApiKey returns the expiration time in milliseconds.
+//   - CreateApiKey returns the expiration time in milliseconds.
 //
-//    * UpdateApiKey is not available for this key version.
+//   - UpdateApiKey is not available for this key version.
 //
-//    * DeleteApiKey deletes the item from the table.
+//   - DeleteApiKey deletes the item from the table.
 //
-//    * Expiration is stored in Amazon DynamoDB as milliseconds. This results
-//    in a bug where keys are not automatically deleted because DynamoDB expects
-//    the TTL to be stored in seconds. As a one-time action, we will delete
-//    these keys from the table after February 21, 2018.
+//   - Expiration is stored in DynamoDB as milliseconds. This results in a
+//     bug where keys are not automatically deleted because DynamoDB expects
+//     the TTL to be stored in seconds. As a one-time action, we deleted these
+//     keys from the table on February 21, 2018.
 //
-// da2: This version was introduced in February 2018 when AppSync added support
+// da2: We introduced this version in February 2018 when AppSync added support
 // to extend key expiration.
 //
-//    * ListApiKeys returns the expiration time and deletion time in seconds.
+//   - ListApiKeys returns the expiration time and deletion time in seconds.
 //
-//    * CreateApiKey returns the expiration time and deletion time in seconds
-//    and accepts a user-provided expiration time in seconds.
+//   - CreateApiKey returns the expiration time and deletion time in seconds
+//     and accepts a user-provided expiration time in seconds.
 //
-//    * UpdateApiKey returns the expiration time and and deletion time in seconds
-//    and accepts a user-provided expiration time in seconds. Expired API keys
-//    are kept for 60 days after the expiration time. Key expiration time can
-//    be updated while the key is not deleted.
+//   - UpdateApiKey returns the expiration time and and deletion time in seconds
+//     and accepts a user-provided expiration time in seconds. Expired API keys
+//     are kept for 60 days after the expiration time. You can update the key
+//     expiration time as long as the key isn't deleted.
 //
-//    * DeleteApiKey deletes the item from the table.
+//   - DeleteApiKey deletes the item from the table.
 //
-//    * Expiration is stored in Amazon DynamoDB as seconds. After the expiration
-//    time, using the key to authenticate will fail. But the key can be reinstated
-//    before deletion.
+//   - Expiration is stored in DynamoDB as seconds. After the expiration time,
+//     using the key to authenticate will fail. However, you can reinstate the
+//     key before deletion.
 //
-//    * Deletion is stored in Amazon DynamoDB as seconds. The key will be deleted
-//    after deletion time.
+//   - Deletion is stored in DynamoDB as seconds. The key is deleted after
+//     deletion time.
 type ApiKey struct {
 	_ struct{} `type:"structure"`
 
@@ -4153,12 +6456,20 @@ type ApiKey struct {
 	Id *string `locationName:"id" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiKey) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiKey) GoString() string {
 	return s.String()
 }
@@ -4195,12 +6506,20 @@ type ApiKeyLimitExceededException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiKeyLimitExceededException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiKeyLimitExceededException) GoString() string {
 	return s.String()
 }
@@ -4252,12 +6571,20 @@ type ApiKeyValidityOutOfBoundsException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiKeyValidityOutOfBoundsException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiKeyValidityOutOfBoundsException) GoString() string {
 	return s.String()
 }
@@ -4308,12 +6635,20 @@ type ApiLimitExceededException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiLimitExceededException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ApiLimitExceededException) GoString() string {
 	return s.String()
 }
@@ -4356,27 +6691,434 @@ func (s *ApiLimitExceededException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The authorization config in case the HTTP endpoint requires authorization.
+// Describes a runtime used by an Amazon Web Services AppSync pipeline resolver
+// or Amazon Web Services AppSync function. Specifies the name and version of
+// the runtime to use. Note that if a runtime is specified, code must also be
+// specified.
+type AppSyncRuntime struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the runtime to use. Currently, the only allowed value is APPSYNC_JS.
+	//
+	// Name is a required field
+	Name *string `locationName:"name" type:"string" required:"true" enum:"RuntimeName"`
+
+	// The version of the runtime to use. Currently, the only allowed version is
+	// 1.0.0.
+	//
+	// RuntimeVersion is a required field
+	RuntimeVersion *string `locationName:"runtimeVersion" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AppSyncRuntime) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AppSyncRuntime) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AppSyncRuntime) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AppSyncRuntime"}
+	if s.Name == nil {
+		invalidParams.Add(request.NewErrParamRequired("Name"))
+	}
+	if s.RuntimeVersion == nil {
+		invalidParams.Add(request.NewErrParamRequired("RuntimeVersion"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetName sets the Name field's value.
+func (s *AppSyncRuntime) SetName(v string) *AppSyncRuntime {
+	s.Name = &v
+	return s
+}
+
+// SetRuntimeVersion sets the RuntimeVersion field's value.
+func (s *AppSyncRuntime) SetRuntimeVersion(v string) *AppSyncRuntime {
+	s.RuntimeVersion = &v
+	return s
+}
+
+type AssociateApiInput struct {
+	_ struct{} `type:"structure"`
+
+	// The API ID. Private APIs can not be associated with custom domains.
+	//
+	// ApiId is a required field
+	ApiId *string `locationName:"apiId" type:"string" required:"true"`
+
+	// The domain name.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"domainName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateApiInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateApiInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssociateApiInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssociateApiInput"}
+	if s.ApiId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ApiId"))
+	}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApiId sets the ApiId field's value.
+func (s *AssociateApiInput) SetApiId(v string) *AssociateApiInput {
+	s.ApiId = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *AssociateApiInput) SetDomainName(v string) *AssociateApiInput {
+	s.DomainName = &v
+	return s
+}
+
+type AssociateApiOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ApiAssociation object.
+	ApiAssociation *ApiAssociation `locationName:"apiAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateApiOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateApiOutput) GoString() string {
+	return s.String()
+}
+
+// SetApiAssociation sets the ApiAssociation field's value.
+func (s *AssociateApiOutput) SetApiAssociation(v *ApiAssociation) *AssociateApiOutput {
+	s.ApiAssociation = v
+	return s
+}
+
+type AssociateMergedGraphqlApiInput struct {
+	_ struct{} `type:"structure"`
+
+	// The description field.
+	Description *string `locationName:"description" type:"string"`
+
+	// The identifier of the AppSync Merged API. This is generated by the AppSync
+	// service. In most cases, Merged APIs (especially in your account) only require
+	// the API ID value or ARN of the merged API. However, Merged APIs in other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the merged API.
+	//
+	// MergedApiIdentifier is a required field
+	MergedApiIdentifier *string `locationName:"mergedApiIdentifier" type:"string" required:"true"`
+
+	// The SourceApiAssociationConfig object data.
+	SourceApiAssociationConfig *SourceApiAssociationConfig `locationName:"sourceApiAssociationConfig" type:"structure"`
+
+	// The identifier of the AppSync Source API. This is generated by the AppSync
+	// service. In most cases, source APIs (especially in your account) only require
+	// the API ID value or ARN of the source API. However, source APIs from other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the source API.
+	//
+	// SourceApiIdentifier is a required field
+	SourceApiIdentifier *string `location:"uri" locationName:"sourceApiIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateMergedGraphqlApiInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateMergedGraphqlApiInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssociateMergedGraphqlApiInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssociateMergedGraphqlApiInput"}
+	if s.MergedApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MergedApiIdentifier"))
+	}
+	if s.SourceApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("SourceApiIdentifier"))
+	}
+	if s.SourceApiIdentifier != nil && len(*s.SourceApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SourceApiIdentifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *AssociateMergedGraphqlApiInput) SetDescription(v string) *AssociateMergedGraphqlApiInput {
+	s.Description = &v
+	return s
+}
+
+// SetMergedApiIdentifier sets the MergedApiIdentifier field's value.
+func (s *AssociateMergedGraphqlApiInput) SetMergedApiIdentifier(v string) *AssociateMergedGraphqlApiInput {
+	s.MergedApiIdentifier = &v
+	return s
+}
+
+// SetSourceApiAssociationConfig sets the SourceApiAssociationConfig field's value.
+func (s *AssociateMergedGraphqlApiInput) SetSourceApiAssociationConfig(v *SourceApiAssociationConfig) *AssociateMergedGraphqlApiInput {
+	s.SourceApiAssociationConfig = v
+	return s
+}
+
+// SetSourceApiIdentifier sets the SourceApiIdentifier field's value.
+func (s *AssociateMergedGraphqlApiInput) SetSourceApiIdentifier(v string) *AssociateMergedGraphqlApiInput {
+	s.SourceApiIdentifier = &v
+	return s
+}
+
+type AssociateMergedGraphqlApiOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The SourceApiAssociation object data.
+	SourceApiAssociation *SourceApiAssociation `locationName:"sourceApiAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateMergedGraphqlApiOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateMergedGraphqlApiOutput) GoString() string {
+	return s.String()
+}
+
+// SetSourceApiAssociation sets the SourceApiAssociation field's value.
+func (s *AssociateMergedGraphqlApiOutput) SetSourceApiAssociation(v *SourceApiAssociation) *AssociateMergedGraphqlApiOutput {
+	s.SourceApiAssociation = v
+	return s
+}
+
+type AssociateSourceGraphqlApiInput struct {
+	_ struct{} `type:"structure"`
+
+	// The description field.
+	Description *string `locationName:"description" type:"string"`
+
+	// The identifier of the AppSync Merged API. This is generated by the AppSync
+	// service. In most cases, Merged APIs (especially in your account) only require
+	// the API ID value or ARN of the merged API. However, Merged APIs in other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the merged API.
+	//
+	// MergedApiIdentifier is a required field
+	MergedApiIdentifier *string `location:"uri" locationName:"mergedApiIdentifier" type:"string" required:"true"`
+
+	// The SourceApiAssociationConfig object data.
+	SourceApiAssociationConfig *SourceApiAssociationConfig `locationName:"sourceApiAssociationConfig" type:"structure"`
+
+	// The identifier of the AppSync Source API. This is generated by the AppSync
+	// service. In most cases, source APIs (especially in your account) only require
+	// the API ID value or ARN of the source API. However, source APIs from other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the source API.
+	//
+	// SourceApiIdentifier is a required field
+	SourceApiIdentifier *string `locationName:"sourceApiIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateSourceGraphqlApiInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateSourceGraphqlApiInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *AssociateSourceGraphqlApiInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "AssociateSourceGraphqlApiInput"}
+	if s.MergedApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MergedApiIdentifier"))
+	}
+	if s.MergedApiIdentifier != nil && len(*s.MergedApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MergedApiIdentifier", 1))
+	}
+	if s.SourceApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("SourceApiIdentifier"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *AssociateSourceGraphqlApiInput) SetDescription(v string) *AssociateSourceGraphqlApiInput {
+	s.Description = &v
+	return s
+}
+
+// SetMergedApiIdentifier sets the MergedApiIdentifier field's value.
+func (s *AssociateSourceGraphqlApiInput) SetMergedApiIdentifier(v string) *AssociateSourceGraphqlApiInput {
+	s.MergedApiIdentifier = &v
+	return s
+}
+
+// SetSourceApiAssociationConfig sets the SourceApiAssociationConfig field's value.
+func (s *AssociateSourceGraphqlApiInput) SetSourceApiAssociationConfig(v *SourceApiAssociationConfig) *AssociateSourceGraphqlApiInput {
+	s.SourceApiAssociationConfig = v
+	return s
+}
+
+// SetSourceApiIdentifier sets the SourceApiIdentifier field's value.
+func (s *AssociateSourceGraphqlApiInput) SetSourceApiIdentifier(v string) *AssociateSourceGraphqlApiInput {
+	s.SourceApiIdentifier = &v
+	return s
+}
+
+type AssociateSourceGraphqlApiOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The SourceApiAssociation object data.
+	SourceApiAssociation *SourceApiAssociation `locationName:"sourceApiAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateSourceGraphqlApiOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s AssociateSourceGraphqlApiOutput) GoString() string {
+	return s.String()
+}
+
+// SetSourceApiAssociation sets the SourceApiAssociation field's value.
+func (s *AssociateSourceGraphqlApiOutput) SetSourceApiAssociation(v *SourceApiAssociation) *AssociateSourceGraphqlApiOutput {
+	s.SourceApiAssociation = v
+	return s
+}
+
+// The authorization configuration in case the HTTP endpoint requires authorization.
 type AuthorizationConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The authorization type required by the HTTP endpoint.
+	// The authorization type that the HTTP endpoint requires.
 	//
-	//    * AWS_IAM: The authorization type is Sigv4.
+	//    * AWS_IAM: The authorization type is Signature Version 4 (SigV4).
 	//
 	// AuthorizationType is a required field
 	AuthorizationType *string `locationName:"authorizationType" type:"string" required:"true" enum:"AuthorizationType"`
 
-	// The Identity and Access Management settings.
+	// The Identity and Access Management (IAM) settings.
 	AwsIamConfig *AwsIamConfig `locationName:"awsIamConfig" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AuthorizationConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AuthorizationConfig) GoString() string {
 	return s.String()
 }
@@ -4406,23 +7148,31 @@ func (s *AuthorizationConfig) SetAwsIamConfig(v *AwsIamConfig) *AuthorizationCon
 	return s
 }
 
-// The Identity and Access Management configuration.
+// The Identity and Access Management (IAM) configuration.
 type AwsIamConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The signing region for Identity and Access Management authorization.
+	// The signing Amazon Web Services Region for IAM authorization.
 	SigningRegion *string `locationName:"signingRegion" type:"string"`
 
-	// The signing service name for Identity and Access Management authorization.
+	// The signing service name for IAM authorization.
 	SigningServiceName *string `locationName:"signingServiceName" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AwsIamConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s AwsIamConfig) GoString() string {
 	return s.String()
 }
@@ -4439,21 +7189,70 @@ func (s *AwsIamConfig) SetSigningServiceName(v string) *AwsIamConfig {
 	return s
 }
 
+// Provides further details for the reason behind the bad request. For reason
+// type CODE_ERROR, the detail will contain a list of code errors.
+type BadRequestDetail struct {
+	_ struct{} `type:"structure"`
+
+	// Contains the list of errors in the request.
+	CodeErrors []*CodeError `locationName:"codeErrors" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BadRequestDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s BadRequestDetail) GoString() string {
+	return s.String()
+}
+
+// SetCodeErrors sets the CodeErrors field's value.
+func (s *BadRequestDetail) SetCodeErrors(v []*CodeError) *BadRequestDetail {
+	s.CodeErrors = v
+	return s
+}
+
 // The request is not well formed. For example, a value is invalid or a required
 // field is missing. Check the field values, and then try again.
 type BadRequestException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
 
+	// Provides further details for the reason behind the bad request. For reason
+	// type CODE_ERROR, the detail will contain a list of code errors.
+	Detail *BadRequestDetail `locationName:"detail" type:"structure"`
+
 	Message_ *string `locationName:"message" type:"string"`
+
+	// Provides context for the cause of the bad request. The only supported value
+	// is CODE_ERROR.
+	Reason *string `locationName:"reason" type:"string" enum:"BadRequestReason"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BadRequestException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s BadRequestException) GoString() string {
 	return s.String()
 }
@@ -4483,7 +7282,7 @@ func (s *BadRequestException) OrigErr() error {
 }
 
 func (s *BadRequestException) Error() string {
-	return fmt.Sprintf("%s: %s", s.Code(), s.Message())
+	return fmt.Sprintf("%s: %s\n%s", s.Code(), s.Message(), s.String())
 }
 
 // Status code returns the HTTP status code for the request's response error.
@@ -4496,30 +7295,53 @@ func (s *BadRequestException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// The caching configuration for a resolver that has caching enabled.
+// The caching configuration for a resolver that has caching activated.
 type CachingConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The caching keys for a resolver that has caching enabled.
+	// The caching keys for a resolver that has caching activated.
 	//
 	// Valid values are entries from the $context.arguments, $context.source, and
 	// $context.identity maps.
 	CachingKeys []*string `locationName:"cachingKeys" type:"list"`
 
-	// The TTL in seconds for a resolver that has caching enabled.
+	// The TTL in seconds for a resolver that has caching activated.
 	//
-	// Valid values are between 1 and 3600 seconds.
-	Ttl *int64 `locationName:"ttl" type:"long"`
+	// Valid values are 1–3,600 seconds.
+	//
+	// Ttl is a required field
+	Ttl *int64 `locationName:"ttl" type:"long" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CachingConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CachingConfig) GoString() string {
 	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CachingConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CachingConfig"}
+	if s.Ttl == nil {
+		invalidParams.Add(request.NewErrParamRequired("Ttl"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
 }
 
 // SetCachingKeys sets the CachingKeys field's value.
@@ -4534,12 +7356,117 @@ func (s *CachingConfig) SetTtl(v int64) *CachingConfig {
 	return s
 }
 
+// Describes an AppSync error.
+type CodeError struct {
+	_ struct{} `type:"structure"`
+
+	// The type of code error.
+	//
+	// Examples include, but aren't limited to: LINT_ERROR, PARSER_ERROR.
+	ErrorType *string `locationName:"errorType" type:"string"`
+
+	// The line, column, and span location of the error in the code.
+	Location *CodeErrorLocation `locationName:"location" type:"structure"`
+
+	// A user presentable error.
+	//
+	// Examples include, but aren't limited to: Parsing error: Unterminated string
+	// literal.
+	Value *string `locationName:"value" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CodeError) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CodeError) GoString() string {
+	return s.String()
+}
+
+// SetErrorType sets the ErrorType field's value.
+func (s *CodeError) SetErrorType(v string) *CodeError {
+	s.ErrorType = &v
+	return s
+}
+
+// SetLocation sets the Location field's value.
+func (s *CodeError) SetLocation(v *CodeErrorLocation) *CodeError {
+	s.Location = v
+	return s
+}
+
+// SetValue sets the Value field's value.
+func (s *CodeError) SetValue(v string) *CodeError {
+	s.Value = &v
+	return s
+}
+
+// Describes the location of the error in a code sample.
+type CodeErrorLocation struct {
+	_ struct{} `type:"structure"`
+
+	// The column number in the code. Defaults to 0 if unknown.
+	Column *int64 `locationName:"column" type:"integer"`
+
+	// The line number in the code. Defaults to 0 if unknown.
+	Line *int64 `locationName:"line" type:"integer"`
+
+	// The span/length of the error. Defaults to -1 if unknown.
+	Span *int64 `locationName:"span" type:"integer"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CodeErrorLocation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CodeErrorLocation) GoString() string {
+	return s.String()
+}
+
+// SetColumn sets the Column field's value.
+func (s *CodeErrorLocation) SetColumn(v int64) *CodeErrorLocation {
+	s.Column = &v
+	return s
+}
+
+// SetLine sets the Line field's value.
+func (s *CodeErrorLocation) SetLine(v int64) *CodeErrorLocation {
+	s.Line = &v
+	return s
+}
+
+// SetSpan sets the Span field's value.
+func (s *CodeErrorLocation) SetSpan(v int64) *CodeErrorLocation {
+	s.Span = &v
+	return s
+}
+
 // Describes an Amazon Cognito user pool configuration.
 type CognitoUserPoolConfig struct {
 	_ struct{} `type:"structure"`
 
 	// A regular expression for validating the incoming Amazon Cognito user pool
-	// app client ID.
+	// app client ID. If this value isn't set, no filtering is applied.
 	AppIdClientRegex *string `locationName:"appIdClientRegex" type:"string"`
 
 	// The Amazon Web Services Region in which the user pool was created.
@@ -4553,12 +7480,20 @@ type CognitoUserPoolConfig struct {
 	UserPoolId *string `locationName:"userPoolId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CognitoUserPoolConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CognitoUserPoolConfig) GoString() string {
 	return s.String()
 }
@@ -4606,12 +7541,20 @@ type ConcurrentModificationException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConcurrentModificationException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ConcurrentModificationException) GoString() string {
 	return s.String()
 }
@@ -4667,21 +7610,35 @@ type CreateApiCacheInput struct {
 	// ApiCachingBehavior is a required field
 	ApiCachingBehavior *string `locationName:"apiCachingBehavior" type:"string" required:"true" enum:"ApiCachingBehavior"`
 
-	// The GraphQL API Id.
+	// The GraphQL API ID.
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
-	// At rest encryption flag for cache. This setting cannot be updated after creation.
+	// At-rest encryption flag for cache. You cannot update this setting after creation.
 	AtRestEncryptionEnabled *bool `locationName:"atRestEncryptionEnabled" type:"boolean"`
 
-	// Transit encryption flag when connecting to cache. This setting cannot be
-	// updated after creation.
+	// Controls how cache health metrics will be emitted to CloudWatch. Cache health
+	// metrics include:
+	//
+	//    * NetworkBandwidthOutAllowanceExceeded: The network packets dropped because
+	//    the throughput exceeded the aggregated bandwidth limit. This is useful
+	//    for diagnosing bottlenecks in a cache configuration.
+	//
+	//    * EngineCPUUtilization: The CPU utilization (percentage) allocated to
+	//    the Redis process. This is useful for diagnosing bottlenecks in a cache
+	//    configuration.
+	//
+	// Metrics will be recorded by API ID. You can set the value to ENABLED or DISABLED.
+	HealthMetricsConfig *string `locationName:"healthMetricsConfig" type:"string" enum:"CacheHealthMetricsConfig"`
+
+	// Transit encryption flag when connecting to cache. You cannot update this
+	// setting after creation.
 	TransitEncryptionEnabled *bool `locationName:"transitEncryptionEnabled" type:"boolean"`
 
 	// TTL in seconds for cache entries.
 	//
-	// Valid values are between 1 and 3600 seconds.
+	// Valid values are 1–3,600 seconds.
 	//
 	// Ttl is a required field
 	Ttl *int64 `locationName:"ttl" type:"long" required:"true"`
@@ -4728,12 +7685,20 @@ type CreateApiCacheInput struct {
 	Type *string `locationName:"type" type:"string" required:"true" enum:"ApiCacheType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiCacheInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiCacheInput) GoString() string {
 	return s.String()
 }
@@ -4781,6 +7746,12 @@ func (s *CreateApiCacheInput) SetAtRestEncryptionEnabled(v bool) *CreateApiCache
 	return s
 }
 
+// SetHealthMetricsConfig sets the HealthMetricsConfig field's value.
+func (s *CreateApiCacheInput) SetHealthMetricsConfig(v string) *CreateApiCacheInput {
+	s.HealthMetricsConfig = &v
+	return s
+}
+
 // SetTransitEncryptionEnabled sets the TransitEncryptionEnabled field's value.
 func (s *CreateApiCacheInput) SetTransitEncryptionEnabled(v bool) *CreateApiCacheInput {
 	s.TransitEncryptionEnabled = &v
@@ -4807,12 +7778,20 @@ type CreateApiCacheOutput struct {
 	ApiCache *ApiCache `locationName:"apiCache" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiCacheOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiCacheOutput) GoString() string {
 	return s.String()
 }
@@ -4834,19 +7813,27 @@ type CreateApiKeyInput struct {
 	// A description of the purpose of the API key.
 	Description *string `locationName:"description" type:"string"`
 
-	// The time from creation time after which the API key expires. The date is
-	// represented as seconds since the epoch, rounded down to the nearest hour.
+	// From the creation time, the time after which the API key expires. The date
+	// is represented as seconds since the epoch, rounded down to the nearest hour.
 	// The default value for this parameter is 7 days from creation time. For more
 	// information, see .
 	Expires *int64 `locationName:"expires" type:"long"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiKeyInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiKeyInput) GoString() string {
 	return s.String()
 }
@@ -4892,12 +7879,20 @@ type CreateApiKeyOutput struct {
 	ApiKey *ApiKey `locationName:"apiKey" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiKeyOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateApiKeyOutput) GoString() string {
 	return s.String()
 }
@@ -4922,25 +7917,45 @@ type CreateDataSourceInput struct {
 	// Amazon DynamoDB settings.
 	DynamodbConfig *DynamodbDataSourceConfig `locationName:"dynamodbConfig" type:"structure"`
 
-	// Amazon Elasticsearch Service settings.
+	// Amazon OpenSearch Service settings.
+	//
+	// As of September 2021, Amazon Elasticsearch service is Amazon OpenSearch Service.
+	// This configuration is deprecated. For new data sources, use CreateDataSourceRequest$openSearchServiceConfig
+	// to create an OpenSearch data source.
 	ElasticsearchConfig *ElasticsearchDataSourceConfig `locationName:"elasticsearchConfig" type:"structure"`
+
+	// Amazon EventBridge settings.
+	EventBridgeConfig *EventBridgeDataSourceConfig `locationName:"eventBridgeConfig" type:"structure"`
 
 	// HTTP endpoint settings.
 	HttpConfig *HttpDataSourceConfig `locationName:"httpConfig" type:"structure"`
 
-	// Amazon Web Services Lambda settings.
+	// Lambda settings.
 	LambdaConfig *LambdaDataSourceConfig `locationName:"lambdaConfig" type:"structure"`
+
+	// Enables or disables enhanced data source metrics for specified data sources.
+	// Note that metricsConfig won't be used unless the dataSourceLevelMetricsBehavior
+	// value is set to PER_DATA_SOURCE_METRICS. If the dataSourceLevelMetricsBehavior
+	// is set to FULL_REQUEST_DATA_SOURCE_METRICS instead, metricsConfig will be
+	// ignored. However, you can still set its value.
+	//
+	// metricsConfig can be ENABLED or DISABLED.
+	MetricsConfig *string `locationName:"metricsConfig" type:"string" enum:"DataSourceLevelMetricsConfig"`
 
 	// A user-supplied name for the DataSource.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" min:"1" type:"string" required:"true"`
 
+	// Amazon OpenSearch Service settings.
+	OpenSearchServiceConfig *OpenSearchServiceDataSourceConfig `locationName:"openSearchServiceConfig" type:"structure"`
+
 	// Relational database settings.
 	RelationalDatabaseConfig *RelationalDatabaseDataSourceConfig `locationName:"relationalDatabaseConfig" type:"structure"`
 
-	// The Identity and Access Management service role ARN for the data source.
-	// The system assumes this role when accessing the data source.
+	// The Identity and Access Management (IAM) service role Amazon Resource Name
+	// (ARN) for the data source. The system assumes this role when accessing the
+	// data source.
 	ServiceRoleArn *string `locationName:"serviceRoleArn" type:"string"`
 
 	// The type of the DataSource.
@@ -4949,12 +7964,20 @@ type CreateDataSourceInput struct {
 	Type *string `locationName:"type" type:"string" required:"true" enum:"DataSourceType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDataSourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDataSourceInput) GoString() string {
 	return s.String()
 }
@@ -4987,6 +8010,11 @@ func (s *CreateDataSourceInput) Validate() error {
 			invalidParams.AddNested("ElasticsearchConfig", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.EventBridgeConfig != nil {
+		if err := s.EventBridgeConfig.Validate(); err != nil {
+			invalidParams.AddNested("EventBridgeConfig", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.HttpConfig != nil {
 		if err := s.HttpConfig.Validate(); err != nil {
 			invalidParams.AddNested("HttpConfig", err.(request.ErrInvalidParams))
@@ -4995,6 +8023,11 @@ func (s *CreateDataSourceInput) Validate() error {
 	if s.LambdaConfig != nil {
 		if err := s.LambdaConfig.Validate(); err != nil {
 			invalidParams.AddNested("LambdaConfig", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OpenSearchServiceConfig != nil {
+		if err := s.OpenSearchServiceConfig.Validate(); err != nil {
+			invalidParams.AddNested("OpenSearchServiceConfig", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -5028,6 +8061,12 @@ func (s *CreateDataSourceInput) SetElasticsearchConfig(v *ElasticsearchDataSourc
 	return s
 }
 
+// SetEventBridgeConfig sets the EventBridgeConfig field's value.
+func (s *CreateDataSourceInput) SetEventBridgeConfig(v *EventBridgeDataSourceConfig) *CreateDataSourceInput {
+	s.EventBridgeConfig = v
+	return s
+}
+
 // SetHttpConfig sets the HttpConfig field's value.
 func (s *CreateDataSourceInput) SetHttpConfig(v *HttpDataSourceConfig) *CreateDataSourceInput {
 	s.HttpConfig = v
@@ -5040,9 +8079,21 @@ func (s *CreateDataSourceInput) SetLambdaConfig(v *LambdaDataSourceConfig) *Crea
 	return s
 }
 
+// SetMetricsConfig sets the MetricsConfig field's value.
+func (s *CreateDataSourceInput) SetMetricsConfig(v string) *CreateDataSourceInput {
+	s.MetricsConfig = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *CreateDataSourceInput) SetName(v string) *CreateDataSourceInput {
 	s.Name = &v
+	return s
+}
+
+// SetOpenSearchServiceConfig sets the OpenSearchServiceConfig field's value.
+func (s *CreateDataSourceInput) SetOpenSearchServiceConfig(v *OpenSearchServiceDataSourceConfig) *CreateDataSourceInput {
+	s.OpenSearchServiceConfig = v
 	return s
 }
 
@@ -5071,12 +8122,20 @@ type CreateDataSourceOutput struct {
 	DataSource *DataSource `locationName:"dataSource" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDataSourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateDataSourceOutput) GoString() string {
 	return s.String()
 }
@@ -5084,6 +8143,114 @@ func (s CreateDataSourceOutput) GoString() string {
 // SetDataSource sets the DataSource field's value.
 func (s *CreateDataSourceOutput) SetDataSource(v *DataSource) *CreateDataSourceOutput {
 	s.DataSource = v
+	return s
+}
+
+type CreateDomainNameInput struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the certificate. This can be an Certificate
+	// Manager (ACM) certificate or an Identity and Access Management (IAM) server
+	// certificate.
+	//
+	// CertificateArn is a required field
+	CertificateArn *string `locationName:"certificateArn" min:"20" type:"string" required:"true"`
+
+	// A description of the DomainName.
+	Description *string `locationName:"description" type:"string"`
+
+	// The domain name.
+	//
+	// DomainName is a required field
+	DomainName *string `locationName:"domainName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDomainNameInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDomainNameInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *CreateDomainNameInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "CreateDomainNameInput"}
+	if s.CertificateArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("CertificateArn"))
+	}
+	if s.CertificateArn != nil && len(*s.CertificateArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("CertificateArn", 20))
+	}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *CreateDomainNameInput) SetCertificateArn(v string) *CreateDomainNameInput {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *CreateDomainNameInput) SetDescription(v string) *CreateDomainNameInput {
+	s.Description = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *CreateDomainNameInput) SetDomainName(v string) *CreateDomainNameInput {
+	s.DomainName = &v
+	return s
+}
+
+type CreateDomainNameOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The configuration for the DomainName.
+	DomainNameConfig *DomainNameConfig `locationName:"domainNameConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDomainNameOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s CreateDomainNameOutput) GoString() string {
+	return s.String()
+}
+
+// SetDomainNameConfig sets the DomainNameConfig field's value.
+func (s *CreateDomainNameOutput) SetDomainNameConfig(v *DomainNameConfig) *CreateDomainNameOutput {
+	s.DomainNameConfig = v
 	return s
 }
 
@@ -5095,6 +8262,10 @@ type CreateFunctionInput struct {
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
+	// The function code that contains the request and response functions. When
+	// code is used, the runtime is required. The runtime value must be APPSYNC_JS.
+	Code *string `locationName:"code" min:"1" type:"string"`
+
 	// The Function DataSource name.
 	//
 	// DataSourceName is a required field
@@ -5103,11 +8274,13 @@ type CreateFunctionInput struct {
 	// The Function description.
 	Description *string `locationName:"description" type:"string"`
 
-	// The version of the request mapping template. Currently the supported value
-	// is 2018-05-29.
-	//
-	// FunctionVersion is a required field
-	FunctionVersion *string `locationName:"functionVersion" type:"string" required:"true"`
+	// The version of the request mapping template. Currently, the supported value
+	// is 2018-05-29. Note that when using VTL and mapping templates, the functionVersion
+	// is required.
+	FunctionVersion *string `locationName:"functionVersion" type:"string"`
+
+	// The maximum batching size for a resolver.
+	MaxBatchSize *int64 `locationName:"maxBatchSize" type:"integer"`
 
 	// The Function name. The function name does not have to be unique.
 	//
@@ -5121,19 +8294,33 @@ type CreateFunctionInput struct {
 	// The Function response mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
 
+	// Describes a runtime used by an Amazon Web Services AppSync pipeline resolver
+	// or Amazon Web Services AppSync function. Specifies the name and version of
+	// the runtime to use. Note that if a runtime is specified, code must also be
+	// specified.
+	Runtime *AppSyncRuntime `locationName:"runtime" type:"structure"`
+
 	// Describes a Sync configuration for a resolver.
 	//
-	// Contains information on which Conflict Detection as well as Resolution strategy
-	// should be performed when the resolver is invoked.
+	// Specifies which Conflict Detection strategy and Resolution strategy to use
+	// when the resolver is invoked.
 	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateFunctionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateFunctionInput) GoString() string {
 	return s.String()
 }
@@ -5147,14 +8334,14 @@ func (s *CreateFunctionInput) Validate() error {
 	if s.ApiId != nil && len(*s.ApiId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
 	}
+	if s.Code != nil && len(*s.Code) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Code", 1))
+	}
 	if s.DataSourceName == nil {
 		invalidParams.Add(request.NewErrParamRequired("DataSourceName"))
 	}
 	if s.DataSourceName != nil && len(*s.DataSourceName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DataSourceName", 1))
-	}
-	if s.FunctionVersion == nil {
-		invalidParams.Add(request.NewErrParamRequired("FunctionVersion"))
 	}
 	if s.Name == nil {
 		invalidParams.Add(request.NewErrParamRequired("Name"))
@@ -5168,6 +8355,11 @@ func (s *CreateFunctionInput) Validate() error {
 	if s.ResponseMappingTemplate != nil && len(*s.ResponseMappingTemplate) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ResponseMappingTemplate", 1))
 	}
+	if s.Runtime != nil {
+		if err := s.Runtime.Validate(); err != nil {
+			invalidParams.AddNested("Runtime", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -5178,6 +8370,12 @@ func (s *CreateFunctionInput) Validate() error {
 // SetApiId sets the ApiId field's value.
 func (s *CreateFunctionInput) SetApiId(v string) *CreateFunctionInput {
 	s.ApiId = &v
+	return s
+}
+
+// SetCode sets the Code field's value.
+func (s *CreateFunctionInput) SetCode(v string) *CreateFunctionInput {
+	s.Code = &v
 	return s
 }
 
@@ -5199,6 +8397,12 @@ func (s *CreateFunctionInput) SetFunctionVersion(v string) *CreateFunctionInput 
 	return s
 }
 
+// SetMaxBatchSize sets the MaxBatchSize field's value.
+func (s *CreateFunctionInput) SetMaxBatchSize(v int64) *CreateFunctionInput {
+	s.MaxBatchSize = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *CreateFunctionInput) SetName(v string) *CreateFunctionInput {
 	s.Name = &v
@@ -5217,6 +8421,12 @@ func (s *CreateFunctionInput) SetResponseMappingTemplate(v string) *CreateFuncti
 	return s
 }
 
+// SetRuntime sets the Runtime field's value.
+func (s *CreateFunctionInput) SetRuntime(v *AppSyncRuntime) *CreateFunctionInput {
+	s.Runtime = v
+	return s
+}
+
 // SetSyncConfig sets the SyncConfig field's value.
 func (s *CreateFunctionInput) SetSyncConfig(v *SyncConfig) *CreateFunctionInput {
 	s.SyncConfig = v
@@ -5230,12 +8440,20 @@ type CreateFunctionOutput struct {
 	FunctionConfiguration *FunctionConfiguration `locationName:"functionConfiguration" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateFunctionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateFunctionOutput) GoString() string {
 	return s.String()
 }
@@ -5252,25 +8470,68 @@ type CreateGraphqlApiInput struct {
 	// A list of additional authentication providers for the GraphqlApi API.
 	AdditionalAuthenticationProviders []*AdditionalAuthenticationProvider `locationName:"additionalAuthenticationProviders" type:"list"`
 
-	// The authentication type: API key, Identity and Access Management, OIDC, or
-	// Amazon Cognito user pools.
+	// The value that indicates whether the GraphQL API is a standard API (GRAPHQL)
+	// or merged API (MERGED).
+	ApiType *string `locationName:"apiType" type:"string" enum:"GraphQLApiType"`
+
+	// The authentication type: API key, Identity and Access Management (IAM), OpenID
+	// Connect (OIDC), Amazon Cognito user pools, or Lambda.
 	//
 	// AuthenticationType is a required field
 	AuthenticationType *string `locationName:"authenticationType" type:"string" required:"true" enum:"AuthenticationType"`
 
-	// Configuration for AWS Lambda function authorization.
+	// The enhancedMetricsConfig object.
+	EnhancedMetricsConfig *EnhancedMetricsConfig `locationName:"enhancedMetricsConfig" type:"structure"`
+
+	// Sets the value of the GraphQL API to enable (ENABLED) or disable (DISABLED)
+	// introspection. If no value is provided, the introspection configuration will
+	// be set to ENABLED by default. This field will produce an error if the operation
+	// attempts to use the introspection feature while this field is disabled.
+	//
+	// For more information about introspection, see GraphQL introspection (https://graphql.org/learn/introspection/).
+	IntrospectionConfig *string `locationName:"introspectionConfig" type:"string" enum:"GraphQLApiIntrospectionConfig"`
+
+	// Configuration for Lambda function authorization.
 	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
 
 	// The Amazon CloudWatch Logs configuration.
 	LogConfig *LogConfig `locationName:"logConfig" type:"structure"`
+
+	// The Identity and Access Management service role ARN for a merged API. The
+	// AppSync service assumes this role on behalf of the Merged API to validate
+	// access to source APIs at runtime and to prompt the AUTO_MERGE to update the
+	// merged API endpoint with the source API changes automatically.
+	MergedApiExecutionRoleArn *string `locationName:"mergedApiExecutionRoleArn" type:"string"`
 
 	// A user-supplied name for the GraphqlApi.
 	//
 	// Name is a required field
 	Name *string `locationName:"name" type:"string" required:"true"`
 
-	// The OpenID Connect configuration.
+	// The OIDC configuration.
 	OpenIDConnectConfig *OpenIDConnectConfig `locationName:"openIDConnectConfig" type:"structure"`
+
+	// The owner contact information for an API resource.
+	//
+	// This field accepts any string input with a length of 0 - 256 characters.
+	OwnerContact *string `locationName:"ownerContact" type:"string"`
+
+	// The maximum depth a query can have in a single request. Depth refers to the
+	// amount of nested levels allowed in the body of query. The default value is
+	// 0 (or unspecified), which indicates there's no depth limit. If you set a
+	// limit, it can be between 1 and 75 nested levels. This field will produce
+	// a limit error if the operation falls out of bounds.
+	//
+	// Note that fields can still be set to nullable or non-nullable. If a non-nullable
+	// field produces an error, the error will be thrown upwards to the first nullable
+	// field available.
+	QueryDepthLimit *int64 `locationName:"queryDepthLimit" type:"integer"`
+
+	// The maximum number of resolvers that can be invoked in a single request.
+	// The default value is 0 (or unspecified), which will set the limit to 10000.
+	// When specified, the limit value can be between 1 and 10000. This field will
+	// produce a limit error if the operation falls out of bounds.
+	ResolverCountLimit *int64 `locationName:"resolverCountLimit" type:"integer"`
 
 	// A TagMap object.
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
@@ -5278,16 +8539,29 @@ type CreateGraphqlApiInput struct {
 	// The Amazon Cognito user pool configuration.
 	UserPoolConfig *UserPoolConfig `locationName:"userPoolConfig" type:"structure"`
 
-	// A flag indicating whether to enable X-Ray tracing for the GraphqlApi.
+	// Sets the value of the GraphQL API to public (GLOBAL) or private (PRIVATE).
+	// If no value is provided, the visibility will be set to GLOBAL by default.
+	// This value cannot be changed once the API has been created.
+	Visibility *string `locationName:"visibility" type:"string" enum:"GraphQLApiVisibility"`
+
+	// A flag indicating whether to use X-Ray tracing for the GraphqlApi.
 	XrayEnabled *bool `locationName:"xrayEnabled" type:"boolean"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateGraphqlApiInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateGraphqlApiInput) GoString() string {
 	return s.String()
 }
@@ -5312,6 +8586,11 @@ func (s *CreateGraphqlApiInput) Validate() error {
 			if err := v.Validate(); err != nil {
 				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AdditionalAuthenticationProviders", i), err.(request.ErrInvalidParams))
 			}
+		}
+	}
+	if s.EnhancedMetricsConfig != nil {
+		if err := s.EnhancedMetricsConfig.Validate(); err != nil {
+			invalidParams.AddNested("EnhancedMetricsConfig", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.LambdaAuthorizerConfig != nil {
@@ -5347,9 +8626,27 @@ func (s *CreateGraphqlApiInput) SetAdditionalAuthenticationProviders(v []*Additi
 	return s
 }
 
+// SetApiType sets the ApiType field's value.
+func (s *CreateGraphqlApiInput) SetApiType(v string) *CreateGraphqlApiInput {
+	s.ApiType = &v
+	return s
+}
+
 // SetAuthenticationType sets the AuthenticationType field's value.
 func (s *CreateGraphqlApiInput) SetAuthenticationType(v string) *CreateGraphqlApiInput {
 	s.AuthenticationType = &v
+	return s
+}
+
+// SetEnhancedMetricsConfig sets the EnhancedMetricsConfig field's value.
+func (s *CreateGraphqlApiInput) SetEnhancedMetricsConfig(v *EnhancedMetricsConfig) *CreateGraphqlApiInput {
+	s.EnhancedMetricsConfig = v
+	return s
+}
+
+// SetIntrospectionConfig sets the IntrospectionConfig field's value.
+func (s *CreateGraphqlApiInput) SetIntrospectionConfig(v string) *CreateGraphqlApiInput {
+	s.IntrospectionConfig = &v
 	return s
 }
 
@@ -5365,6 +8662,12 @@ func (s *CreateGraphqlApiInput) SetLogConfig(v *LogConfig) *CreateGraphqlApiInpu
 	return s
 }
 
+// SetMergedApiExecutionRoleArn sets the MergedApiExecutionRoleArn field's value.
+func (s *CreateGraphqlApiInput) SetMergedApiExecutionRoleArn(v string) *CreateGraphqlApiInput {
+	s.MergedApiExecutionRoleArn = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *CreateGraphqlApiInput) SetName(v string) *CreateGraphqlApiInput {
 	s.Name = &v
@@ -5377,6 +8680,24 @@ func (s *CreateGraphqlApiInput) SetOpenIDConnectConfig(v *OpenIDConnectConfig) *
 	return s
 }
 
+// SetOwnerContact sets the OwnerContact field's value.
+func (s *CreateGraphqlApiInput) SetOwnerContact(v string) *CreateGraphqlApiInput {
+	s.OwnerContact = &v
+	return s
+}
+
+// SetQueryDepthLimit sets the QueryDepthLimit field's value.
+func (s *CreateGraphqlApiInput) SetQueryDepthLimit(v int64) *CreateGraphqlApiInput {
+	s.QueryDepthLimit = &v
+	return s
+}
+
+// SetResolverCountLimit sets the ResolverCountLimit field's value.
+func (s *CreateGraphqlApiInput) SetResolverCountLimit(v int64) *CreateGraphqlApiInput {
+	s.ResolverCountLimit = &v
+	return s
+}
+
 // SetTags sets the Tags field's value.
 func (s *CreateGraphqlApiInput) SetTags(v map[string]*string) *CreateGraphqlApiInput {
 	s.Tags = v
@@ -5386,6 +8707,12 @@ func (s *CreateGraphqlApiInput) SetTags(v map[string]*string) *CreateGraphqlApiI
 // SetUserPoolConfig sets the UserPoolConfig field's value.
 func (s *CreateGraphqlApiInput) SetUserPoolConfig(v *UserPoolConfig) *CreateGraphqlApiInput {
 	s.UserPoolConfig = v
+	return s
+}
+
+// SetVisibility sets the Visibility field's value.
+func (s *CreateGraphqlApiInput) SetVisibility(v string) *CreateGraphqlApiInput {
+	s.Visibility = &v
 	return s
 }
 
@@ -5402,12 +8729,20 @@ type CreateGraphqlApiOutput struct {
 	GraphqlApi *GraphqlApi `locationName:"graphqlApi" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateGraphqlApiOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateGraphqlApiOutput) GoString() string {
 	return s.String()
 }
@@ -5429,6 +8764,10 @@ type CreateResolverInput struct {
 	// The caching configuration for the resolver.
 	CachingConfig *CachingConfig `locationName:"cachingConfig" type:"structure"`
 
+	// The resolver code that contains the request and response functions. When
+	// code is used, the runtime is required. The runtime value must be APPSYNC_JS.
+	Code *string `locationName:"code" min:"1" type:"string"`
+
 	// The name of the data source for which the resolver is being created.
 	DataSourceName *string `locationName:"dataSourceName" min:"1" type:"string"`
 
@@ -5440,32 +8779,50 @@ type CreateResolverInput struct {
 	// The resolver type.
 	//
 	//    * UNIT: A UNIT resolver type. A UNIT resolver is the default resolver
-	//    type. A UNIT resolver enables you to execute a GraphQL query against a
-	//    single data source.
+	//    type. You can use a UNIT resolver to run a GraphQL query against a single
+	//    data source.
 	//
-	//    * PIPELINE: A PIPELINE resolver type. A PIPELINE resolver enables you
-	//    to execute a series of Function in a serial manner. You can use a pipeline
-	//    resolver to execute a GraphQL query against multiple data sources.
+	//    * PIPELINE: A PIPELINE resolver type. You can use a PIPELINE resolver
+	//    to invoke a series of Function objects in a serial manner. You can use
+	//    a pipeline resolver to run a GraphQL query against multiple data sources.
 	Kind *string `locationName:"kind" type:"string" enum:"ResolverKind"`
+
+	// The maximum batching size for a resolver.
+	MaxBatchSize *int64 `locationName:"maxBatchSize" type:"integer"`
+
+	// Enables or disables enhanced resolver metrics for specified resolvers. Note
+	// that metricsConfig won't be used unless the resolverLevelMetricsBehavior
+	// value is set to PER_RESOLVER_METRICS. If the resolverLevelMetricsBehavior
+	// is set to FULL_REQUEST_RESOLVER_METRICS instead, metricsConfig will be ignored.
+	// However, you can still set its value.
+	//
+	// metricsConfig can be ENABLED or DISABLED.
+	MetricsConfig *string `locationName:"metricsConfig" type:"string" enum:"ResolverLevelMetricsConfig"`
 
 	// The PipelineConfig.
 	PipelineConfig *PipelineConfig `locationName:"pipelineConfig" type:"structure"`
 
-	// The mapping template to be used for requests.
+	// The mapping template to use for requests.
 	//
 	// A resolver uses a request mapping template to convert a GraphQL expression
 	// into a format that a data source can understand. Mapping templates are written
 	// in Apache Velocity Template Language (VTL).
 	//
-	// VTL request mapping templates are optional when using a Lambda data source.
+	// VTL request mapping templates are optional when using an Lambda data source.
 	// For all other data sources, VTL request and response mapping templates are
 	// required.
 	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string"`
 
-	// The mapping template to be used for responses from the data source.
+	// The mapping template to use for responses from the data source.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
 
-	// The SyncConfig for a resolver attached to a versioned datasource.
+	// Describes a runtime used by an Amazon Web Services AppSync pipeline resolver
+	// or Amazon Web Services AppSync function. Specifies the name and version of
+	// the runtime to use. Note that if a runtime is specified, code must also be
+	// specified.
+	Runtime *AppSyncRuntime `locationName:"runtime" type:"structure"`
+
+	// The SyncConfig for a resolver attached to a versioned data source.
 	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 
 	// The name of the Type.
@@ -5474,12 +8831,20 @@ type CreateResolverInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResolverInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResolverInput) GoString() string {
 	return s.String()
 }
@@ -5492,6 +8857,9 @@ func (s *CreateResolverInput) Validate() error {
 	}
 	if s.ApiId != nil && len(*s.ApiId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
+	}
+	if s.Code != nil && len(*s.Code) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Code", 1))
 	}
 	if s.DataSourceName != nil && len(*s.DataSourceName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DataSourceName", 1))
@@ -5514,6 +8882,16 @@ func (s *CreateResolverInput) Validate() error {
 	if s.TypeName != nil && len(*s.TypeName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("TypeName", 1))
 	}
+	if s.CachingConfig != nil {
+		if err := s.CachingConfig.Validate(); err != nil {
+			invalidParams.AddNested("CachingConfig", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Runtime != nil {
+		if err := s.Runtime.Validate(); err != nil {
+			invalidParams.AddNested("Runtime", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -5530,6 +8908,12 @@ func (s *CreateResolverInput) SetApiId(v string) *CreateResolverInput {
 // SetCachingConfig sets the CachingConfig field's value.
 func (s *CreateResolverInput) SetCachingConfig(v *CachingConfig) *CreateResolverInput {
 	s.CachingConfig = v
+	return s
+}
+
+// SetCode sets the Code field's value.
+func (s *CreateResolverInput) SetCode(v string) *CreateResolverInput {
+	s.Code = &v
 	return s
 }
 
@@ -5551,6 +8935,18 @@ func (s *CreateResolverInput) SetKind(v string) *CreateResolverInput {
 	return s
 }
 
+// SetMaxBatchSize sets the MaxBatchSize field's value.
+func (s *CreateResolverInput) SetMaxBatchSize(v int64) *CreateResolverInput {
+	s.MaxBatchSize = &v
+	return s
+}
+
+// SetMetricsConfig sets the MetricsConfig field's value.
+func (s *CreateResolverInput) SetMetricsConfig(v string) *CreateResolverInput {
+	s.MetricsConfig = &v
+	return s
+}
+
 // SetPipelineConfig sets the PipelineConfig field's value.
 func (s *CreateResolverInput) SetPipelineConfig(v *PipelineConfig) *CreateResolverInput {
 	s.PipelineConfig = v
@@ -5566,6 +8962,12 @@ func (s *CreateResolverInput) SetRequestMappingTemplate(v string) *CreateResolve
 // SetResponseMappingTemplate sets the ResponseMappingTemplate field's value.
 func (s *CreateResolverInput) SetResponseMappingTemplate(v string) *CreateResolverInput {
 	s.ResponseMappingTemplate = &v
+	return s
+}
+
+// SetRuntime sets the Runtime field's value.
+func (s *CreateResolverInput) SetRuntime(v *AppSyncRuntime) *CreateResolverInput {
+	s.Runtime = v
 	return s
 }
 
@@ -5588,12 +8990,20 @@ type CreateResolverOutput struct {
 	Resolver *Resolver `locationName:"resolver" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResolverOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateResolverOutput) GoString() string {
 	return s.String()
 }
@@ -5625,12 +9035,20 @@ type CreateTypeInput struct {
 	Format *string `locationName:"format" type:"string" required:"true" enum:"TypeDefinitionFormat"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateTypeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateTypeInput) GoString() string {
 	return s.String()
 }
@@ -5682,12 +9100,20 @@ type CreateTypeOutput struct {
 	Type *Type `locationName:"type" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateTypeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s CreateTypeOutput) GoString() string {
 	return s.String()
 }
@@ -5702,47 +9128,68 @@ func (s *CreateTypeOutput) SetType(v *Type) *CreateTypeOutput {
 type DataSource struct {
 	_ struct{} `type:"structure"`
 
-	// The data source ARN.
+	// The data source Amazon Resource Name (ARN).
 	DataSourceArn *string `locationName:"dataSourceArn" type:"string"`
 
 	// The description of the data source.
 	Description *string `locationName:"description" type:"string"`
 
-	// Amazon DynamoDB settings.
+	// DynamoDB settings.
 	DynamodbConfig *DynamodbDataSourceConfig `locationName:"dynamodbConfig" type:"structure"`
 
-	// Amazon Elasticsearch Service settings.
+	// Amazon OpenSearch Service settings.
 	ElasticsearchConfig *ElasticsearchDataSourceConfig `locationName:"elasticsearchConfig" type:"structure"`
+
+	// Amazon EventBridge settings.
+	EventBridgeConfig *EventBridgeDataSourceConfig `locationName:"eventBridgeConfig" type:"structure"`
 
 	// HTTP endpoint settings.
 	HttpConfig *HttpDataSourceConfig `locationName:"httpConfig" type:"structure"`
 
-	// Amazon Web Services Lambda settings.
+	// Lambda settings.
 	LambdaConfig *LambdaDataSourceConfig `locationName:"lambdaConfig" type:"structure"`
+
+	// Enables or disables enhanced data source metrics for specified data sources.
+	// Note that metricsConfig won't be used unless the dataSourceLevelMetricsBehavior
+	// value is set to PER_DATA_SOURCE_METRICS. If the dataSourceLevelMetricsBehavior
+	// is set to FULL_REQUEST_DATA_SOURCE_METRICS instead, metricsConfig will be
+	// ignored. However, you can still set its value.
+	//
+	// metricsConfig can be ENABLED or DISABLED.
+	MetricsConfig *string `locationName:"metricsConfig" type:"string" enum:"DataSourceLevelMetricsConfig"`
 
 	// The name of the data source.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
+	// Amazon OpenSearch Service settings.
+	OpenSearchServiceConfig *OpenSearchServiceDataSourceConfig `locationName:"openSearchServiceConfig" type:"structure"`
+
 	// Relational database settings.
 	RelationalDatabaseConfig *RelationalDatabaseDataSourceConfig `locationName:"relationalDatabaseConfig" type:"structure"`
 
-	// The Identity and Access Management service role ARN for the data source.
-	// The system assumes this role when accessing the data source.
+	// The Identity and Access Management (IAM) service role Amazon Resource Name
+	// (ARN) for the data source. The system assumes this role when accessing the
+	// data source.
 	ServiceRoleArn *string `locationName:"serviceRoleArn" type:"string"`
 
 	// The type of the data source.
 	//
+	//    * AWS_LAMBDA: The data source is an Lambda function.
+	//
 	//    * AMAZON_DYNAMODB: The data source is an Amazon DynamoDB table.
 	//
-	//    * AMAZON_ELASTICSEARCH: The data source is an Amazon Elasticsearch Service
+	//    * AMAZON_ELASTICSEARCH: The data source is an Amazon OpenSearch Service
 	//    domain.
 	//
-	//    * AWS_LAMBDA: The data source is an Amazon Web Services Lambda function.
+	//    * AMAZON_OPENSEARCH_SERVICE: The data source is an Amazon OpenSearch Service
+	//    domain.
 	//
-	//    * NONE: There is no data source. This type is used when you wish to invoke
-	//    a GraphQL operation without connecting to a data source, such as performing
-	//    data transformation with resolvers or triggering a subscription to be
-	//    invoked from a mutation.
+	//    * AMAZON_EVENTBRIDGE: The data source is an Amazon EventBridge configuration.
+	//
+	//    * NONE: There is no data source. Use this type when you want to invoke
+	//    a GraphQL operation without connecting to a data source, such as when
+	//    you're performing data transformation with resolvers or invoking a subscription
+	//    from a mutation.
 	//
 	//    * HTTP: The data source is an HTTP endpoint.
 	//
@@ -5750,12 +9197,20 @@ type DataSource struct {
 	Type *string `locationName:"type" type:"string" enum:"DataSourceType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DataSource) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DataSource) GoString() string {
 	return s.String()
 }
@@ -5784,6 +9239,12 @@ func (s *DataSource) SetElasticsearchConfig(v *ElasticsearchDataSourceConfig) *D
 	return s
 }
 
+// SetEventBridgeConfig sets the EventBridgeConfig field's value.
+func (s *DataSource) SetEventBridgeConfig(v *EventBridgeDataSourceConfig) *DataSource {
+	s.EventBridgeConfig = v
+	return s
+}
+
 // SetHttpConfig sets the HttpConfig field's value.
 func (s *DataSource) SetHttpConfig(v *HttpDataSourceConfig) *DataSource {
 	s.HttpConfig = v
@@ -5796,9 +9257,21 @@ func (s *DataSource) SetLambdaConfig(v *LambdaDataSourceConfig) *DataSource {
 	return s
 }
 
+// SetMetricsConfig sets the MetricsConfig field's value.
+func (s *DataSource) SetMetricsConfig(v string) *DataSource {
+	s.MetricsConfig = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *DataSource) SetName(v string) *DataSource {
 	s.Name = &v
+	return s
+}
+
+// SetOpenSearchServiceConfig sets the OpenSearchServiceConfig field's value.
+func (s *DataSource) SetOpenSearchServiceConfig(v *OpenSearchServiceDataSourceConfig) *DataSource {
+	s.OpenSearchServiceConfig = v
 	return s
 }
 
@@ -5820,9 +9293,291 @@ func (s *DataSource) SetType(v string) *DataSource {
 	return s
 }
 
+// Contains the introspected data that was retrieved from the data source.
+type DataSourceIntrospectionModel struct {
+	_ struct{} `type:"structure"`
+
+	// The DataSourceIntrospectionModelField object data.
+	Fields []*DataSourceIntrospectionModelField `locationName:"fields" type:"list"`
+
+	// The array of DataSourceIntrospectionModelIndex objects.
+	Indexes []*DataSourceIntrospectionModelIndex `locationName:"indexes" type:"list"`
+
+	// The name of the model. For example, this could be the name of a single table
+	// in a database.
+	Name *string `locationName:"name" type:"string"`
+
+	// The primary key stored as a DataSourceIntrospectionModelIndex object.
+	PrimaryKey *DataSourceIntrospectionModelIndex `locationName:"primaryKey" type:"structure"`
+
+	// Contains the output of the SDL that was generated from the introspected types.
+	// This is controlled by the includeModelsSDL parameter of the GetDataSourceIntrospection
+	// operation.
+	Sdl *string `locationName:"sdl" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModel) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModel) GoString() string {
+	return s.String()
+}
+
+// SetFields sets the Fields field's value.
+func (s *DataSourceIntrospectionModel) SetFields(v []*DataSourceIntrospectionModelField) *DataSourceIntrospectionModel {
+	s.Fields = v
+	return s
+}
+
+// SetIndexes sets the Indexes field's value.
+func (s *DataSourceIntrospectionModel) SetIndexes(v []*DataSourceIntrospectionModelIndex) *DataSourceIntrospectionModel {
+	s.Indexes = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DataSourceIntrospectionModel) SetName(v string) *DataSourceIntrospectionModel {
+	s.Name = &v
+	return s
+}
+
+// SetPrimaryKey sets the PrimaryKey field's value.
+func (s *DataSourceIntrospectionModel) SetPrimaryKey(v *DataSourceIntrospectionModelIndex) *DataSourceIntrospectionModel {
+	s.PrimaryKey = v
+	return s
+}
+
+// SetSdl sets the Sdl field's value.
+func (s *DataSourceIntrospectionModel) SetSdl(v string) *DataSourceIntrospectionModel {
+	s.Sdl = &v
+	return s
+}
+
+// Represents the fields that were retrieved from the introspected data.
+type DataSourceIntrospectionModelField struct {
+	_ struct{} `type:"structure"`
+
+	// The length value of the introspected field.
+	Length *int64 `locationName:"length" type:"long"`
+
+	// The name of the field that was retrieved from the introspected data.
+	Name *string `locationName:"name" type:"string"`
+
+	// The DataSourceIntrospectionModelFieldType object data.
+	Type *DataSourceIntrospectionModelFieldType `locationName:"type" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModelField) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModelField) GoString() string {
+	return s.String()
+}
+
+// SetLength sets the Length field's value.
+func (s *DataSourceIntrospectionModelField) SetLength(v int64) *DataSourceIntrospectionModelField {
+	s.Length = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DataSourceIntrospectionModelField) SetName(v string) *DataSourceIntrospectionModelField {
+	s.Name = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *DataSourceIntrospectionModelField) SetType(v *DataSourceIntrospectionModelFieldType) *DataSourceIntrospectionModelField {
+	s.Type = v
+	return s
+}
+
+// Represents the type data for each field retrieved from the introspection.
+type DataSourceIntrospectionModelFieldType struct {
+	_ struct{} `type:"structure"`
+
+	// Specifies the classification of data. For example, this could be set to values
+	// like Scalar or NonNull to indicate a fundamental property of the field.
+	//
+	// Valid values include:
+	//
+	//    * Scalar: Indicates the value is a primitive type (scalar).
+	//
+	//    * NonNull: Indicates the field cannot be null.
+	//
+	//    * List: Indicates the field contains a list.
+	Kind *string `locationName:"kind" type:"string"`
+
+	// The name of the data type that represents the field. For example, String
+	// is a valid name value.
+	Name *string `locationName:"name" type:"string"`
+
+	// The DataSourceIntrospectionModelFieldType object data. The type is only present
+	// if DataSourceIntrospectionModelFieldType.kind is set to NonNull or List.
+	//
+	// The type typically contains its own kind and name fields to represent the
+	// actual type data. For instance, type could contain a kind value of Scalar
+	// with a name value of String. The values Scalar and String will be collectively
+	// stored in the values field.
+	Type *DataSourceIntrospectionModelFieldType `locationName:"type" type:"structure"`
+
+	// The values of the type field. This field represents the AppSync data type
+	// equivalent of the introspected field.
+	Values []*string `locationName:"values" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModelFieldType) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModelFieldType) GoString() string {
+	return s.String()
+}
+
+// SetKind sets the Kind field's value.
+func (s *DataSourceIntrospectionModelFieldType) SetKind(v string) *DataSourceIntrospectionModelFieldType {
+	s.Kind = &v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DataSourceIntrospectionModelFieldType) SetName(v string) *DataSourceIntrospectionModelFieldType {
+	s.Name = &v
+	return s
+}
+
+// SetType sets the Type field's value.
+func (s *DataSourceIntrospectionModelFieldType) SetType(v *DataSourceIntrospectionModelFieldType) *DataSourceIntrospectionModelFieldType {
+	s.Type = v
+	return s
+}
+
+// SetValues sets the Values field's value.
+func (s *DataSourceIntrospectionModelFieldType) SetValues(v []*string) *DataSourceIntrospectionModelFieldType {
+	s.Values = v
+	return s
+}
+
+// The index that was retrieved from the introspected data.
+type DataSourceIntrospectionModelIndex struct {
+	_ struct{} `type:"structure"`
+
+	// The fields of the index.
+	Fields []*string `locationName:"fields" type:"list"`
+
+	// The name of the index.
+	Name *string `locationName:"name" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModelIndex) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionModelIndex) GoString() string {
+	return s.String()
+}
+
+// SetFields sets the Fields field's value.
+func (s *DataSourceIntrospectionModelIndex) SetFields(v []*string) *DataSourceIntrospectionModelIndex {
+	s.Fields = v
+	return s
+}
+
+// SetName sets the Name field's value.
+func (s *DataSourceIntrospectionModelIndex) SetName(v string) *DataSourceIntrospectionModelIndex {
+	s.Name = &v
+	return s
+}
+
+// Represents the output of a DataSourceIntrospectionResult. This is the populated
+// result of a GetDataSourceIntrospection operation.
+type DataSourceIntrospectionResult struct {
+	_ struct{} `type:"structure"`
+
+	// The array of DataSourceIntrospectionModel objects.
+	Models []*DataSourceIntrospectionModel `locationName:"models" type:"list"`
+
+	// Determines the number of types to be returned in a single response before
+	// paginating. This value is typically taken from nextToken value from the previous
+	// response.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionResult) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DataSourceIntrospectionResult) GoString() string {
+	return s.String()
+}
+
+// SetModels sets the Models field's value.
+func (s *DataSourceIntrospectionResult) SetModels(v []*DataSourceIntrospectionModel) *DataSourceIntrospectionResult {
+	s.Models = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *DataSourceIntrospectionResult) SetNextToken(v string) *DataSourceIntrospectionResult {
+	s.NextToken = &v
+	return s
+}
+
 // Represents the input of a DeleteApiCache operation.
 type DeleteApiCacheInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -5830,12 +9585,20 @@ type DeleteApiCacheInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiCacheInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiCacheInput) GoString() string {
 	return s.String()
 }
@@ -5867,18 +9630,26 @@ type DeleteApiCacheOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiCacheOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiCacheOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteApiKeyInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -5891,12 +9662,20 @@ type DeleteApiKeyInput struct {
 	Id *string `location:"uri" locationName:"id" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiKeyInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiKeyInput) GoString() string {
 	return s.String()
 }
@@ -5939,18 +9718,26 @@ type DeleteApiKeyOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiKeyOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteApiKeyOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteDataSourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -5963,12 +9750,20 @@ type DeleteDataSourceInput struct {
 	Name *string `location:"uri" locationName:"name" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteDataSourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteDataSourceInput) GoString() string {
 	return s.String()
 }
@@ -6011,18 +9806,97 @@ type DeleteDataSourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteDataSourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteDataSourceOutput) GoString() string {
 	return s.String()
 }
 
-type DeleteFunctionInput struct {
+type DeleteDomainNameInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The domain name.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"domainName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDomainNameInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDomainNameInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DeleteDomainNameInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DeleteDomainNameInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *DeleteDomainNameInput) SetDomainName(v string) *DeleteDomainNameInput {
+	s.DomainName = &v
+	return s
+}
+
+type DeleteDomainNameOutput struct {
 	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDomainNameOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DeleteDomainNameOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteFunctionInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The GraphQL API ID.
 	//
@@ -6035,12 +9909,20 @@ type DeleteFunctionInput struct {
 	FunctionId *string `location:"uri" locationName:"functionId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteFunctionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteFunctionInput) GoString() string {
 	return s.String()
 }
@@ -6083,18 +9965,26 @@ type DeleteFunctionOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteFunctionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteFunctionOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteGraphqlApiInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -6102,12 +9992,20 @@ type DeleteGraphqlApiInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteGraphqlApiInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteGraphqlApiInput) GoString() string {
 	return s.String()
 }
@@ -6138,18 +10036,26 @@ type DeleteGraphqlApiOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteGraphqlApiOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteGraphqlApiOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteResolverInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -6167,12 +10073,20 @@ type DeleteResolverInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResolverInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResolverInput) GoString() string {
 	return s.String()
 }
@@ -6227,18 +10141,26 @@ type DeleteResolverOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResolverOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteResolverOutput) GoString() string {
 	return s.String()
 }
 
 type DeleteTypeInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -6251,12 +10173,20 @@ type DeleteTypeInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteTypeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteTypeInput) GoString() string {
 	return s.String()
 }
@@ -6299,12 +10229,20 @@ type DeleteTypeOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteTypeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeleteTypeOutput) GoString() string {
 	return s.String()
 }
@@ -6313,23 +10251,31 @@ func (s DeleteTypeOutput) GoString() string {
 type DeltaSyncConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The number of minutes an Item is stored in the datasource.
+	// The number of minutes that an Item is stored in the data source.
 	BaseTableTTL *int64 `locationName:"baseTableTTL" type:"long"`
 
 	// The Delta Sync table name.
 	DeltaSyncTableName *string `locationName:"deltaSyncTableName" type:"string"`
 
-	// The number of minutes a Delta Sync log entry is stored in the Delta Sync
-	// table.
+	// The number of minutes that a Delta Sync log entry is stored in the Delta
+	// Sync table.
 	DeltaSyncTableTTL *int64 `locationName:"deltaSyncTableTTL" type:"long"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeltaSyncConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DeltaSyncConfig) GoString() string {
 	return s.String()
 }
@@ -6352,6 +10298,349 @@ func (s *DeltaSyncConfig) SetDeltaSyncTableTTL(v int64) *DeltaSyncConfig {
 	return s
 }
 
+type DisassociateApiInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The domain name.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"domainName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateApiInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateApiInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DisassociateApiInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DisassociateApiInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *DisassociateApiInput) SetDomainName(v string) *DisassociateApiInput {
+	s.DomainName = &v
+	return s
+}
+
+type DisassociateApiOutput struct {
+	_ struct{} `type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateApiOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateApiOutput) GoString() string {
+	return s.String()
+}
+
+type DisassociateMergedGraphqlApiInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID generated by the AppSync service for the source API association.
+	//
+	// AssociationId is a required field
+	AssociationId *string `location:"uri" locationName:"associationId" type:"string" required:"true"`
+
+	// The identifier of the AppSync Source API. This is generated by the AppSync
+	// service. In most cases, source APIs (especially in your account) only require
+	// the API ID value or ARN of the source API. However, source APIs from other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the source API.
+	//
+	// SourceApiIdentifier is a required field
+	SourceApiIdentifier *string `location:"uri" locationName:"sourceApiIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateMergedGraphqlApiInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateMergedGraphqlApiInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DisassociateMergedGraphqlApiInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DisassociateMergedGraphqlApiInput"}
+	if s.AssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssociationId"))
+	}
+	if s.AssociationId != nil && len(*s.AssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssociationId", 1))
+	}
+	if s.SourceApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("SourceApiIdentifier"))
+	}
+	if s.SourceApiIdentifier != nil && len(*s.SourceApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("SourceApiIdentifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *DisassociateMergedGraphqlApiInput) SetAssociationId(v string) *DisassociateMergedGraphqlApiInput {
+	s.AssociationId = &v
+	return s
+}
+
+// SetSourceApiIdentifier sets the SourceApiIdentifier field's value.
+func (s *DisassociateMergedGraphqlApiInput) SetSourceApiIdentifier(v string) *DisassociateMergedGraphqlApiInput {
+	s.SourceApiIdentifier = &v
+	return s
+}
+
+type DisassociateMergedGraphqlApiOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The state of the source API association.
+	SourceApiAssociationStatus *string `locationName:"sourceApiAssociationStatus" type:"string" enum:"SourceApiAssociationStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateMergedGraphqlApiOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateMergedGraphqlApiOutput) GoString() string {
+	return s.String()
+}
+
+// SetSourceApiAssociationStatus sets the SourceApiAssociationStatus field's value.
+func (s *DisassociateMergedGraphqlApiOutput) SetSourceApiAssociationStatus(v string) *DisassociateMergedGraphqlApiOutput {
+	s.SourceApiAssociationStatus = &v
+	return s
+}
+
+type DisassociateSourceGraphqlApiInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID generated by the AppSync service for the source API association.
+	//
+	// AssociationId is a required field
+	AssociationId *string `location:"uri" locationName:"associationId" type:"string" required:"true"`
+
+	// The identifier of the AppSync Merged API. This is generated by the AppSync
+	// service. In most cases, Merged APIs (especially in your account) only require
+	// the API ID value or ARN of the merged API. However, Merged APIs in other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the merged API.
+	//
+	// MergedApiIdentifier is a required field
+	MergedApiIdentifier *string `location:"uri" locationName:"mergedApiIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateSourceGraphqlApiInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateSourceGraphqlApiInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *DisassociateSourceGraphqlApiInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "DisassociateSourceGraphqlApiInput"}
+	if s.AssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssociationId"))
+	}
+	if s.AssociationId != nil && len(*s.AssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssociationId", 1))
+	}
+	if s.MergedApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MergedApiIdentifier"))
+	}
+	if s.MergedApiIdentifier != nil && len(*s.MergedApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MergedApiIdentifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *DisassociateSourceGraphqlApiInput) SetAssociationId(v string) *DisassociateSourceGraphqlApiInput {
+	s.AssociationId = &v
+	return s
+}
+
+// SetMergedApiIdentifier sets the MergedApiIdentifier field's value.
+func (s *DisassociateSourceGraphqlApiInput) SetMergedApiIdentifier(v string) *DisassociateSourceGraphqlApiInput {
+	s.MergedApiIdentifier = &v
+	return s
+}
+
+type DisassociateSourceGraphqlApiOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The state of the source API association.
+	SourceApiAssociationStatus *string `locationName:"sourceApiAssociationStatus" type:"string" enum:"SourceApiAssociationStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateSourceGraphqlApiOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DisassociateSourceGraphqlApiOutput) GoString() string {
+	return s.String()
+}
+
+// SetSourceApiAssociationStatus sets the SourceApiAssociationStatus field's value.
+func (s *DisassociateSourceGraphqlApiOutput) SetSourceApiAssociationStatus(v string) *DisassociateSourceGraphqlApiOutput {
+	s.SourceApiAssociationStatus = &v
+	return s
+}
+
+// Describes a configuration for a custom domain.
+type DomainNameConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The domain name that AppSync provides.
+	AppsyncDomainName *string `locationName:"appsyncDomainName" type:"string"`
+
+	// The Amazon Resource Name (ARN) of the certificate. This can be an Certificate
+	// Manager (ACM) certificate or an Identity and Access Management (IAM) server
+	// certificate.
+	CertificateArn *string `locationName:"certificateArn" min:"20" type:"string"`
+
+	// A description of the DomainName configuration.
+	Description *string `locationName:"description" type:"string"`
+
+	// The domain name.
+	DomainName *string `locationName:"domainName" min:"1" type:"string"`
+
+	// The ID of your Amazon Route 53 hosted zone.
+	HostedZoneId *string `locationName:"hostedZoneId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DomainNameConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s DomainNameConfig) GoString() string {
+	return s.String()
+}
+
+// SetAppsyncDomainName sets the AppsyncDomainName field's value.
+func (s *DomainNameConfig) SetAppsyncDomainName(v string) *DomainNameConfig {
+	s.AppsyncDomainName = &v
+	return s
+}
+
+// SetCertificateArn sets the CertificateArn field's value.
+func (s *DomainNameConfig) SetCertificateArn(v string) *DomainNameConfig {
+	s.CertificateArn = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *DomainNameConfig) SetDescription(v string) *DomainNameConfig {
+	s.Description = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *DomainNameConfig) SetDomainName(v string) *DomainNameConfig {
+	s.DomainName = &v
+	return s
+}
+
+// SetHostedZoneId sets the HostedZoneId field's value.
+func (s *DomainNameConfig) SetHostedZoneId(v string) *DomainNameConfig {
+	s.HostedZoneId = &v
+	return s
+}
+
 // Describes an Amazon DynamoDB data source configuration.
 type DynamodbDataSourceConfig struct {
 	_ struct{} `type:"structure"`
@@ -6361,7 +10650,7 @@ type DynamodbDataSourceConfig struct {
 	// AwsRegion is a required field
 	AwsRegion *string `locationName:"awsRegion" type:"string" required:"true"`
 
-	// The DeltaSyncConfig for a versioned datasource.
+	// The DeltaSyncConfig for a versioned data source.
 	DeltaSyncConfig *DeltaSyncConfig `locationName:"deltaSyncConfig" type:"structure"`
 
 	// The table name.
@@ -6376,12 +10665,20 @@ type DynamodbDataSourceConfig struct {
 	Versioned *bool `locationName:"versioned" type:"boolean"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DynamodbDataSourceConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s DynamodbDataSourceConfig) GoString() string {
 	return s.String()
 }
@@ -6432,7 +10729,11 @@ func (s *DynamodbDataSourceConfig) SetVersioned(v bool) *DynamodbDataSourceConfi
 	return s
 }
 
-// Describes an Elasticsearch data source configuration.
+// Describes an OpenSearch data source configuration.
+//
+// As of September 2021, Amazon Elasticsearch service is Amazon OpenSearch Service.
+// This configuration is deprecated. For new data sources, use OpenSearchServiceDataSourceConfig
+// to specify an OpenSearch data source.
 type ElasticsearchDataSourceConfig struct {
 	_ struct{} `type:"structure"`
 
@@ -6447,12 +10748,20 @@ type ElasticsearchDataSourceConfig struct {
 	Endpoint *string `locationName:"endpoint" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ElasticsearchDataSourceConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ElasticsearchDataSourceConfig) GoString() string {
 	return s.String()
 }
@@ -6485,9 +10794,580 @@ func (s *ElasticsearchDataSourceConfig) SetEndpoint(v string) *ElasticsearchData
 	return s
 }
 
+// Enables and controls the enhanced metrics feature. Enhanced metrics emit
+// granular data on API usage and performance such as AppSync request and error
+// counts, latency, and cache hits/misses. All enhanced metric data is sent
+// to your CloudWatch account, and you can configure the types of data that
+// will be sent.
+//
+// Enhanced metrics can be configured at the resolver, data source, and operation
+// levels. EnhancedMetricsConfig contains three required parameters, each controlling
+// one of these categories:
+//
+// resolverLevelMetricsBehavior: Controls how resolver metrics will be emitted
+// to CloudWatch. Resolver metrics include:
+//
+//   - GraphQL errors: The number of GraphQL errors that occurred.
+//
+//   - Requests: The number of invocations that occurred during a request.
+//
+//   - Latency: The time to complete a resolver invocation.
+//
+//   - Cache hits: The number of cache hits during a request.
+//
+//   - Cache misses: The number of cache misses during a request.
+//
+// These metrics can be emitted to CloudWatch per resolver or for all resolvers
+// in the request. Metrics will be recorded by API ID and resolver name. resolverLevelMetricsBehavior
+// accepts one of these values at a time:
+//
+//   - FULL_REQUEST_RESOLVER_METRICS: Records and emits metric data for all
+//     resolvers in the request.
+//
+//   - PER_RESOLVER_METRICS: Records and emits metric data for resolvers that
+//     have the metricsConfig value set to ENABLED.
+//
+// dataSourceLevelMetricsBehavior: Controls how data source metrics will be
+// emitted to CloudWatch. Data source metrics include:
+//
+//   - Requests: The number of invocations that occured during a request.
+//
+//   - Latency: The time to complete a data source invocation.
+//
+//   - Errors: The number of errors that occurred during a data source invocation.
+//
+// These metrics can be emitted to CloudWatch per data source or for all data
+// sources in the request. Metrics will be recorded by API ID and data source
+// name. dataSourceLevelMetricsBehavior accepts one of these values at a time:
+//
+//   - FULL_REQUEST_DATA_SOURCE_METRICS: Records and emits metric data for
+//     all data sources in the request.
+//
+//   - PER_DATA_SOURCE_METRICS: Records and emits metric data for data sources
+//     that have the metricsConfig value set to ENABLED.
+//
+// operationLevelMetricsConfig: Controls how operation metrics will be emitted
+// to CloudWatch. Operation metrics include:
+//
+//   - Requests: The number of times a specified GraphQL operation was called.
+//
+//   - GraphQL errors: The number of GraphQL errors that occurred during a
+//     specified GraphQL operation.
+//
+// Metrics will be recorded by API ID and operation name. You can set the value
+// to ENABLED or DISABLED.
+type EnhancedMetricsConfig struct {
+	_ struct{} `type:"structure"`
+
+	// Controls how data source metrics will be emitted to CloudWatch. Data source
+	// metrics include:
+	//
+	//    * Requests: The number of invocations that occured during a request.
+	//
+	//    * Latency: The time to complete a data source invocation.
+	//
+	//    * Errors: The number of errors that occurred during a data source invocation.
+	//
+	// These metrics can be emitted to CloudWatch per data source or for all data
+	// sources in the request. Metrics will be recorded by API ID and data source
+	// name. dataSourceLevelMetricsBehavior accepts one of these values at a time:
+	//
+	//    * FULL_REQUEST_DATA_SOURCE_METRICS: Records and emits metric data for
+	//    all data sources in the request.
+	//
+	//    * PER_DATA_SOURCE_METRICS: Records and emits metric data for data sources
+	//    that have the metricsConfig value set to ENABLED.
+	//
+	// DataSourceLevelMetricsBehavior is a required field
+	DataSourceLevelMetricsBehavior *string `locationName:"dataSourceLevelMetricsBehavior" type:"string" required:"true" enum:"DataSourceLevelMetricsBehavior"`
+
+	// Controls how operation metrics will be emitted to CloudWatch. Operation metrics
+	// include:
+	//
+	//    * Requests: The number of times a specified GraphQL operation was called.
+	//
+	//    * GraphQL errors: The number of GraphQL errors that occurred during a
+	//    specified GraphQL operation.
+	//
+	// Metrics will be recorded by API ID and operation name. You can set the value
+	// to ENABLED or DISABLED.
+	//
+	// OperationLevelMetricsConfig is a required field
+	OperationLevelMetricsConfig *string `locationName:"operationLevelMetricsConfig" type:"string" required:"true" enum:"OperationLevelMetricsConfig"`
+
+	// Controls how resolver metrics will be emitted to CloudWatch. Resolver metrics
+	// include:
+	//
+	//    * GraphQL errors: The number of GraphQL errors that occurred.
+	//
+	//    * Requests: The number of invocations that occurred during a request.
+	//
+	//    * Latency: The time to complete a resolver invocation.
+	//
+	//    * Cache hits: The number of cache hits during a request.
+	//
+	//    * Cache misses: The number of cache misses during a request.
+	//
+	// These metrics can be emitted to CloudWatch per resolver or for all resolvers
+	// in the request. Metrics will be recorded by API ID and resolver name. resolverLevelMetricsBehavior
+	// accepts one of these values at a time:
+	//
+	//    * FULL_REQUEST_RESOLVER_METRICS: Records and emits metric data for all
+	//    resolvers in the request.
+	//
+	//    * PER_RESOLVER_METRICS: Records and emits metric data for resolvers that
+	//    have the metricsConfig value set to ENABLED.
+	//
+	// ResolverLevelMetricsBehavior is a required field
+	ResolverLevelMetricsBehavior *string `locationName:"resolverLevelMetricsBehavior" type:"string" required:"true" enum:"ResolverLevelMetricsBehavior"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnhancedMetricsConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EnhancedMetricsConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EnhancedMetricsConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EnhancedMetricsConfig"}
+	if s.DataSourceLevelMetricsBehavior == nil {
+		invalidParams.Add(request.NewErrParamRequired("DataSourceLevelMetricsBehavior"))
+	}
+	if s.OperationLevelMetricsConfig == nil {
+		invalidParams.Add(request.NewErrParamRequired("OperationLevelMetricsConfig"))
+	}
+	if s.ResolverLevelMetricsBehavior == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResolverLevelMetricsBehavior"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDataSourceLevelMetricsBehavior sets the DataSourceLevelMetricsBehavior field's value.
+func (s *EnhancedMetricsConfig) SetDataSourceLevelMetricsBehavior(v string) *EnhancedMetricsConfig {
+	s.DataSourceLevelMetricsBehavior = &v
+	return s
+}
+
+// SetOperationLevelMetricsConfig sets the OperationLevelMetricsConfig field's value.
+func (s *EnhancedMetricsConfig) SetOperationLevelMetricsConfig(v string) *EnhancedMetricsConfig {
+	s.OperationLevelMetricsConfig = &v
+	return s
+}
+
+// SetResolverLevelMetricsBehavior sets the ResolverLevelMetricsBehavior field's value.
+func (s *EnhancedMetricsConfig) SetResolverLevelMetricsBehavior(v string) *EnhancedMetricsConfig {
+	s.ResolverLevelMetricsBehavior = &v
+	return s
+}
+
+// Contains the list of errors generated. When using JavaScript, this will apply
+// to the request or response function evaluation.
+type ErrorDetail struct {
+	_ struct{} `type:"structure"`
+
+	// The error payload.
+	Message *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ErrorDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ErrorDetail) GoString() string {
+	return s.String()
+}
+
+// SetMessage sets the Message field's value.
+func (s *ErrorDetail) SetMessage(v string) *ErrorDetail {
+	s.Message = &v
+	return s
+}
+
+// Contains the list of errors from a code evaluation response.
+type EvaluateCodeErrorDetail struct {
+	_ struct{} `type:"structure"`
+
+	// Contains the list of CodeError objects.
+	CodeErrors []*CodeError `locationName:"codeErrors" type:"list"`
+
+	// The error payload.
+	Message *string `locationName:"message" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateCodeErrorDetail) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateCodeErrorDetail) GoString() string {
+	return s.String()
+}
+
+// SetCodeErrors sets the CodeErrors field's value.
+func (s *EvaluateCodeErrorDetail) SetCodeErrors(v []*CodeError) *EvaluateCodeErrorDetail {
+	s.CodeErrors = v
+	return s
+}
+
+// SetMessage sets the Message field's value.
+func (s *EvaluateCodeErrorDetail) SetMessage(v string) *EvaluateCodeErrorDetail {
+	s.Message = &v
+	return s
+}
+
+type EvaluateCodeInput struct {
+	_ struct{} `type:"structure"`
+
+	// The code definition to be evaluated. Note that code and runtime are both
+	// required for this action. The runtime value must be APPSYNC_JS.
+	//
+	// Code is a required field
+	Code *string `locationName:"code" min:"1" type:"string" required:"true"`
+
+	// The map that holds all of the contextual information for your resolver invocation.
+	// A context is required for this action.
+	//
+	// Context is a required field
+	Context *string `locationName:"context" min:"2" type:"string" required:"true"`
+
+	// The function within the code to be evaluated. If provided, the valid values
+	// are request and response.
+	Function *string `locationName:"function" type:"string"`
+
+	// The runtime to be used when evaluating the code. Currently, only the APPSYNC_JS
+	// runtime is supported.
+	//
+	// Runtime is a required field
+	Runtime *AppSyncRuntime `locationName:"runtime" type:"structure" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateCodeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateCodeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EvaluateCodeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EvaluateCodeInput"}
+	if s.Code == nil {
+		invalidParams.Add(request.NewErrParamRequired("Code"))
+	}
+	if s.Code != nil && len(*s.Code) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Code", 1))
+	}
+	if s.Context == nil {
+		invalidParams.Add(request.NewErrParamRequired("Context"))
+	}
+	if s.Context != nil && len(*s.Context) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("Context", 2))
+	}
+	if s.Runtime == nil {
+		invalidParams.Add(request.NewErrParamRequired("Runtime"))
+	}
+	if s.Runtime != nil {
+		if err := s.Runtime.Validate(); err != nil {
+			invalidParams.AddNested("Runtime", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetCode sets the Code field's value.
+func (s *EvaluateCodeInput) SetCode(v string) *EvaluateCodeInput {
+	s.Code = &v
+	return s
+}
+
+// SetContext sets the Context field's value.
+func (s *EvaluateCodeInput) SetContext(v string) *EvaluateCodeInput {
+	s.Context = &v
+	return s
+}
+
+// SetFunction sets the Function field's value.
+func (s *EvaluateCodeInput) SetFunction(v string) *EvaluateCodeInput {
+	s.Function = &v
+	return s
+}
+
+// SetRuntime sets the Runtime field's value.
+func (s *EvaluateCodeInput) SetRuntime(v *AppSyncRuntime) *EvaluateCodeInput {
+	s.Runtime = v
+	return s
+}
+
+type EvaluateCodeOutput struct {
+	_ struct{} `type:"structure"`
+
+	// Contains the payload of the response error.
+	Error *EvaluateCodeErrorDetail `locationName:"error" type:"structure"`
+
+	// The result of the evaluation operation.
+	EvaluationResult *string `locationName:"evaluationResult" type:"string"`
+
+	// A list of logs that were generated by calls to util.log.info and util.log.error
+	// in the evaluated code.
+	Logs []*string `locationName:"logs" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateCodeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateCodeOutput) GoString() string {
+	return s.String()
+}
+
+// SetError sets the Error field's value.
+func (s *EvaluateCodeOutput) SetError(v *EvaluateCodeErrorDetail) *EvaluateCodeOutput {
+	s.Error = v
+	return s
+}
+
+// SetEvaluationResult sets the EvaluationResult field's value.
+func (s *EvaluateCodeOutput) SetEvaluationResult(v string) *EvaluateCodeOutput {
+	s.EvaluationResult = &v
+	return s
+}
+
+// SetLogs sets the Logs field's value.
+func (s *EvaluateCodeOutput) SetLogs(v []*string) *EvaluateCodeOutput {
+	s.Logs = v
+	return s
+}
+
+type EvaluateMappingTemplateInput struct {
+	_ struct{} `type:"structure"`
+
+	// The map that holds all of the contextual information for your resolver invocation.
+	// A context is required for this action.
+	//
+	// Context is a required field
+	Context *string `locationName:"context" min:"2" type:"string" required:"true"`
+
+	// The mapping template; this can be a request or response template. A template
+	// is required for this action.
+	//
+	// Template is a required field
+	Template *string `locationName:"template" min:"2" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateMappingTemplateInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateMappingTemplateInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EvaluateMappingTemplateInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EvaluateMappingTemplateInput"}
+	if s.Context == nil {
+		invalidParams.Add(request.NewErrParamRequired("Context"))
+	}
+	if s.Context != nil && len(*s.Context) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("Context", 2))
+	}
+	if s.Template == nil {
+		invalidParams.Add(request.NewErrParamRequired("Template"))
+	}
+	if s.Template != nil && len(*s.Template) < 2 {
+		invalidParams.Add(request.NewErrParamMinLen("Template", 2))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetContext sets the Context field's value.
+func (s *EvaluateMappingTemplateInput) SetContext(v string) *EvaluateMappingTemplateInput {
+	s.Context = &v
+	return s
+}
+
+// SetTemplate sets the Template field's value.
+func (s *EvaluateMappingTemplateInput) SetTemplate(v string) *EvaluateMappingTemplateInput {
+	s.Template = &v
+	return s
+}
+
+type EvaluateMappingTemplateOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ErrorDetail object.
+	Error *ErrorDetail `locationName:"error" type:"structure"`
+
+	// The mapping template; this can be a request or response template.
+	EvaluationResult *string `locationName:"evaluationResult" type:"string"`
+
+	// A list of logs that were generated by calls to util.log.info and util.log.error
+	// in the evaluated code.
+	Logs []*string `locationName:"logs" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateMappingTemplateOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EvaluateMappingTemplateOutput) GoString() string {
+	return s.String()
+}
+
+// SetError sets the Error field's value.
+func (s *EvaluateMappingTemplateOutput) SetError(v *ErrorDetail) *EvaluateMappingTemplateOutput {
+	s.Error = v
+	return s
+}
+
+// SetEvaluationResult sets the EvaluationResult field's value.
+func (s *EvaluateMappingTemplateOutput) SetEvaluationResult(v string) *EvaluateMappingTemplateOutput {
+	s.EvaluationResult = &v
+	return s
+}
+
+// SetLogs sets the Logs field's value.
+func (s *EvaluateMappingTemplateOutput) SetLogs(v []*string) *EvaluateMappingTemplateOutput {
+	s.Logs = v
+	return s
+}
+
+// Describes an Amazon EventBridge bus data source configuration.
+type EventBridgeDataSourceConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The ARN of the event bus. For more information about event buses, see Amazon
+	// EventBridge event buses (https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-event-bus.html).
+	//
+	// EventBusArn is a required field
+	EventBusArn *string `locationName:"eventBusArn" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EventBridgeDataSourceConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s EventBridgeDataSourceConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *EventBridgeDataSourceConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "EventBridgeDataSourceConfig"}
+	if s.EventBusArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("EventBusArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetEventBusArn sets the EventBusArn field's value.
+func (s *EventBridgeDataSourceConfig) SetEventBusArn(v string) *EventBridgeDataSourceConfig {
+	s.EventBusArn = &v
+	return s
+}
+
 // Represents the input of a FlushApiCache operation.
 type FlushApiCacheInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -6495,12 +11375,20 @@ type FlushApiCacheInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FlushApiCacheInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FlushApiCacheInput) GoString() string {
 	return s.String()
 }
@@ -6532,20 +11420,32 @@ type FlushApiCacheOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FlushApiCacheOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FlushApiCacheOutput) GoString() string {
 	return s.String()
 }
 
-// A function is a reusable entity. Multiple functions can be used to compose
+// A function is a reusable entity. You can use multiple functions to compose
 // the resolver logic.
 type FunctionConfiguration struct {
 	_ struct{} `type:"structure"`
+
+	// The function code that contains the request and response functions. When
+	// code is used, the runtime is required. The runtime value must be APPSYNC_JS.
+	Code *string `locationName:"code" min:"1" type:"string"`
 
 	// The name of the DataSource.
 	DataSourceName *string `locationName:"dataSourceName" min:"1" type:"string"`
@@ -6553,15 +11453,18 @@ type FunctionConfiguration struct {
 	// The Function description.
 	Description *string `locationName:"description" type:"string"`
 
-	// The ARN of the Function object.
+	// The Amazon Resource Name (ARN) of the Function object.
 	FunctionArn *string `locationName:"functionArn" type:"string"`
 
 	// A unique ID representing the Function object.
 	FunctionId *string `locationName:"functionId" type:"string"`
 
-	// The version of the request mapping template. Currently only the 2018-05-29
+	// The version of the request mapping template. Currently, only the 2018-05-29
 	// version of the template is supported.
 	FunctionVersion *string `locationName:"functionVersion" type:"string"`
+
+	// The maximum batching size for a resolver.
+	MaxBatchSize *int64 `locationName:"maxBatchSize" type:"integer"`
 
 	// The name of the Function object.
 	Name *string `locationName:"name" min:"1" type:"string"`
@@ -6573,21 +11476,41 @@ type FunctionConfiguration struct {
 	// The Function response mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
 
+	// Describes a runtime used by an Amazon Web Services AppSync pipeline resolver
+	// or Amazon Web Services AppSync function. Specifies the name and version of
+	// the runtime to use. Note that if a runtime is specified, code must also be
+	// specified.
+	Runtime *AppSyncRuntime `locationName:"runtime" type:"structure"`
+
 	// Describes a Sync configuration for a resolver.
 	//
-	// Contains information on which Conflict Detection as well as Resolution strategy
-	// should be performed when the resolver is invoked.
+	// Specifies which Conflict Detection strategy and Resolution strategy to use
+	// when the resolver is invoked.
 	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FunctionConfiguration) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s FunctionConfiguration) GoString() string {
 	return s.String()
+}
+
+// SetCode sets the Code field's value.
+func (s *FunctionConfiguration) SetCode(v string) *FunctionConfiguration {
+	s.Code = &v
+	return s
 }
 
 // SetDataSourceName sets the DataSourceName field's value.
@@ -6620,6 +11543,12 @@ func (s *FunctionConfiguration) SetFunctionVersion(v string) *FunctionConfigurat
 	return s
 }
 
+// SetMaxBatchSize sets the MaxBatchSize field's value.
+func (s *FunctionConfiguration) SetMaxBatchSize(v int64) *FunctionConfiguration {
+	s.MaxBatchSize = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *FunctionConfiguration) SetName(v string) *FunctionConfiguration {
 	s.Name = &v
@@ -6638,15 +11567,101 @@ func (s *FunctionConfiguration) SetResponseMappingTemplate(v string) *FunctionCo
 	return s
 }
 
+// SetRuntime sets the Runtime field's value.
+func (s *FunctionConfiguration) SetRuntime(v *AppSyncRuntime) *FunctionConfiguration {
+	s.Runtime = v
+	return s
+}
+
 // SetSyncConfig sets the SyncConfig field's value.
 func (s *FunctionConfiguration) SetSyncConfig(v *SyncConfig) *FunctionConfiguration {
 	s.SyncConfig = v
 	return s
 }
 
+type GetApiAssociationInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The domain name.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"domainName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetApiAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetApiAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetApiAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetApiAssociationInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *GetApiAssociationInput) SetDomainName(v string) *GetApiAssociationInput {
+	s.DomainName = &v
+	return s
+}
+
+type GetApiAssociationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The ApiAssociation object.
+	ApiAssociation *ApiAssociation `locationName:"apiAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetApiAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetApiAssociationOutput) GoString() string {
+	return s.String()
+}
+
+// SetApiAssociation sets the ApiAssociation field's value.
+func (s *GetApiAssociationOutput) SetApiAssociation(v *ApiAssociation) *GetApiAssociationOutput {
+	s.ApiAssociation = v
+	return s
+}
+
 // Represents the input of a GetApiCache operation.
 type GetApiCacheInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -6654,12 +11669,20 @@ type GetApiCacheInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetApiCacheInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetApiCacheInput) GoString() string {
 	return s.String()
 }
@@ -6694,12 +11717,20 @@ type GetApiCacheOutput struct {
 	ApiCache *ApiCache `locationName:"apiCache" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetApiCacheOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetApiCacheOutput) GoString() string {
 	return s.String()
 }
@@ -6711,7 +11742,7 @@ func (s *GetApiCacheOutput) SetApiCache(v *ApiCache) *GetApiCacheOutput {
 }
 
 type GetDataSourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -6724,12 +11755,20 @@ type GetDataSourceInput struct {
 	Name *string `location:"uri" locationName:"name" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDataSourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDataSourceInput) GoString() string {
 	return s.String()
 }
@@ -6768,6 +11807,157 @@ func (s *GetDataSourceInput) SetName(v string) *GetDataSourceInput {
 	return s
 }
 
+type GetDataSourceIntrospectionInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// A boolean flag that determines whether SDL should be generated for introspected
+	// types or not. If set to true, each model will contain an sdl property that
+	// contains the SDL for that type. The SDL only contains the type data and no
+	// additional metadata or directives.
+	IncludeModelsSDL *bool `location:"querystring" locationName:"includeModelsSDL" type:"boolean"`
+
+	// The introspection ID. Each introspection contains a unique ID that can be
+	// used to reference the instrospection record.
+	//
+	// IntrospectionId is a required field
+	IntrospectionId *string `location:"uri" locationName:"introspectionId" type:"string" required:"true"`
+
+	// The maximum number of introspected types that will be returned in a single
+	// response.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// Determines the number of types to be returned in a single response before
+	// paginating. This value is typically taken from nextToken value from the previous
+	// response.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceIntrospectionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceIntrospectionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetDataSourceIntrospectionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetDataSourceIntrospectionInput"}
+	if s.IntrospectionId == nil {
+		invalidParams.Add(request.NewErrParamRequired("IntrospectionId"))
+	}
+	if s.IntrospectionId != nil && len(*s.IntrospectionId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("IntrospectionId", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetIncludeModelsSDL sets the IncludeModelsSDL field's value.
+func (s *GetDataSourceIntrospectionInput) SetIncludeModelsSDL(v bool) *GetDataSourceIntrospectionInput {
+	s.IncludeModelsSDL = &v
+	return s
+}
+
+// SetIntrospectionId sets the IntrospectionId field's value.
+func (s *GetDataSourceIntrospectionInput) SetIntrospectionId(v string) *GetDataSourceIntrospectionInput {
+	s.IntrospectionId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *GetDataSourceIntrospectionInput) SetMaxResults(v int64) *GetDataSourceIntrospectionInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *GetDataSourceIntrospectionInput) SetNextToken(v string) *GetDataSourceIntrospectionInput {
+	s.NextToken = &v
+	return s
+}
+
+type GetDataSourceIntrospectionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The introspection ID. Each introspection contains a unique ID that can be
+	// used to reference the instrospection record.
+	IntrospectionId *string `locationName:"introspectionId" type:"string"`
+
+	// The DataSourceIntrospectionResult object data.
+	IntrospectionResult *DataSourceIntrospectionResult `locationName:"introspectionResult" type:"structure"`
+
+	// The status of the introspection during retrieval. By default, when a new
+	// instrospection is being retrieved, the status will be set to PROCESSING.
+	// Once the operation has been completed, the status will change to SUCCESS
+	// or FAILED depending on how the data was parsed. A FAILED operation will return
+	// an error and its details as an introspectionStatusDetail.
+	IntrospectionStatus *string `locationName:"introspectionStatus" type:"string" enum:"DataSourceIntrospectionStatus"`
+
+	// The error detail field. When a FAILED introspectionStatus is returned, the
+	// introspectionStatusDetail will also return the exact error that was generated
+	// during the operation.
+	IntrospectionStatusDetail *string `locationName:"introspectionStatusDetail" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceIntrospectionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDataSourceIntrospectionOutput) GoString() string {
+	return s.String()
+}
+
+// SetIntrospectionId sets the IntrospectionId field's value.
+func (s *GetDataSourceIntrospectionOutput) SetIntrospectionId(v string) *GetDataSourceIntrospectionOutput {
+	s.IntrospectionId = &v
+	return s
+}
+
+// SetIntrospectionResult sets the IntrospectionResult field's value.
+func (s *GetDataSourceIntrospectionOutput) SetIntrospectionResult(v *DataSourceIntrospectionResult) *GetDataSourceIntrospectionOutput {
+	s.IntrospectionResult = v
+	return s
+}
+
+// SetIntrospectionStatus sets the IntrospectionStatus field's value.
+func (s *GetDataSourceIntrospectionOutput) SetIntrospectionStatus(v string) *GetDataSourceIntrospectionOutput {
+	s.IntrospectionStatus = &v
+	return s
+}
+
+// SetIntrospectionStatusDetail sets the IntrospectionStatusDetail field's value.
+func (s *GetDataSourceIntrospectionOutput) SetIntrospectionStatusDetail(v string) *GetDataSourceIntrospectionOutput {
+	s.IntrospectionStatusDetail = &v
+	return s
+}
+
 type GetDataSourceOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -6775,12 +11965,20 @@ type GetDataSourceOutput struct {
 	DataSource *DataSource `locationName:"dataSource" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDataSourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetDataSourceOutput) GoString() string {
 	return s.String()
 }
@@ -6791,8 +11989,88 @@ func (s *GetDataSourceOutput) SetDataSource(v *DataSource) *GetDataSourceOutput 
 	return s
 }
 
-type GetFunctionInput struct {
+type GetDomainNameInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The domain name.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"domainName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainNameInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainNameInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetDomainNameInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetDomainNameInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *GetDomainNameInput) SetDomainName(v string) *GetDomainNameInput {
+	s.DomainName = &v
+	return s
+}
+
+type GetDomainNameOutput struct {
 	_ struct{} `type:"structure"`
+
+	// The configuration for the DomainName.
+	DomainNameConfig *DomainNameConfig `locationName:"domainNameConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainNameOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetDomainNameOutput) GoString() string {
+	return s.String()
+}
+
+// SetDomainNameConfig sets the DomainNameConfig field's value.
+func (s *GetDomainNameOutput) SetDomainNameConfig(v *DomainNameConfig) *GetDomainNameOutput {
+	s.DomainNameConfig = v
+	return s
+}
+
+type GetFunctionInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The GraphQL API ID.
 	//
@@ -6805,12 +12083,20 @@ type GetFunctionInput struct {
 	FunctionId *string `location:"uri" locationName:"functionId" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetFunctionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetFunctionInput) GoString() string {
 	return s.String()
 }
@@ -6856,12 +12142,20 @@ type GetFunctionOutput struct {
 	FunctionConfiguration *FunctionConfiguration `locationName:"functionConfiguration" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetFunctionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetFunctionOutput) GoString() string {
 	return s.String()
 }
@@ -6872,8 +12166,89 @@ func (s *GetFunctionOutput) SetFunctionConfiguration(v *FunctionConfiguration) *
 	return s
 }
 
-type GetGraphqlApiInput struct {
+type GetGraphqlApiEnvironmentVariablesInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID of the API from which the environmental variable list will be retrieved.
+	//
+	// ApiId is a required field
+	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetGraphqlApiEnvironmentVariablesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetGraphqlApiEnvironmentVariablesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetGraphqlApiEnvironmentVariablesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetGraphqlApiEnvironmentVariablesInput"}
+	if s.ApiId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ApiId"))
+	}
+	if s.ApiId != nil && len(*s.ApiId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApiId sets the ApiId field's value.
+func (s *GetGraphqlApiEnvironmentVariablesInput) SetApiId(v string) *GetGraphqlApiEnvironmentVariablesInput {
+	s.ApiId = &v
+	return s
+}
+
+type GetGraphqlApiEnvironmentVariablesOutput struct {
 	_ struct{} `type:"structure"`
+
+	// The payload containing each environmental variable in the "key" : "value"
+	// format.
+	EnvironmentVariables map[string]*string `locationName:"environmentVariables" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetGraphqlApiEnvironmentVariablesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetGraphqlApiEnvironmentVariablesOutput) GoString() string {
+	return s.String()
+}
+
+// SetEnvironmentVariables sets the EnvironmentVariables field's value.
+func (s *GetGraphqlApiEnvironmentVariablesOutput) SetEnvironmentVariables(v map[string]*string) *GetGraphqlApiEnvironmentVariablesOutput {
+	s.EnvironmentVariables = v
+	return s
+}
+
+type GetGraphqlApiInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID for the GraphQL API.
 	//
@@ -6881,12 +12256,20 @@ type GetGraphqlApiInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetGraphqlApiInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetGraphqlApiInput) GoString() string {
 	return s.String()
 }
@@ -6920,12 +12303,20 @@ type GetGraphqlApiOutput struct {
 	GraphqlApi *GraphqlApi `locationName:"graphqlApi" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetGraphqlApiOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetGraphqlApiOutput) GoString() string {
 	return s.String()
 }
@@ -6937,7 +12328,7 @@ func (s *GetGraphqlApiOutput) SetGraphqlApi(v *GraphqlApi) *GetGraphqlApiOutput 
 }
 
 type GetIntrospectionSchemaInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -6953,12 +12344,20 @@ type GetIntrospectionSchemaInput struct {
 	IncludeDirectives *bool `location:"querystring" locationName:"includeDirectives" type:"boolean"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetIntrospectionSchemaInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetIntrospectionSchemaInput) GoString() string {
 	return s.String()
 }
@@ -7009,12 +12408,20 @@ type GetIntrospectionSchemaOutput struct {
 	Schema []byte `locationName:"schema" type:"blob"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetIntrospectionSchemaOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetIntrospectionSchemaOutput) GoString() string {
 	return s.String()
 }
@@ -7026,7 +12433,7 @@ func (s *GetIntrospectionSchemaOutput) SetSchema(v []byte) *GetIntrospectionSche
 }
 
 type GetResolverInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -7044,12 +12451,20 @@ type GetResolverInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResolverInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResolverInput) GoString() string {
 	return s.String()
 }
@@ -7107,12 +12522,20 @@ type GetResolverOutput struct {
 	Resolver *Resolver `locationName:"resolver" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResolverOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetResolverOutput) GoString() string {
 	return s.String()
 }
@@ -7124,7 +12547,7 @@ func (s *GetResolverOutput) SetResolver(v *Resolver) *GetResolverOutput {
 }
 
 type GetSchemaCreationStatusInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -7132,12 +12555,20 @@ type GetSchemaCreationStatusInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSchemaCreationStatusInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSchemaCreationStatusInput) GoString() string {
 	return s.String()
 }
@@ -7175,12 +12606,20 @@ type GetSchemaCreationStatusOutput struct {
 	Status *string `locationName:"status" type:"string" enum:"SchemaStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSchemaCreationStatusOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetSchemaCreationStatusOutput) GoString() string {
 	return s.String()
 }
@@ -7197,8 +12636,109 @@ func (s *GetSchemaCreationStatusOutput) SetStatus(v string) *GetSchemaCreationSt
 	return s
 }
 
-type GetTypeInput struct {
+type GetSourceApiAssociationInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID generated by the AppSync service for the source API association.
+	//
+	// AssociationId is a required field
+	AssociationId *string `location:"uri" locationName:"associationId" type:"string" required:"true"`
+
+	// The identifier of the AppSync Merged API. This is generated by the AppSync
+	// service. In most cases, Merged APIs (especially in your account) only require
+	// the API ID value or ARN of the merged API. However, Merged APIs in other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the merged API.
+	//
+	// MergedApiIdentifier is a required field
+	MergedApiIdentifier *string `location:"uri" locationName:"mergedApiIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetSourceApiAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetSourceApiAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *GetSourceApiAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "GetSourceApiAssociationInput"}
+	if s.AssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssociationId"))
+	}
+	if s.AssociationId != nil && len(*s.AssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssociationId", 1))
+	}
+	if s.MergedApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MergedApiIdentifier"))
+	}
+	if s.MergedApiIdentifier != nil && len(*s.MergedApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MergedApiIdentifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *GetSourceApiAssociationInput) SetAssociationId(v string) *GetSourceApiAssociationInput {
+	s.AssociationId = &v
+	return s
+}
+
+// SetMergedApiIdentifier sets the MergedApiIdentifier field's value.
+func (s *GetSourceApiAssociationInput) SetMergedApiIdentifier(v string) *GetSourceApiAssociationInput {
+	s.MergedApiIdentifier = &v
+	return s
+}
+
+type GetSourceApiAssociationOutput struct {
 	_ struct{} `type:"structure"`
+
+	// The SourceApiAssociation object data.
+	SourceApiAssociation *SourceApiAssociation `locationName:"sourceApiAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetSourceApiAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s GetSourceApiAssociationOutput) GoString() string {
+	return s.String()
+}
+
+// SetSourceApiAssociation sets the SourceApiAssociation field's value.
+func (s *GetSourceApiAssociationOutput) SetSourceApiAssociation(v *SourceApiAssociation) *GetSourceApiAssociationOutput {
+	s.SourceApiAssociation = v
+	return s
+}
+
+type GetTypeInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -7216,12 +12756,20 @@ type GetTypeInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetTypeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetTypeInput) GoString() string {
 	return s.String()
 }
@@ -7276,12 +12824,20 @@ type GetTypeOutput struct {
 	Type *Type `locationName:"type" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetTypeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GetTypeOutput) GoString() string {
 	return s.String()
 }
@@ -7300,12 +12856,20 @@ type GraphQLSchemaException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GraphQLSchemaException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GraphQLSchemaException) GoString() string {
 	return s.String()
 }
@@ -7358,23 +12922,72 @@ type GraphqlApi struct {
 	// The API ID.
 	ApiId *string `locationName:"apiId" type:"string"`
 
-	// The ARN.
+	// The value that indicates whether the GraphQL API is a standard API (GRAPHQL)
+	// or merged API (MERGED).
+	ApiType *string `locationName:"apiType" type:"string" enum:"GraphQLApiType"`
+
+	// The Amazon Resource Name (ARN).
 	Arn *string `locationName:"arn" type:"string"`
 
 	// The authentication type.
 	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
 
-	// Configuration for AWS Lambda function authorization.
+	// The DNS records for the API.
+	Dns map[string]*string `locationName:"dns" type:"map"`
+
+	// The enhancedMetricsConfig object.
+	EnhancedMetricsConfig *EnhancedMetricsConfig `locationName:"enhancedMetricsConfig" type:"structure"`
+
+	// Sets the value of the GraphQL API to enable (ENABLED) or disable (DISABLED)
+	// introspection. If no value is provided, the introspection configuration will
+	// be set to ENABLED by default. This field will produce an error if the operation
+	// attempts to use the introspection feature while this field is disabled.
+	//
+	// For more information about introspection, see GraphQL introspection (https://graphql.org/learn/introspection/).
+	IntrospectionConfig *string `locationName:"introspectionConfig" type:"string" enum:"GraphQLApiIntrospectionConfig"`
+
+	// Configuration for Lambda function authorization.
 	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
 
 	// The Amazon CloudWatch Logs configuration.
 	LogConfig *LogConfig `locationName:"logConfig" type:"structure"`
+
+	// The Identity and Access Management service role ARN for a merged API. The
+	// AppSync service assumes this role on behalf of the Merged API to validate
+	// access to source APIs at runtime and to prompt the AUTO_MERGE to update the
+	// merged API endpoint with the source API changes automatically.
+	MergedApiExecutionRoleArn *string `locationName:"mergedApiExecutionRoleArn" type:"string"`
 
 	// The API name.
 	Name *string `locationName:"name" min:"1" type:"string"`
 
 	// The OpenID Connect configuration.
 	OpenIDConnectConfig *OpenIDConnectConfig `locationName:"openIDConnectConfig" type:"structure"`
+
+	// The account owner of the GraphQL API.
+	Owner *string `locationName:"owner" type:"string"`
+
+	// The owner contact information for an API resource.
+	//
+	// This field accepts any string input with a length of 0 - 256 characters.
+	OwnerContact *string `locationName:"ownerContact" type:"string"`
+
+	// The maximum depth a query can have in a single request. Depth refers to the
+	// amount of nested levels allowed in the body of query. The default value is
+	// 0 (or unspecified), which indicates there's no depth limit. If you set a
+	// limit, it can be between 1 and 75 nested levels. This field will produce
+	// a limit error if the operation falls out of bounds.
+	//
+	// Note that fields can still be set to nullable or non-nullable. If a non-nullable
+	// field produces an error, the error will be thrown upwards to the first nullable
+	// field available.
+	QueryDepthLimit *int64 `locationName:"queryDepthLimit" type:"integer"`
+
+	// The maximum number of resolvers that can be invoked in a single request.
+	// The default value is 0 (or unspecified), which will set the limit to 10000.
+	// When specified, the limit value can be between 1 and 10000. This field will
+	// produce a limit error if the operation falls out of bounds.
+	ResolverCountLimit *int64 `locationName:"resolverCountLimit" type:"integer"`
 
 	// The tags.
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
@@ -7385,19 +12998,33 @@ type GraphqlApi struct {
 	// The Amazon Cognito user pool configuration.
 	UserPoolConfig *UserPoolConfig `locationName:"userPoolConfig" type:"structure"`
 
-	// The ARN of the WAF ACL associated with this GraphqlApi, if one exists.
+	// Sets the value of the GraphQL API to public (GLOBAL) or private (PRIVATE).
+	// If no value is provided, the visibility will be set to GLOBAL by default.
+	// This value cannot be changed once the API has been created.
+	Visibility *string `locationName:"visibility" type:"string" enum:"GraphQLApiVisibility"`
+
+	// The ARN of the WAF access control list (ACL) associated with this GraphqlApi,
+	// if one exists.
 	WafWebAclArn *string `locationName:"wafWebAclArn" type:"string"`
 
-	// A flag representing whether X-Ray tracing is enabled for this GraphqlApi.
+	// A flag indicating whether to use X-Ray tracing for this GraphqlApi.
 	XrayEnabled *bool `locationName:"xrayEnabled" type:"boolean"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GraphqlApi) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s GraphqlApi) GoString() string {
 	return s.String()
 }
@@ -7414,6 +13041,12 @@ func (s *GraphqlApi) SetApiId(v string) *GraphqlApi {
 	return s
 }
 
+// SetApiType sets the ApiType field's value.
+func (s *GraphqlApi) SetApiType(v string) *GraphqlApi {
+	s.ApiType = &v
+	return s
+}
+
 // SetArn sets the Arn field's value.
 func (s *GraphqlApi) SetArn(v string) *GraphqlApi {
 	s.Arn = &v
@@ -7423,6 +13056,24 @@ func (s *GraphqlApi) SetArn(v string) *GraphqlApi {
 // SetAuthenticationType sets the AuthenticationType field's value.
 func (s *GraphqlApi) SetAuthenticationType(v string) *GraphqlApi {
 	s.AuthenticationType = &v
+	return s
+}
+
+// SetDns sets the Dns field's value.
+func (s *GraphqlApi) SetDns(v map[string]*string) *GraphqlApi {
+	s.Dns = v
+	return s
+}
+
+// SetEnhancedMetricsConfig sets the EnhancedMetricsConfig field's value.
+func (s *GraphqlApi) SetEnhancedMetricsConfig(v *EnhancedMetricsConfig) *GraphqlApi {
+	s.EnhancedMetricsConfig = v
+	return s
+}
+
+// SetIntrospectionConfig sets the IntrospectionConfig field's value.
+func (s *GraphqlApi) SetIntrospectionConfig(v string) *GraphqlApi {
+	s.IntrospectionConfig = &v
 	return s
 }
 
@@ -7438,6 +13089,12 @@ func (s *GraphqlApi) SetLogConfig(v *LogConfig) *GraphqlApi {
 	return s
 }
 
+// SetMergedApiExecutionRoleArn sets the MergedApiExecutionRoleArn field's value.
+func (s *GraphqlApi) SetMergedApiExecutionRoleArn(v string) *GraphqlApi {
+	s.MergedApiExecutionRoleArn = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *GraphqlApi) SetName(v string) *GraphqlApi {
 	s.Name = &v
@@ -7447,6 +13104,30 @@ func (s *GraphqlApi) SetName(v string) *GraphqlApi {
 // SetOpenIDConnectConfig sets the OpenIDConnectConfig field's value.
 func (s *GraphqlApi) SetOpenIDConnectConfig(v *OpenIDConnectConfig) *GraphqlApi {
 	s.OpenIDConnectConfig = v
+	return s
+}
+
+// SetOwner sets the Owner field's value.
+func (s *GraphqlApi) SetOwner(v string) *GraphqlApi {
+	s.Owner = &v
+	return s
+}
+
+// SetOwnerContact sets the OwnerContact field's value.
+func (s *GraphqlApi) SetOwnerContact(v string) *GraphqlApi {
+	s.OwnerContact = &v
+	return s
+}
+
+// SetQueryDepthLimit sets the QueryDepthLimit field's value.
+func (s *GraphqlApi) SetQueryDepthLimit(v int64) *GraphqlApi {
+	s.QueryDepthLimit = &v
+	return s
+}
+
+// SetResolverCountLimit sets the ResolverCountLimit field's value.
+func (s *GraphqlApi) SetResolverCountLimit(v int64) *GraphqlApi {
+	s.ResolverCountLimit = &v
 	return s
 }
 
@@ -7468,6 +13149,12 @@ func (s *GraphqlApi) SetUserPoolConfig(v *UserPoolConfig) *GraphqlApi {
 	return s
 }
 
+// SetVisibility sets the Visibility field's value.
+func (s *GraphqlApi) SetVisibility(v string) *GraphqlApi {
+	s.Visibility = &v
+	return s
+}
+
 // SetWafWebAclArn sets the WafWebAclArn field's value.
 func (s *GraphqlApi) SetWafWebAclArn(v string) *GraphqlApi {
 	s.WafWebAclArn = &v
@@ -7484,22 +13171,30 @@ func (s *GraphqlApi) SetXrayEnabled(v bool) *GraphqlApi {
 type HttpDataSourceConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The authorization config in case the HTTP endpoint requires authorization.
+	// The authorization configuration in case the HTTP endpoint requires authorization.
 	AuthorizationConfig *AuthorizationConfig `locationName:"authorizationConfig" type:"structure"`
 
-	// The HTTP URL endpoint. You can either specify the domain name or IP, and
-	// port combination, and the URL scheme must be HTTP or HTTPS. If the port is
-	// not specified, AppSync uses the default port 80 for the HTTP endpoint and
-	// port 443 for HTTPS endpoints.
+	// The HTTP URL endpoint. You can specify either the domain name or IP, and
+	// port combination, and the URL scheme must be HTTP or HTTPS. If you don't
+	// specify the port, AppSync uses the default port 80 for the HTTP endpoint
+	// and port 443 for HTTPS endpoints.
 	Endpoint *string `locationName:"endpoint" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s HttpDataSourceConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s HttpDataSourceConfig) GoString() string {
 	return s.String()
 }
@@ -7539,12 +13234,20 @@ type InternalFailureException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalFailureException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s InternalFailureException) GoString() string {
 	return s.String()
 }
@@ -7587,23 +13290,25 @@ func (s *InternalFailureException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// A LambdaAuthorizerConfig holds configuration on how to authorize AppSync
-// API access when using the AWS_LAMBDA authorizer mode. Be aware that an AppSync
-// API may have only one Lambda authorizer configured at a time.
+// A LambdaAuthorizerConfig specifies how to authorize AppSync API access when
+// using the AWS_LAMBDA authorizer mode. Be aware that an AppSync API can have
+// only one Lambda authorizer configured at a time.
 type LambdaAuthorizerConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The number of seconds a response should be cached for. The default is 5 minutes
-	// (300 seconds). The Lambda function can override this by returning a ttlOverride
-	// key in its response. A value of 0 disables caching of responses.
+	// The number of seconds a response should be cached for. The default is 0 seconds,
+	// which disables caching. If you don't specify a value for authorizerResultTtlInSeconds,
+	// the default value is used. The maximum value is one hour (3600 seconds).
+	// The Lambda function can override this by returning a ttlOverride key in its
+	// response.
 	AuthorizerResultTtlInSeconds *int64 `locationName:"authorizerResultTtlInSeconds" type:"integer"`
 
-	// The ARN of the lambda function to be called for authorization. This may be
-	// a standard Lambda ARN, a version ARN (.../v3) or alias ARN.
+	// The Amazon Resource Name (ARN) of the Lambda function to be called for authorization.
+	// This can be a standard Lambda ARN, a version ARN (.../v3), or an alias ARN.
 	//
 	// Note: This Lambda function must have the following resource-based policy
-	// assigned to it. When configuring Lambda authorizers in the Console, this
-	// is done for you. To do so with the AWS CLI, run the following:
+	// assigned to it. When configuring Lambda authorizers in the console, this
+	// is done for you. To use the Command Line Interface (CLI), run the following:
 	//
 	// aws lambda add-permission --function-name "arn:aws:lambda:us-east-2:111122223333:function:my-function"
 	// --statement-id "appsync" --principal appsync.amazonaws.com --action lambda:InvokeFunction
@@ -7611,17 +13316,25 @@ type LambdaAuthorizerConfig struct {
 	// AuthorizerUri is a required field
 	AuthorizerUri *string `locationName:"authorizerUri" type:"string" required:"true"`
 
-	// A regular expression for validation of tokens before the Lambda Function
+	// A regular expression for validation of tokens before the Lambda function
 	// is called.
 	IdentityValidationExpression *string `locationName:"identityValidationExpression" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaAuthorizerConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaAuthorizerConfig) GoString() string {
 	return s.String()
 }
@@ -7662,16 +13375,25 @@ func (s *LambdaAuthorizerConfig) SetIdentityValidationExpression(v string) *Lamb
 type LambdaConflictHandlerConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The Arn for the Lambda function to use as the Conflict Handler.
+	// The Amazon Resource Name (ARN) for the Lambda function to use as the Conflict
+	// Handler.
 	LambdaConflictHandlerArn *string `locationName:"lambdaConflictHandlerArn" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaConflictHandlerConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaConflictHandlerConfig) GoString() string {
 	return s.String()
 }
@@ -7682,22 +13404,30 @@ func (s *LambdaConflictHandlerConfig) SetLambdaConflictHandlerArn(v string) *Lam
 	return s
 }
 
-// Describes an Amazon Web Services Lambda data source configuration.
+// Describes an Lambda data source configuration.
 type LambdaDataSourceConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The ARN for the Lambda function.
+	// The Amazon Resource Name (ARN) for the Lambda function.
 	//
 	// LambdaFunctionArn is a required field
 	LambdaFunctionArn *string `locationName:"lambdaFunctionArn" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaDataSourceConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LambdaDataSourceConfig) GoString() string {
 	return s.String()
 }
@@ -7729,12 +13459,20 @@ type LimitExceededException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LimitExceededException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LimitExceededException) GoString() string {
 	return s.String()
 }
@@ -7778,27 +13516,35 @@ func (s *LimitExceededException) RequestID() string {
 }
 
 type ListApiKeysInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
-	// The maximum number of results you want the request to return.
+	// The maximum number of results that you want the request to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
 	// An identifier that was returned from the previous call to this operation,
-	// which can be used to return the next set of items in the list.
+	// which you can use to return the next set of items in the list.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListApiKeysInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListApiKeysInput) GoString() string {
 	return s.String()
 }
@@ -7846,17 +13592,25 @@ type ListApiKeysOutput struct {
 	// The ApiKey objects.
 	ApiKeys []*ApiKey `locationName:"apiKeys" type:"list"`
 
-	// An identifier to be passed in the next request to this operation to return
-	// the next set of items in the list.
+	// An identifier to pass in the next request to this operation to return the
+	// next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListApiKeysOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListApiKeysOutput) GoString() string {
 	return s.String()
 }
@@ -7874,27 +13628,35 @@ func (s *ListApiKeysOutput) SetNextToken(v string) *ListApiKeysOutput {
 }
 
 type ListDataSourcesInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
-	// The maximum number of results you want the request to return.
+	// The maximum number of results that you want the request to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
 	// An identifier that was returned from the previous call to this operation,
-	// which can be used to return the next set of items in the list.
+	// which you can use to return the next set of items in the list.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDataSourcesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDataSourcesInput) GoString() string {
 	return s.String()
 }
@@ -7942,17 +13704,25 @@ type ListDataSourcesOutput struct {
 	// The DataSource objects.
 	DataSources []*DataSource `locationName:"dataSources" type:"list"`
 
-	// An identifier to be passed in the next request to this operation to return
-	// the next set of items in the list.
+	// An identifier to pass in the next request to this operation to return the
+	// next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDataSourcesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListDataSourcesOutput) GoString() string {
 	return s.String()
 }
@@ -7969,28 +13739,131 @@ func (s *ListDataSourcesOutput) SetNextToken(v string) *ListDataSourcesOutput {
 	return s
 }
 
-type ListFunctionsInput struct {
+type ListDomainNamesInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The maximum number of results that you want the request to return.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// An identifier that was returned from the previous call to this operation,
+	// which you can use to return the next set of items in the list.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainNamesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainNamesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListDomainNamesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListDomainNamesInput"}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListDomainNamesInput) SetMaxResults(v int64) *ListDomainNamesInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListDomainNamesInput) SetNextToken(v string) *ListDomainNamesInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListDomainNamesOutput struct {
 	_ struct{} `type:"structure"`
+
+	// Lists configurations for multiple domain names.
+	DomainNameConfigs []*DomainNameConfig `locationName:"domainNameConfigs" type:"list"`
+
+	// An identifier that was returned from the previous call to this operation,
+	// which you can use to return the next set of items in the list.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainNamesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListDomainNamesOutput) GoString() string {
+	return s.String()
+}
+
+// SetDomainNameConfigs sets the DomainNameConfigs field's value.
+func (s *ListDomainNamesOutput) SetDomainNameConfigs(v []*DomainNameConfig) *ListDomainNamesOutput {
+	s.DomainNameConfigs = v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListDomainNamesOutput) SetNextToken(v string) *ListDomainNamesOutput {
+	s.NextToken = &v
+	return s
+}
+
+type ListFunctionsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The GraphQL API ID.
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
-	// The maximum number of results you want the request to return.
+	// The maximum number of results that you want the request to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
 	// An identifier that was returned from the previous call to this operation,
-	// which can be used to return the next set of items in the list.
+	// which you can use to return the next set of items in the list.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListFunctionsInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListFunctionsInput) GoString() string {
 	return s.String()
 }
@@ -8039,16 +13912,24 @@ type ListFunctionsOutput struct {
 	Functions []*FunctionConfiguration `locationName:"functions" type:"list"`
 
 	// An identifier that was returned from the previous call to this operation,
-	// which can be used to return the next set of items in the list.
+	// which you can use to return the next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListFunctionsOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListFunctionsOutput) GoString() string {
 	return s.String()
 }
@@ -8066,22 +13947,37 @@ func (s *ListFunctionsOutput) SetNextToken(v string) *ListFunctionsOutput {
 }
 
 type ListGraphqlApisInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The maximum number of results you want the request to return.
+	// The value that indicates whether the GraphQL API is a standard API (GRAPHQL)
+	// or merged API (MERGED).
+	ApiType *string `location:"querystring" locationName:"apiType" type:"string" enum:"GraphQLApiType"`
+
+	// The maximum number of results that you want the request to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
 	// An identifier that was returned from the previous call to this operation,
-	// which can be used to return the next set of items in the list.
+	// which you can use to return the next set of items in the list.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+
+	// The account owner of the GraphQL API.
+	Owner *string `location:"querystring" locationName:"owner" type:"string" enum:"Ownership"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListGraphqlApisInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListGraphqlApisInput) GoString() string {
 	return s.String()
 }
@@ -8099,6 +13995,12 @@ func (s *ListGraphqlApisInput) Validate() error {
 	return nil
 }
 
+// SetApiType sets the ApiType field's value.
+func (s *ListGraphqlApisInput) SetApiType(v string) *ListGraphqlApisInput {
+	s.ApiType = &v
+	return s
+}
+
 // SetMaxResults sets the MaxResults field's value.
 func (s *ListGraphqlApisInput) SetMaxResults(v int64) *ListGraphqlApisInput {
 	s.MaxResults = &v
@@ -8111,23 +14013,37 @@ func (s *ListGraphqlApisInput) SetNextToken(v string) *ListGraphqlApisInput {
 	return s
 }
 
+// SetOwner sets the Owner field's value.
+func (s *ListGraphqlApisInput) SetOwner(v string) *ListGraphqlApisInput {
+	s.Owner = &v
+	return s
+}
+
 type ListGraphqlApisOutput struct {
 	_ struct{} `type:"structure"`
 
 	// The GraphqlApi objects.
 	GraphqlApis []*GraphqlApi `locationName:"graphqlApis" type:"list"`
 
-	// An identifier to be passed in the next request to this operation to return
-	// the next set of items in the list.
+	// An identifier to pass in the next request to this operation to return the
+	// next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListGraphqlApisOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListGraphqlApisOutput) GoString() string {
 	return s.String()
 }
@@ -8145,19 +14061,19 @@ func (s *ListGraphqlApisOutput) SetNextToken(v string) *ListGraphqlApisOutput {
 }
 
 type ListResolversByFunctionInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
-	// The Function ID.
+	// The function ID.
 	//
 	// FunctionId is a required field
 	FunctionId *string `location:"uri" locationName:"functionId" type:"string" required:"true"`
 
-	// The maximum number of results you want the request to return.
+	// The maximum number of results that you want the request to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
 	// An identifier that was returned from the previous call to this operation,
@@ -8165,12 +14081,20 @@ type ListResolversByFunctionInput struct {
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversByFunctionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversByFunctionInput) GoString() string {
 	return s.String()
 }
@@ -8227,19 +14151,27 @@ func (s *ListResolversByFunctionInput) SetNextToken(v string) *ListResolversByFu
 type ListResolversByFunctionOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An identifier that can be used to return the next set of items in the list.
+	// An identifier that you can use to return the next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
 	// The list of resolvers.
 	Resolvers []*Resolver `locationName:"resolvers" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversByFunctionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversByFunctionOutput) GoString() string {
 	return s.String()
 }
@@ -8257,18 +14189,18 @@ func (s *ListResolversByFunctionOutput) SetResolvers(v []*Resolver) *ListResolve
 }
 
 type ListResolversInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
-	// The maximum number of results you want the request to return.
+	// The maximum number of results that you want the request to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
 	// An identifier that was returned from the previous call to this operation,
-	// which can be used to return the next set of items in the list.
+	// which you can use to return the next set of items in the list.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 
 	// The type name.
@@ -8277,12 +14209,20 @@ type ListResolversInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversInput) GoString() string {
 	return s.String()
 }
@@ -8339,20 +14279,28 @@ func (s *ListResolversInput) SetTypeName(v string) *ListResolversInput {
 type ListResolversOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An identifier to be passed in the next request to this operation to return
-	// the next set of items in the list.
+	// An identifier to pass in the next request to this operation to return the
+	// next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
 	// The Resolver objects.
 	Resolvers []*Resolver `locationName:"resolvers" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListResolversOutput) GoString() string {
 	return s.String()
 }
@@ -8369,21 +14317,141 @@ func (s *ListResolversOutput) SetResolvers(v []*Resolver) *ListResolversOutput {
 	return s
 }
 
-type ListTagsForResourceInput struct {
+type ListSourceApiAssociationsInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The API ID.
+	//
+	// ApiId is a required field
+	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
+
+	// The maximum number of results that you want the request to return.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// An identifier that was returned from the previous call to this operation,
+	// which you can use to return the next set of items in the list.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSourceApiAssociationsInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSourceApiAssociationsInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListSourceApiAssociationsInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListSourceApiAssociationsInput"}
+	if s.ApiId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ApiId"))
+	}
+	if s.ApiId != nil && len(*s.ApiId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApiId sets the ApiId field's value.
+func (s *ListSourceApiAssociationsInput) SetApiId(v string) *ListSourceApiAssociationsInput {
+	s.ApiId = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListSourceApiAssociationsInput) SetMaxResults(v int64) *ListSourceApiAssociationsInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListSourceApiAssociationsInput) SetNextToken(v string) *ListSourceApiAssociationsInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListSourceApiAssociationsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The GraphqlApi ARN.
+	// An identifier that was returned from the previous call to this operation,
+	// which you can use to return the next set of items in the list.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+
+	// The SourceApiAssociationSummary object data.
+	SourceApiAssociationSummaries []*SourceApiAssociationSummary `locationName:"sourceApiAssociationSummaries" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSourceApiAssociationsOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListSourceApiAssociationsOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListSourceApiAssociationsOutput) SetNextToken(v string) *ListSourceApiAssociationsOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetSourceApiAssociationSummaries sets the SourceApiAssociationSummaries field's value.
+func (s *ListSourceApiAssociationsOutput) SetSourceApiAssociationSummaries(v []*SourceApiAssociationSummary) *ListSourceApiAssociationsOutput {
+	s.SourceApiAssociationSummaries = v
+	return s
+}
+
+type ListTagsForResourceInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The GraphqlApi Amazon Resource Name (ARN).
 	//
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resourceArn" min:"70" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceInput) GoString() string {
 	return s.String()
 }
@@ -8417,12 +14485,20 @@ type ListTagsForResourceOutput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTagsForResourceOutput) GoString() string {
 	return s.String()
 }
@@ -8433,8 +14509,155 @@ func (s *ListTagsForResourceOutput) SetTags(v map[string]*string) *ListTagsForRe
 	return s
 }
 
-type ListTypesInput struct {
+type ListTypesByAssociationInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID generated by the AppSync service for the source API association.
+	//
+	// AssociationId is a required field
+	AssociationId *string `location:"uri" locationName:"associationId" type:"string" required:"true"`
+
+	// The format type.
+	//
+	// Format is a required field
+	Format *string `location:"querystring" locationName:"format" type:"string" required:"true" enum:"TypeDefinitionFormat"`
+
+	// The maximum number of results that you want the request to return.
+	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
+
+	// The identifier of the AppSync Merged API. This is generated by the AppSync
+	// service. In most cases, Merged APIs (especially in your account) only require
+	// the API ID value or ARN of the merged API. However, Merged APIs in other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the merged API.
+	//
+	// MergedApiIdentifier is a required field
+	MergedApiIdentifier *string `location:"uri" locationName:"mergedApiIdentifier" type:"string" required:"true"`
+
+	// An identifier that was returned from the previous call to this operation,
+	// which you can use to return the next set of items in the list.
+	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTypesByAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTypesByAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *ListTypesByAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "ListTypesByAssociationInput"}
+	if s.AssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssociationId"))
+	}
+	if s.AssociationId != nil && len(*s.AssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssociationId", 1))
+	}
+	if s.Format == nil {
+		invalidParams.Add(request.NewErrParamRequired("Format"))
+	}
+	if s.MergedApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MergedApiIdentifier"))
+	}
+	if s.MergedApiIdentifier != nil && len(*s.MergedApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MergedApiIdentifier", 1))
+	}
+	if s.NextToken != nil && len(*s.NextToken) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("NextToken", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *ListTypesByAssociationInput) SetAssociationId(v string) *ListTypesByAssociationInput {
+	s.AssociationId = &v
+	return s
+}
+
+// SetFormat sets the Format field's value.
+func (s *ListTypesByAssociationInput) SetFormat(v string) *ListTypesByAssociationInput {
+	s.Format = &v
+	return s
+}
+
+// SetMaxResults sets the MaxResults field's value.
+func (s *ListTypesByAssociationInput) SetMaxResults(v int64) *ListTypesByAssociationInput {
+	s.MaxResults = &v
+	return s
+}
+
+// SetMergedApiIdentifier sets the MergedApiIdentifier field's value.
+func (s *ListTypesByAssociationInput) SetMergedApiIdentifier(v string) *ListTypesByAssociationInput {
+	s.MergedApiIdentifier = &v
+	return s
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListTypesByAssociationInput) SetNextToken(v string) *ListTypesByAssociationInput {
+	s.NextToken = &v
+	return s
+}
+
+type ListTypesByAssociationOutput struct {
 	_ struct{} `type:"structure"`
+
+	// An identifier that was returned from the previous call to this operation,
+	// which you can use to return the next set of items in the list.
+	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
+
+	// The Type objects.
+	Types []*Type `locationName:"types" type:"list"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTypesByAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s ListTypesByAssociationOutput) GoString() string {
+	return s.String()
+}
+
+// SetNextToken sets the NextToken field's value.
+func (s *ListTypesByAssociationOutput) SetNextToken(v string) *ListTypesByAssociationOutput {
+	s.NextToken = &v
+	return s
+}
+
+// SetTypes sets the Types field's value.
+func (s *ListTypesByAssociationOutput) SetTypes(v []*Type) *ListTypesByAssociationOutput {
+	s.Types = v
+	return s
+}
+
+type ListTypesInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
 
 	// The API ID.
 	//
@@ -8446,20 +14669,28 @@ type ListTypesInput struct {
 	// Format is a required field
 	Format *string `location:"querystring" locationName:"format" type:"string" required:"true" enum:"TypeDefinitionFormat"`
 
-	// The maximum number of results you want the request to return.
+	// The maximum number of results that you want the request to return.
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" type:"integer"`
 
 	// An identifier that was returned from the previous call to this operation,
-	// which can be used to return the next set of items in the list.
+	// which you can use to return the next set of items in the list.
 	NextToken *string `location:"querystring" locationName:"nextToken" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTypesInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTypesInput) GoString() string {
 	return s.String()
 }
@@ -8513,20 +14744,28 @@ func (s *ListTypesInput) SetNextToken(v string) *ListTypesInput {
 type ListTypesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// An identifier to be passed in the next request to this operation to return
-	// the next set of items in the list.
+	// An identifier to pass in the next request to this operation to return the
+	// next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"1" type:"string"`
 
 	// The Type objects.
 	Types []*Type `locationName:"types" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTypesOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s ListTypesOutput) GoString() string {
 	return s.String()
 }
@@ -8543,12 +14782,12 @@ func (s *ListTypesOutput) SetTypes(v []*Type) *ListTypesOutput {
 	return s
 }
 
-// The CloudWatch Logs configuration.
+// The Amazon CloudWatch Logs configuration.
 type LogConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The service role that AppSync will assume to publish to Amazon CloudWatch
-	// logs in your account.
+	// The service role that AppSync assumes to publish to CloudWatch logs in your
+	// account.
 	//
 	// CloudWatchLogsRoleArn is a required field
 	CloudWatchLogsRoleArn *string `locationName:"cloudWatchLogsRoleArn" type:"string" required:"true"`
@@ -8573,12 +14812,20 @@ type LogConfig struct {
 	FieldLogLevel *string `locationName:"fieldLogLevel" type:"string" required:"true" enum:"FieldLogLevel"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LogConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s LogConfig) GoString() string {
 	return s.String()
 }
@@ -8626,12 +14873,20 @@ type NotFoundException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NotFoundException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s NotFoundException) GoString() string {
 	return s.String()
 }
@@ -8674,35 +14929,43 @@ func (s *NotFoundException) RequestID() string {
 	return s.RespMetadata.RequestID
 }
 
-// Describes an OpenID Connect configuration.
+// Describes an OpenID Connect (OIDC) configuration.
 type OpenIDConnectConfig struct {
 	_ struct{} `type:"structure"`
 
-	// The number of milliseconds a token is valid after being authenticated.
+	// The number of milliseconds that a token is valid after being authenticated.
 	AuthTTL *int64 `locationName:"authTTL" type:"long"`
 
-	// The client identifier of the Relying party at the OpenID identity provider.
-	// This identifier is typically obtained when the Relying party is registered
+	// The client identifier of the relying party at the OpenID identity provider.
+	// This identifier is typically obtained when the relying party is registered
 	// with the OpenID identity provider. You can specify a regular expression so
-	// the AppSync can validate against multiple client identifiers at a time.
+	// that AppSync can validate against multiple client identifiers at a time.
 	ClientId *string `locationName:"clientId" type:"string"`
 
-	// The number of milliseconds a token is valid after being issued to a user.
+	// The number of milliseconds that a token is valid after it's issued to a user.
 	IatTTL *int64 `locationName:"iatTTL" type:"long"`
 
-	// The issuer for the OpenID Connect configuration. The issuer returned by discovery
-	// must exactly match the value of iss in the ID token.
+	// The issuer for the OIDC configuration. The issuer returned by discovery must
+	// exactly match the value of iss in the ID token.
 	//
 	// Issuer is a required field
 	Issuer *string `locationName:"issuer" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s OpenIDConnectConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s OpenIDConnectConfig) GoString() string {
 	return s.String()
 }
@@ -8744,6 +15007,67 @@ func (s *OpenIDConnectConfig) SetIssuer(v string) *OpenIDConnectConfig {
 	return s
 }
 
+// Describes an OpenSearch data source configuration.
+type OpenSearchServiceDataSourceConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Web Services Region.
+	//
+	// AwsRegion is a required field
+	AwsRegion *string `locationName:"awsRegion" type:"string" required:"true"`
+
+	// The endpoint.
+	//
+	// Endpoint is a required field
+	Endpoint *string `locationName:"endpoint" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OpenSearchServiceDataSourceConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s OpenSearchServiceDataSourceConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *OpenSearchServiceDataSourceConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "OpenSearchServiceDataSourceConfig"}
+	if s.AwsRegion == nil {
+		invalidParams.Add(request.NewErrParamRequired("AwsRegion"))
+	}
+	if s.Endpoint == nil {
+		invalidParams.Add(request.NewErrParamRequired("Endpoint"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAwsRegion sets the AwsRegion field's value.
+func (s *OpenSearchServiceDataSourceConfig) SetAwsRegion(v string) *OpenSearchServiceDataSourceConfig {
+	s.AwsRegion = &v
+	return s
+}
+
+// SetEndpoint sets the Endpoint field's value.
+func (s *OpenSearchServiceDataSourceConfig) SetEndpoint(v string) *OpenSearchServiceDataSourceConfig {
+	s.Endpoint = &v
+	return s
+}
+
 // The pipeline configuration for a resolver of kind PIPELINE.
 type PipelineConfig struct {
 	_ struct{} `type:"structure"`
@@ -8752,12 +15076,20 @@ type PipelineConfig struct {
 	Functions []*string `locationName:"functions" type:"list"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s PipelineConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s PipelineConfig) GoString() string {
 	return s.String()
 }
@@ -8768,32 +15100,246 @@ func (s *PipelineConfig) SetFunctions(v []*string) *PipelineConfig {
 	return s
 }
 
-// The Amazon RDS HTTP endpoint configuration.
+type PutGraphqlApiEnvironmentVariablesInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID of the API to which the environmental variable list will be written.
+	//
+	// ApiId is a required field
+	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
+
+	// The list of environmental variables to add to the API.
+	//
+	// When creating an environmental variable key-value pair, it must follow the
+	// additional constraints below:
+	//
+	//    * Keys must begin with a letter.
+	//
+	//    * Keys must be at least two characters long.
+	//
+	//    * Keys can only contain letters, numbers, and the underscore character
+	//    (_).
+	//
+	//    * Values can be up to 512 characters long.
+	//
+	//    * You can configure up to 50 key-value pairs in a GraphQL API.
+	//
+	// You can create a list of environmental variables by adding it to the environmentVariables
+	// payload as a list in the format {"key1":"value1","key2":"value2", …}. Note
+	// that each call of the PutGraphqlApiEnvironmentVariables action will result
+	// in the overwriting of the existing environmental variable list of that API.
+	// This means the existing environmental variables will be lost. To avoid this,
+	// you must include all existing and new environmental variables in the list
+	// each time you call this action.
+	//
+	// EnvironmentVariables is a required field
+	EnvironmentVariables map[string]*string `locationName:"environmentVariables" type:"map" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutGraphqlApiEnvironmentVariablesInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutGraphqlApiEnvironmentVariablesInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *PutGraphqlApiEnvironmentVariablesInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "PutGraphqlApiEnvironmentVariablesInput"}
+	if s.ApiId == nil {
+		invalidParams.Add(request.NewErrParamRequired("ApiId"))
+	}
+	if s.ApiId != nil && len(*s.ApiId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
+	}
+	if s.EnvironmentVariables == nil {
+		invalidParams.Add(request.NewErrParamRequired("EnvironmentVariables"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetApiId sets the ApiId field's value.
+func (s *PutGraphqlApiEnvironmentVariablesInput) SetApiId(v string) *PutGraphqlApiEnvironmentVariablesInput {
+	s.ApiId = &v
+	return s
+}
+
+// SetEnvironmentVariables sets the EnvironmentVariables field's value.
+func (s *PutGraphqlApiEnvironmentVariablesInput) SetEnvironmentVariables(v map[string]*string) *PutGraphqlApiEnvironmentVariablesInput {
+	s.EnvironmentVariables = v
+	return s
+}
+
+type PutGraphqlApiEnvironmentVariablesOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The payload containing each environmental variable in the "key" : "value"
+	// format.
+	EnvironmentVariables map[string]*string `locationName:"environmentVariables" type:"map"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutGraphqlApiEnvironmentVariablesOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s PutGraphqlApiEnvironmentVariablesOutput) GoString() string {
+	return s.String()
+}
+
+// SetEnvironmentVariables sets the EnvironmentVariables field's value.
+func (s *PutGraphqlApiEnvironmentVariablesOutput) SetEnvironmentVariables(v map[string]*string) *PutGraphqlApiEnvironmentVariablesOutput {
+	s.EnvironmentVariables = v
+	return s
+}
+
+// Contains the metadata required to introspect the RDS cluster.
+type RdsDataApiConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The name of the database in the cluster.
+	//
+	// DatabaseName is a required field
+	DatabaseName *string `locationName:"databaseName" min:"1" type:"string" required:"true"`
+
+	// The resource ARN of the RDS cluster.
+	//
+	// ResourceArn is a required field
+	ResourceArn *string `locationName:"resourceArn" min:"20" type:"string" required:"true"`
+
+	// The secret's ARN that was obtained from Secrets Manager. A secret consists
+	// of secret information, the secret value, plus metadata about the secret.
+	// A secret value can be a string or binary. It typically includes the ARN,
+	// secret name and description, policies, tags, encryption key from the Key
+	// Management Service, and key rotation data.
+	//
+	// SecretArn is a required field
+	SecretArn *string `locationName:"secretArn" min:"20" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDataApiConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s RdsDataApiConfig) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *RdsDataApiConfig) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "RdsDataApiConfig"}
+	if s.DatabaseName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DatabaseName"))
+	}
+	if s.DatabaseName != nil && len(*s.DatabaseName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DatabaseName", 1))
+	}
+	if s.ResourceArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("ResourceArn"))
+	}
+	if s.ResourceArn != nil && len(*s.ResourceArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("ResourceArn", 20))
+	}
+	if s.SecretArn == nil {
+		invalidParams.Add(request.NewErrParamRequired("SecretArn"))
+	}
+	if s.SecretArn != nil && len(*s.SecretArn) < 20 {
+		invalidParams.Add(request.NewErrParamMinLen("SecretArn", 20))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDatabaseName sets the DatabaseName field's value.
+func (s *RdsDataApiConfig) SetDatabaseName(v string) *RdsDataApiConfig {
+	s.DatabaseName = &v
+	return s
+}
+
+// SetResourceArn sets the ResourceArn field's value.
+func (s *RdsDataApiConfig) SetResourceArn(v string) *RdsDataApiConfig {
+	s.ResourceArn = &v
+	return s
+}
+
+// SetSecretArn sets the SecretArn field's value.
+func (s *RdsDataApiConfig) SetSecretArn(v string) *RdsDataApiConfig {
+	s.SecretArn = &v
+	return s
+}
+
+// The Amazon Relational Database Service (Amazon RDS) HTTP endpoint configuration.
 type RdsHttpEndpointConfig struct {
 	_ struct{} `type:"structure"`
 
-	// Amazon Web Services Region for RDS HTTP endpoint.
+	// Amazon Web Services Region for Amazon RDS HTTP endpoint.
 	AwsRegion *string `locationName:"awsRegion" type:"string"`
 
-	// Amazon Web Services secret store ARN for database credentials.
+	// Amazon Web Services secret store Amazon Resource Name (ARN) for database
+	// credentials.
 	AwsSecretStoreArn *string `locationName:"awsSecretStoreArn" type:"string"`
 
 	// Logical database name.
 	DatabaseName *string `locationName:"databaseName" type:"string"`
 
-	// Amazon RDS cluster ARN.
+	// Amazon RDS cluster Amazon Resource Name (ARN).
 	DbClusterIdentifier *string `locationName:"dbClusterIdentifier" type:"string"`
 
 	// Logical schema name.
 	Schema *string `locationName:"schema" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RdsHttpEndpointConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RdsHttpEndpointConfig) GoString() string {
 	return s.String()
 }
@@ -8838,16 +15384,24 @@ type RelationalDatabaseDataSourceConfig struct {
 	// Source type for the relational database.
 	//
 	//    * RDS_HTTP_ENDPOINT: The relational database source type is an Amazon
-	//    RDS HTTP endpoint.
+	//    Relational Database Service (Amazon RDS) HTTP endpoint.
 	RelationalDatabaseSourceType *string `locationName:"relationalDatabaseSourceType" type:"string" enum:"RelationalDatabaseSourceType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RelationalDatabaseDataSourceConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s RelationalDatabaseDataSourceConfig) GoString() string {
 	return s.String()
 }
@@ -8871,6 +15425,10 @@ type Resolver struct {
 	// The caching configuration for the resolver.
 	CachingConfig *CachingConfig `locationName:"cachingConfig" type:"structure"`
 
+	// The resolver code that contains the request and response functions. When
+	// code is used, the runtime is required. The runtime value must be APPSYNC_JS.
+	Code *string `locationName:"code" min:"1" type:"string"`
+
 	// The resolver data source name.
 	DataSourceName *string `locationName:"dataSourceName" min:"1" type:"string"`
 
@@ -8880,13 +15438,25 @@ type Resolver struct {
 	// The resolver type.
 	//
 	//    * UNIT: A UNIT resolver type. A UNIT resolver is the default resolver
-	//    type. A UNIT resolver enables you to execute a GraphQL query against a
-	//    single data source.
+	//    type. You can use a UNIT resolver to run a GraphQL query against a single
+	//    data source.
 	//
-	//    * PIPELINE: A PIPELINE resolver type. A PIPELINE resolver enables you
-	//    to execute a series of Function in a serial manner. You can use a pipeline
-	//    resolver to execute a GraphQL query against multiple data sources.
+	//    * PIPELINE: A PIPELINE resolver type. You can use a PIPELINE resolver
+	//    to invoke a series of Function objects in a serial manner. You can use
+	//    a pipeline resolver to run a GraphQL query against multiple data sources.
 	Kind *string `locationName:"kind" type:"string" enum:"ResolverKind"`
+
+	// The maximum batching size for a resolver.
+	MaxBatchSize *int64 `locationName:"maxBatchSize" type:"integer"`
+
+	// Enables or disables enhanced resolver metrics for specified resolvers. Note
+	// that metricsConfig won't be used unless the resolverLevelMetricsBehavior
+	// value is set to PER_RESOLVER_METRICS. If the resolverLevelMetricsBehavior
+	// is set to FULL_REQUEST_RESOLVER_METRICS instead, metricsConfig will be ignored.
+	// However, you can still set its value.
+	//
+	// metricsConfig can be ENABLED or DISABLED.
+	MetricsConfig *string `locationName:"metricsConfig" type:"string" enum:"ResolverLevelMetricsConfig"`
 
 	// The PipelineConfig.
 	PipelineConfig *PipelineConfig `locationName:"pipelineConfig" type:"structure"`
@@ -8894,25 +15464,39 @@ type Resolver struct {
 	// The request mapping template.
 	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string"`
 
-	// The resolver ARN.
+	// The resolver Amazon Resource Name (ARN).
 	ResolverArn *string `locationName:"resolverArn" type:"string"`
 
 	// The response mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
 
-	// The SyncConfig for a resolver attached to a versioned datasource.
+	// Describes a runtime used by an Amazon Web Services AppSync pipeline resolver
+	// or Amazon Web Services AppSync function. Specifies the name and version of
+	// the runtime to use. Note that if a runtime is specified, code must also be
+	// specified.
+	Runtime *AppSyncRuntime `locationName:"runtime" type:"structure"`
+
+	// The SyncConfig for a resolver attached to a versioned data source.
 	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 
 	// The resolver type name.
 	TypeName *string `locationName:"typeName" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Resolver) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Resolver) GoString() string {
 	return s.String()
 }
@@ -8920,6 +15504,12 @@ func (s Resolver) GoString() string {
 // SetCachingConfig sets the CachingConfig field's value.
 func (s *Resolver) SetCachingConfig(v *CachingConfig) *Resolver {
 	s.CachingConfig = v
+	return s
+}
+
+// SetCode sets the Code field's value.
+func (s *Resolver) SetCode(v string) *Resolver {
+	s.Code = &v
 	return s
 }
 
@@ -8938,6 +15528,18 @@ func (s *Resolver) SetFieldName(v string) *Resolver {
 // SetKind sets the Kind field's value.
 func (s *Resolver) SetKind(v string) *Resolver {
 	s.Kind = &v
+	return s
+}
+
+// SetMaxBatchSize sets the MaxBatchSize field's value.
+func (s *Resolver) SetMaxBatchSize(v int64) *Resolver {
+	s.MaxBatchSize = &v
+	return s
+}
+
+// SetMetricsConfig sets the MetricsConfig field's value.
+func (s *Resolver) SetMetricsConfig(v string) *Resolver {
+	s.MetricsConfig = &v
 	return s
 }
 
@@ -8965,6 +15567,12 @@ func (s *Resolver) SetResponseMappingTemplate(v string) *Resolver {
 	return s
 }
 
+// SetRuntime sets the Runtime field's value.
+func (s *Resolver) SetRuntime(v *AppSyncRuntime) *Resolver {
+	s.Runtime = v
+	return s
+}
+
 // SetSyncConfig sets the SyncConfig field's value.
 func (s *Resolver) SetSyncConfig(v *SyncConfig) *Resolver {
 	s.SyncConfig = v
@@ -8977,6 +15585,367 @@ func (s *Resolver) SetTypeName(v string) *Resolver {
 	return s
 }
 
+// Describes the configuration of a source API. A source API is a GraphQL API
+// that is linked to a merged API. There can be multiple source APIs attached
+// to each merged API. When linked to a merged API, the source API's schema,
+// data sources, and resolvers will be combined with other linked source API
+// data to form a new, singular API.
+//
+// Source APIs can originate from your account or from other accounts via Amazon
+// Web Services Resource Access Manager. For more information about sharing
+// resources from other accounts, see What is Amazon Web Services Resource Access
+// Manager? (https://docs.aws.amazon.com/ram/latest/userguide/what-is.html)
+// in the Amazon Web Services Resource Access Manager guide.
+type SourceApiAssociation struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the source API association.
+	AssociationArn *string `locationName:"associationArn" type:"string"`
+
+	// The ID generated by the AppSync service for the source API association.
+	AssociationId *string `locationName:"associationId" type:"string"`
+
+	// The description field.
+	Description *string `locationName:"description" type:"string"`
+
+	// The datetime value of the last successful merge of the source API association.
+	// The result will be in UTC format and your local time zone.
+	LastSuccessfulMergeDate *time.Time `locationName:"lastSuccessfulMergeDate" type:"timestamp"`
+
+	// The Amazon Resource Name (ARN) of the AppSync Merged API.
+	MergedApiArn *string `locationName:"mergedApiArn" type:"string"`
+
+	// The ID of the AppSync Merged API.
+	MergedApiId *string `locationName:"mergedApiId" type:"string"`
+
+	// The Amazon Resource Name (ARN) of the AppSync source API.
+	SourceApiArn *string `locationName:"sourceApiArn" type:"string"`
+
+	// The SourceApiAssociationConfig object data.
+	SourceApiAssociationConfig *SourceApiAssociationConfig `locationName:"sourceApiAssociationConfig" type:"structure"`
+
+	// The state of the source API association.
+	SourceApiAssociationStatus *string `locationName:"sourceApiAssociationStatus" type:"string" enum:"SourceApiAssociationStatus"`
+
+	// The detailed message related to the current state of the source API association.
+	SourceApiAssociationStatusDetail *string `locationName:"sourceApiAssociationStatusDetail" type:"string"`
+
+	// The ID of the AppSync source API.
+	SourceApiId *string `locationName:"sourceApiId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceApiAssociation) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceApiAssociation) GoString() string {
+	return s.String()
+}
+
+// SetAssociationArn sets the AssociationArn field's value.
+func (s *SourceApiAssociation) SetAssociationArn(v string) *SourceApiAssociation {
+	s.AssociationArn = &v
+	return s
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *SourceApiAssociation) SetAssociationId(v string) *SourceApiAssociation {
+	s.AssociationId = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *SourceApiAssociation) SetDescription(v string) *SourceApiAssociation {
+	s.Description = &v
+	return s
+}
+
+// SetLastSuccessfulMergeDate sets the LastSuccessfulMergeDate field's value.
+func (s *SourceApiAssociation) SetLastSuccessfulMergeDate(v time.Time) *SourceApiAssociation {
+	s.LastSuccessfulMergeDate = &v
+	return s
+}
+
+// SetMergedApiArn sets the MergedApiArn field's value.
+func (s *SourceApiAssociation) SetMergedApiArn(v string) *SourceApiAssociation {
+	s.MergedApiArn = &v
+	return s
+}
+
+// SetMergedApiId sets the MergedApiId field's value.
+func (s *SourceApiAssociation) SetMergedApiId(v string) *SourceApiAssociation {
+	s.MergedApiId = &v
+	return s
+}
+
+// SetSourceApiArn sets the SourceApiArn field's value.
+func (s *SourceApiAssociation) SetSourceApiArn(v string) *SourceApiAssociation {
+	s.SourceApiArn = &v
+	return s
+}
+
+// SetSourceApiAssociationConfig sets the SourceApiAssociationConfig field's value.
+func (s *SourceApiAssociation) SetSourceApiAssociationConfig(v *SourceApiAssociationConfig) *SourceApiAssociation {
+	s.SourceApiAssociationConfig = v
+	return s
+}
+
+// SetSourceApiAssociationStatus sets the SourceApiAssociationStatus field's value.
+func (s *SourceApiAssociation) SetSourceApiAssociationStatus(v string) *SourceApiAssociation {
+	s.SourceApiAssociationStatus = &v
+	return s
+}
+
+// SetSourceApiAssociationStatusDetail sets the SourceApiAssociationStatusDetail field's value.
+func (s *SourceApiAssociation) SetSourceApiAssociationStatusDetail(v string) *SourceApiAssociation {
+	s.SourceApiAssociationStatusDetail = &v
+	return s
+}
+
+// SetSourceApiId sets the SourceApiId field's value.
+func (s *SourceApiAssociation) SetSourceApiId(v string) *SourceApiAssociation {
+	s.SourceApiId = &v
+	return s
+}
+
+// Describes properties used to specify configurations related to a source API.
+type SourceApiAssociationConfig struct {
+	_ struct{} `type:"structure"`
+
+	// The property that indicates which merging option is enabled in the source
+	// API association.
+	//
+	// Valid merge types are MANUAL_MERGE (default) and AUTO_MERGE. Manual merges
+	// are the default behavior and require the user to trigger any changes from
+	// the source APIs to the merged API manually. Auto merges subscribe the merged
+	// API to the changes performed on the source APIs so that any change in the
+	// source APIs are also made to the merged API. Auto merges use MergedApiExecutionRoleArn
+	// to perform merge operations.
+	MergeType *string `locationName:"mergeType" type:"string" enum:"MergeType"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceApiAssociationConfig) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceApiAssociationConfig) GoString() string {
+	return s.String()
+}
+
+// SetMergeType sets the MergeType field's value.
+func (s *SourceApiAssociationConfig) SetMergeType(v string) *SourceApiAssociationConfig {
+	s.MergeType = &v
+	return s
+}
+
+// Describes the ARNs and IDs of associations, Merged APIs, and source APIs.
+type SourceApiAssociationSummary struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) of the source API association.
+	AssociationArn *string `locationName:"associationArn" type:"string"`
+
+	// The ID generated by the AppSync service for the source API association.
+	AssociationId *string `locationName:"associationId" type:"string"`
+
+	// The description field.
+	Description *string `locationName:"description" type:"string"`
+
+	// The Amazon Resource Name (ARN) of the AppSync Merged API.
+	MergedApiArn *string `locationName:"mergedApiArn" type:"string"`
+
+	// The ID of the AppSync Merged API.
+	MergedApiId *string `locationName:"mergedApiId" type:"string"`
+
+	// The Amazon Resource Name (ARN) of the AppSync Source API.
+	SourceApiArn *string `locationName:"sourceApiArn" type:"string"`
+
+	// The ID of the AppSync source API.
+	SourceApiId *string `locationName:"sourceApiId" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceApiAssociationSummary) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s SourceApiAssociationSummary) GoString() string {
+	return s.String()
+}
+
+// SetAssociationArn sets the AssociationArn field's value.
+func (s *SourceApiAssociationSummary) SetAssociationArn(v string) *SourceApiAssociationSummary {
+	s.AssociationArn = &v
+	return s
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *SourceApiAssociationSummary) SetAssociationId(v string) *SourceApiAssociationSummary {
+	s.AssociationId = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *SourceApiAssociationSummary) SetDescription(v string) *SourceApiAssociationSummary {
+	s.Description = &v
+	return s
+}
+
+// SetMergedApiArn sets the MergedApiArn field's value.
+func (s *SourceApiAssociationSummary) SetMergedApiArn(v string) *SourceApiAssociationSummary {
+	s.MergedApiArn = &v
+	return s
+}
+
+// SetMergedApiId sets the MergedApiId field's value.
+func (s *SourceApiAssociationSummary) SetMergedApiId(v string) *SourceApiAssociationSummary {
+	s.MergedApiId = &v
+	return s
+}
+
+// SetSourceApiArn sets the SourceApiArn field's value.
+func (s *SourceApiAssociationSummary) SetSourceApiArn(v string) *SourceApiAssociationSummary {
+	s.SourceApiArn = &v
+	return s
+}
+
+// SetSourceApiId sets the SourceApiId field's value.
+func (s *SourceApiAssociationSummary) SetSourceApiId(v string) *SourceApiAssociationSummary {
+	s.SourceApiId = &v
+	return s
+}
+
+type StartDataSourceIntrospectionInput struct {
+	_ struct{} `type:"structure"`
+
+	// The rdsDataApiConfig object data.
+	RdsDataApiConfig *RdsDataApiConfig `locationName:"rdsDataApiConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDataSourceIntrospectionInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDataSourceIntrospectionInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartDataSourceIntrospectionInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartDataSourceIntrospectionInput"}
+	if s.RdsDataApiConfig != nil {
+		if err := s.RdsDataApiConfig.Validate(); err != nil {
+			invalidParams.AddNested("RdsDataApiConfig", err.(request.ErrInvalidParams))
+		}
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetRdsDataApiConfig sets the RdsDataApiConfig field's value.
+func (s *StartDataSourceIntrospectionInput) SetRdsDataApiConfig(v *RdsDataApiConfig) *StartDataSourceIntrospectionInput {
+	s.RdsDataApiConfig = v
+	return s
+}
+
+type StartDataSourceIntrospectionOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The introspection ID. Each introspection contains a unique ID that can be
+	// used to reference the instrospection record.
+	IntrospectionId *string `locationName:"introspectionId" type:"string"`
+
+	// The status of the introspection during creation. By default, when a new instrospection
+	// has been created, the status will be set to PROCESSING. Once the operation
+	// has been completed, the status will change to SUCCESS or FAILED depending
+	// on how the data was parsed. A FAILED operation will return an error and its
+	// details as an introspectionStatusDetail.
+	IntrospectionStatus *string `locationName:"introspectionStatus" type:"string" enum:"DataSourceIntrospectionStatus"`
+
+	// The error detail field. When a FAILED introspectionStatus is returned, the
+	// introspectionStatusDetail will also return the exact error that was generated
+	// during the operation.
+	IntrospectionStatusDetail *string `locationName:"introspectionStatusDetail" type:"string"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDataSourceIntrospectionOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartDataSourceIntrospectionOutput) GoString() string {
+	return s.String()
+}
+
+// SetIntrospectionId sets the IntrospectionId field's value.
+func (s *StartDataSourceIntrospectionOutput) SetIntrospectionId(v string) *StartDataSourceIntrospectionOutput {
+	s.IntrospectionId = &v
+	return s
+}
+
+// SetIntrospectionStatus sets the IntrospectionStatus field's value.
+func (s *StartDataSourceIntrospectionOutput) SetIntrospectionStatus(v string) *StartDataSourceIntrospectionOutput {
+	s.IntrospectionStatus = &v
+	return s
+}
+
+// SetIntrospectionStatusDetail sets the IntrospectionStatusDetail field's value.
+func (s *StartDataSourceIntrospectionOutput) SetIntrospectionStatusDetail(v string) *StartDataSourceIntrospectionOutput {
+	s.IntrospectionStatusDetail = &v
+	return s
+}
+
 type StartSchemaCreationInput struct {
 	_ struct{} `type:"structure"`
 
@@ -8986,19 +15955,26 @@ type StartSchemaCreationInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
 	// The schema definition, in GraphQL schema language format.
-	//
 	// Definition is automatically base64 encoded/decoded by the SDK.
 	//
 	// Definition is a required field
 	Definition []byte `locationName:"definition" type:"blob" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartSchemaCreationInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartSchemaCreationInput) GoString() string {
 	return s.String()
 }
@@ -9042,12 +16018,20 @@ type StartSchemaCreationOutput struct {
 	Status *string `locationName:"status" type:"string" enum:"SchemaStatus"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartSchemaCreationOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s StartSchemaCreationOutput) GoString() string {
 	return s.String()
 }
@@ -9058,10 +16042,111 @@ func (s *StartSchemaCreationOutput) SetStatus(v string) *StartSchemaCreationOutp
 	return s
 }
 
+type StartSchemaMergeInput struct {
+	_ struct{} `type:"structure" nopayload:"true"`
+
+	// The ID generated by the AppSync service for the source API association.
+	//
+	// AssociationId is a required field
+	AssociationId *string `location:"uri" locationName:"associationId" type:"string" required:"true"`
+
+	// The identifier of the AppSync Merged API. This is generated by the AppSync
+	// service. In most cases, Merged APIs (especially in your account) only require
+	// the API ID value or ARN of the merged API. However, Merged APIs in other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the merged API.
+	//
+	// MergedApiIdentifier is a required field
+	MergedApiIdentifier *string `location:"uri" locationName:"mergedApiIdentifier" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartSchemaMergeInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartSchemaMergeInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *StartSchemaMergeInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "StartSchemaMergeInput"}
+	if s.AssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssociationId"))
+	}
+	if s.AssociationId != nil && len(*s.AssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssociationId", 1))
+	}
+	if s.MergedApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MergedApiIdentifier"))
+	}
+	if s.MergedApiIdentifier != nil && len(*s.MergedApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MergedApiIdentifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *StartSchemaMergeInput) SetAssociationId(v string) *StartSchemaMergeInput {
+	s.AssociationId = &v
+	return s
+}
+
+// SetMergedApiIdentifier sets the MergedApiIdentifier field's value.
+func (s *StartSchemaMergeInput) SetMergedApiIdentifier(v string) *StartSchemaMergeInput {
+	s.MergedApiIdentifier = &v
+	return s
+}
+
+type StartSchemaMergeOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The state of the source API association.
+	SourceApiAssociationStatus *string `locationName:"sourceApiAssociationStatus" type:"string" enum:"SourceApiAssociationStatus"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartSchemaMergeOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s StartSchemaMergeOutput) GoString() string {
+	return s.String()
+}
+
+// SetSourceApiAssociationStatus sets the SourceApiAssociationStatus field's value.
+func (s *StartSchemaMergeOutput) SetSourceApiAssociationStatus(v string) *StartSchemaMergeOutput {
+	s.SourceApiAssociationStatus = &v
+	return s
+}
+
 // Describes a Sync configuration for a resolver.
 //
-// Contains information on which Conflict Detection as well as Resolution strategy
-// should be performed when the resolver is invoked.
+// Specifies which Conflict Detection strategy and Resolution strategy to use
+// when the resolver is invoked.
 type SyncConfig struct {
 	_ struct{} `type:"structure"`
 
@@ -9069,30 +16154,38 @@ type SyncConfig struct {
 	//
 	//    * VERSION: Detect conflicts based on object versions for this resolver.
 	//
-	//    * NONE: Do not detect conflicts when executing this resolver.
+	//    * NONE: Do not detect conflicts when invoking this resolver.
 	ConflictDetection *string `locationName:"conflictDetection" type:"string" enum:"ConflictDetectionType"`
 
 	// The Conflict Resolution strategy to perform in the event of a conflict.
 	//
 	//    * OPTIMISTIC_CONCURRENCY: Resolve conflicts by rejecting mutations when
-	//    versions do not match the latest version at the server.
+	//    versions don't match the latest version at the server.
 	//
 	//    * AUTOMERGE: Resolve conflicts with the Automerge conflict resolution
 	//    strategy.
 	//
-	//    * LAMBDA: Resolve conflicts with a Lambda function supplied in the LambdaConflictHandlerConfig.
+	//    * LAMBDA: Resolve conflicts with an Lambda function supplied in the LambdaConflictHandlerConfig.
 	ConflictHandler *string `locationName:"conflictHandler" type:"string" enum:"ConflictHandlerType"`
 
 	// The LambdaConflictHandlerConfig when configuring LAMBDA as the Conflict Handler.
 	LambdaConflictHandlerConfig *LambdaConflictHandlerConfig `locationName:"lambdaConflictHandlerConfig" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SyncConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s SyncConfig) GoString() string {
 	return s.String()
 }
@@ -9118,7 +16211,7 @@ func (s *SyncConfig) SetLambdaConflictHandlerConfig(v *LambdaConflictHandlerConf
 type TagResourceInput struct {
 	_ struct{} `type:"structure"`
 
-	// The GraphqlApi ARN.
+	// The GraphqlApi Amazon Resource Name (ARN).
 	//
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resourceArn" min:"70" type:"string" required:"true"`
@@ -9129,12 +16222,20 @@ type TagResourceInput struct {
 	Tags map[string]*string `locationName:"tags" min:"1" type:"map" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceInput) GoString() string {
 	return s.String()
 }
@@ -9177,12 +16278,20 @@ type TagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s TagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -9191,7 +16300,7 @@ func (s TagResourceOutput) GoString() string {
 type Type struct {
 	_ struct{} `type:"structure"`
 
-	// The type ARN.
+	// The type Amazon Resource Name (ARN).
 	Arn *string `locationName:"arn" type:"string"`
 
 	// The type definition.
@@ -9207,12 +16316,20 @@ type Type struct {
 	Name *string `locationName:"name" min:"1" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Type) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s Type) GoString() string {
 	return s.String()
 }
@@ -9247,7 +16364,7 @@ func (s *Type) SetName(v string) *Type {
 	return s
 }
 
-// You are not authorized to perform this operation.
+// You aren't authorized to perform this operation.
 type UnauthorizedException struct {
 	_            struct{}                  `type:"structure"`
 	RespMetadata protocol.ResponseMetadata `json:"-" xml:"-"`
@@ -9255,12 +16372,20 @@ type UnauthorizedException struct {
 	Message_ *string `locationName:"message" type:"string"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnauthorizedException) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UnauthorizedException) GoString() string {
 	return s.String()
 }
@@ -9304,9 +16429,9 @@ func (s *UnauthorizedException) RequestID() string {
 }
 
 type UntagResourceInput struct {
-	_ struct{} `type:"structure"`
+	_ struct{} `type:"structure" nopayload:"true"`
 
-	// The GraphqlApi ARN.
+	// The GraphqlApi Amazon Resource Name (ARN).
 	//
 	// ResourceArn is a required field
 	ResourceArn *string `location:"uri" locationName:"resourceArn" min:"70" type:"string" required:"true"`
@@ -9317,12 +16442,20 @@ type UntagResourceInput struct {
 	TagKeys []*string `location:"querystring" locationName:"tagKeys" min:"1" type:"list" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceInput) GoString() string {
 	return s.String()
 }
@@ -9365,12 +16498,20 @@ type UntagResourceOutput struct {
 	_ struct{} `type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UntagResourceOutput) GoString() string {
 	return s.String()
 }
@@ -9388,14 +16529,28 @@ type UpdateApiCacheInput struct {
 	// ApiCachingBehavior is a required field
 	ApiCachingBehavior *string `locationName:"apiCachingBehavior" type:"string" required:"true" enum:"ApiCachingBehavior"`
 
-	// The GraphQL API Id.
+	// The GraphQL API ID.
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
+	// Controls how cache health metrics will be emitted to CloudWatch. Cache health
+	// metrics include:
+	//
+	//    * NetworkBandwidthOutAllowanceExceeded: The network packets dropped because
+	//    the throughput exceeded the aggregated bandwidth limit. This is useful
+	//    for diagnosing bottlenecks in a cache configuration.
+	//
+	//    * EngineCPUUtilization: The CPU utilization (percentage) allocated to
+	//    the Redis process. This is useful for diagnosing bottlenecks in a cache
+	//    configuration.
+	//
+	// Metrics will be recorded by API ID. You can set the value to ENABLED or DISABLED.
+	HealthMetricsConfig *string `locationName:"healthMetricsConfig" type:"string" enum:"CacheHealthMetricsConfig"`
+
 	// TTL in seconds for cache entries.
 	//
-	// Valid values are between 1 and 3600 seconds.
+	// Valid values are 1–3,600 seconds.
 	//
 	// Ttl is a required field
 	Ttl *int64 `locationName:"ttl" type:"long" required:"true"`
@@ -9442,12 +16597,20 @@ type UpdateApiCacheInput struct {
 	Type *string `locationName:"type" type:"string" required:"true" enum:"ApiCacheType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiCacheInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiCacheInput) GoString() string {
 	return s.String()
 }
@@ -9489,6 +16652,12 @@ func (s *UpdateApiCacheInput) SetApiId(v string) *UpdateApiCacheInput {
 	return s
 }
 
+// SetHealthMetricsConfig sets the HealthMetricsConfig field's value.
+func (s *UpdateApiCacheInput) SetHealthMetricsConfig(v string) *UpdateApiCacheInput {
+	s.HealthMetricsConfig = &v
+	return s
+}
+
 // SetTtl sets the Ttl field's value.
 func (s *UpdateApiCacheInput) SetTtl(v int64) *UpdateApiCacheInput {
 	s.Ttl = &v
@@ -9509,12 +16678,20 @@ type UpdateApiCacheOutput struct {
 	ApiCache *ApiCache `locationName:"apiCache" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiCacheOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiCacheOutput) GoString() string {
 	return s.String()
 }
@@ -9536,8 +16713,8 @@ type UpdateApiKeyInput struct {
 	// A description of the purpose of the API key.
 	Description *string `locationName:"description" type:"string"`
 
-	// The time from update time after which the API key expires. The date is represented
-	// as seconds since the epoch. For more information, see .
+	// From the update time, the time after which the API key expires. The date
+	// is represented as seconds since the epoch. For more information, see .
 	Expires *int64 `locationName:"expires" type:"long"`
 
 	// The API key ID.
@@ -9546,12 +16723,20 @@ type UpdateApiKeyInput struct {
 	Id *string `location:"uri" locationName:"id" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiKeyInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiKeyInput) GoString() string {
 	return s.String()
 }
@@ -9609,12 +16794,20 @@ type UpdateApiKeyOutput struct {
 	ApiKey *ApiKey `locationName:"apiKey" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiKeyOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateApiKeyOutput) GoString() string {
 	return s.String()
 }
@@ -9639,24 +16832,43 @@ type UpdateDataSourceInput struct {
 	// The new Amazon DynamoDB configuration.
 	DynamodbConfig *DynamodbDataSourceConfig `locationName:"dynamodbConfig" type:"structure"`
 
-	// The new Elasticsearch Service configuration.
+	// The new OpenSearch configuration.
+	//
+	// As of September 2021, Amazon Elasticsearch service is Amazon OpenSearch Service.
+	// This configuration is deprecated. Instead, use UpdateDataSourceRequest$openSearchServiceConfig
+	// to update an OpenSearch data source.
 	ElasticsearchConfig *ElasticsearchDataSourceConfig `locationName:"elasticsearchConfig" type:"structure"`
+
+	// The new Amazon EventBridge settings.
+	EventBridgeConfig *EventBridgeDataSourceConfig `locationName:"eventBridgeConfig" type:"structure"`
 
 	// The new HTTP endpoint configuration.
 	HttpConfig *HttpDataSourceConfig `locationName:"httpConfig" type:"structure"`
 
-	// The new Amazon Web Services Lambda configuration.
+	// The new Lambda configuration.
 	LambdaConfig *LambdaDataSourceConfig `locationName:"lambdaConfig" type:"structure"`
+
+	// Enables or disables enhanced data source metrics for specified data sources.
+	// Note that metricsConfig won't be used unless the dataSourceLevelMetricsBehavior
+	// value is set to PER_DATA_SOURCE_METRICS. If the dataSourceLevelMetricsBehavior
+	// is set to FULL_REQUEST_DATA_SOURCE_METRICS instead, metricsConfig will be
+	// ignored. However, you can still set its value.
+	//
+	// metricsConfig can be ENABLED or DISABLED.
+	MetricsConfig *string `locationName:"metricsConfig" type:"string" enum:"DataSourceLevelMetricsConfig"`
 
 	// The new name for the data source.
 	//
 	// Name is a required field
 	Name *string `location:"uri" locationName:"name" min:"1" type:"string" required:"true"`
 
+	// The new OpenSearch configuration.
+	OpenSearchServiceConfig *OpenSearchServiceDataSourceConfig `locationName:"openSearchServiceConfig" type:"structure"`
+
 	// The new relational database configuration.
 	RelationalDatabaseConfig *RelationalDatabaseDataSourceConfig `locationName:"relationalDatabaseConfig" type:"structure"`
 
-	// The new service role ARN for the data source.
+	// The new service role Amazon Resource Name (ARN) for the data source.
 	ServiceRoleArn *string `locationName:"serviceRoleArn" type:"string"`
 
 	// The new data source type.
@@ -9665,12 +16877,20 @@ type UpdateDataSourceInput struct {
 	Type *string `locationName:"type" type:"string" required:"true" enum:"DataSourceType"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateDataSourceInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateDataSourceInput) GoString() string {
 	return s.String()
 }
@@ -9703,6 +16923,11 @@ func (s *UpdateDataSourceInput) Validate() error {
 			invalidParams.AddNested("ElasticsearchConfig", err.(request.ErrInvalidParams))
 		}
 	}
+	if s.EventBridgeConfig != nil {
+		if err := s.EventBridgeConfig.Validate(); err != nil {
+			invalidParams.AddNested("EventBridgeConfig", err.(request.ErrInvalidParams))
+		}
+	}
 	if s.HttpConfig != nil {
 		if err := s.HttpConfig.Validate(); err != nil {
 			invalidParams.AddNested("HttpConfig", err.(request.ErrInvalidParams))
@@ -9711,6 +16936,11 @@ func (s *UpdateDataSourceInput) Validate() error {
 	if s.LambdaConfig != nil {
 		if err := s.LambdaConfig.Validate(); err != nil {
 			invalidParams.AddNested("LambdaConfig", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.OpenSearchServiceConfig != nil {
+		if err := s.OpenSearchServiceConfig.Validate(); err != nil {
+			invalidParams.AddNested("OpenSearchServiceConfig", err.(request.ErrInvalidParams))
 		}
 	}
 
@@ -9744,6 +16974,12 @@ func (s *UpdateDataSourceInput) SetElasticsearchConfig(v *ElasticsearchDataSourc
 	return s
 }
 
+// SetEventBridgeConfig sets the EventBridgeConfig field's value.
+func (s *UpdateDataSourceInput) SetEventBridgeConfig(v *EventBridgeDataSourceConfig) *UpdateDataSourceInput {
+	s.EventBridgeConfig = v
+	return s
+}
+
 // SetHttpConfig sets the HttpConfig field's value.
 func (s *UpdateDataSourceInput) SetHttpConfig(v *HttpDataSourceConfig) *UpdateDataSourceInput {
 	s.HttpConfig = v
@@ -9756,9 +16992,21 @@ func (s *UpdateDataSourceInput) SetLambdaConfig(v *LambdaDataSourceConfig) *Upda
 	return s
 }
 
+// SetMetricsConfig sets the MetricsConfig field's value.
+func (s *UpdateDataSourceInput) SetMetricsConfig(v string) *UpdateDataSourceInput {
+	s.MetricsConfig = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *UpdateDataSourceInput) SetName(v string) *UpdateDataSourceInput {
 	s.Name = &v
+	return s
+}
+
+// SetOpenSearchServiceConfig sets the OpenSearchServiceConfig field's value.
+func (s *UpdateDataSourceInput) SetOpenSearchServiceConfig(v *OpenSearchServiceDataSourceConfig) *UpdateDataSourceInput {
+	s.OpenSearchServiceConfig = v
 	return s
 }
 
@@ -9787,12 +17035,20 @@ type UpdateDataSourceOutput struct {
 	DataSource *DataSource `locationName:"dataSource" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateDataSourceOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateDataSourceOutput) GoString() string {
 	return s.String()
 }
@@ -9803,6 +17059,95 @@ func (s *UpdateDataSourceOutput) SetDataSource(v *DataSource) *UpdateDataSourceO
 	return s
 }
 
+type UpdateDomainNameInput struct {
+	_ struct{} `type:"structure"`
+
+	// A description of the DomainName.
+	Description *string `locationName:"description" type:"string"`
+
+	// The domain name.
+	//
+	// DomainName is a required field
+	DomainName *string `location:"uri" locationName:"domainName" min:"1" type:"string" required:"true"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDomainNameInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDomainNameInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateDomainNameInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateDomainNameInput"}
+	if s.DomainName == nil {
+		invalidParams.Add(request.NewErrParamRequired("DomainName"))
+	}
+	if s.DomainName != nil && len(*s.DomainName) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("DomainName", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateDomainNameInput) SetDescription(v string) *UpdateDomainNameInput {
+	s.Description = &v
+	return s
+}
+
+// SetDomainName sets the DomainName field's value.
+func (s *UpdateDomainNameInput) SetDomainName(v string) *UpdateDomainNameInput {
+	s.DomainName = &v
+	return s
+}
+
+type UpdateDomainNameOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The configuration for the DomainName.
+	DomainNameConfig *DomainNameConfig `locationName:"domainNameConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDomainNameOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateDomainNameOutput) GoString() string {
+	return s.String()
+}
+
+// SetDomainNameConfig sets the DomainNameConfig field's value.
+func (s *UpdateDomainNameOutput) SetDomainNameConfig(v *DomainNameConfig) *UpdateDomainNameOutput {
+	s.DomainNameConfig = v
+	return s
+}
+
 type UpdateFunctionInput struct {
 	_ struct{} `type:"structure"`
 
@@ -9810,6 +17155,10 @@ type UpdateFunctionInput struct {
 	//
 	// ApiId is a required field
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
+
+	// The function code that contains the request and response functions. When
+	// code is used, the runtime is required. The runtime value must be APPSYNC_JS.
+	Code *string `locationName:"code" min:"1" type:"string"`
 
 	// The Function DataSource name.
 	//
@@ -9824,11 +17173,13 @@ type UpdateFunctionInput struct {
 	// FunctionId is a required field
 	FunctionId *string `location:"uri" locationName:"functionId" min:"1" type:"string" required:"true"`
 
-	// The version of the request mapping template. Currently the supported value
-	// is 2018-05-29.
-	//
-	// FunctionVersion is a required field
-	FunctionVersion *string `locationName:"functionVersion" type:"string" required:"true"`
+	// The version of the request mapping template. Currently, the supported value
+	// is 2018-05-29. Note that when using VTL and mapping templates, the functionVersion
+	// is required.
+	FunctionVersion *string `locationName:"functionVersion" type:"string"`
+
+	// The maximum batching size for a resolver.
+	MaxBatchSize *int64 `locationName:"maxBatchSize" type:"integer"`
 
 	// The Function name.
 	//
@@ -9842,19 +17193,33 @@ type UpdateFunctionInput struct {
 	// The Function request mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
 
+	// Describes a runtime used by an Amazon Web Services AppSync pipeline resolver
+	// or Amazon Web Services AppSync function. Specifies the name and version of
+	// the runtime to use. Note that if a runtime is specified, code must also be
+	// specified.
+	Runtime *AppSyncRuntime `locationName:"runtime" type:"structure"`
+
 	// Describes a Sync configuration for a resolver.
 	//
-	// Contains information on which Conflict Detection as well as Resolution strategy
-	// should be performed when the resolver is invoked.
+	// Specifies which Conflict Detection strategy and Resolution strategy to use
+	// when the resolver is invoked.
 	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateFunctionInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateFunctionInput) GoString() string {
 	return s.String()
 }
@@ -9868,6 +17233,9 @@ func (s *UpdateFunctionInput) Validate() error {
 	if s.ApiId != nil && len(*s.ApiId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
 	}
+	if s.Code != nil && len(*s.Code) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Code", 1))
+	}
 	if s.DataSourceName == nil {
 		invalidParams.Add(request.NewErrParamRequired("DataSourceName"))
 	}
@@ -9879,9 +17247,6 @@ func (s *UpdateFunctionInput) Validate() error {
 	}
 	if s.FunctionId != nil && len(*s.FunctionId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("FunctionId", 1))
-	}
-	if s.FunctionVersion == nil {
-		invalidParams.Add(request.NewErrParamRequired("FunctionVersion"))
 	}
 	if s.Name == nil {
 		invalidParams.Add(request.NewErrParamRequired("Name"))
@@ -9895,6 +17260,11 @@ func (s *UpdateFunctionInput) Validate() error {
 	if s.ResponseMappingTemplate != nil && len(*s.ResponseMappingTemplate) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ResponseMappingTemplate", 1))
 	}
+	if s.Runtime != nil {
+		if err := s.Runtime.Validate(); err != nil {
+			invalidParams.AddNested("Runtime", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -9905,6 +17275,12 @@ func (s *UpdateFunctionInput) Validate() error {
 // SetApiId sets the ApiId field's value.
 func (s *UpdateFunctionInput) SetApiId(v string) *UpdateFunctionInput {
 	s.ApiId = &v
+	return s
+}
+
+// SetCode sets the Code field's value.
+func (s *UpdateFunctionInput) SetCode(v string) *UpdateFunctionInput {
+	s.Code = &v
 	return s
 }
 
@@ -9932,6 +17308,12 @@ func (s *UpdateFunctionInput) SetFunctionVersion(v string) *UpdateFunctionInput 
 	return s
 }
 
+// SetMaxBatchSize sets the MaxBatchSize field's value.
+func (s *UpdateFunctionInput) SetMaxBatchSize(v int64) *UpdateFunctionInput {
+	s.MaxBatchSize = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *UpdateFunctionInput) SetName(v string) *UpdateFunctionInput {
 	s.Name = &v
@@ -9950,6 +17332,12 @@ func (s *UpdateFunctionInput) SetResponseMappingTemplate(v string) *UpdateFuncti
 	return s
 }
 
+// SetRuntime sets the Runtime field's value.
+func (s *UpdateFunctionInput) SetRuntime(v *AppSyncRuntime) *UpdateFunctionInput {
+	s.Runtime = v
+	return s
+}
+
 // SetSyncConfig sets the SyncConfig field's value.
 func (s *UpdateFunctionInput) SetSyncConfig(v *SyncConfig) *UpdateFunctionInput {
 	s.SyncConfig = v
@@ -9963,12 +17351,20 @@ type UpdateFunctionOutput struct {
 	FunctionConfiguration *FunctionConfiguration `locationName:"functionConfiguration" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateFunctionOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateFunctionOutput) GoString() string {
 	return s.String()
 }
@@ -9991,13 +17387,32 @@ type UpdateGraphqlApiInput struct {
 	ApiId *string `location:"uri" locationName:"apiId" type:"string" required:"true"`
 
 	// The new authentication type for the GraphqlApi object.
-	AuthenticationType *string `locationName:"authenticationType" type:"string" enum:"AuthenticationType"`
+	//
+	// AuthenticationType is a required field
+	AuthenticationType *string `locationName:"authenticationType" type:"string" required:"true" enum:"AuthenticationType"`
 
-	// Configuration for AWS Lambda function authorization.
+	// The enhancedMetricsConfig object.
+	EnhancedMetricsConfig *EnhancedMetricsConfig `locationName:"enhancedMetricsConfig" type:"structure"`
+
+	// Sets the value of the GraphQL API to enable (ENABLED) or disable (DISABLED)
+	// introspection. If no value is provided, the introspection configuration will
+	// be set to ENABLED by default. This field will produce an error if the operation
+	// attempts to use the introspection feature while this field is disabled.
+	//
+	// For more information about introspection, see GraphQL introspection (https://graphql.org/learn/introspection/).
+	IntrospectionConfig *string `locationName:"introspectionConfig" type:"string" enum:"GraphQLApiIntrospectionConfig"`
+
+	// Configuration for Lambda function authorization.
 	LambdaAuthorizerConfig *LambdaAuthorizerConfig `locationName:"lambdaAuthorizerConfig" type:"structure"`
 
 	// The Amazon CloudWatch Logs configuration for the GraphqlApi object.
 	LogConfig *LogConfig `locationName:"logConfig" type:"structure"`
+
+	// The Identity and Access Management service role ARN for a merged API. The
+	// AppSync service assumes this role on behalf of the Merged API to validate
+	// access to source APIs at runtime and to prompt the AUTO_MERGE to update the
+	// merged API endpoint with the source API changes automatically.
+	MergedApiExecutionRoleArn *string `locationName:"mergedApiExecutionRoleArn" type:"string"`
 
 	// The new name for the GraphqlApi object.
 	//
@@ -10007,19 +17422,49 @@ type UpdateGraphqlApiInput struct {
 	// The OpenID Connect configuration for the GraphqlApi object.
 	OpenIDConnectConfig *OpenIDConnectConfig `locationName:"openIDConnectConfig" type:"structure"`
 
-	// The new Amazon Cognito user pool configuration for the GraphqlApi object.
+	// The owner contact information for an API resource.
+	//
+	// This field accepts any string input with a length of 0 - 256 characters.
+	OwnerContact *string `locationName:"ownerContact" type:"string"`
+
+	// The maximum depth a query can have in a single request. Depth refers to the
+	// amount of nested levels allowed in the body of query. The default value is
+	// 0 (or unspecified), which indicates there's no depth limit. If you set a
+	// limit, it can be between 1 and 75 nested levels. This field will produce
+	// a limit error if the operation falls out of bounds.
+	//
+	// Note that fields can still be set to nullable or non-nullable. If a non-nullable
+	// field produces an error, the error will be thrown upwards to the first nullable
+	// field available.
+	QueryDepthLimit *int64 `locationName:"queryDepthLimit" type:"integer"`
+
+	// The maximum number of resolvers that can be invoked in a single request.
+	// The default value is 0 (or unspecified), which will set the limit to 10000.
+	// When specified, the limit value can be between 1 and 10000. This field will
+	// produce a limit error if the operation falls out of bounds.
+	ResolverCountLimit *int64 `locationName:"resolverCountLimit" type:"integer"`
+
+	// The new Amazon Cognito user pool configuration for the ~GraphqlApi object.
 	UserPoolConfig *UserPoolConfig `locationName:"userPoolConfig" type:"structure"`
 
-	// A flag indicating whether to enable X-Ray tracing for the GraphqlApi.
+	// A flag indicating whether to use X-Ray tracing for the GraphqlApi.
 	XrayEnabled *bool `locationName:"xrayEnabled" type:"boolean"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateGraphqlApiInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateGraphqlApiInput) GoString() string {
 	return s.String()
 }
@@ -10033,6 +17478,9 @@ func (s *UpdateGraphqlApiInput) Validate() error {
 	if s.ApiId != nil && len(*s.ApiId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
 	}
+	if s.AuthenticationType == nil {
+		invalidParams.Add(request.NewErrParamRequired("AuthenticationType"))
+	}
 	if s.Name == nil {
 		invalidParams.Add(request.NewErrParamRequired("Name"))
 	}
@@ -10044,6 +17492,11 @@ func (s *UpdateGraphqlApiInput) Validate() error {
 			if err := v.Validate(); err != nil {
 				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "AdditionalAuthenticationProviders", i), err.(request.ErrInvalidParams))
 			}
+		}
+	}
+	if s.EnhancedMetricsConfig != nil {
+		if err := s.EnhancedMetricsConfig.Validate(); err != nil {
+			invalidParams.AddNested("EnhancedMetricsConfig", err.(request.ErrInvalidParams))
 		}
 	}
 	if s.LambdaAuthorizerConfig != nil {
@@ -10091,6 +17544,18 @@ func (s *UpdateGraphqlApiInput) SetAuthenticationType(v string) *UpdateGraphqlAp
 	return s
 }
 
+// SetEnhancedMetricsConfig sets the EnhancedMetricsConfig field's value.
+func (s *UpdateGraphqlApiInput) SetEnhancedMetricsConfig(v *EnhancedMetricsConfig) *UpdateGraphqlApiInput {
+	s.EnhancedMetricsConfig = v
+	return s
+}
+
+// SetIntrospectionConfig sets the IntrospectionConfig field's value.
+func (s *UpdateGraphqlApiInput) SetIntrospectionConfig(v string) *UpdateGraphqlApiInput {
+	s.IntrospectionConfig = &v
+	return s
+}
+
 // SetLambdaAuthorizerConfig sets the LambdaAuthorizerConfig field's value.
 func (s *UpdateGraphqlApiInput) SetLambdaAuthorizerConfig(v *LambdaAuthorizerConfig) *UpdateGraphqlApiInput {
 	s.LambdaAuthorizerConfig = v
@@ -10103,6 +17568,12 @@ func (s *UpdateGraphqlApiInput) SetLogConfig(v *LogConfig) *UpdateGraphqlApiInpu
 	return s
 }
 
+// SetMergedApiExecutionRoleArn sets the MergedApiExecutionRoleArn field's value.
+func (s *UpdateGraphqlApiInput) SetMergedApiExecutionRoleArn(v string) *UpdateGraphqlApiInput {
+	s.MergedApiExecutionRoleArn = &v
+	return s
+}
+
 // SetName sets the Name field's value.
 func (s *UpdateGraphqlApiInput) SetName(v string) *UpdateGraphqlApiInput {
 	s.Name = &v
@@ -10112,6 +17583,24 @@ func (s *UpdateGraphqlApiInput) SetName(v string) *UpdateGraphqlApiInput {
 // SetOpenIDConnectConfig sets the OpenIDConnectConfig field's value.
 func (s *UpdateGraphqlApiInput) SetOpenIDConnectConfig(v *OpenIDConnectConfig) *UpdateGraphqlApiInput {
 	s.OpenIDConnectConfig = v
+	return s
+}
+
+// SetOwnerContact sets the OwnerContact field's value.
+func (s *UpdateGraphqlApiInput) SetOwnerContact(v string) *UpdateGraphqlApiInput {
+	s.OwnerContact = &v
+	return s
+}
+
+// SetQueryDepthLimit sets the QueryDepthLimit field's value.
+func (s *UpdateGraphqlApiInput) SetQueryDepthLimit(v int64) *UpdateGraphqlApiInput {
+	s.QueryDepthLimit = &v
+	return s
+}
+
+// SetResolverCountLimit sets the ResolverCountLimit field's value.
+func (s *UpdateGraphqlApiInput) SetResolverCountLimit(v int64) *UpdateGraphqlApiInput {
+	s.ResolverCountLimit = &v
 	return s
 }
 
@@ -10134,12 +17623,20 @@ type UpdateGraphqlApiOutput struct {
 	GraphqlApi *GraphqlApi `locationName:"graphqlApi" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateGraphqlApiOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateGraphqlApiOutput) GoString() string {
 	return s.String()
 }
@@ -10161,6 +17658,10 @@ type UpdateResolverInput struct {
 	// The caching configuration for the resolver.
 	CachingConfig *CachingConfig `locationName:"cachingConfig" type:"structure"`
 
+	// The resolver code that contains the request and response functions. When
+	// code is used, the runtime is required. The runtime value must be APPSYNC_JS.
+	Code *string `locationName:"code" min:"1" type:"string"`
+
 	// The new data source name.
 	DataSourceName *string `locationName:"dataSourceName" min:"1" type:"string"`
 
@@ -10172,13 +17673,25 @@ type UpdateResolverInput struct {
 	// The resolver type.
 	//
 	//    * UNIT: A UNIT resolver type. A UNIT resolver is the default resolver
-	//    type. A UNIT resolver enables you to execute a GraphQL query against a
-	//    single data source.
+	//    type. You can use a UNIT resolver to run a GraphQL query against a single
+	//    data source.
 	//
-	//    * PIPELINE: A PIPELINE resolver type. A PIPELINE resolver enables you
-	//    to execute a series of Function in a serial manner. You can use a pipeline
-	//    resolver to execute a GraphQL query against multiple data sources.
+	//    * PIPELINE: A PIPELINE resolver type. You can use a PIPELINE resolver
+	//    to invoke a series of Function objects in a serial manner. You can use
+	//    a pipeline resolver to run a GraphQL query against multiple data sources.
 	Kind *string `locationName:"kind" type:"string" enum:"ResolverKind"`
+
+	// The maximum batching size for a resolver.
+	MaxBatchSize *int64 `locationName:"maxBatchSize" type:"integer"`
+
+	// Enables or disables enhanced resolver metrics for specified resolvers. Note
+	// that metricsConfig won't be used unless the resolverLevelMetricsBehavior
+	// value is set to PER_RESOLVER_METRICS. If the resolverLevelMetricsBehavior
+	// is set to FULL_REQUEST_RESOLVER_METRICS instead, metricsConfig will be ignored.
+	// However, you can still set its value.
+	//
+	// metricsConfig can be ENABLED or DISABLED.
+	MetricsConfig *string `locationName:"metricsConfig" type:"string" enum:"ResolverLevelMetricsConfig"`
 
 	// The PipelineConfig.
 	PipelineConfig *PipelineConfig `locationName:"pipelineConfig" type:"structure"`
@@ -10189,7 +17702,7 @@ type UpdateResolverInput struct {
 	// into a format that a data source can understand. Mapping templates are written
 	// in Apache Velocity Template Language (VTL).
 	//
-	// VTL request mapping templates are optional when using a Lambda data source.
+	// VTL request mapping templates are optional when using an Lambda data source.
 	// For all other data sources, VTL request and response mapping templates are
 	// required.
 	RequestMappingTemplate *string `locationName:"requestMappingTemplate" min:"1" type:"string"`
@@ -10197,7 +17710,13 @@ type UpdateResolverInput struct {
 	// The new response mapping template.
 	ResponseMappingTemplate *string `locationName:"responseMappingTemplate" min:"1" type:"string"`
 
-	// The SyncConfig for a resolver attached to a versioned datasource.
+	// Describes a runtime used by an Amazon Web Services AppSync pipeline resolver
+	// or Amazon Web Services AppSync function. Specifies the name and version of
+	// the runtime to use. Note that if a runtime is specified, code must also be
+	// specified.
+	Runtime *AppSyncRuntime `locationName:"runtime" type:"structure"`
+
+	// The SyncConfig for a resolver attached to a versioned data source.
 	SyncConfig *SyncConfig `locationName:"syncConfig" type:"structure"`
 
 	// The new type name.
@@ -10206,12 +17725,20 @@ type UpdateResolverInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResolverInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResolverInput) GoString() string {
 	return s.String()
 }
@@ -10224,6 +17751,9 @@ func (s *UpdateResolverInput) Validate() error {
 	}
 	if s.ApiId != nil && len(*s.ApiId) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("ApiId", 1))
+	}
+	if s.Code != nil && len(*s.Code) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("Code", 1))
 	}
 	if s.DataSourceName != nil && len(*s.DataSourceName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("DataSourceName", 1))
@@ -10246,6 +17776,16 @@ func (s *UpdateResolverInput) Validate() error {
 	if s.TypeName != nil && len(*s.TypeName) < 1 {
 		invalidParams.Add(request.NewErrParamMinLen("TypeName", 1))
 	}
+	if s.CachingConfig != nil {
+		if err := s.CachingConfig.Validate(); err != nil {
+			invalidParams.AddNested("CachingConfig", err.(request.ErrInvalidParams))
+		}
+	}
+	if s.Runtime != nil {
+		if err := s.Runtime.Validate(); err != nil {
+			invalidParams.AddNested("Runtime", err.(request.ErrInvalidParams))
+		}
+	}
 
 	if invalidParams.Len() > 0 {
 		return invalidParams
@@ -10262,6 +17802,12 @@ func (s *UpdateResolverInput) SetApiId(v string) *UpdateResolverInput {
 // SetCachingConfig sets the CachingConfig field's value.
 func (s *UpdateResolverInput) SetCachingConfig(v *CachingConfig) *UpdateResolverInput {
 	s.CachingConfig = v
+	return s
+}
+
+// SetCode sets the Code field's value.
+func (s *UpdateResolverInput) SetCode(v string) *UpdateResolverInput {
+	s.Code = &v
 	return s
 }
 
@@ -10283,6 +17829,18 @@ func (s *UpdateResolverInput) SetKind(v string) *UpdateResolverInput {
 	return s
 }
 
+// SetMaxBatchSize sets the MaxBatchSize field's value.
+func (s *UpdateResolverInput) SetMaxBatchSize(v int64) *UpdateResolverInput {
+	s.MaxBatchSize = &v
+	return s
+}
+
+// SetMetricsConfig sets the MetricsConfig field's value.
+func (s *UpdateResolverInput) SetMetricsConfig(v string) *UpdateResolverInput {
+	s.MetricsConfig = &v
+	return s
+}
+
 // SetPipelineConfig sets the PipelineConfig field's value.
 func (s *UpdateResolverInput) SetPipelineConfig(v *PipelineConfig) *UpdateResolverInput {
 	s.PipelineConfig = v
@@ -10298,6 +17856,12 @@ func (s *UpdateResolverInput) SetRequestMappingTemplate(v string) *UpdateResolve
 // SetResponseMappingTemplate sets the ResponseMappingTemplate field's value.
 func (s *UpdateResolverInput) SetResponseMappingTemplate(v string) *UpdateResolverInput {
 	s.ResponseMappingTemplate = &v
+	return s
+}
+
+// SetRuntime sets the Runtime field's value.
+func (s *UpdateResolverInput) SetRuntime(v *AppSyncRuntime) *UpdateResolverInput {
+	s.Runtime = v
 	return s
 }
 
@@ -10320,12 +17884,20 @@ type UpdateResolverOutput struct {
 	Resolver *Resolver `locationName:"resolver" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResolverOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateResolverOutput) GoString() string {
 	return s.String()
 }
@@ -10333,6 +17905,125 @@ func (s UpdateResolverOutput) GoString() string {
 // SetResolver sets the Resolver field's value.
 func (s *UpdateResolverOutput) SetResolver(v *Resolver) *UpdateResolverOutput {
 	s.Resolver = v
+	return s
+}
+
+type UpdateSourceApiAssociationInput struct {
+	_ struct{} `type:"structure"`
+
+	// The ID generated by the AppSync service for the source API association.
+	//
+	// AssociationId is a required field
+	AssociationId *string `location:"uri" locationName:"associationId" type:"string" required:"true"`
+
+	// The description field.
+	Description *string `locationName:"description" type:"string"`
+
+	// The identifier of the AppSync Merged API. This is generated by the AppSync
+	// service. In most cases, Merged APIs (especially in your account) only require
+	// the API ID value or ARN of the merged API. However, Merged APIs in other
+	// accounts (cross-account use cases) strictly require the full resource ARN
+	// of the merged API.
+	//
+	// MergedApiIdentifier is a required field
+	MergedApiIdentifier *string `location:"uri" locationName:"mergedApiIdentifier" type:"string" required:"true"`
+
+	// The SourceApiAssociationConfig object data.
+	SourceApiAssociationConfig *SourceApiAssociationConfig `locationName:"sourceApiAssociationConfig" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSourceApiAssociationInput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSourceApiAssociationInput) GoString() string {
+	return s.String()
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *UpdateSourceApiAssociationInput) Validate() error {
+	invalidParams := request.ErrInvalidParams{Context: "UpdateSourceApiAssociationInput"}
+	if s.AssociationId == nil {
+		invalidParams.Add(request.NewErrParamRequired("AssociationId"))
+	}
+	if s.AssociationId != nil && len(*s.AssociationId) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("AssociationId", 1))
+	}
+	if s.MergedApiIdentifier == nil {
+		invalidParams.Add(request.NewErrParamRequired("MergedApiIdentifier"))
+	}
+	if s.MergedApiIdentifier != nil && len(*s.MergedApiIdentifier) < 1 {
+		invalidParams.Add(request.NewErrParamMinLen("MergedApiIdentifier", 1))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// SetAssociationId sets the AssociationId field's value.
+func (s *UpdateSourceApiAssociationInput) SetAssociationId(v string) *UpdateSourceApiAssociationInput {
+	s.AssociationId = &v
+	return s
+}
+
+// SetDescription sets the Description field's value.
+func (s *UpdateSourceApiAssociationInput) SetDescription(v string) *UpdateSourceApiAssociationInput {
+	s.Description = &v
+	return s
+}
+
+// SetMergedApiIdentifier sets the MergedApiIdentifier field's value.
+func (s *UpdateSourceApiAssociationInput) SetMergedApiIdentifier(v string) *UpdateSourceApiAssociationInput {
+	s.MergedApiIdentifier = &v
+	return s
+}
+
+// SetSourceApiAssociationConfig sets the SourceApiAssociationConfig field's value.
+func (s *UpdateSourceApiAssociationInput) SetSourceApiAssociationConfig(v *SourceApiAssociationConfig) *UpdateSourceApiAssociationInput {
+	s.SourceApiAssociationConfig = v
+	return s
+}
+
+type UpdateSourceApiAssociationOutput struct {
+	_ struct{} `type:"structure"`
+
+	// The SourceApiAssociation object data.
+	SourceApiAssociation *SourceApiAssociation `locationName:"sourceApiAssociation" type:"structure"`
+}
+
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSourceApiAssociationOutput) String() string {
+	return awsutil.Prettify(s)
+}
+
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
+func (s UpdateSourceApiAssociationOutput) GoString() string {
+	return s.String()
+}
+
+// SetSourceApiAssociation sets the SourceApiAssociation field's value.
+func (s *UpdateSourceApiAssociationOutput) SetSourceApiAssociation(v *SourceApiAssociation) *UpdateSourceApiAssociationOutput {
+	s.SourceApiAssociation = v
 	return s
 }
 
@@ -10358,12 +18049,20 @@ type UpdateTypeInput struct {
 	TypeName *string `location:"uri" locationName:"typeName" min:"1" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateTypeInput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateTypeInput) GoString() string {
 	return s.String()
 }
@@ -10424,12 +18123,20 @@ type UpdateTypeOutput struct {
 	Type *Type `locationName:"type" type:"structure"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateTypeOutput) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UpdateTypeOutput) GoString() string {
 	return s.String()
 }
@@ -10445,7 +18152,7 @@ type UserPoolConfig struct {
 	_ struct{} `type:"structure"`
 
 	// A regular expression for validating the incoming Amazon Cognito user pool
-	// app client ID.
+	// app client ID. If this value isn't set, no filtering is applied.
 	AppIdClientRegex *string `locationName:"appIdClientRegex" type:"string"`
 
 	// The Amazon Web Services Region in which the user pool was created.
@@ -10466,12 +18173,20 @@ type UserPoolConfig struct {
 	UserPoolId *string `locationName:"userPoolId" type:"string" required:"true"`
 }
 
-// String returns the string representation
+// String returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UserPoolConfig) String() string {
 	return awsutil.Prettify(s)
 }
 
-// GoString returns the string representation
+// GoString returns the string representation.
+//
+// API parameter values that are decorated as "sensitive" in the API will not
+// be included in the string output. The member name will be present, but the
+// value will be replaced with "sensitive".
 func (s UserPoolConfig) GoString() string {
 	return s.String()
 }
@@ -10632,6 +18347,26 @@ func ApiCachingBehavior_Values() []string {
 }
 
 const (
+	// AssociationStatusProcessing is a AssociationStatus enum value
+	AssociationStatusProcessing = "PROCESSING"
+
+	// AssociationStatusFailed is a AssociationStatus enum value
+	AssociationStatusFailed = "FAILED"
+
+	// AssociationStatusSuccess is a AssociationStatus enum value
+	AssociationStatusSuccess = "SUCCESS"
+)
+
+// AssociationStatus_Values returns all elements of the AssociationStatus enum
+func AssociationStatus_Values() []string {
+	return []string{
+		AssociationStatusProcessing,
+		AssociationStatusFailed,
+		AssociationStatusSuccess,
+	}
+}
+
+const (
 	// AuthenticationTypeApiKey is a AuthenticationType enum value
 	AuthenticationTypeApiKey = "API_KEY"
 
@@ -10668,6 +18403,36 @@ const (
 func AuthorizationType_Values() []string {
 	return []string{
 		AuthorizationTypeAwsIam,
+	}
+}
+
+// Provides context for the cause of the bad request. The only supported value
+// is CODE_ERROR.
+const (
+	// BadRequestReasonCodeError is a BadRequestReason enum value
+	BadRequestReasonCodeError = "CODE_ERROR"
+)
+
+// BadRequestReason_Values returns all elements of the BadRequestReason enum
+func BadRequestReason_Values() []string {
+	return []string{
+		BadRequestReasonCodeError,
+	}
+}
+
+const (
+	// CacheHealthMetricsConfigEnabled is a CacheHealthMetricsConfig enum value
+	CacheHealthMetricsConfigEnabled = "ENABLED"
+
+	// CacheHealthMetricsConfigDisabled is a CacheHealthMetricsConfig enum value
+	CacheHealthMetricsConfigDisabled = "DISABLED"
+)
+
+// CacheHealthMetricsConfig_Values returns all elements of the CacheHealthMetricsConfig enum
+func CacheHealthMetricsConfig_Values() []string {
+	return []string{
+		CacheHealthMetricsConfigEnabled,
+		CacheHealthMetricsConfigDisabled,
 	}
 }
 
@@ -10712,6 +18477,58 @@ func ConflictHandlerType_Values() []string {
 }
 
 const (
+	// DataSourceIntrospectionStatusProcessing is a DataSourceIntrospectionStatus enum value
+	DataSourceIntrospectionStatusProcessing = "PROCESSING"
+
+	// DataSourceIntrospectionStatusFailed is a DataSourceIntrospectionStatus enum value
+	DataSourceIntrospectionStatusFailed = "FAILED"
+
+	// DataSourceIntrospectionStatusSuccess is a DataSourceIntrospectionStatus enum value
+	DataSourceIntrospectionStatusSuccess = "SUCCESS"
+)
+
+// DataSourceIntrospectionStatus_Values returns all elements of the DataSourceIntrospectionStatus enum
+func DataSourceIntrospectionStatus_Values() []string {
+	return []string{
+		DataSourceIntrospectionStatusProcessing,
+		DataSourceIntrospectionStatusFailed,
+		DataSourceIntrospectionStatusSuccess,
+	}
+}
+
+const (
+	// DataSourceLevelMetricsBehaviorFullRequestDataSourceMetrics is a DataSourceLevelMetricsBehavior enum value
+	DataSourceLevelMetricsBehaviorFullRequestDataSourceMetrics = "FULL_REQUEST_DATA_SOURCE_METRICS"
+
+	// DataSourceLevelMetricsBehaviorPerDataSourceMetrics is a DataSourceLevelMetricsBehavior enum value
+	DataSourceLevelMetricsBehaviorPerDataSourceMetrics = "PER_DATA_SOURCE_METRICS"
+)
+
+// DataSourceLevelMetricsBehavior_Values returns all elements of the DataSourceLevelMetricsBehavior enum
+func DataSourceLevelMetricsBehavior_Values() []string {
+	return []string{
+		DataSourceLevelMetricsBehaviorFullRequestDataSourceMetrics,
+		DataSourceLevelMetricsBehaviorPerDataSourceMetrics,
+	}
+}
+
+const (
+	// DataSourceLevelMetricsConfigEnabled is a DataSourceLevelMetricsConfig enum value
+	DataSourceLevelMetricsConfigEnabled = "ENABLED"
+
+	// DataSourceLevelMetricsConfigDisabled is a DataSourceLevelMetricsConfig enum value
+	DataSourceLevelMetricsConfigDisabled = "DISABLED"
+)
+
+// DataSourceLevelMetricsConfig_Values returns all elements of the DataSourceLevelMetricsConfig enum
+func DataSourceLevelMetricsConfig_Values() []string {
+	return []string{
+		DataSourceLevelMetricsConfigEnabled,
+		DataSourceLevelMetricsConfigDisabled,
+	}
+}
+
+const (
 	// DataSourceTypeAwsLambda is a DataSourceType enum value
 	DataSourceTypeAwsLambda = "AWS_LAMBDA"
 
@@ -10729,6 +18546,12 @@ const (
 
 	// DataSourceTypeRelationalDatabase is a DataSourceType enum value
 	DataSourceTypeRelationalDatabase = "RELATIONAL_DATABASE"
+
+	// DataSourceTypeAmazonOpensearchService is a DataSourceType enum value
+	DataSourceTypeAmazonOpensearchService = "AMAZON_OPENSEARCH_SERVICE"
+
+	// DataSourceTypeAmazonEventbridge is a DataSourceType enum value
+	DataSourceTypeAmazonEventbridge = "AMAZON_EVENTBRIDGE"
 )
 
 // DataSourceType_Values returns all elements of the DataSourceType enum
@@ -10740,6 +18563,8 @@ func DataSourceType_Values() []string {
 		DataSourceTypeNone,
 		DataSourceTypeHttp,
 		DataSourceTypeRelationalDatabase,
+		DataSourceTypeAmazonOpensearchService,
+		DataSourceTypeAmazonEventbridge,
 	}
 }
 
@@ -10780,6 +18605,86 @@ func FieldLogLevel_Values() []string {
 }
 
 const (
+	// GraphQLApiIntrospectionConfigEnabled is a GraphQLApiIntrospectionConfig enum value
+	GraphQLApiIntrospectionConfigEnabled = "ENABLED"
+
+	// GraphQLApiIntrospectionConfigDisabled is a GraphQLApiIntrospectionConfig enum value
+	GraphQLApiIntrospectionConfigDisabled = "DISABLED"
+)
+
+// GraphQLApiIntrospectionConfig_Values returns all elements of the GraphQLApiIntrospectionConfig enum
+func GraphQLApiIntrospectionConfig_Values() []string {
+	return []string{
+		GraphQLApiIntrospectionConfigEnabled,
+		GraphQLApiIntrospectionConfigDisabled,
+	}
+}
+
+const (
+	// GraphQLApiTypeGraphql is a GraphQLApiType enum value
+	GraphQLApiTypeGraphql = "GRAPHQL"
+
+	// GraphQLApiTypeMerged is a GraphQLApiType enum value
+	GraphQLApiTypeMerged = "MERGED"
+)
+
+// GraphQLApiType_Values returns all elements of the GraphQLApiType enum
+func GraphQLApiType_Values() []string {
+	return []string{
+		GraphQLApiTypeGraphql,
+		GraphQLApiTypeMerged,
+	}
+}
+
+const (
+	// GraphQLApiVisibilityGlobal is a GraphQLApiVisibility enum value
+	GraphQLApiVisibilityGlobal = "GLOBAL"
+
+	// GraphQLApiVisibilityPrivate is a GraphQLApiVisibility enum value
+	GraphQLApiVisibilityPrivate = "PRIVATE"
+)
+
+// GraphQLApiVisibility_Values returns all elements of the GraphQLApiVisibility enum
+func GraphQLApiVisibility_Values() []string {
+	return []string{
+		GraphQLApiVisibilityGlobal,
+		GraphQLApiVisibilityPrivate,
+	}
+}
+
+const (
+	// MergeTypeManualMerge is a MergeType enum value
+	MergeTypeManualMerge = "MANUAL_MERGE"
+
+	// MergeTypeAutoMerge is a MergeType enum value
+	MergeTypeAutoMerge = "AUTO_MERGE"
+)
+
+// MergeType_Values returns all elements of the MergeType enum
+func MergeType_Values() []string {
+	return []string{
+		MergeTypeManualMerge,
+		MergeTypeAutoMerge,
+	}
+}
+
+const (
+	// OperationLevelMetricsConfigEnabled is a OperationLevelMetricsConfig enum value
+	OperationLevelMetricsConfigEnabled = "ENABLED"
+
+	// OperationLevelMetricsConfigDisabled is a OperationLevelMetricsConfig enum value
+	OperationLevelMetricsConfigDisabled = "DISABLED"
+)
+
+// OperationLevelMetricsConfig_Values returns all elements of the OperationLevelMetricsConfig enum
+func OperationLevelMetricsConfig_Values() []string {
+	return []string{
+		OperationLevelMetricsConfigEnabled,
+		OperationLevelMetricsConfigDisabled,
+	}
+}
+
+const (
 	// OutputTypeSdl is a OutputType enum value
 	OutputTypeSdl = "SDL"
 
@@ -10792,6 +18697,22 @@ func OutputType_Values() []string {
 	return []string{
 		OutputTypeSdl,
 		OutputTypeJson,
+	}
+}
+
+const (
+	// OwnershipCurrentAccount is a Ownership enum value
+	OwnershipCurrentAccount = "CURRENT_ACCOUNT"
+
+	// OwnershipOtherAccounts is a Ownership enum value
+	OwnershipOtherAccounts = "OTHER_ACCOUNTS"
+)
+
+// Ownership_Values returns all elements of the Ownership enum
+func Ownership_Values() []string {
+	return []string{
+		OwnershipCurrentAccount,
+		OwnershipOtherAccounts,
 	}
 }
 
@@ -10824,6 +18745,50 @@ func ResolverKind_Values() []string {
 }
 
 const (
+	// ResolverLevelMetricsBehaviorFullRequestResolverMetrics is a ResolverLevelMetricsBehavior enum value
+	ResolverLevelMetricsBehaviorFullRequestResolverMetrics = "FULL_REQUEST_RESOLVER_METRICS"
+
+	// ResolverLevelMetricsBehaviorPerResolverMetrics is a ResolverLevelMetricsBehavior enum value
+	ResolverLevelMetricsBehaviorPerResolverMetrics = "PER_RESOLVER_METRICS"
+)
+
+// ResolverLevelMetricsBehavior_Values returns all elements of the ResolverLevelMetricsBehavior enum
+func ResolverLevelMetricsBehavior_Values() []string {
+	return []string{
+		ResolverLevelMetricsBehaviorFullRequestResolverMetrics,
+		ResolverLevelMetricsBehaviorPerResolverMetrics,
+	}
+}
+
+const (
+	// ResolverLevelMetricsConfigEnabled is a ResolverLevelMetricsConfig enum value
+	ResolverLevelMetricsConfigEnabled = "ENABLED"
+
+	// ResolverLevelMetricsConfigDisabled is a ResolverLevelMetricsConfig enum value
+	ResolverLevelMetricsConfigDisabled = "DISABLED"
+)
+
+// ResolverLevelMetricsConfig_Values returns all elements of the ResolverLevelMetricsConfig enum
+func ResolverLevelMetricsConfig_Values() []string {
+	return []string{
+		ResolverLevelMetricsConfigEnabled,
+		ResolverLevelMetricsConfigDisabled,
+	}
+}
+
+const (
+	// RuntimeNameAppsyncJs is a RuntimeName enum value
+	RuntimeNameAppsyncJs = "APPSYNC_JS"
+)
+
+// RuntimeName_Values returns all elements of the RuntimeName enum
+func RuntimeName_Values() []string {
+	return []string{
+		RuntimeNameAppsyncJs,
+	}
+}
+
+const (
 	// SchemaStatusProcessing is a SchemaStatus enum value
 	SchemaStatusProcessing = "PROCESSING"
 
@@ -10852,6 +18817,46 @@ func SchemaStatus_Values() []string {
 		SchemaStatusFailed,
 		SchemaStatusSuccess,
 		SchemaStatusNotApplicable,
+	}
+}
+
+const (
+	// SourceApiAssociationStatusMergeScheduled is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusMergeScheduled = "MERGE_SCHEDULED"
+
+	// SourceApiAssociationStatusMergeFailed is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusMergeFailed = "MERGE_FAILED"
+
+	// SourceApiAssociationStatusMergeSuccess is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusMergeSuccess = "MERGE_SUCCESS"
+
+	// SourceApiAssociationStatusMergeInProgress is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusMergeInProgress = "MERGE_IN_PROGRESS"
+
+	// SourceApiAssociationStatusAutoMergeScheduleFailed is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusAutoMergeScheduleFailed = "AUTO_MERGE_SCHEDULE_FAILED"
+
+	// SourceApiAssociationStatusDeletionScheduled is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusDeletionScheduled = "DELETION_SCHEDULED"
+
+	// SourceApiAssociationStatusDeletionInProgress is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusDeletionInProgress = "DELETION_IN_PROGRESS"
+
+	// SourceApiAssociationStatusDeletionFailed is a SourceApiAssociationStatus enum value
+	SourceApiAssociationStatusDeletionFailed = "DELETION_FAILED"
+)
+
+// SourceApiAssociationStatus_Values returns all elements of the SourceApiAssociationStatus enum
+func SourceApiAssociationStatus_Values() []string {
+	return []string{
+		SourceApiAssociationStatusMergeScheduled,
+		SourceApiAssociationStatusMergeFailed,
+		SourceApiAssociationStatusMergeSuccess,
+		SourceApiAssociationStatusMergeInProgress,
+		SourceApiAssociationStatusAutoMergeScheduleFailed,
+		SourceApiAssociationStatusDeletionScheduled,
+		SourceApiAssociationStatusDeletionInProgress,
+		SourceApiAssociationStatusDeletionFailed,
 	}
 }
 
