@@ -40,11 +40,17 @@ To build the Session Manager plugin in a `Docker` container, complete the follow
 
 2. Build the `docker` image
 ```
-docker build -t session-manager-plugin-image .
+docker build --tag session-manager-plugin-image .
 ```
 3. Build the plugin
 ```
-docker run -it --rm --name session-manager-plugin -v `pwd`:/session-manager-plugin session-manager-plugin-image make release
+docker run --interactive --rm --tty \
+   --name session-manager-plugin \
+   --security-opt label=disable \
+   --user $(id --user):$(id --group) \
+   --volume ${PWD}:/session-manager-plugin \
+   session-manager-plugin-image \
+   make release
 ```
 
 ### Working with Linux
