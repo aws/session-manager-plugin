@@ -1,5 +1,10 @@
 Latest
 ================
+- Fix checkstyle issues to support newer Go version.
+- Reapplied signing for OpenDataChannel request
+
+1.2.707.0
+================
 - Update Readme for version configuration
 - Upgrade Go version to 1.23 in Dockerfile
 
