@@ -19,80 +19,66 @@ package shellsession
 
 import (
 	"os"
-	"time"
+	"unsafe"
 
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/message"
-	"github.com/eiannone/keyboard"
+	"golang.org/x/sys/windows"
 )
 
-// Byte array for key inputs
-// Note: F11 cannot be converted to byte array
-var specialKeysInputMap = map[keyboard.Key][]byte{
-	keyboard.KeyEsc:        {27},
-	keyboard.KeyArrowUp:    {27, 79, 65},
-	keyboard.KeyArrowDown:  {27, 79, 66},
-	keyboard.KeyArrowRight: {27, 79, 67},
-	keyboard.KeyArrowLeft:  {27, 79, 68},
-	keyboard.KeyF1:         {27, 79, 80},
-	keyboard.KeyF2:         {27, 79, 81},
-	keyboard.KeyF3:         {27, 79, 82},
-	keyboard.KeyF4:         {27, 79, 83},
-	keyboard.KeyF5:         {27, 91, 49, 53, 126},
-	keyboard.KeyF6:         {27, 91, 49, 55, 126},
-	keyboard.KeyF7:         {27, 91, 49, 56, 126},
-	keyboard.KeyF8:         {27, 91, 49, 57, 126},
-	keyboard.KeyF9:         {27, 91, 50, 48, 126},
-	keyboard.KeyF10:        {27, 91, 50, 49, 126},
-	keyboard.KeyF12:        {27, 91, 50, 52, 126},
-	keyboard.KeyHome:       {27, 91, 72},
-	keyboard.KeyEnd:        {27, 91, 70},
-	keyboard.KeyInsert:     {27, 91, 50, 126},
-	keyboard.KeyDelete:     {27, 91, 51, 126},
-	keyboard.KeyPgup:       {27, 91, 53, 126},
-	keyboard.KeyPgdn:       {27, 91, 54, 126},
-}
+var (
+	handle           windows.Handle
+	modeSave         uint32
+	kernel32         = windows.NewLazyDLL("kernel32.dll")
+	procReadConsoleA = kernel32.NewProc("ReadConsoleA")
+)
 
 // stop restores the terminal settings and exits
 func (s *ShellSession) Stop() {
+	windows.SetConsoleMode(handle, modeSave)
 	os.Exit(0)
+}
+
+func readConsoleA(hConsoleInput windows.Handle, lpBuffer unsafe.Pointer, nNumberOfCharsToRead int, lpNumberOfCharsRead *uint32, pInputControl unsafe.Pointer) (err error) {
+	r1, _, e1 := procReadConsoleA.Call(
+		uintptr(hConsoleInput),
+		uintptr(lpBuffer),
+		uintptr(nNumberOfCharsToRead),
+		uintptr(unsafe.Pointer(lpNumberOfCharsRead)),
+		uintptr(pInputControl),
+	)
+	if r1 == 0 {
+		err = e1
+	}
+	return
 }
 
 // handleKeyboardInput handles input entered by customer on terminal
 func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
-	var (
-		character rune         //character input from keyboard
-		key       keyboard.Key //special keys like arrows and function keys
-	)
-	if err = keyboard.Open(); err != nil {
-		log.Errorf("Failed to load Keyboard: %v", err)
+	handle = windows.Handle(os.Stdin.Fd())
+
+	err = windows.GetConsoleMode(handle, &modeSave)
+	if err != nil {
+		log.Errorf("Failed to get console mode: %v", err)
 		return
 	}
-	defer keyboard.Close()
 
-	for {
-		if character, key, err = keyboard.GetKey(); err != nil {
-			log.Errorf("Failed to get the key stroke: %v", err)
-			return
-		}
-		if character != 0 {
-			charBytes := []byte(string(character))
-			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, charBytes); err != nil {
-				log.Errorf("Failed to send UTF8 char: %v", err)
-				break
-			}
-		} else if key != 0 {
-			keyBytes := []byte(string(key))
-			if byteValue, ok := specialKeysInputMap[key]; ok {
-				keyBytes = byteValue
-			}
-			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, keyBytes); err != nil {
-				log.Errorf("Failed to send UTF8 char: %v", err)
-				break
-			}
-		}
-		// sleep to limit the rate of transfer
-		time.Sleep(time.Millisecond)
+	err = windows.SetConsoleMode(handle, windows.ENABLE_VIRTUAL_TERMINAL_INPUT)
+	if err != nil {
+		log.Errorf("Failed to set console to virtual terminal: %v", err)
+		return
 	}
+
+	buf := make([]byte, 1024)
+	var read uint32
+	for {
+		readConsoleA(handle, unsafe.Pointer(&buf[0]), len(buf), &read, nil)
+
+		if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, buf[:read]); err != nil {
+			log.Errorf("Failed to send UTF8 char: %v", err)
+			break
+		}
+	}
+
 	return
 }
