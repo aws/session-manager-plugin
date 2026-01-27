@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo "Creating symbolic link for session-manager-plugin"
 if [ -f /usr/local/bin/session-manager-plugin ]
 then
