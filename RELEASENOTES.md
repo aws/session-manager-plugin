@@ -1,6 +1,11 @@
 Latest
 ================
-- Fix checkstyle issues to support newer Go version.
+- Add shebang lines to debian packaging scripts
+- Update Go version to 1.25 in Dockerfile
+
+1.2.764.0
+================
+- Fix checkstyle issues to support newer Go version
 - Reapplied signing for OpenDataChannel request
 
 1.2.707.0
