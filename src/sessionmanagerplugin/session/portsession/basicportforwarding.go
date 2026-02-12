@@ -142,6 +142,7 @@ func (p *BasicPortForwarding) startLocalConn(log log.T) (err error) {
 
 // startLocalListener starts a local listener to given address
 func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (listener net.Listener, err error) {
+
 	var displayMessage string
 	switch p.portParameters.LocalConnectionType {
 	case "unix":
@@ -150,7 +151,13 @@ func (p *BasicPortForwarding) startLocalListener(log log.T, portNumber string) (
 		}
 		displayMessage = fmt.Sprintf("Unix socket %s opened for sessionId %s.", p.portParameters.LocalUnixSocket, p.sessionId)
 	default:
-		if listener, err = getNewListener("tcp", "localhost:"+portNumber); err != nil {
+		listenerHost := os.Getenv("SSM_PLUGIN_LOCAL_HOST")
+		if listenerHost == "" {
+			listenerHost = "localhost"
+		}
+		listenerAddress := net.JoinHostPort(listenerHost, portNumber)
+
+		if listener, err = getNewListener("tcp", listenerAddress); err != nil {
 			return
 		}
 		// get port number the TCP listener opened

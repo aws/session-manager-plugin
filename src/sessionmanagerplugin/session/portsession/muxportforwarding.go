@@ -242,7 +242,14 @@ func (p *MuxPortForwarding) handleClientConnections(log log.T, ctx context.Conte
 		if p.portParameters.LocalPortNumber == "" {
 			localPortNumber = "0"
 		}
-		if listener, err = net.Listen("tcp", "localhost:"+localPortNumber); err != nil {
+
+		listenerHost := os.Getenv("SSM_PLUGIN_LOCAL_HOST")
+		if listenerHost == "" {
+			listenerHost = "localhost"
+		}
+		listenerAddress := net.JoinHostPort(listenerHost, localPortNumber)
+
+		if listener, err = net.Listen("tcp", listenerAddress); err != nil {
 			return err
 		}
 		p.portParameters.LocalPortNumber = strconv.Itoa(listener.Addr().(*net.TCPAddr).Port)
