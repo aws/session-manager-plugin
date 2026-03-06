@@ -23,7 +23,8 @@ import (
 
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/message"
-	"github.com/eiannone/keyboard"
+	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/keyboard"
+	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session/sessionutil"
 )
 
 // Byte array for key inputs
@@ -49,12 +50,13 @@ var specialKeysInputMap = map[keyboard.Key][]byte{
 	keyboard.KeyEnd:        {27, 91, 70},
 	keyboard.KeyInsert:     {27, 91, 50, 126},
 	keyboard.KeyDelete:     {27, 91, 51, 126},
-	keyboard.KeyPgup:       {27, 91, 53, 126},
-	keyboard.KeyPgdn:       {27, 91, 54, 126},
+	keyboard.KeyPgUp:       {27, 91, 53, 126},
+	keyboard.KeyPgDn:       {27, 91, 54, 126},
 }
 
 // stop restores the terminal settings and exits
 func (s *ShellSession) Stop() {
+	sessionutil.RestoreConsoleCodePages()
 	os.Exit(0)
 }
 

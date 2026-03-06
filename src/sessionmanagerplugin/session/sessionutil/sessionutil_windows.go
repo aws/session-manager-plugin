@@ -30,6 +30,16 @@ import (
 
 var EnvProgramFiles = os.Getenv("ProgramFiles")
 
+var (
+	kernel32        = windows.NewLazySystemDLL("kernel32.dll")
+	getConsoleCP    = kernel32.NewProc("GetConsoleCP")
+	setConsoleCP    = kernel32.NewProc("SetConsoleCP")
+	getConsoleOutCP = kernel32.NewProc("GetConsoleOutputCP")
+	setConsoleOutCP = kernel32.NewProc("SetConsoleOutputCP")
+	originalCP      uint32
+	originalOutCP   uint32
+)
+
 type DisplayMode struct {
 	handle windows.Handle
 }
@@ -40,6 +50,15 @@ func (d *DisplayMode) InitDisplayMode(log log.T) {
 		fileDescriptor int
 		err            error
 	)
+
+	// Save and set console code pages to UTF-8 (65001)
+	ret, _, _ := getConsoleCP.Call()
+	originalCP = uint32(ret)
+	setConsoleCP.Call(uintptr(65001))
+
+	ret, _, _ = getConsoleOutCP.Call()
+	originalOutCP = uint32(ret)
+	setConsoleOutCP.Call(uintptr(65001))
 
 	// gets handler for Stdout
 	fileDescriptor = int(syscall.Stdout)
@@ -72,7 +91,18 @@ func (d *DisplayMode) DisplayMessage(log log.T, message message.ClientMessage) {
 	if err = windows.WriteFile(d.handle, message.Payload, done, nil); err != nil {
 		log.Errorf("error occurred while writing to file: %v", err)
 		fmt.Fprintf(os.Stdout, "\nError getting the output. %s\n", err.Error())
+		RestoreConsoleCodePages()
 		os.Exit(0)
+	}
+}
+
+// RestoreConsoleCodePages restores the original console code pages
+func RestoreConsoleCodePages() {
+	if originalCP != 0 {
+		setConsoleCP.Call(uintptr(originalCP))
+	}
+	if originalOutCP != 0 {
+		setConsoleOutCP.Call(uintptr(originalOutCP))
 	}
 }
 
