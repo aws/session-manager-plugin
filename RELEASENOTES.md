@@ -1,5 +1,9 @@
 Latest
 ================
+- Add international keyboard support for Windows
+
+1.2.779.0
+================
 - Add shebang lines to debian packaging scripts
 - Update Go version to 1.25 in Dockerfile
 
