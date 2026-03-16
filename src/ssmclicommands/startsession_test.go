@@ -18,7 +18,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/aws/aws-sdk-go/service/ssm"
+	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/sessionmanagerplugin/session"
 
@@ -55,10 +55,10 @@ func TestStartSessionCommand_ExecuteSuccess(t *testing.T) {
 	command := &StartSessionCommand{
 		helpText: "StartSessionCommand Help Context",
 	}
-	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.SSM, error) {
+	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.Client, error) {
 		assert.Equal(t, region, "us-east-1")
 		assert.Empty(t, profile)
-		ssmClient := &ssm.SSM{}
+		ssmClient := &ssm.Client{}
 		return ssmClient, nil
 	}
 
@@ -69,8 +69,8 @@ func TestStartSessionCommand_ExecuteSuccess(t *testing.T) {
 
 	startSession = func(s *StartSessionCommand, input *ssm.StartSessionInput) (*ssm.StartSessionOutput, error) {
 		assert.Equal(t, *input.Target, "i-123456")
-		assert.Equal(t, *input.Parameters["portNumber"][0], "80")
-		assert.Equal(t, *input.Parameters["localPortNumber"][0], "6789")
+		assert.Equal(t, input.Parameters["portNumber"][0], "80")
+		assert.Equal(t, input.Parameters["localPortNumber"][0], "6789")
 		assert.Equal(t, *input.DocumentName, "AWS-StartPortForwardingSession")
 		return startSessionOutput, nil
 	}
@@ -86,7 +86,7 @@ func TestStartSessionCommand_ExecuteGetSSMClientFailure(t *testing.T) {
 	command := &StartSessionCommand{
 		helpText: "StartSessionCommand Help Context",
 	}
-	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.SSM, error) {
+	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.Client, error) {
 		assert.Equal(t, profile, "user1")
 		return nil, fmt.Errorf("Get SSMClient Failure")
 	}
@@ -102,8 +102,8 @@ func TestStartSessionCommand_ExecuteSessionFailure(t *testing.T) {
 	command := &StartSessionCommand{
 		helpText: "StartSessionCommand Help Context",
 	}
-	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.SSM, error) {
-		ssmClient := &ssm.SSM{}
+	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.Client, error) {
+		ssmClient := &ssm.Client{}
 		return ssmClient, nil
 	}
 

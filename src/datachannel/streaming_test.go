@@ -24,9 +24,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/signer/v4"
-	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	communicatorMocks "github.com/aws/session-manager-plugin/src/communicator/mocks"
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/encryption"
@@ -61,7 +60,8 @@ var (
 	streamDataSequenceNumber                    = int64(0)
 	expectedSequenceNumber                      = int64(0)
 	region                                      = "us-east-1"
-	mockSigner                                  = &v4.Signer{Credentials: credentials.NewStaticCredentials("AKID", "SECRET", "SESSION")}
+	mockSigner                                  = v4.NewSigner()
+	mockCredentials                             = aws.Credentials{AccessKeyID: "AKID", SecretAccessKey: "SECRET", SessionToken: "SESSION"}
 )
 
 func TestInitialize(t *testing.T) {
@@ -86,9 +86,9 @@ func TestSetWebsocket(t *testing.T) {
 
 	mockWsChannel.On("GetStreamUrl").Return(streamUrl)
 	mockWsChannel.On("GetChannelToken").Return(channelToken)
-	mockWsChannel.On("Initialize", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	mockWsChannel.On("Initialize", mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(nil)
 
-	datachannel.SetWebsocket(mockLogger, streamUrl, channelToken, region, mockSigner)
+	datachannel.SetWebsocket(mockLogger, streamUrl, channelToken, region, mockSigner, mockCredentials)
 
 	assert.Equal(t, streamUrl, datachannel.wsChannel.GetStreamUrl())
 	assert.Equal(t, channelToken, datachannel.wsChannel.GetChannelToken())
@@ -440,8 +440,8 @@ func TestHandshakeRequestHandler(t *testing.T) {
 		uint32(message.HandshakeRequestPayloadType), handshakeRequestBytes)
 	handshakeRequestMessageBytes, _ := clientMessage.SerializeClientMessage(mockLogger)
 
-	newEncrypter = func(log log.T, kmsKeyIdInput string, context map[string]*string, KMSService kmsiface.KMSAPI) (encryption.IEncrypter, error) {
-		expectedContext := map[string]*string{"aws:ssm:SessionId": &sessionId, "aws:ssm:TargetId": &instanceId}
+	newEncrypter = func(log log.T, kmsKeyIdInput string, context map[string]string, KMSService encryption.KMSAPI) (encryption.IEncrypter, error) {
+		expectedContext := map[string]string{"aws:ssm:SessionId": sessionId, "aws:ssm:TargetId": instanceId}
 		assert.Equal(t, kmsKeyId, kmsKeyIdInput)
 		assert.Equal(t, expectedContext, context)
 		mockEncrypter.On("GetEncryptedDataKey").Return(cipherTextKey)

@@ -15,13 +15,17 @@
 package communicator
 
 import (
+	"context"
+	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 	"net/http"
 	"net/url"
 	"sync"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws/signer/v4"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/aws/session-manager-plugin/src/websocketutil"
@@ -30,7 +34,7 @@ import (
 
 // IWebSocketChannel is the interface for DataChannel.
 type IWebSocketChannel interface {
-	Initialize(log log.T, channelUrl string, channelToken string, region string, signer *v4.Signer)
+	Initialize(log log.T, channelUrl string, channelToken string, region string, signer *v4.Signer, credentials aws.Credentials)
 	Open(log log.T) error
 	Close(log log.T) error
 	SendMessage(log log.T, input []byte, inputType int) error
@@ -54,6 +58,7 @@ type WebSocketChannel struct {
 	ChannelToken string
 	Region       string
 	Signer       *v4.Signer
+	Credentials  aws.Credentials
 }
 
 // GetChannelToken gets the channel token
@@ -82,11 +87,12 @@ func (webSocketChannel *WebSocketChannel) SetOnMessage(onMessageHandler func([]b
 }
 
 // Initialize initializes websocket channel fields
-func (webSocketChannel *WebSocketChannel) Initialize(log log.T, channelUrl string, channelToken string, region string, signer *v4.Signer) {
+func (webSocketChannel *WebSocketChannel) Initialize(log log.T, channelUrl string, channelToken string, region string, signer *v4.Signer, credentials aws.Credentials) {
 	webSocketChannel.ChannelToken = channelToken
 	webSocketChannel.Url = channelUrl
 	webSocketChannel.Region = region
 	webSocketChannel.Signer = signer
+	webSocketChannel.Credentials = credentials
 }
 
 // StartPings starts the pinging process to keep the websocket channel alive.
@@ -131,9 +137,16 @@ func (webSocketChannel *WebSocketChannel) SendMessage(log log.T, input []byte, i
 // getV4SignatureHeader gets the signed header.
 func (webSocketChannel *WebSocketChannel) getV4SignatureHeader(log log.T, Url string) (http.Header, error) {
 	request, err := http.NewRequest("GET", Url, nil)
+	if err != nil {
+		return nil, err
+	}
 
 	if webSocketChannel.Signer != nil {
-		_, err = webSocketChannel.Signer.Sign(request, nil, config.ServiceName, webSocketChannel.Region, time.Now())
+		// Compute empty body hash for GET request
+		hash := sha256.New()
+		payloadHash := hex.EncodeToString(hash.Sum(nil))
+
+		err = webSocketChannel.Signer.SignHTTP(context.Background(), webSocketChannel.Credentials, request, payloadHash, config.ServiceName, webSocketChannel.Region, time.Now())
 		if err != nil {
 			log.Errorf("Failed to sign websocket, %v", err)
 		}

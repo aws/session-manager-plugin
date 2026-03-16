@@ -11,33 +11,68 @@
 // either express or implied. See the License for the specific language governing
 // permissions and limitations under the License.
 
-// Package retryer overrides the default aws sdk retryer delay logic to better suit the mds needs
+// Package retryer provides custom retry logic for AWS SDK operations
+// Note: This is currently unused in v2 code but kept for potential future use
 package retryer
 
 import (
+	"context"
 	"math"
 	"math/rand"
 	"strings"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws/client"
-	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/aws/retry"
 )
 
+// SsmCliRetryer implements custom retry logic for SSM CLI operations
 type SsmCliRetryer struct {
-	client.DefaultRetryer
+	*retry.Standard
 }
 
-// RetryRules returns the delay duration before retrying this request again
-func (s SsmCliRetryer) RetryRules(r *request.Request) time.Duration {
+// NewSsmCliRetryer creates a new instance of SsmCliRetryer
+func NewSsmCliRetryer() *SsmCliRetryer {
+	return &SsmCliRetryer{
+		Standard: retry.NewStandard(func(o *retry.StandardOptions) {
+			o.MaxAttempts = 3
+		}),
+	}
+}
+
+// MaxAttempts returns the maximum number of retry attempts
+func (s *SsmCliRetryer) MaxAttempts() int {
+	return s.Standard.MaxAttempts()
+}
+
+// RetryDelay returns the delay duration before retrying this request again
+func (s *SsmCliRetryer) RetryDelay(attempt int, err error) (time.Duration, error) {
 	// Handle GetMessages Client.Timeout error
-	if r.Operation.Name == "GetMessages" && r.Error != nil && strings.Contains(r.Error.Error(), "Client.Timeout") {
-		// expected error. we will retry with a short 100 ms delay
-		return time.Duration(100 * time.Millisecond)
+	if err != nil && strings.Contains(err.Error(), "Client.Timeout") {
+		// Expected error. We will retry with a short 100 ms delay
+		return time.Duration(100 * time.Millisecond), nil
 	}
 
-	// retry after a > 1 sec timeout, increasing exponentially with each retry
+	// Retry after a > 1 sec timeout, increasing exponentially with each retry
 	rand.Seed(time.Now().UnixNano())
-	delay := int(math.Pow(2, float64(r.RetryCount))) * (rand.Intn(500) + 1000)
-	return time.Duration(delay) * time.Millisecond
+	delay := int(math.Pow(2, float64(attempt))) * (rand.Intn(500) + 1000)
+	return time.Duration(delay) * time.Millisecond, nil
 }
+
+// IsErrorRetryable determines if an error should be retried
+func (s *SsmCliRetryer) IsErrorRetryable(err error) bool {
+	return s.Standard.IsErrorRetryable(err)
+}
+
+// GetRetryToken attempts to get a retry token
+func (s *SsmCliRetryer) GetRetryToken(ctx context.Context, err error) (func(error) error, error) {
+	return s.Standard.GetRetryToken(ctx, err)
+}
+
+// GetInitialToken returns the initial retry token
+func (s *SsmCliRetryer) GetInitialToken() func(error) error {
+	return s.Standard.GetInitialToken()
+}
+
+// Ensure SsmCliRetryer implements aws.Retryer interface
+var _ aws.Retryer = (*SsmCliRetryer)(nil)

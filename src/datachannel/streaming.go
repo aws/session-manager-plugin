@@ -27,9 +27,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/signer/v4"
-	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/session-manager-plugin/src/communicator"
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/encryption"
@@ -43,7 +42,7 @@ import (
 
 type IDataChannel interface {
 	Initialize(log log.T, clientId string, sessionId string, targetId string, isAwsCliUpgradeNeeded bool)
-	SetWebsocket(log log.T, streamUrl string, tokenValue string, region string, signer *v4.Signer)
+	SetWebsocket(log log.T, streamUrl string, tokenValue string, region string, signer *v4.Signer, credentials aws.Credentials)
 	Reconnect(log log.T) error
 	SendFlag(log log.T, flagType message.PayloadTypeFlag) error
 	Open(log log.T) error
@@ -157,8 +156,8 @@ var GetRoundTripTime = func(streamingMessage StreamingMessage) time.Duration {
 	return time.Since(streamingMessage.LastSentTime)
 }
 
-var newEncrypter = func(log log.T, kmsKeyId string, encryptionConext map[string]*string, kmsService kmsiface.KMSAPI) (encryption.IEncrypter, error) {
-	return encryption.NewEncrypter(log, kmsKeyId, encryptionConext, kmsService)
+var newEncrypter = func(log log.T, kmsKeyId string, encryptionContext map[string]string, kmsService encryption.KMSAPI) (encryption.IEncrypter, error) {
+	return encryption.NewEncrypter(log, kmsKeyId, encryptionContext, kmsService)
 }
 
 // Initialize populates the data channel object with the correct values.
@@ -194,8 +193,8 @@ func (dataChannel *DataChannel) Initialize(log log.T, clientId string, sessionId
 }
 
 // SetWebsocket function populates websocket channel object
-func (dataChannel *DataChannel) SetWebsocket(log log.T, channelUrl string, channelToken string, region string, signer *v4.Signer) {
-	dataChannel.wsChannel.Initialize(log, channelUrl, channelToken, region, signer)
+func (dataChannel *DataChannel) SetWebsocket(log log.T, channelUrl string, channelToken string, region string, signer *v4.Signer, credentials aws.Credentials) {
+	dataChannel.wsChannel.Initialize(log, channelUrl, channelToken, region, signer, credentials)
 }
 
 // FinalizeHandshake sends the token for service to acknowledge the connection.
@@ -863,7 +862,7 @@ func (dataChannel *DataChannel) ProcessKMSEncryptionHandshakeAction(log log.T, a
 		return fmt.Errorf("error while creating new KMS service, %v", err)
 	}
 
-	encryptionContext := map[string]*string{"aws:ssm:SessionId": &dataChannel.SessionId, "aws:ssm:TargetId": &dataChannel.TargetId}
+	encryptionContext := map[string]string{"aws:ssm:SessionId": dataChannel.SessionId, "aws:ssm:TargetId": dataChannel.TargetId}
 	dataChannel.encryption, err = newEncrypter(log, kmsKeyId, encryptionContext, kmsService)
 	return
 }

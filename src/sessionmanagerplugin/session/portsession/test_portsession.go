@@ -15,8 +15,8 @@
 package portsession
 
 import (
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/signer/v4"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/session-manager-plugin/src/communicator/mocks"
 	"github.com/aws/session-manager-plugin/src/datachannel"
 	"github.com/aws/session-manager-plugin/src/log"
@@ -36,8 +36,9 @@ var (
 	properties = map[string]interface{}{
 		"PortNumber": "22",
 	}
-	region     = "us-east-1"
-	mockSigner = &v4.Signer{Credentials: credentials.NewStaticCredentials("AKID", "SECRET", "SESSION")}
+	region          = "us-east-1"
+	mockSigner      = v4.NewSigner()
+	mockCredentials = aws.Credentials{AccessKeyID: "AKID", SecretAccessKey: "SECRET", SessionToken: "SESSION"}
 )
 
 func getSessionMock() session.Session {

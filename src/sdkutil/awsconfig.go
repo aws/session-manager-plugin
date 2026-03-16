@@ -15,84 +15,101 @@
 package sdkutil
 
 import (
+	"context"
 	"fmt"
-	"time"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/session-manager-plugin/src/sdkutil/retryer"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
 )
 
 var defaultRegion string
 var defaultProfile string
 
-// GetNewSessionWithEndpoint creates aws sdk session with given profile, region and endpoint
-func GetNewSessionWithEndpoint(endpoint string) (sess *session.Session, err error) {
-	if sess, err = session.NewSessionWithOptions(session.Options{
-		Config: aws.Config{
-			Retryer:    newRetryer(),
-			SleepDelay: sleepDelay,
-			Region:     aws.String(defaultRegion),
-			Endpoint:   aws.String(endpoint),
-		},
-		SharedConfigState: session.SharedConfigEnable,
-		Profile:           defaultProfile,
-	}); err != nil {
-		return nil, fmt.Errorf("Error creating new aws sdk session %s", err)
+// GetConfigWithEndpoint creates aws sdk config with given profile, region and endpoint
+func GetConfigWithEndpoint(ctx context.Context, endpoint string) (aws.Config, error) {
+	// Build config options
+	opts := []func(*config.LoadOptions) error{
+		config.WithRegion(defaultRegion),
+		config.WithRetryMaxAttempts(3),
 	}
-	return sess, nil
-}
 
-// GetSessionWithQuickCheck creates aws sdk session with fast checking
-// with minimal retry logic to avoid delays while maintaining reliability
-func GetSessionWithQuickCheck(endpoint string) (sess *session.Session, err error) {
-	if sess, err = session.NewSessionWithOptions(session.Options{
-		Config: aws.Config{
-			Region:     aws.String(defaultRegion),
-			Endpoint:   aws.String(endpoint),
-			MaxRetries: aws.Int(1),
-			SleepDelay: fastSleepDelay,
-		},
-		SharedConfigState: session.SharedConfigEnable,
-		Profile:           defaultProfile,
-	}); err != nil {
-
-		return nil, fmt.Errorf("Error creating new aws sdk session %s", err)
+	// Add profile if specified
+	if defaultProfile != "" {
+		opts = append(opts, config.WithSharedConfigProfile(defaultProfile))
 	}
-	return sess, nil
+
+	// Add custom endpoint if specified
+	if endpoint != "" {
+		opts = append(opts, config.WithEndpointResolverWithOptions(
+			aws.EndpointResolverWithOptionsFunc(
+				func(service, region string, options ...interface{}) (aws.Endpoint, error) {
+					return aws.Endpoint{
+						URL:           endpoint,
+						SigningRegion: region,
+					}, nil
+				},
+			),
+		))
+	}
+
+	// Load config
+	cfg, err := config.LoadDefaultConfig(ctx, opts...)
+	if err != nil {
+		return aws.Config{}, fmt.Errorf("error creating new aws sdk config: %w", err)
+	}
+
+	return cfg, nil
 }
 
-// GetDefaultSession creates aws sdk session with given profile and region
-func GetDefaultSession() (sess *session.Session, err error) {
-	return GetNewSessionWithEndpoint("")
+// GetConfigWithQuickCheck creates aws sdk config with minimal retry logic
+// to avoid delays while maintaining reliability (used for credential checks)
+func GetConfigWithQuickCheck(ctx context.Context, endpoint string) (aws.Config, error) {
+	// Build config options with minimal retries
+	opts := []func(*config.LoadOptions) error{
+		config.WithRegion(defaultRegion),
+		config.WithRetryMaxAttempts(1),
+	}
+
+	// Add profile if specified
+	if defaultProfile != "" {
+		opts = append(opts, config.WithSharedConfigProfile(defaultProfile))
+	}
+
+	// Add custom endpoint if specified
+	if endpoint != "" {
+		opts = append(opts, config.WithEndpointResolverWithOptions(
+			aws.EndpointResolverWithOptionsFunc(
+				func(service, region string, options ...interface{}) (aws.Endpoint, error) {
+					return aws.Endpoint{
+						URL:           endpoint,
+						SigningRegion: region,
+					}, nil
+				},
+			),
+		))
+	}
+
+	// Load config
+	cfg, err := config.LoadDefaultConfig(ctx, opts...)
+	if err != nil {
+		return aws.Config{}, fmt.Errorf("error creating new aws sdk config: %w", err)
+	}
+
+	return cfg, nil
 }
 
-// Sets the region and profile for default aws sessions
+// GetDefaultConfig creates aws sdk config with given profile and region
+func GetDefaultConfig(ctx context.Context) (aws.Config, error) {
+	return GetConfigWithEndpoint(ctx, "")
+}
+
+// SetRegionAndProfile sets the region and profile for default aws configs
 func SetRegionAndProfile(region string, profile string) {
 	defaultRegion = region
 	defaultProfile = profile
 }
 
-// Gets the region for default aws sessions
-func GetRegion() (region string) {
+// GetRegion gets the region for default aws configs
+func GetRegion() string {
 	return defaultRegion
-}
-
-var newRetryer = func() aws.RequestRetryer {
-	r := retryer.SsmCliRetryer{}
-	r.NumMaxRetries = 3
-	return r
-}
-
-var sleepDelay = func(d time.Duration) {
-	time.Sleep(d)
-}
-
-var fastSleepDelay = func(d time.Duration) {
-	// For credential checks, use minimal delay (max 50ms)
-	if d > 50*time.Millisecond {
-		time.Sleep(50 * time.Millisecond)
-	} else {
-		time.Sleep(d)
-	}
 }

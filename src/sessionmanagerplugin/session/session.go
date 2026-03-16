@@ -23,8 +23,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/aws/aws-sdk-go/aws/signer/v4"
-	"github.com/aws/aws-sdk-go/service/ssm"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
+	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/aws/session-manager-plugin/src/config"
 	"github.com/aws/session-manager-plugin/src/datachannel"
 	"github.com/aws/session-manager-plugin/src/log"
@@ -80,13 +81,14 @@ type Session struct {
 	Endpoint              string
 	ClientId              string
 	TargetId              string
-	sdk                   *ssm.SSM
+	sdk                   *ssm.Client
 	retryParams           retry.RepeatableExponentialRetryer
 	SessionType           string
 	SessionProperties     interface{}
 	DisplayMode           sessionutil.DisplayMode
 	Region                string
 	Signer                *v4.Signer
+	Credentials           aws.Credentials
 }
 
 // startSession create the datachannel for session

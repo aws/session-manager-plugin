@@ -20,13 +20,15 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/aws/aws-sdk-go/service/kms/kmsiface"
 	"github.com/aws/session-manager-plugin/src/log"
 )
 
 const (
 	nonceSize = 12
 )
+
+// KMSAPI is imported from kmsservice.go
+// It defines the interface for KMS operations
 
 type KMSKeyProvider interface {
 	GenerateDataKey()
@@ -39,7 +41,7 @@ type IEncrypter interface {
 }
 
 type Encrypter struct {
-	KMSService kmsiface.KMSAPI
+	KMSService KMSAPI
 
 	kmsKeyId      string
 	cipherTextKey []byte
@@ -47,14 +49,14 @@ type Encrypter struct {
 	decryptionKey []byte
 }
 
-var NewEncrypter = func(log log.T, kmsKeyId string, context map[string]*string, KMSService kmsiface.KMSAPI) (*Encrypter, error) {
+var NewEncrypter = func(log log.T, kmsKeyId string, context map[string]string, KMSService KMSAPI) (*Encrypter, error) {
 	encrypter := Encrypter{kmsKeyId: kmsKeyId, KMSService: KMSService}
 	err := encrypter.generateEncryptionKey(log, kmsKeyId, context)
 	return &encrypter, err
 }
 
 // generateEncryptionKey calls KMS to generate a new encryption key
-func (encrypter *Encrypter) generateEncryptionKey(log log.T, kmsKeyId string, context map[string]*string) error {
+func (encrypter *Encrypter) generateEncryptionKey(log log.T, kmsKeyId string, context map[string]string) error {
 	cipherTextKey, plainTextKey, err := KMSGenerateDataKey(kmsKeyId, encrypter.KMSService, context)
 	if err != nil {
 		log.Errorf("Error generating data key from KMS: %s,", err)

@@ -24,8 +24,8 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/signer/v4"
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/session-manager-plugin/src/log"
 	"github.com/gorilla/websocket"
 	"github.com/stretchr/testify/assert"
@@ -39,7 +39,8 @@ var (
 	defaultError        = errors.New("Default Error")
 	defaultMessage      = []byte("Default Message")
 	defaultRegion       = "us-east-1"
-	mockSigner          = &v4.Signer{Credentials: credentials.NewStaticCredentials("AKID", "SECRET", "SESSION")}
+	mockSigner          = v4.NewSigner()
+	mockCredentials     = aws.Credentials{AccessKeyID: "AKID", SecretAccessKey: "SECRET", SessionToken: "SESSION"}
 )
 
 type ErrorCallbackWrapper struct {
@@ -146,7 +147,7 @@ func TestWebsocketChannel_SetOnMessage(t *testing.T) {
 func TestWebsocketchannel_Initialize(t *testing.T) {
 	t.Log("Starting test: webSocketChannel.Initialize")
 	channel := &WebSocketChannel{}
-	channel.Initialize(mockLogger, defaultStreamUrl, defaultChannelToken, defaultRegion, mockSigner)
+	channel.Initialize(mockLogger, defaultStreamUrl, defaultChannelToken, defaultRegion, mockSigner, mockCredentials)
 
 	assert.Equal(t, defaultStreamUrl, channel.Url)
 	assert.Equal(t, defaultChannelToken, channel.ChannelToken)

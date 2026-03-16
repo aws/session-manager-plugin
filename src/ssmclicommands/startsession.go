@@ -21,8 +21,9 @@ import (
 	"html/template"
 	"strings"
 
-	sdkSession "github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ssm"
+	"context"
+
+	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	"github.com/aws/session-manager-plugin/src/datachannel"
 	"github.com/aws/session-manager-plugin/src/jsonutil"
 	"github.com/aws/session-manager-plugin/src/log"
@@ -85,20 +86,20 @@ type StartSessionHelpParams struct {
 
 type StartSessionCommand struct {
 	helpText string
-	sdk      *ssm.SSM
+	sdk      *ssm.Client
 }
 
 // getSSMClient generate ssm client by configuration
-var getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.SSM, error) {
+var getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.Client, error) {
 	sdkutil.SetRegionAndProfile(region, profile)
 
-	var sdkSession *sdkSession.Session
-	sdkSession, err := sdkutil.GetNewSessionWithEndpoint(endpoint)
+	ctx := context.Background()
+	cfg, err := sdkutil.GetConfigWithEndpoint(ctx, endpoint)
 	if err != nil {
-		log.Errorf("Get session with endpoint Failed: %v", err)
+		log.Errorf("Get config with endpoint Failed: %v", err)
 		return nil, err
 	}
-	return ssm.New(sdkSession), nil
+	return ssm.NewFromConfig(cfg), nil
 }
 
 // executeSession to open datachannel
@@ -108,7 +109,8 @@ var executeSession = func(log log.T, session *session.Session) (err error) {
 
 // startSession trigger a sdk start session call.
 var startSession = func(s *StartSessionCommand, input *ssm.StartSessionInput) (*ssm.StartSessionOutput, error) {
-	return s.sdk.StartSession(input)
+	ctx := context.Background()
+	return s.sdk.StartSession(ctx, input)
 }
 
 func init() {
@@ -267,7 +269,18 @@ func (s *StartSessionCommand) getStartSessionParams(log log.T, parameters map[st
 			userParameters[k] = values
 		}
 
-		startSessionInput.Parameters = userParameters
+		// Convert []*string to []string for v2 SDK
+		v2Parameters := make(map[string][]string)
+		for k, v := range userParameters {
+			stringValues := make([]string, len(v))
+			for i, ptr := range v {
+				if ptr != nil {
+					stringValues[i] = *ptr
+				}
+			}
+			v2Parameters[k] = stringValues
+		}
+		startSessionInput.Parameters = v2Parameters
 	}
 
 	log.Infof("StartSession input parameters: %v", startSessionInput)
