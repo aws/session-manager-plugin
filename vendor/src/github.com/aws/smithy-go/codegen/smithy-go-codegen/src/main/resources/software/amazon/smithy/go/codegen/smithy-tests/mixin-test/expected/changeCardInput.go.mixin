@@ -1,0 +1,8 @@
+type ChangeCardInput struct {
+	
+	Number *int32
+	
+	Suit *string
+	
+	noSmithyDocumentSerde
+}

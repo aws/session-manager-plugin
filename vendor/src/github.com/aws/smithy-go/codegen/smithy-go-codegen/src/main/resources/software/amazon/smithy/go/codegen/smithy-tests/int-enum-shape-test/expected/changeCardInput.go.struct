@@ -1,0 +1,8 @@
+type ChangeCardInput struct {
+	
+	Number types.Number
+	
+	Suit types.Suit
+	
+	noSmithyDocumentSerde
+}

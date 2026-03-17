@@ -1,0 +1,11 @@
+type ChangeCardOutput struct {
+	
+	Number *int32
+	
+	Suit *string
+	
+	// Metadata pertaining to the operation's result.
+	ResultMetadata middleware.Metadata
+	
+	noSmithyDocumentSerde
+}

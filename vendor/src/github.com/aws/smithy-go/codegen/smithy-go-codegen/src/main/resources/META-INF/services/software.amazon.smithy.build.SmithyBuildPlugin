@@ -1,0 +1,3 @@
+software.amazon.smithy.go.codegen.GoCodegenPlugin
+software.amazon.smithy.go.codegen.server.ServerCodegenPlugin
+software.amazon.smithy.go.codegen.ShapeCodegenPlugin
