@@ -1,0 +1,151 @@
+# v1.13.2 (2026-03-03)
+
+* **Dependency Update**: Bump minimum Go version to 1.24
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.13.1 (2026-02-23)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.13.0 (2026-02-10.2)
+
+* **Feature**: Added AgentCore browser proxy configuration support, allowing routing of browser traffic through HTTP and HTTPS proxy servers with authentication and bypass rules.
+
+# v1.12.0 (2026-02-05)
+
+* **Feature**: Support Browser profile persistence (cookies and local storage) across sessions for AgentCore Browser.
+
+# v1.11.0 (2026-01-21)
+
+* **Feature**: Supports custom browser extensions for AgentCore Browser and increased message payloads up to 100KB per message in an Event for AgentCore Memory
+
+# v1.10.2 (2026-01-09)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.10.1 (2025-12-08)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.10.0 (2025-12-02)
+
+* **Feature**: Support for AgentCore Evaluations and Episodic memory strategy for AgentCore Memory.
+* **Dependency Update**: Updated to the latest SDK module versions
+* **Dependency Update**: Upgrade to smithy-go v1.24.0. Notably this version of the library reduces the allocation footprint of the middleware system. We observe a ~10% reduction in allocations per SDK call with this change.
+
+# v1.9.1 (2025-11-25)
+
+* **Bug Fix**: Add error check for endpoint param binding during auth scheme resolution to fix panic reported in #3234
+
+# v1.9.0 (2025-11-20)
+
+* **Feature**: Bedrock AgentCore Memory release for redriving memory extraction jobs (StartMemoryExtractionJob and ListMemoryExtractionJob)
+
+# v1.8.5 (2025-11-19.2)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.8.4 (2025-11-12)
+
+* **Bug Fix**: Further reduce allocation overhead when the metrics system isn't in-use.
+* **Bug Fix**: Reduce allocation overhead when the client doesn't have any HTTP interceptors configured.
+* **Bug Fix**: Remove blank trace spans towards the beginning of the request that added no additional information. This conveys a slight reduction in overall allocations.
+
+# v1.8.3 (2025-11-11)
+
+* **Bug Fix**: Return validation error if input region is not a valid host label.
+
+# v1.8.2 (2025-11-04)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+* **Dependency Update**: Upgrade to smithy-go v1.23.2 which should convey some passive reduction of overall allocations, especially when not using the metrics system.
+
+# v1.8.1 (2025-10-30)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.8.0 (2025-10-23)
+
+* **Feature**: Fixing the service documentation name
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.7.1 (2025-10-16)
+
+* **Dependency Update**: Bump minimum Go version to 1.23.
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.7.0 (2025-10-13)
+
+* **Feature**: Updated InvokeAgentRuntime API to accept account id optionally and added CompleteResourceTokenAuth API.
+
+# v1.6.0 (2025-10-10)
+
+* **Feature**: Bedrock AgentCore release for Runtime, and Memory.
+
+# v1.5.0 (2025-10-06)
+
+* **Feature**: Add support for batch memory management, agent card retrieval and session termination
+
+# v1.4.5 (2025-09-26)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.4.4 (2025-09-23)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.4.3 (2025-09-10)
+
+* No change notes available for this release.
+
+# v1.4.2 (2025-09-08)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.4.1 (2025-08-29)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.4.0 (2025-08-27)
+
+* **Feature**: Remove incorrect endpoint tests
+* **Dependency Update**: Update to smithy-go v1.23.0.
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.3.2 (2025-08-21)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.3.1 (2025-08-20)
+
+* **Bug Fix**: Remove unused deserialization code.
+
+# v1.3.0 (2025-08-11)
+
+* **Feature**: Add support for configuring per-service Options via callback on global config.
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.2.0 (2025-08-04)
+
+* **Feature**: Remove superfluous field from API
+* **Feature**: Support configurable auth scheme preferences in service clients via AWS_AUTH_SCHEME_PREFERENCE in the environment, auth_scheme_preference in the config file, and through in-code settings on LoadDefaultConfig and client constructor methods.
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.1.1 (2025-07-30)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.1.0 (2025-07-28)
+
+* **Feature**: Add support for HTTP interceptors.
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.0.1 (2025-07-19)
+
+* **Dependency Update**: Updated to the latest SDK module versions
+
+# v1.0.0 (2025-07-16.2)
+
+* **Release**: New AWS service client module
+* **Feature**: Initial release of Amazon Bedrock AgentCore SDK including Runtime, Built-In Tools, Memory, Gateway and Identity.
+
