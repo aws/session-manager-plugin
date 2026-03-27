@@ -9,4 +9,4 @@
 package version
 
 // Version is the version of the CLI
-const Version = "1.2.0.0"
+const Version = "1.3.0.0"

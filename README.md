@@ -21,16 +21,7 @@ For information about troubleshooting, see [Troubleshooting Session Manager](htt
 
 ### Version Compatibility
 
-The default compiled version is 1.2.0.0. We strongly recommend you manually update to version 1.3.0.0 before you compile. This step is crucial to ensure you have access to the latest features and functionality.
-
-To update the version:
-1. Locate the version information in the following files:
-    - `src/version/version.go`
-    - `VERSION`
-2. In both files, update the version number from 1.2.0.0 to 1.3.0.0.
-3. Save the changes and recompile the plugin with the updated version number.
-
-By taking this extra step, you'll avoid potential feature limitations or functionality issues that may arise from using an outdated version. This practice ensures that you're working with the most up-to-date capabilities of the Session Manager Plugin.
+The default compiled version is 1.3.0.0, which enables all the latest features and functionality for local builds. Official releases use the 1.2.x.x versioning scheme. If you are building locally, we recommend keeping the default version (1.3.0.0) in both `VERSION` and `src/version/version.go` to ensure access to all available features.
 
 ### Working with Docker
 
