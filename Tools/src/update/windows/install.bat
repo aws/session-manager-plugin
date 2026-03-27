@@ -15,7 +15,7 @@ if not %errorLevel% == 0 echo [ERROR] Failed when trying to remove current insta
 :INSTALL
 echo [INFO] Detecting administrative permissions...
 net session >nul 2>&1
-if not %errorLevel% == 0 echo [ERROR] Current permissions are inadequate. & goto exit /b 1
+if not %errorLevel% == 0 echo [ERROR] Current permissions are inadequate. & exit /b 1
 echo [INFO] Administrative permissions confirmed.
 
 echo [INFO] Copy Amazon SessionManagerPlugin from %SsmcliZipFile% to %InstallingFolder%.
@@ -34,11 +34,27 @@ sc failure %ServiceName% reset= 86400 actions= restart/1000/restart/1000//1000
 if not %errorlevel% == 0 echo [WARN] Failed to configure recovery settings for %ServiceName% service.
 
 echo [INFO] Set environment path variable.
-echo ;%PATH%; | find /C /I ";%InstallingFolder%\bin\;" >nul
-if %errorlevel% == 0 echo "%InstallingFolder%\bin\ already in env:PATH" & goto FINISH
-set Empty=0
-for /f "skip=2 tokens=3*" %%a in ('reg query HKCU\Environment /v PATH') do if [%%b]==[] ( setx PATH "%%~a;%InstallingFolder%\bin\;" && set Empty=1 ) else ( setx PATH "%%~a %%~b;%InstallingFolder%\bin\;" && set Empty=1 )
-if "%Empty%" == "0" setx PATH "%InstallingFolder%\bin\;"
+
+rem Read existing user PATH from registry
+for /f "skip=2 tokens=2,*" %%A in ('reg query HKCU\Environment /v PATH 2^>nul') do (
+    set "UserPath=%%B"
+)
+
+echo ;%UserPath%; | find /C /I ";%InstallingFolder%\bin\;" >nul
+if %errorlevel% == 0 (
+    echo "%InstallingFolder%\bin\ already in user PATH"
+    goto FINISH
+)
+
+if defined UserPath (
+    set "NewPath=%UserPath%;%InstallingFolder%\bin\"
+) else (
+    set "NewPath=%InstallingFolder%\bin\"
+)
+
+reg add HKCU\Environment /v PATH /t REG_EXPAND_SZ /d "%NewPath%" /f >nul
+
+echo [INFO] PATH updated successfully.
 
 :FINISH
 exit /b 0
