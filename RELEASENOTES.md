@@ -1,5 +1,11 @@
 Latest
 ================
+- Bump to aws-sdk-go-v2 package
+- Update windows install script
+- Update default plugin version for local build
+
+1.2.792.0
+================
 - Add international keyboard support for Windows
 
 1.2.779.0
