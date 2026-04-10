@@ -194,6 +194,59 @@ func TestStartSessionCommand_getStartSessionParamsWithNilOutput(t *testing.T) {
 	assert.Empty(t, url)
 }
 
+func TestStartSessionCommand_ExecuteWithEndpoint(t *testing.T) {
+	parameter, _ := getCommandParameter()
+	parameter[ENDPOINT] = []string{"https://ssm.us-east-1.amazonaws.com"}
+	command := &StartSessionCommand{
+		helpText: "StartSessionCommand Help Context",
+	}
+	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.Client, error) {
+		assert.Equal(t, region, "us-east-1")
+		assert.Equal(t, endpoint, "https://ssm.us-east-1.amazonaws.com")
+		ssmClient := &ssm.Client{}
+		return ssmClient, nil
+	}
+
+	executeSession = func(log log.T, session *session.Session) (err error) {
+		// Verify endpoint is stored on the session for later use by TerminateSession/ResumeSession
+		assert.Equal(t, "https://ssm.us-east-1.amazonaws.com", session.Endpoint)
+		return nil
+	}
+
+	startSession = func(s *StartSessionCommand, input *ssm.StartSessionInput) (*ssm.StartSessionOutput, error) {
+		return startSessionOutput, nil
+	}
+
+	err, msg := command.Execute(parameter)
+	assert.Nil(t, err)
+	assert.Equal(t, msg, "StartSession executed successfully")
+}
+
+func TestStartSessionCommand_ExecuteWithEmptyEndpoint(t *testing.T) {
+	parameter, _ := getCommandParameter()
+	command := &StartSessionCommand{
+		helpText: "StartSessionCommand Help Context",
+	}
+	getSSMClient = func(log log.T, region string, profile string, endpoint string) (*ssm.Client, error) {
+		assert.Empty(t, endpoint)
+		ssmClient := &ssm.Client{}
+		return ssmClient, nil
+	}
+
+	executeSession = func(log log.T, session *session.Session) (err error) {
+		assert.Empty(t, session.Endpoint)
+		return nil
+	}
+
+	startSession = func(s *StartSessionCommand, input *ssm.StartSessionInput) (*ssm.StartSessionOutput, error) {
+		return startSessionOutput, nil
+	}
+
+	err, msg := command.Execute(parameter)
+	assert.Nil(t, err)
+	assert.Equal(t, msg, "StartSession executed successfully")
+}
+
 func getCommandParameter() (parameters map[string][]string, err error) {
 	args := []string{1: "start-session", 2: "--instance-id", 3: "i-123456", 4: "--region", 5: "us-east-1"}
 	err, _, _, _, parameter := ParseCliCommand(args)

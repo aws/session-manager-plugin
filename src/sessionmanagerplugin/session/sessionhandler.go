@@ -55,7 +55,7 @@ func (s *Session) OpenDataChannel(log log.T) (err error) {
 		// Only attempt credential lookup if URL is not presigned
 		if !presigned {
 			ctx := context.Background()
-			cfg, err := sdkutil.GetConfigWithQuickCheck(ctx, s.Endpoint)
+			cfg, err := sdkutil.GetConfigWithQuickCheck(ctx)
 			if err != nil {
 				log.Errorf("Failed to create aws config: %v", err)
 			} else {
@@ -146,12 +146,19 @@ func (s *Session) GetResumeSessionParams(log log.T) (string, error) {
 
 	// Only attempt credential lookup if URL is not presigned
 	if !presigned {
-		cfg, err := sdkutil.GetConfigWithQuickCheck(ctx, s.Endpoint)
+		cfg, err := sdkutil.GetConfigWithQuickCheck(ctx)
 		if err != nil {
 			return "", err
 		}
 
-		ssmClient := ssm.NewFromConfig(cfg)
+		var ssmOpts []func(*ssm.Options)
+		if s.Endpoint != "" {
+			endpoint := s.Endpoint
+			ssmOpts = append(ssmOpts, func(o *ssm.Options) {
+				o.BaseEndpoint = &endpoint
+			})
+		}
+		ssmClient := ssm.NewFromConfig(cfg, ssmOpts...)
 
 		// Update signer with fresh credentials
 		creds, getCredErr := cfg.Credentials.Retrieve(ctx)
@@ -203,13 +210,20 @@ func (s *Session) ResumeSessionHandler(log log.T) (err error) {
 func (s *Session) TerminateSession(log log.T) error {
 	ctx := context.Background()
 
-	cfg, err := sdkutil.GetConfigWithQuickCheck(ctx, s.Endpoint)
+	cfg, err := sdkutil.GetConfigWithQuickCheck(ctx)
 	if err != nil {
 		log.Errorf("Terminate Session failed: %v", err)
 		return err
 	}
 
-	ssmClient := ssm.NewFromConfig(cfg)
+	var ssmOpts []func(*ssm.Options)
+	if s.Endpoint != "" {
+		endpoint := s.Endpoint
+		ssmOpts = append(ssmOpts, func(o *ssm.Options) {
+			o.BaseEndpoint = &endpoint
+		})
+	}
+	ssmClient := ssm.NewFromConfig(cfg, ssmOpts...)
 
 	terminateSessionInput := ssm.TerminateSessionInput{
 		SessionId: &s.SessionId,

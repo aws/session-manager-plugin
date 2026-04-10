@@ -155,6 +155,33 @@ func TestOpenDataChannelWithError(t *testing.T) {
 	assert.Nil(t, err)
 }
 
+func TestOpenDataChannelWithEndpoint(t *testing.T) {
+	mockDataChannel = &dataChannelMock.IDataChannel{}
+	mockWsChannel = &wsChannelMock.IWebSocketChannel{}
+
+	// Session with a custom SSM endpoint — should NOT affect credential resolution
+	sessionMock := &Session{
+		StreamUrl: "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/test-session?role=publish_subscribe",
+		Endpoint:  "https://ssm.us-east-1.amazonaws.com",
+	}
+	sessionMock.DataChannel = mockDataChannel
+	SetupMockActions()
+	mockDataChannel.On("Open", mock.Anything).Return(nil)
+
+	// Set up credentials for this test
+	os.Setenv("AWS_ACCESS_KEY_ID", "test-access-key-id")
+	os.Setenv("AWS_SECRET_ACCESS_KEY", "test-secret-access-key")
+	defer func() {
+		os.Unsetenv("AWS_ACCESS_KEY_ID")
+		os.Unsetenv("AWS_SECRET_ACCESS_KEY")
+	}()
+
+	err := sessionMock.OpenDataChannel(logger)
+	assert.Nil(t, err)
+	// Signer should still be set — endpoint should not interfere with credential lookup
+	assert.NotNil(t, sessionMock.Signer)
+}
+
 func TestProcessFirstMessageOutputMessageFirst(t *testing.T) {
 	outputMessage := message.ClientMessage{
 		PayloadType: uint32(message.Output),

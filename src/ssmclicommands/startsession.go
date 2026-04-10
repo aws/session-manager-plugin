@@ -94,12 +94,19 @@ var getSSMClient = func(log log.T, region string, profile string, endpoint strin
 	sdkutil.SetRegionAndProfile(region, profile)
 
 	ctx := context.Background()
-	cfg, err := sdkutil.GetConfigWithEndpoint(ctx, endpoint)
+	cfg, err := sdkutil.GetDefaultConfig(ctx)
 	if err != nil {
-		log.Errorf("Get config with endpoint Failed: %v", err)
+		log.Errorf("Get default config Failed: %v", err)
 		return nil, err
 	}
-	return ssm.NewFromConfig(cfg), nil
+
+	var opts []func(*ssm.Options)
+	if endpoint != "" {
+		opts = append(opts, func(o *ssm.Options) {
+			o.BaseEndpoint = &endpoint
+		})
+	}
+	return ssm.NewFromConfig(cfg, opts...), nil
 }
 
 // executeSession to open datachannel

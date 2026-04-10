@@ -25,8 +25,8 @@ import (
 var defaultRegion string
 var defaultProfile string
 
-// GetConfigWithEndpoint creates aws sdk config with given profile, region and endpoint
-func GetConfigWithEndpoint(ctx context.Context, endpoint string) (aws.Config, error) {
+// GetDefaultConfig creates aws sdk config with given profile and region
+func GetDefaultConfig(ctx context.Context) (aws.Config, error) {
 	// Build config options
 	opts := []func(*config.LoadOptions) error{
 		config.WithRegion(defaultRegion),
@@ -36,20 +36,6 @@ func GetConfigWithEndpoint(ctx context.Context, endpoint string) (aws.Config, er
 	// Add profile if specified
 	if defaultProfile != "" {
 		opts = append(opts, config.WithSharedConfigProfile(defaultProfile))
-	}
-
-	// Add custom endpoint if specified
-	if endpoint != "" {
-		opts = append(opts, config.WithEndpointResolverWithOptions(
-			aws.EndpointResolverWithOptionsFunc(
-				func(service, region string, options ...interface{}) (aws.Endpoint, error) {
-					return aws.Endpoint{
-						URL:           endpoint,
-						SigningRegion: region,
-					}, nil
-				},
-			),
-		))
 	}
 
 	// Load config
@@ -63,7 +49,7 @@ func GetConfigWithEndpoint(ctx context.Context, endpoint string) (aws.Config, er
 
 // GetConfigWithQuickCheck creates aws sdk config with minimal retry logic
 // to avoid delays while maintaining reliability (used for credential checks)
-func GetConfigWithQuickCheck(ctx context.Context, endpoint string) (aws.Config, error) {
+func GetConfigWithQuickCheck(ctx context.Context) (aws.Config, error) {
 	// Build config options with minimal retries
 	opts := []func(*config.LoadOptions) error{
 		config.WithRegion(defaultRegion),
@@ -75,20 +61,6 @@ func GetConfigWithQuickCheck(ctx context.Context, endpoint string) (aws.Config, 
 		opts = append(opts, config.WithSharedConfigProfile(defaultProfile))
 	}
 
-	// Add custom endpoint if specified
-	if endpoint != "" {
-		opts = append(opts, config.WithEndpointResolverWithOptions(
-			aws.EndpointResolverWithOptionsFunc(
-				func(service, region string, options ...interface{}) (aws.Endpoint, error) {
-					return aws.Endpoint{
-						URL:           endpoint,
-						SigningRegion: region,
-					}, nil
-				},
-			),
-		))
-	}
-
 	// Load config
 	cfg, err := config.LoadDefaultConfig(ctx, opts...)
 	if err != nil {
@@ -96,11 +68,6 @@ func GetConfigWithQuickCheck(ctx context.Context, endpoint string) (aws.Config, 
 	}
 
 	return cfg, nil
-}
-
-// GetDefaultConfig creates aws sdk config with given profile and region
-func GetDefaultConfig(ctx context.Context) (aws.Config, error) {
-	return GetConfigWithEndpoint(ctx, "")
 }
 
 // SetRegionAndProfile sets the region and profile for default aws configs
