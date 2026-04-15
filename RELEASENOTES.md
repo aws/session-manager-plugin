@@ -1,5 +1,9 @@
 Latest
 ================
+- Move SSM endpoint configuration from global AWS config to SSM client level
+
+1.2.804.0
+================
 - Bump to aws-sdk-go-v2 package
 - Update windows install script
 - Update default plugin version for local build
