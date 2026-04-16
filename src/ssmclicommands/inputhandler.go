@@ -87,7 +87,7 @@ func ParseCliCommand(args []string) (err error, options []string, command string
 
 // ValidateInput function validates the input and displays response accordingly.
 func ValidateInput(args []string, out io.Writer) {
-	uuid.SwitchFormat(uuid.CleanHyphen)
+	uuid.SwitchFormat(uuid.FormatCanonical)
 
 	if len(args) < ArgumentLength {
 		utils.DisplayCommandUsage(out)

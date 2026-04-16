@@ -494,7 +494,7 @@ func SerializeClientMessageWithAcknowledgeContent(log log.T, acknowledgeContent 
 		return
 	}
 
-	uuid.SwitchFormat(uuid.CleanHyphen)
+	uuid.SwitchFormat(uuid.FormatCanonical)
 	messageId := uuid.NewV4()
 	clientMessage := ClientMessage{
 		MessageType:    AcknowledgeMessage,

@@ -1,3 +1,0 @@
-[profile partial-creds-1]
-aws_secret_access_key = configSecretKey
-region = us-west-2
