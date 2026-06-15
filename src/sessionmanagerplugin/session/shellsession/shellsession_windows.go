@@ -18,6 +18,7 @@
 package shellsession
 
 import (
+	"errors"
 	"os"
 	"time"
 
@@ -79,7 +80,18 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 		}
 		if character != 0 {
 			charBytes := []byte(string(character))
-			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, charBytes); err != nil {
+			toSend, escErr := s.handleEscapeSequence(log, charBytes, len(charBytes))
+			if escErr != nil {
+				if !errors.Is(escErr, errSessionTerminated) {
+					log.Errorf("Escape sequence failure: %v", escErr)
+				}
+				s.Stop()
+				return
+			}
+			if len(toSend) == 0 {
+				continue
+			}
+			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, toSend); err != nil {
 				log.Errorf("Failed to send UTF8 char: %v", err)
 				break
 			}
@@ -88,7 +100,18 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 			if byteValue, ok := specialKeysInputMap[key]; ok {
 				keyBytes = byteValue
 			}
-			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, keyBytes); err != nil {
+			toSend, escErr := s.handleEscapeSequence(log, keyBytes, len(keyBytes))
+			if escErr != nil {
+				if !errors.Is(escErr, errSessionTerminated) {
+					log.Errorf("Escape sequence failure: %v", escErr)
+				}
+				s.Stop()
+				return
+			}
+			if len(toSend) == 0 {
+				continue
+			}
+			if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, toSend); err != nil {
 				log.Errorf("Failed to send UTF8 char: %v", err)
 				break
 			}

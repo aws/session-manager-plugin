@@ -20,6 +20,7 @@ package shellsession
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"os"
 	"os/exec"
 	"time"
@@ -75,7 +76,19 @@ func (s *ShellSession) handleKeyboardInput(log log.T) (err error) {
 			break
 		}
 
-		if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, stdinBytes[:stdinBytesLen]); err != nil {
+		toSend, escErr := s.handleEscapeSequence(log, stdinBytes[:stdinBytesLen], stdinBytesLen)
+		if escErr != nil {
+			if !errors.Is(escErr, errSessionTerminated) {
+				log.Errorf("Escape sequence failure: %v", escErr)
+			}
+			s.Stop()
+			return
+		}
+		if len(toSend) == 0 {
+			continue
+		}
+
+		if err = s.Session.DataChannel.SendInputDataMessage(log, message.Output, toSend); err != nil {
 			log.Errorf("Failed to send UTF8 char: %v", err)
 			break
 		}
