@@ -1,5 +1,10 @@
 Latest
 ================
+- Add SSH-style escape sequences to shell sessions (~. to terminate, ~? for help)
+- Fix port forwarding sessions silently dying after WebSocket reconnection
+
+1.2.814.0
+================
 - Move SSM endpoint configuration from global AWS config to SSM client level
 
 1.2.804.0
