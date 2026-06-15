@@ -117,6 +117,16 @@ func (_m *IWebSocketChannel) SetChannelToken(_a0 string) {
 	_m.Called(_a0)
 }
 
+// SetStreamUrl provides a mock function with given fields: _a0
+func (_m *IWebSocketChannel) SetStreamUrl(_a0 string) {
+	_m.Called(_a0)
+}
+
+// SetCredentials provides a mock function with given fields: _a0
+func (_m *IWebSocketChannel) SetCredentials(_a0 aws.Credentials) {
+	_m.Called(_a0)
+}
+
 // SetOnError provides a mock function with given fields: onErrorHandler
 func (_m *IWebSocketChannel) SetOnError(onErrorHandler func(error)) {
 	_m.Called(onErrorHandler)

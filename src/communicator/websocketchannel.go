@@ -42,6 +42,8 @@ type IWebSocketChannel interface {
 	GetChannelToken() string
 	GetStreamUrl() string
 	SetChannelToken(string)
+	SetStreamUrl(string)
+	SetCredentials(aws.Credentials)
 	SetOnError(onErrorHandler func(error))
 	SetOnMessage(onMessageHandler func([]byte))
 }
@@ -74,6 +76,16 @@ func (webSocketChannel *WebSocketChannel) SetChannelToken(channelToken string) {
 // GetStreamUrl gets stream url
 func (webSocketChannel *WebSocketChannel) GetStreamUrl() string {
 	return webSocketChannel.Url
+}
+
+// SetStreamUrl sets the stream url for reconnection
+func (webSocketChannel *WebSocketChannel) SetStreamUrl(url string) {
+	webSocketChannel.Url = url
+}
+
+// SetCredentials updates the credentials used for signing
+func (webSocketChannel *WebSocketChannel) SetCredentials(creds aws.Credentials) {
+	webSocketChannel.Credentials = creds
 }
 
 // SetOnError sets OnError field of websocket channel

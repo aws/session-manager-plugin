@@ -129,7 +129,7 @@ func (s *Session) Stop() {
 }
 
 // GetResumeSessionParams calls ResumeSession API and gets tokenvalue for reconnecting
-func (s *Session) GetResumeSessionParams(log log.T) (string, error) {
+func (s *Session) GetResumeSessionParams(log log.T) (string, string, error) {
 	ctx := context.Background()
 
 	var (
@@ -148,7 +148,7 @@ func (s *Session) GetResumeSessionParams(log log.T) (string, error) {
 	if !presigned {
 		cfg, err := sdkutil.GetConfigWithQuickCheck(ctx)
 		if err != nil {
-			return "", err
+			return "", "", err
 		}
 
 		var ssmOpts []func(*ssm.Options)
@@ -176,23 +176,35 @@ func (s *Session) GetResumeSessionParams(log log.T) (string, error) {
 		log.Debugf("Resume Session input parameters: %v", resumeSessionInput)
 		if resumeSessionOutput, err = ssmClient.ResumeSession(ctx, &resumeSessionInput); err != nil {
 			log.Errorf("Resume Session failed: %v", err)
-			return "", err
+			return "", "", err
 		}
 
 		if resumeSessionOutput.TokenValue == nil {
-			return "", nil
+			return "", "", nil
 		}
 
-		return *resumeSessionOutput.TokenValue, nil
+		streamUrl := ""
+		if resumeSessionOutput.StreamUrl != nil {
+			streamUrl = *resumeSessionOutput.StreamUrl
+		}
+
+		return *resumeSessionOutput.TokenValue, streamUrl, nil
 	}
 
 	log.Debugf("StreamUrl is presigned, skipping resume session")
-	return "", errors.New("Skip resuming session with presigned URL")
+	return "", "", errors.New("Skip resuming session with presigned URL")
+}
+
+// getResumeSessionParams is the function used by ResumeSessionHandler to get token and stream URL.
+// It is a variable to allow test injection.
+var getResumeSessionParams = func(s *Session, log log.T) (string, string, error) {
+	return s.GetResumeSessionParams(log)
 }
 
 // ResumeSessionHandler gets token value and tries to Reconnect to datachannel
 func (s *Session) ResumeSessionHandler(log log.T) (err error) {
-	s.TokenValue, err = s.GetResumeSessionParams(log)
+	var streamUrl string
+	s.TokenValue, streamUrl, err = getResumeSessionParams(s, log)
 	if err != nil {
 		log.Errorf("Failed to get token: %v", err)
 		return
@@ -202,6 +214,11 @@ func (s *Session) ResumeSessionHandler(log log.T) (err error) {
 		os.Exit(0)
 	}
 	s.DataChannel.GetWsChannel().SetChannelToken(s.TokenValue)
+	s.DataChannel.GetWsChannel().SetCredentials(s.Credentials)
+	if streamUrl != "" {
+		s.StreamUrl = streamUrl
+		s.DataChannel.GetWsChannel().SetStreamUrl(streamUrl)
+	}
 	err = s.DataChannel.Reconnect(log)
 	return
 }
