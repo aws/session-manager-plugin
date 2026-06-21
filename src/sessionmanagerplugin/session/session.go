@@ -44,7 +44,7 @@ const (
 	VersionFile           = "VERSION"
 )
 
-var SessionRegistry = map[string]ISessionPlugin{}
+var SessionRegistry = map[string]func() ISessionPlugin{}
 
 type ISessionPlugin interface {
 	SetSessionHandlers(log.T) error
@@ -65,11 +65,11 @@ type ISession interface {
 }
 
 func init() {
-	SessionRegistry = make(map[string]ISessionPlugin)
+	SessionRegistry = make(map[string]func() ISessionPlugin)
 }
 
-func Register(session ISessionPlugin) {
-	SessionRegistry[session.Name()] = session
+func Register(session ISessionPlugin, constructor func() ISessionPlugin) {
+	SessionRegistry[session.Name()] = constructor
 }
 
 type Session struct {
@@ -98,8 +98,12 @@ var startSession = func(session *Session, log log.T) error {
 
 // setSessionHandlersWithSessionType set session handlers based on session subtype
 var setSessionHandlersWithSessionType = func(session *Session, log log.T) error {
-	// SessionType is set inside DataChannel
-	sessionSubType := SessionRegistry[session.SessionType]
+	constructor := SessionRegistry[session.SessionType]
+	if constructor == nil {
+		return fmt.Errorf("no constructor found for session type %s", session.SessionType)
+	}
+
+	sessionSubType := constructor()
 	sessionSubType.Initialize(log, session)
 	return sessionSubType.SetSessionHandlers(log)
 }
