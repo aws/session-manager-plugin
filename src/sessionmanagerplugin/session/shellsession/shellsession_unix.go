@@ -23,6 +23,7 @@ import (
 	"errors"
 	"os"
 	"os/exec"
+	"strings"
 	"time"
 
 	"github.com/aws/session-manager-plugin/src/log"
@@ -34,6 +35,7 @@ func (s *ShellSession) disableEchoAndInputBuffering() {
 	getState(&s.originalSttyState)
 	setState(bytes.NewBufferString("cbreak"))
 	setState(bytes.NewBufferString("-echo"))
+	s.disableDelayedSuspend()
 }
 
 // getState gets current state of terminal
@@ -44,9 +46,12 @@ func getState(state *bytes.Buffer) error {
 	return cmd.Run()
 }
 
-// setState sets the new settings to terminal
+// setState sets the new settings to terminal. The buffer may contain several
+// whitespace-separated stty operands (for example "dsusp undef"), which must be
+// passed to stty as individual arguments rather than a single operand.
 func setState(state *bytes.Buffer) error {
-	cmd := exec.Command("stty", state.String())
+	args := strings.Fields(state.String())
+	cmd := exec.Command("stty", args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	return cmd.Run()
