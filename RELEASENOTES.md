@@ -2,6 +2,7 @@ Latest
 ================
 - Add SSH-style escape sequences to shell sessions (~. to terminate, ~? for help)
 - Fix port forwarding sessions silently dying after WebSocket reconnection
+- Fix shell sessions terminating on macOS/BSD when Ctrl+Y is pressed by disabling the DSUSP terminal control character
 
 1.2.814.0
 ================
