@@ -59,7 +59,7 @@ func TestValidateInputAndStartSession(t *testing.T) {
 		return fmt.Errorf("Some error")
 	}
 	ValidateInputAndStartSession(args, &buffer)
-	assert.Contains(t, buffer.String(), "Cannot perform start session: Some error")
+	assert.Contains(t, buffer.String(), "Unable to establish session connection: Some error")
 }
 
 func TestValidateInputAndStartSessionWithEnvVariableParameter(t *testing.T) {
