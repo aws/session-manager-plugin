@@ -15,10 +15,12 @@
 package session
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -201,6 +203,13 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 			return
 		}
 
+		if startSessionOutput.SessionId == nil || startSessionOutput.StreamUrl == nil ||
+			startSessionOutput.TokenValue == nil {
+			log.Error("Cannot perform start session: StartSession response is missing SessionId, StreamUrl or TokenValue")
+			fmt.Fprint(out, "Cannot perform start session: StartSession response is missing required fields\n")
+			return
+		}
+
 		session.SessionId = *startSessionOutput.SessionId
 		session.StreamUrl = *startSessionOutput.StreamUrl
 		session.TokenValue = *startSessionOutput.TokenValue
@@ -209,6 +218,17 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 		session.TargetId = target
 		session.Region = region
 		session.DataChannel = &datachannel.DataChannel{}
+
+		if err = validateStreamUrl(session.StreamUrl, session.Region, session.Endpoint); err != nil {
+			log.Errorf("Cannot perform start session, invalid StreamUrl: %v", err)
+			fmt.Fprintf(out, "Cannot perform start session: %v\n", err)
+			return
+		}
+		if strings.TrimSpace(session.TokenValue) == "" {
+			log.Error("Cannot perform start session: TokenValue is empty")
+			fmt.Fprint(out, "Cannot perform start session: TokenValue is empty\n")
+			return
+		}
 
 	default:
 		fmt.Fprint(out, "Invalid Operation")
@@ -220,6 +240,105 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 		fmt.Fprintf(out, "Unable to establish session connection: %v\n", err)
 		return
 	}
+}
+
+const ssmMessagesServiceName = "ssmmessages"
+
+// validateStreamUrl checks that streamUrl is a wss URL for the client's region on an AWS-owned host.
+func validateStreamUrl(streamUrl string, region string, ssmEndpoint string) error {
+	if strings.TrimSpace(streamUrl) == "" {
+		return errors.New("StreamUrl is empty")
+	}
+	if strings.TrimSpace(region) == "" {
+		return errors.New("client region is empty, cannot validate StreamUrl host")
+	}
+
+	parsedUrl, err := url.Parse(streamUrl)
+	if err != nil {
+		return fmt.Errorf("StreamUrl is not a valid URL: %v", err)
+	}
+	if !strings.EqualFold(parsedUrl.Scheme, "wss") {
+		return fmt.Errorf("StreamUrl has unexpected scheme %q, expected \"wss\"", parsedUrl.Scheme)
+	}
+	if parsedUrl.User != nil {
+		return errors.New("StreamUrl must not contain userinfo")
+	}
+
+	host := strings.TrimSuffix(strings.ToLower(parsedUrl.Hostname()), ".")
+	if host == "" {
+		return errors.New("StreamUrl has no host")
+	}
+	region = strings.ToLower(region)
+
+	if !hasServiceRegionLabels(host, region) {
+		return fmt.Errorf("StreamUrl host %q is not an ssmmessages endpoint for region %q", host, region)
+	}
+	for _, suffix := range trustedDnsSuffixes(region, ssmEndpoint) {
+		if suffix != "" && (host == suffix || strings.HasSuffix(host, "."+suffix)) {
+			return nil
+		}
+	}
+	return fmt.Errorf("StreamUrl host %q is not under a recognized AWS DNS suffix", host)
+}
+
+// hasServiceRegionLabels reports whether host has an ssmmessages[-fips] label followed by the region label.
+func hasServiceRegionLabels(host, region string) bool {
+	labels := strings.Split(host, ".")
+	for i := 0; i+1 < len(labels); i++ {
+		if (labels[i] == ssmMessagesServiceName || labels[i] == ssmMessagesServiceName+"-fips") &&
+			labels[i+1] == region {
+			return true
+		}
+	}
+	return false
+}
+
+// trustedDnsSuffixes returns the AWS DNS suffixes a StreamUrl host may end with, taken from the ssm
+// endpoint the CLI passed and the SDK's standard and dual-stack endpoints for the region.
+func trustedDnsSuffixes(region, ssmEndpoint string) []string {
+	suffixes := []string{resolvedSsmDnsSuffix(region, false), resolvedSsmDnsSuffix(region, true)}
+	if s := dnsSuffixFromSsmEndpoint(ssmEndpoint, region); s != "" {
+		suffixes = append(suffixes, s)
+	}
+	return suffixes
+}
+
+// resolvedSsmDnsSuffix returns the DNS suffix of the SDK-resolved ssm endpoint for region, or "".
+func resolvedSsmDnsSuffix(region string, dualStack bool) string {
+	endpoint, err := ssm.NewDefaultEndpointResolverV2().ResolveEndpoint(context.Background(),
+		ssm.EndpointParameters{Region: aws.String(region), UseDualStack: aws.Bool(dualStack)})
+	if err != nil {
+		return ""
+	}
+	return dnsSuffixFromHost(endpoint.URI.Hostname(), region)
+}
+
+// dnsSuffixFromSsmEndpoint returns the DNS suffix of an ssm endpoint URL, or "".
+func dnsSuffixFromSsmEndpoint(ssmEndpoint string, region string) string {
+	if strings.TrimSpace(ssmEndpoint) == "" {
+		return ""
+	}
+	host := ssmEndpoint
+	if parsed, err := url.Parse(ssmEndpoint); err == nil && parsed.Host != "" {
+		host = parsed.Hostname()
+	}
+	return dnsSuffixFromHost(host, region)
+}
+
+// dnsSuffixFromHost strips the ssm[-fips] and region labels from an ssm host, leaving the DNS suffix.
+func dnsSuffixFromHost(host, region string) string {
+	host = strings.TrimSuffix(strings.ToLower(host), ".")
+	for _, servicePrefix := range []string{"ssm-fips.", "ssm."} {
+		if strings.HasPrefix(host, servicePrefix) {
+			host = host[len(servicePrefix):]
+			break
+		}
+	}
+	host = strings.TrimPrefix(host, strings.ToLower(region)+".")
+	if host == "" || strings.ContainsAny(host, "/:@") {
+		return ""
+	}
+	return host
 }
 
 // Execute create data channel and start the session
