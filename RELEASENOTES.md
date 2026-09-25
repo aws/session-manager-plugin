@@ -1,5 +1,11 @@
 Latest
 ================
+- Validate that the session stream URL is an AWS Session Manager endpoint before connecting
+- Support log configuration for non-admin users on Windows
+- Report connection failures instead of hanging when a session cannot be established
+
+1.2.835.0
+================
 - Add SSH-style escape sequences to shell sessions (~. to terminate, ~? for help)
 - Fix port forwarding sessions silently dying after WebSocket reconnection
 
