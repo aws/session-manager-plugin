@@ -198,7 +198,24 @@ func TestValidateStreamUrl(t *testing.T) {
 		{"foreign suffix", "wss://ssmmessages.us-east-1.example.com/v1/data-channel/s", region, "", true},
 		{"prefix smuggling", "wss://ssmmessages.us-east-1.amazonaws.com.example.com/v1/data-channel/s", region, endpoint, true},
 		{"embedded userinfo", "wss://ssmmessages.us-east-1.amazonaws.com@example.com/v1/data-channel/s", region, endpoint, true},
-		{"wrong region in host", "wss://ssmmessages.us-west-2.amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"host not tied to client region", "wss://ssmmessages.us-west-2.amazonaws.com/v1/data-channel/s", region, endpoint, false},
+		{"mgs service label", "wss://stream-mgs.us-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, false},
+		{"gamma service label", "wss://stream-gamma.us-west-2.amazonaws.com/v1/data-channel/s", region, endpoint, false},
+		{"beta service label", "wss://stream-beta.us-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, false},
+		{"fips service label", "wss://stream-fips.us-east-2.amazonaws.com/v1/data-channel/s", region, endpoint, false},
+		{"service label without keyword", "wss://other-service.us-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"customer-named load balancer", "wss://evil-mgs-123.us-east-1.elb.amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"extra leading label", "wss://evil.ssmmessages.us-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"bare aws suffix", "wss://amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"s3 virtual-hosted bucket", "wss://evil-mgs.s3.amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"s3 legacy regional bucket", "ws://evil-mgs.s3-us-west-2.amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"s3 website bucket", "ws://evil-mgs.s3-website-us-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, true},
+		{"airport code region label", "wss://stream-mgs.iad.amazonaws.com/v1/data-channel/s", region, endpoint, false},
+		{"new partition style region label", "wss://ssmmessages.ap-examplea-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, false},
+		{"amazon.com suffix", "wss://stream-mgs.pdx.amazon.com/v1/data-channel/s", region, endpoint, false},
+		{"amazon.com suffix without keyword", "wss://www.pdx.amazon.com/v1/data-channel/s", region, endpoint, true},
+		{"amazon.com suffix with extra leading label", "wss://evil.stream-mgs.pdx.amazon.com/v1/data-channel/s", region, endpoint, true},
+		{"ws scheme", "ws://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, false},
 		{"wrong scheme https", "https://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/s", region, endpoint, true},
 		{"empty url", "", region, endpoint, true},
 		{"empty region", "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/s", "", endpoint, true},
@@ -229,4 +246,53 @@ func TestValidateInputAndStartSessionRejectsFakeStreamUrl(t *testing.T) {
 	ValidateInputAndStartSession(args, &buffer)
 	assert.False(t, startSessionCalled, "session must not start for a non-SSM StreamUrl")
 	assert.Contains(t, buffer.String(), "Cannot perform start session")
+}
+
+func TestValidateStreamUrlAdditionalHosts(t *testing.T) {
+	const region = "us-east-1"
+	t.Setenv(additionalStreamHostsEnvVar, " stream-a.example.com , Stream-B.Example.org.")
+	cases := []struct {
+		name      string
+		streamUrl string
+		wantErr   bool
+	}{
+		{"allowed host", "wss://stream-a.example.com/v1/data-channel/s", false},
+		{"allowed host is case-insensitive", "wss://stream-b.example.org/v1/data-channel/s", false},
+		{"standard host still allowed", "wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/s", false},
+		{"allowed host with ws", "ws://stream-a.example.com/v1/data-channel/s", false},
+		{"allowed host still rejects https", "https://stream-a.example.com/v1/data-channel/s", true},
+		{"allowed host still rejects userinfo", "wss://stream-a.example.com@example.com/v1/data-channel/s", true},
+		{"subdomain of allowed host", "wss://evil.stream-a.example.com/v1/data-channel/s", true},
+		{"unlisted host", "wss://stream-c.example.com/v1/data-channel/s", true},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			err := validateStreamUrl(tc.streamUrl, region, "")
+			if tc.wantErr {
+				assert.Error(t, err)
+			} else {
+				assert.NoError(t, err)
+			}
+		})
+	}
+}
+
+func TestValidateStreamUrlAdditionalHostsUnset(t *testing.T) {
+	t.Setenv(additionalStreamHostsEnvVar, "")
+	assert.Error(t, validateStreamUrl("wss://stream-a.example.com/v1/data-channel/s", "us-east-1", ""))
+}
+
+func TestValidateInputAndStartSessionAllowsEmptyToken(t *testing.T) {
+	var buffer bytes.Buffer
+	sessionResponse := "{\"SessionId\": \"user-012345\", \"TokenValue\": \"\", \"StreamUrl\": \"wss://ssmmessages.us-east-1.amazonaws.com/v1/data-channel/s\"}"
+	args := []string{"session-manager-plugin",
+		sessionResponse,
+		"us-east-1", "StartSession", "", "{\"Target\": \"i-0123abc\"}", "https://ssm.us-east-1.amazonaws.com"}
+	startSessionCalled := false
+	startSession = func(session *Session, log log.T) error {
+		startSessionCalled = true
+		return nil
+	}
+	ValidateInputAndStartSession(args, &buffer)
+	assert.True(t, startSessionCalled, "session must start when TokenValue is empty")
 }

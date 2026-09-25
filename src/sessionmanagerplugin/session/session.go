@@ -22,6 +22,7 @@ import (
 	"io"
 	"net/url"
 	"os"
+	"regexp"
 	"strings"
 	"time"
 
@@ -203,16 +204,17 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 			return
 		}
 
-		if startSessionOutput.SessionId == nil || startSessionOutput.StreamUrl == nil ||
-			startSessionOutput.TokenValue == nil {
-			log.Error("Cannot perform start session: StartSession response is missing SessionId, StreamUrl or TokenValue")
+		if startSessionOutput.SessionId == nil || startSessionOutput.StreamUrl == nil {
+			log.Error("Cannot perform start session: StartSession response is missing SessionId or StreamUrl")
 			fmt.Fprint(out, "Cannot perform start session: StartSession response is missing required fields\n")
 			return
 		}
 
 		session.SessionId = *startSessionOutput.SessionId
 		session.StreamUrl = *startSessionOutput.StreamUrl
-		session.TokenValue = *startSessionOutput.TokenValue
+		if startSessionOutput.TokenValue != nil {
+			session.TokenValue = *startSessionOutput.TokenValue
+		}
 		session.Endpoint = ssmEndpoint
 		session.ClientId = clientId
 		session.TargetId = target
@@ -222,11 +224,6 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 		if err = validateStreamUrl(session.StreamUrl, session.Region, session.Endpoint); err != nil {
 			log.Errorf("Cannot perform start session, invalid StreamUrl: %v", err)
 			fmt.Fprintf(out, "Cannot perform start session: %v\n", err)
-			return
-		}
-		if strings.TrimSpace(session.TokenValue) == "" {
-			log.Error("Cannot perform start session: TokenValue is empty")
-			fmt.Fprint(out, "Cannot perform start session: TokenValue is empty\n")
 			return
 		}
 
@@ -242,9 +239,21 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 	}
 }
 
-const ssmMessagesServiceName = "ssmmessages"
+// additionalStreamHostsEnvVar names a comma-separated list of extra StreamUrl hosts to trust.
+const additionalStreamHostsEnvVar = "AWS_SSM_PLUGIN_ADDITIONAL_STREAM_HOSTS"
 
-// validateStreamUrl checks that streamUrl is a wss URL for the client's region on an AWS-owned host.
+// isAdditionalTrustedStreamHost reports whether host exactly matches an entry in additionalStreamHostsEnvVar.
+func isAdditionalTrustedStreamHost(host string) bool {
+	for _, entry := range strings.Split(os.Getenv(additionalStreamHostsEnvVar), ",") {
+		entry = strings.TrimSuffix(strings.ToLower(strings.TrimSpace(entry)), ".")
+		if entry != "" && entry == host {
+			return true
+		}
+	}
+	return false
+}
+
+// validateStreamUrl checks that streamUrl is a ws or wss URL on an AWS stream service host.
 func validateStreamUrl(streamUrl string, region string, ssmEndpoint string) error {
 	if strings.TrimSpace(streamUrl) == "" {
 		return errors.New("StreamUrl is empty")
@@ -257,8 +266,8 @@ func validateStreamUrl(streamUrl string, region string, ssmEndpoint string) erro
 	if err != nil {
 		return fmt.Errorf("StreamUrl is not a valid URL: %v", err)
 	}
-	if !strings.EqualFold(parsedUrl.Scheme, "wss") {
-		return fmt.Errorf("StreamUrl has unexpected scheme %q, expected \"wss\"", parsedUrl.Scheme)
+	if !strings.EqualFold(parsedUrl.Scheme, "wss") && !strings.EqualFold(parsedUrl.Scheme, "ws") {
+		return fmt.Errorf("StreamUrl has unexpected scheme %q, expected \"wss\" or \"ws\"", parsedUrl.Scheme)
 	}
 	if parsedUrl.User != nil {
 		return errors.New("StreamUrl must not contain userinfo")
@@ -270,33 +279,53 @@ func validateStreamUrl(streamUrl string, region string, ssmEndpoint string) erro
 	}
 	region = strings.ToLower(region)
 
-	if !hasServiceRegionLabels(host, region) {
-		return fmt.Errorf("StreamUrl host %q is not an ssmmessages endpoint for region %q", host, region)
+	if isAdditionalTrustedStreamHost(host) {
+		return nil
 	}
 	for _, suffix := range trustedDnsSuffixes(region, ssmEndpoint) {
-		if suffix != "" && (host == suffix || strings.HasSuffix(host, "."+suffix)) {
+		if suffix != "" && strings.HasSuffix(host, "."+suffix) &&
+			hasStreamServiceShape(strings.TrimSuffix(host, "."+suffix)) {
 			return nil
 		}
 	}
-	return fmt.Errorf("StreamUrl host %q is not under a recognized AWS DNS suffix", host)
+	return fmt.Errorf("StreamUrl host %q is not a recognized AWS stream endpoint", host)
 }
 
-// hasServiceRegionLabels reports whether host has an ssmmessages[-fips] label followed by the region label.
-func hasServiceRegionLabels(host, region string) bool {
-	labels := strings.Split(host, ".")
-	for i := 0; i+1 < len(labels); i++ {
-		if (labels[i] == ssmMessagesServiceName || labels[i] == ssmMessagesServiceName+"-fips") &&
-			labels[i+1] == region {
+// streamServiceLabelKeywords lists substrings, one of which the service label must contain.
+var streamServiceLabelKeywords = []string{"ssmmessages", "fips", "mgs", "gamma", "beta"}
+
+// streamRegionLabel matches a region name such as "us-east-1" or a three-letter code such as "iad".
+var streamRegionLabel = regexp.MustCompile(`^([a-z]{2,4}(-[a-z]+)+-[0-9]+|[a-z]{3})$`)
+
+// hasStreamServiceShape reports whether prefix is "<service>.<region>" or "<vpce-id>.<service>.<region>.vpce".
+func hasStreamServiceShape(prefix string) bool {
+	labels := strings.Split(prefix, ".")
+	var service, region string
+	switch {
+	case len(labels) == 2:
+		service, region = labels[0], labels[1]
+	case len(labels) == 4 && strings.HasPrefix(labels[0], "vpce-") && labels[3] == "vpce":
+		service, region = labels[1], labels[2]
+	default:
+		return false
+	}
+	if !streamRegionLabel.MatchString(region) {
+		return false
+	}
+	for _, keyword := range streamServiceLabelKeywords {
+		if strings.Contains(service, keyword) {
 			return true
 		}
 	}
 	return false
 }
 
-// trustedDnsSuffixes returns the AWS DNS suffixes a StreamUrl host may end with, taken from the ssm
-// endpoint the CLI passed and the SDK's standard and dual-stack endpoints for the region.
+// amazonDnsSuffix is trusted for StreamUrl hosts in every region.
+const amazonDnsSuffix = "amazon.com"
+
+// trustedDnsSuffixes returns the DNS suffixes a StreamUrl host may end with.
 func trustedDnsSuffixes(region, ssmEndpoint string) []string {
-	suffixes := []string{resolvedSsmDnsSuffix(region, false), resolvedSsmDnsSuffix(region, true)}
+	suffixes := []string{resolvedSsmDnsSuffix(region, false), resolvedSsmDnsSuffix(region, true), amazonDnsSuffix}
 	if s := dnsSuffixFromSsmEndpoint(ssmEndpoint, region); s != "" {
 		suffixes = append(suffixes, s)
 	}
