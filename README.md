@@ -9,7 +9,11 @@ Session Manager is a fully managed AWS Systems Manager capability that lets you 
 
 ### Prerequisites
 
-Before using Session Manager, make sure your environment meets the following requirements. [Complete Session Manager prerequisites](http://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-prerequisites.html).
+Before using Session Manager, make sure your environment meets the following requirements. [Complete Session Manager prerequisites](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-prerequisites.html).
+
+### Installation
+
+For instructions on installing pre-built installer packages for Windows, macOS, Linux, or Ubuntu, see [Install the Session Manager plugin for the AWS CLI](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html).
 
 ### Starting a session
 
@@ -17,7 +21,7 @@ For information about starting a session using the AWS CLI, see [Starting a sess
 
 ### Troubleshooting
 
-For information about troubleshooting, see [Troubleshooting Session Manager](http://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-troubleshooting.html).
+For information about troubleshooting, see [Troubleshooting Session Manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-troubleshooting.html).
 
 ### Version Compatibility
 
