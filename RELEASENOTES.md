@@ -1,5 +1,9 @@
 Latest
 ================
+- Revert "Session failure reason check and avoid hanging session"
+  		  
+1.2.889.0
+================
 - Validate that the session stream URL is an AWS Session Manager endpoint before connecting
 - Support log configuration for non-admin users on Windows
 - Report connection failures instead of hanging when a session cannot be established
