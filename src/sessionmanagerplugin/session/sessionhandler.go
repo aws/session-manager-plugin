@@ -86,8 +86,7 @@ func (s *Session) OpenDataChannel(log log.T) (err error) {
 		log.Errorf("Retrying connection for data channel id: %s failed with error: %s", s.SessionId, err)
 		s.retryParams.CallableFunc = func() (err error) { return s.DataChannel.Reconnect(log) }
 		if err = s.retryParams.Call(); err != nil {
-			log.Errorf("All retry attempts failed: %v", err)
-			return err
+			log.Error(err)
 		}
 	}
 

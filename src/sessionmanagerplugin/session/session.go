@@ -234,7 +234,7 @@ func ValidateInputAndStartSession(args []string, out io.Writer) {
 
 	if err = startSession(&session, log); err != nil {
 		log.Errorf("Cannot perform start session: %v", err)
-		fmt.Fprintf(out, "Unable to establish session connection: %v\n", err)
+		fmt.Fprintf(out, "Cannot perform start session: %v\n", err)
 		return
 	}
 }
@@ -385,23 +385,16 @@ func (s *Session) Execute(log log.T) (err error) {
 	handleStreamMessageResendTimeout(s, log)
 
 	// The session type is set either by handshake or the first packet received.
-	// Add timeout to avoid hanging indefinitely on authorization failures
-	select {
-	case sessionTypeSet := <-s.DataChannel.IsSessionTypeSet():
-		if !sessionTypeSet {
-			log.Errorf("unable to set SessionType for session %s", s.SessionId)
-			return errors.New("unable to determine SessionType")
-		}
+	if !<-s.DataChannel.IsSessionTypeSet() {
+		log.Errorf("unable to set SessionType for session %s", s.SessionId)
+		return errors.New("unable to determine SessionType")
+	} else {
 		s.SessionType = s.DataChannel.GetSessionType()
 		s.SessionProperties = s.DataChannel.GetSessionProperties()
 		if err = setSessionHandlersWithSessionType(s, log); err != nil {
 			log.Errorf("Session ending with error: %v", err)
 			return
 		}
-	case <-time.After(30 * time.Second):
-		err = errors.New("Session creation timed out.")
-		log.Errorf("Session %s: %v", s.SessionId, err)
-		return err
 	}
 
 	return

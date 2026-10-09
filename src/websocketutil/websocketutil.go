@@ -67,10 +67,6 @@ func (u *WebsocketUtil) OpenConnection(url string, header http.Header) (*websock
 	if err != nil {
 		if resp != nil {
 			u.log.Errorf("Failed to dial websocket, status: %s, err: %s", resp.Status, err)
-			// Enhance error message for authorization and request failures
-			if resp.StatusCode == http.StatusBadRequest || resp.StatusCode == http.StatusUnauthorized || resp.StatusCode == http.StatusForbidden {
-				return nil, errors.New("Connection failed: " + resp.Status + ".")
-			}
 		} else {
 			u.log.Errorf("Failed to dial websocket: %s", err)
 		}

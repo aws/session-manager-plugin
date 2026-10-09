@@ -228,7 +228,7 @@ func (dataChannel *DataChannel) SendMessage(log log.T, input []byte, inputType i
 // Open opens websocket connects and does final handshake to acknowledge connection
 func (dataChannel *DataChannel) Open(log log.T) (err error) {
 	if err = dataChannel.wsChannel.Open(log); err != nil {
-		return err
+		return fmt.Errorf("failed to open data channel with error: %v", err)
 	}
 
 	if err = dataChannel.FinalizeDataChannelHandshake(log, dataChannel.wsChannel.GetChannelToken()); err != nil {
@@ -251,7 +251,7 @@ func (dataChannel *DataChannel) Reconnect(log log.T) (err error) {
 	}
 
 	if err = dataChannel.Open(log); err != nil {
-		return err
+		return fmt.Errorf("failed to reconnect data channel %s with error: %v", dataChannel.wsChannel.GetStreamUrl(), err)
 	}
 
 	log.Infof("Successfully reconnected to data channel: %s", dataChannel.wsChannel.GetStreamUrl())
