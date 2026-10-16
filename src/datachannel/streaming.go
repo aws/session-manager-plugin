@@ -115,6 +115,8 @@ type DataChannel struct {
 
 	// AgentVersion received during handshake
 	agentVersion string
+
+	mutex sync.Mutex
 }
 
 type ListMessageBuffer struct {
@@ -274,6 +276,9 @@ func (dataChannel *DataChannel) SendInputDataMessage(
 	payloadType message.PayloadType,
 	inputData []byte) (err error) {
 
+	dataChannel.mutex.Lock()
+	defer dataChannel.mutex.Unlock()
+
 	var (
 		flag uint64 = 0
 		msg  []byte
@@ -338,12 +343,16 @@ func (dataChannel *DataChannel) ResendStreamDataMessageScheduler(log log.T) (err
 			streamMessageElement := dataChannel.OutgoingMessageBuffer.Messages.Front()
 			dataChannel.OutgoingMessageBuffer.Mutex.Unlock()
 
+			dataChannel.mutex.Lock()
+			localTimeout := dataChannel.RetransmissionTimeout
+			dataChannel.mutex.Unlock()
+
 			if streamMessageElement == nil {
 				continue
 			}
 
 			streamMessage := streamMessageElement.Value.(StreamingMessage)
-			if time.Since(streamMessage.LastSentTime) > dataChannel.RetransmissionTimeout {
+			if time.Since(streamMessage.LastSentTime) > localTimeout {
 				log.Debugf("Resend stream data message %d for the %d attempt.", streamMessage.SequenceNumber, *streamMessage.ResendAttempt)
 				if *streamMessage.ResendAttempt >= config.ResendMaxAttempt {
 					log.Warnf("Message %d was resent over %d times.", streamMessage.SequenceNumber, config.ResendMaxAttempt)
@@ -363,6 +372,9 @@ func (dataChannel *DataChannel) ResendStreamDataMessageScheduler(log log.T) (err
 
 // ProcessAcknowledgedMessage processes acknowledge messages by deleting them from OutgoingMessageBuffer
 func (dataChannel *DataChannel) ProcessAcknowledgedMessage(log log.T, acknowledgeMessageContent message.AcknowledgeContent) error {
+	dataChannel.mutex.Lock()
+	defer dataChannel.mutex.Unlock()
+
 	acknowledgeSequenceNumber := acknowledgeMessageContent.SequenceNumber
 	for streamMessageElement := dataChannel.OutgoingMessageBuffer.Messages.Front(); streamMessageElement != nil; streamMessageElement = streamMessageElement.Next() {
 		streamMessage := streamMessageElement.Value.(StreamingMessage)
@@ -610,6 +622,8 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 	outputMessage message.ClientMessage,
 	rawMessage []byte) (err error) {
 
+	dataChannel.mutex.Lock()
+
 	// On receiving expected stream data message, send acknowledgement, process it and increment expected sequence number by 1.
 	// Further process messages from IncomingMessageBuffer
 	if outputMessage.SequenceNumber == dataChannel.ExpectedSequenceNumber {
@@ -618,40 +632,51 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 		case message.HandshakeRequestPayloadType:
 			{
 				if err = SendAcknowledgeMessageCall(log, dataChannel, outputMessage); err != nil {
+					dataChannel.mutex.Unlock()
 					return err
 				}
 
 				// PayloadType is HandshakeRequest so we call our own handler instead of the provided handler
 				log.Debugf("Processing HandshakeRequest message %s", outputMessage)
+
+				// The handler will eventually request the lock in `SendInputDataMessage`, so we'll unlock here to avoid deadlock
+				dataChannel.mutex.Unlock()
 				if err = dataChannel.handleHandshakeRequest(log, outputMessage); err != nil {
 					log.Errorf("Unable to process incoming data payload, MessageType %s, "+
 						"PayloadType HandshakeRequestPayloadType, err: %s.", outputMessage.MessageType, err)
 					return err
 				}
+				dataChannel.mutex.Lock()
 			}
 		case message.HandshakeCompletePayloadType:
 			{
 				if err = SendAcknowledgeMessageCall(log, dataChannel, outputMessage); err != nil {
+					dataChannel.mutex.Unlock()
 					return err
 				}
 
+				dataChannel.mutex.Unlock()
 				if err = dataChannel.handleHandshakeComplete(log, outputMessage); err != nil {
 					log.Errorf("Unable to process incoming data payload, MessageType %s, "+
 						"PayloadType HandshakeCompletePayloadType, err: %s.", outputMessage.MessageType, err)
 					return err
 				}
+				dataChannel.mutex.Lock()
 			}
 		case message.EncChallengeRequest:
 			{
 				if err = SendAcknowledgeMessageCall(log, dataChannel, outputMessage); err != nil {
+					dataChannel.mutex.Unlock()
 					return err
 				}
 
+				dataChannel.mutex.Unlock()
 				if err = dataChannel.handleEncryptionChallengeRequest(log, outputMessage); err != nil {
 					log.Errorf("Unable to process incoming data payload, MessageType %s, "+
 						"PayloadType EncChallengeRequest, err: %s.", outputMessage.MessageType, err)
 					return err
 				}
+				dataChannel.mutex.Lock()
 			}
 		default:
 
@@ -681,11 +706,13 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 			} else {
 				// Acknowledge outputMessage only if session specific handler is ready
 				if err := SendAcknowledgeMessageCall(log, dataChannel, outputMessage); err != nil {
+					dataChannel.mutex.Unlock()
 					return err
 				}
 			}
 		}
 		dataChannel.ExpectedSequenceNumber = dataChannel.ExpectedSequenceNumber + 1
+		dataChannel.mutex.Unlock()
 		return dataChannel.ProcessIncomingMessageBufferItems(log, outputMessage)
 	} else {
 		log.Debugf("Unexpected sequence message received. Received Sequence Number: %d. Expected Sequence Number: %d",
@@ -698,6 +725,7 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 				outputMessage.SequenceNumber, dataChannel.ExpectedSequenceNumber)
 			if len(dataChannel.IncomingMessageBuffer.Messages) < dataChannel.IncomingMessageBuffer.Capacity {
 				if err = SendAcknowledgeMessageCall(log, dataChannel, outputMessage); err != nil {
+					dataChannel.mutex.Unlock()
 					return err
 				}
 
@@ -713,6 +741,7 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 			}
 		}
 	}
+	dataChannel.mutex.Unlock()
 	return nil
 }
 
@@ -721,6 +750,9 @@ func (dataChannel *DataChannel) HandleOutputMessage(
 // Repeat until expected sequence stream data is not found in IncomingMessageBuffer.
 func (dataChannel *DataChannel) ProcessIncomingMessageBufferItems(log log.T,
 	outputMessage message.ClientMessage) (err error) {
+
+	dataChannel.mutex.Lock()
+	defer dataChannel.mutex.Unlock()
 
 	for {
 		bufferedStreamMessage := dataChannel.IncomingMessageBuffer.Messages[dataChannel.ExpectedSequenceNumber]

@@ -50,7 +50,7 @@ type PortParameters struct {
 }
 
 func init() {
-	session.Register(&PortSession{})
+	session.Register(&PortSession{}, func() session.ISessionPlugin { return &PortSession{} })
 }
 
 // Name is the session name used inputStream the plugin
